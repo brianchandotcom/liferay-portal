@@ -1,89 +1,94 @@
 jobs:
     close-merge-conflicts:
         env:
-            AUTHORIZED_OWNERS_LIST: pyoo47
+            AUTHORIZED_OWNERS_LIST: ${{ vars.AUTHORIZED_OWNERS }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         permissions:
             issues: write
             pull-requests: write
         runs-on: ubuntu-latest
         steps:
-            -   run: |
-                    set -e
+            - run: |
+                set -e
 
-                    CURRENT_REPOSITORY_OWNER="${{ github.repository_owner }}"
-                    REPOSITORY_NAME="${{ github.event.repository.name }}"
+                function main {
+                    local authorizedOwnersList="${AUTHORIZED_OWNERS_LIST}"
+                    local currentRepositoryOwner="${{ github.repository_owner }}"
+                    local githubToken="${GITHUB_TOKEN}"
+                    local isAuthorizedUser=false
+                    local repositoryName="${{ github.event.repository.name }}"
 
-                    IS_AUTHORIZED_USER=false
-
-                    for OWNER_ENTRY in ${AUTHORIZED_OWNERS_LIST}
+                    for ownerEntry in ${authorizedOwnersList}
                     do
-                      if [[ "${OWNER_ENTRY}" == "${CURRENT_REPOSITORY_OWNER}" ]]
-                      then
-                        IS_AUTHORIZED_USER=true
+                        if [[ "${ownerEntry}" == "${currentRepositoryOwner}" ]]
+                        then
+                            isAuthorizedUser=true
 
-                        break
-                      fi
+                            break
+                        fi
                     done
 
-                    if [[ "${IS_AUTHORIZED_USER}" == "false" ]]
+                    if [[ "${isAuthorizedUser}" == "false" ]]
                     then
-                      echo "Execution skipped: ${CURRENT_REPOSITORY_OWNER} is not authorized."
+                        echo "Execution skipped: ${currentRepositoryOwner} is not authorized."
 
-                      exit 0
+                        exit 0
                     fi
 
-                    echo "Checking open pull requests in ${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}..."
+                    echo "Checking open pull requests in ${currentRepositoryOwner}/${repositoryName}..."
 
-                    PR_LIST=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                      "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls?state=open" \
-                      | jq -r '.[] | "\(.number)\t\(.html_url)"')
+                    local prList=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                        "https://api.github.com/repos/${currentRepositoryOwner}/${repositoryName}/pulls?state=open" \
+                        | jq -r '.[] | "\(.number)\t\(.html_url)"')
 
-                    echo "${PR_LIST}" | while IFS=$'\t' read -r PULL_REQUEST_NUMBER PULL_REQUEST_URL
+                    echo "${prList}" | while IFS=$'\t' read -r pullRequestNumber pullRequestUrl
                     do
-                      if [[ -z "${PULL_REQUEST_NUMBER}" ]]
-                      then
-                        continue
-                      fi
+                        if [[ -z "${pullRequestNumber}" ]]
+                        then
+                            continue
+                        fi
 
-                      MERGEABLE_STATE=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                        "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PULL_REQUEST_NUMBER}" \
-                        | jq -r '.mergeable_state')
+                        local mergeableState=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                            "https://api.github.com/repos/${currentRepositoryOwner}/${repositoryName}/pulls/${pullRequestNumber}" \
+                            | jq -r '.mergeable_state')
 
-                      MAX_RETRIES=6
-                      RETRY_COUNT=0
+                        local maxRetries=6
+                        local retryCount=0
 
-                      while [["${MERGEABLE_STATE}" == "unknown" || "${MERGEABLE_STATE}" == "null"]] &&
-                            [[${RETRY_COUNT} -lt ${MAX_RETRIES}]]
-                      do
-                        echo "Pull request ${PULL_REQUEST_URL} state is unknown."
-                        echo "Waiting 5s (Attempt $((RETRY_COUNT + 1)) of ${MAX_RETRIES})..."
+                        while [[ "${mergeableState}" == "unknown" || "${mergeableState}" == "null" ]] &&
+                              [[ ${retryCount} -lt ${maxRetries} ]]
+                        do
+                            echo "Pull request ${pullRequestUrl} state is unknown."
+                            echo "Waiting 5s (Attempt $((retryCount + 1)) of ${maxRetries})..."
 
-                        sleep 5
+                            sleep 5
 
-                        MERGEABLE_STATE=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                          "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PULL_REQUEST_NUMBER}" \
-                          | jq -r '.mergeable_state')
+                            mergeableState=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                                "https://api.github.com/repos/${currentRepositoryOwner}/${repositoryName}/pulls/${pullRequestNumber}" \
+                                | jq -r '.mergeable_state')
 
-                        RETRY_COUNT=$(expr ${RETRY_COUNT} + 1)
-                      done
+                            retryCount=$(expr ${retryCount} + 1)
+                        done
 
-                      if [[ "${MERGEABLE_STATE}" == "dirty" ]]
-                      then
-                        echo "[ACTION] Closing pull request: ${PULL_REQUEST_URL} due to conflicts."
+                        if [[ "${mergeableState}" == "dirty" ]]
+                        then
+                            echo "[ACTION] Closing pull request: ${pullRequestUrl} due to conflicts."
 
-                        curl -s -X POST -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                          -d '{"body": "This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send."}' \
-                          "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/issues/${PULL_REQUEST_NUMBER}/comments"
+                            curl -s -X POST -H "Authorization: Bearer ${githubToken}" \
+                                -d '{"body": "This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send."}' \
+                                "https://api.github.com/repos/${currentRepositoryOwner}/${repositoryName}/issues/${pullRequestNumber}/comments"
 
-                        curl -s -X PATCH -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                          -d '{"state": "closed"}' \
-                          "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PULL_REQUEST_NUMBER}"
-                      else
-                        echo "[SKIP] Pull request: ${PULL_REQUEST_URL} is currently: ${MERGEABLE_STATE}"
-                      fi
+                            curl -s -X PATCH -H "Authorization: Bearer ${githubToken}" \
+                                -d '{"state": "closed"}' \
+                                "https://api.github.com/repos/${currentRepositoryOwner}/${repositoryName}/pulls/${pullRequestNumber}"
+                        else
+                            echo "[SKIP] Pull request: ${pullRequestUrl} is currently: ${mergeableState}"
+                        fi
                     done
+                }
+
+                main
 on:
     schedule:
-        -   cron: "*/15 * * * *"
+        - cron: '*/15 * * * *'
     workflow_dispatch:

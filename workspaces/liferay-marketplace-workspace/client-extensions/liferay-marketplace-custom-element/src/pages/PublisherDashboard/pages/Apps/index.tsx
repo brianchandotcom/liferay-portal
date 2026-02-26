@@ -7,8 +7,8 @@ import ClayButton from '@clayui/button';
 import {useNavigate} from 'react-router-dom';
 
 import ListView from '../../../../components/ListView';
-import OrderStatus from '../../../../components/OrderStatus';
 import Page from '../../../../components/Page';
+import ProductStatus from '../../../../components/ProductStatus';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {
@@ -16,7 +16,6 @@ import {
 	ProductTypeLabels,
 	ProductTypeVocabulary,
 	ProductWorkflowStatusCode,
-	ProductWorkflowStatusLabel,
 } from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import {formatDate} from '../../../../utils/date';
@@ -194,15 +193,9 @@ const Apps = () => {
 								}
 
 								return (
-									<OrderStatus
-										orderStatus={workflowStatusInfo.label}
-									>
-										{
-											ProductWorkflowStatusLabel[
-												workflowStatusInfo.code as keyof typeof ProductWorkflowStatusLabel
-											]
-										}
-									</OrderStatus>
+									<ProductStatus
+										productStatus={workflowStatusInfo.label}
+									/>
 								);
 							},
 						},

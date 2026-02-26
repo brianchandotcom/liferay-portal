@@ -102,10 +102,8 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 				},
 				{
 					key: 'orderStatusInfo',
-					render: (orderStatusInfo) => (
-						<OrderStatus orderStatus={orderStatusInfo?.label}>
-							{orderStatusInfo?.label}
-						</OrderStatus>
+					render: (_, PlacedOrder) => (
+						<OrderStatus placedOrder={PlacedOrder} />
 					),
 					title: i18n.translate('order-status'),
 				},

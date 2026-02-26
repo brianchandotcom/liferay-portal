@@ -121,10 +121,8 @@ const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 				},
 				{
 					key: 'orderStatusInfo',
-					render: (orderStatusInfo) => (
-						<OrderStatus orderStatus={orderStatusInfo?.label}>
-							{orderStatusInfo?.label}
-						</OrderStatus>
+					render: (_, PlacedOrder) => (
+						<OrderStatus placedOrder={PlacedOrder} />
 					),
 					title: 'Status',
 				},

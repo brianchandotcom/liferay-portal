@@ -1,0 +1,32 @@
+.product-status-icon {
+	height: 0.5rem;
+	width: 0.5rem;
+
+	&-completed {
+		color: #4aab3b;
+	}
+
+	&-draft {
+		color: #cccccc;
+	}
+
+	&-pending {
+		color: #b95000;
+	}
+
+	&-processing {
+		color: #2e5aac;
+	}
+
+	&-under-review {
+		color: #b300ff;
+	}
+}
+
+.product-status-text {
+	color: #6c6c75;
+	font-size: 0.813rem;
+	font-weight: 600;
+	line-height: 1rem;
+	text-transform: capitalize;
+}

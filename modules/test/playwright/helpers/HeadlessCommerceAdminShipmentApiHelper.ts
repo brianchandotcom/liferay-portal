@@ -15,6 +15,7 @@ type TShipment = {
 	shippingAddressId?: number;
 	shippingDate?: string;
 	trackingNumber?: string;
+	trackingURL?: string;
 };
 
 type TShipmentItem = {

@@ -3357,3 +3357,184 @@ test(
 		await expect(commerceLayoutsPage.createNewOrderButton).toBeDisabled();
 	}
 );
+
+test(
+	'Placed Order Shipment and Shipment Items show delivery date, shipping date, and tracking url',
+	{tag: ['@LPD-80554']},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		commerceThemeClassicOrdersPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'person',
+		});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'com.liferay.commerce.fragment.internal.renderer.OrdersDataSetFragmentRenderer',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment(
+			'Order',
+			'Placed Order Shipments Data Set'
+		);
+
+		await expect(
+			page.getByText(
+				'The placed order shipment data set component will be shown here.'
+			)
+		).toBeVisible();
+
+		await pageEditorPage.addFragment('Order', 'Order Items Data Set');
+
+		await expect(
+			page.getByText(
+				'The order items data set component will be shown here.'
+			)
+		).toBeVisible();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+			accountId: account.id,
+			billingAddressId: address.id,
+			channelId: channel.id,
+			orderItems: [
+				{
+					quantity: 2,
+					skuId: String(product.skus[0].id),
+				},
+			],
+			shippingAddressId: address.id,
+		});
+		await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+			orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+		await displayPageTemplatesPage.clickMoreActions(
+			displayPageTemplateName,
+			'Mark as Default'
+		);
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const now = new Date();
+		const expectedDate = new Date(
+			now.getFullYear() + 1,
+			now.getMonth() + 1,
+			now.getDate()
+		);
+
+		const shippingDate = new Date(
+			now.getFullYear() + 1,
+			now.getMonth(),
+			now.getDate()
+		);
+
+		await apiHelpers.headlessCommerceAdminShipment.postShipment({
+			expectedDate: expectedDate.toISOString(),
+			orderId: order.id,
+			shipmentItems: [
+				{
+					orderItemId: order.orderItems[0].id,
+					quantity: 1,
+				},
+			],
+			shippingAddressId: address.id,
+			shippingDate: shippingDate.toISOString(),
+			trackingURL: getRandomString(),
+		});
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${order.id}`
+		);
+
+		await expect(
+			page.getByRole('columnheader', {name: 'Estimated Delivery Date'})
+		).toBeVisible();
+		await expect(
+			page.getByRole('columnheader', {name: 'Estimated Shipping Date'})
+		).toBeVisible();
+		await expect(
+			page.getByRole('columnheader', {name: 'Tracking URL'})
+		).toBeVisible();
+
+		await (
+			await commerceThemeClassicOrdersPage.orderItemsTableRow(
+				2,
+				product.skus[0].sku
+			)
+		).row
+			.getByRole('button', {name: 'Actions'})
+			.click();
+		await commerceThemeClassicOrdersPage
+			.orderTableMenuItem('Shipments')
+			.click();
+
+		await expect(
+			commerceThemeClassicOrdersPage.orderItemShipmentsIframe.getByRole(
+				'columnheader',
+				{name: 'Estimated Shipping Date'}
+			)
+		).toBeVisible();
+		await expect(
+			commerceThemeClassicOrdersPage.orderItemShipmentsIframe.getByRole(
+				'columnheader',
+				{name: 'Estimated Delivery Date'}
+			)
+		).toBeVisible();
+		await expect(
+			commerceThemeClassicOrdersPage.orderItemShipmentsIframe.getByRole(
+				'columnheader',
+				{name: 'Tracking URL'}
+			)
+		).toBeVisible();
+	}
+);

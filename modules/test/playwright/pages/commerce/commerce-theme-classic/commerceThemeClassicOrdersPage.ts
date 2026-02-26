@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceThemeClassicOrdersPage extends CommerceDNDTablePage {
 	readonly expandProductButton: Locator;
+	readonly orderItemShipmentsIframe: FrameLocator;
 	readonly orderItemsTable: Locator;
 	readonly orderItemsTableRow: (
 		colPosition: number,
@@ -32,6 +33,9 @@ export class CommerceThemeClassicOrdersPage extends CommerceDNDTablePage {
 			.locator('.autofit-col-toggle')
 			.getByRole('button');
 
+		this.orderItemShipmentsIframe = page.frameLocator(
+			'iframe[title="Shipments"]'
+		);
 		this.orderItemsTable = page.locator(
 			'.lfr-layout-structure-item-com-liferay-commerce-order-content-web-internal-fragment-renderer-orderitemsdatasetfragmentrenderer .fds table'
 		);

@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectWebKeys;
@@ -61,6 +62,7 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsFieldsDisplayContext(
+					_depotEntryLocalService,
 					_portal.getHttpServletRequest(renderRequest),
 					_listTypeDefinitionService,
 					_objectDefinitionModelResourcePermission,
@@ -73,6 +75,9 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 
 		return "/object_definitions/edit_object_field.jsp";
 	}
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;

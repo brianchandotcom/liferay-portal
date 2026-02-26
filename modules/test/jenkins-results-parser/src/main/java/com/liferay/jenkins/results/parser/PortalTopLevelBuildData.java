@@ -40,6 +40,19 @@ public class PortalTopLevelBuildData
 		return getGitHubBranchName(getPortalGitHubURL());
 	}
 
+	public String getPortalGitHubCompareURL(String previousPortalBranchSHA) {
+		if ((previousPortalBranchSHA == null) ||
+			!previousPortalBranchSHA.matches("[0-9a-f]{40}")) {
+
+			return null;
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/", getPortalGitHubUsername(), "/",
+			getPortalGitHubRepositoryName(), "/compare/",
+			previousPortalBranchSHA, "...", getPortalBranchSHA());
+	}
+
 	@Override
 	public String getPortalGitHubRepositoryName() {
 		return getGitHubRepositoryName(getPortalGitHubURL());

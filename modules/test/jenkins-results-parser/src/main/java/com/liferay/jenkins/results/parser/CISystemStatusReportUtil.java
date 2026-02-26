@@ -111,6 +111,76 @@ public class CISystemStatusReportUtil {
 		JenkinsResultsParserUtil.append(new File(filePath), sb.toString());
 	}
 
+	public static void appendPullRequestHistoryDataToJavaScriptFile(
+			String filePath, JenkinsCohort jenkinsCohort)
+		throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+
+		JSONObject jsonObject = null;
+
+		LocalDate localDate = JenkinsResultsParserUtil.getLocalDate(
+			System.currentTimeMillis());
+
+		long durationDays = _getReportDurationDays();
+
+		localDate = localDate.minusDays(durationDays - 1);
+
+		Set<String> keys = new HashSet<>(Arrays.asList(_NODE_METRIC_NAMES));
+
+		Set<String> asgPrimaryLabels = jenkinsCohort.getASGPrimaryLabels();
+
+		for (String asgPrimaryLabel : asgPrimaryLabels) {
+			for (String asgNodeMetricName : _ASG_NODE_METRIC_NAMES) {
+				keys.add(asgNodeMetricName + "__" + asgPrimaryLabel);
+			}
+		}
+
+		for (String dateString :
+				JenkinsResultsParserUtil.getDateStrings(
+					durationDays, localDate)) {
+
+			File nodeDataFile = new File(
+				_TMP_BASE_DIR, dateString + "/node.json");
+
+			if (!nodeDataFile.exists()) {
+				System.out.println(
+					"Node data not available in: " + nodeDataFile);
+
+				continue;
+			}
+
+			if (jsonObject == null) {
+				jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					"file://" + nodeDataFile.getPath());
+
+				continue;
+			}
+
+			_mergeJSONArraysInJSONObjects(
+				jsonObject,
+				JenkinsResultsParserUtil.toJSONObject(
+					"file://" + nodeDataFile.getPath()),
+				keys);
+		}
+
+		if (jsonObject == null) {
+			jsonObject = new JSONObject();
+		}
+
+		if (!asgPrimaryLabels.isEmpty()) {
+			jsonObject.put("asg_primary_labels", asgPrimaryLabels);
+		}
+
+		sb.append("\nvar nodeHistoryData = ");
+
+		sb.append(jsonObject);
+
+		sb.append(";");
+
+		JenkinsResultsParserUtil.append(new File(filePath), sb.toString());
+	}
+
 	public static void copyBaseReportFiles(String filePath) throws IOException {
 		FileUtils.copyDirectory(
 			_CI_SYSTEM_STATUS_REPORT_DIR, new File(filePath));
@@ -139,6 +209,8 @@ public class CISystemStatusReportUtil {
 		jenkinsCohort.writeDataJavaScriptFile(filePath);
 
 		appendNodeHistoryDataToJavaScriptFile(filePath, jenkinsCohort);
+
+		appendPullRequestHistoryDataToJavaScriptFile(filePath, jenkinsCohort);
 	}
 
 	public static void writeTestrayDataJavaScriptFile(

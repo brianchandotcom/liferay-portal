@@ -126,6 +126,36 @@ test(
 );
 
 test(
+	'Verify alert only appears if changing the value',
+	{tag: '@LPD-79710'},
+	async ({page}) => {
+		const enabledButton = await page.getByLabel('Enabled');
+
+		await enabledButton.setChecked(true);
+
+		const consentRenewalPeriodField = await page.getByLabel(
+			'Consent Renewal Period'
+		);
+
+		await consentRenewalPeriodField.fill('12');
+
+		await page.getByRole('button', {name: 'Update'}).click();
+
+		await consentRenewalPeriodField.fill('11');
+
+		await page.getByRole('button', {name: 'Update'}).click();
+
+		page.once('dialog', async (dialogWindow) => {
+			await expect(dialogWindow.message()).toContain(
+				'You are about to change the consent renewal period'
+			);
+
+			await dialogWindow.dismiss();
+		});
+	}
+);
+
+test(
 	'Verify Consent Manager can be saved with Enabled set to false',
 	{tag: '@LPD-78627'},
 	async ({page}) => {
@@ -136,6 +166,26 @@ test(
 
 			await expect(page.getByLabel('Enabled')).not.toBeChecked();
 		});
+	}
+);
+
+test(
+	'Verify Consent Renewal Period can be changed immediately after checking Enabled',
+	{tag: '@LPD-79710'},
+	async ({page}) => {
+		const enabledButton = await page.getByLabel('Enabled');
+
+		await enabledButton.setChecked(false);
+
+		const consentRenewalPeriod = await page.getByLabel(
+			'Consent Renewal Period'
+		);
+
+		await expect(consentRenewalPeriod).not.toBeEnabled();
+
+		await enabledButton.setChecked(true);
+
+		await expect(consentRenewalPeriod).toBeEnabled();
 	}
 );
 

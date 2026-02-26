@@ -173,42 +173,12 @@ test(
 
 			await enabledButton.click();
 
-			if (
-				await systemSettingsPage.page
-					.getByRole('button', {name: 'Save'})
-					.isVisible()
-			) {
-				await systemSettingsPage.page
-					.getByRole('button', {name: 'Save'})
-					.dispatchEvent('click');
-			}
-			else {
-				await systemSettingsPage.page
-					.getByRole('button', {name: 'Update'})
-					.dispatchEvent('click');
-			}
-
 			await expect(consentRenewalPeriod).not.toBeEditable();
 		}
 		else {
 			await expect(consentRenewalPeriod).not.toBeEditable();
 
 			await enabledButton.click();
-
-			if (
-				await systemSettingsPage.page
-					.getByRole('button', {name: 'Save'})
-					.isVisible()
-			) {
-				await systemSettingsPage.page
-					.getByRole('button', {name: 'Save'})
-					.dispatchEvent('click');
-			}
-			else {
-				await systemSettingsPage.page
-					.getByRole('button', {name: 'Update'})
-					.dispatchEvent('click');
-			}
 
 			await expect(consentRenewalPeriod).toBeEditable();
 		}

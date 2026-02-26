@@ -32,6 +32,12 @@ public class ObjectEntryFolderModelSummaryContributor
 	}
 
 	private String _getTitle(Document document, Locale locale) {
+		String title = document.get("snippet_title");
+
+		if (!Validator.isBlank(title)) {
+			return title;
+		}
+
 		String localizedFieldTitle = Field.getLocalizedName(
 			locale, "localized_label");
 

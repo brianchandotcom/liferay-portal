@@ -7,7 +7,7 @@ package com.liferay.osb.patcher.util;
 
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.pubsub.v1.stub.GrpcSubscriberStub;
 import com.google.cloud.pubsub.v1.stub.SubscriberStub;
 import com.google.cloud.pubsub.v1.stub.SubscriberStubSettings;
@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lock.service.LockLocalServiceUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -140,21 +139,13 @@ public class PatcherUtil {
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				PatcherConfiguration.class, companyId);
 
-		if (Validator.isNull(
-				patcherConfiguration.patcherPubsubCredentialFilePath())) {
-
-			return null;
-		}
-
-		ServiceAccountCredentials serviceAccountCredentials =
-			ServiceAccountCredentials.fromStream(
-				new FileInputStream(
-					patcherConfiguration.patcherPubsubCredentialFilePath()));
+		GoogleCredentials googleCredentials =
+			GoogleCredentials.getApplicationDefault();
 
 		SubscriberStubSettings subscriberStubSettings =
 			SubscriberStubSettings.newBuilder(
 			).setCredentialsProvider(
-				FixedCredentialsProvider.create(serviceAccountCredentials)
+				FixedCredentialsProvider.create(googleCredentials)
 			).setTransportChannelProvider(
 				SubscriberStubSettings.defaultGrpcTransportProviderBuilder(
 				).setMaxInboundMessageSize(

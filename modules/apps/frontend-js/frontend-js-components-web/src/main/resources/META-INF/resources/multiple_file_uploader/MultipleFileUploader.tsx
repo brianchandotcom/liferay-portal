@@ -160,9 +160,16 @@ export default function MultipleFileUploader({
 			});
 		},
 		onDropRejected: (rejectedFiled) => {
-			setDropErrorMessage(
-				FILE_ERRORS[rejectedFiled?.[0]?.errors?.[0]?.code] || ''
-			);
+			let errorMessage = '';
+
+			if (rejectedFiled?.[0]?.errors?.[0]?.code) {
+				const key = rejectedFiled[0].errors[0]
+					.code as keyof typeof FILE_ERRORS;
+
+				errorMessage = FILE_ERRORS[key];
+			}
+
+			setDropErrorMessage(errorMessage);
 		},
 	});
 

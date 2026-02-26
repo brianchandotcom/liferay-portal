@@ -59,9 +59,9 @@ public interface OAuthClientASLocalMetadataLocalService
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			long userId, String authorizationEndpoint, String issuer,
 			String jwksURI, boolean localWellKnownEnabled,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpoint,
-			String userInfoEndpoint)
+			String registrationEndpoint, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException;
 
 	/**
@@ -315,9 +315,9 @@ public interface OAuthClientASLocalMetadataLocalService
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
 			String issuer, String jwksURI, boolean localWellKnownEnabled,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpoint,
-			String userInfoEndpoint)
+			String registrationEndpoint, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException;
 
 	/**

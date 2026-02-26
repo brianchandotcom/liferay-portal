@@ -41,15 +41,16 @@ public class OAuthClientASLocalMetadataServiceUtil {
 
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			String authorizationEndpoint, String issuer, String jwksURI,
-			boolean localWellKnownEnabled, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpoint, String userInfoEndpoint)
+			boolean localWellKnownEnabled, String registrationEndpoint,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
 			authorizationEndpoint, issuer, jwksURI, localWellKnownEnabled,
-			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
-			tokenEndpoint, userInfoEndpoint);
+			registrationEndpoint, supportedGrantTypes, supportedScopes,
+			supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
@@ -153,16 +154,16 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
 			String issuer, String jwksURI, boolean localWellKnownEnabled,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpoint,
-			String userInfoEndpoint)
+			String registrationEndpoint, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException {
 
 		return getService().updateOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadataId, authorizationEndpoint, issuer,
-			jwksURI, localWellKnownEnabled, supportedGrantTypes,
-			supportedScopes, supportedSubjectTypes, tokenEndpoint,
-			userInfoEndpoint);
+			jwksURI, localWellKnownEnabled, registrationEndpoint,
+			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+			tokenEndpoint, userInfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadataService getService() {

@@ -47,15 +47,16 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			long userId, String authorizationEndpoint, String issuer,
 			String jwksURI, boolean localWellKnownEnabled,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpoint,
-			String userInfoEndpoint)
+			String registrationEndpoint, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
 			userId, authorizationEndpoint, issuer, jwksURI,
-			localWellKnownEnabled, supportedGrantTypes, supportedScopes,
-			supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
+			localWellKnownEnabled, registrationEndpoint, supportedGrantTypes,
+			supportedScopes, supportedSubjectTypes, tokenEndpoint,
+			userInfoEndpoint);
 	}
 
 	/**
@@ -387,16 +388,16 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
 			String issuer, String jwksURI, boolean localWellKnownEnabled,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpoint,
-			String userInfoEndpoint)
+			String registrationEndpoint, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException {
 
 		return getService().updateOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadataId, authorizationEndpoint, issuer,
-			jwksURI, localWellKnownEnabled, supportedGrantTypes,
-			supportedScopes, supportedSubjectTypes, tokenEndpoint,
-			userInfoEndpoint);
+			jwksURI, localWellKnownEnabled, registrationEndpoint,
+			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+			tokenEndpoint, userInfoEndpoint);
 	}
 
 	/**

@@ -47,16 +47,17 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 			addOAuthClientASLocalMetadata(
 				long userId, String authorizationEndpoint, String issuer,
 				String jwksURI, boolean localWellKnownEnabled,
-				String[] supportedGrantTypes, String[] supportedScopes,
-				String[] supportedSubjectTypes, String tokenEndpoint,
-				String userInfoEndpoint)
+				String registrationEndpoint, String[] supportedGrantTypes,
+				String[] supportedScopes, String[] supportedSubjectTypes,
+				String tokenEndpoint, String userInfoEndpoint)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataLocalService.
 			addOAuthClientASLocalMetadata(
 				userId, authorizationEndpoint, issuer, jwksURI,
-				localWellKnownEnabled, supportedGrantTypes, supportedScopes,
-				supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
+				localWellKnownEnabled, registrationEndpoint,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpoint, userInfoEndpoint);
 	}
 
 	/**
@@ -465,17 +466,17 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 			updateOAuthClientASLocalMetadata(
 				long oAuthClientASLocalMetadataId, String authorizationEndpoint,
 				String issuer, String jwksURI, boolean localWellKnownEnabled,
-				String[] supportedGrantTypes, String[] supportedScopes,
-				String[] supportedSubjectTypes, String tokenEndpoint,
-				String userInfoEndpoint)
+				String registrationEndpoint, String[] supportedGrantTypes,
+				String[] supportedScopes, String[] supportedSubjectTypes,
+				String tokenEndpoint, String userInfoEndpoint)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataLocalService.
 			updateOAuthClientASLocalMetadata(
 				oAuthClientASLocalMetadataId, authorizationEndpoint, issuer,
-				jwksURI, localWellKnownEnabled, supportedGrantTypes,
-				supportedScopes, supportedSubjectTypes, tokenEndpoint,
-				userInfoEndpoint);
+				jwksURI, localWellKnownEnabled, registrationEndpoint,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpoint, userInfoEndpoint);
 	}
 
 	/**

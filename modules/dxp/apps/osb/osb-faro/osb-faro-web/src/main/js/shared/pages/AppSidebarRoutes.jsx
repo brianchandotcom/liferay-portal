@@ -79,6 +79,13 @@ const IndividualProfileRoutes = lazy(() =>
 		/* webpackChunkName: "IndividualProfileRoutes" */ '../../individual/profile/pages/ProfileRoutes'
 	)
 );
+
+const IndividualProfileRoutesCDP = lazy(() =>
+	import(
+		/* webpackChunkName: "IndividualProfileRoutesCDP" */ '../../individual/profile/pages/ProfileRoutesCDP'
+	)
+);
+
 const IndividualsDashboard = lazy(() =>
 	import(
 		/* webpackChunkName: "IndividualsDashboard" */ '../../individual/dashboard/pages'
@@ -164,7 +171,7 @@ const ROUTES = [
 		path: Routes.CONTACTS_ACCOUNT
 	},
 	{
-		data: IndividualProfileRoutes,
+		data: ENABLE_CDP ? IndividualProfileRoutesCDP : IndividualProfileRoutes,
 		exact: false,
 		path: Routes.CONTACTS_INDIVIDUAL
 	},

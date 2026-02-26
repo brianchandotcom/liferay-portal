@@ -20,7 +20,6 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",
 		"jakarta.portlet.display-name=Background Task",
-		"jakarta.portlet.init-param.view-template=/view.jsp",
 		"jakarta.portlet.name=" + BackgroundTaskPortletKeys.BACKGROUND_TASK,
 		"jakarta.portlet.resource-bundle=content.Language",
 		"jakarta.portlet.security-role-ref=administrator,power-user,user",

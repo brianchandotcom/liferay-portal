@@ -968,6 +968,21 @@ public class PreupgradeVerifyProperties extends PreupgradeVerifyProcess {
 			"restricted.variables", "com.liferay.portal.template.freemarker"
 		},
 
+		// Frontend
+
+		{
+			"global.object.disable.get.remote.methods", "disable-get-remote-methods",
+			"com.liferay.frontend.js.web"
+		},
+		{
+			"session.timeout.auto.extend", "auto-extend",
+			"com.liferay.frontend.js.web"
+		},
+		{
+			"session.timeout.auto.extend.offset", "auto-extend-offset",
+			"com.liferay.frontend.js.web"
+		},
+
 		// IFrame
 
 		{"iframe.auth", "auth", "com.liferay.iframe.web"},
@@ -1472,17 +1487,6 @@ public class PreupgradeVerifyProperties extends PreupgradeVerifyProcess {
 		{
 			"search.facet.configuration", "facet.configuration",
 			"com.liferay.search.web"
-		},
-
-		// Session
-
-		{
-			"session.timeout.auto.extend", "auto-extend",
-			"com.liferay.frontend.js.web"
-		},
-		{
-			"session.timeout.auto.extend.offset", "auto-extend-offset",
-			"com.liferay.frontend.js.web"
 		},
 
 		// Site Map

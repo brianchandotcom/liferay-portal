@@ -80,38 +80,48 @@ test('User is able to propagate pages separately on site templates', async ({
 
 	apiHelpers.data.push({id: siteId, type: 'site'});
 
-	let homePageData = await apiHelpers.headlessDelivery.getSitePage(
+	const homePageDataInitial = await apiHelpers.headlessDelivery.getSitePage(
+		homePageName,
+		siteId
+	);
+	const widgetPageDataInitial = await apiHelpers.headlessDelivery.getSitePage(
+		pageName,
+		siteId
+	);
+
+
+	await page.goto(
+		`/group/template-${layoutSetPrototype.layoutSetPrototypeId}${widgetPageDataInitial.friendlyUrlPath}`
+	);
+	await widgetPagePage.addPortlet('Web Content Display');
+
+	await page.goto(`/web/${siteName}${widgetPageDataInitial.friendlyUrlPath}`);
+
+	const widgetPageDataPhase1 = await apiHelpers.headlessDelivery.getSitePage(
+		pageName,
+		siteId
+	);
+	const homePageDataPhase1 = await apiHelpers.headlessDelivery.getSitePage(
 		homePageName,
 		siteId
 	);
 
-	let widgetPageData = await apiHelpers.headlessDelivery.getSitePage(
-		pageName,
-		siteId
-	);
-
-	const homePageModificationDateBefore = homePageData.dateModified;
-	const widgetPageModificationDateBefore = widgetPageData.dateModified;
-
-	await page.goto(
-		`/group/template-${layoutSetPrototype.layoutSetPrototypeId}${widgetPageData.friendlyUrlPath}`
-	);
-
-	await widgetPagePage.addPortlet('Web Content Display');
-
-	await page.goto(`/web/${siteName}${widgetPageData.friendlyUrlPath}`);
-
-	widgetPageData = await apiHelpers.headlessDelivery.getSitePage(
-		pageName,
-		siteId
-	);
-
-	const widgetPageModificationDateAfter = widgetPageData.dateModified;
+	expect
+		.soft(
+			Date.parse(widgetPageDataPhase1.dateModified),
+			'PHASE 1: Widget page should be updated'
+		)
+		.toBeGreaterThan(Date.parse(widgetPageDataInitial.dateModified));
+	expect
+		.soft(
+			homePageDataPhase1.dateModified,
+			'PHASE 1: Home page should remain unchanged'
+		)
+		.toBe(homePageDataInitial.dateModified);
 
 	await page.goto(
 		`/group/template-${layoutSetPrototype.layoutSetPrototypeId}`
 	);
-
 	await productMenuPage.goToPages();
 	await page.getByText(homePageName).click();
 	await pageEditorPage.addFragment('Basic Components', 'Button');
@@ -119,30 +129,27 @@ test('User is able to propagate pages separately on site templates', async ({
 	await applicationsMenuPage.goToSites();
 	await page.getByText(siteName).click();
 
-	await page.goto(
-		`/group/template-${layoutSetPrototype.layoutSetPrototypeId}${widgetPageData.friendlyUrlPath}`
+	const widgetPageDataPhase2 = await apiHelpers.headlessDelivery.getSitePage(
+		pageName,
+		siteId
 	);
-
-	homePageData = await apiHelpers.headlessDelivery.getSitePage(
+	const homePageDataPhase2 = await apiHelpers.headlessDelivery.getSitePage(
 		homePageName,
 		siteId
 	);
 
-	const homePageModificationDateAfter = homePageData.dateModified;
-
 	expect
 		.soft(
-			Date.parse(widgetPageModificationDateBefore),
-			'The widget page modification date should be updated after propagating changes from the site template'
+			widgetPageDataPhase2.dateModified,
+			'PHASE 2: Widget page should NOT change again'
 		)
-		.toBeLessThan(Date.parse(widgetPageModificationDateAfter));
-
+		.toBe(widgetPageDataPhase1.dateModified);
 	expect
 		.soft(
-			homePageModificationDateBefore,
-			'The home page modification date should remain unchanged, ensuring pages are propagated separately'
+			Date.parse(homePageDataPhase2.dateModified),
+			'PHASE 2: Home page should be updated'
 		)
-		.toBe(homePageModificationDateAfter);
+		.toBeGreaterThan(Date.parse(homePageDataPhase1.dateModified));
 });
 
 test(

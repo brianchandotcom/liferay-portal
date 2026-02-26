@@ -6,6 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {openProductMenu} from '../../utils/productMenu';
 
 type Categories = 'Applications' | 'CMS' | 'Commerce' | 'Control Panel';
 
@@ -28,30 +29,6 @@ export class GlobalMenuPage {
 			.and(page.locator('.global-menu .sites-list'));
 	}
 
-	async closeProductMenu(name: string) {
-		const productMenu = this.page.getByLabel(`${name} Menu`, {exact: true});
-
-		const isClosed = await productMenu.evaluate(
-			(element) => !element.classList.contains('c-slideout-show')
-		);
-
-		if (!isClosed) {
-			const button = this.page.getByTestId('sideNavigationToggler');
-
-			await expect(button).toHaveAttribute('aria-expanded', 'true');
-
-			await expect(async () => {
-				await button.click();
-
-				await expect(productMenu).not.toHaveClass(/c-slideout-show/, {
-					timeout: 2000,
-				});
-
-				await expect(button).toHaveAttribute('aria-expanded', 'false');
-			}).toPass();
-		}
-	}
-
 	async goTo(categoryName: Categories) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -66,7 +43,7 @@ export class GlobalMenuPage {
 		await expect(menu).toBeAttached();
 
 		if (!(await menu.isVisible())) {
-			this.openProductMenu(categoryName);
+			openProductMenu(this.page);
 		}
 	}
 
@@ -91,29 +68,5 @@ export class GlobalMenuPage {
 			target: this.categoriesList,
 			trigger: this.globalMenuButton,
 		});
-	}
-
-	async openProductMenu(name: string) {
-		const menu = this.page.getByLabel(`${name} Menu`, {exact: true});
-
-		const isOpen = await menu.evaluate((element) =>
-			element.classList.contains('c-slideout-show')
-		);
-
-		if (!isOpen) {
-			const button = this.page.getByTestId('sideNavigationToggler');
-
-			await expect(button).toHaveAttribute('aria-expanded', 'false');
-
-			await expect(async () => {
-				await button.click();
-
-				await expect(menu).toHaveClass(/c-slideout-show/, {
-					timeout: 2000,
-				});
-
-				await expect(button).toHaveAttribute('aria-expanded', 'true');
-			}).toPass();
-		}
 	}
 }

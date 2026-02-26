@@ -6,37 +6,52 @@
 import {Page, expect} from '@playwright/test';
 
 export async function openProductMenu(page: Page) {
-	const productMenu = page.getByLabel('Product Menu', {exact: true});
+	const productMenu = page
+		.getByLabel('Product Menu', {exact: true})
+		.or(page.getByTestId('sideNavigation'));
 
-	const isOpen = await productMenu.evaluate((element) =>
-		element.classList.contains('open')
+	const isOpen = await productMenu.evaluate(
+		(element) =>
+			element.classList.contains('open') ||
+			element.classList.contains('c-slideout-show')
 	);
 
 	if (!isOpen) {
-		const button = page.getByLabel('Open Product Menu');
+		const button = page
+			.getByLabel('Open Product Menu')
+			.or(page.getByTestId('sideNavigationToggler'));
 
 		await expect(async () => {
 			await button.click();
 
-			await expect(productMenu).toHaveClass(/open/, {timeout: 2000});
+			await expect(productMenu).toHaveClass(/open|c-slideout-show/, {
+				timeout: 2000,
+			});
 		}).toPass();
 	}
 }
 
 export async function closeProductMenu(page: Page) {
-	const productMenu = page.getByLabel('Product Menu', {exact: true});
+	const productMenu = page
+		.getByLabel('Product Menu', {exact: true})
+		.or(page.getByTestId('sideNavigation'));
 
-	const isClosed = await productMenu.evaluate((element) =>
-		element.classList.contains('closed')
-	);
+	const isClosed = async () =>
+		await productMenu.evaluate(
+			(element) =>
+				element.classList.contains('closed') ||
+				!element.classList.contains('c-slideout-show')
+		);
 
-	if (!isClosed) {
-		const button = page.getByLabel('Close Product Menu');
+	if (!(await isClosed())) {
+		const button = page
+			.getByRole('tab', {name: 'Close Product Menu'})
+			.or(page.getByTestId('sideNavigationToggler'));
 
 		await expect(async () => {
 			await button.click();
 
-			await expect(productMenu).toHaveClass(/closed/, {timeout: 2000});
+			expect(await isClosed()).toBeTruthy();
 		}).toPass();
 	}
 }

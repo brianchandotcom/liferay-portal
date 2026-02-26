@@ -9,6 +9,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {closeProductMenu, openProductMenu} from '../../../utils/productMenu';
 import {waitForPageToBeLoaded} from '../../../utils/waitForPageToBeLoaded';
 
 const test = mergeTests(
@@ -90,11 +91,11 @@ test(
 		await test.step('Click the toggle button and check if navigation is open/hidden', async () => {
 			const menu = page.getByLabel('Applications Menu', {exact: true});
 
-			await globalMenuPage.openProductMenu('Applications');
+			await openProductMenu(page);
 
 			await expect(menu).toBeVisible();
 
-			await globalMenuPage.closeProductMenu('Applications');
+			await closeProductMenu(page);
 
 			await expect(menu).not.toBeVisible();
 		});

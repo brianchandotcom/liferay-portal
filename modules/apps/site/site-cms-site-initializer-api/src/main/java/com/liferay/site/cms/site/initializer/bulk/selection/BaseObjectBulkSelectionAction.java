@@ -8,8 +8,6 @@ package com.liferay.site.cms.site.initializer.bulk.selection;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.bulk.selection.constants.BulkSelectionActionStatusConstants;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -19,7 +17,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
 
@@ -49,8 +46,6 @@ public abstract class BaseObjectBulkSelectionAction
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		values.put("numberOfItems", bulkSelection.getSize());
-
 		String executionStatus = BulkSelectionActionStatusConstants.COMPLETED;
 		AtomicInteger numberOfFailedItems = new AtomicInteger(0);
 		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);
@@ -64,14 +59,8 @@ public abstract class BaseObjectBulkSelectionAction
 
 			values = objectEntry.getValues();
 
-			long objectDefinitionId = _getObjectDefinitionId(
-				objectEntry.getCompanyId());
-
 			bulkSelection.forEach(
 				object -> {
-					String status =
-						BulkSelectionActionStatusConstants.COMPLETED;
-
 					try {
 						doExecute(user, inputMap, object);
 
@@ -83,26 +72,6 @@ public abstract class BaseObjectBulkSelectionAction
 						}
 
 						numberOfFailedItems.getAndIncrement();
-						status = BulkSelectionActionStatusConstants.FAILED;
-					}
-					finally {
-						objectEntryLocalService.addObjectEntry(
-							0, user.getUserId(), objectDefinitionId,
-							ObjectEntryFolderConstants.
-								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-							null,
-							HashMapBuilder.<String, Serializable>put(
-								"bulkActionTaskId", bulkActionTaskId
-							).put(
-								"executionStatus", status
-							).put(
-								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
-									"askId",
-								bulkActionTaskId
-							).put(
-								"type", "ObjectEntryFolder"
-							).build(),
-							new ServiceContext());
 					}
 				});
 		}
@@ -143,15 +112,6 @@ public abstract class BaseObjectBulkSelectionAction
 
 	@Reference
 	protected ObjectEntryLocalService objectEntryLocalService;
-
-	private long _getObjectDefinitionId(long companyId) throws PortalException {
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BULK_ACTION_TASK_ITEM", companyId);
-
-		return objectDefinition.getObjectDefinitionId();
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseObjectBulkSelectionAction.class);

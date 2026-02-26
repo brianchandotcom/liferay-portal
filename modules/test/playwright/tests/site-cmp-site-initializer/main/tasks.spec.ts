@@ -72,20 +72,6 @@ test.afterEach(async ({apiHelpers}) => {
 		);
 	}
 
-	const bulkActionTaskItems = 'cms/bulk-action-task-items';
-
-	const bulkTaskItems =
-		await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-			bulkActionTaskItems
-		);
-
-	for (const bulkTaskItem of bulkTaskItems.items) {
-		await apiHelpers.objectEntry.deleteObjectEntry(
-			bulkActionTaskItems,
-			bulkTaskItem.id
-		);
-	}
-
 	const bulkActionTasks = 'cms/bulk-action-tasks';
 
 	const bulkTasks =

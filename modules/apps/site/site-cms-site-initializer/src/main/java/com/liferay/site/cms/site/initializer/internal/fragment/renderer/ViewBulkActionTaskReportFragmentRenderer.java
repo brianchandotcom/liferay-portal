@@ -6,15 +6,12 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewBulkActionTaskReportDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon

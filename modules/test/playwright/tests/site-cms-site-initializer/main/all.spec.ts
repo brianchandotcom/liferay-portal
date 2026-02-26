@@ -897,7 +897,6 @@ test(
 	async ({apiHelpers, assetsPage, page}) => {
 		const basicWebContent = 'cms/basic-web-contents';
 		const bulkActionTasks = 'cms/bulk-action-tasks';
-		const bulkActionTasksItems = 'cms/bulk-action-task-items';
 		const spaceName = 'Default';
 
 		const createdFiles = [];
@@ -1197,22 +1196,11 @@ test(
 			});
 		}
 		finally {
-			const tasksItems =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasksItems
-				);
-
 			tasks =
 				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 					bulkActionTasks
 				);
 
-			for (let i = 0; i < tasksItems.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasksItems,
-					tasksItems.items[i].id
-				);
-			}
 			for (let i = 0; i < tasks.totalCount; i++) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
 					bulkActionTasks,
@@ -1380,7 +1368,6 @@ test(
 
 		const basicWebContent = 'cms/basic-web-contents';
 		const bulkActionTasks = 'cms/bulk-action-tasks';
-		const bulkActionTasksItems = 'cms/bulk-action-task-items';
 
 		const createdFiles = [];
 
@@ -1510,22 +1497,11 @@ test(
 			});
 		}
 		finally {
-			const tasksItems =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasksItems
-				);
-
 			tasks =
 				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 					bulkActionTasks
 				);
 
-			for (let i = 0; i < tasksItems.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasksItems,
-					tasksItems.items[i].id
-				);
-			}
 			for (let i = 0; i < tasks.totalCount; i++) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
 					bulkActionTasks,
@@ -1594,7 +1570,6 @@ test(
 
 		const basicWebContent = 'cms/basic-web-contents';
 		const bulkActionTasks = 'cms/bulk-action-tasks';
-		const bulkActionTasksItems = 'cms/bulk-action-task-items';
 
 		const createdFiles = [];
 
@@ -1920,11 +1895,6 @@ test(
 			});
 		}
 		finally {
-			const tasksItems =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasksItems
-				);
-
 			tasks =
 				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 					bulkActionTasks
@@ -1932,12 +1902,6 @@ test(
 
 			await apiHelpers.objectFolder.deleteObjectEntryFolder(folder.id);
 
-			for (let i = 0; i < tasksItems.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasksItems,
-					tasksItems.items[i].id
-				);
-			}
 			for (let i = 0; i < tasks.totalCount; i++) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
 					bulkActionTasks,
@@ -1974,7 +1938,6 @@ test(
 
 		const basicWebContent = 'cms/basic-web-contents';
 		const bulkActionTasks = 'cms/bulk-action-tasks';
-		const bulkActionTasksItems = 'cms/bulk-action-task-items';
 
 		const createdFiles = [];
 
@@ -2321,11 +2284,6 @@ test(
 			});
 		}
 		finally {
-			const tasksItems =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasksItems
-				);
-
 			tasks =
 				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 					bulkActionTasks
@@ -2333,12 +2291,6 @@ test(
 
 			await apiHelpers.objectFolder.deleteObjectEntryFolder(folder.id);
 
-			for (let i = 0; i < tasksItems.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasksItems,
-					tasksItems.items[i].id
-				);
-			}
 			for (let i = 0; i < tasks.totalCount; i++) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
 					bulkActionTasks,

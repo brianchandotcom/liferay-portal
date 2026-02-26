@@ -307,14 +307,6 @@ public class SettingsTestUtil {
 		}
 	}
 
-	public static IconImageURLReference getIconImageURLReference() {
-		return new IconImageURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-			}
-		};
-	}
-
 	public static ItemExternalReference getMasterPageItemExternalReference(
 			boolean optionalMasterPageReference, ServiceContext serviceContext)
 		throws Exception {
@@ -562,8 +554,11 @@ public class SettingsTestUtil {
 					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
 		}
 
-		settings.setIconImageURLReference(
-			SettingsTestUtil::getIconImageURLReference);
+		settings.setIconImageURLReference(() -> new IconImageURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+			}
+		});
 	}
 
 	private static void _assertClientExtension(

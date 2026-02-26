@@ -2028,7 +2028,7 @@
 			"properties": {
 				"cachingStrategy": {
 					"default": "do-not-use-hashes",
-					"description": "Set the balance between caching span and size of the import maps (which affect the size of the page's HTML). \"Do not use hashes\" makes import maps smaller at the expense of a time limited caching span. \"Use one hash per file\" makes the import maps bigger but files can be cached infinitely.",
+					"description": "Set the balance between caching span and size of the import maps (which affect the size of the page's HTML). If you decide not to use hashes, the import maps will be smaller but the caching span will be limited. On the other hand, if you use one hash per file, the import maps will be bigger but files will be infinitely cacheable.",
 					"enum": [
 						"do-not-use-hashes",
 						"use-one-hash-per-file"
@@ -2983,10 +2983,6 @@
 					"type": "boolean"
 				},
 				"patcherLiferayPortalRepository": {
-					"default": "",
-					"type": "string"
-				},
-				"patcherPubsubCredentialFilePath": {
 					"default": "",
 					"type": "string"
 				},

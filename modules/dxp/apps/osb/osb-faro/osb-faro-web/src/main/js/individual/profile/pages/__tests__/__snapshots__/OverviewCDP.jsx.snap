@@ -1,0 +1,176 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndividualOverview should render 1`] = `
+<div>
+  <div
+    class="overview-column-main"
+  >
+    <div
+      class="mb-3"
+    >
+      <span
+        class="mr-2"
+      >
+        <span
+          class="text-4 text-secondary"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-sites"
+            role="presentation"
+          >
+            <use
+              href="#sites"
+            />
+          </svg>
+        </span>
+      </span>
+      <span
+        class="text-4 text-secondary font-weight-semi-bold"
+      >
+        CONTEXTUAL INFORMATION
+      </span>
+    </div>
+    <div
+      class="card card-root"
+    >
+      <div
+        class="card-body"
+      >
+        <div
+          class="no-results-root flex-grow-1 no-results-primary"
+        >
+          <div
+            class="no-results-content"
+          >
+            <div
+              class="h4 no-results-title"
+            >
+              No Site Data Synced
+            </div>
+            <div
+              class="no-results-description"
+            >
+              Connect a data source containing site data.
+              <a
+                class="d-block mb-3 text-decoration-underline"
+                href="https://learn.liferay.com/w/dxp/personalization/analytics-cloud/workspace-data/managing-data-sources"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                Learn more about data sources.
+                <span
+                  class="inline-item inline-item-after"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut"
+                    font-size="8"
+                    role="presentation"
+                  >
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="sr-only"
+                >
+                  (Opens a new window)
+                </span>
+              </a>
+            </div>
+            <a
+              class="button-root mt-1 btn btn-primary"
+              href="/workspace/23/settings/data-source"
+            >
+              Connect Data Source
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mb-3"
+    >
+      <span
+        class="mr-2"
+      >
+        <span
+          class="text-4 text-secondary"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-analytics"
+            role="presentation"
+          >
+            <use
+              href="#analytics"
+            />
+          </svg>
+        </span>
+      </span>
+      <span
+        class="text-4 text-secondary font-weight-semi-bold"
+      >
+        INTERACTION HISTORY
+      </span>
+    </div>
+    <div
+      class="card card-root page-display"
+    >
+      <div
+        class="card-body"
+      >
+        <div
+          class="no-results-root flex-grow-1 no-results-primary"
+        >
+          <div
+            class="no-results-content"
+          >
+            <div
+              class="h4 no-results-title"
+            >
+              No Site Data Synced
+            </div>
+            <div
+              class="no-results-description"
+            >
+              Connect a data source containing site data.
+              <a
+                class="d-block mb-3 text-decoration-underline"
+                href="https://learn.liferay.com/w/dxp/personalization/analytics-cloud/workspace-data/managing-data-sources"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                Learn more about data sources.
+                <span
+                  class="inline-item inline-item-after"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut"
+                    font-size="8"
+                    role="presentation"
+                  >
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="sr-only"
+                >
+                  (Opens a new window)
+                </span>
+              </a>
+            </div>
+            <a
+              class="button-root mt-1 btn btn-primary"
+              href="/workspace/23/settings/data-source"
+            >
+              Connect Data Source
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

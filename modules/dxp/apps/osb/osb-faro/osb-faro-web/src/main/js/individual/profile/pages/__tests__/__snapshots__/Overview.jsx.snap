@@ -9,31 +9,6 @@ exports[`IndividualOverview should render 1`] = `
       class="overview-column-main"
     >
       <div
-        class="mb-3"
-      >
-        <span
-          class="mr-2"
-        >
-          <span
-            class="text-4 text-secondary"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-analytics"
-              role="presentation"
-            >
-              <use
-                href="#analytics"
-              />
-            </svg>
-          </span>
-        </span>
-        <span
-          class="text-4 text-secondary font-weight-semi-bold"
-        >
-          INTERACTION HISTORY
-        </span>
-      </div>
-      <div
         class="card card-root individual-profile-card-root page-display"
       >
         <div

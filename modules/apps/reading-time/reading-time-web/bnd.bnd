@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Reading Time Web
 Bundle-SymbolicName: com.liferay.reading.time.web
 Bundle-Version: 4.0.22
+Web-ServiceTracking: false
 -dsannotations-options: inherit

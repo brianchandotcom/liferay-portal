@@ -8,3 +8,4 @@ Export-Package:\
 	com.liferay.antivirus.async.store.jmx,\
 	com.liferay.antivirus.async.store.retry,\
 	com.liferay.antivirus.async.store.util
+Web-ServiceTracking: false

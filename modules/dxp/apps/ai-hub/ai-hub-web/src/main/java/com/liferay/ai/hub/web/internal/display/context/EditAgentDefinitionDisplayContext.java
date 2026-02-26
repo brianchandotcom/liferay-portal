@@ -61,7 +61,14 @@ public class EditAgentDefinitionDisplayContext {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		return HashMapBuilder.<String, Object>put(
-			"backURL", portalURL + "/web/ai-hub/agents"
+			"backURL",
+			() -> {
+				Group group = _groupLocalService.getGroup(
+					_themeDisplay.getScopeGroupId());
+
+				return StringBundler.concat(
+					portalURL, "/web", group.getFriendlyURL(), "/agents");
+			}
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")

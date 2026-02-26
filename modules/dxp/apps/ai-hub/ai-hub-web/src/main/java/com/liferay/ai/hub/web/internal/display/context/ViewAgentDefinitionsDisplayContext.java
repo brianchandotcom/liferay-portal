@@ -8,9 +8,12 @@ package com.liferay.ai.hub.web.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -26,8 +29,10 @@ import java.util.List;
 public class ViewAgentDefinitionsDisplayContext {
 
 	public ViewAgentDefinitionsDisplayContext(
+		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest) {
 
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -83,12 +88,15 @@ public class ViewAgentDefinitionsDisplayContext {
 	private String _getAgentDefinitionURL() throws Exception {
 		Company company = _themeDisplay.getCompany();
 
-		String portalURL = company.getPortalURL(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		Group group = _groupLocalService.getGroup(
+			_themeDisplay.getScopeGroupId());
 
-		return portalURL + "/web/ai-hub/agent";
+		return StringBundler.concat(
+			company.getPortalURL(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			"/web", group.getFriendlyURL(), "/agent");
 	}
 
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 

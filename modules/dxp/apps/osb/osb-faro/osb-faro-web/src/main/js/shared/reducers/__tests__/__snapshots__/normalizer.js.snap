@@ -48,6 +48,7 @@ Immutable.Map {
       "data": Immutable.Record {
         "accountName": null,
         "activitiesCount": 0,
+        "context": Immutable.Map {},
         "dateCreated": null,
         "demographics": Immutable.Map {},
         "firstActivityDate": null,

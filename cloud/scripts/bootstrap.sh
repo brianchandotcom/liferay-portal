@@ -4,6 +4,31 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+function main {
+	if [[ "${BASH_SOURCE[0]}" != "${0}" ]]
+	then
+		return
+	fi
+
+	_check_utils curl jq tar
+
+	local config_file=""
+
+	config_file=$(_get_config_file "${1:-}")
+
+	local provider=""
+
+	provider=$(_get_provider "${config_file}")
+
+	local extracted_dir=""
+
+	extracted_dir=$(_download_and_extract_files "${provider}")
+
+	trap "rm --force --recursive \"${extracted_dir}\"" EXIT
+
+	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${@}"
+}
+
 function _check_utils {
 	for util in "${@}"
 	do
@@ -114,31 +139,6 @@ function _get_provider {
 	fi
 
 	echo "${provider}"
-}
-
-function main {
-	if [[ "${BASH_SOURCE[0]}" != "${0}" ]]
-	then
-		return
-	fi
-
-	_check_utils curl jq tar
-
-	local config_file=""
-
-	config_file=$(_get_config_file "${1:-}")
-
-	local provider=""
-
-	provider=$(_get_provider "${config_file}")
-
-	local extracted_dir=""
-
-	extracted_dir=$(_download_and_extract_files "${provider}")
-
-	trap "rm --force --recursive \"${extracted_dir}\"" EXIT
-
-	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${@}"
 }
 
 main "${@}"

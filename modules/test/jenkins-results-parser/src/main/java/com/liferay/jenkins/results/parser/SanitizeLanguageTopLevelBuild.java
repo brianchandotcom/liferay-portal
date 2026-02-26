@@ -110,7 +110,8 @@ public class SanitizeLanguageTopLevelBuild
 	}
 
 	private String _getUpstreamBranchSHA() {
-		String upstreamBranchSHA = getParameterValue("GITHUB_UPSTREAM_BRANCH_SHA");
+		String upstreamBranchSHA = getParameterValue(
+			"GITHUB_UPSTREAM_BRANCH_SHA");
 
 		if (JenkinsResultsParserUtil.isSHA(upstreamBranchSHA)) {
 			return upstreamBranchSHA;

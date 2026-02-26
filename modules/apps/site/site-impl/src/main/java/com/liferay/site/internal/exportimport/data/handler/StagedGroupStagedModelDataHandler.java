@@ -664,8 +664,7 @@ public class StagedGroupStagedModelDataHandler
 
 				if (importPortletControlsMap.get(
 						PortletDataHandlerKeys.PORTLET_DATA) ||
-					_isPortletImportable(
-						portletDataContext.getCompanyId(), portletId)) {
+					_isHidden(portletDataContext.getCompanyId(), portletId)) {
 
 					_portletImportController.importPortletData(
 						portletDataContext, portletDataElement);
@@ -738,7 +737,7 @@ public class StagedGroupStagedModelDataHandler
 		}
 	}
 
-	private boolean _isPortletImportable(long companyId, String portletId) {
+	private boolean _isHidden(long companyId, String portletId) {
 		Portlet portlet = _portletLocalService.getPortletById(
 			companyId, portletId);
 

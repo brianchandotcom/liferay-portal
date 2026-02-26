@@ -42,15 +42,16 @@ public class OAuthClientASLocalMetadataServiceWrapper
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			addOAuthClientASLocalMetadata(
 				String authorizationEndpoint, String issuer, String jwksURI,
-				boolean localWellKnownEnabled, String[] supportedGrantTypes,
-				String[] supportedScopes, String[] supportedSubjectTypes,
-				String tokenEndpoint, String userInfoEndpoint)
+				boolean localWellKnownEnabled, String registrationEndpoint,
+				String[] supportedGrantTypes, String[] supportedScopes,
+				String[] supportedSubjectTypes, String tokenEndpoint,
+				String userInfoEndpoint)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataService.addOAuthClientASLocalMetadata(
 			authorizationEndpoint, issuer, jwksURI, localWellKnownEnabled,
-			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
-			tokenEndpoint, userInfoEndpoint);
+			registrationEndpoint, supportedGrantTypes, supportedScopes,
+			supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
 	}
 
 	@Override
@@ -184,17 +185,17 @@ public class OAuthClientASLocalMetadataServiceWrapper
 			updateOAuthClientASLocalMetadata(
 				long oAuthClientASLocalMetadataId, String authorizationEndpoint,
 				String issuer, String jwksURI, boolean localWellKnownEnabled,
-				String[] supportedGrantTypes, String[] supportedScopes,
-				String[] supportedSubjectTypes, String tokenEndpoint,
-				String userInfoEndpoint)
+				String registrationEndpoint, String[] supportedGrantTypes,
+				String[] supportedScopes, String[] supportedSubjectTypes,
+				String tokenEndpoint, String userInfoEndpoint)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataService.
 			updateOAuthClientASLocalMetadata(
 				oAuthClientASLocalMetadataId, authorizationEndpoint, issuer,
-				jwksURI, localWellKnownEnabled, supportedGrantTypes,
-				supportedScopes, supportedSubjectTypes, tokenEndpoint,
-				userInfoEndpoint);
+				jwksURI, localWellKnownEnabled, registrationEndpoint,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpoint, userInfoEndpoint);
 	}
 
 	@Override

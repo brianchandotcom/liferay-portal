@@ -91,9 +91,10 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				addOAuthClientASLocalMetadata(
 					HttpPrincipal httpPrincipal, String authorizationEndpoint,
 					String issuer, String jwksURI,
-					boolean localWellKnownEnabled, String[] supportedGrantTypes,
-					String[] supportedScopes, String[] supportedSubjectTypes,
-					String tokenEndpoint, String userInfoEndpoint)
+					boolean localWellKnownEnabled, String registrationEndpoint,
+					String[] supportedGrantTypes, String[] supportedScopes,
+					String[] supportedSubjectTypes, String tokenEndpoint,
+					String userInfoEndpoint)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -104,8 +105,9 @@ public class OAuthClientASLocalMetadataServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, authorizationEndpoint, issuer, jwksURI,
-				localWellKnownEnabled, supportedGrantTypes, supportedScopes,
-				supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
+				localWellKnownEnabled, registrationEndpoint,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpoint, userInfoEndpoint);
 
 			Object returnObj = null;
 
@@ -651,9 +653,10 @@ public class OAuthClientASLocalMetadataServiceHttp {
 					HttpPrincipal httpPrincipal,
 					long oAuthClientASLocalMetadataId,
 					String authorizationEndpoint, String issuer, String jwksURI,
-					boolean localWellKnownEnabled, String[] supportedGrantTypes,
-					String[] supportedScopes, String[] supportedSubjectTypes,
-					String tokenEndpoint, String userInfoEndpoint)
+					boolean localWellKnownEnabled, String registrationEndpoint,
+					String[] supportedGrantTypes, String[] supportedScopes,
+					String[] supportedSubjectTypes, String tokenEndpoint,
+					String userInfoEndpoint)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -664,9 +667,9 @@ public class OAuthClientASLocalMetadataServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, oAuthClientASLocalMetadataId, authorizationEndpoint,
-				issuer, jwksURI, localWellKnownEnabled, supportedGrantTypes,
-				supportedScopes, supportedSubjectTypes, tokenEndpoint,
-				userInfoEndpoint);
+				issuer, jwksURI, localWellKnownEnabled, registrationEndpoint,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpoint, userInfoEndpoint);
 
 			Object returnObj = null;
 
@@ -707,8 +710,8 @@ public class OAuthClientASLocalMetadataServiceHttp {
 	private static final Class<?>[]
 		_addOAuthClientASLocalMetadataParameterTypes1 = new Class[] {
 			String.class, String.class, String.class, boolean.class,
-			String[].class, String[].class, String[].class, String.class,
-			String.class
+			String.class, String[].class, String[].class, String[].class,
+			String.class, String.class
 		};
 	private static final Class<?>[]
 		_deleteOAuthClientASLocalMetadataParameterTypes2 = new Class[] {
@@ -762,8 +765,8 @@ public class OAuthClientASLocalMetadataServiceHttp {
 	private static final Class<?>[]
 		_updateOAuthClientASLocalMetadataParameterTypes14 = new Class[] {
 			long.class, String.class, String.class, String.class, boolean.class,
-			String[].class, String[].class, String[].class, String.class,
-			String.class
+			String.class, String[].class, String[].class, String[].class,
+			String.class, String.class
 		};
 
 }

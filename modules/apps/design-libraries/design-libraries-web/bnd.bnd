@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Design Libraries Web
+Bundle-SymbolicName: com.liferay.design.libraries.web
+Bundle-Version: 2.0.138
+Web-ContextPath: /design-libraries-web
+-dsannotations-options: inherit

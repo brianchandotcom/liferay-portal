@@ -62,6 +62,8 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 				}
 			});
 
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
 		DBInspector dbInspector = new DBInspector(connection);
 
 		Map<String, String> tableNames = new TreeMap<>(
@@ -83,9 +85,12 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 			DataCleanupLoggingUtil.logRename(
 				_log, tableName, expectedTableName, "it was incorrectly cased");
 
-			alterTableName(tableName, expectedTableName + "_temp");
+			String tempTableName = _getTempName(
+				databaseMetaData.getMaxTableNameLength(), expectedTableName);
 
-			alterTableName(expectedTableName + "_temp", expectedTableName);
+			alterTableName(tableName, tempTableName);
+
+			alterTableName(tempTableName, expectedTableName);
 		}
 
 		Map<String, List<String>> columnDefinitionsMap =
@@ -101,7 +106,6 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 				connection));
 
 		Map<String, Map<String, String>> columnsMap = new TreeMap<>();
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 		for (String tableName : expectedTableNames) {
 			try (ResultSet resultSet = databaseMetaData.getColumns(
@@ -131,13 +135,29 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 
 			_validateColumnNamesCasing(
 				dbInspector, columnDefinitions, columnNames,
+				databaseMetaData.getMaxColumnNameLength(),
 				dbInspector.normalizeName(tableName));
 		}
 	}
 
+	private String _getTempName(int maxNameLength, String name) {
+		if ((maxNameLength == 0) ||
+			((name.length() + _TEMP_SUFFIX.length()) <= maxNameLength)) {
+
+			return name.concat(_TEMP_SUFFIX);
+		}
+
+		return name.substring(
+			0, maxNameLength - _TEMP_SUFFIX.length()
+		).concat(
+			_TEMP_SUFFIX
+		);
+	}
+
 	private void _validateColumnNamesCasing(
 			DBInspector dbInspector, List<String> columnDefinitions,
-			Map<String, String> columnNames, String tableName)
+			Map<String, String> columnNames, int maxColumnNameLength,
+			String tableName)
 		throws Exception {
 
 		if ((columnNames == null) || columnNames.isEmpty()) {
@@ -171,17 +191,21 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 			String columnDataType =
 				(index != -1) ? columnDefinition.substring(index + 1) : "";
 
+			String tempColumnName = _getTempName(
+				maxColumnNameLength, expectedColumnName);
+
 			String tempColumnDefinition =
-				expectedColumnName + "_temp " + columnDataType;
+				tempColumnName + StringPool.SPACE + columnDataType;
 
 			db.alterColumnName(
 				connection, tableName, columnName, tempColumnDefinition);
 
 			db.alterColumnName(
-				connection, tableName, expectedColumnName + "_temp",
-				columnDefinition);
+				connection, tableName, tempColumnName, columnDefinition);
 		}
 	}
+
+	private static final String _TEMP_SUFFIX = "_temp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess.class);

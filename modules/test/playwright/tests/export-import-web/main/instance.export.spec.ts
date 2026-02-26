@@ -703,7 +703,7 @@ test('Can see deletion counts at instance level', async ({
 		String(objectEntry1.id)
 	);
 
-	await companyExportImportPage.exportImportPage.refreshCountsButton.click();
+	await companyExportImportPage.exportImportPage.refreshCountsLink.click();
 
 	await expect(
 		companyExportImportPage.page.getByText(
@@ -716,7 +716,7 @@ test('Can see deletion counts at instance level', async ({
 		String(objectEntry2.id)
 	);
 
-	await companyExportImportPage.exportImportPage.refreshCountsButton.click();
+	await companyExportImportPage.exportImportPage.refreshCountsLink.click();
 
 	await expect(
 		companyExportImportPage.page.getByText(

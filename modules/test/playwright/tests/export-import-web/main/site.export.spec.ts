@@ -203,7 +203,7 @@ test('Can see deletion counts at site level', async ({
 		String(objectEntry1.id)
 	);
 
-	await exportImportPage.refreshCountsButton.click();
+	await exportImportPage.refreshCountsLink.click();
 
 	await expect(
 		exportImportPage.page.getByText(
@@ -216,7 +216,7 @@ test('Can see deletion counts at site level', async ({
 		String(objectEntry2.id)
 	);
 
-	await exportImportPage.refreshCountsButton.click();
+	await exportImportPage.refreshCountsLink.click();
 
 	await expect(
 		exportImportPage.page.getByText(`${objectDefinition.name} 2 Deletions`)

@@ -5,6 +5,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.JSONObject;
 
 /**
@@ -93,6 +96,7 @@ public class PortalTopLevelBuildData
 
 		super(runID, jobName, buildURL);
 
+		setPortalBranchSHA(_getPortalBranchSHA());
 		setPortalGitHubURL(_getPortalGitHubURL());
 		setPortalUpstreamBranchName(_getPortalUpstreamBranchName());
 
@@ -104,6 +108,13 @@ public class PortalTopLevelBuildData
 		return _TYPE;
 	}
 
+	private String _getPortalBranchSHA() {
+		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
+			_getPortalGitHubURL());
+
+		return remoteGitRef.getSHA();
+	}
+
 	private String _getPortalGitHubURL() {
 		String portalGitHubURL = optString("portal_github_url");
 
@@ -111,7 +122,24 @@ public class PortalTopLevelBuildData
 			return portalGitHubURL;
 		}
 
-		return URL_PORTAL_GITHUB_BRANCH_DEFAULT;
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://github.com/liferay/");
+		sb.append(_getPortalRepositoryName());
+		sb.append("/tree/");
+		sb.append(_getPortalUpstreamBranchName());
+
+		return sb.toString();
+	}
+
+	private String _getPortalRepositoryName() {
+		String portalUpstreamBranchName = _getPortalUpstreamBranchName();
+
+		if (!portalUpstreamBranchName.equals("master")) {
+			return "liferay-portal-ee";
+		}
+
+		return "liferay-portal";
 	}
 
 	private String _getPortalUpstreamBranchName() {
@@ -122,6 +150,12 @@ public class PortalTopLevelBuildData
 			return portalUpstreamBranchName;
 		}
 
+		Matcher matcher = _jobNamePattern.matcher(getJobName());
+
+		if (matcher.find()) {
+			return matcher.group("upstreamBranchName");
+		}
+
 		return NAME_PORTAL_UPSTREAM_BRANCH_DEFAULT;
 	}
 
@@ -130,5 +164,8 @@ public class PortalTopLevelBuildData
 	};
 
 	private static final String _TYPE = "portal_top_level";
+
+	private static final Pattern _jobNamePattern = Pattern.compile(
+		"[^\\(]+\\((?<upstreamBranchName>[^\\)]+)\\)");
 
 }

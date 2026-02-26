@@ -41,7 +41,8 @@ public class BuildDataFactory {
 			return new PortalTestSuiteUpstreamControllerBuildData(
 				runID, jobName, buildURL);
 		}
-		else if (jobName.contains("portal") ||
+		else if (jobName.startsWith("archive-binaries-cache") ||
+				 jobName.contains("portal") ||
 				 jobName.contains("root-cause-analysis-tool") ||
 				 jobName.equals("test-poshi-release")) {
 

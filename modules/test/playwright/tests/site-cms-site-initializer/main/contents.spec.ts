@@ -249,6 +249,7 @@ test(
 		const applicationName = 'cms/basic-documents';
 		const fileName = `file_${getRandomString()}.png`;
 		const structureLabel = `StructureName${getRandomInt()}`;
+		const contentTitle = getRandomString();
 		let objectEntry;
 
 		await test.step('Create a new file', async () => {
@@ -293,8 +294,6 @@ test(
 
 			await contentsPage.createContent(structureLabel);
 
-			const contentTitle = getRandomString();
-
 			await contentsPage.fillData([
 				{label: 'Title', value: contentTitle},
 			]);
@@ -319,7 +318,21 @@ test(
 
 			await page.getByLabel(contentTitle).click();
 
+			await expect(page.getByText(`Edit ${contentTitle}`)).toBeVisible();
+
 			await expect(page.getByText(fileName)).toBeVisible();
+		});
+
+		await test.step('Check preselected file', async () => {
+			await page.getByRole('button', {name: 'Select File'}).click();
+
+			await expect(
+				page.getByTestId('visualization-mode-cards')
+			).toBeVisible();
+
+			await expect(page.getByText(`${fileName} Selected`)).toBeVisible();
+
+			await expect(page.getByLabel(`Select ${fileName}`)).toBeChecked();
 		});
 
 		await test.step('Delete file', async () => {

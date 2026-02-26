@@ -18,7 +18,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIconClientExtension;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIconItemExternalReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.IconImageURLReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
@@ -455,12 +454,6 @@ public class SettingsTestUtil {
 						ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
 				});
 		}
-
-		settings.setIconImageURLReference(() -> new IconImageURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-			}
-		});
 
 		if (Validator.isNotNull(settings.getJavascript())) {
 			settings.setJavascript(() -> null);

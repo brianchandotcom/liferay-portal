@@ -10,11 +10,13 @@ import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
@@ -32,8 +34,10 @@ public class CPTaxCategoryUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
 	public void testUpdateCPTaxCategoryExternalReferenceCode()
@@ -92,6 +96,10 @@ public class CPTaxCategoryUpgradeProcessTest {
 
 		Assert.assertEquals(
 			externalReferenceCode2, cpTaxCategory3.getExternalReferenceCode());
+
+		cpTaxCategory2.setCompanyId(serviceContext.getCompanyId());
+
+		_cpTaxCategoryLocalService.updateCPTaxCategory(cpTaxCategory2);
 	}
 
 	private void _runUpgrade() throws Exception {

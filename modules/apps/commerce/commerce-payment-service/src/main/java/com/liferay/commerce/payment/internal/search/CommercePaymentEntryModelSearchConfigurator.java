@@ -52,7 +52,6 @@ public class CommercePaymentEntryModelSearchConfigurator
 			IndexerWriterMode.UPDATE,
 			_commercePaymentEntryLocalService::
 				getIndexableActionableDynamicQuery);
-
 		_modelSummaryContributor =
 			new CommercePaymentEntryModelSummaryContributor();
 	}

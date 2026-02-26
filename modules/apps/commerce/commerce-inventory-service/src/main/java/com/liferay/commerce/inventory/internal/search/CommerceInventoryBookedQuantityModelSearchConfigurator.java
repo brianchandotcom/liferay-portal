@@ -52,7 +52,6 @@ public class CommerceInventoryBookedQuantityModelSearchConfigurator
 			IndexerWriterMode.UPDATE,
 			_commerceInventoryBookedQuantityLocalService::
 				getIndexableActionableDynamicQuery);
-
 		_modelSummaryContributor =
 			new CommerceInventoryBookedQuantityModelSummaryContributor();
 	}

@@ -65,7 +65,6 @@ public class DDMFormInstanceRecordModelSearchConfigurator
 				_ddmFormInstanceLocalService,
 				_ddmFormInstanceRecordLocalService,
 				_ddmFormInstanceRecordVersionLocalService);
-
 		_modelSummaryContributor =
 			new DDMFormInstanceRecordModelSummaryContributor(
 				_ddmFormInstanceLocalService, _language);

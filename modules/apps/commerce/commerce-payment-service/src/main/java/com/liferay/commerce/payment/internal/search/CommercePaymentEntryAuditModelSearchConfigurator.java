@@ -47,7 +47,6 @@ public class CommercePaymentEntryAuditModelSearchConfigurator
 			IndexerWriterMode.UPDATE,
 			_commercePaymentEntryAuditLocalService::
 				getIndexableActionableDynamicQuery);
-
 		_modelSummaryContributor =
 			new CommercePaymentEntryAuditModelSummaryContributor();
 	}

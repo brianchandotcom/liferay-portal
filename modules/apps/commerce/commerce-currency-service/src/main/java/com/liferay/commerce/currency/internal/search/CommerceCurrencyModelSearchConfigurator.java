@@ -51,7 +51,6 @@ public class CommerceCurrencyModelSearchConfigurator
 		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
 			IndexerWriterMode.UPDATE,
 			_commerceCurrencyLocalService::getIndexableActionableDynamicQuery);
-
 		_modelSummaryContributor =
 			new CommerceCurrencyModelSummaryContributor();
 	}

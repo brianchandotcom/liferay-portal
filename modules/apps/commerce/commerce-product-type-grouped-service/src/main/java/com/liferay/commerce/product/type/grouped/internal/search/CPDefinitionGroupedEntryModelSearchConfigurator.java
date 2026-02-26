@@ -52,7 +52,6 @@ public class CPDefinitionGroupedEntryModelSearchConfigurator
 			IndexerWriterMode.UPDATE,
 			_cpDefinitionGroupedEntryLocalService::
 				getIndexableActionableDynamicQuery);
-
 		_modelSummaryContributor =
 			new CPDefinitionGroupedEntryModelSummaryContributor();
 	}

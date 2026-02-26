@@ -62,7 +62,6 @@ public class CommerceTermEntryModelSearchConfigurator
 		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
 			IndexerWriterMode.UPDATE,
 			_commerceTermEntryLocalService::getIndexableActionableDynamicQuery);
-
 		_modelSummaryContributor =
 			new CommerceTermEntryModelSummaryContributor();
 		_modelVisibilityContributor =

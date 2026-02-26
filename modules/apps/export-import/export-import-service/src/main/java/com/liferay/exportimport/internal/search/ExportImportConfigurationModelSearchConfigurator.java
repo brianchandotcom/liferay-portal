@@ -56,7 +56,6 @@ public class ExportImportConfigurationModelSearchConfigurator
 		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
 			_exportImportConfigurationLocalService::
 				getIndexableActionableDynamicQuery);
-
 		_modelSummaryContributor =
 			new ExportImportConfigurationModelSummaryContributor();
 	}

@@ -1,5 +1,5 @@
-{{- $search := .Values.search.elasticsearch | default dict -}}
-{{- if $search.enabled -}}
+{{- $search := .Values.search.elasticsearch -}}
+{{- if $search.enabled }}
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:

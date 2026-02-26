@@ -31,7 +31,6 @@ spec:
                                 backup:
                                     properties:
                                         enabled:
-                                            default: false
                                             type: boolean
                                         region:
                                             type: string
@@ -59,7 +58,8 @@ spec:
                                         -   rules
                                     type: object
                                 commonTags:
-                                    additionalProperties: true
+                                    additionalProperties:
+                                        type: string
                                     default: {}
                                     type: object
                                 database:
@@ -74,7 +74,6 @@ spec:
                                             default: db.t3.medium
                                             type: string
                                         isRestoring:
-                                            default: false
                                             type: boolean
                                         region:
                                             default: us-west-2
@@ -91,7 +90,6 @@ spec:
                                         -   region
                                     type: object
                                 deletionProtection:
-                                    default: false
                                     type: boolean
                                 environmentId:
                                     type: string
@@ -144,7 +142,6 @@ spec:
                         status:
                             properties:
                                 managedServiceDetailsReady:
-                                    default: false
                                     type: boolean
                             type: object
                     type: object

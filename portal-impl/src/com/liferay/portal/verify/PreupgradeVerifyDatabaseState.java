@@ -123,7 +123,14 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 						new TreeSet<>(missingTableNames));
 			}
 
-			viewNames.removeAll(dbInspector.getViewNames(null));
+			List<String> databaseViewNames = dbInspector.getViewNames(null);
+
+			Set<String> databaseViewNamesSet = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			databaseViewNamesSet.addAll(databaseViewNames);
+
+			viewNames.removeAll(databaseViewNamesSet);
 
 			if (!viewNames.isEmpty()) {
 				throw new VerifyException(
@@ -185,7 +192,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		for (String missingTableName : missingTableNames) {
 			if (dbInspector.isControlTable(missingTableName)) {
-				viewNames.add(missingTableName);
+				viewNames.add(dbInspector.normalizeName(missingTableName));
 			}
 		}
 

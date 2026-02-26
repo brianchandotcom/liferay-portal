@@ -290,21 +290,10 @@ public class SettingsTestUtil {
 			Objects.deepEquals(
 				expectedSettings.getThemeSpritemapClientExtension(),
 				actualSettings.getThemeSpritemapClientExtension()));
-
-		IconImageURLReference expectedIconImageURLReference =
-			expectedSettings.getIconImageURLReference();
-		IconImageURLReference actualIconImageURLReference =
-			actualSettings.getIconImageURLReference();
-
-		if (expectedIconImageURLReference != null) {
-			Assert.assertNotNull(actualIconImageURLReference);
-			Assert.assertEquals(
-				expectedIconImageURLReference.getExternalReferenceCode(),
-				actualIconImageURLReference.getExternalReferenceCode());
-		}
-		else {
-			Assert.assertNull(actualIconImageURLReference);
-		}
+		Assert.assertTrue(
+			Objects.deepEquals(
+				expectedSettings.getIconImageURLReference(),
+				actualSettings.getIconImageURLReference()));
 	}
 
 	public static ItemExternalReference getMasterPageItemExternalReference(

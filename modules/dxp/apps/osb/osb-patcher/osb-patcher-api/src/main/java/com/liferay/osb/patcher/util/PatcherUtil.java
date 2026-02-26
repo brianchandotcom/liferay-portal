@@ -177,6 +177,12 @@ public class PatcherUtil {
 			List<ReceivedMessage> receivedMessageList =
 				pullResponse.getReceivedMessagesList();
 
+			if (receivedMessageList.isEmpty()) {
+				subscriber.close();
+
+				return null;
+			}
+
 			ReceivedMessage receivedMessage = receivedMessageList.get(0);
 
 			AcknowledgeRequest acknowledgeRequest =

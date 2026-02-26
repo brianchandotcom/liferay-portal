@@ -5,6 +5,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
@@ -120,7 +121,10 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 			if (!missingTableNames.isEmpty()) {
 				throw new VerifyException(
 					"Missing tables detected: " +
-						new TreeSet<>(missingTableNames));
+						new TreeSet<>(
+							TransformUtil.transform(
+								missingTableNames,
+								dbInspector::normalizeName)));
 			}
 
 			List<String> databaseViewNames = dbInspector.getViewNames(null);

@@ -161,8 +161,6 @@ public class ObjectDefinitionUtil {
 		).put(
 			"CMSBulkActionTask", "/cms/bulk-action-tasks"
 		).put(
-			"CMSBulkActionTaskItem", "/cms/bulk-action-task-items"
-		).put(
 			"CMSDefaultPermission", "/cms/default-permissions"
 		).put(
 			"CMSExternalVideo", "/cms/external-videos"

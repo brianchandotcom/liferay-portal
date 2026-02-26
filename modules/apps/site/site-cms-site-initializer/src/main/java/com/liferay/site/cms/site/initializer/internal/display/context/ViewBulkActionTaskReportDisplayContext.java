@@ -10,10 +10,8 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
  */
 public class ViewBulkActionTaskReportDisplayContext {
 
-
 	public String getAPIURL() {
 		return "/o/cms/bulk-action-tasks";
 	}
-
 
 }

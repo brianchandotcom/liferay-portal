@@ -139,10 +139,12 @@ data "aws_iam_policy_document" "provider_aws_iam_policy_document" {
 			"iam:AttachUserPolicy",
 			"iam:CreateAccessKey",
 			"iam:CreatePolicy",
+			"iam:CreatePolicyVersion",
 			"iam:CreateRole",
 			"iam:CreateUser",
 			"iam:DeleteAccessKey",
 			"iam:DeletePolicy",
+			"iam:DeletePolicyVersion",
 			"iam:DeleteRole",
 			"iam:DeleteUser",
 			"iam:DeleteUserPolicy",
@@ -251,6 +253,7 @@ data "aws_iam_policy_document" "provider_aws_rds_policy_document" {
 			"rds:ListTagsForResource",
 			"rds:ModifyDBInstance",
 			"rds:ModifyDBSubnetGroup",
+			"rds:RestoreDBInstanceFromDBSnapshot",
 		]
 		effect="Allow"
 		resources=["*"]
@@ -298,6 +301,7 @@ data "aws_iam_policy_document" "provider_aws_s3_policy_document" {
 			"s3:GetBucketLocation",
 			"s3:GetBucketLogging",
 			"s3:GetBucketObjectLockConfiguration",
+			"s3:GetBucketOwnershipControls",
 			"s3:GetBucketPolicy",
 			"s3:GetBucketPublicAccessBlock",
 			"s3:GetBucketRequestPayment",
@@ -311,6 +315,7 @@ data "aws_iam_policy_document" "provider_aws_s3_policy_document" {
 			"s3:ListBucketMultipartUploads",
 			"s3:PutBucketAcl",
 			"s3:PutBucketCORS",
+			"s3:PutBucketOwnershipControls",
 			"s3:PutBucketPolicy",
 			"s3:PutBucketPublicAccessBlock",
 			"s3:PutBucketTagging",

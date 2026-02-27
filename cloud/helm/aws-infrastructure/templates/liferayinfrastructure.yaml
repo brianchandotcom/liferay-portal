@@ -3,6 +3,7 @@ apiVersion: aws.liferay.com/v1alpha1
 kind: LiferayInfrastructure
 metadata:
     annotations:
+        argocd.argoproj.io/sync-options: ServerSideApply=true
         argocd.argoproj.io/sync-wave: "-20"
     name: {{ .Release.Name }}
     namespace: {{ .Release.Namespace }}

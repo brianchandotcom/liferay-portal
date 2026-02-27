@@ -128,14 +128,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			Pagination pagination, Sort[] sorts, BulkAction bulkAction)
 		throws Exception {
 
-		if ((BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
-				bulkAction.getType()) &&
-			 !FeatureFlagManagerUtil.isEnabled(
-				 contextCompany.getCompanyId(), "LPD-69713")) ||
-			(!FeatureFlagManagerUtil.isEnabled(
+		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-17564") &&
-			 !BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
-				 bulkAction.getType()))) {
+			!BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
+				bulkAction.getType())) {
 
 			throw new UnsupportedOperationException();
 		}

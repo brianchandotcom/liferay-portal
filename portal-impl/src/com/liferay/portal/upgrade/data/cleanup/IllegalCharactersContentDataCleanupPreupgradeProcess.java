@@ -64,6 +64,10 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 
 		DB db = DBManagerUtil.getDB();
 
+		if ((charCode == 0) && (db.getDBType() == DBType.POSTGRESQL)) {
+			return;
+		}
+
 		String charSentence = "CHAR(" + charCode + ")";
 
 		if (db.getDBType() == DBType.DB2) {

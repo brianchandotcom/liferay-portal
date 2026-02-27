@@ -240,7 +240,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private BulkActionTask _addBulkActionTask(BulkAction bulkAction)
 		throws Exception {
 
-		if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(type)) {
+		if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
+				bulkAction.getType())) {
+
 			return new BulkActionTask();
 		}
 
@@ -249,28 +251,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BULK_ACTION_TASK", contextCompany.getCompanyId());
 
-		BulkAction.Type type = bulkAction.getType();
-
-		String typeString = type.toString();
-
-		if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
-			DeleteBulkAction deleteBulkAction = (DeleteBulkAction)bulkAction;
-
-			if (!Validator.isBlank(deleteBulkAction.getClassName())) {
-				ObjectDefinition bulkActionObjectDefinition =
-					_objectDefinitionLocalService.
-						getObjectDefinitionByClassName(
-							objectDefinition.getCompanyId(),
-							deleteBulkAction.getClassName());
-
-				if (StringUtil.equals(
-						bulkActionObjectDefinition.getExternalReferenceCode(),
-						"L_CMP_TASK")) {
-
-					typeString = "DeleteTaskBulkAction";
-				}
-			}
-		}
+		String typeString = _getTypeString(bulkAction);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, contextUser.getUserId(),
@@ -286,12 +267,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).build(),
 			new ServiceContext());
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
 		return new BulkActionTask() {
 			{
-				setActionName(
-					() -> GetterUtil.getString(values.get("actionName")));
+				setActionName(() -> GetterUtil.getString(typeString));
 				setAuthor(objectEntry::getUserName);
 				setCreatedDate(objectEntry::getCreateDate);
 				setExecuteStatus(
@@ -299,7 +277,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 						BulkSelectionActionStatusConstants.INITIAL));
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setId(objectEntry::getObjectEntryId);
-				setType(() -> GetterUtil.getString(values.get("type")));
+				setType(() -> GetterUtil.getString(typeString));
 			}
 		};
 	}
@@ -800,6 +778,37 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			});
 
 		return permissionsList.toArray(new Permission[0]);
+	}
+
+	private String _getTypeString(BulkAction bulkAction) throws Exception {
+		BulkAction.Type type = bulkAction.getType();
+
+		if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
+			DeleteBulkAction deleteBulkAction = (DeleteBulkAction)bulkAction;
+
+			if (!Validator.isBlank(deleteBulkAction.getClassName())) {
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.
+						getObjectDefinitionByExternalReferenceCode(
+							"L_CMS_BULK_ACTION_TASK",
+							contextCompany.getCompanyId());
+
+				ObjectDefinition bulkActionObjectDefinition =
+					_objectDefinitionLocalService.
+						getObjectDefinitionByClassName(
+							objectDefinition.getCompanyId(),
+							deleteBulkAction.getClassName());
+
+				if (StringUtil.equals(
+						bulkActionObjectDefinition.getExternalReferenceCode(),
+						"L_CMP_TASK")) {
+
+					return "DeleteTaskBulkAction";
+				}
+			}
+		}
+
+		return type.toString();
 	}
 
 	private long _getUsagesCount(

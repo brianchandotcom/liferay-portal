@@ -134,7 +134,7 @@ import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -875,7 +875,7 @@ public class DefaultObjectEntryManagerImpl
 					_searchRequestBuilderFactory.builder(searchContext);
 
 				_processVulcanAggregation(
-					_aggregations, _queries, searchRequestBuilder, aggregation);
+					_aggregations, searchRequestBuilder, aggregation);
 			},
 			sorts,
 			document -> getObjectEntry(
@@ -3085,8 +3085,7 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private void _processVulcanAggregation(
-		Aggregations aggregations, Queries queries,
-		SearchRequestBuilder searchRequestBuilder,
+		Aggregations aggregations, SearchRequestBuilder searchRequestBuilder,
 		Aggregation vulcanAggregation) {
 
 		if (vulcanAggregation == null) {
@@ -3110,7 +3109,7 @@ public class DefaultObjectEntryManagerImpl
 
 			FilterAggregation filterAggregation = aggregations.filter(
 				"filterAggregation",
-				queries.term("nestedFieldArray.fieldName", valueParts[1]));
+				QueriesUtil.term("nestedFieldArray.fieldName", valueParts[1]));
 
 			filterAggregation.addChildAggregation(
 				aggregations.terms(entry.getKey(), valueParts[0]));
@@ -3920,9 +3919,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

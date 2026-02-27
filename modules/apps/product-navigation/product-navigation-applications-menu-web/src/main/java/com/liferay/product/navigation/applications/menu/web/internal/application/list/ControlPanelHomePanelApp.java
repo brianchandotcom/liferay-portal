@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.product.navigation.applications.menu.web.internal.home;
+package com.liferay.product.navigation.applications.menu.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
@@ -23,11 +23,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"panel.app.order:Integer=1000",
-		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL
 	},
 	service = PanelApp.class
 )
-public class ApplicationsHomePanelApp extends BasePanelApp {
+public class ControlPanelHomePanelApp extends BasePanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -41,11 +41,11 @@ public class ApplicationsHomePanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return ProductNavigationApplicationsMenuPortletKeys.APPLICATIONS_HOME;
+		return ProductNavigationApplicationsMenuPortletKeys.CONTROL_PANEL_HOME;
 	}
 
 	@Reference(
-		target = "(jakarta.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.APPLICATIONS_HOME + ")"
+		target = "(jakarta.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.CONTROL_PANEL_HOME + ")"
 	)
 	private Portlet _portlet;
 

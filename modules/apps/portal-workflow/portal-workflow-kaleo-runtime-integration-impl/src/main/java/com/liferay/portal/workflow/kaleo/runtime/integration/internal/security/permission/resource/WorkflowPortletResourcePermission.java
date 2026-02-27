@@ -71,11 +71,11 @@ public class WorkflowPortletResourcePermission
 			return true;
 		}
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group == null) {
+		if (groupId == 0) {
 			return false;
 		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
 
 		AccountEntry accountEntry =
 			_accountEntryLocalService.fetchUserAccountEntry(

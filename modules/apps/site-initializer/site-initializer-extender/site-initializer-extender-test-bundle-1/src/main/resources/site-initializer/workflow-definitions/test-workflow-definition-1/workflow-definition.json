@@ -1,6 +1,7 @@
 {
 	"active": true,
 	"description": "This is the description for Test Workflow Definition 1.",
+	"groupExternalReferenceCode": "[$ACCOUNT_ENTRY_GROUP_ERC:TESTACCOUNT1$]",
 	"name": "Test Workflow Definition 1",
 	"title": "Test Workflow Definition 1",
 	"title_i18n": {

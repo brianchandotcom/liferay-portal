@@ -5,6 +5,8 @@
 
 package com.liferay.site.initializer.extender.internal.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -4444,6 +4446,18 @@ public class BundleSiteInitializerTest {
 				"Test Workflow Definition 1", null, 1);
 
 		Assert.assertNotNull(workflowDefinitionTest1);
+
+		AccountEntry accountEntry =
+			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+				"TESTACCOUNT1", TestPropsValues.getCompanyId());
+
+		Group group = _groupLocalService.getGroup(
+			accountEntry.getAccountEntryGroupId());
+
+		Assert.assertEquals(
+			group.getExternalReferenceCode(),
+			workflowDefinitionTest1.getGroupExternalReferenceCode());
+
 		Assert.assertEquals(
 			"Test Workflow Definition 1", workflowDefinitionTest1.getName());
 		Assert.assertEquals(
@@ -4638,6 +4652,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private static PLOEntryLocalService _ploEntryLocalService;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountEntryOrganizationRelLocalService

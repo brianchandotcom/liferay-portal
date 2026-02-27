@@ -8,7 +8,7 @@ export const validateEmailDomain = (emailDomain: string): boolean =>
 
 export const validateEmailDomainArr = (
 	items: string[],
-	inputListValue: string
+	inputListValue: string | string[]
 ): string | void => {
 	const emailDomains = items.concat(inputListValue || []);
 

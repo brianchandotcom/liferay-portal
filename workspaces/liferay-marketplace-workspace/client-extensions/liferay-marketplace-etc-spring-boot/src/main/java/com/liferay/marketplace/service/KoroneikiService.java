@@ -58,6 +58,15 @@ public class KoroneikiService {
 		).build();
 	}
 
+	public ContactResource getContactResource() throws Exception {
+		return ContactResource.builder(
+		).header(
+			"API_TOKEN", _koroneikiAuthToken
+		).endpoint(
+			new URL(_koroneikiAuthURL)
+		).build();
+	}
+
 	public Page<Contact> getContactsPage(
 			String accountKey, Pagination pagination)
 		throws Exception {
@@ -66,15 +75,6 @@ public class KoroneikiService {
 
 		return contactResource.getAccountAccountKeyContactsPage(
 			accountKey, pagination);
-	}
-
-	public ContactResource getContactResource() throws Exception {
-		return ContactResource.builder(
-		).header(
-			"API_TOKEN", _koroneikiAuthToken
-		).endpoint(
-			new URL(_koroneikiAuthURL)
-		).build();
 	}
 
 	public Account getKoroneikiAccount(String accountKey) throws Exception {

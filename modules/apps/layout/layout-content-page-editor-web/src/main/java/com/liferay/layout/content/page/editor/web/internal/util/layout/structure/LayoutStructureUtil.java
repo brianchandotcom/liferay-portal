@@ -11,7 +11,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.util.FragmentRendererRegistryUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -24,7 +23,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -136,23 +134,14 @@ public class LayoutStructureUtil {
 	private static FragmentEntry _getFragmentEntry(
 		FragmentEntryLink fragmentEntryLink) {
 
-		if (Validator.isNull(fragmentEntryLink.getFragmentEntryERC())) {
+		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
+
+		if (fragmentEntry == null) {
 			return FragmentCollectionContributorRegistryUtil.getFragmentEntry(
 				fragmentEntryLink.getRendererKey());
 		}
 
-		Long fragmentEntryGroupId = ScopeUtil.getItemGroupId(
-			fragmentEntryLink.getCompanyId(),
-			fragmentEntryLink.getFragmentEntryScopeERC(),
-			fragmentEntryLink.getGroupId());
-
-		if (fragmentEntryGroupId == null) {
-			return null;
-		}
-
-		return FragmentEntryLocalServiceUtil.
-			fetchFragmentEntryByExternalReferenceCode(
-				fragmentEntryLink.getFragmentEntryERC(), fragmentEntryGroupId);
+		return fragmentEntry;
 	}
 
 	private static boolean _hasMissingFragmentEntryFragmentEntryLinks(
@@ -182,12 +171,6 @@ public class LayoutStructureUtil {
 			FragmentEntryLink fragmentEntryLink =
 				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-			if (Validator.isNull(fragmentEntryLink.getFragmentEntryERC()) &&
-				Validator.isNull(fragmentEntryLink.getRendererKey())) {
-
-				continue;
-			}
 
 			FragmentEntry fragmentEntry = _getFragmentEntry(fragmentEntryLink);
 

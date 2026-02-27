@@ -13,7 +13,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.test.util.FragmentEntryTestUtil;
 import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -321,25 +320,11 @@ public class FragmentEntryLinkUpgradeProcessTest
 	}
 
 	private long _getFragmentEntryId(FragmentEntryLink fragmentEntryLink) {
-		if (Validator.isNull(fragmentEntryLink.getFragmentEntryERC())) {
+		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
+
+		if (fragmentEntry == null) {
 			return 0;
 		}
-
-		long groupId = fragmentEntryLink.getGroupId();
-
-		if (Validator.isNotNull(fragmentEntryLink.getFragmentEntryScopeERC())) {
-			Group group =
-				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-					fragmentEntryLink.getFragmentEntryScopeERC(),
-					fragmentEntryLink.getCompanyId());
-
-			groupId = group.getGroupId();
-		}
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.
-				fetchFragmentEntryByExternalReferenceCode(
-					fragmentEntryLink.getFragmentEntryERC(), groupId);
 
 		return fragmentEntry.getFragmentEntryId();
 	}

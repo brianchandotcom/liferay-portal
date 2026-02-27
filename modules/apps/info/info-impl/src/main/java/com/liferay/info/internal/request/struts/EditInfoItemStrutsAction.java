@@ -10,7 +10,6 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.InfoFormInvalidGroupException;
@@ -44,7 +43,6 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.InfoFormException;
@@ -70,7 +68,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -619,39 +616,14 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 	private boolean _isCaptchaFragmentEntry(
 		FragmentEntryLink fragmentEntryLink) {
 
-		FragmentEntry fragmentEntry = null;
+		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
 
-		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+		if ((fragmentEntry == null) &&
+			Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+
 			fragmentEntry =
 				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryLink.getRendererKey());
-		}
-
-		Long groupId = ScopeUtil.getItemGroupId(
-			fragmentEntryLink.getCompanyId(),
-			fragmentEntryLink.getFragmentEntryScopeERC(),
-			fragmentEntryLink.getGroupId());
-
-		if (groupId == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to resolve group ID for fragment entry link ",
-						fragmentEntryLink.getFragmentEntryLinkId(),
-						" with fragment entry scope external reference code ",
-						fragmentEntryLink.getFragmentEntryScopeERC()));
-			}
-
-			return false;
-		}
-
-		if ((fragmentEntry == null) &&
-			Validator.isNotNull(fragmentEntryLink.getFragmentEntryERC())) {
-
-			fragmentEntry =
-				_fragmentEntryLocalService.
-					fetchFragmentEntryByExternalReferenceCode(
-						fragmentEntryLink.getFragmentEntryERC(), groupId);
 		}
 
 		if ((fragmentEntry == null) ||
@@ -765,9 +737,6 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

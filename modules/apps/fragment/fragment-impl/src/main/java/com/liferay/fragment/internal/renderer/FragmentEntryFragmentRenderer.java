@@ -18,7 +18,6 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
@@ -163,38 +162,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getFragmentEntryName(FragmentEntryLink fragmentEntryLink) {
-		FragmentEntry fragmentEntry = null;
+		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
 
-		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+		if ((fragmentEntry == null) &&
+			Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+
 			fragmentEntry =
 				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryLink.getRendererKey());
-		}
-
-		if (fragmentEntry == null) {
-			Long groupId = ScopeUtil.getItemGroupId(
-				fragmentEntryLink.getCompanyId(),
-				fragmentEntryLink.getFragmentEntryScopeERC(),
-				fragmentEntryLink.getGroupId());
-
-			if (groupId == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to resolve group ID for fragment entry ",
-							"link ", fragmentEntryLink.getFragmentEntryLinkId(),
-							" with fragment entry scope external reference ",
-							"code ",
-							fragmentEntryLink.getFragmentEntryScopeERC()));
-				}
-
-				return StringPool.BLANK;
-			}
-
-			fragmentEntry =
-				_fragmentEntryLocalService.
-					fetchFragmentEntryByExternalReferenceCode(
-						fragmentEntryLink.getFragmentEntryERC(), groupId);
 		}
 
 		if (fragmentEntry == null) {
@@ -241,9 +216,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			}
 		}
 
-		FragmentEntry fragmentEntry = null;
+		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
 
-		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+		if ((fragmentEntry == null) &&
+			Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+
 			fragmentEntry =
 				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryLink.getRendererKey());
@@ -251,22 +228,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			if (fragmentEntry == null) {
 				return false;
 			}
-		}
-
-		if (fragmentEntry == null) {
-			Long groupId = ScopeUtil.getItemGroupId(
-				fragmentEntryLink.getCompanyId(),
-				fragmentEntryLink.getFragmentEntryScopeERC(),
-				fragmentEntryLink.getGroupId());
-
-			if (groupId == null) {
-				return fragmentEntryLink.isCacheable();
-			}
-
-			fragmentEntry =
-				_fragmentEntryLocalService.
-					fetchFragmentEntryByExternalReferenceCode(
-						fragmentEntryLink.getFragmentEntryERC(), groupId);
 		}
 
 		if (fragmentEntry == null) {
@@ -613,9 +574,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryLinkCache _fragmentEntryLinkCache;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

@@ -51,8 +51,7 @@ public class PackageRunBuildTask extends PackageRunTask {
 
 		if (!file.exists()) {
 
-			// We moved _node-scripts under frontend-sdk. This provides
-			// backwards compatibility for older commits of 7.4.x
+			// Backwards compatibility
 
 			file = new File(
 				portalRootDir, "modules/_node-scripts/package.json");

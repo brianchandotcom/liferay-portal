@@ -48,7 +48,7 @@ function _download_and_extract_files {
 
 	if [ ! -n "${json}" ]
 	then
-		echo "Unable to get metadata from gs://${bucket_name}/${prefix}/" >&2
+		echo "Unable to get metadata from gs://${bucket_name}/${prefix}" >&2
 
 		exit 1
 	fi
@@ -63,7 +63,7 @@ function _download_and_extract_files {
 
 	if [ "${latest_path}" == "null" ] || [ -z "${latest_path}" ]
 	then
-		echo "Unable to find any files in gs://${bucket_name}/${prefix}/" >&2
+		echo "There are no files in gs://${bucket_name}/${prefix}/" >&2
 
 		exit 1
 	fi
@@ -97,7 +97,7 @@ function _get_config_file {
 
 	if [ ! -f "${config_file}" ]
 	then
-		echo "No config file '${config_file}' found." >&2
+		echo "The configuration file ${config_file} does not exist." >&2
 
 		exit 1
 	fi
@@ -112,12 +112,12 @@ function _get_provider {
 
 	if [ -z "${provider}" ]
 	then
-		echo "'provider' field is missing in ${1}." >&2
+		echo "No provider is specified in ${config_file}." >&2
 
 		exit 1
 	elif [ "${provider}" != "aws" ] && [ "${provider}" != "gcp" ]
 	then
-		echo "Unsupported provider ${provider}." >&2
+		echo "Unsupported provider ${provider} was specified in ${config_file}." >&2
 
 		exit 1
 	fi

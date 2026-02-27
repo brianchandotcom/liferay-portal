@@ -1,6 +1,0 @@
-dependencies {
-	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
-	testIntegrationImplementation project(":apps:layout:layout-prototype-api")
-	testIntegrationImplementation project(":apps:layout:layout-test-util")
-	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-}

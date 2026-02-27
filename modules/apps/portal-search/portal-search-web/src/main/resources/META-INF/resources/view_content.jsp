@@ -49,7 +49,7 @@ SearchResultContentDisplayContext searchResultContentDisplayContext = searchResu
 				<%= HtmlUtil.escape(searchResultContentDisplayContext.getHeaderTitle()) %>
 			</span>
 
-			<c:if test="<%= searchResultContentDisplayContext.hasEditPermission() %>">
+			<c:if test="<%= searchResultContentDisplayContext.hasEditPermission() && (searchResultContentDisplayContext.getIconURLString() != null) %>">
 				<span class="d-inline-flex">
 					<liferay-ui:icon
 						cssClass="visible-interaction"

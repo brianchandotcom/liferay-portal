@@ -110,7 +110,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testEditPermissionFalseFromURLEdit() throws Exception {
+	public void testIconMissingFromNullURLEdit() throws Exception {
 		Mockito.doReturn(
 			null
 		).when(
@@ -122,7 +122,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
 			_buildDisplayContext();
 
-		Assert.assertFalse(
+		Assert.assertTrue(
 			searchResultContentDisplayContext.hasEditPermission());
 
 		_assertIconMissing(searchResultContentDisplayContext);

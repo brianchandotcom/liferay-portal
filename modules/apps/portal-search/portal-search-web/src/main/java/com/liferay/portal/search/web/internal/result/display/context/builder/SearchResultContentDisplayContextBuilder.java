@@ -70,6 +70,9 @@ public class SearchResultContentDisplayContextBuilder {
 			boolean hasEditPermission = assetRenderer.hasEditPermission(
 				_permissionChecker);
 
+			searchResultContentDisplayContext.setHasEditPermission(
+				hasEditPermission);
+
 			if (hasEditPermission) {
 				PortletURL editPortletURL = assetRenderer.getURLEdit(
 					_portal.getLiferayPortletRequest(_renderRequest),
@@ -80,8 +83,6 @@ public class SearchResultContentDisplayContextBuilder {
 						(ThemeDisplay)_renderRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					searchResultContentDisplayContext.setHasEditPermission(
-						true);
 					searchResultContentDisplayContext.setIconEditTarget(title);
 					searchResultContentDisplayContext.setIconURLString(
 						PortletURLBuilder.create(
@@ -96,10 +97,6 @@ public class SearchResultContentDisplayContextBuilder {
 								return portletDisplay.getId();
 							}
 						).buildString());
-				}
-				else {
-					searchResultContentDisplayContext.setHasEditPermission(
-						false);
 				}
 			}
 

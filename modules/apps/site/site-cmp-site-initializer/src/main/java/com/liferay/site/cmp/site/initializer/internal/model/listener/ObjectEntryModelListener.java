@@ -20,11 +20,13 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -32,6 +34,10 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleService;
+import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -41,6 +47,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -88,6 +96,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		try {
 			_updateGroup(objectEntry);
 			_updateProjectCompletionRate(objectEntry);
+			_updateProjectManagerProjectSponsorUserGroupRoles(objectEntry);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -280,6 +289,85 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			new ServiceContext());
 	}
 
+	private void _updateProjectManagerProjectSponsorUserGroupRoles(
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		if (!StringUtil.equals(
+				objectDefinition.getExternalReferenceCode(), "L_CMP_PROJECT")) {
+
+			return;
+		}
+
+		_updateUserGroupRoles(
+			objectEntry.getGroupId(),
+			Arrays.asList(
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+				DepotRolesConstants.ASSET_LIBRARY_MEMBER),
+			MapUtil.getLong(
+				objectEntry.getValues(), "r_userToCMPProjectManager_userId",
+				0));
+		_updateUserGroupRoles(
+			objectEntry.getGroupId(),
+			Collections.singletonList(DepotRolesConstants.ASSET_LIBRARY_MEMBER),
+			MapUtil.getLong(
+				objectEntry.getValues(), "r_userToCMPProjectSponsor_userId",
+				0));
+	}
+
+	private User _updateUser(long[] groupIds, Long userId) throws Exception {
+		User user = _userService.getUserById(userId);
+
+		Contact contact = user.getContact();
+
+		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+
+		birthdayCal.setTime(user.getBirthday());
+
+		return _userService.updateUser(
+			user.getUserId(), user.getPassword(), null, null,
+			user.isPasswordReset(), null, null, user.getScreenName(),
+			user.getEmailAddress(), user.getLanguageId(), user.getTimeZoneId(),
+			user.getGreeting(), user.getComments(), user.getFirstName(),
+			user.getMiddleName(), user.getLastName(),
+			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
+			user.isMale(), birthdayCal.get(Calendar.MONTH),
+			birthdayCal.get(Calendar.DATE), birthdayCal.get(Calendar.YEAR),
+			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getSkypeSn(), contact.getTwitterSn(), user.getJobTitle(),
+			groupIds, user.getOrganizationIds(), null, null,
+			user.getUserGroupIds(), new ServiceContext());
+	}
+
+	private void _updateUserGroupRoles(
+			long groupId, List<String> roleNames, long userId)
+		throws Exception {
+
+		if (userId == 0) {
+			return;
+		}
+
+		User user = _userService.getUserById(userId);
+
+		user = _updateUser(
+			ArrayUtil.append(user.getGroupIds(), groupId), userId);
+
+		long companyId = user.getCompanyId();
+
+		_userGroupRoleService.addUserGroupRoles(
+			user.getUserId(), groupId,
+			TransformUtil.transformToLongArray(
+				roleNames,
+				roleName -> {
+					Role role = _roleLocalService.fetchRole(
+						companyId, roleName);
+
+					return role.getRoleId();
+				}));
+	}
+
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
@@ -302,5 +390,11 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupRoleService _userGroupRoleService;
+
+	@Reference
+	private UserService _userService;
 
 }

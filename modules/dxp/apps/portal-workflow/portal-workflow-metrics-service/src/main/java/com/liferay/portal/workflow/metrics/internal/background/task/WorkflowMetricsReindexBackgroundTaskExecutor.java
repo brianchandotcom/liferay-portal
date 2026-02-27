@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.background.task.constants.WorkflowMetricsReindexBackgroundTaskConstants;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
@@ -82,8 +81,8 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 				WorkflowMetricsIndex.toWorkflowMetricsIndex(indexEntityName);
 
 			workflowMetricsIndex.deleteAllDocuments(
-				_searchCapabilities, _searchEngineAdapter, _queries,
-				_indexNameBuilder, backgroundTask.getCompanyId());
+				_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+				backgroundTask.getCompanyId());
 		}
 
 		List<NoticeableFuture<?>> noticeableFutures = new ArrayList<>();
@@ -189,9 +188,6 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;

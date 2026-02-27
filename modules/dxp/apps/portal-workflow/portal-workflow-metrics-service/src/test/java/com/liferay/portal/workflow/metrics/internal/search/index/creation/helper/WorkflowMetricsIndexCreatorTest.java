@@ -18,8 +18,6 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
@@ -49,7 +47,6 @@ public class WorkflowMetricsIndexCreatorTest {
 		_setUpBackgroundTaskLocalService();
 		_setUpIndexNameBuilder();
 		_setUpPrincipalThreadLocal();
-		_setUpQueries();
 		_setUpSearchCapabilities();
 		_setUpSearchEngineAdapter();
 		_setUpWorkflowMetricsIndex();
@@ -150,19 +147,6 @@ public class WorkflowMetricsIndexCreatorTest {
 		);
 	}
 
-	private void _setUpQueries() {
-		BooleanQuery booleanQuery = Mockito.mock(BooleanQuery.class);
-
-		Mockito.when(
-			_queries.booleanQuery()
-		).thenReturn(
-			booleanQuery
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			_workflowMetricsIndexCreator, "_queries", _queries);
-	}
-
 	private void _setUpSearchCapabilities() {
 		Mockito.when(
 			_searchCapabilities.isWorkflowMetricsSupported()
@@ -225,7 +209,6 @@ public class WorkflowMetricsIndexCreatorTest {
 		Mockito.mock(BackgroundTaskLocalService.class);
 	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
 		IndexNameBuilder.class);
-	private final Queries _queries = Mockito.mock(Queries.class);
 	private final SearchCapabilities _searchCapabilities = Mockito.mock(
 		SearchCapabilities.class);
 	private final SearchEngineAdapter _searchEngineAdapter = Mockito.mock(

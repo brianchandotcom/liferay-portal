@@ -20,7 +20,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
@@ -66,11 +66,11 @@ public class SLATaskResultWorkflowMetricsReindexer
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_NODE);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_queries.term("companyId", companyId),
-			_queries.term("deleted", Boolean.FALSE));
+			QueriesUtil.term("companyId", companyId),
+			QueriesUtil.term("deleted", Boolean.FALSE));
 
 		searchSearchRequest.setQuery(booleanQuery);
 
@@ -129,9 +129,6 @@ public class SLATaskResultWorkflowMetricsReindexer
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;

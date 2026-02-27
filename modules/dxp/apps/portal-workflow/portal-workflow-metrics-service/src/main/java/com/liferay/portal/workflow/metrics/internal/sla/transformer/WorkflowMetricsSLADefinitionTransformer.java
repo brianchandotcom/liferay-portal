@@ -28,7 +28,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
@@ -70,16 +70,16 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		String currentProcessVersion, String latestProcessVersion,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		TermsQuery termsQuery = _queries.terms("version");
+		TermsQuery termsQuery = QueriesUtil.terms("version");
 
 		termsQuery.addValues(currentProcessVersion, latestProcessVersion);
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				"companyId", workflowMetricsSLADefinition.getCompanyId()),
-			_queries.term(
+			QueriesUtil.term(
 				"processId", workflowMetricsSLADefinition.getProcessId()),
 			termsQuery);
 	}
@@ -256,9 +256,6 @@ public class WorkflowMetricsSLADefinitionTransformer {
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

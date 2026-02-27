@@ -14,6 +14,7 @@ import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.search.script.Scripts;
@@ -35,10 +36,10 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	public void blockDocuments(
 		long companyId, long processId, long slaDefinitionId) {
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			queries.term("instanceCompleted", Boolean.TRUE));
+			QueriesUtil.term("instanceCompleted", Boolean.TRUE));
 
 		updateDocuments(
 			companyId,
@@ -46,9 +47,9 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 				"blocked", Boolean.TRUE
 			).build(),
 			booleanQuery.addMustQueryClauses(
-				queries.term("companyId", companyId),
-				queries.term("processId", processId),
-				queries.term("slaDefinitionId", slaDefinitionId)));
+				QueriesUtil.term("companyId", companyId),
+				QueriesUtil.term("processId", processId),
+				QueriesUtil.term("slaDefinitionId", slaDefinitionId)));
 	}
 
 	public Document creatDefaultDocument(long companyId, long processId) {
@@ -157,19 +158,20 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 
 		super.deleteDocuments(companyId, processId, slaDefinitionId);
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		BooleanQuery filterBooleanQuery = queries.booleanQuery();
+		BooleanQuery filterBooleanQuery = QueriesUtil.booleanQuery();
 
 		filterBooleanQuery.addMustNotQueryClauses(
-			queries.term("instanceCompleted", Boolean.TRUE));
+			QueriesUtil.term("instanceCompleted", Boolean.TRUE));
 
 		filterBooleanQuery.addMustQueryClauses(
-			queries.term("completed", false),
-			queries.term("processId", processId),
-			queries.nested(
+			QueriesUtil.term("completed", false),
+			QueriesUtil.term("processId", processId),
+			QueriesUtil.nested(
 				"slaResults",
-				queries.term("slaResults.slaDefinitionId", slaDefinitionId)));
+				QueriesUtil.term(
+					"slaResults.slaDefinitionId", slaDefinitionId)));
 
 		booleanQuery.addFilterQueryClauses(filterBooleanQuery);
 

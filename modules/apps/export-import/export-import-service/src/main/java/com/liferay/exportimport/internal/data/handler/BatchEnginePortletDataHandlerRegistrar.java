@@ -232,13 +232,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			exportImportDescriptor =
 				batchEnginePortletDataHandler.
 					unregisterExportImportVulcanBatchEngineTaskItemDelegate(
-						GetterUtil.getObject(
-							(String)serviceReference.getProperty(
-								"batch.engine.task.item.delegate.class.name"),
-							() -> (String)serviceReference.getProperty(
-								"batch.engine.entity.class.name")),
-						(String)serviceReference.getProperty(
-							"batch.engine.task.item.delegate.name"));
+						exportImportDescriptor.getKey());
 
 			if (exportImportDescriptor != null) {
 				BatchEnginePortletDataHandlerRegistryUtil.unregisterKey(

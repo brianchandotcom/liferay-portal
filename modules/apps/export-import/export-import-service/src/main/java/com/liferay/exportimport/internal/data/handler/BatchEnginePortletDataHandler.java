@@ -341,20 +341,17 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	public ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-		unregisterExportImportVulcanBatchEngineTaskItemDelegate(
-			String batchEngineClassName, String taskItemDelegateName) {
+		unregisterExportImportVulcanBatchEngineTaskItemDelegate(String key) {
 
 		Iterator<Registration> iterator = _registrations.iterator();
 
 		while (iterator.hasNext()) {
 			Registration registration = iterator.next();
 
-			if (Objects.equals(
-					registration.getBatchEngineClassName(),
-					batchEngineClassName) &&
-				Objects.equals(
-					registration.getTaskItemDelegateName(),
-					taskItemDelegateName)) {
+			if (StringUtil.equals(
+					key,
+					registration.getExportImportDescriptor(
+					).getKey())) {
 
 				iterator.remove();
 

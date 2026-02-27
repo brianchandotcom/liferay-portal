@@ -50,6 +50,7 @@ public class OpenSearchConnection {
 		_active = openSearchConnectionImpl._active;
 		_authenticationEnabled =
 			openSearchConnectionImpl._authenticationEnabled;
+		_compressionEnabled = openSearchConnectionImpl._compressionEnabled;
 		_connectionId = openSearchConnectionImpl._connectionId;
 		_httpSSLEnabled = openSearchConnectionImpl._httpSSLEnabled;
 		_maxConnections = openSearchConnectionImpl._maxConnections;
@@ -144,6 +145,12 @@ public class OpenSearchConnection {
 
 		public OpenSearchConnection build() {
 			return new OpenSearchConnection(_openSearchConnection);
+		}
+
+		public Builder compressionEnabled(boolean compressionEnabled) {
+			_openSearchConnection._compressionEnabled = compressionEnabled;
+
+			return this;
 		}
 
 		public Builder connectionId(String connectionId) {
@@ -290,6 +297,8 @@ public class OpenSearchConnection {
 	private OpenSearchTransport _createTransport() {
 		return ApacheHttpClient5TransportBuilder.builder(
 			_getHttpHosts()
+		).setCompressionEnabled(
+			_compressionEnabled
 		).setMapper(
 			new JacksonJsonpMapper()
 		).setHttpClientConfigCallback(
@@ -345,6 +354,7 @@ public class OpenSearchConnection {
 
 	private boolean _active;
 	private boolean _authenticationEnabled;
+	private boolean _compressionEnabled;
 	private String _connectionId;
 	private boolean _httpSSLEnabled;
 	private int _maxConnections;

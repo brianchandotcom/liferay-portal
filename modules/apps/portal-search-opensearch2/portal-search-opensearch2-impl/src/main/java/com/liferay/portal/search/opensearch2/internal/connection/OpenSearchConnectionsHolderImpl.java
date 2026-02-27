@@ -104,6 +104,8 @@ public class OpenSearchConnectionsHolderImpl
 				openSearchConnectionConfiguration.active()
 			).authenticationEnabled(
 				openSearchConnectionConfiguration.authenticationEnabled()
+			).compressionEnabled(
+				openSearchConnectionConfiguration.compressionEnabled()
 			).connectionId(
 				openSearchConnectionConfiguration.connectionId()
 			).httpSSLEnabled(

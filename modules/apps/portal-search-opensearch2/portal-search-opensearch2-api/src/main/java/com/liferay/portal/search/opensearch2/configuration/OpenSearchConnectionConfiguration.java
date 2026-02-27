@@ -40,6 +40,12 @@ public interface OpenSearchConnectionConfiguration {
 	public boolean authenticationEnabled();
 
 	@Meta.AD(
+		deflt = "true", description = "compression-enabled-help",
+		name = "compression-enabled", required = false
+	)
+	public boolean compressionEnabled();
+
+	@Meta.AD(
 		description = "connection-id-help[opensearch]", name = "connection-id",
 		required = false
 	)

@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 
 /**
  * @author Rafael Praxedes
@@ -15,29 +16,29 @@ public abstract class BaseSLAWorkflowMetricsIndexer
 	extends BaseWorkflowMetricsIndexer {
 
 	public void deleteDocuments(long companyId, long instanceId) {
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		_deleteDocuments(
 			companyId,
 			booleanQuery.addMustQueryClauses(
-				queries.term("companyId", companyId),
-				queries.term("instanceId", instanceId)));
+				QueriesUtil.term("companyId", companyId),
+				QueriesUtil.term("instanceId", instanceId)));
 	}
 
 	public void deleteDocuments(
 		long companyId, long processId, long slaDefinitionId) {
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			queries.term("instanceCompleted", Boolean.TRUE));
+			QueriesUtil.term("instanceCompleted", Boolean.TRUE));
 
 		_deleteDocuments(
 			companyId,
 			booleanQuery.addMustQueryClauses(
-				queries.term("companyId", companyId),
-				queries.term("processId", processId),
-				queries.term("slaDefinitionId", slaDefinitionId)));
+				QueriesUtil.term("companyId", companyId),
+				QueriesUtil.term("processId", processId),
+				QueriesUtil.term("slaDefinitionId", slaDefinitionId)));
 	}
 
 	private void _deleteDocuments(long companyId, BooleanQuery booleanQuery) {

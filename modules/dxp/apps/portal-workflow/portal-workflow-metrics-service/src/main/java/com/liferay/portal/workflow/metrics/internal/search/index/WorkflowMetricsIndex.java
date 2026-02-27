@@ -21,7 +21,7 @@ import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
@@ -102,7 +102,7 @@ public enum WorkflowMetricsIndex {
 
 	public boolean deleteAllDocuments(
 			SearchCapabilities searchCapabilities,
-			SearchEngineAdapter searchEngineAdapter, Queries queries,
+			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException {
 
@@ -116,7 +116,7 @@ public enum WorkflowMetricsIndex {
 
 		searchEngineAdapter.execute(
 			new DeleteByQueryDocumentRequest(
-				queries.matchAll(),
+				QueriesUtil.matchAll(),
 				getIndexName(indexNameBuilder, _indexNameSuffix, companyId)));
 
 		return true;

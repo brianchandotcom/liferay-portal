@@ -29,7 +29,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration;
 import com.liferay.portal.workflow.metrics.internal.sla.transformer.WorkflowMetricsSLADefinitionTransformer;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
@@ -80,12 +80,12 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 	}
 
 	private BooleanQuery _createBooleanQuery(long companyId) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("active", Boolean.TRUE),
-			_queries.term("companyId", companyId),
-			_queries.term("deleted", Boolean.FALSE));
+			QueriesUtil.term("active", Boolean.TRUE),
+			QueriesUtil.term("companyId", companyId),
+			QueriesUtil.term("deleted", Boolean.FALSE));
 	}
 
 	private boolean _hasIndex(long companyId) {
@@ -115,7 +115,7 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(_createBooleanQuery(companyId)));
@@ -152,9 +152,6 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;

@@ -19,6 +19,7 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.search.script.Scripts;
@@ -244,12 +245,13 @@ public class TaskWorkflowMetricsIndexerImpl
 					completeTaskRequest.getCompanyId(),
 					completeTaskRequest.getTaskId());
 
-				BooleanQuery booleanQuery = queries.booleanQuery();
+				BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 				booleanQuery.addMustQueryClauses(
-					queries.term(
+					QueriesUtil.term(
 						"companyId", completeTaskRequest.getCompanyId()),
-					queries.term("taskId", completeTaskRequest.getTaskId()));
+					QueriesUtil.term(
+						"taskId", completeTaskRequest.getTaskId()));
 
 				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
 					completeTaskRequest.getCompanyId(),
@@ -354,11 +356,12 @@ public class TaskWorkflowMetricsIndexerImpl
 					return;
 				}
 
-				BooleanQuery booleanQuery = queries.booleanQuery();
+				BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 				booleanQuery.addMustQueryClauses(
-					queries.term("companyId", document.getLong("companyId")),
-					queries.term("taskId", document.getLong("taskId")));
+					QueriesUtil.term(
+						"companyId", document.getLong("companyId")),
+					QueriesUtil.term("taskId", document.getLong("taskId")));
 
 				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
 					updateTaskRequest.getCompanyId(),
@@ -398,9 +401,9 @@ public class TaskWorkflowMetricsIndexerImpl
 
 				UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 					new UpdateByQueryDocumentRequest(
-						queries.nested(
+						QueriesUtil.nested(
 							"tasks",
-							queries.term(
+							QueriesUtil.term(
 								"tasks.taskId", updateTaskRequest.getTaskId())),
 						scriptBuilder.build(),
 						WorkflowMetricsIndex.getIndexName(
@@ -425,7 +428,8 @@ public class TaskWorkflowMetricsIndexerImpl
 
 		searchEngineAdapter.execute(
 			new UpdateByQueryDocumentRequest(
-				queries.nested("tasks", queries.term("tasks.taskId", taskId)),
+				QueriesUtil.nested(
+					"tasks", QueriesUtil.term("tasks.taskId", taskId)),
 				scriptBuilder.idOrCode(
 					StringUtil.read(
 						getClass(),

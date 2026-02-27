@@ -34,7 +34,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
@@ -375,7 +375,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	private FilterAggregation _createNodeIdAggregation(
 		String aggregationName, Set<String> nodeIds) {
 
-		TermsQuery termsQuery = _queries.terms("nodeId");
+		TermsQuery termsQuery = QueriesUtil.terms("nodeId");
 
 		termsQuery.addValues(nodeIds.toArray());
 
@@ -395,11 +395,11 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(
-			_queries.term("companyId", companyId),
-			_queries.term("processId", processId));
+			QueriesUtil.term("companyId", companyId),
+			QueriesUtil.term("processId", processId));
 
 		searchSearchRequest.setQuery(booleanQuery);
 
@@ -533,13 +533,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_NODE);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", companyId),
-				_queries.term("processId", processId),
-				_queries.term("version", processVersion)));
+				QueriesUtil.term("companyId", companyId),
+				QueriesUtil.term("processId", processId),
+				QueriesUtil.term("version", processVersion)));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
@@ -583,9 +583,6 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

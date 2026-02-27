@@ -16,8 +16,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
 
 import java.lang.reflect.Method;
 
@@ -86,12 +84,6 @@ public class
 		);
 
 		Mockito.when(
-			_queries.booleanQuery()
-		).thenReturn(
-			Mockito.mock(BooleanQuery.class)
-		);
-
-		Mockito.when(
 			_searchHits.getSearchHits()
 		).thenReturn(
 			Collections.emptyList()
@@ -138,7 +130,6 @@ public class
 	private final IndicesExistsIndexResponse _indicesExistsIndexResponse =
 		Mockito.mock(IndicesExistsIndexResponse.class);
 	private String _originalIndexSearchLimit;
-	private final Queries _queries = Mockito.mock(Queries.class);
 	private final SearchCapabilities _searchCapabilities = Mockito.mock(
 		SearchCapabilities.class);
 	private final SearchEngineAdapter _searchEngineAdapter = Mockito.mock(

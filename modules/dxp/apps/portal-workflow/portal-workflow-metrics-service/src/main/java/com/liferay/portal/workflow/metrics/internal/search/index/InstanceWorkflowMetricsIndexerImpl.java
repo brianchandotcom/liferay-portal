@@ -12,6 +12,7 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.internal.sla.WorkflowMetricsInstanceSLAStatus;
 import com.liferay.portal.workflow.metrics.search.index.InstanceWorkflowMetricsIndexer;
@@ -236,11 +237,11 @@ public class InstanceWorkflowMetricsIndexerImpl
 	private void _updateDocuments(
 		long companyId, Map<String, Object> fieldsMap, long instanceId) {
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(
-			queries.term("companyId", companyId),
-			queries.term("instanceId", instanceId));
+			QueriesUtil.term("companyId", companyId),
+			QueriesUtil.term("instanceId", instanceId));
 
 		_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
 			companyId, fieldsMap, booleanQuery);

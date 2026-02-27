@@ -35,7 +35,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
@@ -175,11 +175,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		boolean completed, Date endDate, long instanceId, long processId,
 		long slaDefinitionId, Date startDate) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		if (completed) {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term("slaDefinitionIds", slaDefinitionId));
+				QueriesUtil.term("slaDefinitionIds", slaDefinitionId));
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -191,12 +191,13 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		boolean completed, Date endDate, long instanceId, long processId,
 		Date startDate) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", "0"));
+		booleanQuery.addMustNotQueryClauses(
+			QueriesUtil.term("instanceId", "0"));
 
 		if (startDate != null) {
-			RangeTermQuery rangeTermQuery = _queries.rangeTerm(
+			RangeTermQuery rangeTermQuery = QueriesUtil.rangeTerm(
 				"completionDate", true, false);
 
 			rangeTermQuery.setLowerBound(_getDate(startDate));
@@ -209,54 +210,56 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		}
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("active", true),
-			_queries.term("completed", completed),
-			_queries.term("deleted", false),
-			_queries.rangeTerm("instanceId", false, false, instanceId, null),
-			_queries.term("processId", processId));
+			QueriesUtil.term("active", true),
+			QueriesUtil.term("completed", completed),
+			QueriesUtil.term("deleted", false),
+			QueriesUtil.rangeTerm("instanceId", false, false, instanceId, null),
+			QueriesUtil.term("processId", processId));
 	}
 
 	private BooleanQuery _createMustNotCompletionDateBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		return booleanQuery.addMustNotQueryClauses(
-			_queries.exists("completionDate"));
+			QueriesUtil.exists("completionDate"));
 	}
 
 	private BooleanQuery _createSLAInstanceResultsBooleanQuery(
 		long endInstanceId, long processId, long slaDefinitionId,
 		long startInstanceId) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("active", true), _queries.term("blocked", false),
-			_queries.term("deleted", false),
-			_queries.rangeTerm(
+			QueriesUtil.term("active", true),
+			QueriesUtil.term("blocked", false),
+			QueriesUtil.term("deleted", false),
+			QueriesUtil.rangeTerm(
 				"instanceId", true, true, startInstanceId, endInstanceId),
-			_queries.term("processId", processId),
-			_queries.term("slaDefinitionId", slaDefinitionId));
+			QueriesUtil.term("processId", processId),
+			QueriesUtil.term("slaDefinitionId", slaDefinitionId));
 	}
 
 	private BooleanQuery _createTasksBooleanQuery(
 		long endInstanceId, LocalDateTime lastCheckLocalDateTime,
 		long processId, long startInstanceId) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		if (lastCheckLocalDateTime != null) {
 			booleanQuery.addShouldQueryClauses(
 				_createMustNotCompletionDateBooleanQuery(),
-				_queries.dateRangeTerm(
+				QueriesUtil.dateRangeTerm(
 					"completionDate", true, false,
 					_dateTimeFormatter.format(lastCheckLocalDateTime), null));
 		}
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("active", true), _queries.term("deleted", false),
-			_queries.rangeTerm(
+			QueriesUtil.term("active", true),
+			QueriesUtil.term("deleted", false),
+			QueriesUtil.rangeTerm(
 				"instanceId", true, true, startInstanceId, endInstanceId),
-			_queries.term("processId", processId));
+			QueriesUtil.term("processId", processId));
 	}
 
 	private LocalDateTime _getCompletionLocalDateTime(Document document) {
@@ -291,13 +294,14 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_NODE);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
-				_queries.term("deleted", false), _queries.term("initial", true),
-				_queries.term("processId", processId),
-				_queries.term("version", version)));
+				QueriesUtil.term("deleted", false),
+				QueriesUtil.term("initial", true),
+				QueriesUtil.term("processId", processId),
+				QueriesUtil.term("version", version)));
 
 		searchSearchRequest.setSelectedFieldNames("nodeId");
 		searchSearchRequest.setSize(1);
@@ -330,7 +334,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_SLA_INSTANCE_RESULT);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(
@@ -396,7 +400,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_TASK);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(
@@ -515,7 +519,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		searchSearchRequest.setIndexNames(
 			indexName + WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(
@@ -697,7 +701,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 			new UpdateByQueryDocumentRequest(
-				_queries.rangeTerm(
+				QueriesUtil.rangeTerm(
 					"instanceId", true, true, startInstanceId, endInstanceId),
 				Scripts.INSTANCE.script(
 					StringBundler.concat(
@@ -725,9 +729,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;

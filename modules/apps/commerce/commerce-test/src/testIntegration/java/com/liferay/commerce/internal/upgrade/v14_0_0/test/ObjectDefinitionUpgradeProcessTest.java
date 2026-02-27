@@ -255,6 +255,8 @@ public class ObjectDefinitionUpgradeProcessTest {
 		_originalSystemObjectDefinitionManager.addBaseModel(
 			false, _user,
 			HashMapBuilder.<String, Object>put(
+				"active", true
+			).put(
 				"catalogId",
 				() -> {
 					List<CommerceCatalog> commerceCatalogs =

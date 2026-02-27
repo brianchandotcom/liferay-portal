@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -63,12 +64,6 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 
 		DB db = DBManagerUtil.getDB();
 
-		String charModificator = "";
-
-		if (db.getDBType() == DBType.POSTGRESQL) {
-			charModificator = "::bytea";
-		}
-
 		String charSentence = "CHAR(" + charCode + ")";
 
 		if (db.getDBType() == DBType.DB2) {
@@ -77,32 +72,34 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 				") FOR BIT DATA");
 		}
 		else if ((db.getDBType() == DBType.ORACLE) ||
+				 (db.getDBType() == DBType.POSTGRESQL) ||
 				 (db.getDBType() == DBType.SQLSERVER)) {
 
 			charSentence = "CHR(" + charCode + ")";
 		}
 
-		String columnModificator = "";
+		String preColumnModificator = "";
 
 		if ((db.getDBType() == DBType.MARIADB) ||
 			(db.getDBType() == DBType.MYSQL)) {
 
-			columnModificator = " COLLATE utf8mb4_bin";
+			preColumnModificator = "BINARY ";
 		}
-		else if (db.getDBType() == DBType.POSTGRESQL) {
-			columnModificator = "::bytea";
-		}
-		else if (db.getDBType() == DBType.SQLSERVER) {
-			columnModificator = " COLLATE Latin1_General_100_BIN2";
+
+		String postColumnModificator = "";
+
+		if (db.getDBType() == DBType.SQLSERVER) {
+			postColumnModificator = " COLLATE Latin1_General_100_BIN2";
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"update ", tableName, " set ", columnName, " = replace(",
-					columnName, columnModificator, ", ", charSentence,
-					charModificator, ", ''", charModificator, ") where INSTR( ",
-					columnName, columnModificator, ", ", charSentence,
-					charModificator, ") > 0"))) {
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"update ", tableName, " set ", columnName,
+						" = replace(", preColumnModificator, columnName,
+						postColumnModificator, ", ", charSentence,
+						", '') where INSTR(", preColumnModificator, columnName,
+						postColumnModificator, ", ", charSentence, ") > 0")))) {
 
 			int count = preparedStatement.executeUpdate();
 

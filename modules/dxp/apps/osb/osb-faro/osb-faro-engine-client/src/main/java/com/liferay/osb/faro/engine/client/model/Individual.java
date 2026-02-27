@@ -26,6 +26,10 @@ public class Individual {
 		return _activitiesCount;
 	}
 
+	public Map<String, String> getContext() {
+		return _context;
+	}
+
 	public Map<String, List<Field>> getCustom() {
 		return _custom;
 	}
@@ -93,6 +97,10 @@ public class Individual {
 
 	public void setActivitiesCount(long activitiesCount) {
 		_activitiesCount = activitiesCount;
+	}
+
+	public void setContext(Map<String, String> context) {
+		_context = context;
 	}
 
 	public void setCustom(Map<String, List<Field>> custom) {
@@ -183,6 +191,7 @@ public class Individual {
 
 	private String _accountName;
 	private Long _activitiesCount;
+	private Map<String, String> _context = new HashMap<>();
 	private Map<String, List<Field>> _custom = new HashMap<>();
 	private List<DataSourceIndividualPK> _dataSourceIndividualPKs =
 		new ArrayList<>();

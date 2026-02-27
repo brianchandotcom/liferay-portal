@@ -129,8 +129,7 @@ public class MarketplaceTopicSubscriber {
 		Subscriber subscriber = Subscriber.newBuilder(
 			subscriptionName,
 			new MarketplaceMessageReceiver(
-				_koroneikiService, _marketplaceService, _productKeysList,
-				topicName)
+				_koroneikiService, _marketplaceService, _productKeys, topicName)
 		).setCredentialsProvider(
 			credentialsProvider
 		).build();
@@ -156,8 +155,8 @@ public class MarketplaceTopicSubscriber {
 	@Autowired
 	private MarketplaceService _marketplaceService;
 
-	@Value("${liferay.marketplace.koroneiki.product.keys.list}")
-	private List<String> _productKeysList;
+	@Value("${liferay.marketplace.koroneiki.product.keys}")
+	private List<String> _productKeys;
 
 	@Value("${liferay.marketplace.pubsub.gcp.project.id}")
 	private String _projectId;

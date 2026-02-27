@@ -20,6 +20,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.MultiMatchQuery;
 import com.liferay.portal.search.query.Operator;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
@@ -72,7 +73,7 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 		_indexUserDocuments("omega", "delta", "userName2");
 		_indexUserDocuments("omega", "alpha", "userName3");
 
-		MultiMatchQuery multiMatchQuery = queries.multiMatch(
+		MultiMatchQuery multiMatchQuery = QueriesUtil.multiMatch(
 			"delta", "firstName", "lastName");
 
 		multiMatchQuery.setType(MultiMatchQuery.Type.BOOL_PREFIX);
@@ -87,7 +88,7 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 		_indexUserDocuments("bravo", "alpha", "userName1");
 		_indexUserDocuments("omega", "beta", "userName2");
 
-		MultiMatchQuery multiMatchQuery = queries.multiMatch(
+		MultiMatchQuery multiMatchQuery = QueriesUtil.multiMatch(
 			"bravo alpha", "firstName", "lastName");
 
 		multiMatchQuery.setOperator(Operator.AND);
@@ -105,7 +106,7 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 		_indexUserDocuments("alpha", "zeta", "userName3");
 		_indexUserDocuments("omega", "beta", "userName4");
 
-		MultiMatchQuery multiMatchQuery = queries.multiMatch(
+		MultiMatchQuery multiMatchQuery = QueriesUtil.multiMatch(
 			"alpha", "firstName", "lastName");
 
 		List<String> expected = Arrays.asList(
@@ -119,7 +120,7 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 		_indexUserDocuments("bro charlie", "iota", "userName1");
 		_indexUserDocuments("omega", "beta", "userName2");
 
-		MultiMatchQuery multiMatchQuery = queries.multiMatch(
+		MultiMatchQuery multiMatchQuery = QueriesUtil.multiMatch(
 			"bro", "firstName", "lastName");
 
 		multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
@@ -135,7 +136,7 @@ public class MultiMatchQueryTest extends BaseIndexingTestCase {
 		_indexUserDocuments("omega", "delta", "userName2");
 		_indexUserDocuments("omega", "beta", "userName3");
 
-		MultiMatchQuery multiMatchQuery = queries.multiMatch(
+		MultiMatchQuery multiMatchQuery = QueriesUtil.multiMatch(
 			"delta", "firstName", "lastName");
 
 		multiMatchQuery.setTieBreaker(Float.valueOf(0.3F));

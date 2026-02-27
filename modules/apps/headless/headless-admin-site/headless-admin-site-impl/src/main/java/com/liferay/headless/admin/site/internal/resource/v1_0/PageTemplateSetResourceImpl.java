@@ -79,7 +79,7 @@ public class PageTemplateSetResourceImpl
 
 			@Override
 			public String getKey() {
-				return PageTemplateResourceImpl.class.getName();
+				return PageTemplateSetResourceImpl.class.getName();
 			}
 
 			@Override

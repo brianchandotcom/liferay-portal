@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.SearchEngineInformation;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.NestedSort;
 import com.liferay.portal.search.sort.Sort;
@@ -244,7 +244,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		NestedSort nestedSort = sorts.nested(DDMIndexer.DDM_FIELD_ARRAY);
 
 		nestedSort.setFilterQuery(
-			queries.term(
+			QueriesUtil.term(
 				StringBundler.concat(
 					DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
 					DDMIndexer.DDM_FIELD_NAME),
@@ -544,9 +544,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		return sb.toString();
 	}
-
-	@Reference
-	protected Queries queries;
 
 	@Reference
 	protected SearchEngineInformation searchEngineInformation;

@@ -67,6 +67,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -690,6 +691,52 @@ public class CPDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchApprovedOnlyCPDefinitionByCProductId()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Fetch only approved CPDefinition"
+		).given(
+			"A newly created CPDefinition"
+		).when(
+			"the CPDefinition is converted to draft"
+		).and(
+			"the fetch of this CPDefinition is attempted"
+		).then(
+			"the CPDefinition is not found"
+		);
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+
+		CPDefinition fetchedCPDefinition =
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				cpDefinition.getCProductId(), true);
+
+		Assert.assertNotNull(fetchedCPDefinition);
+		Assert.assertEquals(
+			cpDefinition.getCPDefinitionId(),
+			fetchedCPDefinition.getCPDefinitionId());
+		Assert.assertEquals(
+			cpDefinition.getStatus(), fetchedCPDefinition.getStatus());
+
+		cpDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, cpDefinition.getStatus());
+
+		fetchedCPDefinition =
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				cpDefinition.getCProductId(), true);
+
+		Assert.assertNull(fetchedCPDefinition);
+	}
+
+	@Test
 	public void testFindByExpirationDate() throws Exception {
 		long time = System.currentTimeMillis();
 
@@ -1012,6 +1059,84 @@ public class CPDefinitionLocalServiceTest {
 				_workflowDefinitionLinkLocalService.
 					deleteWorkflowDefinitionLink(workflowDefinitionLink);
 			}
+		}
+	}
+
+	@Test
+	public void testUpdateCProductLatestVersion() throws Exception {
+		frutillaRule.scenario(
+			"Update CProduct latest version when latest published " +
+				"CPDefinition is deleted"
+		).given(
+			"A newly created CPDefinition"
+		).when(
+			"publish a copy of the current CPDefinition"
+		).and(
+			"delete the copy of the CPDefinition"
+		).then(
+			"the version of the CProduct is updated to the previous one"
+		);
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+
+		Assert.assertTrue(cpDefinition1.isPublished());
+
+		CProduct cProduct = cpDefinition1.getCProduct();
+
+		Assert.assertEquals(1, cProduct.getLatestVersion());
+		Assert.assertEquals(
+			cpDefinition1.getCPDefinitionId(),
+			cProduct.getPublishedCPDefinitionId());
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CProductVersionConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).put(
+							"versionThreshold", 2
+						).build())) {
+
+			CPDefinition cpDefinition2 =
+				_cpDefinitionLocalService.copyCPDefinition(
+					cpDefinition1.getCPDefinitionId());
+
+			Assert.assertNotEquals(
+				cpDefinition1.getCPDefinitionId(),
+				cpDefinition2.getCPDefinitionId());
+
+			cProduct = cpDefinition2.getCProduct();
+
+			Assert.assertEquals(2, cProduct.getLatestVersion());
+			Assert.assertNotEquals(
+				cProduct.getPublishedCPDefinitionId(),
+				cpDefinition2.getCPDefinitionId());
+
+			cpDefinition2 = _cpDefinitionLocalService.updateStatus(
+				_serviceContext.getUserId(), cpDefinition2.getCPDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED, _serviceContext,
+				Collections.emptyMap());
+
+			cProduct = cpDefinition2.getCProduct();
+
+			Assert.assertEquals(2, cProduct.getLatestVersion());
+			Assert.assertEquals(
+				cProduct.getPublishedCPDefinitionId(),
+				cpDefinition2.getCPDefinitionId());
+
+			_cpDefinitionLocalService.deleteCPDefinition(
+				cpDefinition2.getCPDefinitionId());
+
+			cProduct = cpDefinition1.getCProduct();
+
+			Assert.assertEquals(1, cProduct.getLatestVersion());
+			Assert.assertEquals(
+				cProduct.getPublishedCPDefinitionId(),
+				cpDefinition1.getCPDefinitionId());
 		}
 	}
 

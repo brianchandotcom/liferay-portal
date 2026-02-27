@@ -21,7 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -140,7 +140,7 @@ public class TaskStatisticsResourceImpl extends BaseTaskStatisticsResourceImpl {
 							).entryClassNames(
 								KaleoTaskInstanceToken.class.getName()
 							).query(
-								_queries.wildcard(
+								QueriesUtil.wildcard(
 									"assetTagNames.lowercase", "L_CMP_TASK*")
 							).build());
 
@@ -163,9 +163,6 @@ public class TaskStatisticsResourceImpl extends BaseTaskStatisticsResourceImpl {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private Searcher _searcher;

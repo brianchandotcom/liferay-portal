@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -121,9 +120,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setPlid(plid);
 		fragmentEntryLink.setCss(css);
 
-		html = _replaceResources(
-			user.getCompanyId(), fragmentEntryERC, fragmentEntryScopeERC,
-			groupId, html);
+		html = _replaceResources(fragmentEntryLink.fetchFragmentEntry(), html);
 
 		fragmentEntryLink.setHtml(html);
 
@@ -820,11 +817,7 @@ public class FragmentEntryLinkLocalServiceImpl
 			modified = true;
 		}
 
-		String html = _replaceResources(
-			fragmentEntry.getCompanyId(),
-			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntryLink.getFragmentEntryScopeERC(),
-			fragmentEntry.getGroupId(), fragmentEntry.getHtml());
+		String html = _replaceResources(fragmentEntry, fragmentEntry.getHtml());
 
 		if (!Objects.equals(fragmentEntryLink.getHtml(), html)) {
 			JSONObject editableValuesJSONObject =
@@ -895,18 +888,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		FragmentEntryLink fragmentEntryLink =
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
-		Long fragmentEntryGroupId = ScopeUtil.getItemGroupId(
-			fragmentEntryLink.getCompanyId(),
-			fragmentEntryLink.getFragmentEntryScopeERC(),
-			fragmentEntryLink.getGroupId());
-
-		FragmentEntry fragmentEntry = null;
-
-		if (fragmentEntryGroupId != null) {
-			fragmentEntry = _fragmentEntryPersistence.fetchByERC_G_Head(
-				fragmentEntryLink.getFragmentEntryERC(), fragmentEntryGroupId,
-				true);
-		}
+		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
 
 		if (fragmentEntry == null) {
 			throw new UnsupportedOperationException(
@@ -964,25 +946,8 @@ public class FragmentEntryLinkLocalServiceImpl
 			fragmentEntryLink, fragmentEntryProcessorContext);
 	}
 
-	private String _replaceResources(
-			long companyId, String fragmentEntryERC,
-			String fragmentEntryScopeERC, long groupId, String html)
+	private String _replaceResources(FragmentEntry fragmentEntry, String html)
 		throws PortalException {
-
-		if (groupId <= 0) {
-			return html;
-		}
-
-		Long fragmentEntryGroupId = ScopeUtil.getItemGroupId(
-			companyId, fragmentEntryScopeERC, groupId);
-
-		if (fragmentEntryGroupId == null) {
-			return html;
-		}
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryPersistence.fetchByERC_G_Head(
-				fragmentEntryERC, fragmentEntryGroupId, true);
 
 		if (fragmentEntry == null) {
 			return html;

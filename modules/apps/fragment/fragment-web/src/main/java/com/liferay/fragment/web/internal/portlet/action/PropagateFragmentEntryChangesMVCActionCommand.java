@@ -9,7 +9,6 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -55,19 +54,8 @@ public class PropagateFragmentEntryChangesMVCActionCommand
 				continue;
 			}
 
-			Long groupId = ScopeUtil.getItemGroupId(
-				fragmentEntryLink.getCompanyId(),
-				fragmentEntryLink.getFragmentEntryScopeERC(),
-				fragmentEntryLink.getGroupId());
-
-			if (groupId == null) {
-				continue;
-			}
-
 			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.
-					fetchFragmentEntryByExternalReferenceCode(
-						fragmentEntryLink.getFragmentEntryERC(), groupId);
+				fragmentEntryLink.fetchFragmentEntry();
 
 			if (fragmentEntry == null) {
 				continue;
@@ -121,8 +109,5 @@ public class PropagateFragmentEntryChangesMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }

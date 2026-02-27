@@ -116,6 +116,8 @@ function _setup_aws_eks {
 
 	_terraform_init_and_apply "."
 
+	export KUBE_CONFIG_PATH="${HOME}/.kube/config"
+
 	aws \
 		eks \
 		update-kubeconfig \

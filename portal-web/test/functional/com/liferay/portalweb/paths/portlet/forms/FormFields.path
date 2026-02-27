@@ -672,7 +672,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD_PRICE_RANGE</td>
-	<td>//input[@type='number' and contains(@title,'${key_name}')] | //div[contains(@class,'form-group')]//p[text()='']</td>
+	<td>//label [contains(text(), '${key_name}')]/..//input[@type='number'] | //div[contains(@class,'form-group')]//p[text()='']</td>
 	<td></td>
 </tr>
 <tr>

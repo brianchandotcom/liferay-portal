@@ -813,6 +813,20 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
+		task ("Workaround for the issue with friendlyURL collision") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.deletePage(pageName = "Home");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			PagesAdmin.deletePage(pageName = "Staging Test Page");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+
+			PagesAdmin.deletePage(pageName = "Staging Test Page");
+		}
+
 		task ("Given: User import home page from LAR file on staging site") {
 			LAR.importSiteCP(
 				larFileName = "HR_Home_Page_Content_master.lar",

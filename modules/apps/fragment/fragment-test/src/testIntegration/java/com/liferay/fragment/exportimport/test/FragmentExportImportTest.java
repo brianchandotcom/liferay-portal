@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -278,10 +277,7 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 					null, importedGroupFragmentEntry.getCss(),
 					importedGroupFragmentEntry.getConfiguration(),
-					importedGroupFragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						fragmentEntry.getGroupId(),
-						importedDraftGroupLayout.getGroupId()),
+					importedGroupFragmentEntry.getExternalReferenceCode(), null,
 					importedGroupFragmentEntry.getHtml(),
 					importedGroupFragmentEntry.getJs(),
 					importedDraftGroupLayout,

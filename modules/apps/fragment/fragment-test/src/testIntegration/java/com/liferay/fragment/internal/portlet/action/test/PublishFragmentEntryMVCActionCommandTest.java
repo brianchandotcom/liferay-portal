@@ -141,9 +141,8 @@ public class PublishFragmentEntryMVCActionCommandTest {
 				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 					StringPool.BLANK, fragmentEntry.getCss(),
 					fragmentEntry.getConfiguration(),
-					fragmentEntry.getExternalReferenceCode(),
-					fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
-					fragmentEntry.getJs(), layout,
+					fragmentEntry.getExternalReferenceCode(), null,
+					fragmentEntry.getHtml(), fragmentEntry.getJs(), layout,
 					fragmentEntry.getFragmentEntryKey(),
 					_segmentsExperienceLocalService.
 						fetchDefaultSegmentsExperienceId(layout.getPlid()),

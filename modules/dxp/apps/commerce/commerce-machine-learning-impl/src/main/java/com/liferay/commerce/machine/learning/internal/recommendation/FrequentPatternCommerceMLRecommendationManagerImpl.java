@@ -22,7 +22,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.FunctionScoreQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.query.function.CombineFunction;
 import com.liferay.portal.search.query.function.score.ScoreFunctions;
@@ -167,25 +167,25 @@ public class FrequentPatternCommerceMLRecommendationManagerImpl
 	}
 
 	private BooleanQuery _getConstantScoreQuery(long[] cpInstanceIds) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		for (long cpInstanceId : cpInstanceIds) {
-			TermQuery termQuery = _queries.term(
+			TermQuery termQuery = QueriesUtil.term(
 				CommerceMLRecommendationField.ANTECEDENT_IDS, cpInstanceId);
 
 			booleanQuery.addShouldQueryClauses(
-				_queries.constantScore(termQuery));
+				QueriesUtil.constantScore(termQuery));
 		}
 
 		return booleanQuery;
 	}
 
 	private BooleanQuery _getExcludeRecommendations(long[] cpInstanceIds) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		for (long cpInstanceId : cpInstanceIds) {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					CommerceMLRecommendationField.RECOMMENDED_ENTRY_CLASS_PK,
 					cpInstanceId));
 		}
@@ -220,7 +220,7 @@ public class FrequentPatternCommerceMLRecommendationManagerImpl
 	private SearchSearchRequest _getSearchSearchRequest(
 		long companyId, long[] cpDefinitionIds) {
 
-		FunctionScoreQuery functionScoreQuery = _queries.functionScore(
+		FunctionScoreQuery functionScoreQuery = QueriesUtil.functionScore(
 			_getConstantScoreQuery(cpDefinitionIds));
 
 		functionScoreQuery.addFilterQueryScoreFunctionHolder(
@@ -248,9 +248,6 @@ public class FrequentPatternCommerceMLRecommendationManagerImpl
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private ScoreFunctions _scoreFunctions;

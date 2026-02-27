@@ -234,16 +234,20 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 					).build();
 			}
 
-			existentConfigurationId =
-				ConfigurationTestUtil.createFactoryConfiguration(
-					ConfigurationDataCleanupPreupgradeProcessTest.class.
-						getName(),
-					existentDictionary);
-			nonexistentConfigurationId =
-				ConfigurationTestUtil.createFactoryConfiguration(
-					ConfigurationDataCleanupPreupgradeProcessTest.class.
-						getName(),
-					nonexistentDictionary);
+			try (LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME, LoggerTestUtil.ERROR)) {
+
+				existentConfigurationId =
+					ConfigurationTestUtil.createFactoryConfiguration(
+						ConfigurationDataCleanupPreupgradeProcessTest.class.
+							getName(),
+						existentDictionary);
+				nonexistentConfigurationId =
+					ConfigurationTestUtil.createFactoryConfiguration(
+						ConfigurationDataCleanupPreupgradeProcessTest.class.
+							getName(),
+						nonexistentDictionary);
+			}
 
 			upgrade();
 
@@ -285,6 +289,11 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 			}
 		}
 	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.configuration.admin.web.internal.configuration." +
+			"persistence.listener." +
+				"ConfigurationImportGlobalConfigurationModelListener";
 
 	private Connection _connection;
 	private DBInspector _dbInspector;

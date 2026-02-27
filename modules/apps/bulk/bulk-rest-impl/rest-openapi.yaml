@@ -132,6 +132,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
+                        className:
+                            type: string
+                        classPK:
+                            format: int64
+                            type: integer
                         versions:
                             items:
                                 type: integer

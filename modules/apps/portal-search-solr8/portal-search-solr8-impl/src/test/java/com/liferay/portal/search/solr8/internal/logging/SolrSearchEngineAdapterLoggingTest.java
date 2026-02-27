@@ -11,6 +11,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.CountSearchRequestExecutor;
@@ -109,7 +110,7 @@ public class SolrSearchEngineAdapterLoggingTest extends BaseIndexingTestCase {
 			new SearchSearchRequest() {
 				{
 					setIndexNames("liferay");
-					setQuery(queries.matchAll());
+					setQuery(QueriesUtil.matchAll());
 				}
 			});
 	}

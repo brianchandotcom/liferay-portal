@@ -11,10 +11,12 @@
 PortletURL viewURL = renderResponse.createRenderURL();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", viewURL.toString()));
-portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 ProductAnalyticsConsentPanelDisplayContext productAnalyticsConsentPanelDisplayContext = (ProductAnalyticsConsentPanelDisplayContext)request.getAttribute(ProductAnalyticsWebKeys.PRODUCT_ANALYTICS_CONSENT_PANEL_DISPLAY_CONTEXT);
+
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", viewURL.toString()));
+
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 User selUser = PortalUtil.getSelectedUser(request);
 

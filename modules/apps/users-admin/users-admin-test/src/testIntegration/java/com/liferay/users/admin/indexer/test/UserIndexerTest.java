@@ -173,7 +173,7 @@ public class UserIndexerTest {
 		addUserWithNameFields(firstName, middleName, lastName);
 
 		assertFirstNameFieldValue(
-			firstName, byAttribute("firstName", "\"Mary Jane\""));
+			firstName, byAttribute("firstName_en_US", "\"Mary Jane\""));
 	}
 
 	@Test
@@ -192,11 +192,12 @@ public class UserIndexerTest {
 				lastName
 			));
 
-		assertNoHits(byAttribute("firstName", "\"Mary Watson\""));
-		assertNoHits(byAttribute("firstName", "\"Mary Jane\" Missingword"));
+		assertNoHits(byAttribute("firstName_en_US", "\"Mary Watson\""));
+		assertNoHits(
+			byAttribute("firstName_en_US", "\"Mary Jane\" Missingword"));
 
 		assertFirstNameFieldValue(
-			firstName, byAttribute("firstName", "Mary \"Jane Watson\""));
+			firstName, byAttribute("firstName_en_US", "Mary \"Jane Watson\""));
 	}
 
 	@Test
@@ -230,8 +231,9 @@ public class UserIndexerTest {
 		User user = addUserWithNameFields(firstName, null, lastName);
 
 		assertFieldValue(
-			"firstName", firstName, byAttribute("firstName", "姓氏"));
-		assertFieldValue("lastName", lastName, byAttribute("lastName", "名字"));
+			"firstName_zh_CN", firstName, byAttribute("firstName_zh_CN", "姓氏"));
+		assertFieldValue(
+			"lastName_zh_CN", lastName, byAttribute("lastName_zh_CN", "名字"));
 
 		assertUserId(user.getUserId(), byQueryString("名字"));
 		assertUserId(user.getUserId(), byQueryString("名字姓氏"));
@@ -246,8 +248,9 @@ public class UserIndexerTest {
 		User user = addUserWithNameFields(firstName, null, lastName);
 
 		assertFieldValue(
-			"firstName", firstName, byAttribute("firstName", "宮崎"));
-		assertFieldValue("lastName", lastName, byAttribute("lastName", "駿"));
+			"firstName_ja_JP", firstName, byAttribute("firstName_ja_JP", "宮崎"));
+		assertFieldValue(
+			"lastName_ja_JP", lastName, byAttribute("lastName_ja_JP", "駿"));
 
 		assertUserId(user.getUserId(), byQueryString("宮崎"));
 		assertUserId(user.getUserId(), byQueryString("駿 宮崎"));
@@ -293,11 +296,14 @@ public class UserIndexerTest {
 		User user = addUserWithNameFields(firstName, middleName, lastName);
 
 		assertFieldValue(
-			"firstName", firstName, byAttribute("firstName", "José"));
+			"firstName_es_ES", firstName,
+			byAttribute("firstName_es_ES", "José"));
 		assertFieldValue(
-			"lastName", lastName, byAttribute("lastName", "Sánchez"));
+			"lastName_es_ES", lastName,
+			byAttribute("lastName_es_ES", "Sánchez"));
 		assertFieldValue(
-			"middleName", middleName, byAttribute("middleName", "Pedro"));
+			"middleName_es_ES", middleName,
+			byAttribute("middleName_es_ES", "Pedro"));
 
 		assertUserId(user.getUserId(), byQueryString("Pedro"));
 		assertUserId(user.getUserId(), byQueryString("José Sánchez"));
@@ -675,7 +681,7 @@ public class UserIndexerTest {
 	protected void assertFirstNameFieldValue(
 		String firstName, Consumer<SearchRequestBuilder> consumer) {
 
-		assertFieldValue("firstName", firstName, consumer);
+		assertFieldValue("firstName_en_US", firstName, consumer);
 	}
 
 	protected void assertNoHits(Consumer<SearchRequestBuilder> consumer) {
@@ -811,11 +817,14 @@ public class UserIndexerTest {
 		addUserWithNameFields(firstName, middleName, lastName);
 
 		assertFieldValue(
-			"firstName", firstName, byAttribute("firstName", firstName));
+			"firstName_en_US", firstName,
+			byAttribute("firstName_en_US", firstName));
 		assertFieldValue(
-			"lastName", lastName, byAttribute("lastName", lastName));
+			"lastName_en_US", lastName,
+			byAttribute("lastName_en_US", lastName));
 		assertFieldValue(
-			"middleName", middleName, byAttribute("middleName", middleName));
+			"middleName_en_US", middleName,
+			byAttribute("middleName_en_US", middleName));
 	}
 
 	protected void toggleCreateSite(Organization organization, boolean site)

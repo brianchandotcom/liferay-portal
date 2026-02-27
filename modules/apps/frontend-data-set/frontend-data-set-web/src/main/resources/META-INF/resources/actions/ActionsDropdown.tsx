@@ -188,7 +188,8 @@ function ActionsDropdown({
 		!inlineEditingAlwaysOn &&
 		!uniformActionsDisplay &&
 		actions.length === 1 &&
-		(actions[0].type === EItemActionsType.ITEM ||
+		(actions[0].type === undefined ||
+			actions[0].type === EItemActionsType.ITEM ||
 			((actions[0].type === EItemActionsType.CONTEXTUAL ||
 				actions[0].type === EItemActionsType.GROUP) &&
 				actions[0].items?.length === 1))

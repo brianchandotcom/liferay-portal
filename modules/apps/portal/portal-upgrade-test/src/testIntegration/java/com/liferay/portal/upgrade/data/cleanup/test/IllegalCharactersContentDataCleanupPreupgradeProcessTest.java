@@ -163,7 +163,13 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 			IllegalCharactersContentDataCleanupPreupgradeProcess.class,
 			"_ILLEGAL_CHARACTER_CODES");
 
+		DB db = DBManagerUtil.getDB();
+
 		for (int charCode : illegalCharacters) {
+			if ((charCode == 0) && (db.getDBType() == DBType.POSTGRESQL)) {
+				continue;
+			}
+
 			String cleanContent =
 				RandomTestUtil.randomString() +
 					"äëïöüÄËÏÖÜàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ";

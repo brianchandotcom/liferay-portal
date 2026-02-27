@@ -21,7 +21,7 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -307,8 +306,12 @@ public class CommerceDiscountRelFinderImpl
 		try {
 			session = openSession();
 
+			FromStep fromStep = DSLQueryFactoryUtil.select(
+				CommerceDiscountRelTable.INSTANCE);
+
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
-				_getGroupByStep(
+				_getJoinStep(
+					fromStep,
 					DSLQueryFactoryUtil.selectDistinct(
 						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
 					).from(
@@ -328,8 +331,8 @@ public class CommerceDiscountRelFinderImpl
 				CommerceDiscountRelImpl.TABLE_NAME,
 				CommerceDiscountRelImpl.class);
 
-			return _getCommerceDiscountRels(
-				(List<Long>)QueryUtil.list(sqlQuery, getDialect(), start, end));
+			return (List<CommerceDiscountRel>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -358,8 +361,12 @@ public class CommerceDiscountRelFinderImpl
 		try {
 			session = openSession();
 
+			FromStep fromStep = DSLQueryFactoryUtil.select(
+				CommerceDiscountRelTable.INSTANCE);
+
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
-				_getGroupByStep(
+				_getJoinStep(
+					fromStep,
 					DSLQueryFactoryUtil.selectDistinct(
 						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
 					).from(
@@ -388,8 +395,8 @@ public class CommerceDiscountRelFinderImpl
 				CommerceDiscountRelImpl.TABLE_NAME,
 				CommerceDiscountRelImpl.class);
 
-			return _getCommerceDiscountRels(
-				(List<Long>)QueryUtil.list(sqlQuery, getDialect(), start, end));
+			return (List<CommerceDiscountRel>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -417,8 +424,12 @@ public class CommerceDiscountRelFinderImpl
 		try {
 			session = openSession();
 
+			FromStep fromStep = DSLQueryFactoryUtil.select(
+				CommerceDiscountRelTable.INSTANCE);
+
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
-				_getGroupByStep(
+				_getJoinStep(
+					fromStep,
 					DSLQueryFactoryUtil.selectDistinct(
 						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
 					).from(
@@ -440,8 +451,8 @@ public class CommerceDiscountRelFinderImpl
 				CommerceDiscountRelImpl.TABLE_NAME,
 				CommerceDiscountRelImpl.class);
 
-			return _getCommerceDiscountRels(
-				(List<Long>)QueryUtil.list(sqlQuery, getDialect(), start, end));
+			return (List<CommerceDiscountRel>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -451,58 +462,50 @@ public class CommerceDiscountRelFinderImpl
 		}
 	}
 
-	private List<CommerceDiscountRel> _getCommerceDiscountRels(
-		List<Long> commerceDiscountRelIds) {
-
-		if (commerceDiscountRelIds.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		return dslQuery(
-			DSLQueryFactoryUtil.select(
-				CommerceDiscountRelTable.INSTANCE
-			).from(
-				CommerceDiscountRelTable.INSTANCE
-			).where(
-				CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId.in(
-					commerceDiscountRelIds.toArray(new Long[0]))
-			));
-	}
-
-	private GroupByStep _getGroupByStep(
-		JoinStep joinStep, String className, Long commerceDiscountId,
-		String keywords, Expression<String> keywordsPredicateExpression,
+	private JoinStep _getJoinStep(
+		FromStep fromStep, JoinStep initialJoinStep, String className,
+		Long commerceDiscountId, String keywords,
+		Expression<String> keywordsPredicateExpression,
 		boolean inlineSQLHelper) {
 
-		return joinStep.where(
-			() -> {
-				Predicate predicate =
-					CommerceDiscountRelTable.INSTANCE.commerceDiscountId.eq(
-						commerceDiscountId
-					).and(
-						CommerceDiscountRelTable.INSTANCE.classNameId.eq(
-							_classNameLocalService.getClassNameId(className))
-					);
+		Predicate predicate =
+			CommerceDiscountRelTable.INSTANCE.commerceDiscountId.eq(
+				commerceDiscountId
+			).and(
+				CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(className))
+			);
 
-				if (Validator.isNotNull(keywords)) {
-					predicate = predicate.and(
-						Predicate.withParentheses(
-							_customSQL.getKeywordsPredicate(
-								DSLFunctionFactoryUtil.lower(
-									keywordsPredicateExpression),
-								_customSQL.keywords(keywords, true))));
-				}
+		if (Validator.isNotNull(keywords)) {
+			predicate = predicate.and(
+				Predicate.withParentheses(
+					_customSQL.getKeywordsPredicate(
+						DSLFunctionFactoryUtil.lower(
+							keywordsPredicateExpression),
+						_customSQL.keywords(keywords, true))));
+		}
 
-				if (inlineSQLHelper) {
-					predicate = predicate.and(
-						_inlineSQLHelper.getPermissionWherePredicate(
-							CommerceDiscount.class,
-							CommerceDiscountRelTable.INSTANCE.
-								commerceDiscountId));
-				}
+		if (inlineSQLHelper) {
+			predicate = predicate.and(
+				_inlineSQLHelper.getPermissionWherePredicate(
+					CommerceDiscount.class,
+					CommerceDiscountRelTable.INSTANCE.commerceDiscountId));
+		}
 
-				return predicate;
-			});
+		return fromStep.from(
+			initialJoinStep.where(
+				predicate
+			).as(
+				"tempCommerceDiscountRel"
+			)
+		).innerJoinON(
+			CommerceDiscountRelTable.INSTANCE,
+			CommerceDiscountRelTable.INSTANCE.as(
+				"tempCommerceDiscountRel"
+			).commerceDiscountRelId.eq(
+				CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+			)
+		);
 	}
 
 	@Reference

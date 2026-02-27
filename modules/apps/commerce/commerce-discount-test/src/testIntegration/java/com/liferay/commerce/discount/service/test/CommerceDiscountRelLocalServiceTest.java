@@ -301,6 +301,11 @@ public class CommerceDiscountRelLocalServiceTest {
 				commercePricingClass2.getCommercePricingClassId(), null,
 				_serviceContext);
 
+		commerceDiscountRelList =
+			_commerceDiscountRelFinder.findPricingClassesByCommerceDiscountId(
+				_commerceDiscount.getCommerceDiscountId(), null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 		Assert.assertEquals(
 			commerceDiscountRelList.toString(), 2,
 			commerceDiscountRelList.size());

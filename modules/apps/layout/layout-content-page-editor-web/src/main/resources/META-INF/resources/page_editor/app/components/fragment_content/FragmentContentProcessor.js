@@ -6,7 +6,7 @@
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 
 import {
 	useEditableProcessorClickPosition,
@@ -31,6 +31,7 @@ export default function FragmentContentProcessor({
 	const languageId = useSelector(selectLanguageId);
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const isMounted = useIsMounted();
+	const isNavigatingRef = useRef(false);
 
 	const editable = editables.find(
 		(editable) => editableProcessorUniqueId === editable.itemId
@@ -50,7 +51,15 @@ export default function FragmentContentProcessor({
 				return;
 			}
 
+			if (isNavigatingRef.current) {
+				isNavigatingRef.current = false;
+
+				return;
+			}
+
 			event.originalEvent.preventDefault();
+
+			isNavigatingRef.current = true;
 
 			const editableValue =
 				editableValues[editable.editableValueNamespace][

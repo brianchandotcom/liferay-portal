@@ -112,7 +112,7 @@ export class FDSSamplePage {
 
 		this.cards = {
 			container: cardsContainer,
-			itemActionButtons: cardItems.getByLabel('More actions'),
+			itemActionButtons: cardItems.getByLabel('Actions'),
 			items: cardItems,
 		};
 		this.creatorFilterSearchInput = page
@@ -144,7 +144,6 @@ export class FDSSamplePage {
 		this.list = {
 			container: listContainer,
 			itemActionButtons: listItems.getByRole('button', {
-				exact: true,
 				name: 'Actions',
 			}),
 			items: listItems,
@@ -199,7 +198,6 @@ export class FDSSamplePage {
 			itemActionButtons: tableContainer
 				.locator('.cell-item-actions')
 				.getByRole('button', {
-					exact: true,
 					name: 'Actions',
 				}),
 			manageColumnsVisibilityButton: tableContainer.getByTitle(
@@ -312,7 +310,6 @@ export class FDSSamplePage {
 			})
 			.locator('.cell-item-actions')
 			.getByRole('button', {
-				exact: true,
 				name: 'Actions',
 			});
 	}

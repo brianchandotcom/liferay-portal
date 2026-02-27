@@ -159,7 +159,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
@@ -592,8 +591,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				MVCResourceCommand.class,
 				new AutocompleteAssigneeMVCResourceCommand(
-					_queries, _roleLocalService, _searcher,
-					_searchRequestBuilderFactory, _userLocalService),
+					_roleLocalService, _searcher, _searchRequestBuilderFactory,
+					_userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"jakarta.portlet.name", objectDefinition.getPortletId()
 				).put(
@@ -890,9 +889,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -39,11 +39,10 @@ public class AutocompleteAssigneeMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	public AutocompleteAssigneeMVCResourceCommand(
-		Queries queries, RoleLocalService roleLocalService, Searcher searcher,
+		RoleLocalService roleLocalService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		UserLocalService userLocalService) {
 
-		_queries = queries;
 		_roleLocalService = roleLocalService;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
@@ -125,35 +124,34 @@ public class AutocompleteAssigneeMVCResourceCommand
 	private BooleanQuery _getBooleanQuery(long companyId, String search)
 		throws Exception {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		BooleanQuery roleBooleanQuery = _queries.booleanQuery();
+		BooleanQuery roleBooleanQuery = QueriesUtil.booleanQuery();
 
 		Role guestRole = _roleLocalService.getRole(
 			companyId, RoleConstants.GUEST);
 
 		roleBooleanQuery.addMustNotQueryClauses(
-			_queries.term(Field.ENTRY_CLASS_PK, guestRole.getRoleId()));
+			QueriesUtil.term(Field.ENTRY_CLASS_PK, guestRole.getRoleId()));
 
 		if (Validator.isNull(search)) {
 			return booleanQuery.addShouldQueryClauses(roleBooleanQuery);
 		}
 
 		roleBooleanQuery.addMustQueryClauses(
-			_queries.matchPhrasePrefix(Field.NAME, search),
-			_queries.term(Field.ENTRY_CLASS_NAME, Role.class.getName()));
+			QueriesUtil.matchPhrasePrefix(Field.NAME, search),
+			QueriesUtil.term(Field.ENTRY_CLASS_NAME, Role.class.getName()));
 
-		BooleanQuery userBooleanQuery = _queries.booleanQuery();
+		BooleanQuery userBooleanQuery = QueriesUtil.booleanQuery();
 
 		userBooleanQuery.addMustQueryClauses(
-			_queries.matchPhrasePrefix("fullName", search),
-			_queries.term(Field.ENTRY_CLASS_NAME, User.class.getName()));
+			QueriesUtil.matchPhrasePrefix("fullName", search),
+			QueriesUtil.term(Field.ENTRY_CLASS_NAME, User.class.getName()));
 
 		return booleanQuery.addShouldQueryClauses(
 			roleBooleanQuery, userBooleanQuery);
 	}
 
-	private final Queries _queries;
 	private final RoleLocalService _roleLocalService;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;

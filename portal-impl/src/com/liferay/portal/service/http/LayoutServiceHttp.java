@@ -2336,6 +2336,46 @@ public class LayoutServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Layout updateIconImageId(
+			HttpPrincipal httpPrincipal, long plid, long iconImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutServiceUtil.class, "updateIconImageId",
+				_updateIconImageIdParameterTypes57);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, plid, iconImageId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Layout)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Layout updateLayout(
 			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 			long layoutId, long parentLayoutId,
@@ -2355,7 +2395,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateLayout",
-				_updateLayoutParameterTypes57);
+				_updateLayoutParameterTypes58);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, parentLayoutId,
@@ -2401,51 +2441,11 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateLookAndFeel",
-				_updateLookAndFeelParameterTypes58);
+				_updateLookAndFeelParameterTypes59);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, themeId,
 				colorSchemeId, css);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.portal.kernel.model.Layout)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.portal.kernel.model.Layout updateIconImageId(
-			HttpPrincipal httpPrincipal, long plid, long iconImageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutServiceUtil.class, "updateIconImageId",
-				_updateIconImageIdParameterTypes59);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, plid, iconImageId);
 
 			Object returnObj = null;
 
@@ -3078,7 +3078,9 @@ public class LayoutServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 	private static final Class<?>[] _updateIconImageParameterTypes56 =
 		new Class[] {long.class, byte[].class};
-	private static final Class<?>[] _updateLayoutParameterTypes57 =
+	private static final Class<?>[] _updateIconImageIdParameterTypes57 =
+		new Class[] {long.class, long.class};
+	private static final Class<?>[] _updateLayoutParameterTypes58 =
 		new Class[] {
 			long.class, boolean.class, long.class, long.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
@@ -3087,13 +3089,11 @@ public class LayoutServiceHttp {
 			String.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLookAndFeelParameterTypes58 =
+	private static final Class<?>[] _updateLookAndFeelParameterTypes59 =
 		new Class[] {
 			long.class, boolean.class, long.class, String.class, String.class,
 			String.class
 		};
-	private static final Class<?>[] _updateIconImageIdParameterTypes59 =
-		new Class[] {long.class, long.class};
 	private static final Class<?>[] _updateNameParameterTypes60 = new Class[] {
 		long.class, boolean.class, long.class, String.class, String.class
 	};

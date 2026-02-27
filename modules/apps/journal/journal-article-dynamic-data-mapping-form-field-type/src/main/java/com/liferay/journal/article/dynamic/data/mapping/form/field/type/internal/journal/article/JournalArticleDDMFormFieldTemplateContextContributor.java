@@ -200,18 +200,16 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 					"classNameId", _portal.getClassNameId(className));
 			}
 
-			if (!jsonObject.has("title") || !jsonObject.has("titleMap")) {
-				JournalArticle journalArticle =
-					_journalArticleLocalService.fetchLatestArticle(
-						jsonObject.getLong("classPK"));
+			JournalArticle journalArticle =
+				_journalArticleLocalService.fetchLatestArticle(
+					jsonObject.getLong("classPK"));
 
-				jsonObject.put(
-					"title", journalArticle.getTitle()
-				).put(
-					"titleMap",
-					_jsonFactory.createJSONObject(journalArticle.getTitleMap())
-				);
-			}
+			jsonObject.put(
+				"title", journalArticle.getTitle()
+			).put(
+				"titleMap",
+				_jsonFactory.createJSONObject(journalArticle.getTitleMap())
+			);
 
 			return jsonObject.toString();
 		}

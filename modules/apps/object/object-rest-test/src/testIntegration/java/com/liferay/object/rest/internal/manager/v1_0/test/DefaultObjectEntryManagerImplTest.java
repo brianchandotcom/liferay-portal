@@ -7144,6 +7144,11 @@ public class DefaultObjectEntryManagerImplTest
 				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
 				String.valueOf(depotEntry.getGroupId()));
 
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition7,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			String.valueOf(depotEntry.getGroupId()), 1);
+
 		ObjectEntryFolder objectEntryFolder1 =
 			_objectEntryFolderLocalService.addObjectEntryFolder(
 				RandomTestUtil.randomString(), depotEntry.getGroupId(),
@@ -7152,6 +7157,14 @@ public class DefaultObjectEntryManagerImplTest
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null, null, RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
+
+		_testMoveObjectEntry(
+			objectEntry.getPropertyValue("textObjectFieldName"),
+			objectEntry.getId(), objectEntryFolder1.getObjectEntryFolderId());
+
+		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
+			dtoConverterContext, objectEntry.getExternalReferenceCode(),
+			_objectDefinition7, String.valueOf(depotEntry.getGroupId()));
 
 		ObjectEntryFolder objectEntryFolder2 =
 			_objectEntryFolderLocalService.addObjectEntryFolder(
@@ -7162,7 +7175,8 @@ public class DefaultObjectEntryManagerImplTest
 				ServiceContextTestUtil.getServiceContext());
 
 		_testMoveObjectEntry(
-			depotEntry.getGroupId(), objectEntryFolder1, objectEntryFolder2);
+			objectEntry.getPropertyValue("textObjectFieldName"),
+			objectEntry.getId(), objectEntryFolder2.getObjectEntryFolderId());
 		_testMoveObjectEntryDuplicateName(
 			depotEntry.getGroupId(), objectEntryFolder2, objectEntryFolder1);
 		_testMoveObjectEntryReplace(
@@ -11660,26 +11674,20 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _testMoveObjectEntry(
-			long groupId, ObjectEntryFolder sourceObjectEntryFolder,
-			ObjectEntryFolder destinationObjectEntryFolder)
+			Object expectedObjectFieldValue, long objectEntryId,
+			long objectEntryFolderId)
 		throws Exception {
 
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			_objectDefinition7,
-			sourceObjectEntryFolder.getObjectEntryFolderId(),
-			String.valueOf(groupId), 1);
-
-		ObjectEntry objectEntry2 = _defaultObjectEntryManager.moveObjectEntry(
-			_createDTOConverterContext(adminUser), objectEntry1.getId(),
-			destinationObjectEntryFolder.getObjectEntryFolderId(), false);
+		ObjectEntry objectEntry = _defaultObjectEntryManager.moveObjectEntry(
+			_createDTOConverterContext(adminUser), objectEntryId,
+			objectEntryFolderId, false);
 
 		Assert.assertEquals(
-			objectEntry1.getPropertyValue("textObjectFieldName"),
-			objectEntry2.getPropertyValue("textObjectFieldName"));
-		Assert.assertEquals(
+			String.valueOf(expectedObjectFieldValue),
 			String.valueOf(
-				destinationObjectEntryFolder.getObjectEntryFolderId()),
-			String.valueOf(objectEntry2.getObjectEntryFolderId()));
+				objectEntry.getPropertyValue("textObjectFieldName")));
+		Assert.assertEquals(
+			objectEntryFolderId, (long)objectEntry.getObjectEntryFolderId());
 	}
 
 	private void _testMoveObjectEntryDuplicateName(

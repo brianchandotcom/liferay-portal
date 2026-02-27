@@ -10,7 +10,6 @@ import com.liferay.headless.delivery.dynamic.data.mapping.DDMStructureField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
@@ -25,7 +24,7 @@ public class SortUtil {
 
 	public static void processSorts(
 			DDMIndexer ddmIndexer, SearchRequestBuilder searchRequestBuilder,
-			Sort[] oldSorts, Queries queries, Sorts sorts)
+			Sort[] oldSorts, Sorts sorts)
 		throws PortalException {
 
 		List<com.liferay.portal.search.sort.Sort> searchSorts =

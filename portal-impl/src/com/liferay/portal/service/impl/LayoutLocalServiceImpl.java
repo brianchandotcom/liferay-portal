@@ -3023,7 +3023,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-		layout.setModifiedDate(new Date());
 		layout.setIconImageId(iconImageId);
 
 		return layoutPersistence.update(layout);

@@ -271,7 +271,7 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 
 			int maxTableNameLength = databaseMetaData.getMaxTableNameLength();
 
-			String tempTableName = null;
+			String tempTableName;
 
 			if ((maxTableNameLength > 0) &&
 				((testTableName.length() + _TEMP_SUFFIX.length()) >

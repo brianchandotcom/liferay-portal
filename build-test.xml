@@ -13081,6 +13081,7 @@ company.default.web.id=www.able.com</echo>
 Comment view						</start-docker-container>
 					</then>
 				</if>
+
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 dl.store.antivirus.enabled=true</echo>
 

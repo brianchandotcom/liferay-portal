@@ -7,28 +7,23 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -191,23 +186,21 @@ public class ViewRecycleBinSectionDisplayContext
 			"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq " +
 				"'files')";
 
-		List<Long> groupIds = null;
+		List<Long> groupIds = ListUtil.filter(
+			DepotEntryServiceUtil.getDepotEntryGroupIds(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				DepotConstants.TYPE_SPACE),
+			groupId -> {
+				Group group = groupLocalService.fetchGroup(groupId);
 
-		try {
-			groupIds = _getDepotGroupIds(_themeDisplay.getCompanyId());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get depot group IDs for group " + _groupId,
-					portalException);
-			}
+				if ((group != null) && _trashHelper.isTrashEnabled(group)) {
+					return true;
+				}
 
-			return filterString + " and status eq " +
-				WorkflowConstants.STATUS_ANY;
-		}
+				return false;
+			});
 
-		if (groupIds.isEmpty()) {
+		if (ListUtil.isEmpty(groupIds)) {
 			return filterString + " and status eq " +
 				WorkflowConstants.STATUS_ANY;
 		}
@@ -217,43 +210,6 @@ public class ViewRecycleBinSectionDisplayContext
 			StringUtil.merge(groupIds, ","), ")) and status eq ",
 			WorkflowConstants.STATUS_IN_TRASH);
 	}
-
-	private List<Long> _getDepotGroupIds(long companyId)
-		throws PortalException {
-
-		List<Long> depotEntryGroupIds = null;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (RoleLocalServiceUtil.hasUserRole(
-				themeDisplay.getUserId(), themeDisplay.getCompanyId(),
-				RoleConstants.CMS_ADMINISTRATOR, true)) {
-
-			depotEntryGroupIds = depotEntryLocalService.getDepotEntryGroupIds(
-				companyId, DepotConstants.TYPE_SPACE);
-		}
-		else {
-			depotEntryGroupIds = depotEntryLocalService.getDepotEntryGroupIds(
-				companyId, themeDisplay.getUserId(), DepotConstants.TYPE_SPACE);
-		}
-
-		return TransformUtil.transform(
-			depotEntryGroupIds,
-			depotEntryGroupId -> {
-				Group group = groupLocalService.fetchGroup(depotEntryGroupId);
-
-				if ((group == null) || !_trashHelper.isTrashEnabled(group)) {
-					return null;
-				}
-
-				return group.getGroupId();
-			});
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewRecycleBinSectionDisplayContext.class);
 
 	private final AssetLibraryResource.Factory _assetLibraryResourceFactory;
 	private final long _groupId;

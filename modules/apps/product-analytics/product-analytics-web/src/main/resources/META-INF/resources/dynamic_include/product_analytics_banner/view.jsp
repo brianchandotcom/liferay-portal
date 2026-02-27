@@ -11,10 +11,6 @@
 ProductAnalyticsConfigurationDisplayContext productAnalyticsConfigurationDisplayContext = (ProductAnalyticsConfigurationDisplayContext)request.getAttribute(ProductAnalyticsWebKeys.PRODUCT_ANALYTICS_CONFIGURATION_DISPLAY_CONTEXT);
 %>
 
-<liferay-portlet:runtime
-	portletName="<%= ProductAnalyticsPortletKeys.PRODUCT_ANALYTICS_BANNER %>"
-/>
-
 <aui:script src="https://storage.googleapis.com/liferaycloud-cdn-product-experience-manager-assets-prd/self-hosted-script/product-analytics-script.umd.min.js" type="text/javascript"></aui:script>
 
 <aui:script type="module">

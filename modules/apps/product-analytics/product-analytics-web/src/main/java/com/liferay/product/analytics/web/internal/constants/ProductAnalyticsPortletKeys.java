@@ -10,10 +10,6 @@ package com.liferay.product.analytics.web.internal.constants;
  */
 public class ProductAnalyticsPortletKeys {
 
-	public static final String PRODUCT_ANALYTICS_BANNER =
-		"com_liferay_product_analytics_web_portlet_" +
-			"ProductAnalyticsBannerPortlet";
-
 	public static final String PRODUCT_ANALYTICS_CONSENT_PANEL =
 		"com_liferay_product_analytics_web_portlet_" +
 			"ProductAnalyticsConsentPanelPortlet";

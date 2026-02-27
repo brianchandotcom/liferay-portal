@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.search.configuration.ReindexerConfiguration;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.reindexer.Reindexer;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -302,15 +302,15 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	protected SearchResponse searchUsersInAllGroups(
 		List<Group> groups, long testUserId) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		groups.forEach(
 			group -> booleanQuery.addMustQueryClauses(
-				_queries.term(Field.GROUP_ID, group.getGroupId())));
+				QueriesUtil.term(Field.GROUP_ID, group.getGroupId())));
 
 		if (testUserId != 0) {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term(Field.USER_ID, testUserId));
+				QueriesUtil.term(Field.USER_ID, testUserId));
 		}
 
 		Group group = groups.get(0);
@@ -359,9 +359,6 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 
 	@Inject
 	private static OrganizationLocalService _organizationLocalService;
-
-	@Inject
-	private static Queries _queries;
 
 	@Inject
 	private static Reindexer _reindexer;

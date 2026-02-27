@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -245,7 +245,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 			searchRequestBuilder.emptySearchEnabled(
 				true
 			).query(
-				_queries.term(Field.USER_ID, TestPropsValues.getUserId())
+				QueriesUtil.term(Field.USER_ID, TestPropsValues.getUserId())
 			).build());
 
 		List<Document> documents = searchResponse1.getDocuments();
@@ -269,7 +269,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		SearchResponse searchResponse2 = _searcher.search(
 			searchRequestBuilder.query(
-				_queries.term(Field.GROUP_ID, groupId)
+				QueriesUtil.term(Field.GROUP_ID, groupId)
 			).build());
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
@@ -317,7 +317,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 			).modelIndexerClasses(
 				user.getModelClass()
 			).query(
-				_queries.term(Field.ENTRY_CLASS_PK, user.getPrimaryKeyObj())
+				QueriesUtil.term(Field.ENTRY_CLASS_PK, user.getPrimaryKeyObj())
 			).build());
 
 		List<Document> documents = searchResponse.getDocuments();
@@ -344,9 +344,6 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 	@Inject
 	private static OrganizationLocalService _organizationLocalService;
-
-	@Inject
-	private static Queries _queries;
 
 	@Inject
 	private static ResourcePermissionLocalService

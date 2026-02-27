@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -245,13 +245,13 @@ public class UserGroupCascadeReindexUsersTest {
 	}
 
 	protected SearchResponse searchUsersInGroup(Group group) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(
-			_queries.term(Field.GROUP_ID, group.getGroupId()));
+			QueriesUtil.term(Field.GROUP_ID, group.getGroupId()));
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term(Field.USER_ID, getTestUserId()));
+			QueriesUtil.term(Field.USER_ID, getTestUserId()));
 
 		return _searcher.search(
 			getSearchRequestBuilder(
@@ -278,7 +278,7 @@ public class UserGroupCascadeReindexUsersTest {
 			).modelIndexerClasses(
 				User.class
 			).query(
-				_queries.term("userGroupIds", userGroup.getUserGroupId())
+				QueriesUtil.term("userGroupIds", userGroup.getUserGroupId())
 			).build());
 	}
 
@@ -328,9 +328,6 @@ public class UserGroupCascadeReindexUsersTest {
 
 	@Inject
 	private static OrganizationLocalService _organizationLocalService;
-
-	@Inject
-	private static Queries _queries;
 
 	@Inject
 	private static Searcher _searcher;

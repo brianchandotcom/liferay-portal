@@ -217,12 +217,12 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			});
 
 		com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page<Contact>
-			contactPage = _koroneikiService.getContactPage(
+			contactsPage = _koroneikiService.getContactsPage(
 				koroneikiAccount.getKey(),
 				com.liferay.osb.koroneiki.phloem.rest.client.pagination.
 					Pagination.of(1, -1));
 
-		for (Contact contact : contactPage.getItems()) {
+		for (Contact contact : contactsPage.getItems()) {
 			String emailAddress = contact.getEmailAddress();
 
 			Page<UserAccount> userAccountsPage =

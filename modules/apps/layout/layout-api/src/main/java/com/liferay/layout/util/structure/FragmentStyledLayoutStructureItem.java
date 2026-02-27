@@ -7,14 +7,12 @@ package com.liferay.layout.util.structure;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -154,19 +152,7 @@ public class FragmentStyledLayoutStructureItem
 			return PortletIdCodec.decodePortletName(portletId);
 		}
 
-		Long groupId = ScopeUtil.getItemGroupId(
-			fragmentEntryLink.getCompanyId(),
-			fragmentEntryLink.getFragmentEntryScopeERC(),
-			fragmentEntryLink.getGroupId());
-
-		if (groupId == null) {
-			return StringPool.BLANK;
-		}
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.
-				fetchFragmentEntryByExternalReferenceCode(
-					fragmentEntryLink.getFragmentEntryERC(), groupId);
+		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
 
 		if (fragmentEntry != null) {
 			return fragmentEntry.getFragmentEntryKey();

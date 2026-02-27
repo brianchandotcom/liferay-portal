@@ -15,7 +15,6 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -113,9 +112,7 @@ public class ObjectFieldSettingUtil {
 		serviceBuilderObjectFieldSetting.setValue(
 			String.valueOf(objectFieldSetting.getValue()));
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				serviceBuilderObjectFieldSetting.getCompanyId(), "LPD-74813") &&
-			serviceBuilderObjectFieldSetting.compareName(
+		if (serviceBuilderObjectFieldSetting.compareName(
 				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP)) {
 
 			Group group = groupLocalService.fetchGroupByExternalReferenceCode(

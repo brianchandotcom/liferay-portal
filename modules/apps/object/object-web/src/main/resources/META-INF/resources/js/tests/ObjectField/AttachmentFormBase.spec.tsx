@@ -52,16 +52,6 @@ jest.mock('../../utils/fieldSettings', () => ({
 		}, {}),
 }));
 
-beforeAll(() => {
-	global.Liferay = {
-		...global.Liferay,
-		FeatureFlags: {
-			...global.Liferay?.FeatureFlags,
-			'LPD-74813': true,
-		},
-	};
-});
-
 const renderComponent = ({
 	hasDepotEntry = true,
 	objectFieldSettings = [],

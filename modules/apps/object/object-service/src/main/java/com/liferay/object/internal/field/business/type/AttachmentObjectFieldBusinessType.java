@@ -33,7 +33,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -293,11 +292,9 @@ public class AttachmentObjectFieldBusinessType
 		String fileSource = objectFieldSettingsValues.get(
 			ObjectFieldSettingConstants.NAME_FILE_SOURCE);
 
-		if ((FeatureFlagManagerUtil.isEnabled(
-				objectField.getCompanyId(), "LPD-74813") &&
-			 Objects.equals(
-				 fileSource,
-				 ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT)) ||
+		if (Objects.equals(
+				fileSource,
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT) ||
 			Objects.equals(
 				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
@@ -308,12 +305,10 @@ public class AttachmentObjectFieldBusinessType
 					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH),
 				objectField.getName(), objectFieldSettingsValues);
 		}
-		else if (FeatureFlagManagerUtil.isEnabled(
-					objectField.getCompanyId(), "LPD-74813") &&
-				 Objects.equals(
-					 fileSource,
-					 ObjectFieldSettingConstants.
-						 VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT)) {
+		else if (Objects.equals(
+					fileSource,
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT)) {
 
 			validateRelatedObjectFieldSettings(
 				objectField,
@@ -377,12 +372,6 @@ public class AttachmentObjectFieldBusinessType
 
 		super.validateObjectFieldSettingValue(
 			objectField, objectFieldSettingName, objectFieldSettingsValues);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectField.getCompanyId(), "LPD-74813")) {
-
-			return;
-		}
 
 		String objectFieldSettingValue = objectFieldSettingsValues.get(
 			objectFieldSettingName);

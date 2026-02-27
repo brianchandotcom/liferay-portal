@@ -53,7 +53,7 @@ export function AttachmentFormBase({
 				` (${Liferay.Language.get('documents-and-media')})`,
 			value: 'userComputerToDocumentsAndMedia',
 		},
-		...(Liferay.FeatureFlags['LPD-74813'] && hasDepotEntry
+		...(hasDepotEntry
 			? [
 					{
 						label:
@@ -164,7 +164,7 @@ export function AttachmentFormBase({
 	};
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPD-74813'] && hasDepotEntry) {
+		if (hasDepotEntry) {
 			fetch(
 				`/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`
 			)

@@ -17,7 +17,6 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -47,18 +46,11 @@ import java.util.Set;
 public class ObjectFieldSettingUtil {
 
 	public static Set<String> getAllowedFileSources(long companyId) {
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-74813")) {
-			return SetUtil.fromArray(
-				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT,
-				ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA,
-				ObjectFieldSettingConstants.
-					VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT,
-				ObjectFieldSettingConstants.
-					VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA);
-		}
-
 		return SetUtil.fromArray(
+			ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT,
 			ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA,
+			ObjectFieldSettingConstants.
+				VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT,
 			ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA);
 	}
 

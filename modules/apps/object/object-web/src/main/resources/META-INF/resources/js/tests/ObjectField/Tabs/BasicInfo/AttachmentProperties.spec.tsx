@@ -37,9 +37,6 @@ const renderComponent = (settings: ObjectFieldSetting[]) =>
 
 beforeAll(() => {
 	(global as any).Liferay = {
-		FeatureFlags: {
-			'LPD-74813': true,
-		},
 		Language: {
 			get: (key: string) => key,
 		},

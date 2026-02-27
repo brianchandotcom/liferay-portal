@@ -160,7 +160,6 @@ public class ObjectFieldLocalServiceTest {
 				new ServiceContext());
 	}
 
-	@FeatureFlag("LPD-74813")
 	@Test
 	public void testAddCustomObjectField() throws Exception {
 		AssertUtils.assertFailure(
@@ -1891,7 +1890,6 @@ public class ObjectFieldLocalServiceTest {
 			modifiableSystemObjectDefinition);
 	}
 
-	@FeatureFlag("LPD-74813")
 	@Test
 	public void testObjectFieldSettings() throws Exception {
 

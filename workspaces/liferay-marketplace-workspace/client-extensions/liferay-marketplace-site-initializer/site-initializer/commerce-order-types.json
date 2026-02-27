@@ -50,7 +50,7 @@
 	{
 		"active": true,
 		"description": {
-			"en_US": "Designates that the order is an dxp."
+			"en_US": "Designates that the order is Liferay DXP."
 		},
 		"displayOrder": 4,
 		"externalReferenceCode": "DXP",

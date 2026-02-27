@@ -8,18 +8,13 @@ import classNames from 'classnames';
 
 import './ProductStatus.scss';
 
-type ProductStatusProps = {
-	productStatus: string;
-};
-
 const STATUS_CLASS_MAP: Record<string, string> = {
-	'approved': 'product-status-icon-completed',
-	'draft': 'product-status-icon-processing',
-	'pending': 'product-status-icon-pending',
-	'under-review': 'product-status-icon-pending',
+	approved: 'product-status-icon-completed',
+	draft: 'product-status-icon-draft',
+	pending: 'product-status-icon-pending',
 };
 
-const ProductStatus = ({productStatus}: ProductStatusProps) => {
+const ProductStatus = ({productStatus}: {productStatus: string}) => {
 	const statusKey = productStatus.toLowerCase().replace(' ', '-');
 	const statusClass = STATUS_CLASS_MAP[statusKey] || '';
 

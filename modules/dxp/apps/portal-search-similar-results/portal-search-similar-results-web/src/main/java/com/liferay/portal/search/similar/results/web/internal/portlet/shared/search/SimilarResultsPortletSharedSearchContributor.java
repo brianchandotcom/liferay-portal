@@ -26,7 +26,7 @@ import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.query.MoreLikeThisQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsContributorsRegistry;
@@ -216,16 +216,16 @@ public class SimilarResultsPortletSharedSearchContributor
 	}
 
 	private Query _getEntryClassNameQuery(String entryClassName) {
-		return _queries.term(Field.ENTRY_CLASS_NAME, entryClassName);
+		return QueriesUtil.term(Field.ENTRY_CLASS_NAME, entryClassName);
 	}
 
 	private MoreLikeThisQuery _getMoreLikeThisQuery(
 		String uid,
 		SimilarResultsPortletPreferences similarResultsPortletPreferences) {
 
-		MoreLikeThisQuery moreLikeThisQuery = _queries.moreLikeThis(
+		MoreLikeThisQuery moreLikeThisQuery = QueriesUtil.moreLikeThis(
 			Collections.singleton(
-				_queries.documentIdentifier(
+				QueriesUtil.documentIdentifier(
 					similarResultsPortletPreferences.getIndexName(),
 					similarResultsPortletPreferences.getDocType(), uid)));
 
@@ -320,9 +320,6 @@ public class SimilarResultsPortletSharedSearchContributor
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Queries _queries;
 
 	private SimilarResultsContributorsRegistry
 		_similarResultsContributorsRegistry;

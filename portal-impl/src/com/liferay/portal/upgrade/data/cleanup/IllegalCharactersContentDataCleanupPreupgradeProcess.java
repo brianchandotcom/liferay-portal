@@ -33,7 +33,8 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 		Map<String, String> tableAndColumnNames = new HashMap<>();
 
 		if (dbInspector.hasColumn("DDMContent", "data_")) {
-			_cleanUpNullUnicode("data_", dbInspector, "DDMContent");
+			_cleanUpIllegalUnicodeStringNullCharacterSequence(
+				"data_", dbInspector, "DDMContent");
 			tableAndColumnNames.put("DDMContent", "data_");
 		}
 
@@ -42,19 +43,20 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 		}
 
 		if (dbInspector.hasColumn("JournalArticle", "content")) {
-			_cleanUpNullUnicode("content", dbInspector, "JournalArticle");
+			_cleanUpIllegalUnicodeStringNullCharacterSequence(
+				"content", dbInspector, "JournalArticle");
 			tableAndColumnNames.put("JournalArticle", "content");
 		}
 
 		for (Map.Entry<String, String> entry : tableAndColumnNames.entrySet()) {
 			for (int charCode : _ILLEGAL_CHARACTER_CODES) {
-				_cleanUp(
+				_cleanUpIllegalCharacter(
 					charCode, entry.getValue(), dbInspector, entry.getKey());
 			}
 		}
 	}
 
-	private void _cleanUp(
+	private void _cleanUpIllegalCharacter(
 			int charCode, String columnName, DBInspector dbInspector,
 			String tableName)
 		throws Exception {
@@ -112,7 +114,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 		}
 	}
 
-	private void _cleanUpNullUnicode(
+	private void _cleanUpIllegalUnicodeStringNullCharacterSequence(
 			String columnName, DBInspector dbInspector, String tableName)
 		throws Exception {
 

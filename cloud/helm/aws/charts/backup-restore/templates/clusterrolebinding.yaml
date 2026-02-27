@@ -10,5 +10,5 @@ roleRef:
     name: {{ include "liferayAWSBackupRestore.name" . }}
 subjects:
     -   kind: ServiceAccount
-        name: {{ include "liferayAWSBackupRestore.name" . }}
+        name: backup-restore
         namespace: {{ .Release.Namespace }}

@@ -10,4 +10,3 @@ metadata:
     annotations:
         workflows.argoproj.io/default-artifact-repository: {{ $defaultArtifactRepository }}
     name: {{ include "liferayAWSBackupRestore.artifactRepositoryConfigMapName" . }}
-    namespace: {{ .Values.argo.artifactRepository.namespace }}

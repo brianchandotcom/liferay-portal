@@ -22,12 +22,6 @@ spec:
                     properties:
                         spec:
                             properties:
-                                activeDataPlane:
-                                    default: blue
-                                    enum:
-                                        -   blue
-                                        -   green
-                                    type: string
                                 backup:
                                     properties:
                                         enabled:
@@ -73,12 +67,10 @@ spec:
                                         instanceClass:
                                             default: db.t3.medium
                                             type: string
-                                        isRestoring:
-                                            default: false
-                                            type: boolean
                                         region:
                                             type: string
                                         snapshotIdentifier:
+                                            nullable: true
                                             type: string
                                         storageGB:
                                             default: 20
@@ -100,6 +92,12 @@ spec:
                                 projectId:
                                     type: string
                                 region:
+                                    type: string
+                                restorePhase:
+                                    enum:
+                                        -   none
+                                        -   promoting
+                                        -   provisioning
                                     type: string
                                 search:
                                     properties:
@@ -126,6 +124,11 @@ spec:
                                         region:
                                             type: string
                                     type: object
+                                targetActiveDataPlane:
+                                    enum:
+                                        -   blue
+                                        -   green
+                                    type: string
                             required:
                                 -   database
                                 -   deletionProtection

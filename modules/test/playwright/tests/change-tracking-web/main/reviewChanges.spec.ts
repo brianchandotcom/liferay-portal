@@ -953,3 +953,50 @@ test('LPD-78919 Unified view in FragmentEntryLink review page is shown', async (
 		trigger: renderViewDropdown,
 	});
 });
+
+test('LPD-79249 Test XSS vulnerability when moving a change to a ctCollection with malicious name', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+		ctCollection.body.id
+	);
+
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	await apiHelpers.headlessDelivery.postDocument(
+		site.id,
+		createReadStream(path.join(__dirname, '/dependencies/attachment.txt'))
+	);
+
+	await apiHelpers.headlessChangeTracking.createCTCollection(
+		`AnyName<script>alert('test');</script>`
+	);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	const firstDropdown = page
+		.locator('.cell-item-actions .dropdown svg.lexicon-icon-ellipsis-v')
+		.first();
+	await firstDropdown.waitFor();
+	await firstDropdown.click();
+
+	page.on('dialog', async (dialog) => {
+		if (dialog.type() === 'alert') {
+			throw new Error('XSS');
+		}
+	});
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Move Changes'}),
+		trigger: firstDropdown,
+	});
+
+	await expect(
+		page.getByRole('heading', {name: 'Moved Changes'})
+	).toBeVisible();
+});

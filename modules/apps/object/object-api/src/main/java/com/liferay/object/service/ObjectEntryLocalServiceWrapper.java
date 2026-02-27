@@ -831,13 +831,13 @@ public class ObjectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry moveObjectEntry(
-			long userId, long objectEntryId, long objectEntryFolderId,
+			long objectEntryId, long objectEntryFolderId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.moveObjectEntry(
-			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
+			objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	@Override

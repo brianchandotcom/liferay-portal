@@ -726,13 +726,13 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static ObjectEntry moveObjectEntry(
-			long userId, long objectEntryId, long objectEntryFolderId,
+			long objectEntryId, long objectEntryFolderId,
 			Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().moveObjectEntry(
-			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
+			objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	public static ObjectEntry moveObjectEntryToTrash(

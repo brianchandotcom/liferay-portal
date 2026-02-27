@@ -1726,6 +1726,49 @@ test(
 	}
 );
 
+test(
+	'Publish button is disabled when pressing it to avoid several requests to be triggered',
+	{tag: '@LPD-47375'},
+	async ({apiHelpers, fragmentsPage, page, site}) => {
+		const fragmentCollectionName = getRandomString();
+
+		const fragmentCollection =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: site.id,
+					name: fragmentCollectionName,
+				}
+			);
+
+		// Create fragment
+
+		const fragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId: fragmentCollection.fragmentCollectionId,
+			groupId: site.id,
+			html: '<div class="fragment-name">hello</div>',
+			name: fragmentEntryName,
+		});
+
+		// Go to edit fragment
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
+
+		await fragmentsPage.clickAction('Edit', fragmentEntryName);
+
+		// Publish and check that the button is disabled afterwards
+
+		const publishButton = page.getByRole('button', {name: 'Publish'});
+
+		await publishButton.click();
+
+		await expect(publishButton).toBeDisabled();
+	}
+);
+
 testDeprecatedFragmentSet(
 	'The deprecated label and button exist for the contributed Featured Content Fragment Set',
 	{

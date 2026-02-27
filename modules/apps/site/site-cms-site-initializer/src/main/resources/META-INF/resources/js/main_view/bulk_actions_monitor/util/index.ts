@@ -117,7 +117,7 @@ export function getTaskStatusProps(bulkActionTask: IBulkActionTask) {
 	const {executionStatus, numberOfFailedItems, numberOfItems} =
 		bulkActionTask as IBulkActionTask;
 
-	if (numberOfFailedItems === Number(numberOfItems)) {
+	if (numberOfItems !== 0 && numberOfFailedItems === Number(numberOfItems)) {
 		return TASK_STATUS_PROPS.failed;
 	}
 

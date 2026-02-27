@@ -18,6 +18,7 @@ import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import '../css/DataSets.scss';
+import {EItemActionsType} from '../../../../../../../frontend-data-set-web/src/main/resources/META-INF/resources/utils/types';
 import RequiredMark from './components/RequiredMark';
 import ValidationFeedback from './components/ValidationFeedback';
 import RESTApplicationDropdownItem from './components/rest/RESTApplicationDropdownItem';
@@ -795,6 +796,7 @@ const CustomDataSets = ({
 						onClick: ({itemData}: {itemData: IDataSet}) => {
 							navigate(getEditURL(itemData));
 						},
+						type: EItemActionsType.ITEM,
 					},
 					{
 						data: {
@@ -806,6 +808,7 @@ const CustomDataSets = ({
 						icon: 'password-policies',
 						label: Liferay.Language.get('permissions'),
 						target: 'modal-permissions',
+						type: EItemActionsType.ITEM,
 					},
 					{
 						data: {
@@ -814,6 +817,7 @@ const CustomDataSets = ({
 						icon: 'trash',
 						label: Liferay.Language.get('delete'),
 						onClick: onDeleteClick,
+						type: EItemActionsType.ITEM,
 					},
 				]}
 				sorts={[{direction: 'desc', key: 'dateCreated'}]}

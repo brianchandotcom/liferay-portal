@@ -21,6 +21,7 @@ import classNames from 'classnames';
 import {openModal} from 'frontend-js-components-web';
 import {fetch, navigate} from 'frontend-js-web';
 
+import {EItemActionsType} from '../../../../../../../frontend-data-set-web/src/main/resources/META-INF/resources/utils/types';
 import Toggle from './components/Toggle';
 import {DEFAULT_FETCH_HEADERS, FDS_DEFAULT_PROPS} from './utils/constants';
 import getAPIExplorerURL from './utils/getAPIExplorerURL';
@@ -517,6 +518,7 @@ const SystemDataSets = ({
 						onClick: ({itemData}: {itemData: IDataSet}) => {
 							navigate(getEditURL(itemData));
 						},
+						type: EItemActionsType.ITEM,
 					},
 					{
 						data: {
@@ -525,6 +527,7 @@ const SystemDataSets = ({
 						icon: 'trash',
 						label: Liferay.Language.get('delete'),
 						onClick: onDeleteClick,
+						type: EItemActionsType.ITEM,
 					},
 				]}
 				sorts={[{direction: 'desc', key: 'dateCreated'}]}

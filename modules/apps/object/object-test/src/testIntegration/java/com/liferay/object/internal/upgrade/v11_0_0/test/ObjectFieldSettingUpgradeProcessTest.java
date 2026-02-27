@@ -15,8 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -49,16 +48,14 @@ public class ObjectFieldSettingUpgradeProcessTest {
 		ObjectFieldSetting objectFieldSetting2 = _addObjectFieldSetting(
 			objectFieldId, "showFilesInDocumentsAndMedia", StringPool.FALSE);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
+		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
+			_upgradeStepRegistrator, new Version(11, 0, 0));
 
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
+		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
 			upgradeProcess.upgrade();
-
-			_entityCache.clearCache();
 		}
+
+		_entityCache.clearCache();
 
 		objectFieldSetting1 =
 			_objectFieldSettingLocalService.getObjectFieldSetting(
@@ -91,10 +88,6 @@ public class ObjectFieldSettingUpgradeProcessTest {
 		return _objectFieldSettingLocalService.updateObjectFieldSetting(
 			objectFieldSetting);
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.object.internal.upgrade.v11_0_0." +
-			"ObjectFieldSettingUpgradeProcess";
 
 	@Inject(
 		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"

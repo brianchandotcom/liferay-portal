@@ -691,8 +691,13 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"10.27.0", "11.0.0",
-			new com.liferay.object.internal.upgrade.v11_0_0.
-				ObjectFieldSettingUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				"update ObjectFieldSetting set name = 'showFilesInLibrary' " +
+					"where name = 'showFilesInDocumentsAndMedia'"),
+			UpgradeProcessFactory.runSQL(
+				"update ObjectFieldSetting set value = " +
+					"'userComputerToDocumentsAndMedia' where name = " +
+						"'fileSource' and value like 'userComputer'"));
 	}
 
 	@Reference

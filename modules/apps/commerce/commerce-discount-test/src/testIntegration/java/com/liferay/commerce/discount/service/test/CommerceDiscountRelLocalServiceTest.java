@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.discount.service.persistence.test;
+package com.liferay.commerce.discount.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -53,7 +53,7 @@ import org.junit.runner.RunWith;
  * @author Lianne Louie
  */
 @RunWith(Arquillian.class)
-public class CommerceDiscountRelFinderTest {
+public class CommerceDiscountRelLocalServiceTest {
 
 	@ClassRule
 	@Rule

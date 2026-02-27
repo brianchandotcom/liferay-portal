@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -64,7 +65,7 @@ public class FileEntryUtil {
 
 		try {
 			file = FileUtil.createTempFile(
-				URLUtil.getByteArray(thumbnailURLReference.getUrl()));
+				HttpUtil.URLtoByteArray(thumbnailURLReference.getUrl()));
 
 			String mimeType = MimeTypesUtil.getContentType(file);
 

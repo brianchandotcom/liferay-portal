@@ -35,7 +35,7 @@ public class DuplicateQueryStringsDetectorTest
 	@Before
 	public void setUp() throws Exception {
 		_duplicateQueryStringsDetector = new DuplicateQueryStringsDetector(
-			queries, searchEngineAdapter);
+			searchEngineAdapter);
 	}
 
 	@Test
@@ -62,7 +62,6 @@ public class DuplicateQueryStringsDetectorTest
 			criteria
 		).getRankingIndexName();
 
-		setUpQueries();
 		setUpSearchEngineAdapter(setUpSearchHits(queryStrings));
 
 		Assert.assertEquals(

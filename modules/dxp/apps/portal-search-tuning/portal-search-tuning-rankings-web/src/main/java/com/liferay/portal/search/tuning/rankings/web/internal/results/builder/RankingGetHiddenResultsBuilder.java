@@ -20,7 +20,6 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
@@ -40,7 +39,7 @@ public class RankingGetHiddenResultsBuilder {
 
 	public RankingGetHiddenResultsBuilder(
 		DLAppLocalService dlAppLocalService,
-		FastDateFormatFactory fastDateFormatFactory, Queries queries,
+		FastDateFormatFactory fastDateFormatFactory,
 		RankingHelper rankingHelper, RankingIndexName rankingIndexName,
 		RankingIndexReader rankingIndexReader, ResourceActions resourceActions,
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
@@ -48,7 +47,6 @@ public class RankingGetHiddenResultsBuilder {
 
 		_dlAppLocalService = dlAppLocalService;
 		_fastDateFormatFactory = fastDateFormatFactory;
-		_queries = queries;
 		_rankingHelper = rankingHelper;
 		_rankingIndexName = rankingIndexName;
 		_rankingIndexReader = rankingIndexReader;
@@ -165,7 +163,6 @@ public class RankingGetHiddenResultsBuilder {
 	private final DLAppLocalService _dlAppLocalService;
 	private final FastDateFormatFactory _fastDateFormatFactory;
 	private int _from;
-	private final Queries _queries;
 	private final RankingHelper _rankingHelper;
 	private String _rankingId;
 	private final RankingIndexName _rankingIndexName;

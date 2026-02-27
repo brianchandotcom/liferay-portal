@@ -34,7 +34,7 @@ public class RankingGetHiddenResultsBuilderTest
 	@Before
 	public void setUp() throws Exception {
 		_rankingGetHiddenResultsBuilder = new RankingGetHiddenResultsBuilder(
-			dlAppLocalService, fastDateFormatFactory, queries, rankingHelper,
+			dlAppLocalService, fastDateFormatFactory, rankingHelper,
 			rankingIndexName, rankingIndexReader, resourceActions,
 			resourceRequest, resourceResponse, searchEngineAdapter);
 

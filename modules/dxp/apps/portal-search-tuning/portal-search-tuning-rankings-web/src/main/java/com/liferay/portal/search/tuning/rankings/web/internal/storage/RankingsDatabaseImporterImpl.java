@@ -15,7 +15,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
@@ -55,9 +55,6 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 	}
 
 	@Reference
-	protected Queries queries;
-
-	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;
 
 	@Reference(
@@ -95,7 +92,7 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 		searchSearchRequest.setIndexNames(rankingIndexName.getIndexName());
 
 		searchSearchRequest.setFetchSource(true);
-		searchSearchRequest.setQuery(queries.matchAll());
+		searchSearchRequest.setQuery(QueriesUtil.matchAll());
 		searchSearchRequest.setSelectedFieldNames(StringPool.BLANK);
 
 		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(

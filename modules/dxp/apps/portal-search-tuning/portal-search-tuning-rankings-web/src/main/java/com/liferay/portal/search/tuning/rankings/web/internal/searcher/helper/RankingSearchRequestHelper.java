@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.IdsQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
@@ -48,9 +48,6 @@ public class RankingSearchRequestHelper {
 	protected ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory;
 
 	@Reference
-	protected Queries queries;
-
-	@Reference
 	protected RankingHelper rankingHelper;
 
 	private ComplexQueryPart _getHiddenDocumentIdsQueryPart(Ranking ranking) {
@@ -75,7 +72,7 @@ public class RankingSearchRequestHelper {
 			return null;
 		}
 
-		IdsQuery idsQuery = queries.ids();
+		IdsQuery idsQuery = QueriesUtil.ids();
 
 		idsQuery.addIds(
 			ArrayUtil.toStringArray(rankingHelper.translateDocumentIds(ids)));
@@ -84,7 +81,7 @@ public class RankingSearchRequestHelper {
 	}
 
 	private IdsQuery _getIdsQuery(Ranking.Pin pin, int size) {
-		IdsQuery idsQuery = queries.ids();
+		IdsQuery idsQuery = QueriesUtil.ids();
 
 		String id = rankingHelper.getDocumentId(pin.getDocumentId());
 

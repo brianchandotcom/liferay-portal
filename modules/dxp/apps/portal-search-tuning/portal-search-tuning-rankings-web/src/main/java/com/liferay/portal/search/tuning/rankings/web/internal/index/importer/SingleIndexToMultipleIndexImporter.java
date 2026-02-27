@@ -21,7 +21,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreatorUtil;
@@ -35,12 +35,11 @@ import java.util.List;
 public class SingleIndexToMultipleIndexImporter {
 
 	public SingleIndexToMultipleIndexImporter(
-		IndexNameBuilder indexNameBuilder, Queries queries,
+		IndexNameBuilder indexNameBuilder,
 		RankingIndexReader rankingIndexReader,
 		SearchEngineAdapter searchEngineAdapter) {
 
 		_indexNameBuilder = indexNameBuilder;
-		_queries = queries;
 		_rankingIndexReader = rankingIndexReader;
 		_searchEngineAdapter = searchEngineAdapter;
 	}
@@ -91,7 +90,7 @@ public class SingleIndexToMultipleIndexImporter {
 		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
 		countSearchRequest.setIndexNames(SINGLE_INDEX_NAME.getIndexName());
-		countSearchRequest.setQuery(_queries.matchAll());
+		countSearchRequest.setQuery(QueriesUtil.matchAll());
 
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
 			countSearchRequest);
@@ -103,7 +102,8 @@ public class SingleIndexToMultipleIndexImporter {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(SINGLE_INDEX_NAME.getIndexName());
-		searchSearchRequest.setQuery(_queries.term("index", companyIndexName));
+		searchSearchRequest.setQuery(
+			QueriesUtil.term("index", companyIndexName));
 		searchSearchRequest.setFetchSource(true);
 		searchSearchRequest.setSelectedFieldNames(StringPool.BLANK);
 
@@ -154,7 +154,6 @@ public class SingleIndexToMultipleIndexImporter {
 		SingleIndexToMultipleIndexImporter.class);
 
 	private final IndexNameBuilder _indexNameBuilder;
-	private final Queries _queries;
 	private final RankingIndexReader _rankingIndexReader;
 	private final SearchEngineAdapter _searchEngineAdapter;
 

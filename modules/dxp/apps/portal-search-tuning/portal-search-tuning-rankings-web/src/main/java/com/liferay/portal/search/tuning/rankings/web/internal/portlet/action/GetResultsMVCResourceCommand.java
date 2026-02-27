@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
@@ -85,10 +84,10 @@ public class GetResultsMVCResourceCommand implements MVCResourceCommand {
 
 		RankingGetHiddenResultsBuilder rankingGetHiddenResultsBuilder =
 			new RankingGetHiddenResultsBuilder(
-				dlAppLocalService, fastDateFormatFactory, queries,
-				rankingHelper, getRankingIndexName(resourceRequest),
-				rankingIndexReader, resourceActions, resourceRequest,
-				resourceResponse, searchEngineAdapter);
+				dlAppLocalService, fastDateFormatFactory, rankingHelper,
+				getRankingIndexName(resourceRequest), rankingIndexReader,
+				resourceActions, resourceRequest, resourceResponse,
+				searchEngineAdapter);
 
 		RankingMVCResourceRequest rankingMVCResourceRequest =
 			new RankingMVCResourceRequest(resourceRequest);
@@ -138,8 +137,8 @@ public class GetResultsMVCResourceCommand implements MVCResourceCommand {
 		RankingGetSearchResultsBuilder rankingGetSearchResultsBuilder =
 			new RankingGetSearchResultsBuilder(
 				complexQueryPartBuilderFactory, dlAppLocalService,
-				fastDateFormatFactory, groupLocalService, queries,
-				resourceActions, resourceRequest, resourceResponse, searcher,
+				fastDateFormatFactory, groupLocalService, resourceActions,
+				resourceRequest, resourceResponse, searcher,
 				searchRequestBuilderFactory);
 
 		RankingMVCResourceRequest rankingMVCResourceRequest =
@@ -165,8 +164,7 @@ public class GetResultsMVCResourceCommand implements MVCResourceCommand {
 				fastDateFormatFactory, groupLocalService,
 				getRankingIndexName(resourceRequest), rankingIndexReader,
 				rankingSearchRequestHelper, resourceActions, resourceRequest,
-				resourceResponse, queries, searcher,
-				searchRequestBuilderFactory);
+				resourceResponse, searcher, searchRequestBuilderFactory);
 
 		RankingMVCResourceRequest rankingMVCResourceRequest =
 			new RankingMVCResourceRequest(resourceRequest);
@@ -219,9 +217,6 @@ public class GetResultsMVCResourceCommand implements MVCResourceCommand {
 
 	@Reference
 	protected Portal portal;
-
-	@Reference
-	protected Queries queries;
 
 	@Reference
 	protected RankingHelper rankingHelper;

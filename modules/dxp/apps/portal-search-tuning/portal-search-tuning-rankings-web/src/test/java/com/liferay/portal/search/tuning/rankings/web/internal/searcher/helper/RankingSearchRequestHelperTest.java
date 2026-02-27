@@ -39,8 +39,6 @@ public class RankingSearchRequestHelperTest extends BaseRankingsWebTestCase {
 			_rankingSearchRequestHelper, "complexQueryPartBuilderFactory",
 			complexQueryPartBuilderFactory);
 		ReflectionTestUtil.setFieldValue(
-			_rankingSearchRequestHelper, "queries", queries);
-		ReflectionTestUtil.setFieldValue(
 			_rankingSearchRequestHelper, "rankingHelper", rankingHelper);
 	}
 
@@ -48,8 +46,6 @@ public class RankingSearchRequestHelperTest extends BaseRankingsWebTestCase {
 	public void testContribute() {
 		setUpComplexQueryPartBuilderFactory(
 			Mockito.mock(ComplexQueryPartBuilder.class));
-
-		setUpQuery();
 
 		SearchRequestBuilder searchRequestBuilder = Mockito.mock(
 			SearchRequestBuilder.class);

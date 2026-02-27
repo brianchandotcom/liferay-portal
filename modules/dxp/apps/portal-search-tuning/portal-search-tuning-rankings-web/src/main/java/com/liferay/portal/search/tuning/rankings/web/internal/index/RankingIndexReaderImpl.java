@@ -21,7 +21,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
@@ -140,13 +140,13 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		boolean excludeInactiveStatus, String groupExternalReferenceCode,
 		String queryString, String sxpBlueprintExternalReferenceCode) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		if (!Validator.isBlank(sxpBlueprintExternalReferenceCode) &&
 			FeatureFlagManagerUtil.isEnabled("LPD-6368")) {
 
 			booleanQuery.addFilterQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 					sxpBlueprintExternalReferenceCode));
 		}
@@ -154,44 +154,44 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 				 FeatureFlagManagerUtil.isEnabled("LPD-6368")) {
 
 			booleanQuery.addFilterQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
 					groupExternalReferenceCode));
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.wildcard(
+				QueriesUtil.wildcard(
 					RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 					StringPool.QUESTION + StringPool.STAR),
-				_queries.wildcard(
+				QueriesUtil.wildcard(
 					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
 					StringPool.QUESTION + StringPool.STAR));
 		}
 
 		if (!Validator.isBlank(queryString)) {
 			booleanQuery.addFilterQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					RankingFields.QUERY_STRINGS_KEYWORD, queryString));
 		}
 
 		if (excludeInactiveStatus) {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					RankingFields.STATUS,
 					ResultRankingsConstants.STATUS_INACTIVE));
 		}
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				RankingFields.STATUS,
 				ResultRankingsConstants.STATUS_NOT_APPLICABLE));
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-6368")) {
 			booleanQuery.addFilterQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 					StringPool.BLANK),
-				_queries.term(
+				QueriesUtil.term(
 					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
 					StringPool.BLANK));
 		}
@@ -248,9 +248,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 
 		return rankings;
 	}
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private RankingBuilderFactory _rankingBuilderFactory;

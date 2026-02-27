@@ -9,9 +9,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.MatchAllQuery;
-import com.liferay.portal.search.query.MatchQuery;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
@@ -39,8 +36,6 @@ public class SearchRankingRequestTest extends BaseRankingsWebTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpQuery();
-
 		setUpPortletPreferencesFactoryUtil();
 
 		HttpServletRequest httpServletRequest =
@@ -51,7 +46,7 @@ public class SearchRankingRequestTest extends BaseRankingsWebTestCase {
 			Mockito.mock(ThemeDisplay.class));
 
 		_searchRankingRequest = new SearchRankingRequest(
-			httpServletRequest, queries, _rankingIndexName, _sorts,
+			httpServletRequest, _rankingIndexName, _sorts,
 			Mockito.mock(SearchContainer.class), searchEngineAdapter);
 	}
 
@@ -75,28 +70,6 @@ public class SearchRankingRequestTest extends BaseRankingsWebTestCase {
 			_searchRankingRequest.search();
 
 		Assert.assertEquals(searchHits, searchRankingResponse.getSearchHits());
-	}
-
-	private void _setUpQuery() {
-		Mockito.doReturn(
-			Mockito.mock(BooleanQuery.class)
-		).when(
-			queries
-		).booleanQuery();
-
-		Mockito.doReturn(
-			Mockito.mock(MatchQuery.class)
-		).when(
-			queries
-		).match(
-			Mockito.anyString(), Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			Mockito.mock(MatchAllQuery.class)
-		).when(
-			queries
-		).matchAll();
 	}
 
 	private final RankingIndexName _rankingIndexName = Mockito.mock(

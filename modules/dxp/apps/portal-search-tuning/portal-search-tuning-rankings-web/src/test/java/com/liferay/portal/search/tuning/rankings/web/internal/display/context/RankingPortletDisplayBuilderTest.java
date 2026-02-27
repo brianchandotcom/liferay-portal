@@ -46,10 +46,9 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		setUpPortletPreferencesFactoryUtil();
 
 		_rankingPortletDisplayBuilder = new RankingPortletDisplayBuilder(
-			_httpServletRequest, language, portal, queries,
-			_rankingBuilderFactory, rankingIndexNameBuilder, _renderRequest,
-			_renderResponse, searchEngineAdapter, _searchEngineInformation,
-			_sorts);
+			_httpServletRequest, language, portal, _rankingBuilderFactory,
+			rankingIndexNameBuilder, _renderRequest, _renderResponse,
+			searchEngineAdapter, _searchEngineInformation, _sorts);
 	}
 
 	@Test
@@ -65,7 +64,6 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		setUpLanguageUtil("");
 		setUpPortal();
 		setUpPortalUtil();
-		setUpQuery();
 		setUpRankingIndexNameBuilder();
 		setUpRenderResponse(_renderResponse);
 		setUpSearchEngineAdapter(Mockito.mock(SearchHits.class));

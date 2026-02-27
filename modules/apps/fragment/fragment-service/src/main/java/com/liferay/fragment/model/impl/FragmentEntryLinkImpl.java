@@ -113,8 +113,12 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.
-				getFragmentEntryByExternalReferenceCode(
+				fetchFragmentEntryByExternalReferenceCode(
 					getFragmentEntryERC(), groupId);
+
+		if (fragmentEntry == null) {
+			return false;
+		}
 
 		Date fragmentEntryModifiedDate = fragmentEntry.getModifiedDate();
 

@@ -55,14 +55,14 @@ function _generate_tfvars {
 		jq --raw-output '.variables
 		| to_entries[]
 		| if (.value | type) == "string"
-			then
-				"\(.key) = \"\(.value)\""
-			elif (.value | type) == "array" or (.value | type) == "object"
-			then
-				"\(.key) = \(.value | @json)"
-			else
-				"\(.key) = \(.value)"
-			end' "${json_file}")
+		  then
+		  	"\(.key) = \"\(.value)\""
+		  elif (.value | type) == "array" or (.value | type) == "object"
+		  then
+		  	"\(.key) = \(.value | @json)"
+		  else
+		  	"\(.key) = \(.value)"
+		  end' "${json_file}")
 
 	if [ -z "${tfvars_content}" ]
 	then

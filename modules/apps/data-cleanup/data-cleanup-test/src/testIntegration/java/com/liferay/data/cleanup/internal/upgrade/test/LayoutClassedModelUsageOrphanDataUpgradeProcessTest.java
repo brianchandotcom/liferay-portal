@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -295,9 +294,7 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcessTest {
 					))
 			).toString(),
 			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentEntry.getGroupId(), _draftLayout.getGroupId()),
+			fragmentEntry.getExternalReferenceCode(), null,
 			fragmentEntry.getHtml(), fragmentEntry.getJs(), _draftLayout,
 			fragmentEntry.getFragmentEntryKey(), segmentsExperienceId,
 			fragmentEntry.getType());

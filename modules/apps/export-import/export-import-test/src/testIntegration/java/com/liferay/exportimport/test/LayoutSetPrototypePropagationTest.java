@@ -84,7 +84,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -297,9 +296,7 @@ public class LayoutSetPrototypePropagationTest
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			StringPool.BLANK, fragmentEntry.getCss(),
 			fragmentEntry.getConfiguration(),
-			fragmentEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentEntry.getGroupId(), draftLayout1.getGroupId()),
+			fragmentEntry.getExternalReferenceCode(), null,
 			fragmentEntry.getHtml(), fragmentEntry.getJs(), draftLayout1,
 			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
 			0,

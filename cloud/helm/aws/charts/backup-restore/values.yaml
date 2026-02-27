@@ -1,6 +1,4 @@
 argo:
-    artifactRepository:
-        namespace: argo-workflows
     workflowSpec:
         artifactGC:
             strategy: OnWorkflowDeletion
@@ -8,44 +6,20 @@ argo:
             strategy: OnWorkflowSuccess
         ttlStrategy:
             secondsAfterCompletion: 86400
-argoCD:
-    appWaitTimeoutSeconds: 3600
-    infrastructureApplicationName: ""
 awsBackupService:
     restoreWaitTimeoutSeconds: 7200
-clusterSecretStoreName: ""
 createClusterResources: true
 fullnameOverride: ""
-git:
-    externalSecret:
-        keys:
-            token: git_token
-            username: git_username
-        name: liferay/credentials/backup-restore-git-credentials
-    infrastructureRepository:
-        branch: master
-        paths:
-            infrastructureValues: ""
-        url: ""
-    user:
-        emailAddress: ""
-        name: ""
 images:
-    argocd:
-        repository: argoproj/argocd
-        tag: v2.12.2
     awsCli:
         repository: amazon/aws-cli
         tag: 2.27.63
-    git:
-        repository: alpine/git
-        tag: 2.52.0
     helmKubectl:
         repository: dtzar/helm-kubectl
         tag: 4.1.1
-    yq:
-        repository: mikefarah/yq
-        tag: 4.52.4
+liferayInfrastructure:
+    name: ""
+    waitTimeoutSeconds: 3600
 liferayWorkload:
     name: liferay-default
     rolloutTimeout: 15m

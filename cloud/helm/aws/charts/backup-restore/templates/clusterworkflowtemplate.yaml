@@ -18,84 +18,55 @@ spec:
         {{- .Values.argo.workflowSpec.podGC | toYaml | nindent 8 }}
     templates:
         -   inputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
-                    -   name: infrastructure-values
-                        path: /tmp/infrastructure-values.yaml
                 parameters:
-                    -   name: commit-message
-            name: apply-infra-changes
+                    -   name: restore-phase
+                    -   default: "null"
+                        name: snapshot-identifier
+                    -   name: target-active-data-plane
+            name: apply-infrastructure
+            outputs:
+                parameters:
+                    -   name: generation
+                        valueFrom:
+                            jsonPath: "{.metadata.generation}"
+            resource:
+                action: patch
+                manifest: |-
+                    apiVersion: aws.liferay.com/v1alpha1
+                    kind: LiferayInfrastructure
+                    metadata:
+                        name: {{ include "liferayAWSBackupRestore.liferayInfrastructureName" . }}
+                        namespace: {{ .Release.Namespace }}
+                    spec:
+                        database:
+                            snapshotIdentifier: {{ "{{" }}inputs.parameters.snapshot-identifier}}
+                        restorePhase: {{ "{{" }}inputs.parameters.restore-phase}}
+                        targetActiveDataPlane: {{ "{{" }}inputs.parameters.target-active-data-plane}}
+                mergeStrategy: merge
+        -   inputs:
+                parameters:
+                    -   name: restore-phase
+                    -   default: "null"
+                        name: snapshot-identifier
+                    -   name: target-active-data-plane
+            name: apply-wait-infrastructure
             steps:
                 -   -   arguments:
-                            artifacts:
-                                -   from: "{{ "{{" }}inputs.artifacts.git-repository}}"
-                                    name: git-repository
-                        name: git-pull
-                        template: git-pull
-                -   -   arguments:
-                            artifacts:
-                                -   from: "{{ "{{" }}steps.git-pull.outputs.artifacts.git-repository}}"
-                                    name: git-repository
-                                -   from: "{{ "{{" }}inputs.artifacts.infrastructure-values}}"
-                                    name: infrastructure-values
-                        name: write-infra-values
-                        template: write-infra-values
-                -   -   arguments:
-                            artifacts:
-                                -   from: "{{ "{{" }}steps.write-infra-values.outputs.artifacts.git-repository}}"
-                                    name: git-repository
                             parameters:
-                                -   name: commit-message
-                                    value: "{{ "{{" }}inputs.parameters.commit-message}}"
-                        name: git-push
-                        template: git-push
-                -   -   name: argocd-sync
-                        template: argocd-sync
-                -   -   name: wait-observed-generation
-                        template: wait-observed-generation
-                -   -   name: argocd-wait
-                        template: argocd-wait
-        -   container:
-                args:
-                    -   app
-                    -   sync
-                    -   "{{ default (printf "%s-%s-infra" .Values.global.projectId .Values.global.environmentId) .Values.argoCD.infrastructureApplicationName }}"
-                    -   --core
-                    -   --timeout
-                    -   "300"
-                command: [argocd]
-                image: "{{ .Values.images.argocd.repository }}:{{ .Values.images.argocd.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-            name: argocd-sync
-        -   container:
-                args:
-                    -   app
-                    -   wait
-                    -   "{{ default (printf "%s-%s-infra" .Values.global.projectId .Values.global.environmentId) .Values.argoCD.infrastructureApplicationName }}"
-                    -   --core
-                    -   --health
-                    -   --timeout
-                    -   "{{ .Values.argoCD.appWaitTimeoutSeconds }}"
-                command: [argocd]
-                image: "{{ .Values.images.argocd.repository }}:{{ .Values.images.argocd.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-            name: argocd-wait
-        -   name: checkout-git-repository
-            outputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
-            script:
-                command: [sh]
-                image: "{{ .Values.images.git.repository }}:{{ .Values.images.git.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-                source: |-
-                    {{- include "liferayAWSBackupRestore.script.gitCheckout" . | nindent 20 }}
-                {{- include "liferayAWSBackupRestore.gitCredentials.volumeMount" . | nindent 16 }}
+                                -   name: restore-phase
+                                    value: "{{ "{{" }}inputs.parameters.restore-phase}}"
+                                -   name: snapshot-identifier
+                                    value: "{{ "{{" }}inputs.parameters.snapshot-identifier}}"
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
+                        name: apply-infrastructure
+                        template: apply-infrastructure
+                -   -   arguments:
+                            parameters:
+                                -   name: expected-generation
+                                    value: "{{ "{{" }}steps.apply-infrastructure.outputs.parameters.generation}}"
+                        name: wait-infrastructure-ready
+                        template: wait-infrastructure-ready
         -   container:
                 args:
                     -   "s3"
@@ -111,11 +82,7 @@ spec:
                 parameters:
                     -   name: s3-bucket-id
             name: clean-up-s3-bucket
-        -   inputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
-            name: get-current-infrastructure-state
+        -   name: get-current-infrastructure-state
             outputs:
                 parameters:
                     -   name: data-active
@@ -153,40 +120,6 @@ spec:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
                     {{- include "liferayAWSBackupRestore.script.getPeerRecoveryPoints" . | nindent 20 }}
-        -   inputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
-            name: git-pull
-            outputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
-            script:
-                command: [sh]
-                image: "{{ .Values.images.git.repository }}:{{ .Values.images.git.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-                source: |-
-                    {{- include "liferayAWSBackupRestore.script.gitPull" . | nindent 20 }}
-                {{- include "liferayAWSBackupRestore.gitCredentials.volumeMount" . | nindent 16 }}
-                workingDir: /src
-        -   inputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
-                parameters:
-                    -   name: commit-message
-            name: git-push
-            script:
-                command: [sh]
-                image: "{{ .Values.images.git.repository }}:{{ .Values.images.git.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-                source: |-
-                    {{- include "liferayAWSBackupRestore.script.gitPush" . | nindent 20 }}
-                {{- include "liferayAWSBackupRestore.gitCredentials.volumeMount" . | nindent 16 }}
-                workingDir: /src
         -   container:
                 args:
                     -   rollout
@@ -212,24 +145,15 @@ spec:
             name: kubectl-rollout-status
         -   dag:
                 tasks:
-                    -   name: checkout-git-repository
-                        template: checkout-git-repository
                     -   arguments:
-                            artifacts:
-                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
-                                    name: git-repository
-                                -   name: infrastructure-values
-                                    raw:
-                                        data: |-
-                                            activeDataPlane: {{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}
-                                            database:
-                                                isRestoring: false
                             parameters:
-                                -   name: commit-message
-                                    value: Clean up inactive RDS instance
+                                -   name: restore-phase
+                                    value: none
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
                         depends: restart-liferay
                         name: clean-up-rds-instance
-                        template: apply-infra-changes
+                        template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
                                 -   name: s3-bucket-id
@@ -237,35 +161,33 @@ spec:
                         depends: restart-liferay
                         name: clean-up-s3-bucket
                         template: clean-up-s3-bucket
-                    -   arguments:
-                            artifacts:
-                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
-                                    name: git-repository
-                        depends: checkout-git-repository
-                        name: get-current-infrastructure-state
+                    -   name: get-current-infrastructure-state
                         template: get-current-infrastructure-state
                     -   name: get-peer-recovery-points
                         template: get-peer-recovery-points
-                    -   depends: update-kubernetes-secret
+                    -   arguments:
+                            parameters:
+                                -   name: restore-phase
+                                    value: promoting
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
+                        depends: restore-rds-instance && restore-s3-bucket
+                        name: promote-inactive-data-plane
+                        template: apply-wait-infrastructure
+                    -   depends: promote-inactive-data-plane
                         name: restart-liferay
                         template: restart-liferay
                     -   arguments:
-                            artifacts:
-                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
-                                    name: git-repository
-                                -   name: infrastructure-values
-                                    raw:
-                                        data: |-
-                                            activeDataPlane: {{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}
-                                            database:
-                                                isRestoring: true
-                                                snapshotIdentifier: {{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.rds-snapshot-id}}
                             parameters:
-                                -   name: commit-message
-                                    value: Provision inactive RDS instance from database snapshot identifier
+                                -   name: restore-phase
+                                    value: provisioning
+                                -   name: snapshot-identifier
+                                    value: "{{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.rds-snapshot-id}}"
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
                         depends: get-current-infrastructure-state && get-peer-recovery-points
                         name: restore-rds-instance
-                        template: apply-infra-changes
+                        template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
                                 -   name: s3-recovery-point-arn
@@ -276,45 +198,21 @@ spec:
                         name: restore-s3-bucket
                         template: restore-s3-bucket
                     -   arguments:
-                            artifacts:
-                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
-                                    name: git-repository
-                                -   name: infrastructure-values
-                                    raw:
-                                        data: |-
-                                            activeDataPlane: {{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}
-                                            database:
-                                                isRestoring: false
                             parameters:
-                                -   name: commit-message
-                                    value: Roll back RDS instance
-                        depends: "!restore-rds-instance.Skipped && !update-kubernetes-secret.Succeeded"
+                                -   name: restore-phase
+                                    value: none
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}"
+                        depends: "!restore-rds-instance.Omitted && !restore-rds-instance.Skipped && !promote-inactive-data-plane.Succeeded"
                         name: roll-back-rds-instance
-                        template: apply-infra-changes
+                        template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
                                 -   name: s3-bucket-id
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.s3-bucket-id-inactive}}"
-                        depends: "!restore-s3-bucket.Skipped && !update-kubernetes-secret.Succeeded"
+                        depends: "!restore-s3-bucket.Omitted && !restore-s3-bucket.Skipped && !promote-inactive-data-plane.Succeeded"
                         name: roll-back-s3-bucket
                         template: clean-up-s3-bucket
-                    -   arguments:
-                            artifacts:
-                                -   from: "{{ "{{" }}tasks.checkout-git-repository.outputs.artifacts.git-repository}}"
-                                    name: git-repository
-                                -   name: infrastructure-values
-                                    raw:
-                                        data: |-
-                                            activeDataPlane: {{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}
-                                            database:
-                                                isRestoring: true
-                                                snapshotIdentifier: null
-                            parameters:
-                                -   name: commit-message
-                                    value: Update Liferay configuration to restored data plane
-                        depends: restore-rds-instance && restore-s3-bucket
-                        name: update-kubernetes-secret
-                        template: apply-infra-changes
             name: main
         -   inputs:
                 parameters:
@@ -334,44 +232,17 @@ spec:
                         template: kubectl-rollout-restart
                 -   -   name: kubectl-rollout-status
                         template: kubectl-rollout-status
-        -   name: wait-observed-generation
+        -   inputs:
+                parameters:
+                    -   name: expected-generation
+            name: wait-infrastructure-ready
             script:
                 command: [sh]
                 image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "liferayAWSBackupRestore.script.waitObservedGeneration" . | nindent 20 }}
-        -   container:
-                args:
-                    -   --indent
-                    -   "4"
-                    -   --inplace
-                    -   ". *= load(\"/tmp/infrastructure-values.yaml\") | del(.. | select(. == null))"
-                    -   "{{ default (printf "liferay/projects/%s/environments/%s/liferay.yaml" .Values.global.projectId .Values.global.environmentId) .Values.git.infrastructureRepository.paths.infrastructureValues }}"
-                command: [yq]
-                image: "{{ .Values.images.yq.repository }}:{{ .Values.images.yq.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-                workingDir:
-                    /src
-            inputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
-                    -   name: infrastructure-values
-                        path: /tmp/infrastructure-values.yaml
-            name: write-infra-values
-            outputs:
-                artifacts:
-                    -   name: git-repository
-                        path: /src
+                    {{- include "liferayAWSBackupRestore.script.waitInfrastructureReady" . | nindent 20 }}
     ttlStrategy:
         {{- .Values.argo.workflowSpec.ttlStrategy | toYaml | nindent 8 }}
-    {{- if and .Values.git.credentials.token .Values.git.credentials.username }}
-    volumes:
-        -   name: git-credentials
-            secret:
-                secretName: {{ include "liferayAWSBackupRestore.gitCredentials.secretName" . }}
-    {{- end -}}
 {{- end -}}

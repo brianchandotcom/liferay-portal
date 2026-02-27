@@ -114,6 +114,17 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 							"SkipDryRunOnMissingResource=true"
 						]
 					}
+					ignoreDifferences=[
+						{
+							group="aws.liferay.com"
+							jsonPointers=[
+								"/spec/database/snapshotIdentifier",
+								"/spec/restorePhase",
+								"/spec/targetActiveDataPlane",
+							]
+							kind="LiferayInfrastructure"
+						},
+					]
 				}
 			}
 		}

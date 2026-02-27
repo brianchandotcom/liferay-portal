@@ -19,20 +19,9 @@
 {{- end -}}
 {{- end -}}
 
-{{- define "liferayAWSBackupRestore.gitCredentials.externalSecretName" -}}
-{{- printf "%s-git-creds" (include "liferayAWSBackupRestore.name" .) | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "liferayAWSBackupRestore.gitCredentials.volumeMount" -}}
-volumeMounts:
-    -   mountPath: /mnt/.git-credentials
-        name: git-credentials
-        subPath: .git-credentials
-{{- end -}}
-
 {{- define "liferayAWSBackupRestore.infraResourceBaseName" -}}
 {{- $projectIdFull := printf "%s-%s" .Values.global.projectId .Values.global.environmentId -}}
-{{- $uidHash := printf "%s-%s-%s" .Values.global.aws.accountId .Values.global.deploymentName $projectIdFull | sha256sum | trunc 6 -}}
+{{- $uidHash := printf "%v-%s-%s" .Values.global.aws.accountId .Values.global.deploymentName $projectIdFull | sha256sum | trunc 6 -}}
 {{- printf "%.18s-%s" $projectIdFull $uidHash -}}
 {{- end -}}
 
@@ -40,6 +29,10 @@ volumeMounts:
 {{ include "liferayAWSBackupRestore.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 helm.sh/chart: {{ include "liferayAWSBackupRestore.chart" . }}
+{{- end -}}
+
+{{- define "liferayAWSBackupRestore.liferayInfrastructureName" -}}
+{{- default (printf "%s-%s-infra" .Values.global.projectId .Values.global.environmentId) .Values.liferayInfrastructure.name -}}
 {{- end -}}
 
 {{- define "liferayAWSBackupRestore.name" -}}

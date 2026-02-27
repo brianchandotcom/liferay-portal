@@ -2564,7 +2564,11 @@ public class ObjectEntryLocalServiceImpl
 
 		DLFolder dlFileEntryFolder = dlFileEntry.getFolder();
 
-		if (groupId == 0) {
+		if ((groupId == 0) ||
+			Objects.equals(
+				fileSource,
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT)) {
+
 			groupId = dlFileEntry.getGroupId();
 		}
 
@@ -7092,6 +7096,31 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateGroup(
+			long groupId, ObjectField objectField,
+			List<ValidationError> validationErrors)
+		throws PortalException {
+
+		String fileSource = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+			objectField.getObjectFieldSettings());
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if ((Objects.equals(
+				fileSource,
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT) &&
+			 !group.isDepot()) ||
+			(Objects.equals(
+				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA) &&
+			 group.isDepot())) {
+
+			_handle(
+				new ObjectEntryValuesException.InvalidValue(
+					objectField.getName()),
+				validationErrors);
+		}
+	}
+
 	private void _validateGroupId(
 			long groupId, ObjectDefinition objectDefinition)
 		throws PortalException {
@@ -7569,6 +7598,8 @@ public class ObjectEntryLocalServiceImpl
 					guestUser, dlFileEntry.getSize(),
 					objectField.getObjectFieldId(), objectField.getName(),
 					validationErrors);
+				_validateGroup(
+					dlFileEntry.getGroupId(), objectField, validationErrors);
 
 				if ((existingValues != null) &&
 					(dlFileEntry.getFileEntryId() == GetterUtil.getLong(

@@ -49,9 +49,7 @@ function _generate_tfvars {
 
 	echo "Generating ${tfvars_file} from ${json_file}..."
 
-	local tfvars_content
-
-	tfvars_content=$(
+	local tfvars_content=$(
 		jq --raw-output '.variables
 		| to_entries[]
 		| if (.value | type) == "string"

@@ -59,6 +59,9 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
+import com.liferay.portal.kernel.search.generic.QueryTermImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -155,7 +158,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		_bulkSelectionRunner.run(
 			contextUser, bulkSelection, _getBulkSelectionAction(type),
-			_getInputMap(bulkAction, bulkActionTask, type));
+			_getInputMap(bulkAction, bulkActionTask, filter, type));
 
 		return bulkActionTask;
 	}
@@ -468,7 +471,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private Map<String, Serializable> _getInputMap(
-			BulkAction bulkAction, BulkActionTask bulkActionTask,
+			BulkAction bulkAction, BulkActionTask bulkActionTask, Filter filter,
 			BulkAction.Type type)
 		throws Exception {
 
@@ -534,7 +537,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 		else if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(type)) {
 			return hashMapWrapper.put(
-				"objectDefinitionId", _getObjectDefinitionId(bulkAction)
+				"objectDefinitionId", _getObjectDefinitionId(bulkAction, filter)
 			).build();
 		}
 		else if (BulkAction.Type.DUE_DATE_BULK_ACTION.equals(type)) {
@@ -639,8 +642,21 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return "custom-structure";
 	}
 
-	private long _getObjectDefinitionId(BulkAction bulkAction)
+	private long _getObjectDefinitionId(BulkAction bulkAction, Filter filter)
 		throws Exception {
+
+		SelectionScope selectionScope = bulkAction.getSelectionScope();
+
+		if (selectionScope.getSelectAll()) {
+			QueryFilter queryFilter = (QueryFilter)filter;
+
+			TermQueryImpl termQueryImpl = (TermQueryImpl)queryFilter.getQuery();
+
+			QueryTermImpl queryTermImpl =
+				(QueryTermImpl)termQueryImpl.getQueryTerm();
+
+			return Long.valueOf(queryTermImpl.getValue());
+		}
 
 		BulkActionItem[] bulkActionItems = bulkAction.getBulkActionItems();
 

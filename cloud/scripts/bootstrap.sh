@@ -70,18 +70,18 @@ function _download_and_extract_files {
 
 	local temp_dir==$(mktemp --directory --tmpdir liferay-bootstrap.XXXXXX)
 
-	local output_location=="${temp_dir}/$(basename "${latest_path}")"
+	local output_file=="${temp_dir}/$(basename "${latest_path}")"
 
 	curl \
 		--location \
-		--output "${output_location}" \
+		--output "${output_file}" \
 		--silent \
 		"https://cdn.liferay.cloud/${latest_path}"
 
 	tar \
 		--directory "${temp_dir}" \
 		--extract \
-		--file "${output_location}" \
+		--file "${output_file}" \
 		--ungzip
 
 	echo "${temp_dir}"

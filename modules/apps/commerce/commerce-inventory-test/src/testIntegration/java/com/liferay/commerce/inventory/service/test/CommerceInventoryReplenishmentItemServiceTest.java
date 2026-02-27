@@ -60,7 +60,6 @@ public class CommerceInventoryReplenishmentItemServiceTest {
 	public void setUp() throws Exception {
 		_commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
-
 		_cpInstance = CommerceInventoryTestUtil.addRandomCPInstanceSku(
 			TestPropsValues.getGroupId());
 

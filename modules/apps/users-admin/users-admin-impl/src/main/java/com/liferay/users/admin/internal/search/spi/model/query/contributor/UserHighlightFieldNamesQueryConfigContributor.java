@@ -6,9 +6,11 @@
 package com.liferay.users.admin.internal.search.spi.model.query.contributor;
 
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.query.contributor.HighlightFieldNamesQueryConfigContributor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -22,7 +24,11 @@ public class UserHighlightFieldNamesQueryConfigContributor
 
 	@Override
 	public String[] getHighlightFieldNames(SearchContext searchContext) {
-		return new String[] {"fullName"};
+		return _searchLocalizationHelper.getLocalizedFieldNames(
+			new String[] {"fullName"}, searchContext);
 	}
+
+	@Reference
+	private SearchLocalizationHelper _searchLocalizationHelper;
 
 }

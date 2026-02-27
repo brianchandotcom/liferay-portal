@@ -439,6 +439,24 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		inputTemplateNode.addAttribute(
 			"fileNameI18n", _jsonFactory.createJSONObject(fileNameI18n));
 
+		Object object = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+
+		if (object instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)object;
+
+			inputTemplateNode.addAttribute(
+				"groupId", groupedModel.getGroupId());
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		inputTemplateNode.addAttribute("isCMS", group.isCMS());
+
 		String previewURL = _getPreviewURL(httpServletRequest, value);
 
 		if (previewURL != null) {
@@ -493,24 +511,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 							httpServletRequest),
 						fragmentEntryLink.getNamespace() + "selectFileEntry",
 						customFileItemSelectorCriterion)));
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
-
-		inputTemplateNode.addAttribute("isCMS", group.isCMS());
-
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		if (object instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)object;
-
-			inputTemplateNode.addAttribute(
-				"groupId", groupedModel.getGroupId());
 		}
 	}
 

@@ -38,6 +38,10 @@ export const test = mergeTests(
 	dataSetFragmentPageTest
 );
 
+async function getFirstCellContentOfRow(tableRow) {
+	return tableRow.locator('td').first().allTextContents();
+}
+
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
@@ -204,6 +208,10 @@ test.describe('Item Actions in Data Set fragment', () => {
 			});
 		});
 
+		const firstCellTextContent = await getFirstCellContentOfRow(
+			dataSetFragmentPage.table.bodyRows.first()
+		);
+
 		const datasetRow =
 			await test.step('Check that the Item Actions dropdown is present in table row', async () => {
 				const tableRow = dataSetFragmentPage.table.bodyRows
@@ -213,13 +221,13 @@ test.describe('Item Actions in Data Set fragment', () => {
 				await expect(
 					tableRow.getByRole('button', {
 						exact: true,
-						name: 'Actions',
+						name: `${firstCellTextContent} Actions`,
 					})
 				).toBeVisible();
 
 				const button = tableRow.getByRole('button', {
 					exact: true,
-					name: 'Actions',
+					name: `${firstCellTextContent} Actions`,
 				});
 
 				const dropdownId = await button.getAttribute('aria-controls');
@@ -242,8 +250,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 		await test.step('Click the modal item action opens a modal window', async () => {
 			const button = datasetRow.getByRole('button', {
-				exact: true,
-				name: 'Actions',
+				name: `${firstCellTextContent} Actions`,
 			});
 
 			const dropdownId = await button.getAttribute('aria-controls');
@@ -279,7 +286,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		await test.step('Click the side panel item action opens a side panel', async () => {
 			const button = datasetRow.getByRole('button', {
 				exact: true,
-				name: 'Actions',
+				name: `${firstCellTextContent} Actions`,
 			});
 
 			const dropdownId = await button.getAttribute('aria-controls');
@@ -373,10 +380,10 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.allInnerTexts();
 
 			const cardActionsDropdownId = await firstCard
-				.getByLabel('More Actions')
+				.getByLabel('Actions')
 				.getAttribute('aria-controls');
 
-			await firstCard.getByLabel('More Actions').click();
+			await firstCard.getByLabel('Actions').click();
 
 			await page
 				.locator(`#${cardActionsDropdownId}`)
@@ -506,13 +513,21 @@ test.describe('Item Actions in Data Set fragment', () => {
 			});
 		});
 
+		const firstCellTextContent = await getFirstCellContentOfRow(
+			dataSetFragmentPage.table.bodyRows.first()
+		);
+
+		const secondCellTextContent = await getFirstCellContentOfRow(
+			dataSetFragmentPage.table.bodyRows.last()
+		);
+
 		await test.step('Check data set items have two item actions', async () => {
 			const itemActionsCell =
 				dataSetFragmentPage.table.itemActionsCells.first();
 
 			const button = itemActionsCell.getByRole('button', {
 				exact: true,
-				name: 'Actions',
+				name: `${firstCellTextContent} Actions`,
 			});
 
 			await expect(button).toBeVisible();
@@ -552,7 +567,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.first()
 				.getByRole('button', {
 					exact: true,
-					name: 'Actions',
+					name: `${firstCellTextContent} Actions`,
 				});
 
 			const dropdownId = await button.getAttribute('aria-controls');
@@ -581,7 +596,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			const button = itemActionsCell.getByRole('button', {
 				exact: true,
-				name: 'Actions',
+				name: `${secondCellTextContent} Actions`,
 			});
 
 			const dropdownId = await button.getAttribute('aria-controls');
@@ -651,13 +666,17 @@ test.describe('Item Actions in Data Set fragment', () => {
 			});
 		});
 
+		const firstCellTextContent = await getFirstCellContentOfRow(
+			dataSetFragmentPage.table.bodyRows.first()
+		);
+
 		await test.step('Check data set items have two item actions', async () => {
 			const itemActionsCell =
 				dataSetFragmentPage.table.itemActionsCells.first();
 
 			const button = itemActionsCell.getByRole('button', {
 				exact: true,
-				name: 'Actions',
+				name: `${firstCellTextContent} Actions`,
 			});
 
 			await expect(button).toBeVisible();
@@ -692,7 +711,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			const button = itemActionsCell.getByRole('button', {
 				exact: true,
-				name: 'Actions',
+				name: `${firstCellTextContent} Actions`,
 			});
 
 			const dropdownId = await button.getAttribute('aria-controls');
@@ -727,7 +746,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			const button = itemActionsCell.getByRole('button', {
 				exact: true,
-				name: 'Actions',
+				name: `${firstCellTextContent} Actions`,
 			});
 
 			const dropdownId = await button.getAttribute('aria-controls');
@@ -796,7 +815,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.getByRole('button', {name: asyncItemActionName})
 				.click();
 
-			await page.getByRole('alert').waitFor();
+			await page.getByRole('alert').last().waitFor();
 
 			const alert = page.getByRole('alert').first();
 
@@ -853,6 +872,10 @@ test.describe('Item Actions in Data Set fragment', () => {
 				});
 			});
 
+			const firstCellTextContent = await getFirstCellContentOfRow(
+				dataSetFragmentPage.table.bodyRows.first()
+			);
+
 			await test.step('Check that the Item Actions dropdown is present in table row', async () => {
 				const tableRow = dataSetFragmentPage.table.bodyRows
 					.first()
@@ -861,13 +884,13 @@ test.describe('Item Actions in Data Set fragment', () => {
 				await expect(
 					tableRow.getByRole('button', {
 						exact: true,
-						name: 'Actions',
+						name: `${firstCellTextContent} Actions`,
 					})
 				).toBeVisible();
 
 				const button = tableRow.getByRole('button', {
 					exact: true,
-					name: 'Actions',
+					name: `${firstCellTextContent} Actions`,
 				});
 
 				const dropdownId = await button.getAttribute('aria-controls');

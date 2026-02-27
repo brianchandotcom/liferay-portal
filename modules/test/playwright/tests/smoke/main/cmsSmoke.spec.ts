@@ -54,7 +54,7 @@ test('CMS loads and sections are shown', async ({
 
 	await contentsPage.goto();
 
-	await expect(page.getByText(title)).toBeVisible();
+	await expect(page.getByRole('link', {name: title})).toBeVisible();
 
 	// Delete the content
 

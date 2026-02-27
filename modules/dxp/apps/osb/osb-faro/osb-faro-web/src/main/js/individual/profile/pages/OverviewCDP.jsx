@@ -112,7 +112,13 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 
 	return (
 		<div className='overview-column-main'>
-			<ContextualInformation showEmptyState={!sitesSelected}>
+			<ContextualInformation
+				contextData={individual.get('context')}
+				email={individual.get('properties')?.get('email')}
+				showEmptyState={!sitesSelected}
+				userId={individual.get('properties')?.get('userId')}
+				uuid={individual.get('properties')?.get('uuid')}
+			>
 				<OverviewCDPEmptyState
 					authorized={authorized}
 					dataSourceData={dataSourceData}

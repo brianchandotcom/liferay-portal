@@ -53,6 +53,7 @@ interface IContextualInfoProps {
 	email?: string;
 	showEmptyState?: boolean;
 	uuid?: string;
+	userId?: string;
 }
 
 const INFO_LANGUAGE_MAP: Record<string, string> = {
@@ -78,11 +79,13 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 	contextData,
 	email,
 	showEmptyState = false,
+	userId,
 	uuid
 }) => {
 	const getValue = (key: string): string | undefined => {
 		if (key === 'email') return email;
 		if (key === 'uuid') return uuid;
+		if (key === 'userId') return userId;
 
 		if (key === 'timeZoneOffset') {
 			const region = contextData?.get('region');

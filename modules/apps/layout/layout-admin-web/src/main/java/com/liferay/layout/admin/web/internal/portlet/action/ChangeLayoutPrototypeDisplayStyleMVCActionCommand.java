@@ -6,7 +6,6 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -45,7 +44,7 @@ public class ChangeLayoutPrototypeDisplayStyleMVCActionCommand
 			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
 
 		portalPreferences.setValue(
-			LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE, "display-style",
+			LayoutAdminPortletKeys.LAYOUT_PROTOTYPE, "display-style",
 			displayStyle);
 	}
 

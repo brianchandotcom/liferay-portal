@@ -58,7 +58,7 @@ public class KoroneikiService {
 		).build();
 	}
 
-	public Page<Contact> getContactPage(
+	public Page<Contact> getContactsPage(
 			String accountKey, Pagination pagination)
 		throws Exception {
 

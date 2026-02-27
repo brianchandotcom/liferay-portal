@@ -10,6 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.metrics.SumAggregationResult;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
 import org.junit.Assert;
@@ -32,7 +33,7 @@ public abstract class BaseFilterAggregationTestCase
 		index("SomeUser2", 7);
 
 		FilterAggregation filterAggregation = aggregations.filter(
-			"filter", queries.term(Field.USER_NAME, "SomeUser1"));
+			"filter", QueriesUtil.term(Field.USER_NAME, "SomeUser1"));
 
 		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
 

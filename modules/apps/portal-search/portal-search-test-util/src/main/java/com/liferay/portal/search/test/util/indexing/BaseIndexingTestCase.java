@@ -43,10 +43,8 @@ import com.liferay.portal.search.internal.highlight.FieldConfigBuilderFactoryImp
 import com.liferay.portal.search.internal.highlight.HighlightBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderImpl;
-import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.rescore.RescoreBuilderFactoryImpl;
 import com.liferay.portal.search.internal.sort.SortsImpl;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.rescore.RescoreBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -317,7 +315,6 @@ public abstract class BaseIndexingTestCase {
 		new FieldConfigBuilderFactoryImpl();
 	protected final HighlightBuilderFactory highlightBuilderFactory =
 		new HighlightBuilderFactoryImpl();
-	protected final Queries queries = new QueriesImpl();
 	protected final RescoreBuilderFactory rescoreBuilderFactory =
 		new RescoreBuilderFactoryImpl();
 	protected final Sorts sorts = new SortsImpl();

@@ -14,6 +14,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.WrapperQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -54,7 +55,7 @@ public abstract class BaseWrapperQueryTestCase extends BaseIndexingTestCase {
 	protected void assertSearch(Object value, List<String> expectedValues) {
 		assertSearch(
 			indexingTestHelper -> {
-				WrapperQuery wrapperQuery = queries.wrapper(
+				WrapperQuery wrapperQuery = QueriesUtil.wrapper(
 					JSONUtil.put(
 						"match", JSONUtil.put(_FIELD_NAME, value)
 					).toString());

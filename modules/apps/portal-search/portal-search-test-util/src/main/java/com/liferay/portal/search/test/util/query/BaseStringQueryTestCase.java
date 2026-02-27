@@ -14,6 +14,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.test.util.DocumentsAssert;
@@ -149,7 +150,8 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 					Field.USER_NAME, "Other" + i));
 		}
 
-		StringQuery stringQuery = queries.string("SomeUser* OR OtherUser* ");
+		StringQuery stringQuery = QueriesUtil.string(
+			"SomeUser* OR OtherUser* ");
 
 		stringQuery.setDefaultField(Field.USER_NAME);
 
@@ -202,14 +204,14 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 	protected void assertSearch(
 		String queryString, List<String> expectedValues) {
 
-		StringQuery stringQuery = queries.string(queryString);
+		StringQuery stringQuery = QueriesUtil.string(queryString);
 
 		stringQuery.setDefaultField(_FIELD_NAME);
 
-		TermQuery termQuery = queries.term(
+		TermQuery termQuery = QueriesUtil.term(
 			Field.ENTRY_CLASS_NAME, getEntryClassName());
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(stringQuery, termQuery);
 

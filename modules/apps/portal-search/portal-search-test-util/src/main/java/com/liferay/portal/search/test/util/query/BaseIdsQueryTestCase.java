@@ -15,6 +15,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.IdsQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.sort.Sort;
@@ -39,7 +40,7 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 		index(3, "charlie");
 		index(4, "delta");
 
-		IdsQuery idsQuery = queries.ids();
+		IdsQuery idsQuery = QueriesUtil.ids();
 
 		idsQuery.addIds("1", "4");
 
@@ -57,14 +58,14 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 		index(3, "charlie");
 		index(4, "delta");
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		IdsQuery idsQuery = queries.ids();
+		IdsQuery idsQuery = QueriesUtil.ids();
 
 		idsQuery.addIds("4");
 		idsQuery.setBoost(1000F);
 
-		TermQuery termQuery = queries.term(Field.USER_NAME, "alpha");
+		TermQuery termQuery = QueriesUtil.term(Field.USER_NAME, "alpha");
 
 		termQuery.setBoost(500F);
 

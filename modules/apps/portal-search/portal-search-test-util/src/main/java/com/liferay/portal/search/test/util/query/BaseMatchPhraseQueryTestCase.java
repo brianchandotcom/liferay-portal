@@ -12,6 +12,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.MatchPhraseQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -43,7 +44,7 @@ public abstract class BaseMatchPhraseQueryTestCase
 	protected void assertSearch(Object value, List<String> expectedValues) {
 		assertSearch(
 			indexingTestHelper -> {
-				MatchPhraseQuery matchPhraseQuery = queries.matchPhrase(
+				MatchPhraseQuery matchPhraseQuery = QueriesUtil.matchPhrase(
 					_FIELD_NAME, value);
 
 				SearchSearchRequest searchSearchRequest =

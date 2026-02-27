@@ -10,7 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.field.FieldQueryBuilder;
 
@@ -30,7 +30,7 @@ public class SubstringFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override
 	public Query build(String field, String keywords) {
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		List<String> tokens = keywordTokenizer.tokenize(keywords);
 
@@ -56,13 +56,10 @@ public class SubstringFieldQueryBuilder implements FieldQueryBuilder {
 				StringUtil.toLowerCase(value), StringPool.STAR);
 		}
 
-		return queries.wildcard(field, value);
+		return QueriesUtil.wildcard(field, value);
 	}
 
 	@Reference
 	protected KeywordTokenizer keywordTokenizer;
-
-	@Reference
-	protected Queries queries;
 
 }

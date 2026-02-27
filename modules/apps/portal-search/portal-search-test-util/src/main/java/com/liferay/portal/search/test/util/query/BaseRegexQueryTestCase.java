@@ -12,6 +12,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.RegexQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -52,7 +53,7 @@ public abstract class BaseRegexQueryTestCase extends BaseIndexingTestCase {
 					Field.USER_NAME, "Other" + i));
 		}
 
-		RegexQuery regexQuery = queries.regex(
+		RegexQuery regexQuery = QueriesUtil.regex(
 			Field.USER_NAME, "OtherUser<0-9>");
 
 		regexQuery.setRegexFlags(RegexQuery.RegexFlag.INTERVAL);

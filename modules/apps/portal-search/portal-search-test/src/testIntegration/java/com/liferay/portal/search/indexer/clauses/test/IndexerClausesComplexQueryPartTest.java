@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.MatchQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -118,7 +118,7 @@ public class IndexerClausesComplexQueryPartTest {
 				"gamma"
 			);
 
-		_query = _queries.match(_TITLE_EN_US, "omega");
+		_query = QueriesUtil.match(_TITLE_EN_US, "omega");
 
 		assertSearch("[Gamma Article]");
 		assertSearch("[Gamma Article]", should());
@@ -154,7 +154,7 @@ public class IndexerClausesComplexQueryPartTest {
 				"gamma"
 			);
 
-		_query = _queries.match(_TITLE_EN_US, "omega");
+		_query = QueriesUtil.match(_TITLE_EN_US, "omega");
 
 		assertSearch("[Gamma Blog]");
 		assertSearch("[Gamma Blog]", should());
@@ -188,7 +188,7 @@ public class IndexerClausesComplexQueryPartTest {
 				"gamma"
 			);
 
-		_query = _queries.match(_TITLE_EN_US, "omega");
+		_query = QueriesUtil.match(_TITLE_EN_US, "omega");
 
 		assertSearch("[Gamma Article, Gamma Blog]");
 		assertSearch("[Gamma Article, Gamma Blog]", should());
@@ -418,10 +418,6 @@ public class IndexerClausesComplexQueryPartTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
-
-	@Inject
-	private Queries _queries;
-
 	private MatchQuery _query;
 
 	@Inject

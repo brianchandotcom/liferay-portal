@@ -6,6 +6,7 @@
 package com.liferay.portal.search.test.util.query;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermsSetQuery;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.test.util.DocumentsAssert;
@@ -93,7 +94,8 @@ public abstract class BaseTermsSetQueryTestCase extends BaseIndexingTestCase {
 	protected void assertTermsSetWithField(
 		List<Object> terms, String expected) {
 
-		TermsSetQuery termsSetQuery = queries.termsSet(Field.USER_NAME, terms);
+		TermsSetQuery termsSetQuery = QueriesUtil.termsSet(
+			Field.USER_NAME, terms);
 
 		termsSetQuery.setMinimumShouldMatchField(Field.PRIORITY);
 
@@ -103,7 +105,8 @@ public abstract class BaseTermsSetQueryTestCase extends BaseIndexingTestCase {
 	protected void assertTermsSetWithScript(
 		List<Object> terms, String source, String expected) {
 
-		TermsSetQuery termsSetQuery = queries.termsSet(Field.USER_NAME, terms);
+		TermsSetQuery termsSetQuery = QueriesUtil.termsSet(
+			Field.USER_NAME, terms);
 
 		termsSetQuery.setMinimumShouldMatchScript(
 			Scripts.INSTANCE.script(source));

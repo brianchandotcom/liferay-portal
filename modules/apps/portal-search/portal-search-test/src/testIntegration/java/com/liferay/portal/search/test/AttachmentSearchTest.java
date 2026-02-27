@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -87,7 +87,7 @@ public class AttachmentSearchTest {
 			).groupIds(
 				_group.getGroupId()
 			).query(
-				_queries.multiMatch(
+				QueriesUtil.multiMatch(
 					title, "title_en_US", "localized_title_en_US")
 			).withSearchContext(
 				searchContext -> searchContext.setIncludeAttachments(
@@ -99,9 +99,6 @@ public class AttachmentSearchTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private Queries _queries;
 
 	@Inject
 	private Searcher _searcher;

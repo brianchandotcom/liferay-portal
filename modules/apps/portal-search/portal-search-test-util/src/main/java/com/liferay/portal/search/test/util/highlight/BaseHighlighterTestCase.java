@@ -13,6 +13,7 @@ import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.highlight.HighlightField;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -41,7 +42,7 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 			"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
 			"alpha beta gamma delta epsilon zeta eta theta iota alpha");
 
-		Query query = queries.string(fieldName.concat(":alpha"));
+		Query query = QueriesUtil.string(fieldName.concat(":alpha"));
 
 		Highlight highlight = highlightBuilderFactory.builder(
 		).addFieldConfig(

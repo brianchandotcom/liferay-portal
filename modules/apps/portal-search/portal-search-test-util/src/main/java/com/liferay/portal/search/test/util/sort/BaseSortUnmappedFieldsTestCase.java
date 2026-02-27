@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -189,7 +190,7 @@ public abstract class BaseSortUnmappedFieldsTestCase
 		return searchRequestBuilder -> searchRequestBuilder.addComplexQueryPart(
 			complexQueryPartBuilderFactory.builder(
 			).query(
-				queries.term(fieldName, term)
+				QueriesUtil.term(fieldName, term)
 			).build());
 	}
 

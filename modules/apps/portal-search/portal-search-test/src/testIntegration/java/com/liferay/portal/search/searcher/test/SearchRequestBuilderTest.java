@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.collapse.CollapseBuilderFactory;
 import com.liferay.portal.search.collapse.InnerHitBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.rescore.Rescore;
 import com.liferay.portal.search.rescore.RescoreBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -122,7 +122,7 @@ public class SearchRequestBuilderTest {
 			searchRequestBuilder);
 
 		searchRequestBuilder.postFilterQuery(
-			_queries.term("firstName", "alpha"));
+			QueriesUtil.term("firstName", "alpha"));
 
 		_assertSearch(
 			"[alpha omega, alpha omega, alpha omega]", "userName",
@@ -135,7 +135,7 @@ public class SearchRequestBuilderTest {
 			).occur(
 				"filter"
 			).query(
-				_queries.term("firstName", "alpha")
+				QueriesUtil.term("firstName", "alpha")
 			).build()
 		);
 
@@ -150,7 +150,7 @@ public class SearchRequestBuilderTest {
 			).occur(
 				"filter"
 			).query(
-				_queries.term("screenName", "alpha")
+				QueriesUtil.term("screenName", "alpha")
 			).build()
 		);
 
@@ -179,7 +179,7 @@ public class SearchRequestBuilderTest {
 				).occur(
 					"should"
 				).query(
-					_queries.term("screenName", "alpha")
+					QueriesUtil.term("screenName", "alpha")
 				).build()
 			);
 
@@ -190,7 +190,7 @@ public class SearchRequestBuilderTest {
 			).occur(
 				"should"
 			).query(
-				_queries.term("screenName", "sigma")
+				QueriesUtil.term("screenName", "sigma")
 			).build());
 
 		_assertSearch(
@@ -463,7 +463,7 @@ public class SearchRequestBuilderTest {
 
 	private Rescore _buildRescore(String fieldName, String value) {
 		return _rescoreBuilderFactory.builder(
-			_queries.match(fieldName, value)
+			QueriesUtil.match(fieldName, value)
 		).windowSize(
 			100
 		).build();
@@ -500,9 +500,6 @@ public class SearchRequestBuilderTest {
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Inject
-	private Queries _queries;
 
 	@Inject
 	private RescoreBuilderFactory _rescoreBuilderFactory;

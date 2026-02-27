@@ -15,7 +15,6 @@ import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.nested.NestedFacetFactory;
 import com.liferay.portal.search.facet.nested.NestedFacetSearchContributor;
 import com.liferay.portal.search.internal.facet.NestedFacetImpl;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.function.Consumer;
@@ -55,9 +54,6 @@ public class NestedFacetSearchContributorImpl
 
 	@Reference
 	protected NestedFacetFactory nestedFacetFactory;
-
-	@Reference
-	protected Queries queries;
 
 	private class NestedFacetBuilderImpl implements NestedFacetBuilder {
 

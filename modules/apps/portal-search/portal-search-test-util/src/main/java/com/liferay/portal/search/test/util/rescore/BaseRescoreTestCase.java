@@ -12,6 +12,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.rescore.Rescore;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -36,7 +37,7 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 			value -> DocumentCreationHelpers.singleText(_TITLE, value),
 			"alpha zeta", "alpha alpha", "alpha beta beta");
 
-		Query query = queries.string(_TITLE.concat(":alpha"));
+		Query query = QueriesUtil.string(_TITLE.concat(":alpha"));
 
 		assertSearch(
 			Arrays.asList("alpha alpha", "alpha zeta", "alpha beta beta"),
@@ -53,7 +54,7 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 			value -> DocumentCreationHelpers.singleText(_TITLE, value),
 			"alpha alpha", "alpha gamma gamma", "alpha beta beta");
 
-		Query query = queries.string(_TITLE.concat(":alpha"));
+		Query query = QueriesUtil.string(_TITLE.concat(":alpha"));
 
 		assertSearch(
 			Arrays.asList(
@@ -63,7 +64,7 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 		assertSearch(
 			Arrays.asList(
 				"alpha beta beta", "alpha alpha", "alpha gamma gamma"),
-			_TITLE, query, queries.match(_TITLE, "beta"), null);
+			_TITLE, query, QueriesUtil.match(_TITLE, "beta"), null);
 	}
 
 	@Test
@@ -72,7 +73,7 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 			value -> DocumentCreationHelpers.singleText(_TITLE, value),
 			"alpha alpha", "alpha gamma gamma", "alpha beta beta beta");
 
-		Query query = queries.string(_TITLE.concat(":alpha"));
+		Query query = QueriesUtil.string(_TITLE.concat(":alpha"));
 
 		assertSearch(
 			Arrays.asList(
@@ -131,7 +132,7 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 
 	protected Rescore buildRescore(String fieldName, String value) {
 		return rescoreBuilderFactory.builder(
-			queries.match(fieldName, value)
+			QueriesUtil.match(fieldName, value)
 		).windowSize(
 			100
 		).build();

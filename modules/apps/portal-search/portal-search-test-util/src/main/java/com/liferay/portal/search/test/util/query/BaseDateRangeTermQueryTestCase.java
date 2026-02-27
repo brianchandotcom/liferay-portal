@@ -14,6 +14,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.DateRangeTermQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -47,7 +48,7 @@ public abstract class BaseDateRangeTermQueryTestCase
 		addDocument(getDate("2018-02-03T00:00:00"));
 		addDocument(getDate("2019-02-05T00:00:00"));
 
-		DateRangeTermQuery dateRangeTermQuery = queries.dateRangeTerm(
+		DateRangeTermQuery dateRangeTermQuery = QueriesUtil.dateRangeTerm(
 			Field.EXPIRATION_DATE, true, true, "20170101", "20181231");
 
 		dateRangeTermQuery.setDateFormat("yyyyMMdd");

@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -186,9 +185,6 @@ public class SearchResponseGetSearchTimeValueTest {
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Inject
-	private Queries _queries;
 
 	@Inject
 	private Searcher _searcher;

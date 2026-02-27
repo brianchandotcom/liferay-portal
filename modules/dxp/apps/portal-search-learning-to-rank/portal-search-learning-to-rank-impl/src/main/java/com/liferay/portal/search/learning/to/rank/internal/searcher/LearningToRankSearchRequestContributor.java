@@ -8,7 +8,7 @@ package com.liferay.portal.search.learning.to.rank.internal.searcher;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.learning.to.rank.configuration.LearningToRankConfiguration;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.rescore.Rescore;
 import com.liferay.portal.search.rescore.RescoreBuilderFactory;
@@ -64,16 +64,13 @@ public class LearningToRankSearchRequestContributor
 	}
 
 	@Reference
-	protected Queries queries;
-
-	@Reference
 	protected RescoreBuilderFactory rescoreBuilderFactory;
 
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	private Query _getRescoreQuery(String model, String keywords) {
-		return queries.wrapper(
+		return QueriesUtil.wrapper(
 			JSONUtil.put(
 				"sltr",
 				JSONUtil.put(

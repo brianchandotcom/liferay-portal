@@ -529,7 +529,7 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 	public ObjectEntry moveObjectEntry(
-			long userId, long objectEntryId, long objectEntryFolderId,
+			long objectEntryId, long objectEntryFolderId,
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 

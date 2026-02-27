@@ -14,7 +14,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
@@ -52,9 +52,6 @@ public class SynonymSetsDatabaseImporterImpl
 			}
 		}
 	}
-
-	@Reference
-	protected Queries queries;
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
@@ -95,7 +92,7 @@ public class SynonymSetsDatabaseImporterImpl
 		searchSearchRequest.setIndexNames(synonymSetIndexName.getIndexName());
 
 		searchSearchRequest.setFetchSource(true);
-		searchSearchRequest.setQuery(queries.matchAll());
+		searchSearchRequest.setQuery(QueriesUtil.matchAll());
 
 		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
 			searchSearchRequest);

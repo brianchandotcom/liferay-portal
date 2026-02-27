@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommandCache;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.web.internal.BaseSynonymsWebTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -52,8 +51,6 @@ public class SynonymsPortletTest extends BaseSynonymsWebTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_synonymsPortlet, "_language", _language);
 		ReflectionTestUtil.setFieldValue(_synonymsPortlet, "_portal", portal);
-		ReflectionTestUtil.setFieldValue(
-			_synonymsPortlet, "_queries", _queries);
 		ReflectionTestUtil.setFieldValue(
 			_synonymsPortlet, "_renderMVCCommandCache",
 			Mockito.mock(MVCCommandCache.class));
@@ -143,7 +140,6 @@ public class SynonymsPortletTest extends BaseSynonymsWebTestCase {
 	}
 
 	private final Language _language = Mockito.mock(Language.class);
-	private final Queries _queries = Mockito.mock(Queries.class);
 	private final RenderRequest _renderRequest = Mockito.mock(
 		RenderRequest.class);
 	private final RenderResponse _renderResponse = Mockito.mock(

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
@@ -45,15 +44,14 @@ public class SynonymsDisplayBuilder {
 
 	public SynonymsDisplayBuilder(
 		HttpServletRequest httpServletRequest, Language language, Portal portal,
-		Queries queries, RenderRequest renderRequest,
-		RenderResponse renderResponse, SearchEngineAdapter searchEngineAdapter,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		SearchEngineAdapter searchEngineAdapter,
 		SearchEngineInformation searchEngineInformation, Sorts sorts,
 		SynonymSetIndexNameBuilder synonymSetIndexNameBuilder) {
 
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_portal = portal;
-		_queries = queries;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_searchEngineAdapter = searchEngineAdapter;
@@ -146,8 +144,8 @@ public class SynonymsDisplayBuilder {
 
 		SearchSynonymSetRequest searchSynonymSetRequest =
 			new SearchSynonymSetRequest(
-				_buildSynonymSetIndexName(), _httpServletRequest, _queries,
-				_sorts, searchContainer, _searchEngineAdapter);
+				_buildSynonymSetIndexName(), _httpServletRequest, _sorts,
+				searchContainer, _searchEngineAdapter);
 
 		SearchSynonymSetResponse searchSynonymSetResponse =
 			searchSynonymSetRequest.search();
@@ -240,7 +238,6 @@ public class SynonymsDisplayBuilder {
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
-	private final Queries _queries;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final SearchEngineAdapter _searchEngineAdapter;

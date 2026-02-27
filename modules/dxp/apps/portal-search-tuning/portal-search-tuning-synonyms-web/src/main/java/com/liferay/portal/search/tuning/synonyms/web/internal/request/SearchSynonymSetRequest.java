@@ -14,7 +14,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
@@ -37,13 +37,12 @@ public class SearchSynonymSetRequest {
 
 	public SearchSynonymSetRequest(
 		SynonymSetIndexName synonymSetIndexName,
-		HttpServletRequest httpServletRequest, Queries queries, Sorts sorts,
+		HttpServletRequest httpServletRequest, Sorts sorts,
 		SearchContainer<SynonymSetDisplayContext> searchContainer,
 		SearchEngineAdapter searchEngineAdapter) {
 
 		_synonymSetIndexName = synonymSetIndexName;
 		_httpServletRequest = httpServletRequest;
-		_queries = queries;
 		_sorts = sorts;
 		_searchContainer = searchContainer;
 		_searchEngineAdapter = searchEngineAdapter;
@@ -103,10 +102,10 @@ public class SearchSynonymSetRequest {
 		String keywords = _searchContext.getKeywords();
 
 		if (!Validator.isBlank(keywords)) {
-			return _queries.match(SynonymSetFields.SYNONYMS, keywords);
+			return QueriesUtil.match(SynonymSetFields.SYNONYMS, keywords);
 		}
 
-		return _queries.matchAll();
+		return QueriesUtil.matchAll();
 	}
 
 	private Collection<Sort> _getSorts() {
@@ -122,7 +121,6 @@ public class SearchSynonymSetRequest {
 	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
-	private final Queries _queries;
 	private final SearchContainer<SynonymSetDisplayContext> _searchContainer;
 	private final SearchContext _searchContext;
 	private final SearchEngineAdapter _searchEngineAdapter;

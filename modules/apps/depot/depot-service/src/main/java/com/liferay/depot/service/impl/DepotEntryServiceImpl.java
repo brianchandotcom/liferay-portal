@@ -12,11 +12,15 @@ import com.liferay.depot.service.base.DepotEntryServiceBaseImpl;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -116,6 +120,39 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<Long> getDepotEntryGroupIds(
+		long companyId, long userId, int type) {
+
+		try {
+			PermissionChecker permissionChecker = getPermissionChecker();
+
+			if (permissionChecker.isCompanyAdmin() ||
+				((type == DepotConstants.TYPE_SPACE) &&
+				 _roleLocalService.hasUserRole(
+					 getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR,
+					 true))) {
+
+				return depotEntryLocalService.getDepotEntryGroupIds(
+					companyId, type);
+			}
+
+			if (userId != getUserId()) {
+				return null;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
+
+		return depotEntryLocalService.getDepotEntryGroupIds(
+			companyId, userId, type);
+	}
+
+	@Override
 	public List<DepotEntry> getGroupConnectedDepotEntries(
 			long groupId, boolean ddmStructuresAvailable, int start, int end)
 		throws PortalException {
@@ -204,6 +241,9 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 			typeSettingsUnicodeProperties, serviceContext);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DepotEntryServiceImpl.class);
+
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
@@ -218,5 +258,8 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 		target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")"
 	)
 	private volatile PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

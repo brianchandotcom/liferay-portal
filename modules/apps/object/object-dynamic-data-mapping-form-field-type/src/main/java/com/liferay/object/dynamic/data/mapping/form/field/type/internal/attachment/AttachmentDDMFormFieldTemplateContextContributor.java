@@ -79,8 +79,11 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		DDMForm ddmForm = ddmFormField.getDDMForm();
 		HttpServletRequest httpServletRequest =
 			ddmFormFieldRenderingContext.getHttpServletRequest();
+		boolean localizedObjectField = GetterUtil.getBoolean(
+			ddmFormField.getProperty("localizedObjectField"));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -89,11 +92,6 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		long maximumFileSize = _attachmentManager.getMaximumFileSize(
 			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")),
 			themeDisplay.isSignedIn());
-
-		boolean localizedObjectField = GetterUtil.getBoolean(
-			ddmFormField.getProperty("localizedObjectField"));
-
-		DDMForm ddmForm = ddmFormField.getDDMForm();
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));

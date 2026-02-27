@@ -6,8 +6,9 @@
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import {useEffect, useRef} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 
+import {CollectionItemContext} from '../../contexts/CollectionItemContext';
 import {
 	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
@@ -44,6 +45,8 @@ export default function FragmentContentProcessor({
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues,
 		[fragmentEntryLinkId]
 	);
+
+	const {isDisabled} = useContext(CollectionItemContext);
 
 	useEffect(() => {
 		const onBeforeNavigate = async (event) => {
@@ -86,7 +89,8 @@ export default function FragmentContentProcessor({
 		if (
 			!editable ||
 			!editableValues ||
-			editableCollectionItemId !== editableProcessorUniqueId
+			editableCollectionItemId !== editableProcessorUniqueId ||
+			isDisabled
 		) {
 			return;
 		}
@@ -162,6 +166,7 @@ export default function FragmentContentProcessor({
 		editableProcessorUniqueId,
 		editableValues,
 		fragmentEntryLinkId,
+		isDisabled,
 		isMounted,
 		languageId,
 		setEditableProcessorUniqueId,

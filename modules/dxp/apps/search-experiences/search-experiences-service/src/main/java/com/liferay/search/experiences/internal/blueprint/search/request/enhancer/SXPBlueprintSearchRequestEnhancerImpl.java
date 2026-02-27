@@ -25,7 +25,6 @@ import com.liferay.portal.search.collapse.InnerHitBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.rescore.RescoreBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.significance.SignificanceHeuristics;
@@ -113,7 +112,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		HighlightConverter highlightConverter = new HighlightConverter(
 			_fieldConfigBuilderFactory, _highlightBuilderFactory);
 
-		QueryConverter queryConverter = new QueryConverter(_queries);
+		QueryConverter queryConverter = new QueryConverter();
 		ScriptConverter scriptConverter = new ScriptConverter();
 
 		SortConverter sortConverter = new SortConverter(
@@ -127,8 +126,8 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 				_aggregations, highlightConverter, queryConverter,
 				scriptConverter, _significanceHeuristics, _sorts),
 			new GeneralSXPSearchRequestBodyContributor(
-				_assetSubtypeIdentifierBuilder, _complexQueryPartBuilderFactory,
-				_queries),
+				_assetSubtypeIdentifierBuilder,
+				_complexQueryPartBuilderFactory),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(
 				_complexQueryPartBuilderFactory, queryConverter,
@@ -551,9 +550,6 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private RescoreBuilderFactory _rescoreBuilderFactory;

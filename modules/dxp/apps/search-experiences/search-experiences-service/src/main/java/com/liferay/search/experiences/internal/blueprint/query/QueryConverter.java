@@ -7,7 +7,7 @@ package com.liferay.search.experiences.internal.blueprint.query;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.search.experiences.internal.blueprint.property.PropertyValidator;
 
@@ -18,10 +18,6 @@ import java.util.Objects;
  * @author Petteri Karttunen
  */
 public class QueryConverter {
-
-	public QueryConverter(Queries queries) {
-		_queries = queries;
-	}
 
 	public Query toQuery(JSONObject jsonObject) {
 		if (jsonObject == null) {
@@ -40,7 +36,7 @@ public class QueryConverter {
 			return _toTermQuery(jsonObject.getJSONObject(type));
 		}
 
-		return _queries.wrapper(
+		return QueriesUtil.wrapper(
 			PropertyValidator.validate(JSONUtil.toString(jsonObject)));
 	}
 
@@ -54,7 +50,7 @@ public class QueryConverter {
 		if (object instanceof JSONObject) {
 			JSONObject jsonObject2 = (JSONObject)object;
 
-			Query query = _queries.term(
+			Query query = QueriesUtil.term(
 				field,
 				PropertyValidator.validate(
 					Objects.requireNonNull(
@@ -68,9 +64,7 @@ public class QueryConverter {
 			return query;
 		}
 
-		return _queries.term(field, PropertyValidator.validate(object));
+		return QueriesUtil.term(field, PropertyValidator.validate(object));
 	}
-
-	private final Queries _queries;
 
 }

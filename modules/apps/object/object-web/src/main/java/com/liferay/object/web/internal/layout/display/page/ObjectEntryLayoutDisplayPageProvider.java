@@ -28,6 +28,7 @@ import com.liferay.object.service.ObjectEntryVersionLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -92,6 +94,21 @@ public class ObjectEntryLayoutDisplayPageProvider
 	@Override
 	public LayoutDisplayPageObjectProvider<ObjectEntry>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
+
+		if (urlTitle.contains(StringPool.SLASH)) {
+			String[] urlNames = urlTitle.split(StringPool.SLASH);
+
+			if (urlNames.length > 1) {
+				Group group = _groupLocalService.fetchFriendlyURLGroup(
+					CompanyThreadLocal.getCompanyId(),
+					StringPool.SLASH + urlNames[0]);
+
+				if (group != null) {
+					return getLayoutDisplayPageObjectProvider(
+						group.getGroupId(), urlNames[1]);
+				}
+			}
+		}
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			groupId, _objectDefinition, urlTitle);

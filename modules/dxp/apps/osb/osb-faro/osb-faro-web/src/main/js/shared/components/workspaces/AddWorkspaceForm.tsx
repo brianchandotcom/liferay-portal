@@ -22,6 +22,7 @@ import {Modal} from 'shared/types';
 import {Project, TimeZone} from 'shared/util/records';
 import {sequence} from 'shared/util/promise';
 import {sub} from 'shared/util/lang';
+import {Text} from '@clayui/core';
 import {
 	validateEmail,
 	validateEmailArr,
@@ -139,7 +140,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 
 						<p>
 							<span className='text-secondary'>
-								{`${faroURL}/workspace/`}
+								{`${faroURL}/workspace-name/`}
 							</span>
 
 							<b>{newFriendlyURL}</b>
@@ -283,13 +284,14 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 										{Liferay.Language.get('timezone')}
 									</Form.Label>
 
-									<p className='instructions'>
+									<Text as='p' size={3}>
 										{Liferay.Language.get(
-											'select-a-timezone-that-will-be-used-for-all-data-reporting-in-your-workspace'
+											'time-zone-used-for-all-data-reporting-in-this-workspace.-it-is-automatically-set-based-on-your-time-zone-and-cannot-be-changed'
 										)}
-									</p>
+									</Text>
 
 									<TimeZonePicker
+										disabled
 										fieldName='timeZoneId'
 										initialTimeZone={
 											project
@@ -306,28 +308,44 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 								</Sheet.Section>
 
 								<Sheet.Section>
+									<div>
+										<Text size={3} weight='semi-bold'>
+											{Liferay.Language.get(
+												'set-a-friendly-workspace-url'
+											)}
+										</Text>
+									</div>
+
+									<Text size={3}>
+										{Liferay.Language.get(
+											'define-a-friendly-url-that-others-can-use-to-access-and-share-this-workspace.-this-value-cannot-be-changed-after-it-is-set'
+										)}
+									</Text>
+
+									<div className='mb-1'>
+										<Text color='secondary' size={3}>
+											{sub(
+												Liferay.Language.get('e.g.-x'),
+												[
+													<React.Fragment key='WORKSPACE_URL'>
+														<span>{faroURL}</span>
+														<strong>
+															{'/workspace-name'}
+														</strong>
+													</React.Fragment>
+												],
+												false
+											)}
+										</Text>
+									</div>
+
 									<Form.Input
 										data-testid='friendly-url-input'
 										disabled={
 											disabled ||
 											(project && project.friendlyURL)
 										}
-										label={Liferay.Language.get(
-											'set-a-friendly-workspace-url'
-										)}
 										name='friendlyURL'
-										secondaryInfo={
-											<>
-												{!editing &&
-													Liferay.Language.get(
-														'you-can-only-set-your-friendly-workspace-url-once'
-													)}
-
-												<span className='instructions'>
-													{`${faroURL}/workspace`}
-												</span>
-											</>
-										}
 										text={{
 											content: '/',
 											position: 'prepend'
@@ -349,19 +367,48 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 								</Sheet.Section>
 
 								<Sheet.Section>
+									<div>
+										<Text size={3} weight='semi-bold'>
+											{Liferay.Language.get(
+												'allowed-email-domains'
+											)}
+										</Text>
+									</div>
+
+									<Text size={3}>
+										{Liferay.Language.get(
+											'define-which-email-domains-can-request-access-to-this-workspace'
+										)}
+									</Text>
+
+									<div className='mb-1'>
+										<Text color='secondary' size={3}>
+											{sub(
+												Liferay.Language.get('e.g.-x'),
+												[
+													<React.Fragment key='EMAIL_DOMAIN'>
+														<span>
+															{'user.name@'}
+														</span>
+														<strong>
+															{
+																'company-domain.com'
+															}
+														</strong>
+													</React.Fragment>
+												],
+												false
+											)}
+										</Text>
+									</div>
+
 									<Form.InputList
 										disabled={disabled}
 										errorMessage={Liferay.Language.get(
 											'please-enter-the-domain-in-this-format-domain-com'
 										)}
-										label={Liferay.Language.get(
-											'allowed-email-domains'
-										)}
 										name='emailAddressDomains'
 										onChangeInputList={setInputListValue}
-										secondaryInfo={Liferay.Language.get(
-											'anyone-with-an-email-address-at-these-domains-can-request-access-to-your-workspace'
-										)}
 										text={{
 											content: '@',
 											position: 'prepend'

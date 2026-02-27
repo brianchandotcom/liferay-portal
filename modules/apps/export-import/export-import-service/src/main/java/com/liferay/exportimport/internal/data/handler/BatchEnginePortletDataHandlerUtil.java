@@ -10,6 +10,7 @@ import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
@@ -126,7 +127,9 @@ public class BatchEnginePortletDataHandlerUtil {
 					List<String> filterStrings = new ArrayList<>();
 
 					if (ExportImportDateUtil.isRangeFromLastPublishDate(
-							portletDataContext)) {
+							portletDataContext) &&
+						!ExportImportThreadLocal.
+							isInitialLayoutStagingInProcess()) {
 
 						String lastPublishDateFilterString =
 							_getLastPublishDateFilterString(

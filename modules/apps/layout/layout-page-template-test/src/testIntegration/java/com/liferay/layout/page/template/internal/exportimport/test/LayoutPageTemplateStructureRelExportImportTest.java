@@ -176,7 +176,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			JSONUtil.put(
 				"link",
 				_getFileEntryJSONObject(
-					externalReferenceCode, null, "FileEntry_title")
+					externalReferenceCode, "FileEntry_title", null)
 			).put(
 				"styles",
 				JSONUtil.put(
@@ -208,8 +208,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				itemConfigJSONObject.put(
 					"link",
 					_getFileEntryJSONObject(
-						fileEntry1.getExternalReferenceCode(), null,
-						"FileEntry_title"));
+						fileEntry1.getExternalReferenceCode(),
+						"FileEntry_title", null));
 
 				JSONObject stylesJSONObject =
 					itemConfigJSONObject.getJSONObject("styles");
@@ -246,8 +246,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 					"link",
 					_getFileEntryJSONObject(
 						fileEntry2.getExternalReferenceCode(),
-						guestGroup.getExternalReferenceCode(),
-						"FileEntry_title"));
+						"FileEntry_title",
+						guestGroup.getExternalReferenceCode()));
 
 				JSONObject stylesJSONObject =
 					itemConfigJSONObject.getJSONObject("styles");
@@ -255,8 +255,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 				stylesJSONObject.put(
 					"backgroundImage",
 					_getFileEntryJSONObject(
-						fileEntry2.getExternalReferenceCode(),
-						guestGroup.getExternalReferenceCode(), null));
+						fileEntry2.getExternalReferenceCode(), null,
+						guestGroup.getExternalReferenceCode()));
 
 				return itemConfigJSONObject;
 			});
@@ -536,8 +536,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	}
 
 	private JSONObject _getFileEntryJSONObject(
-		String externalReferenceCode, String scopeExternalReferenceCode,
-		String fieldId) {
+		String externalReferenceCode, String fieldId,
+		String scopeExternalReferenceCode) {
 
 		return JSONUtil.put(
 			"className", FileEntry.class.getName()

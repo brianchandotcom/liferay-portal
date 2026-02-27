@@ -93,8 +93,8 @@ public class DBCopyTablesProcessTest {
 	@Test
 	public void testBigDecimalColumn() throws Exception {
 		_testColumnTypeOf(
-			"BIGDECIMAL", RandomTestUtil::nextDouble, Function.identity(),
-			GetterUtil::getDouble);
+			Function.identity(), GetterUtil::getDouble, "BIGDECIMAL",
+			RandomTestUtil::nextDouble);
 	}
 
 	@Test
@@ -134,45 +134,44 @@ public class DBCopyTablesProcessTest {
 	@Test
 	public void testBooleanColumn() throws Exception {
 		_testColumnTypeOf(
-			"BOOLEAN", RandomTestUtil::randomBoolean, Function.identity(),
-			Function.identity());
+			Function.identity(), Function.identity(), "BOOLEAN",
+			RandomTestUtil::randomBoolean);
 	}
 
 	@Test
 	public void testDateColumn() throws Exception {
 		_testColumnTypeOf(
-			"DATE", RandomTestUtil::nextTimestamp, Function.identity(),
-			Function.identity());
+			Function.identity(), Function.identity(), "DATE",
+			RandomTestUtil::nextTimestamp);
 	}
 
 	@Test
 	public void testDoubleColumn() throws Exception {
 		_testColumnTypeOf(
-			"DOUBLE", RandomTestUtil::nextDouble, Function.identity(),
-			GetterUtil::getDouble);
+			Function.identity(), GetterUtil::getDouble, "DOUBLE",
+			RandomTestUtil::nextDouble);
 	}
 
 	@Test
 	public void testIntegerColumn() throws Exception {
 		_testColumnTypeOf(
-			"INTEGER", RandomTestUtil::nextInt, Function.identity(),
-			Function.identity());
+			Function.identity(), Function.identity(), "INTEGER",
+			RandomTestUtil::nextInt);
 	}
 
 	@Test
 	public void testLongColumn() throws Exception {
 		_testColumnTypeOf(
-			"LONG", RandomTestUtil::nextLong, Function.identity(),
-			Function.identity());
+			Function.identity(), Function.identity(), "LONG",
+			RandomTestUtil::nextLong);
 	}
 
 	@Test
 	public void testNullChar() throws Exception {
 		_testColumnTypeOf(
-			"VARCHAR(20)", () -> "Test\\u0000Test",
 			object -> StringUtil.removeSubstring(
 				(String)object, StringPool.NULL_CHAR),
-			Function.identity());
+			Function.identity(), "VARCHAR(20)", () -> "Test\\u0000Test");
 	}
 
 	@Test
@@ -210,26 +209,26 @@ public class DBCopyTablesProcessTest {
 	@Test
 	public void testStringColumn() throws Exception {
 		_testColumnTypeOf(
-			"STRING", RandomTestUtil::randomString, Function.identity(),
-			Function.identity());
+			Function.identity(), Function.identity(), "STRING",
+			RandomTestUtil::randomString);
 	}
 
 	@Test
 	public void testTextColumn() throws Exception {
 		_testColumnTypeOf(
-			"TEXT", RandomTestUtil::randomString, Function.identity(),
-			Function.identity());
+			Function.identity(), Function.identity(), "TEXT",
+			RandomTestUtil::randomString);
 	}
 
 	@Test
 	public void testVarcharColumn() throws Exception {
 		_testColumnTypeOf(
-			"VARCHAR(10)", () -> RandomTestUtil.randomString(10),
-			Function.identity(), Function.identity());
+			Function.identity(), Function.identity(), "VARCHAR(10)",
+			() -> RandomTestUtil.randomString(10));
 	}
 
 	private void _assertValues(
-			Object[] expectedValues, Function<Object, Object> expectedFunction,
+			Function<Object, Object> expectedFunction, Object[] expectedValues,
 			Function<Object, Object> getFunction)
 		throws Exception {
 
@@ -320,9 +319,9 @@ public class DBCopyTablesProcessTest {
 	}
 
 	private void _testColumnTypeOf(
-			String type, Supplier<Object> valueSupplier,
 			Function<Object, Object> expectedFunction,
-			Function<Object, Object> getFunction)
+			Function<Object, Object> getFunction, String type,
+			Supplier<Object> valueSupplier)
 		throws Exception {
 
 		_createTable(type);
@@ -337,7 +336,7 @@ public class DBCopyTablesProcessTest {
 
 		_copyTable();
 
-		_assertValues(values, expectedFunction, getFunction);
+		_assertValues(expectedFunction, values, getFunction);
 	}
 
 	private static final int _TABLE_SIZE = 5000;

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.design.web.internal.portlet;
+package com.liferay.design.library.web.internal.portlet;
 
+import com.liferay.design.library.web.internal.constants.DesignLibraryAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.design.web.internal.constants.DesignLibraryAdminPortletKeys;
 
 import jakarta.portlet.Portlet;
 

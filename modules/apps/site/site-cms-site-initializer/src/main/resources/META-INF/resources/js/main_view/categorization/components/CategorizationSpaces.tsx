@@ -40,6 +40,8 @@ export default function CategorizationSpaces({
 	const [availableSpaces, setAvailableSpaces] = useState<Space[]>([]);
 	const [availableSpacesKey, setAvailableSpacesKey] = useState(0);
 	const [checkbox, setCheckbox] = useState(true);
+	const isVocabulary = checkboxText === 'vocabulary';
+	const [displaySpaceError, setDisplaySpaceError] = useState(!isVocabulary);
 	const [query, setQuery] = useState('');
 	const [selectedItems, setSelectedItems] = useState<Space[]>([]);
 	const [initialSelectedSpaces, setInitialSelectedSpaces] = useState<
@@ -132,6 +134,10 @@ export default function CategorizationSpaces({
 	};
 
 	const _handleChangeAllSpaces = () => {
+		if (isVocabulary && checkbox) {
+			setDisplaySpaceError(false);
+		}
+
 		setSelectedItems([]);
 		setSelectedSpaces([]);
 		setQuery('');
@@ -139,6 +145,7 @@ export default function CategorizationSpaces({
 	};
 
 	const _handleChangeSpaces = (items: Space[]) => {
+		setDisplaySpaceError(true);
 		setSelectedItems(_getAvailableSpaces(items));
 
 		setSelectedSpaces(items.map((item) => item.scopeKey));
@@ -154,7 +161,11 @@ export default function CategorizationSpaces({
 				</span>
 			</label>
 
-			<div className={spaceInputError ? 'has-error' : ''}>
+			<div
+				className={
+					displaySpaceError && spaceInputError ? 'has-error' : ''
+				}
+			>
 				<ClayMultiSelect
 					aria-label={Liferay.Language.get('space-selector')}
 					disabled={checkbox}
@@ -183,7 +194,7 @@ export default function CategorizationSpaces({
 					)}
 				</ClayMultiSelect>
 
-				{spaceInputError && (
+				{displaySpaceError && spaceInputError && (
 					<ClayAlert displayType="danger" variant="feedback">
 						<strong>{Liferay.Language.get('error')}: </strong>
 

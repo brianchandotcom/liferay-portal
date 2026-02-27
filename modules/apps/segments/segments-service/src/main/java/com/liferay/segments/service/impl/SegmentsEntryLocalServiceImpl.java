@@ -202,17 +202,17 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments entry
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			Group group = _groupLocalService.getGroup(
-				segmentsEntry.getGroupId());
-
-			int count = _segmentsExperiencePersistence.countBySEERC_SESERC(
-				segmentsEntry.getExternalReferenceCode(),
-				group.getExternalReferenceCode());
+			int count = _segmentsExperiencePersistence.countByG_SEERC_SESERC(
+				segmentsEntry.getGroupId(),
+				segmentsEntry.getExternalReferenceCode(), null);
 
 			if (count == 0) {
-				count = _segmentsExperiencePersistence.countByG_SEERC_SESERC(
-					segmentsEntry.getGroupId(),
-					segmentsEntry.getExternalReferenceCode(), null);
+				Group group = _groupLocalService.getGroup(
+					segmentsEntry.getGroupId());
+
+				count = _segmentsExperiencePersistence.countBySEERC_SESERC(
+					segmentsEntry.getExternalReferenceCode(),
+					group.getExternalReferenceCode());
 			}
 
 			if (count > 0) {

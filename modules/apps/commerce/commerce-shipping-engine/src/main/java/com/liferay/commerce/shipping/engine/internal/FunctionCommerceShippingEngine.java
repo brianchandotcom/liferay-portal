@@ -184,26 +184,8 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	@Deactivate
-	protected void deactivate() throws PortalException {
-		String key = getKey();
-
-		if (key == null) {
-			return;
-		}
-
-		List<CommerceShippingMethod> commerceShippingMethods =
-			_commerceShippingMethodLocalService.getCommerceShippingMethods(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CommerceShippingMethod commerceShippingMethod :
-				commerceShippingMethods) {
-
-			if (key.equals(commerceShippingMethod.getEngineKey())) {
-				_commerceShippingMethodLocalService.
-					deleteCommerceShippingMethod(
-						commerceShippingMethod.getCommerceShippingMethodId());
-			}
-		}
+	protected void deactivate() {
+		_functionCommerceShippingEngineConfiguration = null;
 	}
 
 	@Modified

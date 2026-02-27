@@ -145,9 +145,9 @@ exports[`AddWorkspaceForm should render 1`] = `
               </span>
             </label>
             <p
-              class="instructions"
+              class="text-3"
             >
-              Select a timezone that will be used for all data reporting in your workspace.
+              Time zone used for all data reporting in this workspace. It is automatically set based on your time zone and cannot be changed.
             </p>
             <div
               class="form-group time-zone-picker-root form-group-autofit"
@@ -187,36 +187,37 @@ exports[`AddWorkspaceForm should render 1`] = `
           <div
             class="sheet-section"
           >
+            <div>
+              <span
+                class="text-3 font-weight-semi-bold"
+              >
+                Set a Friendly Workspace URL
+              </span>
+            </div>
+            <span
+              class="text-3"
+            >
+              Define a friendly URL that others can use to access and share this workspace. This value cannot be changed after it is set.
+            </span>
+            <div
+              class="mb-1"
+            >
+              <span
+                class="text-3 text-secondary"
+              >
+                e.g. 
+                <span>
+                  http://localhost:3000
+                </span>
+                <strong>
+                  /workspace-name
+                </strong>
+                .
+              </span>
+            </div>
             <div
               class=""
             >
-              <label
-                class="form-control-label label-root"
-                for="friendlyURL"
-              >
-                <span
-                  class="content-container"
-                >
-                  Set a Friendly Workspace URL
-                </span>
-              </label>
-              <label
-                class="form-control-label label-root font-weight-normal"
-                for="friendlyURL"
-              >
-                <span
-                  class="content-container"
-                >
-                  <p>
-                    You can only set your friendly workspace URL once.
-                    <span
-                      class="instructions"
-                    >
-                      http://localhost:3000/workspace
-                    </span>
-                  </p>
-                </span>
-              </label>
               <div
                 class="input-group"
               >
@@ -247,31 +248,37 @@ exports[`AddWorkspaceForm should render 1`] = `
           <div
             class="sheet-section"
           >
+            <div>
+              <span
+                class="text-3 font-weight-semi-bold"
+              >
+                Allowed Email Domains
+              </span>
+            </div>
+            <span
+              class="text-3"
+            >
+              Define which email domains can request access to this workspace.
+            </span>
+            <div
+              class="mb-1"
+            >
+              <span
+                class="text-3 text-secondary"
+              >
+                e.g. 
+                <span>
+                  user.name@
+                </span>
+                <strong>
+                  company-domain.com
+                </strong>
+                .
+              </span>
+            </div>
             <div
               class=""
             >
-              <label
-                class="form-control-label label-root"
-                for="emailAddressDomains"
-              >
-                <span
-                  class="content-container"
-                >
-                  Allowed Email Domains
-                </span>
-              </label>
-              <label
-                class="form-control-label label-root font-weight-normal"
-                for="emailAddressDomains"
-              >
-                <span
-                  class="content-container"
-                >
-                  <p>
-                    Anyone with an email address at these domains can request access to your workspace.
-                  </p>
-                </span>
-              </label>
               <div
                 class="input-group"
               >

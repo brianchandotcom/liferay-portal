@@ -7,6 +7,7 @@ package com.liferay.product.analytics.web.internal.servlet.taglib;
 
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -50,13 +51,16 @@ public class ProductAnalyticsBottomJSPDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (LiferayWindowState.isPopUp(httpServletRequest)) {
-			return;
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-51356") ||
+			LiferayWindowState.isPopUp(httpServletRequest)) {
+
+			return;
+		}
 
 		Group group = themeDisplay.getScopeGroup();
 

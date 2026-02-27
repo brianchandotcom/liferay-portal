@@ -14,7 +14,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Christopher Kian
  */
 @ExtendedObjectClassDefinition(
-	category = "privacy", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "privacy", featureFlagKey = "LPD-51356",
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	description = "product-analytics-configuration-description",

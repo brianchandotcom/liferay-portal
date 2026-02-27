@@ -33,7 +33,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.FieldSort;
@@ -113,14 +113,14 @@ public class ResourceHelper {
 		BooleanQuery booleanQuery = createMustNotBooleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("instanceCompleted", instanceCompleted));
+			QueriesUtil.term("instanceCompleted", instanceCompleted));
 	}
 
 	public BooleanQuery createMustNotBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		return booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkflowMetricsSLAStatus.NEW.name()));
+			QueriesUtil.term("status", WorkflowMetricsSLAStatus.NEW.name()));
 	}
 
 	public ScriptedMetricAggregation createOnTimeScriptedMetricAggregation() {
@@ -198,19 +198,19 @@ public class ResourceHelper {
 	public BooleanQuery createTasksBooleanQuery(
 		long companyId, boolean instanceCompleted) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				"_index",
 				_indexNameBuilder.getIndexName(companyId) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_TASK));
 
 		booleanQuery.addMustQueryClauses(
-			_queries.term("instanceCompleted", instanceCompleted));
+			QueriesUtil.term("instanceCompleted", instanceCompleted));
 
 		return booleanQuery.addMustNotQueryClauses(
-			_queries.term("instanceId", 0));
+			QueriesUtil.term("instanceId", 0));
 	}
 
 	public ScriptedMetricAggregation
@@ -371,12 +371,12 @@ public class ResourceHelper {
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", companyId),
-				_queries.term("processId", processId)));
+				QueriesUtil.term("companyId", companyId),
+				QueriesUtil.term("processId", processId)));
 
 		searchSearchRequest.setSelectedFieldNames("version");
 
@@ -518,9 +518,6 @@ public class ResourceHelper {
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

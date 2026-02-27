@@ -19,7 +19,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
@@ -31,13 +31,12 @@ import java.util.List;
 public class SPINodeResource<T> {
 
 	public SPINodeResource(
-		long companyId, IndexNameBuilder indexNameBuilder, Queries queries,
+		long companyId, IndexNameBuilder indexNameBuilder,
 		SearchEngineAdapter searchEngineAdapter,
 		UnsafeFunction<Document, T, SystemException> transformUnsafeFunction) {
 
 		_companyId = companyId;
 		_indexNameBuilder = indexNameBuilder;
-		_queries = queries;
 		_searchEngineAdapter = searchEngineAdapter;
 		_transformUnsafeFunction = transformUnsafeFunction;
 	}
@@ -49,14 +48,15 @@ public class SPINodeResource<T> {
 			_indexNameBuilder.getIndexName(_companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_NODE);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", _companyId),
-				_queries.term("deleted", Boolean.FALSE),
-				_queries.term("processId", processId),
-				_queries.term("version", _getLatestProcessVersion(processId))));
+				QueriesUtil.term("companyId", _companyId),
+				QueriesUtil.term("deleted", Boolean.FALSE),
+				QueriesUtil.term("processId", processId),
+				QueriesUtil.term(
+					"version", _getLatestProcessVersion(processId))));
 
 		searchSearchRequest.setSize(10000);
 
@@ -79,12 +79,12 @@ public class SPINodeResource<T> {
 			_indexNameBuilder.getIndexName(_companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", _companyId),
-				_queries.term("processId", processId)));
+				QueriesUtil.term("companyId", _companyId),
+				QueriesUtil.term("processId", processId)));
 
 		searchSearchRequest.setSelectedFieldNames("version");
 
@@ -108,7 +108,6 @@ public class SPINodeResource<T> {
 
 	private final long _companyId;
 	private final IndexNameBuilder _indexNameBuilder;
-	private final Queries _queries;
 	private final SearchEngineAdapter _searchEngineAdapter;
 	private final UnsafeFunction<Document, T, SystemException>
 		_transformUnsafeFunction;

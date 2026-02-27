@@ -39,7 +39,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
@@ -645,9 +645,9 @@ public class WorkflowMetricsRESTTestHelper {
 
 			_assertCount(
 				booleanQuery -> booleanQuery.addMustQueryClauses(
-					_queries.nested(
+					QueriesUtil.nested(
 						"tasks",
-						_queries.term(
+						QueriesUtil.term(
 							"tasks.taskId", addTaskRequest.getTaskId()))),
 				1,
 				indexName + WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
@@ -815,8 +815,8 @@ public class WorkflowMetricsRESTTestHelper {
 
 		_assertCount(
 			booleanQuery -> booleanQuery.addMustQueryClauses(
-				_queries.nested(
-					"tasks", _queries.term("tasks.taskId", task.getId()))),
+				QueriesUtil.nested(
+					"tasks", QueriesUtil.term("tasks.taskId", task.getId()))),
 			1, indexName + WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
 			"companyId", companyId, "deleted", false, "instanceId",
 			instance.getId(), "processId", task.getProcessId());
@@ -1032,12 +1032,12 @@ public class WorkflowMetricsRESTTestHelper {
 			_indexNameBuilder.getIndexName(companyId) +
 				WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", companyId),
-				_queries.term("deleted", Boolean.FALSE)));
+				QueriesUtil.term("companyId", companyId),
+				QueriesUtil.term("deleted", Boolean.FALSE)));
 
 		searchSearchRequest.setSize(10000);
 
@@ -1140,11 +1140,11 @@ public class WorkflowMetricsRESTTestHelper {
 
 		countSearchRequest.setIndexNames(indexName);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		for (int i = 0; i < parameters.length; i = i + 2) {
 			booleanQuery.addMustQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					String.valueOf(parameters[i]), parameters[i + 1]));
 		}
 
@@ -1307,11 +1307,11 @@ public class WorkflowMetricsRESTTestHelper {
 
 		searchSearchRequest.setIndexNames(indexName);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		for (int j = 0; j < parameters.length; j = j + 2) {
 			booleanQuery.addMustQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					String.valueOf(parameters[j]), parameters[j + 1]));
 		}
 
@@ -1537,9 +1537,9 @@ public class WorkflowMetricsRESTTestHelper {
 		for (SLAResult slaResult : slaResults) {
 			_assertCount(
 				booleanQuery -> booleanQuery.addMustQueryClauses(
-					_queries.nested(
+					QueriesUtil.nested(
 						"slaResults",
-						_queries.term(
+						QueriesUtil.term(
 							"slaResults.overdueDate",
 							_getDateString(slaResult.getDateOverdue())))),
 				1,
@@ -1576,9 +1576,6 @@ public class WorkflowMetricsRESTTestHelper {
 
 	@Reference
 	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference(
 		target = "(|(search.engine.impl=Elasticsearch)(search.engine.impl=OpenSearch))"

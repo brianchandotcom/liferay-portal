@@ -35,7 +35,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.FieldSort;
@@ -128,7 +128,7 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 	private TermsQuery _createAssigneeIdTermsQuery(
 		boolean completed, Set<Long> userIds) {
 
-		TermsQuery termsQuery = _queries.terms(
+		TermsQuery termsQuery = QueriesUtil.terms(
 			completed ? "completionUserId" : "assigneeIds");
 
 		termsQuery.addValues(
@@ -141,14 +141,14 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 		boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
 		long processId, String[] taskNames, Set<Long> userIds) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.setMinimumShouldMatch(1);
 
-		BooleanQuery slaTaskResultsBooleanQuery = _queries.booleanQuery();
+		BooleanQuery slaTaskResultsBooleanQuery = QueriesUtil.booleanQuery();
 
 		slaTaskResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				"_index",
 				_indexNameBuilder.getIndexName(contextCompany.getCompanyId()) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_SLA_TASK_RESULT));
@@ -157,10 +157,10 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 				completed, dateEnd, dateStart, instanceIds, processId,
 				taskNames, userIds));
 
-		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
+		BooleanQuery tasksBooleanQuery = QueriesUtil.booleanQuery();
 
 		tasksBooleanQuery.addFilterQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				"_index",
 				_indexNameBuilder.getIndexName(contextCompany.getCompanyId()) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_TASK));
@@ -178,7 +178,7 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 		long processId, Set<Long> userIds) {
 
 		if (ArrayUtil.isNotEmpty(instanceIds)) {
-			TermsQuery termsQuery = _queries.terms("instanceId");
+			TermsQuery termsQuery = QueriesUtil.terms("instanceId");
 
 			termsQuery.addValues(
 				transform(
@@ -201,12 +201,12 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 		}
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("active", Boolean.TRUE),
-			_queries.term("assigneeType", User.class.getName()),
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", Boolean.FALSE),
-			_queries.term("instanceCompleted", completed),
-			_queries.term("processId", processId));
+			QueriesUtil.term("active", Boolean.TRUE),
+			QueriesUtil.term("assigneeType", User.class.getName()),
+			QueriesUtil.term("companyId", contextCompany.getCompanyId()),
+			QueriesUtil.term("deleted", Boolean.FALSE),
+			QueriesUtil.term("instanceCompleted", completed),
+			QueriesUtil.term("processId", processId));
 	}
 
 	private BucketSelectorPipelineAggregation
@@ -226,35 +226,36 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 	private BooleanQuery _createCompletionDateBooleanQuery(
 		Date dateEnd, Date dateStart) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		return booleanQuery.addShouldQueryClauses(
-			_queries.rangeTerm(
+			QueriesUtil.rangeTerm(
 				"completionDate", true, true,
 				_resourceHelper.getDate(dateStart),
 				_resourceHelper.getDate(dateEnd)),
-			_queries.term("slaDefinitionId", 0));
+			QueriesUtil.term("slaDefinitionId", 0));
 	}
 
 	private BooleanQuery _createCountFilterBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				"_index",
 				_indexNameBuilder.getIndexName(contextCompany.getCompanyId()) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_TASK));
 
-		return booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
+		return booleanQuery.addMustNotQueryClauses(
+			QueriesUtil.term("taskId", 0));
 	}
 
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
 		long processId, String[] taskNames, Set<Long> userIds) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", 0));
+		booleanQuery.addMustNotQueryClauses(QueriesUtil.term("instanceId", 0));
 
 		if (completed) {
 			if ((dateEnd != null) && (dateStart != null)) {
@@ -264,12 +265,12 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term(
+				QueriesUtil.term(
 					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 		}
 
 		if (ArrayUtil.isNotEmpty(taskNames)) {
-			TermsQuery termsQuery = _queries.terms("taskName");
+			TermsQuery termsQuery = QueriesUtil.terms("taskName");
 
 			termsQuery.addValues(taskNames);
 
@@ -284,22 +285,23 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 		boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
 		long processId, String[] taskNames, Set<Long> userIds) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", "0"));
+		booleanQuery.addMustNotQueryClauses(QueriesUtil.term("taskId", "0"));
 
 		if (completed && (dateEnd != null) && (dateStart != null)) {
 			booleanQuery.addMustQueryClauses(
-				_queries.rangeTerm(
+				QueriesUtil.rangeTerm(
 					"completionDate", true, true,
 					_resourceHelper.getDate(dateStart),
 					_resourceHelper.getDate(dateEnd)));
 		}
 
-		booleanQuery.addMustQueryClauses(_queries.term("completed", completed));
+		booleanQuery.addMustQueryClauses(
+			QueriesUtil.term("completed", completed));
 
 		if (ArrayUtil.isNotEmpty(taskNames)) {
-			TermsQuery termsQuery = _queries.terms("name");
+			TermsQuery termsQuery = QueriesUtil.terms("name");
 
 			termsQuery.addValues(taskNames);
 
@@ -579,9 +581,6 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private ResourceHelper _resourceHelper;

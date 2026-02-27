@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.query.BaseMoreLikeThisQueryTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -38,7 +39,7 @@ public class MoreLikeThisQueryTest extends BaseMoreLikeThisQueryTestCase {
 		SearchSearchRequest searchSearchRequest = createSearchSearchRequest();
 
 		searchSearchRequest.setQuery(
-			queries.moreLikeThis(
+			QueriesUtil.moreLikeThis(
 				Collections.emptyList(), RandomTestUtil.randomString()));
 
 		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();

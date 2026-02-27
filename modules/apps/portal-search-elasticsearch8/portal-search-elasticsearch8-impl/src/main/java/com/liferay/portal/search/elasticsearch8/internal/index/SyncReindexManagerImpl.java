@@ -17,7 +17,7 @@ import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.DateRangeTermQuery;
 import com.liferay.portal.search.query.ExistsQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermsQuery;
 
 import java.text.Format;
@@ -50,29 +50,29 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 			_log.info("Deleting stale documents in index " + indexName);
 		}
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		if (SetUtil.isNotEmpty(classNames)) {
-			TermsQuery termsQuery = _queries.terms(Field.ENTRY_CLASS_NAME);
+			TermsQuery termsQuery = QueriesUtil.terms(Field.ENTRY_CLASS_NAME);
 
 			termsQuery.addValues(classNames.toArray());
 
 			booleanQuery.addFilterQueryClauses(termsQuery);
 		}
 
-		BooleanQuery timestampBooleanQuery = _queries.booleanQuery();
+		BooleanQuery timestampBooleanQuery = QueriesUtil.booleanQuery();
 
 		Format format = _fastDateFormatFactory.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
 
-		DateRangeTermQuery dateRangeTermQuery = _queries.dateRangeTerm(
+		DateRangeTermQuery dateRangeTermQuery = QueriesUtil.dateRangeTerm(
 			"timestamp", false, false, null, format.format(date));
 
 		timestampBooleanQuery.addShouldQueryClauses(dateRangeTermQuery);
 
-		BooleanQuery existsBooleanQuery = _queries.booleanQuery();
+		BooleanQuery existsBooleanQuery = QueriesUtil.booleanQuery();
 
-		ExistsQuery existsQuery = _queries.exists("timestamp");
+		ExistsQuery existsQuery = QueriesUtil.exists("timestamp");
 
 		existsBooleanQuery.addMustNotQueryClauses(existsQuery);
 
@@ -94,9 +94,6 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

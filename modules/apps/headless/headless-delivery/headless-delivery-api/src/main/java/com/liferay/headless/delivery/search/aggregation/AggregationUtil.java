@@ -11,7 +11,7 @@ import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 
@@ -23,7 +23,7 @@ import java.util.Map;
 public class AggregationUtil {
 
 	public static void processVulcanAggregation(
-		Aggregations aggregations, DDMIndexer ddmIndexer, Queries queries,
+		Aggregations aggregations, DDMIndexer ddmIndexer,
 		SearchRequestBuilder searchRequestBuilder,
 		Aggregation vulcanAggregation) {
 
@@ -55,7 +55,7 @@ public class AggregationUtil {
 
 			FilterAggregation filterAggregation = aggregations.filter(
 				"filterAggregation",
-				queries.term(
+				QueriesUtil.term(
 					DDMIndexer.DDM_FIELD_ARRAY + "." +
 						DDMIndexer.DDM_FIELD_NAME,
 					ddmStructureField.getDDMStructureFieldName()));

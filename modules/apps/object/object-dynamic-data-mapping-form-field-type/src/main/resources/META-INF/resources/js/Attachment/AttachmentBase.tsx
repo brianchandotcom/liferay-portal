@@ -120,13 +120,11 @@ export default function AttachmentBase({
 
 	const DEFAULT_FOLDER_ERC = 'L_FILES';
 
-	const isCMSBasicDocument =
-		Liferay.FeatureFlags['LPD-74813'] && fileSource === 'CMSBasicDocument';
+	const isCMSBasicDocument = fileSource === 'CMSBasicDocument';
 
 	const isDocumentsAndMedia = fileSource === 'documentsAndMedia';
 
 	const isUserComputerToCMSBasicDocument =
-		Liferay.FeatureFlags['LPD-74813'] &&
 		fileSource === 'userComputerToCMSBasicDocument';
 
 	const isUserComputerToDocumentsAndMedia =

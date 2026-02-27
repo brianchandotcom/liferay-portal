@@ -32,7 +32,6 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -96,10 +95,21 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 		DDMForm ddmForm = ddmFormField.getDDMForm();
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
+
+		return HashMapBuilder.<String, Object>put(
 			ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS,
 			ddmFormField.getProperty(
 				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS)
+		).put(
+			ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
+			_getGroupExternalReferenceCode(objectField)
+		).put(
+			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+				objectField)
 		).put(
 			"deleteURL",
 			() -> {
@@ -164,24 +174,6 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 				getLocalizationParameters(
 					ddmFormField, ddmForm.getDefaultLocale())
 		).build();
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				objectField.getCompanyId(), "LPD-74813")) {
-
-			parameters.put(
-				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
-				_getGroupExternalReferenceCode(objectField));
-			parameters.put(
-				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
-					objectField));
-		}
-
-		return parameters;
 	}
 
 	@Activate

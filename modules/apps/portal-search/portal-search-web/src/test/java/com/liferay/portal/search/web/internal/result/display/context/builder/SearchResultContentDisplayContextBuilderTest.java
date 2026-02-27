@@ -59,7 +59,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testEditPermission() throws Exception {
+	public void testHasEditPermission() throws Exception {
 		String title = RandomTestUtil.randomString();
 
 		Mockito.doReturn(
@@ -89,7 +89,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testEditPermissionFalse() throws Exception {
+	public void testHasEditPermissionFalse() throws Exception {
 		Mockito.doReturn(
 			false
 		).when(
@@ -110,7 +110,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testIconMissingFromNullURLEdit() throws Exception {
+	public void testHasEditPermissionFromNullURL() throws Exception {
 		Mockito.doReturn(
 			null
 		).when(
@@ -129,7 +129,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testVisible() throws Exception {
+	public void testIsVisible() throws Exception {
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
 			_buildDisplayContext();
 
@@ -139,7 +139,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testVisibleFalseFromEntry() throws Exception {
+	public void testIsVisibleFalseFromEntry() throws Exception {
 		Mockito.doReturn(
 			false
 		).when(
@@ -153,7 +153,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testVisibleFalseFromViewPermission() throws Exception {
+	public void testIsVisibleFalseFromViewPermission() throws Exception {
 		Mockito.doReturn(
 			false
 		).when(

@@ -7,8 +7,8 @@ package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceShipmentFDSNames;
-import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.frontend.model.Icon;
 import com.liferay.commerce.frontend.model.OrderItem;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
@@ -189,9 +189,10 @@ public class CommerceShippableOrderItemsFDSDataProvider
 			return StringPool.BLANK;
 		}
 
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			commerceOrder.getCommerceAccountId(), commerceOrder.getGroupId(),
+			commerceOrder.getCommerceCurrencyCode(),
+			commerceOrder.getCommerceOrderId(), commerceOrder.getCompanyId());
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -220,6 +221,9 @@ public class CommerceShippableOrderItemsFDSDataProvider
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
+	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;

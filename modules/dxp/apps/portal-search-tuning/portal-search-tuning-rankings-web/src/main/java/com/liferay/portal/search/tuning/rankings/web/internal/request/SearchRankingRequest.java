@@ -18,7 +18,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
@@ -40,13 +40,12 @@ import java.util.Objects;
 public class SearchRankingRequest {
 
 	public SearchRankingRequest(
-		HttpServletRequest httpServletRequest, Queries queries,
+		HttpServletRequest httpServletRequest,
 		RankingIndexName rankingIndexName, Sorts sorts,
 		SearchContainer<RankingEntryDisplayContext> searchContainer,
 		SearchEngineAdapter searchEngineAdapter) {
 
 		_httpServletRequest = httpServletRequest;
-		_queries = queries;
 		_rankingIndexName = rankingIndexName;
 		_sorts = sorts;
 		_searchContainer = searchContainer;
@@ -64,7 +63,7 @@ public class SearchRankingRequest {
 			searchSearchRequest.setQuery(booleanQuery);
 		}
 		else {
-			searchSearchRequest.setQuery(_queries.matchAll());
+			searchSearchRequest.setQuery(QueriesUtil.matchAll());
 		}
 
 		searchSearchRequest.setFetchSource(true);
@@ -90,15 +89,15 @@ public class SearchRankingRequest {
 
 	private void _addFilterByEverythingScope(BooleanQuery booleanQuery) {
 		booleanQuery.addFilterQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 				StringPool.BLANK),
-			_queries.term(
+			QueriesUtil.term(
 				RankingFields.GROUP_EXTERNAL_REFERENCE_CODE, StringPool.BLANK));
 	}
 
 	private BooleanQuery _getBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		String keywords = _searchContext.getKeywords();
 		String scope = GetterUtil.getString(
@@ -108,23 +107,23 @@ public class SearchRankingRequest {
 
 		if (!Validator.isBlank(keywords)) {
 			booleanQuery.addMustQueryClauses(
-				_queries.booleanQuery(
+				QueriesUtil.booleanQuery(
 				).addShouldQueryClauses(
-					_queries.term(RankingFields.NAME, keywords),
-					_queries.term(RankingFields.ALIASES, keywords)
+					QueriesUtil.term(RankingFields.NAME, keywords),
+					QueriesUtil.term(RankingFields.ALIASES, keywords)
 				));
 		}
 
 		if (!Objects.equals(scope, "all")) {
 			if (Objects.equals(scope, "blueprint")) {
 				booleanQuery.addMustNotQueryClauses(
-					_queries.term(
+					QueriesUtil.term(
 						RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 						StringPool.BLANK));
 			}
 			else if (Objects.equals(scope, "site")) {
 				booleanQuery.addMustNotQueryClauses(
-					_queries.term(
+					QueriesUtil.term(
 						RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
 						StringPool.BLANK));
 			}
@@ -135,7 +134,7 @@ public class SearchRankingRequest {
 
 		if (!Objects.equals(status, "all")) {
 			booleanQuery.addFilterQueryClauses(
-				_queries.term(RankingFields.STATUS, status));
+				QueriesUtil.term(RankingFields.STATUS, status));
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-6368")) {
@@ -194,7 +193,6 @@ public class SearchRankingRequest {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final Queries _queries;
 	private final RankingIndexName _rankingIndexName;
 	private final SearchContainer<RankingEntryDisplayContext> _searchContainer;
 	private final SearchContext _searchContext;

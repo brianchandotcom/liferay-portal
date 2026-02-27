@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
@@ -78,7 +77,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 	@Activate
 	protected void activate() {
 		_duplicateQueryStringsDetector = new DuplicateQueryStringsDetector(
-			_queries, _searchEngineAdapter);
+			_searchEngineAdapter);
 	}
 
 	protected JSONObject getJSONObject(ResourceRequest resourceRequest) {
@@ -200,9 +199,6 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private RankingHelper _rankingHelper;

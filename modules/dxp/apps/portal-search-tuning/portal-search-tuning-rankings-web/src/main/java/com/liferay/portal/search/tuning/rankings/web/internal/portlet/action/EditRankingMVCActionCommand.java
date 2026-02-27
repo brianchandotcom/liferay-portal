@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
@@ -104,7 +103,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	@Activate
 	protected void activate() {
 		_duplicateQueryStringsDetector = new DuplicateQueryStringsDetector(
-			_queries, _searchEngineAdapter);
+			_searchEngineAdapter);
 	}
 
 	protected String getIndexName(ActionRequest actionRequest) {
@@ -668,9 +667,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 	private long _companyId;
 	private DuplicateQueryStringsDetector _duplicateQueryStringsDetector;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

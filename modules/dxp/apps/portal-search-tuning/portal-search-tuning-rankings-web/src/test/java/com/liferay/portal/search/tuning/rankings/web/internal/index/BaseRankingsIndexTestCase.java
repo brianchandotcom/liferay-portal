@@ -10,8 +10,6 @@ import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
 
 import java.util.Arrays;
@@ -37,22 +35,6 @@ public abstract class BaseRankingsIndexTestCase
 		);
 
 		return document;
-	}
-
-	protected void setUpQueries() {
-		Mockito.doReturn(
-			Mockito.mock(BooleanQuery.class)
-		).when(
-			queries
-		).booleanQuery();
-
-		Mockito.doReturn(
-			Mockito.mock(TermsQuery.class)
-		).when(
-			queries
-		).terms(
-			Mockito.anyString()
-		);
 	}
 
 	protected void setUpSearchEngineAdapter(boolean exist) {

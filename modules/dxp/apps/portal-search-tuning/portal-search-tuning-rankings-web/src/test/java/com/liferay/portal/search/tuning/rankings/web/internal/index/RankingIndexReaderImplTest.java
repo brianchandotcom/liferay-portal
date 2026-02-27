@@ -47,8 +47,6 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 			_rankingIndexReaderImpl, "_rankingBuilderFactory",
 			Mockito.mock(RankingBuilderFactory.class));
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexReaderImpl, "_queries", queries);
-		ReflectionTestUtil.setFieldValue(
 			_rankingIndexReaderImpl, "_searchEngineAdapter",
 			searchEngineAdapter);
 	}
@@ -81,7 +79,6 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 
 	@Test
 	public void testFetchQueryString() {
-		setUpQueries();
 		setUpSearchEngineAdapter(
 			setUpGetDocumentResponseGetDocument(
 				setUpDocument(Arrays.asList("queryStrings")),

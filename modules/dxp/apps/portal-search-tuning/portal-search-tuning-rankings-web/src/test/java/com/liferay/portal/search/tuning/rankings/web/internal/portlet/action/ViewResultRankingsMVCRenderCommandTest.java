@@ -55,8 +55,6 @@ public class ViewResultRankingsMVCRenderCommandTest
 		ReflectionTestUtil.setFieldValue(
 			_viewResultRankingsMVCRenderCommand, "portal", portal);
 		ReflectionTestUtil.setFieldValue(
-			_viewResultRankingsMVCRenderCommand, "queries", queries);
-		ReflectionTestUtil.setFieldValue(
 			_viewResultRankingsMVCRenderCommand, "rankingIndexNameBuilder",
 			rankingIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
@@ -79,7 +77,6 @@ public class ViewResultRankingsMVCRenderCommandTest
 		setUpLanguageUtil("");
 		setUpPortal();
 		setUpPortalUtil();
-		setUpQuery();
 		setUpRankingIndexNameBuilder();
 		setUpRenderResponse(_renderResponse);
 		setUpSearchEngineAdapter(Mockito.mock(SearchHits.class));

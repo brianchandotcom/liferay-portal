@@ -12,7 +12,6 @@ import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
@@ -47,9 +46,9 @@ public class ViewResultRankingsMVCRenderCommand implements MVCRenderCommand {
 		RankingPortletDisplayContext rankingPortletDisplayContext =
 			new RankingPortletDisplayBuilder(
 				portal.getHttpServletRequest(renderRequest), language, portal,
-				queries, _rankingBuilderFactory, rankingIndexNameBuilder,
-				renderRequest, renderResponse, searchEngineAdapter,
-				searchEngineInformation, sorts
+				_rankingBuilderFactory, rankingIndexNameBuilder, renderRequest,
+				renderResponse, searchEngineAdapter, searchEngineInformation,
+				sorts
 			).build();
 
 		renderRequest.setAttribute(
@@ -67,9 +66,6 @@ public class ViewResultRankingsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	protected Portal portal;
-
-	@Reference
-	protected Queries queries;
 
 	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;

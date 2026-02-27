@@ -14,7 +14,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.IdsQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
@@ -32,9 +32,8 @@ import java.util.function.Consumer;
 public class DuplicateQueryStringsDetector {
 
 	public DuplicateQueryStringsDetector(
-		Queries queries, SearchEngineAdapter searchEngineAdapter) {
+		SearchEngineAdapter searchEngineAdapter) {
 
-		_queries = queries;
 		_searchEngineAdapter = searchEngineAdapter;
 	}
 
@@ -80,7 +79,7 @@ public class DuplicateQueryStringsDetector {
 	}
 
 	private BooleanQuery _getCriteriaQuery(Criteria criteria) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		_addQueryClauses(
 			booleanQuery::addFilterQueryClauses,
@@ -89,9 +88,9 @@ public class DuplicateQueryStringsDetector {
 			_getSXPBlueprintExternalReferenceCodeQuery(criteria));
 		_addQueryClauses(
 			booleanQuery::addMustNotQueryClauses,
-			_queries.term(
+			QueriesUtil.term(
 				RankingFields.STATUS, ResultRankingsConstants.STATUS_INACTIVE),
-			_queries.term(
+			QueriesUtil.term(
 				RankingFields.STATUS,
 				ResultRankingsConstants.STATUS_NOT_APPLICABLE),
 			_getUnlessRankingIdQuery(criteria));
@@ -113,7 +112,7 @@ public class DuplicateQueryStringsDetector {
 	}
 
 	private Query _getGroupExternalReferenceCodeQuery(Criteria criteria) {
-		return _queries.term(
+		return QueriesUtil.term(
 			RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
 			criteria.getGroupExternalReferenceCode());
 	}
@@ -123,11 +122,11 @@ public class DuplicateQueryStringsDetector {
 			return null;
 		}
 
-		return _queries.term(RankingFields.INDEX, criteria.getIndex());
+		return QueriesUtil.term(RankingFields.INDEX, criteria.getIndex());
 	}
 
 	private TermsQuery _getQueryStringsQuery(Criteria criteria) {
-		TermsQuery termsQuery = _queries.terms(
+		TermsQuery termsQuery = QueriesUtil.terms(
 			RankingFields.QUERY_STRINGS_KEYWORD);
 
 		Collection<String> queryStrings = criteria.getQueryStrings();
@@ -140,7 +139,7 @@ public class DuplicateQueryStringsDetector {
 	private Query _getSXPBlueprintExternalReferenceCodeQuery(
 		Criteria criteria) {
 
-		return _queries.term(
+		return QueriesUtil.term(
 			RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 			criteria.getSXPBlueprintExternalReferenceCode());
 	}
@@ -150,14 +149,13 @@ public class DuplicateQueryStringsDetector {
 			return null;
 		}
 
-		IdsQuery idsQuery = _queries.ids();
+		IdsQuery idsQuery = QueriesUtil.ids();
 
 		idsQuery.addIds(criteria.getUnlessRankingDocumentId());
 
 		return idsQuery;
 	}
 
-	private final Queries _queries;
 	private final SearchEngineAdapter _searchEngineAdapter;
 
 }

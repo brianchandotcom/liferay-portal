@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.IdsQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -26,12 +26,11 @@ public class RankingSearchRequestBuilder {
 
 	public RankingSearchRequestBuilder(
 		ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory,
-		GroupLocalService groupLocalService, Queries queries,
+		GroupLocalService groupLocalService,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		_complexQueryPartBuilderFactory = complexQueryPartBuilderFactory;
 		_groupLocalService = groupLocalService;
-		_queries = queries;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
@@ -122,7 +121,7 @@ public class RankingSearchRequestBuilder {
 	}
 
 	protected Query getIdsQuery(String id) {
-		IdsQuery idsQuery = _queries.ids();
+		IdsQuery idsQuery = QueriesUtil.ids();
 
 		idsQuery.addIds(id);
 
@@ -154,7 +153,6 @@ public class RankingSearchRequestBuilder {
 	private int _from;
 	private String _groupExternalReferenceCode;
 	private final GroupLocalService _groupLocalService;
-	private final Queries _queries;
 	private String _queryString;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private int _size;

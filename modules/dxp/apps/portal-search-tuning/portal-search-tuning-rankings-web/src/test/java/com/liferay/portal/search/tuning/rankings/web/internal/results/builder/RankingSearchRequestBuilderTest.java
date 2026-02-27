@@ -28,14 +28,13 @@ public class RankingSearchRequestBuilderTest
 	@Before
 	public void setUp() throws Exception {
 		_rankingSearchRequestBuilder = new RankingSearchRequestBuilder(
-			complexQueryPartBuilderFactory, groupLocalService, queries,
+			complexQueryPartBuilderFactory, groupLocalService,
 			searchRequestBuilderFactory);
 	}
 
 	@Test
 	public void testBuild() throws Exception {
 		setUpComplexQueryPartBuilderFactory(setUpComplexQueryPartBuilder());
-		setUpQuery();
 
 		SearchRequestBuilder searchRequestBuilder = setUpSearchRequestBuilder();
 

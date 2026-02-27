@@ -46,8 +46,7 @@ public class SingleIndexToMultipleIndexImporterTest
 	public void setUp() throws Exception {
 		_singleIndexToMultipleIndexImporterImpl =
 			new SingleIndexToMultipleIndexImporter(
-				_indexNameBuilder, queries, _rankingIndexReader,
-				searchEngineAdapter);
+				_indexNameBuilder, _rankingIndexReader, searchEngineAdapter);
 	}
 
 	@After

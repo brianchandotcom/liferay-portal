@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -35,16 +34,15 @@ public class RankingGetSearchResultsBuilder {
 		ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory,
 		DLAppLocalService dlAppLocalService,
 		FastDateFormatFactory fastDateFormatFactory,
-		GroupLocalService groupLocalService, Queries queries,
-		ResourceActions resourceActions, ResourceRequest resourceRequest,
-		ResourceResponse resourceResponse, Searcher searcher,
+		GroupLocalService groupLocalService, ResourceActions resourceActions,
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+		Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		_complexQueryPartBuilderFactory = complexQueryPartBuilderFactory;
 		_dlAppLocalService = dlAppLocalService;
 		_fastDateFormatFactory = fastDateFormatFactory;
 		_groupLocalService = groupLocalService;
-		_queries = queries;
 		_resourceActions = resourceActions;
 		_resourceRequest = resourceRequest;
 		_resourceResponse = resourceResponse;
@@ -93,7 +91,7 @@ public class RankingGetSearchResultsBuilder {
 	protected SearchRequest buildSearchRequest() {
 		RankingSearchRequestBuilder rankingSearchRequestBuilder =
 			new RankingSearchRequestBuilder(
-				_complexQueryPartBuilderFactory, _groupLocalService, _queries,
+				_complexQueryPartBuilderFactory, _groupLocalService,
 				_searchRequestBuilderFactory);
 
 		return rankingSearchRequestBuilder.adminSearch(
@@ -143,7 +141,6 @@ public class RankingGetSearchResultsBuilder {
 	private final FastDateFormatFactory _fastDateFormatFactory;
 	private int _from;
 	private final GroupLocalService _groupLocalService;
-	private final Queries _queries;
 	private String _queryString;
 	private final ResourceActions _resourceActions;
 	private final ResourceRequest _resourceRequest;

@@ -67,7 +67,6 @@ public class SiteNavigationMenuItemServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
 		_guestUser = _userLocalService.getGuestUser(
 			TestPropsValues.getCompanyId());
 

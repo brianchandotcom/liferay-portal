@@ -3802,6 +3802,11 @@ public class BatchEnginePortletDataHandlerTest {
 				}
 
 				@Override
+				public Class getModelClass() {
+					return null;
+				}
+
+				@Override
 				public String getModelClassName() {
 					return _modelClassName;
 				}

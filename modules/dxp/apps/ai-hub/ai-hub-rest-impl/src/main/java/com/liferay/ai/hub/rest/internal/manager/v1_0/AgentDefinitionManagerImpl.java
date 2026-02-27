@@ -198,6 +198,12 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 								GetterUtil.getString(
 									objectEntry.getPropertyValue(
 										"outputVariable")),
+								"r_accountToAIHubAgentDefinitions_" +
+									"accountEntryId",
+								GetterUtil.getLong(
+									objectEntry.getPropertyValue(
+										"r_accountToAIHubAgentDefinitions_" +
+											"accountEntryId")),
 								"title_i18n", title, "workflowDefinitionName",
 								workflowDefinitionName));
 					}

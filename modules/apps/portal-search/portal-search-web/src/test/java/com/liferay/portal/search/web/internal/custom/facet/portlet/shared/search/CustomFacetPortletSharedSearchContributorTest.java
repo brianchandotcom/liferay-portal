@@ -39,7 +39,6 @@ import com.liferay.portal.search.internal.facet.range.RangeFacetFactoryImpl;
 import com.liferay.portal.search.internal.facet.range.RangeFacetSearchContributorImpl;
 import com.liferay.portal.search.internal.filter.FilterBuildersImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
-import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
@@ -677,8 +676,6 @@ public class CustomFacetPortletSharedSearchContributorTest {
 		ReflectionTestUtil.setFieldValue(
 			nestedFacetSearchContributor, "nestedFacetFactory",
 			new NestedFacetFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			nestedFacetSearchContributor, "queries", new QueriesImpl());
 
 		ReflectionTestUtil.setFieldValue(
 			customFacetPortletSharedSearchContributor,

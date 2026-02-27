@@ -50,6 +50,88 @@ public class DeleteAssetVersionBulkAction
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getClassName() {
+		if (_classNameSupplier != null) {
+			className = _classNameSupplier.get();
+
+			_classNameSupplier = null;
+		}
+
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+
+		_classNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
+
+		_classNameSupplier = () -> {
+			try {
+				return classNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String className;
+
+	@JsonIgnore
+	private Supplier<String> _classNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getClassPK() {
+		if (_classPKSupplier != null) {
+			classPK = _classPKSupplier.get();
+
+			_classPKSupplier = null;
+		}
+
+		return classPK;
+	}
+
+	public void setClassPK(Long classPK) {
+		this.classPK = classPK;
+
+		_classPKSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setClassPK(
+		UnsafeSupplier<Long, Exception> classPKUnsafeSupplier) {
+
+		_classPKSupplier = () -> {
+			try {
+				return classPKUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long classPK;
+
+	@JsonIgnore
+	private Supplier<Long> _classPKSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer[] getVersions() {
 		if (_versionsSupplier != null) {
 			versions = _versionsSupplier.get();
@@ -118,6 +200,34 @@ public class DeleteAssetVersionBulkAction
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String className = getClassName();
+
+		if (className != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"className\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(className));
+
+			sb.append("\"");
+		}
+
+		Long classPK = getClassPK();
+
+		if (classPK != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"classPK\": ");
+
+			sb.append(classPK);
+		}
 
 		Integer[] versions = getVersions();
 

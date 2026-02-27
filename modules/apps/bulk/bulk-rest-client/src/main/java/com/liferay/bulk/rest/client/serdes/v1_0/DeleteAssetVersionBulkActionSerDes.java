@@ -51,6 +51,30 @@ public class DeleteAssetVersionBulkActionSerDes {
 
 		sb.append("{");
 
+		if (deleteAssetVersionBulkAction.getClassName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"className\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(deleteAssetVersionBulkAction.getClassName()));
+
+			sb.append("\"");
+		}
+
+		if (deleteAssetVersionBulkAction.getClassPK() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"classPK\": ");
+
+			sb.append(deleteAssetVersionBulkAction.getClassPK());
+		}
+
 		if (deleteAssetVersionBulkAction.getVersions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -149,6 +173,24 @@ public class DeleteAssetVersionBulkActionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (deleteAssetVersionBulkAction.getClassName() == null) {
+			map.put("className", null);
+		}
+		else {
+			map.put(
+				"className",
+				String.valueOf(deleteAssetVersionBulkAction.getClassName()));
+		}
+
+		if (deleteAssetVersionBulkAction.getClassPK() == null) {
+			map.put("classPK", null);
+		}
+		else {
+			map.put(
+				"classPK",
+				String.valueOf(deleteAssetVersionBulkAction.getClassPK()));
+		}
+
 		if (deleteAssetVersionBulkAction.getVersions() == null) {
 			map.put("versions", null);
 		}
@@ -204,7 +246,13 @@ public class DeleteAssetVersionBulkActionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "versions")) {
+			if (Objects.equals(jsonParserFieldName, "className")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "classPK")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "versions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
@@ -225,7 +273,19 @@ public class DeleteAssetVersionBulkActionSerDes {
 			DeleteAssetVersionBulkAction deleteAssetVersionBulkAction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "versions")) {
+			if (Objects.equals(jsonParserFieldName, "className")) {
+				if (jsonParserFieldValue != null) {
+					deleteAssetVersionBulkAction.setClassName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "classPK")) {
+				if (jsonParserFieldValue != null) {
+					deleteAssetVersionBulkAction.setClassPK(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "versions")) {
 				if (jsonParserFieldValue != null) {
 					deleteAssetVersionBulkAction.setVersions(
 						toIntegers((Object[])jsonParserFieldValue));

@@ -433,6 +433,34 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("className", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof DeleteAssetVersionBulkAction)) {
+					continue;
+				}
+
+				if (((DeleteAssetVersionBulkAction)bulkAction).getClassName() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("classPK", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof DeleteAssetVersionBulkAction)) {
+					continue;
+				}
+
+				if (((DeleteAssetVersionBulkAction)bulkAction).getClassPK() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("versions", additionalAssertFieldName)) {
 				if (!(bulkAction instanceof DeleteAssetVersionBulkAction)) {
 					continue;
@@ -1026,6 +1054,44 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("className", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof DeleteAssetVersionBulkAction) ||
+					!(bulkAction2 instanceof DeleteAssetVersionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DeleteAssetVersionBulkAction)bulkAction1).
+							getClassName(),
+						((DeleteAssetVersionBulkAction)bulkAction2).
+							getClassName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("classPK", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof DeleteAssetVersionBulkAction) ||
+					!(bulkAction2 instanceof DeleteAssetVersionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DeleteAssetVersionBulkAction)bulkAction1).
+							getClassPK(),
+						((DeleteAssetVersionBulkAction)bulkAction2).
+							getClassPK())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("versions", additionalAssertFieldName)) {
 				if (!(bulkAction1 instanceof DeleteAssetVersionBulkAction) ||
 					!(bulkAction2 instanceof DeleteAssetVersionBulkAction)) {
@@ -1603,6 +1669,10 @@ public abstract class BaseBulkActionResourceTestCase {
 			() -> {
 				DeleteAssetVersionBulkAction bulkAction =
 					new DeleteAssetVersionBulkAction();
+
+				bulkAction.setClassName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				bulkAction.setClassPK(RandomTestUtil.randomLong());
 
 				bulkAction.setType(
 					BulkAction.Type.create("DeleteAssetVersionBulkAction"));

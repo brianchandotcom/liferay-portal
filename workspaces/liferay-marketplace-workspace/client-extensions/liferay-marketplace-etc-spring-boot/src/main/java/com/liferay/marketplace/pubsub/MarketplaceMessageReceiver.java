@@ -45,12 +45,12 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 	public MarketplaceMessageReceiver(
 		KoroneikiService koroneikiService,
-		MarketplaceService marketplaceService, List<String> productKeysList,
+		MarketplaceService marketplaceService, List<String> productKeys,
 		String topicName) {
 
 		_koroneikiService = koroneikiService;
 		_marketplaceService = marketplaceService;
-		_productKeysList = productKeysList;
+		_productKeys = productKeys;
 		_topicName = topicName;
 	}
 
@@ -241,7 +241,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			ProductPurchase productPurchase)
 		throws Exception {
 
-		if (!_productKeysList.contains(productPurchase.getProductKey())) {
+		if (!_productKeys.contains(productPurchase.getProductKey())) {
 			return;
 		}
 
@@ -288,7 +288,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 	private final KoroneikiService _koroneikiService;
 	private final MarketplaceService _marketplaceService;
-	private final List<String> _productKeysList;
+	private final List<String> _productKeys;
 	private final String _topicName;
 
 }

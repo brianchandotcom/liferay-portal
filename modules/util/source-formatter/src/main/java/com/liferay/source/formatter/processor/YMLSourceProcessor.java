@@ -42,14 +42,14 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _dashPattern2.matcher(content);
 
 		while (matcher.find()) {
-			String firstLine = matcher.group(1);
-			String indent = matcher.group(2);
+			String firstLine = matcher.group(2);
+			String indent = matcher.group(3);
 
 			if (indent.length() <= firstLine.length()) {
 				continue;
 			}
 
-			String secondLine = matcher.group(2) + matcher.group(3);
+			String secondLine = matcher.group(3) + matcher.group(4);
 
 			String replacement =
 				firstLine + secondLine.substring(firstLine.length());
@@ -61,7 +61,8 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 		if (sb.length() > 0) {
 			matcher.appendTail(sb);
 
-			return super.postFormat(sb.toString(), originalReturnCharacter);
+			return super.postFormat(
+				StringUtil.trim(sb.toString()), originalReturnCharacter);
 		}
 
 		return super.postFormat(content, originalReturnCharacter);
@@ -121,8 +122,8 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 		"**/templates/*.tpl", "**/*.yaml", "**/*.yml"
 	};
 
-	private static final Pattern _dashPattern1 = Pattern.compile("( +- +)(.+)");
+	private static final Pattern _dashPattern1 = Pattern.compile("( *- +)(.+)");
 	private static final Pattern _dashPattern2 = Pattern.compile(
-		"\n( *-)\n( +)(.+)");
+		"(\\A|\n)( *-)\n( +)(.+)");
 
 }

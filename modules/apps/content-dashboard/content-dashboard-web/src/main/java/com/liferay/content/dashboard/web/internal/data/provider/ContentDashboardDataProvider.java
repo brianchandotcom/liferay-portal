@@ -26,7 +26,7 @@ import com.liferay.portal.search.aggregation.bucket.Order;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -53,12 +53,10 @@ public class ContentDashboardDataProvider {
 			contentDashboardSearchContextBuilder,
 		ContentDashboardSearchRequestBuilderFactory
 			contentDashboardSearchRequestBuilderFactory,
-		Locale locale, Queries queries, ResourceBundle resourceBundle,
-		Searcher searcher) {
+		Locale locale, ResourceBundle resourceBundle, Searcher searcher) {
 
 		_aggregations = aggregations;
 		_locale = locale;
-		_queries = queries;
 		_resourceBundle = resourceBundle;
 		_searcher = searcher;
 
@@ -279,9 +277,9 @@ public class ContentDashboardDataProvider {
 		Set<String> mustNotAssetCategoryIds, String mustNotAssetVocabularyField,
 		Set<String> shouldAssetCategoryIds, String shouldAssetVocabularyField) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		TermsQuery mustNotTermsQuery = _queries.terms(
+		TermsQuery mustNotTermsQuery = QueriesUtil.terms(
 			mustNotAssetVocabularyField);
 
 		mustNotTermsQuery.addValues(
@@ -289,7 +287,7 @@ public class ContentDashboardDataProvider {
 
 		booleanQuery.addMustNotQueryClauses(mustNotTermsQuery);
 
-		TermsQuery shouldTermsQuery = _queries.terms(
+		TermsQuery shouldTermsQuery = QueriesUtil.terms(
 			shouldAssetVocabularyField);
 
 		shouldTermsQuery.addValues(
@@ -432,7 +430,6 @@ public class ContentDashboardDataProvider {
 
 	private final Aggregations _aggregations;
 	private final Locale _locale;
-	private final Queries _queries;
 	private final ResourceBundle _resourceBundle;
 	private final Searcher _searcher;
 	private final SearchRequestBuilder _searchRequestBuilder;

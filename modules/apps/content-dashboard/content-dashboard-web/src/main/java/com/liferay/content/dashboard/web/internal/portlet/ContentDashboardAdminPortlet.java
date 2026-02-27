@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 
@@ -99,8 +98,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 					_assetCategoryLocalService, _assetVocabularyLocalService,
 					_contentDashboardItemFilterProviderRegistry),
 				_contentDashboardSearchRequestBuilderFactory,
-				_portal.getLocale(renderRequest), _queries, resourceBundle,
-				_searcher);
+				_portal.getLocale(renderRequest), resourceBundle, _searcher);
 
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(renderRequest);
@@ -223,9 +221,6 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private Searcher _searcher;

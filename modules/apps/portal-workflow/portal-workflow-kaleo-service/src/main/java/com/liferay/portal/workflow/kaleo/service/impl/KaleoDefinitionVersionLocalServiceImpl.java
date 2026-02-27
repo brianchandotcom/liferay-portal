@@ -44,7 +44,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -382,16 +382,16 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		searchSearchRequest.setIndexNames(
 			_indexNameBuilder.getIndexName(companyId));
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		TermsQuery termsQuery = _queries.terms(Field.ENTRY_CLASS_PK);
+		TermsQuery termsQuery = QueriesUtil.terms(Field.ENTRY_CLASS_PK);
 
 		termsQuery.addValues(
 			ArrayUtil.toStringArray(kaleoDefinitionVersionIds));
 
 		booleanQuery.addMustQueryClauses(
-			_queries.term(Field.COMPANY_ID, companyId),
-			_queries.term(
+			QueriesUtil.term(Field.COMPANY_ID, companyId),
+			QueriesUtil.term(
 				Field.ENTRY_CLASS_NAME, KaleoDefinitionVersion.class.getName()),
 			termsQuery);
 
@@ -449,40 +449,41 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		termsAggregation.addChildrenAggregations(topHitsAggregation);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(
-			_queries.term("scope", WorkflowDefinitionConstants.SCOPE_ALL));
+			QueriesUtil.term("scope", WorkflowDefinitionConstants.SCOPE_ALL));
 
 		if (Validator.isNotNull(keywords)) {
-			BooleanQuery keywordsBooleanQuery = _queries.booleanQuery();
+			BooleanQuery keywordsBooleanQuery = QueriesUtil.booleanQuery();
 
 			keywordsBooleanQuery.addShouldQueryClauses(
-				_queries.match(Field.DESCRIPTION, keywords),
-				_queries.match(Field.NAME, keywords));
+				QueriesUtil.match(Field.DESCRIPTION, keywords),
+				QueriesUtil.match(Field.NAME, keywords));
 
 			String[] localizedFieldNames =
 				_searchLocalizationHelper.getLocalizedFieldNames(
 					new String[] {Field.TITLE}, new SearchContext());
 
 			for (String localizedFieldName : localizedFieldNames) {
-				StringQuery stringQuery = _queries.string(
+				StringQuery stringQuery = QueriesUtil.string(
 					keywords + StringPool.STAR);
 
 				stringQuery.setDefaultField(localizedFieldName);
 
 				keywordsBooleanQuery.addShouldQueryClauses(
-					stringQuery, _queries.match(localizedFieldName, keywords));
+					stringQuery,
+					QueriesUtil.match(localizedFieldName, keywords));
 			}
 
 			booleanQuery.addMustQueryClauses(keywordsBooleanQuery);
 		}
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			booleanQuery.addMustQueryClauses(_queries.term("active", 1));
+			booleanQuery.addMustQueryClauses(QueriesUtil.term("active", 1));
 		}
 		else if (status == WorkflowConstants.STATUS_DRAFT) {
-			booleanQuery.addMustQueryClauses(_queries.term("active", 0));
+			booleanQuery.addMustQueryClauses(QueriesUtil.term("active", 0));
 		}
 
 		SearchRequestBuilder searchRequestBuilder =
@@ -560,9 +561,6 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 	@Reference
 	private KaleoTransitionLocalService _kaleoTransitionLocalService;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

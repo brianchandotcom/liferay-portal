@@ -171,8 +171,13 @@ export default function TranslationAdminSelector({
 	}, [selectedLanguageId, onSelectedLanguageIdChange]);
 
 	useEffect(() => {
-		setActiveLanguageIds(initialActiveLanguageIds);
-	}, [initialActiveLanguageIds]);
+		if (
+			JSON.stringify(activeLanguageIds) !==
+			JSON.stringify(initialActiveLanguageIds)
+		) {
+			setActiveLanguageIds(initialActiveLanguageIds);
+		}
+	}, [activeLanguageIds, initialActiveLanguageIds]);
 
 	useEffect(() => {
 		setSelectedLanguageId(initialSelectedLanguageId);

@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys;
@@ -59,9 +58,8 @@ public class SynonymsPortlet extends MVCPortlet {
 		SynonymsDisplayBuilder synonymsDisplayBuilder =
 			new SynonymsDisplayBuilder(
 				_portal.getHttpServletRequest(renderRequest), _language,
-				_portal, _queries, renderRequest, renderResponse,
-				_searchEngineAdapter, _searchEngineInformation, _sorts,
-				_synonymSetIndexNameBuilder);
+				_portal, renderRequest, renderResponse, _searchEngineAdapter,
+				_searchEngineInformation, _sorts, _synonymSetIndexNameBuilder);
 
 		renderRequest.setAttribute(
 			SynonymsPortletKeys.SYNONYMS_DISPLAY_CONTEXT,
@@ -75,9 +73,6 @@ public class SynonymsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

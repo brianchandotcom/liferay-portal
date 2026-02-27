@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.engine.SearchEngineInformation;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
@@ -44,7 +43,7 @@ public class SynonymsDisplayBuilderTest extends BaseSynonymsWebTestCase {
 		setUpPortletPreferencesFactoryUtil();
 
 		_synonymsDisplayBuilder = new SynonymsDisplayBuilder(
-			_httpServletRequest, _language, portal, _queries, _renderRequest,
+			_httpServletRequest, _language, portal, _renderRequest,
 			_renderResponse, searchEngineAdapter, _searchEngineInformation,
 			_sorts, _synonymSetIndexNameBuilder);
 	}
@@ -86,7 +85,6 @@ public class SynonymsDisplayBuilderTest extends BaseSynonymsWebTestCase {
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 	private final Language _language = Mockito.mock(Language.class);
-	private final Queries _queries = Mockito.mock(Queries.class);
 	private final RenderRequest _renderRequest = Mockito.mock(
 		RenderRequest.class);
 	private final RenderResponse _renderResponse = Mockito.mock(

@@ -127,14 +127,12 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 								dbInspector::normalizeName)));
 			}
 
-			List<String> databaseViewNames = dbInspector.getViewNames(null);
-
-			Set<String> databaseViewNamesSet = new TreeSet<>(
+			Set<String> databaseViewNames = new TreeSet<>(
 				String.CASE_INSENSITIVE_ORDER);
 
-			databaseViewNamesSet.addAll(databaseViewNames);
+			databaseViewNames.addAll(dbInspector.getViewNames(null));
 
-			viewNames.removeAll(databaseViewNamesSet);
+			viewNames.removeAll(databaseViewNames);
 
 			if (!viewNames.isEmpty()) {
 				throw new VerifyException(

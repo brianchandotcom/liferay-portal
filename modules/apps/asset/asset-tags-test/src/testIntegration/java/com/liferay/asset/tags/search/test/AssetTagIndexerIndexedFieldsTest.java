@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -142,7 +142,8 @@ public class AssetTagIndexerIndexedFieldsTest {
 				).modelIndexerClasses(
 					AssetTag.class
 				).addComplexQueryPart(
-					_getComplexQueryPart(_queries.term("entryClassPK", classPK))
+					_getComplexQueryPart(
+						QueriesUtil.term("entryClassPK", classPK))
 				).build()));
 	}
 
@@ -284,9 +285,6 @@ public class AssetTagIndexerIndexedFieldsTest {
 	private List<Group> _groups;
 
 	private IndexedFieldsFixture _indexedFieldsFixture;
-
-	@Inject
-	private Queries _queries;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

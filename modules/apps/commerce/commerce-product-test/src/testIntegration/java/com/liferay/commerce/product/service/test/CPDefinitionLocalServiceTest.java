@@ -12,6 +12,7 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
@@ -20,6 +21,8 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
@@ -47,6 +50,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -580,6 +584,25 @@ public class CPDefinitionLocalServiceTest {
 						).put(
 							"versionThreshold", 2
 						).build())) {
+
+			User user = UserTestUtil.addUser();
+
+			CPConfigurationList cpConfigurationList =
+				_cpConfigurationListLocalService.addCPConfigurationList(
+					RandomTestUtil.randomString(), user.getUserId(),
+					_commerceCatalog.getGroupId(), 0, false,
+					RandomTestUtil.randomString(), 2, 1, 1, 2024, 0, 0, 0, 0, 0,
+					0, 0, true, new ServiceContext());
+
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				RandomTestUtil.randomString(), user.getUserId(),
+				cpConfigurationList.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				cpDefinition1.getCPDefinitionId(),
+				cpConfigurationList.getCPConfigurationListId(), 0, "123.00",
+				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, 1.0, 1.0);
 
 			CPSpecificationOption cpSpecificationOption =
 				CPTestUtil.addCPSpecificationOption(
@@ -1132,6 +1155,12 @@ public class CPDefinitionLocalServiceTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Inject
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Inject
 	private CPDefinitionInventoryLocalService

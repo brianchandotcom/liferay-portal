@@ -132,46 +132,6 @@ public class Task implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public Scope getScope() {
-		if (_scopeSupplier != null) {
-			scope = _scopeSupplier.get();
-
-			_scopeSupplier = null;
-		}
-
-		return scope;
-	}
-
-	public void setScope(Scope scope) {
-		this.scope = scope;
-
-		_scopeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
-		_scopeSupplier = () -> {
-			try {
-				return scopeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Scope scope;
-
-	@JsonIgnore
-	private Supplier<Scope> _scopeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSseEventSinkKey() {
 		if (_sseEventSinkKeySupplier != null) {
 			sseEventSinkKey = _sseEventSinkKeySupplier.get();
@@ -304,18 +264,6 @@ public class Task implements Serializable {
 			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
-		}
-
-		Scope scope = getScope();
-
-		if (scope != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"scope\": ");
-
-			sb.append(String.valueOf(scope));
 		}
 
 		String sseEventSinkKey = getSseEventSinkKey();

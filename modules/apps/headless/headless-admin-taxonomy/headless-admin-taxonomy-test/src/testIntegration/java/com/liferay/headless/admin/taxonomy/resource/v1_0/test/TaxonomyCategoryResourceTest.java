@@ -526,6 +526,7 @@ public class TaxonomyCategoryResourceTest
 		super.testPutSiteTaxonomyCategoryByExternalReferenceCode();
 
 		_testPutSiteTaxonomyCategoryByExternalReferenceCodeUpdatesParentToDefault();
+		_testPutSiteTaxonomyCategoryByExternalReferenceCodeWithParentTaxonomyCategory();
 	}
 
 	@Override
@@ -1759,6 +1760,72 @@ public class TaxonomyCategoryResourceTest
 			Assert.assertEquals(
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				assetCategory.getParentCategoryId());
+		}
+	}
+
+	private void _testPutSiteTaxonomyCategoryByExternalReferenceCodeWithParentTaxonomyCategory()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.getOrAddEmptyCategoryWithAncestors(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					testGroup.getGroupId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+
+			TaxonomyCategory getTaxonomyCategory =
+				taxonomyCategoryResource.getTaxonomyCategory(
+					String.valueOf(assetCategory.getCategoryId()));
+
+			ParentTaxonomyCategory getParentTaxonomyCategory =
+				getTaxonomyCategory.getParentTaxonomyCategory();
+
+			getParentTaxonomyCategory.setId(RandomTestUtil.randomLong());
+
+			TaxonomyCategory putTaxonomyCategory =
+				taxonomyCategoryResource.
+					putSiteTaxonomyCategoryByExternalReferenceCode(
+						testGroup.getGroupId(),
+						assetCategory.getExternalReferenceCode(),
+						getTaxonomyCategory);
+
+			ParentTaxonomyCategory putParentTaxonomyCategory =
+				putTaxonomyCategory.getParentTaxonomyCategory();
+
+			Assert.assertNotNull(putParentTaxonomyCategory);
+
+			Assert.assertEquals(
+				putParentTaxonomyCategory.getId(),
+				Long.valueOf(assetCategory.getParentCategoryId()));
+
+			AssetCategory parentAssetCategory =
+				assetCategory.getParentCategory();
+
+			getParentTaxonomyCategory.setExternalReferenceCode(() -> null);
+			getParentTaxonomyCategory.setId(
+				parentAssetCategory.getCategoryId());
+
+			putTaxonomyCategory =
+				taxonomyCategoryResource.
+					putSiteTaxonomyCategoryByExternalReferenceCode(
+						testGroup.getGroupId(),
+						assetCategory.getExternalReferenceCode(),
+						getTaxonomyCategory);
+
+			putParentTaxonomyCategory =
+				putTaxonomyCategory.getParentTaxonomyCategory();
+
+			Assert.assertNotNull(putParentTaxonomyCategory);
+
+			Assert.assertEquals(
+				putParentTaxonomyCategory.getId(),
+				Long.valueOf(assetCategory.getParentCategoryId()));
+
+			Assert.assertEquals(
+				putParentTaxonomyCategory.getExternalReferenceCode(),
+				parentAssetCategory.getExternalReferenceCode());
 		}
 	}
 

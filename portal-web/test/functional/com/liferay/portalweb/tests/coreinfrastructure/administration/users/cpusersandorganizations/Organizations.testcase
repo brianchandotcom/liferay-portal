@@ -463,7 +463,9 @@ definition {
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 				value1 = "postmaster1@liferay.com");
 
-			Button.clickSave();
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
 		}
 
 		task ("Then the user should be created and associated under the organization") {

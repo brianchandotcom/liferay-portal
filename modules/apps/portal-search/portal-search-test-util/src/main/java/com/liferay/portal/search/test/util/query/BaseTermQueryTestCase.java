@@ -12,6 +12,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
@@ -60,7 +61,7 @@ public abstract class BaseTermQueryTestCase extends BaseIndexingTestCase {
 
 		assertSearch(
 			indexingTestHelper -> {
-				TermQuery termQuery = queries.term(
+				TermQuery termQuery = QueriesUtil.term(
 					Field.USER_NAME, "SomeUser5");
 
 				SearchSearchRequest searchSearchRequest =

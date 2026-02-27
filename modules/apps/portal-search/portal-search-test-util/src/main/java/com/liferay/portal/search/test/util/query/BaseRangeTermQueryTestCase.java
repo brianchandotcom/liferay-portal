@@ -12,6 +12,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -38,7 +39,7 @@ public abstract class BaseRangeTermQueryTestCase extends BaseIndexingTestCase {
 				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i));
 		}
 
-		RangeTermQuery rangeTermQuery = queries.rangeTerm(
+		RangeTermQuery rangeTermQuery = QueriesUtil.rangeTerm(
 			Field.PRIORITY, true, false);
 
 		rangeTermQuery.setLowerBound(5);

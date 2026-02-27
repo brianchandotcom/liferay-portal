@@ -7,6 +7,7 @@ package com.liferay.portal.search.test.util.query;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
@@ -29,7 +30,7 @@ public abstract class BaseTermsQueryTestCase extends BaseIndexingTestCase {
 				Field.USER_NAME, value),
 			"alpha", "bravo", "charlie", "delta");
 
-		TermsQuery termsQuery = queries.terms(Field.USER_NAME);
+		TermsQuery termsQuery = QueriesUtil.terms(Field.USER_NAME);
 
 		termsQuery.addValues("bravo", "charlie");
 

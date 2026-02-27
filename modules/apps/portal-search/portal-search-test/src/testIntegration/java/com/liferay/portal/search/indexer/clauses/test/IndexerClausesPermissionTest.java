@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -360,9 +359,6 @@ public class IndexerClausesPermissionTest {
 
 	@Inject
 	protected PermissionCheckerFactory permissionCheckerFactory;
-
-	@Inject
-	protected Queries queries;
 
 	@Inject
 	protected Searcher searcher;

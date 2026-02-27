@@ -33,7 +33,7 @@ import com.liferay.portal.search.query.MultiMatchQuery;
 import com.liferay.portal.search.query.NestedQuery;
 import com.liferay.portal.search.query.PercolateQuery;
 import com.liferay.portal.search.query.PrefixQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.search.query.RegexQuery;
@@ -47,7 +47,6 @@ import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.query.WrapperQuery;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.test.rule.SearchTestRule;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class QueriesInstantiationTest {
 
 	@Test
 	public void testBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		Assert.assertNotNull(booleanQuery);
 	}
@@ -85,7 +84,7 @@ public class QueriesInstantiationTest {
 		Query positiveQuery = null;
 		Query negativeQuery = null;
 
-		BoostingQuery boostingQuery = _queries.boosting(
+		BoostingQuery boostingQuery = QueriesUtil.boosting(
 			positiveQuery, negativeQuery);
 
 		Assert.assertNotNull(boostingQuery);
@@ -93,7 +92,7 @@ public class QueriesInstantiationTest {
 
 	@Test
 	public void testCommonTermsQuery() {
-		CommonTermsQuery commonTermsQuery = _queries.commonTerms(
+		CommonTermsQuery commonTermsQuery = QueriesUtil.commonTerms(
 			"field", "text");
 
 		Assert.assertNotNull(commonTermsQuery);
@@ -103,7 +102,8 @@ public class QueriesInstantiationTest {
 	public void testConstantScoreQuery() {
 		Query query = null;
 
-		ConstantScoreQuery constantScoreQuery = _queries.constantScore(query);
+		ConstantScoreQuery constantScoreQuery = QueriesUtil.constantScore(
+			query);
 
 		Assert.assertNotNull(constantScoreQuery);
 	}
@@ -113,7 +113,7 @@ public class QueriesInstantiationTest {
 		boolean includesLower = true;
 		boolean includesUpper = true;
 
-		DateRangeTermQuery dateRangeTermQuery = _queries.dateRangeTerm(
+		DateRangeTermQuery dateRangeTermQuery = QueriesUtil.dateRangeTerm(
 			"field", includesLower, includesUpper, "startDate", "endDate");
 
 		Assert.assertNotNull(dateRangeTermQuery);
@@ -121,7 +121,7 @@ public class QueriesInstantiationTest {
 
 	@Test
 	public void testDisMaxQuery() {
-		DisMaxQuery disMaxQuery = _queries.disMax();
+		DisMaxQuery disMaxQuery = QueriesUtil.disMax();
 
 		Assert.assertNotNull(disMaxQuery);
 	}
@@ -129,14 +129,14 @@ public class QueriesInstantiationTest {
 	@Test
 	public void testDocumentIdentifier() {
 		MoreLikeThisQuery.DocumentIdentifier documentIdentifier =
-			_queries.documentIdentifier("index", "type", "id");
+			QueriesUtil.documentIdentifier("index", "type", "id");
 
 		Assert.assertNotNull(documentIdentifier);
 	}
 
 	@Test
 	public void testExistsQuery() {
-		ExistsQuery existsQuery = _queries.exists("field");
+		ExistsQuery existsQuery = QueriesUtil.exists("field");
 
 		Assert.assertNotNull(existsQuery);
 	}
@@ -145,14 +145,15 @@ public class QueriesInstantiationTest {
 	public void testFunctionScoreQuery() {
 		Query query = null;
 
-		FunctionScoreQuery functionScoreQuery = _queries.functionScore(query);
+		FunctionScoreQuery functionScoreQuery = QueriesUtil.functionScore(
+			query);
 
 		Assert.assertNotNull(functionScoreQuery);
 	}
 
 	@Test
 	public void testFuzzyQuery() {
-		FuzzyQuery fuzzyQuery = _queries.fuzzy("field", "value");
+		FuzzyQuery fuzzyQuery = QueriesUtil.fuzzy("field", "value");
 
 		Assert.assertNotNull(fuzzyQuery);
 	}
@@ -162,7 +163,7 @@ public class QueriesInstantiationTest {
 		GeoLocationPoint topLeftGeoLocationPoint = null;
 		GeoLocationPoint bottomRightGeoLocationPoint = null;
 
-		GeoBoundingBoxQuery geoBoundingBoxQuery = _queries.geoBoundingBox(
+		GeoBoundingBoxQuery geoBoundingBoxQuery = QueriesUtil.geoBoundingBox(
 			"field", topLeftGeoLocationPoint, bottomRightGeoLocationPoint);
 
 		Assert.assertNotNull(geoBoundingBoxQuery);
@@ -173,7 +174,7 @@ public class QueriesInstantiationTest {
 		GeoLocationPoint pinGeoLocationPoint = null;
 		GeoDistance geoDistance = null;
 
-		GeoDistanceQuery geoDistanceQuery = _queries.geoDistance(
+		GeoDistanceQuery geoDistanceQuery = QueriesUtil.geoDistance(
 			"field", pinGeoLocationPoint, geoDistance);
 
 		Assert.assertNotNull(geoDistanceQuery);
@@ -187,28 +188,29 @@ public class QueriesInstantiationTest {
 		GeoLocationPoint pinGeoLocationPoint = null;
 		GeoDistance upperBoundGeoDistance = null;
 
-		GeoDistanceRangeQuery geoDistanceRangeQuery = _queries.geoDistanceRange(
-			"field", includesLower, includesUpper, lowerBoundGeoDistance,
-			pinGeoLocationPoint, upperBoundGeoDistance);
+		GeoDistanceRangeQuery geoDistanceRangeQuery =
+			QueriesUtil.geoDistanceRange(
+				"field", includesLower, includesUpper, lowerBoundGeoDistance,
+				pinGeoLocationPoint, upperBoundGeoDistance);
 
 		Assert.assertNotNull(geoDistanceRangeQuery);
 	}
 
 	@Test
 	public void testGeoPolygonQuery() {
-		GeoPolygonQuery geoPolygonQuery = _queries.geoPolygon("field");
+		GeoPolygonQuery geoPolygonQuery = QueriesUtil.geoPolygon("field");
 
 		Assert.assertNotNull(geoPolygonQuery);
 	}
 
 	@Test
 	public void testGeoShapeQuery1() {
-		Assert.assertNotNull(_queries.geoShape("field", null));
+		Assert.assertNotNull(QueriesUtil.geoShape("field", null));
 	}
 
 	@Test
 	public void testGeoShapeQuery2() {
-		GeoShapeQuery geoShapeQuery = _queries.geoShape(
+		GeoShapeQuery geoShapeQuery = QueriesUtil.geoShape(
 			"field", "indexedShapeId", "indexedShapeType");
 
 		Assert.assertNotNull(geoShapeQuery);
@@ -216,14 +218,14 @@ public class QueriesInstantiationTest {
 
 	@Test
 	public void testIdsQuery() {
-		IdsQuery idsQuery = _queries.ids();
+		IdsQuery idsQuery = QueriesUtil.ids();
 
 		Assert.assertNotNull(idsQuery);
 	}
 
 	@Test
 	public void testMatchAllQuery() {
-		MatchAllQuery matchAllQuery = _queries.matchAll();
+		MatchAllQuery matchAllQuery = QueriesUtil.matchAll();
 
 		Assert.assertNotNull(matchAllQuery);
 	}
@@ -233,7 +235,7 @@ public class QueriesInstantiationTest {
 		Object value = null;
 
 		MatchPhrasePrefixQuery matchPhrasePrefixQuery =
-			_queries.matchPhrasePrefix("field", value);
+			QueriesUtil.matchPhrasePrefix("field", value);
 
 		Assert.assertNotNull(matchPhrasePrefixQuery);
 	}
@@ -242,7 +244,7 @@ public class QueriesInstantiationTest {
 	public void testMatchPhraseQuery() {
 		Object value = null;
 
-		MatchPhraseQuery matchPhraseQuery = _queries.matchPhrase(
+		MatchPhraseQuery matchPhraseQuery = QueriesUtil.matchPhrase(
 			"field", value);
 
 		Assert.assertNotNull(matchPhraseQuery);
@@ -252,7 +254,7 @@ public class QueriesInstantiationTest {
 	public void testMatchQuery() {
 		Object value = null;
 
-		MatchQuery matchQuery = _queries.match("field", value);
+		MatchQuery matchQuery = QueriesUtil.match("field", value);
 
 		Assert.assertNotNull(matchQuery);
 	}
@@ -260,9 +262,9 @@ public class QueriesInstantiationTest {
 	@Test
 	public void testMoreLikeThisQuery1() {
 		MoreLikeThisQuery.DocumentIdentifier documentIdentifier =
-			_queries.documentIdentifier("index", "type", "id");
+			QueriesUtil.documentIdentifier("index", "type", "id");
 
-		MoreLikeThisQuery moreLikeThisQuery = _queries.moreLikeThis(
+		MoreLikeThisQuery moreLikeThisQuery = QueriesUtil.moreLikeThis(
 			Collections.singleton(documentIdentifier));
 
 		Assert.assertNotNull(moreLikeThisQuery);
@@ -272,7 +274,7 @@ public class QueriesInstantiationTest {
 	public void testMoreLikeThisQuery2() {
 		String[] fields = new String[0];
 
-		MoreLikeThisQuery moreLikeThisQuery = _queries.moreLikeThis(
+		MoreLikeThisQuery moreLikeThisQuery = QueriesUtil.moreLikeThis(
 			fields, "likeTexts");
 
 		Assert.assertNotNull(moreLikeThisQuery);
@@ -282,7 +284,7 @@ public class QueriesInstantiationTest {
 	public void testMoreLikeThisQuery3() {
 		List<String> fields = new ArrayList<>();
 
-		MoreLikeThisQuery moreLikeThisQuery = _queries.moreLikeThis(
+		MoreLikeThisQuery moreLikeThisQuery = QueriesUtil.moreLikeThis(
 			fields, "likeTexts");
 
 		Assert.assertNotNull(moreLikeThisQuery);
@@ -293,7 +295,7 @@ public class QueriesInstantiationTest {
 		Object value = null;
 		Set<String> fields = new HashSet<>();
 
-		MultiMatchQuery multiMatchQuery = _queries.multiMatch(value, fields);
+		MultiMatchQuery multiMatchQuery = QueriesUtil.multiMatch(value, fields);
 
 		Assert.assertNotNull(multiMatchQuery);
 	}
@@ -302,7 +304,8 @@ public class QueriesInstantiationTest {
 	public void testMultiMatchQuery2() {
 		Object value = null;
 
-		MultiMatchQuery multiMatchQuery = _queries.multiMatch(value, "fields");
+		MultiMatchQuery multiMatchQuery = QueriesUtil.multiMatch(
+			value, "fields");
 
 		Assert.assertNotNull(multiMatchQuery);
 	}
@@ -311,7 +314,7 @@ public class QueriesInstantiationTest {
 	public void testNestedQuery() {
 		Query query = null;
 
-		NestedQuery nestedQuery = _queries.nested("path", query);
+		NestedQuery nestedQuery = QueriesUtil.nested("path", query);
 
 		Assert.assertNotNull(nestedQuery);
 	}
@@ -320,7 +323,7 @@ public class QueriesInstantiationTest {
 	public void testPercolateQuery() {
 		List<String> documentJSONs = new ArrayList<>();
 
-		PercolateQuery percolateQuery = _queries.percolate(
+		PercolateQuery percolateQuery = QueriesUtil.percolate(
 			"field", documentJSONs);
 
 		Assert.assertNotNull(percolateQuery);
@@ -328,7 +331,7 @@ public class QueriesInstantiationTest {
 
 	@Test
 	public void testPrefixQuery() {
-		PrefixQuery prefixQuery = _queries.prefix("field", "prefix");
+		PrefixQuery prefixQuery = QueriesUtil.prefix("field", "prefix");
 
 		Assert.assertNotNull(prefixQuery);
 	}
@@ -338,7 +341,7 @@ public class QueriesInstantiationTest {
 		boolean includesLower = true;
 		boolean includesUpper = true;
 
-		RangeTermQuery rangeTermQuery = _queries.rangeTerm(
+		RangeTermQuery rangeTermQuery = QueriesUtil.rangeTerm(
 			"field", includesLower, includesUpper);
 
 		Assert.assertNotNull(rangeTermQuery);
@@ -351,7 +354,7 @@ public class QueriesInstantiationTest {
 		Object lowerBound = null;
 		Object upperBound = null;
 
-		RangeTermQuery rangeTermQuery = _queries.rangeTerm(
+		RangeTermQuery rangeTermQuery = QueriesUtil.rangeTerm(
 			"field", includesLower, includesUpper, lowerBound, upperBound);
 
 		Assert.assertNotNull(rangeTermQuery);
@@ -359,7 +362,7 @@ public class QueriesInstantiationTest {
 
 	@Test
 	public void testRegexQuery() {
-		RegexQuery regexQuery = _queries.regex("field", "regex");
+		RegexQuery regexQuery = QueriesUtil.regex("field", "regex");
 
 		Assert.assertNotNull(regexQuery);
 	}
@@ -368,21 +371,21 @@ public class QueriesInstantiationTest {
 	public void testScriptQuery() {
 		Script script = null;
 
-		ScriptQuery scriptQuery = _queries.script(script);
+		ScriptQuery scriptQuery = QueriesUtil.script(script);
 
 		Assert.assertNotNull(scriptQuery);
 	}
 
 	@Test
 	public void testSimpleStringQuery() {
-		SimpleStringQuery simpleStringQuery = _queries.simpleString("query");
+		SimpleStringQuery simpleStringQuery = QueriesUtil.simpleString("query");
 
 		Assert.assertNotNull(simpleStringQuery);
 	}
 
 	@Test
 	public void testStringQuery() {
-		StringQuery stringQuery = _queries.string("query");
+		StringQuery stringQuery = QueriesUtil.string("query");
 
 		Assert.assertNotNull(stringQuery);
 	}
@@ -391,14 +394,14 @@ public class QueriesInstantiationTest {
 	public void testTermQuery() {
 		Object value = null;
 
-		TermQuery termQuery = _queries.term("field", value);
+		TermQuery termQuery = QueriesUtil.term("field", value);
 
 		Assert.assertNotNull(termQuery);
 	}
 
 	@Test
 	public void testTermsQuery() {
-		TermsQuery termsQuery = _queries.terms("field");
+		TermsQuery termsQuery = QueriesUtil.terms("field");
 
 		Assert.assertNotNull(termsQuery);
 	}
@@ -407,21 +410,21 @@ public class QueriesInstantiationTest {
 	public void testTermsSetQuery() {
 		List<Object> values = null;
 
-		TermsSetQuery termsSetQuery = _queries.termsSet("fieldName", values);
+		TermsSetQuery termsSetQuery = QueriesUtil.termsSet("fieldName", values);
 
 		Assert.assertNotNull(termsSetQuery);
 	}
 
 	@Test
 	public void testWildcardQuery() {
-		WildcardQuery wildcardQuery = _queries.wildcard("field", "value");
+		WildcardQuery wildcardQuery = QueriesUtil.wildcard("field", "value");
 
 		Assert.assertNotNull(wildcardQuery);
 	}
 
 	@Test
 	public void testWrapperQuery() {
-		WrapperQuery wrapperQuery = _queries.wrapper(
+		WrapperQuery wrapperQuery = QueriesUtil.wrapper(
 			"{\"query\":\"match_all\":{}}");
 
 		Assert.assertNotNull(wrapperQuery);
@@ -429,8 +432,5 @@ public class QueriesInstantiationTest {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	@Inject
-	private static Queries _queries;
 
 }

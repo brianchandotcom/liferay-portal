@@ -7,6 +7,7 @@ package com.liferay.portal.search.test.util.query;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -104,7 +105,7 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 		searchRequestBuilder.addComplexQueryPart(
 			complexQueryPartBuilderFactory.builder(
 			).query(
-				queries.matchAll()
+				QueriesUtil.matchAll()
 			).build());
 	}
 

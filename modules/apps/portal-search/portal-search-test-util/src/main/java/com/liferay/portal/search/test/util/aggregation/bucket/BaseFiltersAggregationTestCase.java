@@ -12,6 +12,7 @@ import com.liferay.portal.search.aggregation.bucket.FiltersAggregation;
 import com.liferay.portal.search.aggregation.bucket.FiltersAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.metrics.SumAggregationResult;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
 import java.util.Collection;
@@ -39,10 +40,10 @@ public abstract class BaseFiltersAggregationTestCase
 			"filter", Field.USER_NAME);
 
 		filtersAggregation.addKeyedQuery(
-			"SomeUser1", queries.term(Field.USER_NAME, "SomeUser1"));
+			"SomeUser1", QueriesUtil.term(Field.USER_NAME, "SomeUser1"));
 
 		filtersAggregation.addKeyedQuery(
-			"SomeUser2", queries.term(Field.USER_NAME, "SomeUser2"));
+			"SomeUser2", QueriesUtil.term(Field.USER_NAME, "SomeUser2"));
 
 		SumAggregation sumAggregation = aggregations.sum("sum", Field.PRIORITY);
 

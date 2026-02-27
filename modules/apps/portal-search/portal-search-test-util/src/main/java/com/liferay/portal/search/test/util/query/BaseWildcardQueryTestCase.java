@@ -12,6 +12,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -42,7 +43,7 @@ public abstract class BaseWildcardQueryTestCase extends BaseIndexingTestCase {
 
 		assertSearch(
 			indexingTestHelper -> {
-				WildcardQuery wildcardQuery = queries.wildcard(
+				WildcardQuery wildcardQuery = QueriesUtil.wildcard(
 					Field.USER_NAME, "Oth*ser*");
 
 				SearchSearchRequest searchSearchRequest =

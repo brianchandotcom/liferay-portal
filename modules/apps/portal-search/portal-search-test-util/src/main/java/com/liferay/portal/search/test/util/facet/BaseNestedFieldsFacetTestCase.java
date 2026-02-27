@@ -13,6 +13,7 @@ import com.liferay.portal.search.internal.facet.NestedFacetImpl;
 import com.liferay.portal.search.internal.facet.nested.NestedFacetFactoryImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
 /**
@@ -49,17 +50,17 @@ public abstract class BaseNestedFieldsFacetTestCase
 
 		facetTestHelper.defineRequest(
 			searchRequestBuilder -> {
-				BooleanQuery booleanQuery = queries.booleanQuery();
+				BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 				booleanQuery.addMustNotQueryClauses(
-					queries.term(getValueFieldName(), presentButUnmatched));
+					QueriesUtil.term(getValueFieldName(), presentButUnmatched));
 				booleanQuery.addMustQueryClauses(
-					queries.term(getFilterFieldName(), getField()));
+					QueriesUtil.term(getFilterFieldName(), getField()));
 
 				searchRequestBuilder.addComplexQueryPart(
 					_complexQueryPartBuilderFactory.builder(
 					).query(
-						queries.nested(getPath(), booleanQuery)
+						QueriesUtil.nested(getPath(), booleanQuery)
 					).build());
 			});
 	}

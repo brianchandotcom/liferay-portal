@@ -13,6 +13,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.PrefixQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -40,7 +41,7 @@ public abstract class BasePrefixQueryTestCase extends BaseIndexingTestCase {
 					Field.USER_NAME, "Other" + i));
 		}
 
-		PrefixQuery prefixQuery = queries.prefix(Field.USER_NAME, "Oth");
+		PrefixQuery prefixQuery = QueriesUtil.prefix(Field.USER_NAME, "Oth");
 
 		assertSearch(
 			indexingTestHelper -> {

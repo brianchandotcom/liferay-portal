@@ -35,7 +35,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -115,19 +115,19 @@ public class BaseModelDocumentContributorTest {
 				"liferay-" + TestPropsValues.getCompanyId());
 		}
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		ClassedModel classedModel = (ClassedModel)externalReferenceCodeModel;
 
 		booleanQuery.addMustQueryClauses(
-			_queries.term(Field.COMPANY_ID, TestPropsValues.getCompanyId()),
-			_queries.term(
+			QueriesUtil.term(Field.COMPANY_ID, TestPropsValues.getCompanyId()),
+			QueriesUtil.term(
 				Field.ENTRY_CLASS_NAME, classedModel.getModelClassName()),
-			_queries.term(fieldName, externalReferenceCode));
+			QueriesUtil.term(fieldName, externalReferenceCode));
 
 		if (externalReferenceCodeModel instanceof GroupedModel) {
 			booleanQuery.addMustQueryClauses(
-				_queries.term(Field.GROUP_ID, group.getGroupId()));
+				QueriesUtil.term(Field.GROUP_ID, group.getGroupId()));
 		}
 
 		countSearchRequest.setQuery(booleanQuery);
@@ -152,9 +152,6 @@ public class BaseModelDocumentContributorTest {
 
 	@Inject
 	private JournalFolderLocalService _journalFolderLocalService;
-
-	@Inject
-	private Queries _queries;
 
 	@Inject
 	private SearchEngineAdapter _searchEngineAdapter;

@@ -7,17 +7,13 @@ package com.liferay.portal.search.internal.query.field;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.query.MatchQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 
 /**
  * @author André de Oliveira
  */
 public class PhraseQueryBuilder {
-
-	public PhraseQueryBuilder(Queries queries) {
-		_queries = queries;
-	}
 
 	public Query build(String field, String value) {
 		MatchQuery.Type type = MatchQuery.Type.PHRASE;
@@ -32,7 +28,7 @@ public class PhraseQueryBuilder {
 			type = MatchQuery.Type.PHRASE_PREFIX;
 		}
 
-		MatchQuery matchQuery = _queries.match(field, value);
+		MatchQuery matchQuery = QueriesUtil.match(field, value);
 
 		matchQuery.setType(type);
 
@@ -74,7 +70,6 @@ public class PhraseQueryBuilder {
 	private Float _boost;
 	private Integer _maxExpansions;
 	private boolean _prefix;
-	private final Queries _queries;
 	private Integer _slop;
 	private boolean _trailingStarAware;
 

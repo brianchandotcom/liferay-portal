@@ -26,7 +26,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -168,11 +168,12 @@ public class IndexWriterHelperImplTest {
 			countSearchRequest.setIndexNames("liferay-" + companyId);
 		}
 
-		TermQuery classNameTermQuery = _queries.term(
+		TermQuery classNameTermQuery = QueriesUtil.term(
 			Field.ENTRY_CLASS_NAME, className);
-		TermQuery companyTermQuery = _queries.term(Field.COMPANY_ID, companyId);
+		TermQuery companyTermQuery = QueriesUtil.term(
+			Field.COMPANY_ID, companyId);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(classNameTermQuery, companyTermQuery);
 
@@ -241,9 +242,6 @@ public class IndexWriterHelperImplTest {
 
 	@Inject
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Inject
-	private Queries _queries;
 
 	@Inject
 	private SearchEngineAdapter _searchEngineAdapter;

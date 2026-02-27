@@ -18,6 +18,7 @@ import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRespon
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -283,7 +284,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		BooleanQuery booleanQuery, boolean mappedAsNested) {
 
 		if (mappedAsNested) {
-			return queries.nested("ddmFieldArray", booleanQuery);
+			return QueriesUtil.nested("ddmFieldArray", booleanQuery);
 		}
 
 		return booleanQuery;
@@ -293,24 +294,24 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		String fieldName, String valueFieldName, String value,
 		boolean mappedAsNested) {
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		if (mappedAsNested) {
 			booleanQuery.addMustQueryClauses(
-				queries.term("ddmFieldArray.ddmFieldName", fieldName));
+				QueriesUtil.term("ddmFieldArray.ddmFieldName", fieldName));
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				queries.match("ddmFieldArray.ddmFieldName", fieldName));
+				QueriesUtil.match("ddmFieldArray.ddmFieldName", fieldName));
 		}
 
 		if (fieldName.startsWith("ddm__keyword")) {
 			booleanQuery.addMustQueryClauses(
-				queries.term(valueFieldName, value));
+				QueriesUtil.term(valueFieldName, value));
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				queries.match(valueFieldName, value));
+				QueriesUtil.match(valueFieldName, value));
 		}
 
 		return booleanQuery;

@@ -12,6 +12,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.SimpleStringQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -41,7 +42,7 @@ public abstract class BaseSimpleStringQueryTestCase
 					Field.USER_NAME, "Other" + i));
 		}
 
-		SimpleStringQuery simpleStringQuery = queries.simpleString(
+		SimpleStringQuery simpleStringQuery = QueriesUtil.simpleString(
 			"(SomeUser* | OtherUser*)");
 
 		simpleStringQuery.addField(Field.USER_NAME, 1.0F);

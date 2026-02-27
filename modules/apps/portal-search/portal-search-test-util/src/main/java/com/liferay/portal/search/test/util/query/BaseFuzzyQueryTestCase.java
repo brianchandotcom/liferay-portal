@@ -12,6 +12,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.FuzzyQuery;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -39,7 +40,7 @@ public abstract class BaseFuzzyQueryTestCase extends BaseIndexingTestCase {
 	protected void assertSearch(String value, List<String> expectedValues) {
 		assertSearch(
 			indexingTestHelper -> {
-				FuzzyQuery fuzzyQuery = queries.fuzzy(_FIELD_NAME, value);
+				FuzzyQuery fuzzyQuery = QueriesUtil.fuzzy(_FIELD_NAME, value);
 
 				SearchSearchRequest searchSearchRequest =
 					new SearchSearchRequest();

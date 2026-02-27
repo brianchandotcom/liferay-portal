@@ -64,7 +64,7 @@ public class FileEntryUtil {
 
 		try {
 			file = FileUtil.createTempFile(
-				URLUtil.getByteArray(thumbnailURLReference.getUrl()));
+				HttpUtil.getByteArray(thumbnailURLReference.getUrl()));
 
 			String mimeType = MimeTypesUtil.getContentType(file);
 

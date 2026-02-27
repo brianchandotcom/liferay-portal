@@ -20,7 +20,7 @@ import java.util.Objects;
 /**
  * @author Lourdes Fernández Besada
  */
-public class URLUtil {
+public class HttpUtil {
 
 	public static byte[] getByteArray(String urlString) throws Exception {
 		URL url = ExportImportAttachmentManagerUtil.getURL(urlString);

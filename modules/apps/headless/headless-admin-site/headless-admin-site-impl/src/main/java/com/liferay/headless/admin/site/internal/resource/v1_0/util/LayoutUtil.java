@@ -678,7 +678,7 @@ public class LayoutUtil {
 		if (image == null) {
 			image = ImageLocalServiceUtil.addImage(
 				iconImageURLReference.getExternalReferenceCode(), companyId,
-				URLUtil.getByteArray(iconImageURLReference.getUrl()));
+				HttpUtil.getByteArray(iconImageURLReference.getUrl()));
 		}
 
 		return image.getImageId();

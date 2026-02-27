@@ -25,9 +25,11 @@ import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -137,11 +139,27 @@ public class ObjectEntryInfoItemFriendlyURLProviderTest {
 				InfoItemFriendlyURLProvider.class,
 				_objectDefinition.getClassName());
 
-		Assert.assertEquals(
-			String.valueOf(objectEntry.getObjectEntryId()),
-			infoItemFriendlyURLProvider.getFriendlyURL(
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		try {
+			String friendlyURL = infoItemFriendlyURLProvider.getFriendlyURL(
 				objectEntry,
-				LanguageUtil.getLanguageId(LocaleUtil.getDefault())));
+				LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
+
+			Group depotEntryGroup = _depotEntry.getGroup();
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					depotEntryGroup.getFriendlyURL(), StringPool.SLASH,
+					objectEntry.getURLTitle(
+						_objectDefinition.getDefaultLocale())),
+				StringPool.SLASH + friendlyURL);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@DeleteAfterTestRun

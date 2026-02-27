@@ -12,11 +12,11 @@ spec:
         EnvironmentId: {{ .Values.environmentId }}
         ProjectId: {{ .Values.projectId }}
     database: {{ .Values.database | toYaml | nindent 8 }}
-    deletionProtection: {{ .Values.deletionProtection | default false }}
+    deletionProtection: {{ .Values.deletionProtection }}
     environmentId: {{ .Values.environmentId }}
-    overlay:
-        region: {{ .Values.overlay.region | default "us-west-2" | quote }}
+    overlay: {{ .Values.overlay | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId }}
+    region: {{ .Values.region }}
     search:
         opensearch: {{ .Values.search.opensearch | toYaml | nindent 12 }}
     storage: {{ .Values.storage | toYaml | nindent 8 }}

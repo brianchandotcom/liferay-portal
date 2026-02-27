@@ -978,22 +978,20 @@ test(
 						name: 'Task Report',
 					})
 				).toBeVisible();
+
+				const row = page.getByRole('row').filter({
+					hasText: tasks.items[0].id,
+				});
+
+				await expect(row).toBeVisible();
 				await expect(
-					page.getByRole('cell', {
-						exact: true,
-						name: tasks.items[0].id,
-					})
-				).toBeVisible();
-				await expect(
-					page.getByRole('cell', {
-						exact: true,
+					row.getByRole('cell', {
 						name: 'All Successful',
 					})
 				).toBeVisible();
 				await expect(
-					page
+					row
 						.getByRole('cell', {
-							exact: true,
 							name: 'All Successful',
 						})
 						.locator('.lexicon-icon-check-circle-full')
@@ -1043,6 +1041,8 @@ test(
 							key: 'started',
 							name: 'Started',
 						},
+						numberOfFailedItems: 0,
+						numberOfSuccessfulItems: 0,
 					},
 					bulkActionTasks,
 					tasks.items[0].id
@@ -1091,6 +1091,8 @@ test(
 							key: 'started',
 							name: 'Started',
 						},
+						numberOfFailedItems: 0,
+						numberOfSuccessfulItems: 0,
 					},
 					bulkActionTasks,
 					tasks.items[0].id

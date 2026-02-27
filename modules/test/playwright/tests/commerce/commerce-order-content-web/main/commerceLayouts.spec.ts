@@ -3091,7 +3091,7 @@ test(
 		page,
 		site,
 	}) => {
-		const account = await apiHelpers.headlessAdminUser.postAccount({
+		await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
 			type: 'person',
 		});
@@ -3142,7 +3142,9 @@ test(
 
 		await applicationsMenuPage.goToSite(site.name);
 
-		await commerceLayoutsPage.accountSelectorButton(account.name).click();
+		await commerceLayoutsPage
+			.accountSelectorButton('Account Selector')
+			.click();
 		await commerceLayoutsPage.createNewOrderButton.click();
 
 		await expect(page.getByText('Heading Example')).toBeVisible();
@@ -3311,7 +3313,7 @@ test(
 		page,
 		site,
 	}) => {
-		const account = await apiHelpers.headlessAdminUser.postAccount({
+		await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
 			type: 'person',
 		});
@@ -3347,12 +3349,16 @@ test(
 
 		await applicationsMenuPage.goToSite(site.name);
 
-		await commerceLayoutsPage.accountSelectorButton(account.name).click();
+		await commerceLayoutsPage
+			.accountSelectorButton('Account Selector')
+			.click();
 		await commerceLayoutsPage.createNewOrderButton.click();
 
 		await applicationsMenuPage.goToSite(site.name);
 
-		await commerceLayoutsPage.accountSelectorButton(account.name).click();
+		await commerceLayoutsPage
+			.accountSelectorButton('Account Selector')
+			.click();
 
 		await expect(commerceLayoutsPage.createNewOrderButton).toBeDisabled();
 	}

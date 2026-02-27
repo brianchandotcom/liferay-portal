@@ -29,9 +29,9 @@ export class CommerceAdminProductDetailsProductOptionsPage extends CommerceDNDTa
 			exact: true,
 			name: 'Delete',
 		});
-		this.optionActionsButton = page.getByRole('button', {
-			name: 'Actions',
-		});
+		this.optionActionsButton = page
+			.locator('[data-testid="visualization-mode-table"]')
+			.getByRole('button', {exact: true, name: 'Actions'});
 		this.page = page;
 	}
 }

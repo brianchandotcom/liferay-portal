@@ -57,7 +57,7 @@ export class CommerceAdminProductDetailsPage {
 			this.addSpecificationFrame.getByRole('textbox');
 		this.backLink = page.locator('span[title="Back"]');
 		this.closeEditFrame = page
-			.frameLocator('iframe >> nth=1')
+			.frameLocator('iframe')
 			.getByRole('button')
 			.first();
 		this.createNewSpecificationProduct =
@@ -79,11 +79,10 @@ export class CommerceAdminProductDetailsPage {
 				)
 				.selectOption(specificationValue);
 		};
-		this.ellipsisProductSpecification = page.getByRole('button', {
-			name: 'Actions',
-		});
-		this.ellipsisFrameProductSpecification =
-			page.frameLocator('iframe >> nth=1');
+		this.ellipsisProductSpecification = page
+			.locator('[data-testid="visualization-mode-table"]')
+			.getByRole('button', {exact: true, name: 'Actions'});
+		this.ellipsisFrameProductSpecification = page.frameLocator('iframe');
 		this.editFrameSaveButton =
 			this.ellipsisFrameProductSpecification.getByRole('button', {
 				name: 'Save',

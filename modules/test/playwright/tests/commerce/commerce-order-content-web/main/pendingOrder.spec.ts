@@ -200,89 +200,102 @@ test(
 	}
 );
 
-test('LPD-13627 Edit pending order item with UOM', async ({
-	apiHelpers,
-	commerceAdminChannelsPage,
-	page,
-	pendingOrdersPage,
-	site,
-	widgetPagePage,
-}) => {
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: getRandomString(),
-	});
+test(
+	'Edit pending order item with UOM',
+	{tag: '@LPD-13627'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		page,
+		pendingOrdersPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
 
-	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
-		channel.name,
-		'B2C'
-	);
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: 'Edit pending order Catalog',
-	});
-
-	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
-	});
-
-	const sku1 = product1.skus[0];
-
-	const uom1 =
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku1.id,
-			{
-				incrementalOrderQuantity: 3,
-				name: {en_US: 'Box'},
-				primary: true,
-				priority: 1,
-				rate: 1,
-			}
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2C'
 		);
 
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: getRandomString(),
+			});
 
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
-	);
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: getRandomString()},
+			});
 
-	await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
+		const sku1 = product1.skus[0];
+
+		const uom1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+				sku1.id,
 				{
-					options: '[]',
-					quantity: 3,
-					replacedSkuId: 0,
-					skuId: sku1.id,
-					skuUnitOfMeasure: {key: uom1.key},
-				},
-			],
-		},
-		channel.id
-	);
+					incrementalOrderQuantity: 3,
+					name: {en_US: 'Box'},
+					primary: true,
+					priority: 1,
+					rate: 1,
+				}
+			);
 
-	await page.waitForLoadState('networkidle');
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['test@liferay.com']
+		);
 
-	await widgetPagePage.addPortlet('Open Carts');
+		await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						options: '[]',
+						quantity: 3,
+						replacedSkuId: 0,
+						skuId: sku1.id,
+						skuUnitOfMeasure: {key: uom1.key},
+					},
+				],
+			},
+			channel.id
+		);
 
-	await pendingOrdersPage.viewButton.click();
+		await page.waitForLoadState('networkidle');
 
-	await pendingOrdersPage.orderItemActionsButton.click();
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await expect(pendingOrdersPage.orderItemActionsButtonEdit).toBeVisible();
-});
+		await widgetPagePage.addPortlet('Open Carts');
+
+		await pendingOrdersPage.viewButton.click();
+
+		await (
+			await pendingOrdersPage.orderItemsTableRowLink(
+				product1.name['en_US']
+			)
+		).click();
+
+		await expect(
+			pendingOrdersPage.orderItemActionsButtonEdit
+		).toBeVisible();
+	}
+);
 
 test('LPD-13627 Edit pending order item without UOM', async ({
 	apiHelpers,
@@ -589,119 +602,125 @@ test(
 	}
 );
 
-test('LPD-28683 When clicking on order item without visibility the user is not redirected to the catalog page', async ({
-	apiHelpers,
-	commerceMiniCartPage,
-	commerceThemeMiniumPage,
-	page,
-	pendingOrdersPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'business',
-	});
+test(
+	'When clicking on order item without visibility the user is not redirected to the catalog page',
+	{tag: '@LPD-28683'},
+	async ({
+		apiHelpers,
+		commerceMiniCartPage,
+		commerceThemeMiniumPage,
+		page,
+		pendingOrdersPage,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
 
-	const {site} = await miniumSetUp(apiHelpers);
+		const {site} = await miniumSetUp(apiHelpers);
 
-	const accountGroup = await apiHelpers.headlessAdminUser.postAccountGroup({
-		name: 'AG1',
-	});
+		const accountGroup =
+			await apiHelpers.headlessAdminUser.postAccountGroup({
+				name: 'AG1',
+			});
 
-	apiHelpers.data.push({id: accountGroup.id, type: 'accountGroup'});
+		apiHelpers.data.push({id: accountGroup.id, type: 'accountGroup'});
 
-	await apiHelpers.headlessAdminUser.assignAccountToAccountGroup(
-		account.externalReferenceCode,
-		accountGroup.externalReferenceCode
-	);
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
+		await apiHelpers.headlessAdminUser.assignAccountToAccountGroup(
+			account.externalReferenceCode,
+			accountGroup.externalReferenceCode
+		);
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['demo.unprivileged@liferay.com']
 		);
 
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.unprivileged@liferay.com'
+			);
 
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
 
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
+		const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+			return role.name === 'Buyer';
+		});
 
-	const product = await apiHelpers.headlessCommerceAdminCatalog.getProducts(
-		new URLSearchParams({
-			filter: `name eq 'U-Joint'`,
-			nestedFields: `productSkus`,
-		})
-	);
-
-	await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
-		product.items[0].productId,
-		{
-			productAccountGroupFilter: true,
-			productAccountGroups: [
-				{
-					accountGroupId: accountGroup.id,
-				},
-			],
-		}
-	);
-
-	const productAccountGroups =
-		await apiHelpers.headlessCommerceAdminCatalog.getProductAccountGroups(
-			product.items[0].productId
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			accountRoleBuyer[0].id,
+			user.emailAddress
 		);
 
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+				new URLSearchParams({
+					filter: `name eq 'U-Joint'`,
+					nestedFields: `productSkus`,
+				})
+			);
 
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
-	);
+		await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
+			product.items[0].productId,
+			{
+				productAccountGroupFilter: true,
+				productAccountGroups: [
+					{
+						accountGroupId: accountGroup.id,
+					},
+				],
+			}
+		);
 
-	await performLogout(page);
-	await performLoginViaApi({page, screenName: user.alternateName});
+		const productAccountGroups =
+			await apiHelpers.headlessCommerceAdminCatalog.getProductAccountGroups(
+				product.items[0].productId
+			);
 
-	await page.goto(`/web/${site.name}`, {waitUntil: 'networkidle'});
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 
-	await commerceMiniCartPage.quickAddToCart(product.items[0].skuFormatted);
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			user.id
+		);
 
-	await expect(
-		await commerceMiniCartPage.priceField(
-			'$ 24.00',
-			commerceMiniCartPage.miniCartItemsContainer
-		)
-	).toBeVisible();
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
-	await apiHelpers.headlessCommerceAdminCatalog.deleteProductAccountGroup(
-		productAccountGroups.items[0].id
-	);
+		await page.goto(`/web/${site.name}`, {waitUntil: 'networkidle'});
 
-	await commerceMiniCartPage.viewDetailsButton.click();
+		await commerceMiniCartPage.quickAddToCart(
+			product.items[0].skuFormatted
+		);
 
-	await expect(
-		page.getByText('One or more products are no longer available.')
-	).toBeVisible();
+		await expect(
+			await commerceMiniCartPage.priceField(
+				'$ 24.00',
+				commerceMiniCartPage.miniCartItemsContainer
+			)
+		).toBeVisible();
 
-	await pendingOrdersPage.errorMessageCloseButton.click();
-	await pendingOrdersPage.skuLink(product.items[0].skuFormatted).click();
+		await apiHelpers.headlessCommerceAdminCatalog.deleteProductAccountGroup(
+			productAccountGroups.items[0].id
+		);
 
-	await expect(
-		await commerceThemeMiniumPage.goToMiniumLink(site.name)
-	).toBeVisible();
-});
+		await commerceMiniCartPage.viewDetailsButton.click();
+
+		await expect(
+			page.getByText('One or more products are no longer available.')
+		).toBeVisible();
+
+		await pendingOrdersPage.errorMessageCloseButton.click();
+		await pendingOrdersPage.skuLink(product.items[0].skuFormatted).click();
+
+		await expect(
+			await commerceThemeMiniumPage.goToMiniumLink(site.name)
+		).toBeVisible();
+	}
+);
 
 test('LPD-26906 As a buyer, I can edit product options from the pending orders page', async ({
 	apiHelpers,

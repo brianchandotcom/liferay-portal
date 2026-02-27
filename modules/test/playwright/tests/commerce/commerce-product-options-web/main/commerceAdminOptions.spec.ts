@@ -161,74 +161,80 @@ test('LPD-45740 Product options can be added from product admins', async ({
 	).toBeVisible();
 });
 
-test('LPD-45740 Product options can be deleted from product admins', async ({
-	apiHelpers,
-	commerceAdminProductDetailsPage,
-	commerceAdminProductDetailsProductOptionsPage,
-	commerceAdminProductPage,
-	page,
-}) => {
-	await page.goto('/');
+test(
+	'Product options can be deleted from product admins',
+	{tag: ['@LPD-45740']},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductDetailsProductOptionsPage,
+		commerceAdminProductPage,
+		page,
+	}) => {
+		await page.goto('/');
 
-	const option = await apiHelpers.headlessCommerceAdminCatalog.postOption(
-		'select',
-		'color',
-		'Color',
-		1
-	);
+		const option = await apiHelpers.headlessCommerceAdminCatalog.postOption(
+			'select',
+			'color',
+			'Color',
+			1
+		);
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		name: {en_US: 'Simple T-Shirt'},
-		productOptions: [
-			{
-				fieldType: 'select',
-				key: 'color',
-				name: {
-					en_US: 'Color',
-				},
-				optionId: option.id,
-				priority: 1,
-				productOptionValues: [
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Simple T-Shirt'},
+				productOptions: [
 					{
-						key: 'black',
+						fieldType: 'select',
+						key: 'color',
 						name: {
-							en_US: 'Black',
+							en_US: 'Color',
 						},
+						optionId: option.id,
 						priority: 1,
-					},
-					{
-						key: 'white',
-						name: {
-							en_US: 'White',
-						},
-						priority: 2,
+						productOptionValues: [
+							{
+								key: 'black',
+								name: {
+									en_US: 'Black',
+								},
+								priority: 1,
+							},
+							{
+								key: 'white',
+								name: {
+									en_US: 'White',
+								},
+								priority: 2,
+							},
+						],
+						skuContributor: true,
 					},
 				],
-				skuContributor: true,
-			},
-		],
-	});
+			});
 
-	await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
 
-	await commerceAdminProductDetailsPage.goToProductOptions();
+		await commerceAdminProductDetailsPage.goToProductOptions();
 
-	await expect(
-		(
-			await commerceAdminProductDetailsProductOptionsPage.tableRow(
-				0,
-				option.name['en_US'],
-				true
-			)
-		).row
-	).toBeVisible();
+		await expect(
+			(
+				await commerceAdminProductDetailsProductOptionsPage.tableRow(
+					0,
+					option.name['en_US'],
+					true
+				)
+			).row
+		).toBeVisible();
 
-	await commerceAdminProductDetailsProductOptionsPage.optionActionsButton.click();
+		await commerceAdminProductDetailsProductOptionsPage.optionActionsButton.click();
 
-	await commerceAdminProductDetailsProductOptionsPage.deleteMenuItem.click();
+		await commerceAdminProductDetailsProductOptionsPage.deleteMenuItem.click();
 
-	await waitForAlert(page);
-});
+		await waitForAlert(page);
+	}
+);

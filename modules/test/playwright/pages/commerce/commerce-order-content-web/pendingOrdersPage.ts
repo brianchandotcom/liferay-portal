@@ -68,6 +68,7 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 			name: 'Edit',
 		});
 		this.errorMessageCloseButton = page.getByRole('button', {
+			exact: true,
 			name: 'Close',
 		});
 		this.layoutsPage = new CommerceLayoutsPage(page);

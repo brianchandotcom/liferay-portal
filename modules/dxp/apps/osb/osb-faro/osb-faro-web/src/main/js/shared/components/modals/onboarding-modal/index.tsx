@@ -1,3 +1,4 @@
+import ConfigureWorkspace from './ConfigureWorkspace';
 import ConnectDXP from './ConnectDXP';
 import InvitePeople from './InvitePeople';
 import Modal from 'shared/components/modal';
@@ -5,7 +6,13 @@ import React, {useState} from 'react';
 import ReadyToGo from './ReadyToGo';
 import Welcome from './Welcome';
 
-const MODAL_SCREENS = [Welcome, ConnectDXP, InvitePeople, ReadyToGo];
+const MODAL_SCREENS = [
+	Welcome,
+	ConfigureWorkspace,
+	ConnectDXP,
+	InvitePeople,
+	ReadyToGo
+];
 
 interface IOnboardingModalProps {
 	groupId: string;

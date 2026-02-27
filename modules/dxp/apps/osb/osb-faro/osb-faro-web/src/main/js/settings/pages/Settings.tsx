@@ -133,7 +133,7 @@ export const Settings = () => {
 		.getState()
 		.getIn(['projects', groupId, 'data', 'recommendationsEnabled'], false);
 
-	const IS_PROJECT_SAAS = project.faroSubscription
+	const IS_PROJECT_SAAS = project?.faroSubscription
 		?.get('name')
 		?.includes('SaaS');
 

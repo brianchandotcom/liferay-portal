@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
@@ -62,6 +63,8 @@ public class UserModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor = new UserModelIndexerWriterContributor(
 			_indexerDocumentBuilder, _indexWriterHelper, _userLocalService);
+		_modelSummaryContributor = new UserModelSummaryContributor(
+			_localization);
 	}
 
 	@Reference(
@@ -72,9 +75,11 @@ public class UserModelSearchConfigurator
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
+	@Reference
+	private Localization _localization;
+
 	private ModelIndexerWriterContributor<User> _modelIndexWriterContributor;
-	private final ModelSummaryContributor _modelSummaryContributor =
-		new UserModelSummaryContributor();
+	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference
 	private UserLocalService _userLocalService;

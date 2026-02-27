@@ -9,6 +9,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.Locale;
@@ -18,13 +20,20 @@ import java.util.Locale;
  */
 public class UserModelSummaryContributor implements ModelSummaryContributor {
 
+	public UserModelSummaryContributor(Localization localization) {
+		_localization = localization;
+	}
+
 	@Override
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
+		String languageId = LocaleUtil.toLanguageId(locale);
+
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
-		String fullName = "fullName";
+		String fullName = _localization.getLocalizedName(
+			"fullName", languageId);
 
 		String title = document.get(prefix + fullName, fullName);
 
@@ -32,5 +41,7 @@ public class UserModelSummaryContributor implements ModelSummaryContributor {
 
 		return new Summary(title, content);
 	}
+
+	private final Localization _localization;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
@@ -89,13 +89,14 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 		countSearchRequest.setIndexNames(indexName);
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		BooleanQuery filterQuery = queries.booleanQuery();
+		BooleanQuery filterQuery = QueriesUtil.booleanQuery();
 
 		for (int i = 0; i < parameters.length; i = i + 2) {
 			filterQuery.addMustQueryClauses(
-				queries.term(String.valueOf(parameters[i]), parameters[i + 1]));
+				QueriesUtil.term(
+					String.valueOf(parameters[i]), parameters[i + 1]));
 		}
 
 		booleanQueryConsumer.accept(filterQuery);
@@ -131,11 +132,12 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 		countSearchRequest.setIndexNames(indexName);
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		for (int i = 0; i < parameters.length; i = i + 2) {
 			booleanQuery.addMustQueryClauses(
-				queries.term(String.valueOf(parameters[i]), parameters[i + 1]));
+				QueriesUtil.term(
+					String.valueOf(parameters[i]), parameters[i + 1]));
 		}
 
 		countSearchRequest.setQuery(booleanQuery);
@@ -274,9 +276,6 @@ public abstract class BaseWorkflowMetricsTestCase {
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			workflowDefinition.getTitle(), workflowDefinition.getName(), bytes);
 	}
-
-	@Inject
-	protected Queries queries;
 
 	@Inject(
 		blocking = false,

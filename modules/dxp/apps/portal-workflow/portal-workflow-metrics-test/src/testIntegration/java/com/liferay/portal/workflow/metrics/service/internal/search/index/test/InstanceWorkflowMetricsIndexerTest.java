@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
@@ -128,9 +129,10 @@ public class InstanceWorkflowMetricsIndexerTest
 
 		retryAssertCount(
 			booleanQuery -> booleanQuery.addMustQueryClauses(
-				queries.nested(
+				QueriesUtil.nested(
 					"tasks",
-					queries.term("tasks.assigneeType", Role.class.getName()))),
+					QueriesUtil.term(
+						"tasks.assigneeType", Role.class.getName()))),
 			1, indexName + WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
 			"WorkflowMetricsInstanceType", "className",
 			kaleoInstance.getClassName(), "classPK", kaleoInstance.getClassPK(),
@@ -151,9 +153,10 @@ public class InstanceWorkflowMetricsIndexerTest
 
 		retryAssertCount(
 			booleanQuery -> booleanQuery.addMustQueryClauses(
-				queries.nested(
+				QueriesUtil.nested(
 					"tasks",
-					queries.term("tasks.assigneeName", user.getFullName()))),
+					QueriesUtil.term(
+						"tasks.assigneeName", user.getFullName()))),
 			1, indexName + WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
 			"WorkflowMetricsInstanceType", "className",
 			kaleoInstance.getClassName(), "classPK", kaleoInstance.getClassPK(),
@@ -168,9 +171,9 @@ public class InstanceWorkflowMetricsIndexerTest
 
 		retryAssertCount(
 			booleanQuery -> booleanQuery.addMustQueryClauses(
-				queries.nested(
+				QueriesUtil.nested(
 					"tasks",
-					queries.term(
+					QueriesUtil.term(
 						"tasks.assigneeName", updatedUser.getFullName()))),
 			1, indexName + WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
 			"WorkflowMetricsInstanceType", "className",

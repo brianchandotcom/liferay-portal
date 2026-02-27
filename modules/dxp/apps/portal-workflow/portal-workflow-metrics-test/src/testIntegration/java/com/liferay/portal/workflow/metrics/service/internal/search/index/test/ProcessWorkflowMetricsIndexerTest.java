@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.metrics.service.internal.search.index.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -102,7 +103,7 @@ public class ProcessWorkflowMetricsIndexerTest
 
 		assertCount(
 			booleanQuery -> {
-				TermsQuery termsQuery = queries.terms("versions");
+				TermsQuery termsQuery = QueriesUtil.terms("versions");
 
 				termsQuery.addValues("1.0", "2.0");
 

@@ -20,7 +20,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Role;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
@@ -56,17 +56,17 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	private BooleanQuery _createTasksBooleanQuery(
 		boolean completed, long processId) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", "0"));
+		booleanQuery.addMustNotQueryClauses(QueriesUtil.term("taskId", "0"));
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("assigneeType", User.class.getName()),
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("completed", completed),
-			_queries.term("deleted", Boolean.FALSE),
-			_queries.term("instanceCompleted", completed),
-			_queries.term("processId", processId));
+			QueriesUtil.term("assigneeType", User.class.getName()),
+			QueriesUtil.term("companyId", contextCompany.getCompanyId()),
+			QueriesUtil.term("completed", completed),
+			QueriesUtil.term("deleted", Boolean.FALSE),
+			QueriesUtil.term("instanceCompleted", completed),
+			QueriesUtil.term("processId", processId));
 	}
 
 	private Set<Long> _getAssigneeIds(boolean completed, long processId) {
@@ -146,9 +146,6 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

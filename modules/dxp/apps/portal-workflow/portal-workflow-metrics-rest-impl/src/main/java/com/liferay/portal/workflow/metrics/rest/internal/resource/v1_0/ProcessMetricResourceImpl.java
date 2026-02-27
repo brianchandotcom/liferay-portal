@@ -30,7 +30,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.script.Scripts;
@@ -135,43 +135,44 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 	}
 
 	private BooleanQuery _createBooleanQuery(boolean completed) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		return booleanQuery.addShouldQueryClauses(
-			_queries.term("completed", completed),
-			_queries.term("instanceId", 0));
+			QueriesUtil.term("completed", completed),
+			QueriesUtil.term("instanceId", 0));
 	}
 
 	private BooleanQuery _createBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Set<Long> processIds) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.setMinimumShouldMatch(1);
 
-		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
+		BooleanQuery instancesBooleanQuery = QueriesUtil.booleanQuery();
 
 		instancesBooleanQuery.addFilterQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				"_index",
 				_indexNameBuilder.getIndexName(contextCompany.getCompanyId()) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE));
 		instancesBooleanQuery.addMustNotQueryClauses(
-			_queries.term("instanceId", 0));
+			QueriesUtil.term("instanceId", 0));
 		instancesBooleanQuery.addMustQueryClauses(
 			_createInstanceBooleanQuery(
 				completed, dateEnd, dateStart, processIds));
 
-		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
+		BooleanQuery slaInstanceResultsBooleanQuery =
+			QueriesUtil.booleanQuery();
 
 		slaInstanceResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term(
+			QueriesUtil.term(
 				"_index",
 				_indexNameBuilder.getIndexName(contextCompany.getCompanyId()) +
 					WorkflowMetricsIndexNameConstants.
 						SUFFIX_SLA_INSTANCE_RESULT));
 		slaInstanceResultsBooleanQuery.addMustNotQueryClauses(
-			_queries.term("slaDefinitionId", 0));
+			QueriesUtil.term("slaDefinitionId", 0));
 		slaInstanceResultsBooleanQuery.addMustQueryClauses(
 			_createSLAInstanceResultsBooleanQuery(
 				completed, dateEnd, dateStart, processIds));
@@ -197,33 +198,33 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 	private BooleanQuery _createCompletionDateBooleanQuery(
 		Date dateEnd, Date dateStart) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		return booleanQuery.addShouldQueryClauses(
-			_queries.rangeTerm(
+			QueriesUtil.rangeTerm(
 				"completionDate", true, true,
 				_resourceHelper.getDate(dateStart),
 				_resourceHelper.getDate(dateEnd)),
-			_queries.term("slaDefinitionId", 0));
+			QueriesUtil.term("slaDefinitionId", 0));
 	}
 
 	private BooleanQuery _createInstanceBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Set<Long> processIds) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		if (completed && (dateEnd != null) && (dateStart != null)) {
 			booleanQuery.addMustQueryClauses(
-				_queries.rangeTerm(
+				QueriesUtil.rangeTerm(
 					"completionDate", true, true,
 					_resourceHelper.getDate(dateStart),
 					_resourceHelper.getDate(dateEnd)));
 		}
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("active", Boolean.TRUE),
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", Boolean.FALSE),
+			QueriesUtil.term("active", Boolean.TRUE),
+			QueriesUtil.term("companyId", contextCompany.getCompanyId()),
+			QueriesUtil.term("deleted", Boolean.FALSE),
 			_createBooleanQuery(completed),
 			_createProcessIdTermsQuery(processIds));
 	}
@@ -231,11 +232,11 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 	private BooleanQuery _createProcessBooleanQuery(
 		Long processId, String title) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		if (Validator.isNotNull(processId)) {
 			booleanQuery.addMustQueryClauses(
-				_queries.term("processId", processId));
+				QueriesUtil.term("processId", processId));
 		}
 
 		if (Validator.isNotNull(title)) {
@@ -243,12 +244,12 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 		}
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", Boolean.FALSE));
+			QueriesUtil.term("companyId", contextCompany.getCompanyId()),
+			QueriesUtil.term("deleted", Boolean.FALSE));
 	}
 
 	private TermsQuery _createProcessIdTermsQuery(Set<Long> processIds) {
-		TermsQuery termsQuery = _queries.terms("processId");
+		TermsQuery termsQuery = QueriesUtil.terms("processId");
 
 		termsQuery.addValues(
 			transformToArray(processIds, String::valueOf, Object.class));
@@ -272,14 +273,14 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 	private BooleanQuery _createSLAInstanceResultsBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Set<Long> processIds) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		if (completed) {
-			BooleanQuery shouldBooleanQuery = _queries.booleanQuery();
+			BooleanQuery shouldBooleanQuery = QueriesUtil.booleanQuery();
 
 			shouldBooleanQuery.addShouldQueryClauses(
-				_queries.term("slaDefinitionId", 0),
-				_queries.term("instanceCompleted", Boolean.TRUE));
+				QueriesUtil.term("slaDefinitionId", 0),
+				QueriesUtil.term("instanceCompleted", Boolean.TRUE));
 
 			booleanQuery.addMustQueryClauses(shouldBooleanQuery);
 
@@ -290,26 +291,26 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				_queries.term("instanceCompleted", Boolean.FALSE));
+				QueriesUtil.term("instanceCompleted", Boolean.FALSE));
 		}
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("active", Boolean.TRUE),
-			_queries.term("blocked", Boolean.FALSE),
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", Boolean.FALSE),
+			QueriesUtil.term("active", Boolean.TRUE),
+			QueriesUtil.term("blocked", Boolean.FALSE),
+			QueriesUtil.term("companyId", contextCompany.getCompanyId()),
+			QueriesUtil.term("deleted", Boolean.FALSE),
 			_createProcessIdTermsQuery(processIds));
 	}
 
 	private BooleanQuery _createTitleBooleanQuery(String title) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
-		StringQuery stringQuery = _queries.string(title + StringPool.STAR);
+		StringQuery stringQuery = QueriesUtil.string(title + StringPool.STAR);
 
 		stringQuery.setDefaultField(_getTitleFieldName());
 
 		return booleanQuery.addShouldQueryClauses(
-			stringQuery, _queries.match(_getTitleFieldName(), title));
+			stringQuery, QueriesUtil.match(_getTitleFieldName(), title));
 	}
 
 	private TermsAggregationResult _getInstanceTermsAggregationResult(
@@ -321,12 +322,12 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"processId", "processId");
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		FilterAggregation filterAggregation = _aggregations.filter(
 			"instanceCountFilter",
 			booleanQuery.addMustNotQueryClauses(
-				_queries.term("instanceId", "0")));
+				QueriesUtil.term("instanceId", "0")));
 
 		filterAggregation.addChildAggregation(
 			_aggregations.valueCount("instanceCount", "instanceId"));
@@ -689,9 +690,6 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private ResourceHelper _resourceHelper;

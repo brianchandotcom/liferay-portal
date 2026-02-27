@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -108,7 +108,7 @@ public class ImportStagedModelExceptionHandlerTest {
 			).modelIndexerClasses(
 				ExportImportReportEntry.class
 			).query(
-				_queries.term(
+				QueriesUtil.term(
 					"exportImportConfigurationId_long",
 					exportImportConfigurationId)
 			).build());
@@ -254,9 +254,6 @@ public class ImportStagedModelExceptionHandlerTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private Queries _queries;
 
 	@Inject
 	private Searcher _searcher;

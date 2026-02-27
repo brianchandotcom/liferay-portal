@@ -66,8 +66,6 @@ components:
                 externalReferenceCode:
                     readOnly: true
                     type: string
-                scope:
-                    $ref: "#/components/schemas/Scope"
                 sseEventSinkKey:
                     type: string
                 type:

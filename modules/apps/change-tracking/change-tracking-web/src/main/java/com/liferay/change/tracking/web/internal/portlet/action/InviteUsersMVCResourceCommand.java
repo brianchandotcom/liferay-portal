@@ -113,43 +113,41 @@ public class InviteUsersMVCResourceCommand
 		long ctCollectionId = ParamUtil.getLong(
 			resourceRequest, "ctCollectionId");
 
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
 		try {
 			AuthTokenUtil.checkCSRFToken(
 				httpServletRequest,
 				InviteUsersMVCResourceCommand.class.getName());
 
-			CTCollectionPermission.contains(
-				themeDisplay.getPermissionChecker(), ctCollectionId,
+			if ((ctCollection == null) &&
+				(ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
+				throw new PrincipalException(
+					"No CTCollection exists with the primary key " +
+						ctCollectionId);
+			}
+
+			CTCollectionPermission.check(
+				themeDisplay.getPermissionChecker(), ctCollection,
 				CTActionKeys.INVITE_USERS);
 		}
-		catch (PrincipalException principalException) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"errorMessage",
-					_language.get(
-						httpServletRequest,
-						"you-do-not-have-permission-to-invite-users-to-this-" +
-							"publication")));
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					JSONUtil.put(
+						"errorMessage",
+						_language.get(
+							httpServletRequest,
+							"you-do-not-have-permission-to-perform-this-" +
+								"action")));
 
-			return;
-		}
+				return;
+			}
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
-
-		if ((ctCollection == null) &&
-			(ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
-
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"errorMessage",
-					_language.get(
-						httpServletRequest,
-						"this-publication-no-longer-exists")));
-
-			return;
+			throw exception;
 		}
 
 		Group group = null;

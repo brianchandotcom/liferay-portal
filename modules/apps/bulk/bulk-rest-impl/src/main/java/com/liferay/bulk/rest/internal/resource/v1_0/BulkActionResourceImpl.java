@@ -313,6 +313,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			_objectDefinitionLocalService
 		).objectEntryLocalService(
 			_objectEntryLocalService
+		).objectEntryVersionLocalService(
+			_objectEntryVersionLocalService
 		).scope(
 			scope
 		).search(

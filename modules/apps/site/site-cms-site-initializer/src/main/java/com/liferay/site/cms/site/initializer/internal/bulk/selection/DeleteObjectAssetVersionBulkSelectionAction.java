@@ -13,6 +13,8 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -62,6 +64,22 @@ public class DeleteObjectAssetVersionBulkSelectionAction
 
 		Set<Integer> toRemoveVersions = _toIntegerSet(
 			inputMap, "toRemoveVersions");
+
+		if (toRemoveVersions.isEmpty()) {
+			toRemoveVersions.addAll(
+				TransformUtil.transform(
+					_objectEntryVersionLocalService.getObjectEntryVersions(
+						objectObjectEntry.getObjectEntryId()),
+					objectEntryVersion -> {
+						int version = objectEntryVersion.getVersion();
+
+						if (version == objectObjectEntry.getVersion()) {
+							return null;
+						}
+
+						return version;
+					}));
+		}
 
 		for (Integer version : toRemoveVersions) {
 			defaultObjectEntryManager.deleteObjectEntryByVersion(
@@ -118,6 +136,9 @@ public class DeleteObjectAssetVersionBulkSelectionAction
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

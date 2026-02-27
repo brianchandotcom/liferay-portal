@@ -13,6 +13,9 @@ public class LayoutAdminPortletKeys {
 	public static final String GROUP_PAGES =
 		"com_liferay_layout_admin_web_portlet_GroupPagesPortlet";
 
+	public static final String LAYOUT_PROTOTYPE =
+		"com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet";
+
 	public static final String LAYOUT_SET_LAYOUTS =
 		"com_liferay_layout_admin_web_portlet_LayoutSetLayoutsPortlet";
 

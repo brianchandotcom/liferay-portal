@@ -10,7 +10,6 @@ package com.liferay.layout.prototype.constants;
  */
 public class LayoutPrototypePortletKeys {
 
-	public static final String LAYOUT_PROTOTYPE =
-		"com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet";
+
 
 }

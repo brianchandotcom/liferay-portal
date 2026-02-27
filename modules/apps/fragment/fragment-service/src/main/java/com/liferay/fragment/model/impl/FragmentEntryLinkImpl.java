@@ -28,6 +28,28 @@ import java.util.Map;
 public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
+	public FragmentEntry fetchFragmentEntry() {
+		if ((_fragmentEntry == null) &&
+			Validator.isNotNull(getFragmentEntryERC())) {
+
+			Long groupId = ScopeUtil.getItemGroupId(
+				getCompanyId(), getFragmentEntryScopeERC(), getGroupId());
+
+			if (groupId != null) {
+				_fragmentEntry =
+					FragmentEntryLocalServiceUtil.
+						fetchFragmentEntryByExternalReferenceCode(
+							getFragmentEntryERC(), groupId);
+
+				fragmentEntryUpdateEntityCacheBiConsumer.accept(
+					this, _fragmentEntry);
+			}
+		}
+
+		return _fragmentEntry;
+	}
+
+	@Override
 	public JSONObject getConfigurationJSONObject() {
 		return getConfigurationJSONObject(false);
 	}
@@ -232,5 +254,8 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@CacheField(permanent = true, propagateToInterface = true)
 	private transient JSONObject _editableValuesJSONObject;
+
+	@CacheField(permanent = true, propagateToInterface = true)
+	private transient FragmentEntry _fragmentEntry;
 
 }

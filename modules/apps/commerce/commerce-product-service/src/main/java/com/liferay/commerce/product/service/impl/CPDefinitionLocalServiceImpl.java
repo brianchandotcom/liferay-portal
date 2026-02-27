@@ -30,6 +30,8 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.exception.CPDefinitionSubscriptionLengthException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
@@ -46,6 +48,7 @@ import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
@@ -963,6 +966,47 @@ public class CPDefinitionLocalServiceImpl
 			newCPAttachmentFileEntry.setClassPK(newCPDefinitionId);
 
 			_cpAttachmentFileEntryPersistence.update(newCPAttachmentFileEntry);
+		}
+
+		CPConfigurationList masterCPConfigurationList =
+			_cpConfigurationListLocalService.getMasterCPConfigurationList(
+				sourceCPDefinition.getGroupId());
+
+		CPConfigurationEntry cpConfigurationEntry =
+			_cpConfigurationEntryLocalService.fetchCPConfigurationEntry(
+				_classNameLocalService.getClassNameId(
+					CPDefinition.class.getName()),
+				sourceCPDefinitionId, masterCPConfigurationList.getGroupId());
+
+		if (cpConfigurationEntry != null) {
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				null, cpConfigurationEntry.getUserId(),
+				cpConfigurationEntry.getGroupId(),
+				cpConfigurationEntry.getClassNameId(),
+				cpConfigurationEntry.getClassPK(),
+				cpConfigurationEntry.getCPConfigurationListId(),
+				cpConfigurationEntry.getCPTaxCategoryId(),
+				cpConfigurationEntry.getAllowedOrderQuantities(),
+				cpConfigurationEntry.isBackOrders(),
+				cpConfigurationEntry.getCommerceAvailabilityEstimateId(),
+				cpConfigurationEntry.getCPDefinitionInventoryEngine(),
+				cpConfigurationEntry.getDepth(),
+				cpConfigurationEntry.isDisplayAvailability(),
+				cpConfigurationEntry.isDisplayStockQuantity(),
+				cpConfigurationEntry.isFreeShipping(),
+				cpConfigurationEntry.getHeight(),
+				cpConfigurationEntry.getLowStockActivity(),
+				cpConfigurationEntry.getMaxOrderQuantity(),
+				cpConfigurationEntry.getMinOrderQuantity(),
+				cpConfigurationEntry.getMinStockQuantity(),
+				cpConfigurationEntry.getMultipleOrderQuantity(),
+				cpConfigurationEntry.isPurchasable(),
+				cpConfigurationEntry.isShippable(),
+				cpConfigurationEntry.getShippingExtraPrice(),
+				cpConfigurationEntry.isShipSeparately(),
+				cpConfigurationEntry.isTaxExempt(),
+				cpConfigurationEntry.getWeight(),
+				cpConfigurationEntry.getWidth());
 		}
 
 		List<CPDefinitionLink> cpDefinitionLinks =
@@ -3276,6 +3320,9 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Reference
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;

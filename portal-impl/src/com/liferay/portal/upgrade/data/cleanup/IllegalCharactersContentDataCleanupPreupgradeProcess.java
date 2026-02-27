@@ -17,6 +17,9 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUti
 
 import java.sql.PreparedStatement;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Luis Ortiz
  */
@@ -27,22 +30,28 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
-		for (int charCode : _ILLEGAL_CHARACTER_CODES) {
-			if (dbInspector.hasColumn("DDMContent", "data_")) {
-				_cleanUp(charCode, "data_", dbInspector, "DDMContent");
-			}
+		Map<String, String> tableAndColumnNames = new HashMap<>();
 
-			if (dbInspector.hasColumn("DDMContent", "xml")) {
-				_cleanUp(charCode, "xml", dbInspector, "DDMContent");
-			}
-
-			if (dbInspector.hasColumn("JournalArticle", "content")) {
-				_cleanUp(charCode, "content", dbInspector, "JournalArticle");
-			}
+		if (dbInspector.hasColumn("DDMContent", "data_")) {
+			_cleanUpNullUnicode("data_", dbInspector, "DDMContent");
+			tableAndColumnNames.put("DDMContent", "data_");
 		}
 
-		_cleanUpNullUnicode("content", dbInspector, "JournalArticle");
-		_cleanUpNullUnicode("data_", dbInspector, "DDMContent");
+		if (dbInspector.hasColumn("DDMContent", "xml")) {
+			tableAndColumnNames.put("DDMContent", "xml");
+		}
+
+		if (dbInspector.hasColumn("JournalArticle", "content")) {
+			_cleanUpNullUnicode("content", dbInspector, "JournalArticle");
+			tableAndColumnNames.put("JournalArticle", "content");
+		}
+
+		for (Map.Entry<String, String> entry : tableAndColumnNames.entrySet()) {
+			for (int charCode : _ILLEGAL_CHARACTER_CODES) {
+				_cleanUp(
+					charCode, entry.getValue(), dbInspector, entry.getKey());
+			}
+		}
 	}
 
 	private void _cleanUp(

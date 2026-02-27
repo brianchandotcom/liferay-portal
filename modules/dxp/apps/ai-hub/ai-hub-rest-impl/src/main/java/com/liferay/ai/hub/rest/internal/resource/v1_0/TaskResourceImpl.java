@@ -91,7 +91,6 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 				setExternalReferenceCode(
 					() -> String.valueOf(
 						workflowInstance.getWorkflowInstanceId()));
-				setScope(task::getScope);
 				setType(task::getType);
 			}
 		};

@@ -80,9 +80,6 @@ export async function postTask(
 			context: {
 				text: content,
 			},
-			scope: {
-				externalReferenceCode: 'L_CMS',
-			},
 			sseEventSinkKey: eventSourceReference,
 			type,
 		}),

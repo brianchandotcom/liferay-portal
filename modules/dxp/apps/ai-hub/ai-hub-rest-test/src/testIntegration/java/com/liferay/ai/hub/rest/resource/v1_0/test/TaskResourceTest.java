@@ -265,7 +265,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Test
 	public void testPostTask() throws Exception {
 		_testPostTask();
-		_testPostTaskWithScope();
 		_testPostTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition();
 		_testPostTaskWithTypeAIDecisionNodeWorkflowDefinition();
 		_testPostTaskWithTypeFixSpellingAndGrammar();
@@ -369,32 +368,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertEquals(2, workflowInstance.getWorkflowDefinitionVersion());
 	}
 
-	private void _testPostTaskWithScope() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"context", JSONUtil.put("text", RandomTestUtil.randomString())
-			).put(
-				"scope",
-				JSONUtil.put(
-					"externalReferenceCode", _group.getExternalReferenceCode())
-			).put(
-				"sseEventSinkKey", RandomTestUtil.randomString()
-			).put(
-				"type", "Workflow Definition"
-			).toString(),
-			"ai-hub/v1.0/tasks", Http.Method.POST);
-
-		WorkflowInstance workflowInstance =
-			_workflowInstanceManager.getWorkflowInstance(
-				TestPropsValues.getCompanyId(),
-				jsonObject.getLong("externalReferenceCode"));
-
-		Assert.assertEquals(_group.getGroupId(), workflowInstance.getGroupId());
-		Assert.assertEquals(
-			"Workflow Definition",
-			workflowInstance.getWorkflowDefinitionName());
-	}
-
 	private void _testPostTaskWithTypeAIDecisionNodeWithToolWorkflowDefinition()
 		throws Exception {
 
@@ -403,10 +376,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				"context",
 				JSONUtil.put(
 					"question", "Is the \"get_openapis\" tool available?")
-			).put(
-				"scope",
-				JSONUtil.put(
-					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
 				"type", "AI Decision Node With Tool Workflow Definition"
 			).toString(),
@@ -451,10 +420,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"context", JSONUtil.put("content", content)
-			).put(
-				"scope",
-				JSONUtil.put(
-					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
 				"sseEventSinkKey", RandomTestUtil.randomString()
 			).put(
@@ -557,10 +522,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				"context",
 				JSONUtil.put("userMessage", "What is Feliphe's favorite food?")
 			).put(
-				"scope",
-				JSONUtil.put(
-					"externalReferenceCode", _group.getExternalReferenceCode())
-			).put(
 				"sseEventSinkKey", sseEventSinkKey
 			).put(
 				"type", "LLM Node With RAG Workflow Definition"
@@ -596,10 +557,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			JSONUtil.put(
 				"context",
 				JSONUtil.put("userMessage", "What is Feliphe's favorite food?")
-			).put(
-				"scope",
-				JSONUtil.put(
-					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
 				"sseEventSinkKey", sseEventSinkKey
 			).put(
@@ -674,11 +631,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 						JSONUtil.put(
 							"userMessage", "What is Feliphe's favorite food?")
 					).put(
-						"scope",
-						JSONUtil.put(
-							"externalReferenceCode",
-							_group.getExternalReferenceCode())
-					).put(
 						"sseEventSinkKey", sseEventSinkKey
 					).put(
 						"type", "LLM Node With RAG Workflow Definition"
@@ -716,11 +668,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 						"context",
 						JSONUtil.put(
 							"userMessage", "What is Feliphe's favorite food?")
-					).put(
-						"scope",
-						JSONUtil.put(
-							"externalReferenceCode",
-							_group.getExternalReferenceCode())
 					).put(
 						"sseEventSinkKey", sseEventSinkKey
 					).put(
@@ -762,10 +709,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				"context",
 				JSONUtil.put(
 					"userMessage", "Is the \"get_openapi\" tool available?")
-			).put(
-				"scope",
-				JSONUtil.put(
-					"externalReferenceCode", _group.getExternalReferenceCode())
 			).put(
 				"sseEventSinkKey", sseEventSinkKey
 			).put(

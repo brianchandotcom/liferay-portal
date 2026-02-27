@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.NestedSort;
@@ -114,7 +114,7 @@ public class SortPortletSharedSearchContributor
 		NestedSort nestedSort = _sorts.nested(path);
 
 		nestedSort.setFilterQuery(
-			_queries.term(
+			QueriesUtil.term(
 				StringBundler.concat(path, StringPool.PERIOD, filterField),
 				filterValue));
 
@@ -239,9 +239,6 @@ public class SortPortletSharedSearchContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SortPortletSharedSearchContributor.class);
-
-	@Reference
-	private Queries _queries;
 
 	@Reference
 	private SortBuilderFactory _sortBuilderFactory;

@@ -8,7 +8,7 @@ import {useResource} from '@clayui/data-provider';
 import ClayLabel from '@clayui/label';
 import {stringUtils} from '@liferay/object-js-components-web';
 import {FieldBase} from 'frontend-js-components-web';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import './SelectObjectDefinition.scss';
 
@@ -67,6 +67,10 @@ export default function SelectObjectDefinition({
 				: [],
 		[resource, objectDefinition1]
 	);
+
+	useEffect(() => {
+		setValue(initialValue ?? '');
+	}, [initialValue]);
 
 	return (
 		<FieldBase

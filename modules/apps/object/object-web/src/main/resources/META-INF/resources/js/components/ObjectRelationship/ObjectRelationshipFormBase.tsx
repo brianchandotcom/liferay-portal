@@ -112,16 +112,6 @@ export function ObjectRelationshipFormBase({
 	>([ONE_TO_MANY]);
 	const [reverseOrder, setReverseOrder] = useState<boolean>(false);
 
-	const switchObjects = () => {
-		const previousObjectDefinition1 = {
-			...objectDefinition1,
-		};
-
-		setObjectDefinition1(objectDefinition2);
-
-		setObjectDefinition2(previousObjectDefinition1);
-	};
-
 	const handleHideReverseButton = () => {
 		return (
 			values.type !== 'oneToMany' ||
@@ -167,8 +157,6 @@ export function ObjectRelationshipFormBase({
 			objectDefinitionId2: objectDefinition1?.id,
 			objectDefinitionName2: objectDefinition1?.name,
 		});
-
-		switchObjects();
 
 		setReverseOrder(!reverseOrder);
 	};
@@ -221,6 +209,22 @@ export function ObjectRelationshipFormBase({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionExternalReferenceCode1]);
 
+	useEffect(() => {
+		if (values.objectDefinitionExternalReferenceCode1) {
+			API.getObjectDefinitionByExternalReferenceCode(
+				values.objectDefinitionExternalReferenceCode1
+			).then(setObjectDefinition1);
+		}
+	}, [values.objectDefinitionExternalReferenceCode1]);
+
+	useEffect(() => {
+		if (values.objectDefinitionExternalReferenceCode2) {
+			API.getObjectDefinitionByExternalReferenceCode(
+				values.objectDefinitionExternalReferenceCode2
+			).then(setObjectDefinition2);
+		}
+	}, [values.objectDefinitionExternalReferenceCode2]);
+
 	return (
 		<>
 			<Input
@@ -256,8 +260,6 @@ export function ObjectRelationshipFormBase({
 							objectDefinitionName2: objectDefinition1?.name,
 							type: value,
 						});
-
-						switchObjects();
 
 						setReverseOrder(!reverseOrder);
 					}
@@ -314,7 +316,7 @@ export function ObjectRelationshipFormBase({
 							<SelectObjectDefinition
 								disabled={readonly}
 								error={errors.objectDefinitionId2}
-								initialValue={values.objectDefinitionName2}
+								initialValue={objectDefinition2?.name}
 								label={
 									OBJECT_RELATIONSHIP_TYPES.find(
 										({value}) => value === values.type
@@ -350,7 +352,7 @@ export function ObjectRelationshipFormBase({
 							<SelectObjectDefinition
 								disabled={readonly}
 								error={errors.objectDefinitionId1}
-								initialValue={values.objectDefinitionName2}
+								initialValue={objectDefinition1?.name}
 								label={
 									OBJECT_RELATIONSHIP_TYPES.find(
 										({value}) => value === values.type

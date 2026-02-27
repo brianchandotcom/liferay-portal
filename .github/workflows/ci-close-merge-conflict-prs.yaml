@@ -1,7 +1,7 @@
 jobs:
     close-merge-conflicts:
         env:
-            AUTHORIZED_OWNERS: "brianchandotcom"
+            AUTHORIZED_OWNERS: brianchandotcom
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         permissions:
             issues: write

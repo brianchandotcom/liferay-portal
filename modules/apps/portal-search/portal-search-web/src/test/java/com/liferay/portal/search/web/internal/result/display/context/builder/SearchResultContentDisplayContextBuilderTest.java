@@ -110,7 +110,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testIconMissingFromNullURLEdit() throws Exception {
+	public void testNullURL() throws Exception {
 		Mockito.doReturn(
 			null
 		).when(

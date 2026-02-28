@@ -6,11 +6,11 @@
 package com.liferay.commerce.availability.estimate.web.internal.portlet;
 
 import com.liferay.commerce.availability.estimate.web.internal.display.context.CommerceAvailabilityEstimateDisplayContext;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.Portlet;
@@ -58,8 +58,9 @@ public class CommerceAvailabilityEstimatePortlet extends MVCPortlet {
 		CommerceAvailabilityEstimateDisplayContext
 			commerceAvailabilityEstimateDisplayContext =
 				new CommerceAvailabilityEstimateDisplayContext(
-					_commerceAvailabilityEstimateService,
-					_portletResourcePermission, renderRequest, renderResponse);
+					_commerceAvailabilityEstimateModelResourcePermission,
+					_commerceAvailabilityEstimateService, renderRequest,
+					renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -68,13 +69,14 @@ public class CommerceAvailabilityEstimatePortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceAvailabilityEstimate)"
+	)
+	private ModelResourcePermission<CommerceAvailabilityEstimate>
+		_commerceAvailabilityEstimateModelResourcePermission;
+
 	@Reference
 	private CommerceAvailabilityEstimateService
 		_commerceAvailabilityEstimateService;
-
-	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_AVAILABILITY + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -108,7 +109,9 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _deleteResourceActions() {
-		for (String actionId : _ACTION_IDS) {
+		for (String actionId :
+				ArrayUtil.append(_ACTION_IDS, _REMOVED_ACTION_IDS)) {
+
 			ResourceAction resourceAction =
 				_resourceActionLocalService.fetchResourceAction("90", actionId);
 
@@ -273,7 +276,8 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private static final String[] _ACTION_IDS = {
-		"ADD_ACCOUNT", "ADD_ACCOUNT_GROUP", "ADD_COMMERCE_BRAND",
+		"ADD_ACCOUNT", "ADD_ACCOUNT_GROUP",
+		"ADD_COMMERCE_AVAILABILITY_ESTIMATE", "ADD_COMMERCE_BRAND",
 		"ADD_COMMERCE_BOM_DEFINITION", "ADD_COMMERCE_BOM_FOLDER",
 		"ADD_COMMERCE_CATALOG", "ADD_COMMERCE_CHANNEL",
 		"ADD_COMMERCE_DATA_INTEGRATION_PROCESS", "ADD_COMMERCE_DISCOUNT",
@@ -282,13 +286,13 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		"ADD_COMMERCE_PRODUCT_OPTION", "ADD_COMMERCE_PRODUCT_OPTION_CATEGORY",
 		"ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION", "ADD_WAREHOUSE",
 		"MANAGE_ALL_ACCOUNTS", "MANAGE_AVAILABLE_ACCOUNTS",
-		"MANAGE_COMMERCE_AVAILABILITY_ESTIMATES", "MANAGE_COMMERCE_CURRENCIES",
-		"MANAGE_COMMERCE_HEALTH_STATUS", "MANAGE_COMMERCE_ORDER_PRICES",
+		"MANAGE_COMMERCE_CURRENCIES", "MANAGE_COMMERCE_HEALTH_STATUS",
+		"MANAGE_COMMERCE_ORDER_PRICES",
 		"MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES", "MANAGE_COMMERCE_SHIPMENTS",
 		"MANAGE_COMMERCE_SUBSCRIPTIONS", "VIEW_INVENTORIES",
-		"VIEW_COMMERCE_ACCOUNT_GROUPS", "VIEW_COMMERCE_CATALOGS",
-		"VIEW_COMMERCE_CHANNELS", "VIEW_COMMERCE_DISCOUNTS",
-		"VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS"
+		"VIEW_COMMERCE_ACCOUNT_GROUPS", "VIEW_COMMERCE_AVAILABILITY_ESTIMATES",
+		"VIEW_COMMERCE_CATALOGS", "VIEW_COMMERCE_CHANNELS",
+		"VIEW_COMMERCE_DISCOUNTS", "VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS"
 	};
 
 	private static final String _PORTLET_NAME_COMMERCE_DISCOUNT =
@@ -310,6 +314,11 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 	private static final String _PORTLET_NAME_COMMERCE_PROMOTION_PRICING =
 		"com_liferay_commerce_pricing_web_internal_portlet_" +
 			"CommercePromotionPortlet";
+
+	private static final String[] _REMOVED_ACTION_IDS = {
+		"MANAGE_COMMERCE_AVAILABILITY_ESTIMATES",
+		"MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS", "MANAGE_INVENTORY"
+	};
 
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourcePermissionLocalService

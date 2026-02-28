@@ -1,6 +1,6 @@
 Bundle-Name: Liferay MCP Server
 Bundle-SymbolicName: com.liferay.mcp.server
-Bundle-Version: 0.0.7
+Bundle-Version: 0.0.8
 Import-Package:\
 	!com.ethlo.*,\
 	\

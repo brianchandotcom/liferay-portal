@@ -347,6 +347,51 @@
 			$c-inner
 		);
 
+		$base: map-remove(
+			$base,
+			'active-bg',
+			'active-border-color',
+			'active-class-bg',
+			'active-class-border-color',
+			'active-class-color',
+			'active-class-font-weight',
+			'active-class-z-index',
+			'active-color',
+			'active-font-weight',
+			'active-z-index',
+			'bg',
+			'btn-focus-box-shadow',
+			'btn-focus-outline',
+			'disabled-active-pointer-events',
+			'disabled-bg',
+			'disabled-border-color',
+			'disabled-box-shadow',
+			'disabled-color',
+			'disabled-cursor',
+			'disabled-opacity',
+			'disabled-pointer-events',
+			'disabled-text-decoration',
+			'focus-bg',
+			'focus-border-color',
+			'focus-border-radius',
+			'focus-box-shadow',
+			'focus-color',
+			'focus-opacity',
+			'focus-outline',
+			'focus-text-decoration',
+			'focus-z-index',
+			'hover-bg',
+			'hover-border-color',
+			'hover-color',
+			'hover-opacity',
+			'hover-text-decoration',
+			'lexicon-icon-font-size',
+			'lexicon-icon-margin-bottom',
+			'lexicon-icon-margin-left',
+			'lexicon-icon-margin-right',
+			'lexicon-icon-margin-top'
+		);
+
 		@if ($enabled) {
 			@if (length($base) != 0) {
 				@include clay-css($base);

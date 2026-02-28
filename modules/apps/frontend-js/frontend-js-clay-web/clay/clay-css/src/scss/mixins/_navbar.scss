@@ -1566,6 +1566,37 @@
 
 		$underline-active-bg: map-get($map, underline-active-bg);
 
+		$base: map-remove(
+			$base,
+			'bg',
+			'brand-bg',
+			'brand-color',
+			'brand-hover-bg',
+			'brand-hover-color',
+			'btn-font-weight',
+			'link-active-bg',
+			'link-active-color',
+			'link-bg',
+			'link-border-radius',
+			'link-color',
+			'link-disabled-bg',
+			'link-disabled-box-shadow',
+			'link-disabled-color',
+			'link-disabled-opacity',
+			'link-disabled-pointer-events',
+			'link-focus-bg',
+			'link-focus-box-shadow',
+			'link-focus-color',
+			'link-font-weight',
+			'link-hover-bg',
+			'link-hover-color',
+			'link-outline',
+			'link-transition',
+			'toggler-color',
+			'toggler-font-weight',
+			'underline-active-bg'
+		);
+
 		@if ($enabled) {
 			@if (length($base) != 0) {
 				@include clay-css($base);

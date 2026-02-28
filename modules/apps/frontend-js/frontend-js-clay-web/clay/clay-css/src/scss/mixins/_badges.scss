@@ -177,6 +177,18 @@
 
 		$badge-item-expand: setter(map-get($map, badge-item-expand), ());
 
+		$base: map-remove(
+			$base,
+			'bg',
+			'hover-bg',
+			'hover-border-color',
+			'hover-color',
+			'link-color',
+			'link-hover-color',
+			'padding-x',
+			'padding-y'
+		);
+
 		@if ($enabled) {
 			@if (length($base) != 0) {
 				@include clay-css($base);

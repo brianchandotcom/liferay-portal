@@ -211,6 +211,19 @@
 			)
 		);
 
+		$base: map-remove(
+			$base,
+			'item-spacer-x',
+			'item-spacer-y',
+			'lexicon-icon-height',
+			'lexicon-icon-margin-top',
+			'lexicon-icon-width',
+			'padding-x',
+			'padding-y',
+			'sticker-border-radius',
+			'sticker-size'
+		);
+
 		@if ($enabled) {
 			@if (length($base) != 0) {
 				@include clay-css($base);
@@ -691,9 +704,40 @@
 			)
 		);
 
+		$base: map-remove(
+			$base,
+			'bg',
+			'disabled-bg',
+			'disabled-border-color',
+			'disabled-box-shadow',
+			'disabled-color',
+			'focus-bg',
+			'focus-border-color',
+			'focus-box-shadow',
+			'focus-color',
+			'focus-outline',
+			'focus-text-decoration',
+			'hover-bg',
+			'hover-border-color',
+			'hover-color',
+			'hover-text-decoration',
+			'item-spacer-x',
+			'item-spacer-y',
+			'lexicon-icon-height',
+			'lexicon-icon-margin-top',
+			'lexicon-icon-width',
+			'link-hover-color',
+			'link-hover-text-decoration',
+			'link-text-decoration',
+			'padding-x',
+			'padding-y',
+			'sticker-border-radius',
+			'sticker-size'
+		);
+
 		@if ($enabled) {
-			@if (length($map) != 0) {
-				@include clay-css($map);
+			@if (length($base) != 0) {
+				@include clay-css($base);
 			}
 
 			@if (length($disabled) != 0) {

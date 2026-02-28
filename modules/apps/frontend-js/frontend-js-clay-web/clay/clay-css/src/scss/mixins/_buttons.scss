@@ -593,6 +593,56 @@
 			$c-inner
 		);
 
+		$base: map-remove(
+			$base,
+			'active-bg',
+			'active-border-color',
+			'active-box-shadow',
+			'active-color',
+			'active-focus',
+			'active-focus-box-shadow',
+			'active-opacity',
+			'active-z-index',
+			'bg',
+			'breakpoint-down',
+			'disabled-bg',
+			'disabled-border-color',
+			'disabled-box-shadow',
+			'disabled-color',
+			'disabled-cursor',
+			'disabled-opacity',
+			'disabled-z-index',
+			'focus-bg',
+			'focus-border-color',
+			'focus-box-shadow',
+			'focus-color',
+			'focus-opacity',
+			'focus-outline',
+			'focus-z-index',
+			'font-size-mobile',
+			'height-mobile',
+			'hover-bg',
+			'hover-border-color',
+			'hover-color',
+			'hover-opacity',
+			'hover-text-decoration',
+			'hover-z-index',
+			'inline-item-font-size',
+			'lexicon-icon-font-size',
+			'lexicon-icon-margin-bottom',
+			'lexicon-icon-margin-left',
+			'lexicon-icon-margin-right',
+			'lexicon-icon-margin-top',
+			'padding-bottom-mobile',
+			'padding-left-mobile',
+			'padding-right-mobile',
+			'padding-top-mobile',
+			'section-font-size',
+			'section-font-weight',
+			'section-line-height',
+			'width-mobile'
+		);
+
 		@if ($enabled) {
 			@if (length($base) != 0) {
 				@include clay-css($base);

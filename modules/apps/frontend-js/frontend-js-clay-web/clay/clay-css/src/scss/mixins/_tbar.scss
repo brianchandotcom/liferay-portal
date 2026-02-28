@@ -466,6 +466,45 @@
 			)
 		);
 
+		$base: map-remove(
+			$base,
+			'bg',
+			'bg-color',
+			'btn-font-size',
+			'btn-font-weight',
+			'btn-height',
+			'btn-line-height',
+			'btn-margin-x',
+			'btn-margin-y',
+			'btn-monospaced-border-radius',
+			'btn-monospaced-border-width',
+			'btn-monospaced-font-size',
+			'btn-monospaced-margin-x',
+			'btn-monospaced-margin-y',
+			'btn-monospaced-padding',
+			'btn-monospaced-size',
+			'btn-padding-x',
+			'btn-padding-y',
+			'item-justify-content',
+			'item-padding-x',
+			'item-padding-y',
+			'link-margin-x',
+			'link-margin-y',
+			'link-monospaced-border-radius',
+			'link-monospaced-border-width',
+			'link-monospaced-font-size',
+			'link-monospaced-margin-x',
+			'link-monospaced-margin-y',
+			'link-monospaced-padding',
+			'link-monospaced-size',
+			'link-padding-x',
+			'link-padding-y',
+			'padding-x',
+			'padding-y',
+			'section-text-align',
+			'strong-font-weight'
+		);
+
 		@if (length($base) != 0) {
 			@include clay-css($base);
 		}
@@ -726,6 +765,8 @@
 					),
 			)
 		);
+
+		$map: map-remove($map, 'item-padding-left', 'item-padding-right');
 
 		@if ($breakpoint-down) {
 			@include media-breakpoint-down($breakpoint-down) {

@@ -307,6 +307,45 @@
 			)
 		);
 
+		$base: map-remove(
+			$base,
+			'bg',
+			'body-margin-bottom',
+			'body-margin-left',
+			'body-margin-right',
+			'body-margin-top',
+			'body-padding-bottom',
+			'body-padding-left',
+			'body-padding-right',
+			'body-padding-top',
+			'collapse-icon-bottom',
+			'collapse-icon-font-size',
+			'collapse-icon-left',
+			'collapse-icon-right',
+			'collapse-icon-top',
+			'footer-bg',
+			'footer-border-color',
+			'footer-color',
+			'header-bg',
+			'header-border-color',
+			'header-border-style',
+			'header-border-width',
+			'header-collapsed-border-color',
+			'header-color',
+			'header-margin-bottom',
+			'header-margin-left',
+			'header-margin-right',
+			'header-margin-top',
+			'header-padding-bottom',
+			'header-padding-left',
+			'header-padding-right',
+			'header-padding-top',
+			'header-transition',
+			'title-font-size',
+			'title-font-weight',
+			'title-text-transform'
+		);
+
 		@if ($enabled) {
 			@if (length($base) != 0) {
 				@include clay-css($base);

@@ -10,8 +10,10 @@ import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.base.CommerceAvailabilityEstimateLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -54,6 +56,11 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 		commerceAvailabilityEstimate.setTitleMap(titleMap);
 		commerceAvailabilityEstimate.setPriority(priority);
 
+		// Resources
+
+		_resourceLocalService.addModelResources(
+			commerceAvailabilityEstimate, serviceContext);
+
 		return commerceAvailabilityEstimatePersistence.update(
 			commerceAvailabilityEstimate);
 	}
@@ -73,6 +80,11 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 
 		_cpdAvailabilityEstimateLocalService.deleteCPDAvailabilityEstimates(
 			commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId());
+
+		// Resources
+
+		_resourceLocalService.deleteResource(
+			commerceAvailabilityEstimate, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		return commerceAvailabilityEstimate;
 	}
@@ -141,6 +153,9 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 	@Reference
 	private CPDAvailabilityEstimateLocalService
 		_cpdAvailabilityEstimateLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

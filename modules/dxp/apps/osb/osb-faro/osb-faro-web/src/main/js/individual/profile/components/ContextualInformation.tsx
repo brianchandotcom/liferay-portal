@@ -49,6 +49,7 @@ function formatTimeZoneOffset(timeZoneOffset?: string, region?: string) {
 }
 
 interface IContextualInfoProps {
+	contactId?: string;
 	contextData: Map<string, any>;
 	email?: string;
 	showEmptyState?: boolean;
@@ -56,7 +57,7 @@ interface IContextualInfoProps {
 	userId?: string;
 }
 
-const INFO_LANGUAGE_MAP: Record<string, string> = {
+const CONTEXTUAL_INFO_LABEL_MAP: Record<string, string> = {
 	browserName: Liferay.Language.get('browser'),
 	city: Liferay.Language.get('city'),
 	contactId: 'contactId',
@@ -76,6 +77,7 @@ const INFO_LANGUAGE_MAP: Record<string, string> = {
 
 const ContextualInformation: React.FC<IContextualInfoProps> = ({
 	children: emptyState,
+	contactId,
 	contextData,
 	email,
 	showEmptyState = false,
@@ -83,9 +85,10 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 	uuid
 }) => {
 	const getValue = (key: string): string | undefined => {
+		if (key === 'contactId') return contactId;
 		if (key === 'email') return email;
-		if (key === 'uuid') return uuid;
 		if (key === 'userId') return userId;
+		if (key === 'uuid') return uuid;
 
 		if (key === 'timeZoneOffset') {
 			const region = contextData?.get('region');
@@ -113,7 +116,7 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 				<GeneralInfoSection
 					config={contextualInfoConfig}
 					getValue={getValue}
-					languageMap={INFO_LANGUAGE_MAP}
+					languageMap={CONTEXTUAL_INFO_LABEL_MAP}
 				/>
 			)}
 		</>

@@ -113,11 +113,12 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 	return (
 		<div className='overview-column-main'>
 			<ContextualInformation
+				contactId={individual.get('id')}
 				contextData={individual.get('context')}
-				email={individual.get('properties')?.get('email')}
+				email={individual.getIn(['properties', 'email'])}
 				showEmptyState={!sitesSelected}
-				userId={individual.get('properties')?.get('userId')}
-				uuid={individual.get('properties')?.get('uuid')}
+				userId={individual.getIn(['properties', 'userId'])}
+				uuid={individual.getIn(['properties', 'uuid'])}
 			>
 				<OverviewCDPEmptyState
 					authorized={authorized}

@@ -19,8 +19,10 @@ describe('ContextualInformation', () => {
 	it('should render the snapshot', () => {
 		const {container} = render(
 			<ContextualInformation
+				contactId='contact-1'
 				contextData={fromJS(mockContext)}
 				email='test@example.com'
+				userId='123456'
 				uuid='12345'
 			/>
 		);
@@ -69,16 +71,5 @@ describe('ContextualInformation', () => {
 
 		const dashes = getAllByText('-');
 		expect(dashes.length).toBeGreaterThan(0);
-	});
-	it('should render', () => {
-		const {container} = render(
-			<ContextualInformation
-				contextData={fromJS(mockIndividual().context)}
-				email='test@example.com'
-				uuid='1234-abcde-67890'
-			/>
-		);
-
-		expect(container).toMatchSnapshot();
 	});
 });

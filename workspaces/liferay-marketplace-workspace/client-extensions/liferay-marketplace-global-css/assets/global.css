@@ -24,33 +24,10 @@ body {
 	position: absolute;
 	right: 32px;
 	top: -10px;
-	width: 80;
+	width: 80px;
 }
 
 /* ---------- App type variants ---------- */
-.app-type-badge.payment-methods {
-	--badge-color: #4b9bff;
-	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
-	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-}
-
-.app-type-badge.theme {
-	--badge-color: #af78ff;
-	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
-	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-}
-
-.app-type-badge.site-initializer {
-	--badge-color: #50d2a0;
-	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
-	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-}
-
-.app-type-badge.fragments {
-	--badge-color: #ff5f5f;
-	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
-	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-}
 
 .app-type-badge.batch {
 	--badge-color: #ffb46e;
@@ -64,8 +41,32 @@ body {
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
 }
 
+.app-type-badge.fragments {
+	--badge-color: #ff5f5f;
+	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
+	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+}
+
 .app-type-badge.object-definition {
 	--badge-color: #5fc8ff;
+	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
+	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+}
+
+.app-type-badge.payment-methods {
+	--badge-color: #4b9bff;
+	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
+	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+}
+
+.app-type-badge.site-initializer {
+	--badge-color: #50d2a0;
+	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
+	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+}
+
+.app-type-badge.theme {
+	--badge-color: #af78ff;
 	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
 }

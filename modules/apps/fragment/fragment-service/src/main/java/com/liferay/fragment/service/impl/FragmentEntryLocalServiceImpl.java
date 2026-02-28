@@ -310,19 +310,8 @@ public class FragmentEntryLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			fragmentEntry.getFragmentEntryId());
 
-		Group group = _groupLocalService.getGroup(fragmentEntry.getGroupId());
-
-		if (Validator.isNotNull(group.getExternalReferenceCode())) {
-			_fragmentEntryLinkLocalService.
-				deleteFragmentEntryLinksByFragmentEntryERC(
-					fragmentEntry.getExternalReferenceCode(),
-					group.getExternalReferenceCode(), true);
-		}
-
-		_fragmentEntryLinkLocalService.
-			deleteFragmentEntryLinksByFragmentEntryERC(
-				fragmentEntry.getGroupId(),
-				fragmentEntry.getExternalReferenceCode(), null, true);
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLinksByFragmentEntry(
+			fragmentEntry, true);
 
 		if (fragmentEntry.getPreviewFileEntryId() > 0) {
 			boolean deletePreviewFileEntry = true;

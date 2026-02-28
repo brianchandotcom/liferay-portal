@@ -222,28 +222,25 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public void deleteFragmentEntryLinksByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted) {
+	public void deleteFragmentEntryLinksByFragmentEntry(
+			FragmentEntry fragmentEntry, boolean deleted)
+		throws PortalException {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			fragmentEntryLinkPersistence.findByG_FEERC_FESERC_D(
-				groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted);
+				fragmentEntry.getGroupId(),
+				fragmentEntry.getExternalReferenceCode(), null, deleted);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 				fragmentEntryLink);
 		}
-	}
 
-	@Override
-	public void deleteFragmentEntryLinksByFragmentEntryERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted) {
+		Group group = _groupLocalService.getGroup(fragmentEntry.getGroupId());
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			fragmentEntryLinkPersistence.findByFEERC_FESERC_D(
-				fragmentEntryERC, fragmentEntryScopeERC, deleted);
+		fragmentEntryLinks = fragmentEntryLinkPersistence.findByFEERC_FESERC_D(
+			fragmentEntry.getExternalReferenceCode(),
+			group.getExternalReferenceCode(), deleted);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinkLocalService.deleteFragmentEntryLink(

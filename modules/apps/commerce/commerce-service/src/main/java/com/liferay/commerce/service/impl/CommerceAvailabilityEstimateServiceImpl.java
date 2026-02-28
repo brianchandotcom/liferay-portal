@@ -6,11 +6,12 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.service.base.CommerceAvailabilityEstimateServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -41,9 +42,8 @@ public class CommerceAvailabilityEstimateServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
+		_hasPortletResourcePermission(
+			CommerceActionKeys.ADD_COMMERCE_AVAILABILITY_ESTIMATE);
 
 		return commerceAvailabilityEstimateLocalService.
 			addCommerceAvailabilityEstimate(titleMap, priority, serviceContext);
@@ -54,9 +54,9 @@ public class CommerceAvailabilityEstimateServiceImpl
 			long commerceAvailabilityEstimateId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
+		_commerceAvailabilityEstimateModelResourcePermission.check(
+			getPermissionChecker(), commerceAvailabilityEstimateId,
+			ActionKeys.DELETE);
 
 		commerceAvailabilityEstimateLocalService.
 			deleteCommerceAvailabilityEstimate(commerceAvailabilityEstimateId);
@@ -67,9 +67,9 @@ public class CommerceAvailabilityEstimateServiceImpl
 			long commerceAvailabilityEstimateId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
+		_commerceAvailabilityEstimateModelResourcePermission.check(
+			getPermissionChecker(), commerceAvailabilityEstimateId,
+			ActionKeys.VIEW);
 
 		return commerceAvailabilityEstimateLocalService.
 			getCommerceAvailabilityEstimate(commerceAvailabilityEstimateId);
@@ -81,9 +81,8 @@ public class CommerceAvailabilityEstimateServiceImpl
 			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
+		_hasPortletResourcePermission(
+			CommerceActionKeys.VIEW_COMMERCE_AVAILABILITY_ESTIMATES);
 
 		return commerceAvailabilityEstimateLocalService.
 			getCommerceAvailabilityEstimates(
@@ -94,9 +93,8 @@ public class CommerceAvailabilityEstimateServiceImpl
 	public int getCommerceAvailabilityEstimatesCount(long companyId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
+		_hasPortletResourcePermission(
+			CommerceActionKeys.VIEW_COMMERCE_AVAILABILITY_ESTIMATES);
 
 		return commerceAvailabilityEstimateLocalService.
 			getCommerceAvailabilityEstimatesCount(companyId);
@@ -108,9 +106,9 @@ public class CommerceAvailabilityEstimateServiceImpl
 			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
+		_commerceAvailabilityEstimateModelResourcePermission.check(
+			getPermissionChecker(), commerceAvailabilityEstimateId,
+			ActionKeys.UPDATE);
 
 		return commerceAvailabilityEstimateLocalService.
 			updateCommerceAvailabilityEstimate(
@@ -118,9 +116,20 @@ public class CommerceAvailabilityEstimateServiceImpl
 				serviceContext);
 	}
 
+	private void _hasPortletResourcePermission(String actionId)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceAvailabilityEstimateModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(getPermissionChecker(), null, actionId);
+	}
+
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_COMMERCE_AVAILABILITY + ")"
+		target = "(model.class.name=com.liferay.commerce.model.CommerceAvailabilityEstimate)"
 	)
-	private PortletResourcePermission _portletResourcePermission;
+	private ModelResourcePermission<CommerceAvailabilityEstimate>
+		_commerceAvailabilityEstimateModelResourcePermission;
 
 }

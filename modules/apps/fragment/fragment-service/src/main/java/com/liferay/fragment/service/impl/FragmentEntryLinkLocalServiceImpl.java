@@ -18,7 +18,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
-import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
@@ -55,6 +54,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -319,32 +319,24 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public List<FragmentEntryLink> getAllFragmentEntryLinksByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
+	public List<FragmentEntryLink> getAllFragmentEntryLinksByFragmentEntry(
+			FragmentEntry fragmentEntry, int start, int end,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws PortalException {
 
 		return fragmentEntryLinkFinder.findByG_FEERC_FESERC(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, start, end,
-			orderByComparator);
+			groupId, fragmentEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), groupId),
+			start, end, orderByComparator);
 	}
 
 	@Override
-	public int getAllFragmentEntryLinksCountByFragmentEntryId(
-		long fragmentEntryId) {
+	public int getAllFragmentEntryLinksCountByFragmentEntry(
+			FragmentEntry fragmentEntry)
+		throws PortalException {
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
-
-		if (fragmentEntry == null) {
-			return 0;
-		}
-
-		Group group = _groupLocalService.fetchGroup(fragmentEntry.getGroupId());
-
-		if (group == null) {
-			return 0;
-		}
+		Group group = _groupLocalService.getGroup(fragmentEntry.getGroupId());
 
 		return fragmentEntryLinkPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
@@ -444,11 +436,14 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC) {
+	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry)
+		throws PortalException {
 
 		return fragmentEntryLinkPersistence.findByG_FEERC_FESERC(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC);
+			groupId, fragmentEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), groupId));
 	}
 
 	@Override
@@ -501,12 +496,15 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public int getFragmentEntryLinksCountByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted) {
+	public int getFragmentEntryLinksCountByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry, boolean deleted)
+		throws PortalException {
 
 		return fragmentEntryLinkPersistence.countByG_FEERC_FESERC_D(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted);
+			groupId, fragmentEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), groupId),
+			deleted);
 	}
 
 	@Override
@@ -515,20 +513,22 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public List<FragmentEntryLink>
-		getLayoutFragmentEntryLinksByFragmentEntryERC(
-			long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-			int start, int end,
-			OrderByComparator<FragmentEntryLink> orderByComparator) {
+	public List<FragmentEntryLink> getLayoutFragmentEntryLinksByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry, int start, int end,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws PortalException {
 
 		return fragmentEntryLinkFinder.findByG_FEERC_FESERC_P_L(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, -1, start, end,
-			orderByComparator);
+			groupId, fragmentEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), groupId),
+			-1, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getLayoutFragmentEntryLinksCountByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC) {
+	public int getLayoutFragmentEntryLinksCountByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry)
+		throws PortalException {
 
 		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
 			LayoutTable.INSTANCE.plid
@@ -547,6 +547,10 @@ public class FragmentEntryLinkLocalServiceImpl
 		).as(
 			"tempLayoutTable", LayoutTable.INSTANCE
 		);
+
+		String fragmentEntryScopeERC =
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), groupId);
 
 		Predicate fragmentEntryScopeERCPredicate =
 			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
@@ -571,7 +575,7 @@ public class FragmentEntryLinkLocalServiceImpl
 					groupId
 				).and(
 					FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
-						fragmentEntryERC)
+						fragmentEntry.getExternalReferenceCode())
 				).and(
 					fragmentEntryScopeERCPredicate
 				).and(
@@ -582,20 +586,24 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public List<FragmentEntryLink>
-		getLayoutPageTemplateFragmentEntryLinksByFragmentEntryERC(
-			long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-			int layoutPageTemplateType, int start, int end,
-			OrderByComparator<FragmentEntryLink> orderByComparator) {
+			getLayoutPageTemplateFragmentEntryLinksByFragmentEntry(
+				long groupId, FragmentEntry fragmentEntry,
+				int layoutPageTemplateType, int start, int end,
+				OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws PortalException {
 
 		return fragmentEntryLinkFinder.findByG_FEERC_FESERC_P_L(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC,
+			groupId, fragmentEntry.getExternalReferenceCode(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), groupId),
 			layoutPageTemplateType, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		int layoutPageTemplateType) {
+	public int getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry,
+			int layoutPageTemplateType)
+		throws PortalException {
 
 		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
 			LayoutTable.INSTANCE.plid
@@ -616,6 +624,10 @@ public class FragmentEntryLinkLocalServiceImpl
 			"tempLayoutTable", LayoutTable.INSTANCE
 		);
 
+		String fragmentEntryScopeERC =
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), groupId);
+
 		Predicate fragmentEntryScopeERCPredicate =
 			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
 				fragmentEntryScopeERC);
@@ -639,7 +651,7 @@ public class FragmentEntryLinkLocalServiceImpl
 					groupId
 				).and(
 					FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
-						fragmentEntryERC)
+						fragmentEntry.getExternalReferenceCode())
 				).and(
 					fragmentEntryScopeERCPredicate
 				).and(
@@ -965,9 +977,6 @@ public class FragmentEntryLinkLocalServiceImpl
 	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
-
-	@Reference
-	private FragmentEntryPersistence _fragmentEntryPersistence;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

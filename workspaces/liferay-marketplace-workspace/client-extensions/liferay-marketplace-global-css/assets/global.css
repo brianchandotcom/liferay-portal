@@ -1,10 +1,13 @@
-/* ---------- Source sans 3 ---------- */
 @font-face {
 	font-display: swap;
 	font-family: 'Source Sans 3';
 	font-style: normal;
 	font-weight: 400;
-	src: url('/documents/d/marketplace/sourcesans3-regular-ttf');
+	src: url(./fonts/SourceSans3-Variable.ttf) format('truetype');
+}
+
+body {
+	font-family: 'Source Sans 3' !important;
 }
 
 /* ---------- Marketplace app tags ---------- */
@@ -22,27 +25,6 @@
 	right: 32px;
 	top: -10px;
 	width: 80;
-}
-
-
-/* ---------- App type badge base ---------- */
-.app-type-badge {
-	position: absolute;
-	right: 32px;
-	top: -6px;
-
-	display: inline-block;
-	height: 20px;
-	line-height: 20px;
-	padding: 0 8px;
-
-	font-size: 11px;
-	font-weight: 600;
-
-	border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10px;
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
 }
 
 /* ---------- App type variants ---------- */
@@ -132,20 +114,21 @@
 	font-weight: none !important;
 }
 
-.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected) .nav-link {
-	color: #0053F0 !important;
+.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected)
+	.nav-link {
+	color: #0053f0 !important;
 	font-weight: 600;
 }
 
 .lfr-nav-item.nav-item.selected.active .nav-link {
-	border-bottom: #004AD7 solid 3px !important;
-	color: #0053F0 !important;
+	border-bottom: #004ad7 solid 3px !important;
+	color: #0053f0 !important;
 	font-weight: 600;
 }
 
 .lfr-nav-item.nav-item.selected.active .nav-link:hover {
 	background-color: #ffffff !important;
-	border-bottom: #004AD7 solid 3px !important;
+	border-bottom: #004ad7 solid 3px !important;
 	font-weight: 600;
 }
 

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Commerce Currency Web
 Bundle-SymbolicName: com.liferay.commerce.currency.web
-Bundle-Version: 4.0.64
+Bundle-Version: 4.0.65
 Web-ContextPath: /commerce-currency-web
 -dsannotations-options: inherit

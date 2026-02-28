@@ -223,20 +223,6 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public void deleteFragmentEntryLinksByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC) {
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			fragmentEntryLinkPersistence.findByG_FEERC_FESERC(
-				groupId, fragmentEntryERC, fragmentEntryScopeERC);
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-				fragmentEntryLink);
-		}
-	}
-
-	@Override
-	public void deleteFragmentEntryLinksByFragmentEntryERC(
 		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
 		boolean deleted) {
 
@@ -469,14 +455,6 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC) {
-
-		return fragmentEntryLinkPersistence.findByFEERC_FESERC(
-			fragmentEntryERC, fragmentEntryScopeERC);
-	}
-
-	@Override
 	public List<FragmentEntryLink> getFragmentEntryLinksByPlid(
 		long groupId, long plid) {
 
@@ -532,23 +510,6 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return fragmentEntryLinkPersistence.countByG_FEERC_FESERC_D(
 			groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted);
-	}
-
-	@Override
-	public int getFragmentEntryLinksCountByFragmentEntryERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC) {
-
-		return fragmentEntryLinkPersistence.countByFEERC_FESERC(
-			fragmentEntryERC, fragmentEntryScopeERC);
-	}
-
-	@Override
-	public int getFragmentEntryLinksCountByFragmentEntryERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted) {
-
-		return fragmentEntryLinkPersistence.countByFEERC_FESERC_D(
-			fragmentEntryERC, fragmentEntryScopeERC, deleted);
 	}
 
 	@Override

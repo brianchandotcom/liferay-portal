@@ -13,6 +13,8 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceAvailabilityEstimate commerceAvailabilityEstimate = (CommerceAvailabilityEstimate)row.getObject();
+
+long commerceAvailabilityEstimateId = commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId();
 %>
 
 <liferay-ui:icon-menu
@@ -22,21 +24,23 @@ CommerceAvailabilityEstimate commerceAvailabilityEstimate = (CommerceAvailabilit
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= commerceAvailabilityEstimateDisplayContext.hasManageCommerceAvailabilityEstimatesPermission() %>">
+	<c:if test="<%= commerceAvailabilityEstimateDisplayContext.hasPermission(commerceAvailabilityEstimateId, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/commerce_availability_estimate/edit_commerce_availability_estimate" />
-			<portlet:param name="commerceAvailabilityEstimateId" value="<%= String.valueOf(commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId()) %>" />
+			<portlet:param name="commerceAvailabilityEstimateId" value="<%= String.valueOf(commerceAvailabilityEstimateId) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
 			message="edit"
 			url="<%= editURL %>"
 		/>
+	</c:if>
 
+	<c:if test="<%= commerceAvailabilityEstimateDisplayContext.hasPermission(commerceAvailabilityEstimateId, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/commerce_availability_estimate/edit_commerce_availability_estimate" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commerceAvailabilityEstimateId" value="<%= String.valueOf(commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId()) %>" />
+			<portlet:param name="commerceAvailabilityEstimateId" value="<%= String.valueOf(commerceAvailabilityEstimateId) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

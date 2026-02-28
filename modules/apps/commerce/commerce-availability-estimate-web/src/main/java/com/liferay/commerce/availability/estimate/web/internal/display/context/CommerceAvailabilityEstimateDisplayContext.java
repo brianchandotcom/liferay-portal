@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -32,13 +33,15 @@ import jakarta.portlet.RenderResponse;
 public class CommerceAvailabilityEstimateDisplayContext {
 
 	public CommerceAvailabilityEstimateDisplayContext(
+		ModelResourcePermission<CommerceAvailabilityEstimate>
+			commerceAvailabilityEstimateModelResourcePermission,
 		CommerceAvailabilityEstimateService commerceAvailabilityEstimateService,
-		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_commerceAvailabilityEstimateModelResourcePermission =
+			commerceAvailabilityEstimateModelResourcePermission;
 		_commerceAvailabilityEstimateService =
 			commerceAvailabilityEstimateService;
-		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -132,13 +135,29 @@ public class CommerceAvailabilityEstimateDisplayContext {
 		return _searchContainer;
 	}
 
-	public boolean hasManageCommerceAvailabilityEstimatesPermission() {
+	public boolean hasPermission(
+			long commerceAvailabilityEstimateId, String actionId)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return _portletResourcePermission.contains(
+		return _commerceAvailabilityEstimateModelResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), commerceAvailabilityEstimateId,
+			actionId);
+	}
+
+	public boolean hasViewCommerceAvailabilityEstimatesPermission() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceAvailabilityEstimateModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
+			CommerceActionKeys.VIEW_COMMERCE_AVAILABILITY_ESTIMATES);
 	}
 
 	private RowChecker _getRowChecker() {
@@ -150,11 +169,12 @@ public class CommerceAvailabilityEstimateDisplayContext {
 	}
 
 	private CommerceAvailabilityEstimate _commerceAvailabilityEstimate;
+	private final ModelResourcePermission<CommerceAvailabilityEstimate>
+		_commerceAvailabilityEstimateModelResourcePermission;
 	private final CommerceAvailabilityEstimateService
 		_commerceAvailabilityEstimateService;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortletResourcePermission _portletResourcePermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private RowChecker _rowChecker;

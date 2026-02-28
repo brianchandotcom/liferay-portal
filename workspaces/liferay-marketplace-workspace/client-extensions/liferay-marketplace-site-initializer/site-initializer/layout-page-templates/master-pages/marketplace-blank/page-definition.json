@@ -15,6 +15,12 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
+		"globalCSSClientExtensions": [
+			{
+				"externalReferenceCode": "LXC:liferay-marketplace-global-css",
+				"name": "Liferay Marketplace Global CSS"
+			}
+		],
 		"styleBook": {
 			"key": "Marketplace",
 			"name": "Marketplace"

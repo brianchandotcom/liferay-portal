@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalServiceUtil;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringPool;
@@ -305,6 +307,33 @@ public class SearchPermissionCheckerTest {
 	}
 
 	@Test
+	public void testInheritedDepotRolePermissionFilter() throws Exception {
+		_depotEntryGroupRel =
+			DepotEntryGroupRelLocalServiceUtil.addDepotEntryGroupRel(
+				_depotEntry.getDepotEntryId(), _organization.getGroupId());
+
+		_user = UserTestUtil.addOrganizationUser(
+			_organization, RoleConstants.ORGANIZATION_USER);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+
+		_addViewPermission(
+			ResourceConstants.SCOPE_GROUP, _depotEntry.getGroupId(),
+			role.getRoleId());
+
+		_assertFieldValue(
+			null, Field.GROUP_ID, String.valueOf(_depotEntry.getGroupId()));
+		_assertFieldValue(
+			null, Field.GROUP_ROLE_ID,
+			_depotEntry.getGroupId() + StringPool.DASH + role.getRoleId());
+	}
+
+	@Test
 	public void testOrganizationRolePermissionFilter() throws Exception {
 		_user = UserTestUtil.addOrganizationAdminUser(_organization);
 
@@ -399,6 +428,9 @@ public class SearchPermissionCheckerTest {
 
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
+
+	@DeleteAfterTestRun
+	private DepotEntryGroupRel _depotEntryGroupRel;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -24,7 +24,8 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testFormatIndentations() throws Exception {
-		test("FormatIndentations.testyaml");
+		test("FormatIndentation1.testyaml");
+		test("FormatIndentation2.testyaml");
 	}
 
 	@Test

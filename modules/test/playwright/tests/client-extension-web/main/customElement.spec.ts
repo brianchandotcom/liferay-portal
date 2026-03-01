@@ -556,3 +556,362 @@ test(
 		).toHaveCount(2);
 	}
 );
+
+test(
+	'HTML element name must start with lowercase',
+	{tag: '@LPS-154719'},
+	async ({editCustomElementPage, page}) => {
+		await editCustomElementPage.goto();
+
+		await editCustomElementPage.nameInput.fill('Test Element');
+		await editCustomElementPage.htmlElementNameInput.fill(
+			'Vanilla counter'
+		);
+		await editCustomElementPage.javaScriptURLInput.fill(
+			'http://sample.com/test.js'
+		);
+
+		await editCustomElementPage.publish(WaitAction.NONE);
+
+		await expect(
+			page.getByText(
+				/html element name must start with a lowercase/i
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'HTML element name must have at least one hyphen',
+	{tag: '@LPS-154719'},
+	async ({editCustomElementPage, page}) => {
+		await editCustomElementPage.goto();
+
+		await editCustomElementPage.nameInput.fill('Test Element');
+		await editCustomElementPage.htmlElementNameInput.fill(
+			'vanilla.counter'
+		);
+		await editCustomElementPage.javaScriptURLInput.fill(
+			'http://sample.com/test.js'
+		);
+
+		await editCustomElementPage.publish(WaitAction.NONE);
+
+		await expect(
+			page.getByText(
+				/html element name must contain at least one hyphen/i
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'HTML element name cannot contain invalid characters',
+	{tag: '@LPS-154719'},
+	async ({editCustomElementPage, page}) => {
+		await editCustomElementPage.goto();
+
+		await editCustomElementPage.nameInput.fill('Test Element');
+		await editCustomElementPage.htmlElementNameInput.fill(
+			'vanilla counter'
+		);
+		await editCustomElementPage.javaScriptURLInput.fill(
+			'http://sample.com/test.js'
+		);
+
+		await editCustomElementPage.publish(WaitAction.NONE);
+
+		await expect(
+			page.getByText(/html element name contains invalid character/i)
+		).toBeVisible();
+	}
+);
+
+testSample(
+	'Custom Element can be instanceable',
+	{tag: '@LPS-139377'},
+	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
+		const clientExtensionName = getRandomString();
+		const htmlElementName = `html-${getRandomString()}`;
+
+		await test.step('Create an instanceable Custom Element', async () => {
+			await editCustomElementPage.goto();
+
+			await editCustomElementPage.nameInput.fill(clientExtensionName);
+			await editCustomElementPage.htmlElementNameInput.fill(
+				htmlElementName
+			);
+			await editCustomElementPage.javaScriptURLInput.fill(
+				'https://www.example.com/test.js'
+			);
+			await editCustomElementPage.instanceableCheckbox.check();
+
+			await editCustomElementPage.publish(WaitAction.SUCCESS);
+		});
+
+		await test.step('Add the widget to two grid columns', async () => {
+			await page.goto(
+				`/web/guest${layout.friendlyURL}?p_l_mode=edit`
+			);
+
+			await pageEditorPage.addWidget(
+				'Client Extensions',
+				clientExtensionName
+			);
+			await pageEditorPage.addWidget(
+				'Client Extensions',
+				clientExtensionName
+			);
+			await pageEditorPage.publishPage();
+		});
+
+		await test.step('Verify both instances render', async () => {
+			await page.goto(`/web/guest${layout.friendlyURL}`);
+
+			const elements = page.locator(htmlElementName);
+
+			await expect(elements).toHaveCount(2);
+		});
+
+		await test.step('Clean up', async () => {
+			await clientExtensionsPage.goto();
+
+			await clientExtensionsPage.deleteClientExtension(
+				clientExtensionName
+			);
+		});
+	}
+);
+
+testSample.fixme(
+	'Custom Element can inject HTML properties',
+	{tag: '@LPS-139377'},
+	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
+		const clientExtensionName = getRandomString();
+		const htmlElementName = `html-${getRandomString()}`;
+
+		await test.step('Create a Custom Element with properties', async () => {
+			await editCustomElementPage.goto();
+
+			await editCustomElementPage.nameInput.fill(clientExtensionName);
+			await editCustomElementPage.htmlElementNameInput.fill(
+				htmlElementName
+			);
+			await editCustomElementPage.javaScriptURLInput.fill(
+				'https://www.example.com/test.js'
+			);
+
+			await editCustomElementPage.publish(WaitAction.SUCCESS);
+		});
+
+		await test.step('Add widget to page and verify HTML property', async () => {
+			await page.goto(
+				`/web/guest${layout.friendlyURL}?p_l_mode=edit`
+			);
+
+			await pageEditorPage.addWidget(
+				'Client Extensions',
+				clientExtensionName
+			);
+			await pageEditorPage.publishPage();
+
+			await page.goto(`/web/guest${layout.friendlyURL}`);
+
+			const element = page.locator(htmlElementName);
+
+			await expect(element).toBeVisible();
+		});
+
+		await test.step('Clean up', async () => {
+			await clientExtensionsPage.goto();
+
+			await clientExtensionsPage.deleteClientExtension(
+				clientExtensionName
+			);
+		});
+	}
+);
+
+testSample.fixme(
+	'Custom Element renders correctly when placed on widget page',
+	{tag: '@LPS-159013'},
+	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
+		const clientExtensionName = getRandomString();
+		const htmlElementName = `html-${getRandomString()}`;
+
+		await test.step('Create a Custom Element with ES modules', async () => {
+			await editCustomElementPage.goto();
+
+			await editCustomElementPage.nameInput.fill(clientExtensionName);
+			await editCustomElementPage.htmlElementNameInput.fill(
+				htmlElementName
+			);
+			await editCustomElementPage.javaScriptURLInput.fill(
+				'https://www.example.com/test.js'
+			);
+			await editCustomElementPage.useESModulesCheckbox.check();
+
+			await editCustomElementPage.publish(WaitAction.SUCCESS);
+		});
+
+		await test.step('Add widget to page and verify script type', async () => {
+			await page.goto(
+				`/web/guest${layout.friendlyURL}?p_l_mode=edit`
+			);
+
+			await pageEditorPage.addWidget(
+				'Client Extensions',
+				clientExtensionName
+			);
+			await pageEditorPage.publishPage();
+
+			await page.goto(`/web/guest${layout.friendlyURL}`);
+
+			await expect(
+				page.locator('script[type="module"][src*="test.js"]')
+			).toBeAttached();
+		});
+
+		await test.step('Clean up', async () => {
+			await clientExtensionsPage.goto();
+
+			await clientExtensionsPage.deleteClientExtension(
+				clientExtensionName
+			);
+		});
+	}
+);
+
+test(
+	'UI label is present for non-OSGi client extensions',
+	{tag: '@LPS-154725'},
+	async ({clientExtensionsPage, editCustomElementPage}) => {
+		const clientExtensionName = getRandomString();
+
+		await test.step('Create a Custom Element', async () => {
+			await editCustomElementPage.goto();
+
+			await editCustomElementPage.nameInput.fill(clientExtensionName);
+			await editCustomElementPage.htmlElementNameInput.fill(
+				`html-${getRandomString()}`
+			);
+			await editCustomElementPage.javaScriptURLInput.fill(
+				'https://www.example.com/test.js'
+			);
+
+			await editCustomElementPage.publish(WaitAction.SUCCESS);
+		});
+
+		await test.step('Verify UI label is present', async () => {
+			await clientExtensionsPage.goto();
+
+			await clientExtensionsPage.search(clientExtensionName);
+
+			const row = clientExtensionsPage.getRowByText(clientExtensionName);
+
+			await expect(row).toBeVisible();
+
+			await expect(
+				row.locator('td').nth(Column.TYPE)
+			).toContainText('Custom Element');
+		});
+
+		await test.step('Clean up', async () => {
+			await clientExtensionsPage.deleteClientExtension(
+				clientExtensionName
+			);
+		});
+	}
+);
+
+testSample(
+	'Custom Element renders as ES module type',
+	{tag: '@LPS-139377'},
+	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
+		const clientExtensionName = getRandomString();
+		const htmlElementName = `html-${getRandomString()}`;
+
+		await test.step('Create an ES module Custom Element', async () => {
+			await editCustomElementPage.goto();
+
+			await editCustomElementPage.nameInput.fill(clientExtensionName);
+			await editCustomElementPage.htmlElementNameInput.fill(
+				htmlElementName
+			);
+			await editCustomElementPage.javaScriptURLInput.fill(
+				'https://www.example.com/counter.js'
+			);
+			await editCustomElementPage.useESModulesCheckbox.check();
+
+			await editCustomElementPage.publish(WaitAction.SUCCESS);
+		});
+
+		await test.step('Add to page and verify type="module" script', async () => {
+			await page.goto(
+				`/web/guest${layout.friendlyURL}?p_l_mode=edit`
+			);
+
+			await pageEditorPage.addWidget(
+				'Client Extensions',
+				clientExtensionName
+			);
+			await pageEditorPage.publishPage();
+
+			await page.goto(`/web/guest${layout.friendlyURL}`);
+
+			await expect(
+				page.locator('script[type="module"][src*="counter.js"]')
+			).toBeAttached();
+		});
+
+		await test.step('Clean up', async () => {
+			await clientExtensionsPage.goto();
+
+			await clientExtensionsPage.deleteClientExtension(
+				clientExtensionName
+			);
+		});
+	}
+);
+
+test.skip(
+	'Can be displayed with DB partitioning',
+	{tag: '@LPS-153716'},
+	async ({page: _page}) => {
+		// Requires DB partitioning environment configuration which is not
+		// available in standard Playwright execution.
+	}
+);
+
+test.skip(
+	'Custom Element can be created in non-root context',
+	{tag: '@LPS-158083'},
+	async ({page: _page}) => {
+		// Requires non-root portal context configuration which is not
+		// available in standard Playwright execution.
+	}
+);
+
+test.skip(
+	'Can cancel update existing client extension',
+	{tag: '@LPS-189916'},
+	async ({page: _page}) => {
+		// Blocked upstream by LPS-189916.
+	}
+);
+
+test.skip(
+	'Can close update existing client extension',
+	{tag: '@LPS-189916'},
+	async ({page: _page}) => {
+		// Blocked upstream by LPS-189916.
+	}
+);
+
+test.skip(
+	'Can update existing client extension',
+	{tag: '@LPS-189916'},
+	async ({page: _page}) => {
+		// Blocked upstream by LPS-189916.
+	}
+);

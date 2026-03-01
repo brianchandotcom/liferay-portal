@@ -5,14 +5,14 @@
 
 import {test} from '@playwright/test';
 
-import {EditIframePage} from '../pages/EditIframePage';
+import {EditIFramePage} from '../pages/EditIFramePage';
 
-const editIframePageTest = test.extend<{
-	editIframePage: EditIframePage;
+const editIFramePageTest = test.extend<{
+	editIFramePage: EditIFramePage;
 }>({
-	editIframePage: async ({page}, use) => {
-		await use(new EditIframePage(page));
+	editIFramePage: async ({page}, use) => {
+		await use(new EditIFramePage(page));
 	},
 });
 
-export {editIframePageTest};
+export {editIFramePageTest};

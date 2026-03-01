@@ -1,0 +1,32 @@
+{
+	"closeOnClickOutside": true,
+	"closeable": true,
+	"pages": {
+		"/walkthrough-page-1": [
+			"step-1",
+			"step-2",
+			"step-3"
+		]
+	},
+	"skippable": true,
+	"steps": [
+		{
+			"darkbg": true,
+			"id": "step-1",
+			"nodeToHighlight": "#step-1",
+			"title": "Click the Button"
+		},
+		{
+			"darkbg": true,
+			"id": "step-2",
+			"nodeToHighlight": "#step-2",
+			"title": "Enter Your Name"
+		},
+		{
+			"darkbg": true,
+			"id": "step-3",
+			"nodeToHighlight": ".walkthrough-test-class",
+			"title": "Content Walkthrough"
+		}
+	]
+}

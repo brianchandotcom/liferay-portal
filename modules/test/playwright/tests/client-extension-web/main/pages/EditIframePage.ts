@@ -5,24 +5,21 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import getRandomString from '../../../../utils/getRandomString';
 import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
-export class EditIframePage extends EditClientExtensionsPage {
-	readonly friendlyURLMappingInput: Locator;
+export class EditIFramePage extends EditClientExtensionsPage {
 	readonly urlInput: Locator;
 
 	constructor(page: Page) {
 		super(page, 'iframe');
 
-		this.friendlyURLMappingInput = page.locator(
-			`[name=_${this.portletName}_friendlyURLMapping]`
+		this.urlInput = page.locator(
+			`[name=_${this.portletName}_url]`
 		);
-		this.urlInput = page.locator(`[name=_${this.portletName}_url]`);
 	}
 
 	async fillRequiredFields() {
-		await this.nameInput.fill(getRandomString());
-		await this.urlInput.fill(getRandomString());
+		await this.nameInput.fill('Test IFrame');
+		await this.urlInput.fill('https://www.example.com');
 	}
 }

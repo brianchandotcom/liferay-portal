@@ -6,7 +6,17 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
+import {editJSImportMapsPageTest} from './fixtures/editJSImportMapsExtensionPageTest';
+import {WaitAction} from './pages/EditClientExtensionsPage';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
+
+const test = mergeTests(
+	clientExtensionsPageTest,
+	editJSImportMapsPageTest,
+	loginTest()
+);
 
 const testSample = mergeTests(loginTest());
 
@@ -69,3 +79,93 @@ testSample.describe('Samples', () => {
 		});
 	}
 });
+
+test(
+	'Can cancel creation of a JS Import Maps entry',
+	{tag: '@LPS-180167'},
+	async ({clientExtensionsPage, editJSImportMapsPage}) => {
+		const name = getRandomString();
+
+		await editJSImportMapsPage.goto();
+
+		await editJSImportMapsPage.nameInput.fill(name);
+		await editJSImportMapsPage.bareSpecifierInput.fill('test-specifier');
+		await editJSImportMapsPage.javaScriptURLInput.fill(
+			'https://www.example.com/test.js'
+		);
+
+		await editJSImportMapsPage.cancel();
+
+		await clientExtensionsPage.goto();
+
+		await expect(
+			clientExtensionsPage.getRowByText(name)
+		).not.toBeVisible();
+	}
+);
+
+test(
+	'Can create a JS Import Maps entry with only required fields filled',
+	{tag: '@LPS-180167'},
+	async ({clientExtensionsPage, editJSImportMapsPage}) => {
+		const name = getRandomString();
+
+		await editJSImportMapsPage.goto();
+
+		await editJSImportMapsPage.nameInput.fill(name);
+		await editJSImportMapsPage.bareSpecifierInput.fill('test-specifier');
+		await editJSImportMapsPage.javaScriptURLInput.fill(
+			'https://www.example.com/test.js'
+		);
+
+		await editJSImportMapsPage.publish(WaitAction.SUCCESS);
+
+		await test.step('Verify entry was created', async () => {
+			await clientExtensionsPage.goto();
+
+			await clientExtensionsPage.search(name);
+
+			await expect(
+				clientExtensionsPage.getRowByText(name)
+			).toBeVisible();
+		});
+
+		await test.step('Clean up', async () => {
+			await clientExtensionsPage.deleteClientExtension(name);
+		});
+	}
+);
+
+test(
+	'Cannot publish when Bare Specifier field is empty',
+	{tag: '@LPS-180167'},
+	async ({editJSImportMapsPage, page}) => {
+		await editJSImportMapsPage.goto();
+
+		await editJSImportMapsPage.nameInput.fill(getRandomString());
+		await editJSImportMapsPage.javaScriptURLInput.fill(
+			'https://www.example.com/test.js'
+		);
+
+		await editJSImportMapsPage.publish(WaitAction.NONE);
+
+		await expect(
+			page.getByText(/bare specifier.*required|required.*bare specifier/i)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Cannot publish when Name field is empty',
+	{tag: '@LPS-180167'},
+	async ({editJSImportMapsPage}) => {
+		await editJSImportMapsPage.goto();
+
+		await editJSImportMapsPage.bareSpecifierInput.fill('test-specifier');
+		await editJSImportMapsPage.javaScriptURLInput.fill(
+			'https://www.example.com/test.js'
+		);
+
+		await editJSImportMapsPage.publish(WaitAction.ERROR);
+	}
+);

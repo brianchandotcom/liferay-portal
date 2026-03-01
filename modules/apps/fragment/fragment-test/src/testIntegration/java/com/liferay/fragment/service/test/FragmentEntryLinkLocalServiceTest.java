@@ -421,9 +421,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
-	public void testGetAllFragmentEntryLinksByFragmentEntryERC()
-		throws Exception {
-
+	public void testGetAllFragmentEntryLinksByFragmentEntry() throws Exception {
 		FragmentEntryLink fragmentEntryLink1 = _addFragmentEntryLinkToLayout();
 		FragmentEntryLink fragmentEntryLink2 =
 			_addFragmentEntryLinkToLayoutPageTemplateEntry();
@@ -432,19 +430,14 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(), null,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				getAllFragmentEntryLinksByFragmentEntry(
+					_fragmentEntry, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		List<FragmentEntryLink> globalFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					_globalFragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_globalFragmentEntry.getGroupId(), _group.getGroupId()),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				getAllFragmentEntryLinksByFragmentEntry(
+					_globalFragmentEntry, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
 
 		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink1));
 		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink2));
@@ -458,7 +451,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
-	public void testGetAllFragmentEntryLinksCountByFragmentEntryId()
+	public void testGetAllFragmentEntryLinksCountByFragmentEntry()
 		throws Exception {
 
 		_addFragmentEntryLinkToLayout();
@@ -468,17 +461,16 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertEquals(
 			2,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_globalFragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(
+					_globalFragmentEntry));
 	}
 
 	@Test
-	public void testGetLayoutFragmentEntryLinksByFragmentEntryERC()
+	public void testGetLayoutFragmentEntryLinksByFragmentEntry()
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink1 = _addFragmentEntryLinkToLayout();
@@ -489,20 +481,14 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getLayoutFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _group.getGroupId()),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				getLayoutFragmentEntryLinksByFragmentEntry(
+					_group.getGroupId(), _fragmentEntry, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
 
 		List<FragmentEntryLink> globalFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getLayoutFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					_globalFragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_globalFragmentEntry.getGroupId(), _group.getGroupId()),
+				getLayoutFragmentEntryLinksByFragmentEntry(
+					_group.getGroupId(), _globalFragmentEntry,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink1));
@@ -517,7 +503,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
-	public void testGetLayoutFragmentEntryLinksCountByFragmentEntryERC()
+	public void testGetLayoutFragmentEntryLinksCountByFragmentEntry()
 		throws Exception {
 
 		_addFragmentEntryLinkToLayout();
@@ -527,24 +513,17 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getLayoutFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _group.getGroupId())));
+				getLayoutFragmentEntryLinksCountByFragmentEntry(
+					_group.getGroupId(), _fragmentEntry));
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getLayoutFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_globalFragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_globalFragmentEntry.getGroupId(),
-						_group.getGroupId())));
+				getLayoutFragmentEntryLinksCountByFragmentEntry(
+					_group.getGroupId(), _globalFragmentEntry));
 	}
 
 	@Test
-	public void testGetLayoutPageTemplateFragmentEntryLinksByFragmentEntryERC()
+	public void testGetLayoutPageTemplateFragmentEntryLinksByFragmentEntry()
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink1 = _addFragmentEntryLinkToLayout();
@@ -555,21 +534,15 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getLayoutPageTemplateFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _group.getGroupId()),
+				getLayoutPageTemplateFragmentEntryLinksByFragmentEntry(
+					_group.getGroupId(), _fragmentEntry,
 					LayoutPageTemplateEntryTypeConstants.BASIC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		List<FragmentEntryLink> globalFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getLayoutPageTemplateFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					_globalFragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_globalFragmentEntry.getGroupId(), _group.getGroupId()),
+				getLayoutPageTemplateFragmentEntryLinksByFragmentEntry(
+					_group.getGroupId(), _globalFragmentEntry,
 					LayoutPageTemplateEntryTypeConstants.BASIC,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -585,7 +558,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
-	public void testGetLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryERC()
+	public void testGetLayoutPageTemplateFragmentEntryLinksCountByFragmentEntry()
 		throws Exception {
 
 		_addFragmentEntryLinkToLayout();
@@ -595,20 +568,14 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _group.getGroupId()),
+				getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntry(
+					_group.getGroupId(), _fragmentEntry,
 					LayoutPageTemplateEntryTypeConstants.BASIC));
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_globalFragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_globalFragmentEntry.getGroupId(), _group.getGroupId()),
+				getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntry(
+					_group.getGroupId(), _globalFragmentEntry,
 					LayoutPageTemplateEntryTypeConstants.BASIC));
 	}
 
@@ -1127,12 +1094,8 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						fragmentEntry.getGroupId(), _group.getGroupId()),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				getAllFragmentEntryLinksByFragmentEntry(
+					fragmentEntry, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink));
 
@@ -1142,12 +1105,8 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						fragmentEntry.getGroupId(), _group.getGroupId()),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				getAllFragmentEntryLinksByFragmentEntry(
+					fragmentEntry, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertFalse(fragmentEntryLinks.contains(fragmentEntryLink));
 
@@ -1157,12 +1116,8 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksByFragmentEntryERC(
-					_group.getGroupId(),
-					fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						fragmentEntry.getGroupId(), _group.getGroupId()),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				getAllFragmentEntryLinksByFragmentEntry(
+					fragmentEntry, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink));
 	}

@@ -104,9 +104,17 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public int getUsageCount() {
-		return FragmentEntryLinkLocalServiceUtil.
-			getAllFragmentEntryLinksCountByFragmentEntryId(
-				getFragmentEntryId());
+		try {
+			return FragmentEntryLinkLocalServiceUtil.
+				getAllFragmentEntryLinksCountByFragmentEntry(this);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get usage count ", portalException);
+			}
+		}
+
+		return 0;
 	}
 
 	@Override

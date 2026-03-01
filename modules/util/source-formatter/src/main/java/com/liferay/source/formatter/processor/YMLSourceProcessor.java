@@ -43,13 +43,18 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 
 		while (matcher.find()) {
 			String firstLine = matcher.group(2);
-			String indent = matcher.group(3);
+
+			if (matcher.group(3) != null) {
+				firstLine = matcher.group(2) + matcher.group(3);
+			}
+
+			String indent = matcher.group(4);
 
 			if (indent.length() <= firstLine.length()) {
 				continue;
 			}
 
-			String secondLine = matcher.group(3) + matcher.group(4);
+			String secondLine = matcher.group(4) + matcher.group(5);
 
 			String replacement =
 				firstLine + secondLine.substring(firstLine.length());
@@ -61,8 +66,14 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 		if (sb.length() > 0) {
 			matcher.appendTail(sb);
 
+			String newContent = sb.toString();
+
+			if (!content.equals(newContent)) {
+				newContent = postFormat(newContent, originalReturnCharacter);
+			}
+
 			return super.postFormat(
-				StringUtil.trim(sb.toString()), originalReturnCharacter);
+				StringUtil.trim(newContent), originalReturnCharacter);
 		}
 
 		return super.postFormat(content, originalReturnCharacter);
@@ -92,22 +103,7 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			Matcher matcher = _dashPattern1.matcher(line);
-
-			if (matcher.matches()) {
-				String indent = matcher.group(1);
-
-				sb.append(StringUtil.trimTrailing(indent));
-
-				sb.append("\n");
-				sb.append(indent.replaceFirst("-", " "));
-				sb.append(matcher.group(2));
-				sb.append("\n");
-
-				continue;
-			}
-
-			sb.append(line);
+			sb.append(_preFormatArray(line));
 			sb.append("\n");
 		}
 
@@ -118,12 +114,33 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 		return sb.toString();
 	}
 
+	private String _preFormatArray(String line) {
+		Matcher matcher = _dashPattern1.matcher(line);
+
+		if (matcher.matches()) {
+			StringBundler sb = new StringBundler(3);
+
+			String indent = matcher.group(1);
+
+			sb.append(StringUtil.trimTrailing(indent));
+
+			sb.append("\n");
+			sb.append(
+				_preFormatArray(
+					indent.replaceFirst("-", " ") + matcher.group(2)));
+
+			return sb.toString();
+		}
+
+		return line;
+	}
+
 	private static final String[] _INCLUDES = {
 		"**/templates/*.tpl", "**/*.yaml", "**/*.yml"
 	};
 
 	private static final Pattern _dashPattern1 = Pattern.compile("( *- +)(.+)");
 	private static final Pattern _dashPattern2 = Pattern.compile(
-		"(\\A|\n)( *-)\n( +)(.+)");
+		"(\\A|\n)( *-)( +-)*\n( +)(.+)");
 
 }

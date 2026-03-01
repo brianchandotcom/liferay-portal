@@ -9,9 +9,10 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.elasticsearch8.internal.util.ClassLoaderUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,13 +57,9 @@ import org.elasticsearch.client.RestClientBuilder;
  */
 public class RestClientTransportFactory {
 
-	public static Builder builder() {
-		return new Builder();
-	}
-
 	public RestClientTransport newRestClientTransport() {
 		RestClientBuilder restClientBuilder = RestClient.builder(
-			_getHttpHosts()
+			_httpHosts
 		).setFailureListener(
 			new RestClient.FailureListener() {
 
@@ -80,121 +77,119 @@ public class RestClientTransportFactory {
 			this::_customizeRequestConfig
 		);
 
-		return ClassLoaderUtil.getWithContextClassLoader(
-			() -> new RestClientTransport(
-				restClientBuilder.build(), new JacksonJsonpMapper()),
-			getClass());
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				getClass().getClassLoader())) {
+
+			return new RestClientTransport(
+				restClientBuilder.build(), new JacksonJsonpMapper());
+		}
 	}
 
 	public static class Builder {
 
+		public Builder(String[] networkHostAddresses) {
+			_httpHosts = TransformUtil.transform(
+				networkHostAddresses, HttpHost::create, HttpHost.class);
+		}
+
 		public Builder authenticationEnabled(boolean authenticationEnabled) {
-			_restClientTransportFactory._authenticationEnabled =
-				authenticationEnabled;
+			_authenticationEnabled = authenticationEnabled;
 
 			return this;
 		}
 
 		public RestClientTransportFactory build() {
-			return new RestClientTransportFactory(_restClientTransportFactory);
+			return new RestClientTransportFactory(this);
 		}
 
 		public Builder compressionEnabled(boolean compressionEnabled) {
-			_restClientTransportFactory._compressionEnabled =
-				compressionEnabled;
+			_compressionEnabled = compressionEnabled;
 
 			return this;
 		}
 
 		public Builder httpSSLEnabled(boolean httpSSLEnabled) {
-			_restClientTransportFactory._httpSSLEnabled = httpSSLEnabled;
+			_httpSSLEnabled = httpSSLEnabled;
 
 			return this;
 		}
 
 		public Builder maxConnections(int maxConnections) {
-			_restClientTransportFactory._maxConnections = maxConnections;
+			_maxConnections = maxConnections;
 
 			return this;
 		}
 
 		public Builder maxConnectionsPerRoute(int maxConnectionsPerRoute) {
-			_restClientTransportFactory._maxConnectionsPerRoute =
-				maxConnectionsPerRoute;
-
-			return this;
-		}
-
-		public Builder networkHostAddresses(String[] networkHostAddresses) {
-			_restClientTransportFactory._networkHostAddresses =
-				networkHostAddresses;
+			_maxConnectionsPerRoute = maxConnectionsPerRoute;
 
 			return this;
 		}
 
 		public Builder password(String password) {
-			_restClientTransportFactory._password = password;
+			_password = password;
 
 			return this;
 		}
 
 		public Builder proxyConfig(ProxyConfig proxyConfig) {
-			_restClientTransportFactory._proxyConfig = proxyConfig;
+			_proxyConfig = proxyConfig;
 
 			return this;
 		}
 
 		public Builder truststorePassword(String truststorePassword) {
-			_restClientTransportFactory._truststorePassword =
-				truststorePassword;
+			_truststorePassword = truststorePassword;
 
 			return this;
 		}
 
 		public Builder truststorePath(String truststorePath) {
-			_restClientTransportFactory._truststorePath = truststorePath;
+			_truststorePath = truststorePath;
 
 			return this;
 		}
 
 		public Builder truststoreType(String truststoreType) {
-			_restClientTransportFactory._truststoreType = truststoreType;
+			_truststoreType = truststoreType;
 
 			return this;
 		}
 
 		public Builder userName(String userName) {
-			_restClientTransportFactory._userName = userName;
+			_userName = userName;
 
 			return this;
 		}
 
-		private final RestClientTransportFactory _restClientTransportFactory =
-			new RestClientTransportFactory();
+		private boolean _authenticationEnabled;
+		private boolean _compressionEnabled;
+		private HttpHost[] _httpHosts;
+		private boolean _httpSSLEnabled;
+		private int _maxConnections;
+		private int _maxConnectionsPerRoute;
+		private String _password;
+		private ProxyConfig _proxyConfig;
+		private String _truststorePassword;
+		private String _truststorePath;
+		private String _truststoreType;
+		private String _userName;
 
 	}
 
-	private RestClientTransportFactory() {
-	}
-
-	private RestClientTransportFactory(
-		RestClientTransportFactory restClientTransportFactory) {
-
-		_authenticationEnabled =
-			restClientTransportFactory._authenticationEnabled;
-		_compressionEnabled = restClientTransportFactory._compressionEnabled;
-		_httpSSLEnabled = restClientTransportFactory._httpSSLEnabled;
-		_maxConnections = restClientTransportFactory._maxConnections;
-		_maxConnectionsPerRoute =
-			restClientTransportFactory._maxConnectionsPerRoute;
-		_networkHostAddresses =
-			restClientTransportFactory._networkHostAddresses;
-		_password = restClientTransportFactory._password;
-		_truststorePassword = restClientTransportFactory._truststorePassword;
-		_truststorePath = restClientTransportFactory._truststorePath;
-		_truststoreType = restClientTransportFactory._truststoreType;
-		_proxyConfig = restClientTransportFactory._proxyConfig;
-		_userName = restClientTransportFactory._userName;
+	private RestClientTransportFactory(Builder builder) {
+		_authenticationEnabled = builder._authenticationEnabled;
+		_compressionEnabled = builder._compressionEnabled;
+		_httpSSLEnabled = builder._httpSSLEnabled;
+		_maxConnections = builder._maxConnections;
+		_maxConnectionsPerRoute = builder._maxConnectionsPerRoute;
+		_httpHosts = builder._httpHosts;
+		_password = builder._password;
+		_proxyConfig = builder._proxyConfig;
+		_truststorePassword = builder._truststorePassword;
+		_truststorePath = builder._truststorePath;
+		_truststoreType = builder._truststoreType;
+		_userName = builder._userName;
 	}
 
 	private CredentialsProvider _createCredentialsProvider() {
@@ -337,25 +332,20 @@ public class RestClientTransportFactory {
 		return requestConfigBuilder.setSocketTimeout(120000);
 	}
 
-	private HttpHost[] _getHttpHosts() {
-		return TransformUtil.transform(
-			_networkHostAddresses, HttpHost::create, HttpHost.class);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		RestClientTransportFactory.class);
 
-	private boolean _authenticationEnabled;
-	private boolean _compressionEnabled;
-	private boolean _httpSSLEnabled;
-	private int _maxConnections;
-	private int _maxConnectionsPerRoute;
-	private String[] _networkHostAddresses;
-	private String _password;
-	private ProxyConfig _proxyConfig;
-	private String _truststorePassword;
-	private String _truststorePath;
-	private String _truststoreType;
-	private String _userName;
+	private final boolean _authenticationEnabled;
+	private final boolean _compressionEnabled;
+	private final HttpHost[] _httpHosts;
+	private final boolean _httpSSLEnabled;
+	private final int _maxConnections;
+	private final int _maxConnectionsPerRoute;
+	private final String _password;
+	private final ProxyConfig _proxyConfig;
+	private final String _truststorePassword;
+	private final String _truststorePath;
+	private final String _truststoreType;
+	private final String _userName;
 
 }

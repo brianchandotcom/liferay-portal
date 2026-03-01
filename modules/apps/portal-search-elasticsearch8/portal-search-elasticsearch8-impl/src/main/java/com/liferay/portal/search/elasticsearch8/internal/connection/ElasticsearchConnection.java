@@ -155,7 +155,8 @@ public class ElasticsearchConnection {
 
 	private ElasticsearchClient _createElasticsearchClient() {
 		RestClientTransport restClientTransport =
-			RestClientTransportFactory.builder(
+			new RestClientTransportFactory.Builder(
+				_networkHostAddresses
 			).authenticationEnabled(
 				_authenticationEnabled
 			).compressionEnabled(
@@ -166,8 +167,6 @@ public class ElasticsearchConnection {
 				_maxConnections
 			).maxConnectionsPerRoute(
 				_maxConnectionsPerRoute
-			).networkHostAddresses(
-				_networkHostAddresses
 			).password(
 				_password
 			).truststorePassword(

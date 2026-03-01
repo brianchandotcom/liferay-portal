@@ -18,6 +18,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
+import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
@@ -866,7 +867,10 @@ public class FragmentEntryLinkLocalServiceImpl
 					fragmentEntryLinkId);
 		}
 
-		updateLatestChanges(fragmentEntry, fragmentEntryLink);
+		updateLatestChanges(
+			_fragmentEntryPersistence.findByPrimaryKey(
+				fragmentEntry.getFragmentEntryId()),
+			fragmentEntryLink);
 	}
 
 	private void _checkUnlockedLayout(long plid, long userId)
@@ -977,6 +981,9 @@ public class FragmentEntryLinkLocalServiceImpl
 	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
+
+	@Reference
+	private FragmentEntryPersistence _fragmentEntryPersistence;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

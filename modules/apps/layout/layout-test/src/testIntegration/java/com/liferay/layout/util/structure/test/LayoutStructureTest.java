@@ -925,8 +925,7 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			fragmentStyledLayoutStructureItem.getItemId());
@@ -934,8 +933,7 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 	}
 
 	@Test
@@ -970,8 +968,7 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			columnLayoutStructureItem.getItemId());
@@ -979,8 +976,7 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 	}
 
 	@Test
@@ -1015,8 +1011,7 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			rowStyledLayoutStructureItem.getItemId());
@@ -1024,8 +1019,7 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 	}
 
 	@Test
@@ -1061,8 +1055,7 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			containerStyledLayoutStructureItem.getItemId());
@@ -1070,8 +1063,7 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryId(
-					_fragmentEntry.getFragmentEntryId()));
+				getAllFragmentEntryLinksCountByFragmentEntry(_fragmentEntry));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink() throws Exception {

@@ -27,6 +27,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Conjunction;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -959,24 +961,40 @@ public class FragmentEntryLocalServiceImpl
 		ActionableDynamicQuery actionableDynamicQuery =
 			_fragmentEntryLinkLocalService.getActionableDynamicQuery();
 
-		long groupId = fragmentEntry.getGroupId();
-
-		Group group = _groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(fragmentEntry.getGroupId());
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.and(
+			dynamicQuery -> {
+				Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+
+				conjunction.add(
 					RestrictionsFactoryUtil.eq(
 						"fragmentEntryERC",
-						fragmentEntry.getExternalReferenceCode()),
-					RestrictionsFactoryUtil.or(
-						RestrictionsFactoryUtil.eq(
-							"fragmentEntryScopeERC",
-							group.getExternalReferenceCode()),
-						RestrictionsFactoryUtil.and(
-							RestrictionsFactoryUtil.isNull(
-								"fragmentEntryScopeERC"),
-							RestrictionsFactoryUtil.eq("groupId", groupId))))));
+						fragmentEntry.getExternalReferenceCode()));
+
+				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+				disjunction.add(
+					RestrictionsFactoryUtil.eq(
+						"fragmentEntryScopeERC",
+						group.getExternalReferenceCode()));
+
+				Conjunction innerConjunction =
+					RestrictionsFactoryUtil.conjunction();
+
+				innerConjunction.add(
+					RestrictionsFactoryUtil.eq(
+						"groupId", fragmentEntry.getGroupId()));
+
+				innerConjunction.add(
+					RestrictionsFactoryUtil.isNull("fragmentEntryScopeERC"));
+
+				disjunction.add(innerConjunction);
+
+				conjunction.add(disjunction);
+
+				dynamicQuery.add(conjunction);
+			});
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(FragmentEntryLink fragmentEntryLink) ->

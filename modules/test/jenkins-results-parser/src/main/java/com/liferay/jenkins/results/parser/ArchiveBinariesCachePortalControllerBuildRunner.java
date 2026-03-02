@@ -14,7 +14,7 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public class ArchiveBinariesCacheControllerBuildRunner
+public class ArchiveBinariesCachePortalControllerBuildRunner
 	<S extends PortalTopLevelBuildData>
 		extends BasePortalControllerBuildRunner<S> {
 
@@ -22,7 +22,7 @@ public class ArchiveBinariesCacheControllerBuildRunner
 	public void tearDown() {
 	}
 
-	protected ArchiveBinariesCacheControllerBuildRunner(S buildData) {
+	protected ArchiveBinariesCachePortalControllerBuildRunner(S buildData) {
 		super(buildData);
 	}
 

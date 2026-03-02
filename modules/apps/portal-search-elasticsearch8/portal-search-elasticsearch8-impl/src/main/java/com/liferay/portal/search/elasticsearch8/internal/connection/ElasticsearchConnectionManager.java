@@ -428,10 +428,11 @@ public class ElasticsearchConnectionManager
 	protected Http http;
 
 	private ElasticsearchConnection _createRemoteElasticsearchConnection() {
-		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
-			new ElasticsearchConnectionBuilder();
+		ElasticsearchConnection.Builder builder =
+			new ElasticsearchConnection.Builder(
+				elasticsearchConfigurationWrapper::networkHostAddresses);
 
-		elasticsearchConnectionBuilder.active(
+		builder.active(
 			true
 		).authenticationEnabled(
 			elasticsearchConfigurationWrapper.authenticationEnabled()
@@ -445,8 +446,6 @@ public class ElasticsearchConnectionManager
 			elasticsearchConfigurationWrapper.maxConnections()
 		).maxConnectionsPerRoute(
 			elasticsearchConfigurationWrapper.maxConnectionsPerRoute()
-		).networkHostAddresses(
-			elasticsearchConfigurationWrapper.networkHostAddresses()
 		).password(
 			elasticsearchConfigurationWrapper.password()
 		).proxyConfig(
@@ -461,7 +460,7 @@ public class ElasticsearchConnectionManager
 			elasticsearchConfigurationWrapper.userName()
 		);
 
-		return elasticsearchConnectionBuilder.build();
+		return builder.build();
 	}
 
 	private String _getExceptionMessage(

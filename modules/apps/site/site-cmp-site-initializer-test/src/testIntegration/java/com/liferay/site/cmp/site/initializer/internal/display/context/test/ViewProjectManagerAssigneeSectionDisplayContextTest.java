@@ -67,8 +67,17 @@ public class ViewProjectManagerAssigneeSectionDisplayContextTest
 		User user = addUser();
 
 		assertAssigneeFieldValue(
-			user.getExternalReferenceCode(), user.getFullName(),
-			user.getPortraitURL(themeDisplay), Assignee.Type.USER.toString(),
+			HashMapBuilder.<String, Object>put(
+				"externalReferenceCode", user.getExternalReferenceCode()
+			).put(
+				"id", user.getUserId()
+			).put(
+				"name", user.getFullName()
+			).put(
+				"portrait", user.getPortraitURL(themeDisplay)
+			).put(
+				"type", Assignee.Type.USER.toString()
+			).build(),
 			projectObjectEntry,
 			HashMapBuilder.<String, Serializable>put(
 				"r_userToCMPProjectManager_userId", user.getUserId()

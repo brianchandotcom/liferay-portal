@@ -112,8 +112,14 @@ public class ViewAssigneeSectionDisplayContextTest
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 
 		assertAssigneeFieldValue(
-			role.getExternalReferenceCode(), role.getName(), null,
-			Assignee.Type.ROLE.toString(), _taskObjectEntry,
+			HashMapBuilder.<String, Object>put(
+				"externalReferenceCode", role.getExternalReferenceCode()
+			).put(
+				"name", role.getName()
+			).put(
+				"type", Assignee.Type.ROLE.toString()
+			).build(),
+			_taskObjectEntry,
 			HashMapBuilder.<String, Serializable>put(
 				"assignTo",
 				HashMapBuilder.put(
@@ -127,8 +133,15 @@ public class ViewAssigneeSectionDisplayContextTest
 		User user = addUser();
 
 		assertAssigneeFieldValue(
-			user.getExternalReferenceCode(), user.getFullName(),
-			user.getPortraitURL(themeDisplay), Assignee.Type.USER.toString(),
+			HashMapBuilder.<String, Object>put(
+				"externalReferenceCode", user.getExternalReferenceCode()
+			).put(
+				"name", user.getFullName()
+			).put(
+				"portrait", user.getPortraitURL(themeDisplay)
+			).put(
+				"type", Assignee.Type.USER.toString()
+			).build(),
 			_taskObjectEntry,
 			HashMapBuilder.<String, Serializable>put(
 				"assignTo",

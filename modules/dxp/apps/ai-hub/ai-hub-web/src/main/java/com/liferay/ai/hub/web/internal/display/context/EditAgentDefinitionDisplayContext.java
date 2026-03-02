@@ -5,11 +5,10 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -21,7 +20,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
@@ -30,9 +28,7 @@ import jakarta.portlet.WindowState;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Davyson Melo
@@ -54,6 +50,9 @@ public class EditAgentDefinitionDisplayContext {
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
+		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
+			_themeDisplay.getUserId());
+
 		Company company = _themeDisplay.getCompany();
 
 		Group group = _groupLocalService.getGroup(
@@ -64,6 +63,15 @@ public class EditAgentDefinitionDisplayContext {
 			"/web", group.getFriendlyURL());
 
 		return HashMapBuilder.<String, Object>put(
+			"accountEntryExternalReferenceCode",
+			() -> {
+				if (accountEntry == null) {
+					return null;
+				}
+
+				return accountEntry.getExternalReferenceCode();
+			}
+		).put(
 			"backURL", aiHubURL + "/agents"
 		).put(
 			"externalReferenceCode",
@@ -92,7 +100,7 @@ public class EditAgentDefinitionDisplayContext {
 					WorkflowPortletKeys.KALEO_DESIGNER);
 
 				String url = _addGroupExternalReferenceCodeParameter(
-					namespace, aiHubURL + "/workflow-definition");
+					accountEntry, namespace, aiHubURL + "/workflow-definition");
 
 				return HttpComponentsUtil.addParameters(
 					_addNameParameter(namespace, url), "p_p_id",
@@ -110,32 +118,8 @@ public class EditAgentDefinitionDisplayContext {
 	}
 
 	private String _addGroupExternalReferenceCodeParameter(
-			String namespace, String url)
+			AccountEntry accountEntry, String namespace, String url)
 		throws PortalException {
-
-		List<AccountEntry> accountEntries =
-			_accountEntryLocalService.getUserAccountEntries(
-				_themeDisplay.getUserId(),
-				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				AccountConstants.ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		if (accountEntries.isEmpty()) {
-			return url;
-		}
-
-		AccountEntry accountEntry = null;
-
-		for (AccountEntry tempAccountEntry : accountEntries) {
-			if (!Objects.equals(
-					tempAccountEntry.getExternalReferenceCode(), "L_AI_HUB")) {
-
-				accountEntry = tempAccountEntry;
-
-				break;
-			}
-		}
 
 		if (accountEntry == null) {
 			return url;

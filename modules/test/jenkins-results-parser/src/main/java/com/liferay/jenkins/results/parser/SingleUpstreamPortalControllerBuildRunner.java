@@ -14,13 +14,11 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public class SingleUpstreamPortalControllerSingleSuiteBuildRunner
+public class SingleUpstreamPortalControllerBuildRunner
 	<S extends ControllerPortalTopLevelBuildData>
 		extends BaseUpstreamPortalControllerBuildRunner<S> {
 
-	protected SingleUpstreamPortalControllerSingleSuiteBuildRunner(
-		S buildData) {
-
+	protected SingleUpstreamPortalControllerBuildRunner(S buildData) {
 		super(buildData);
 	}
 

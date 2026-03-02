@@ -52,12 +52,12 @@ public class BuildRunnerFactory {
 
 			if (matcher.find() && (matcher.group("testSuiteName") != null)) {
 				buildRunner =
-					new TestSuiteSingleUpstreamPortalControllerSingleSuiteBuildRunner(
+					new TestSuiteSingleUpstreamPortalControllerBuildRunner(
 						(ControllerPortalTopLevelBuildData)buildData);
 			}
 			else {
 				buildRunner =
-					new TestSuiteMultipleUpstreamPortalControllerSingleSuiteBuildRunner(
+					new TestSuiteMultipleUpstreamPortalControllerBuildRunner(
 						(ControllerPortalTopLevelBuildData)buildData);
 			}
 		}
@@ -65,9 +65,8 @@ public class BuildRunnerFactory {
 		if ((buildRunner == null) &&
 			jobName.startsWith("test-portal-upstream-controller(")) {
 
-			buildRunner =
-				new SingleUpstreamPortalControllerSingleSuiteBuildRunner(
-					(ControllerPortalTopLevelBuildData)buildData);
+			buildRunner = new SingleUpstreamPortalControllerBuildRunner(
+				(ControllerPortalTopLevelBuildData)buildData);
 		}
 
 		if ((buildRunner == null) && jobName.equals("test-poshi-release")) {

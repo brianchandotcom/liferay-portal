@@ -8,13 +8,11 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Yi-Chen Tsai
  */
-public class TestSuiteSingleUpstreamPortalControllerSingleSuiteBuildRunner
+public class TestSuiteSingleUpstreamPortalControllerBuildRunner
 	<S extends ControllerPortalTopLevelBuildData>
-		extends SingleUpstreamPortalControllerSingleSuiteBuildRunner<S> {
+		extends SingleUpstreamPortalControllerBuildRunner<S> {
 
-	protected TestSuiteSingleUpstreamPortalControllerSingleSuiteBuildRunner(
-		S buildData) {
-
+	protected TestSuiteSingleUpstreamPortalControllerBuildRunner(S buildData) {
 		super(buildData);
 	}
 

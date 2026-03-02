@@ -6017,7 +6017,7 @@ public class JenkinsResultsParserUtil {
 		try {
 			executeBashCommands(
 				combine(
-					"tar  --directory=", getCanonicalPath(targetDir),
+					"tar --directory=", getCanonicalPath(targetDir),
 					" --extract --file=", getCanonicalPath(sourceTarGzipFile),
 					" --gzip"));
 		}

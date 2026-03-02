@@ -38,7 +38,7 @@ public class BuildDataFactory {
 		if (jobName.contains("test-portal-testsuite-upstream-controller") ||
 			jobName.contains("test-portal-upstream-controller")) {
 
-			return new PortalTestSuiteUpstreamControllerBuildData(
+			return new ControllerPortalTopLevelBuildData(
 				runID, jobName, buildURL);
 		}
 		else if (jobName.startsWith("archive-binaries-cache") ||

@@ -18,8 +18,6 @@ function main {
 
 	local extracted_dir=$(_download_and_extract_files "${provider}")
 
-	trap "rm --force --recursive \"${extracted_dir}\"" EXIT
-
 	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${@}"
 }
 

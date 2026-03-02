@@ -1,0 +1,27 @@
+steps:
+    -
+       -
+          arguments:
+                artifacts:
+                    - name: git-repository
+                      from: "{{ "{{" }}inputs.artifacts.git-repository}}"
+          template: git-pull
+          name: git-pull
+    -   -
+          arguments:
+                artifacts:
+                    -
+                       from: "{{ "{{" }}steps.git-pull.outputs.artifacts.git-repository}}"
+                       name: git-repository
+                    -   from: "{{ "{{" }}inputs.artifacts.infrastructure-values}}"
+                        name: infrastructure-values
+          template: write-infra-values
+          name: write-infra-values
+    -   -   
+            name: argocd-sync
+            template: argocd-sync
+    -
+        -   name: wait-observed-generation
+            template: wait-observed-generation
+    -   -   name: argocd-wait
+            template: argocd-wait

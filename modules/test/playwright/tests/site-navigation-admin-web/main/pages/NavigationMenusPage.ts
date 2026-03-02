@@ -482,7 +482,7 @@ export class NavigationMenusPage {
 	}
 
 	async gotoGlobalSiteNavigationMenuPortlet() {
-		await this.productMenuPage.goToSite('Global');
+		await this.globalMenuPage.goToSite('Global');
 
 		await openProductMenu(this.page);
 

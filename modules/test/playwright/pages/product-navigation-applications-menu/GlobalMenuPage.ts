@@ -253,6 +253,35 @@ export class GlobalMenuPage {
 			.click();
 	}
 
+	async goToSite(name: string) {
+		await this.goToControlPanel('Sites');
+
+		await this.page.getByRole('heading', {name: 'Sites'}).waitFor();
+
+		await this.page
+			.locator('tr[data-qa-id="row"]:not(.d-none)', {
+				has: this.page.locator('td', {hasText: name}),
+			})
+			.getByRole('button', {name: 'Actions'})
+			.click();
+
+		const actions = this.page.locator('.show a[role="menuitem"]');
+
+		const action = actions
+			.filter({hasText: 'Go to Pages'})
+			.or(actions.filter({hasText: 'Go to Site Settings'}));
+
+		const href = await action.first().getAttribute('href');
+
+		await this.goToHome();
+		await this.page.waitForLoadState('domcontentloaded');
+
+		await this.page.goto(href, {
+			timeout: 15000,
+			waitUntil: 'domcontentloaded',
+		});
+	}
+
 	async openGlobalMenu() {
 		await clickAndExpectToBeVisible({
 			target: this.categoriesList,

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
@@ -26,6 +27,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	pagesAdminPagesTest,
@@ -36,6 +38,7 @@ export const test = mergeTests(
 test('LPD-42499 Assert correct message appears in Checking changes page', async ({
 	changeTrackingPage,
 	ctCollection,
+	globalMenuPage,
 	page,
 	pageEditorPage,
 	pagesAdminPage,
@@ -44,7 +47,7 @@ test('LPD-42499 Assert correct message appears in Checking changes page', async 
 }) => {
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	await productMenuPage.goToSite(site.name);
+	await globalMenuPage.goToSite(site.name);
 
 	const layoutTitle = getRandomString();
 

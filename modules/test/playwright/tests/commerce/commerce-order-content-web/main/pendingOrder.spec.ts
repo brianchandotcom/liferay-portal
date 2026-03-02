@@ -16,7 +16,6 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../../fixtures/notificationPagesTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../../liferay.config';
 import {getRandomInt} from '../../../../utils/getRandomInt';
@@ -52,7 +51,6 @@ export const test = mergeTests(
 	notificationPagesTest,
 	pageEditorPagesTest,
 	pageViewModePagesTest,
-	productMenuPageTest,
 	usersAndOrganizationsPagesTest
 );
 
@@ -384,7 +382,6 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 	commerceMiniCartPage,
 	globalMenuPage,
 	page,
-	productMenuPage,
 	queuePage,
 }) => {
 	test.setTimeout(180000);
@@ -471,7 +468,7 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		type: 'objectAction',
 	});
 
-	await productMenuPage.goToSite(site.name);
+	await globalMenuPage.goToSite(site.name);
 
 	try {
 		await commerceMiniCartPage.miniCartButton.waitFor();

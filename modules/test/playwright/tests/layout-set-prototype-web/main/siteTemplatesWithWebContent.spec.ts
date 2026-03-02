@@ -114,7 +114,7 @@ test(
 			type: 'site',
 		});
 
-		await productMenuPage.goToSite(siteName);
+		await globalMenuPage.goToSite(siteName);
 		await productMenuPage.goToPages();
 		await page.getByLabel(`${page1Name}`, {exact: true}).click();
 		await pageEditorPage.addWidget(

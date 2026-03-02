@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../../fixtures/loginTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../../utils/performLogin';
@@ -23,18 +23,18 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
-	loginTest(),
-	productMenuPageTest
+	globalMenuPagesTest,
+	loginTest()
 );
 
 test('LPD-29997 Search for products by typing different specification values in global search', async ({
 	apiHelpers,
 	commerceThemeMiniumCatalogPage,
-	productMenuPage,
+	globalMenuPage,
 }) => {
 	const {site} = await miniumSetUp(apiHelpers);
 
-	await productMenuPage.goToSite(site.name);
+	await globalMenuPage.goToSite(site.name);
 
 	await commerceThemeMiniumCatalogPage.focusGlobalSearchBarInput();
 	await commerceThemeMiniumCatalogPage.search('Plastic');
@@ -63,11 +63,11 @@ test('LPD-29997 Search for products by typing different specification values in 
 test('LPD-30191 Search for products by typing different SKUs in global search', async ({
 	apiHelpers,
 	commerceThemeMiniumCatalogPage,
-	productMenuPage,
+	globalMenuPage,
 }) => {
 	const {site} = await miniumSetUp(apiHelpers);
 
-	await productMenuPage.goToSite(site.name);
+	await globalMenuPage.goToSite(site.name);
 
 	await commerceThemeMiniumCatalogPage.focusGlobalSearchBarInput();
 	await commerceThemeMiniumCatalogPage.search('MIN93015');
@@ -96,7 +96,7 @@ test('LPD-30191 Search for products by typing different SKUs in global search', 
 test('LPD-30370 Search for all orders by typing user email in global search', async ({
 	apiHelpers,
 	commerceThemeMiniumCatalogPage,
-	productMenuPage,
+	globalMenuPage,
 }) => {
 	const {channel, site} = await miniumSetUp(apiHelpers);
 
@@ -155,7 +155,7 @@ test('LPD-30370 Search for all orders by typing user email in global search', as
 		shippingAddressId: address.id,
 	});
 
-	await productMenuPage.goToSite(site.name);
+	await globalMenuPage.goToSite(site.name);
 
 	await commerceThemeMiniumCatalogPage.focusGlobalSearchBarInput();
 	await commerceThemeMiniumCatalogPage.search('test@liferay.com');
@@ -175,12 +175,12 @@ test('LPD-30370 Search for all orders by typing user email in global search', as
 test('LPD-3185 Search a catalog entry using global search, click on a suggested entry and get redirected to that product details page', async ({
 	apiHelpers,
 	commerceThemeMiniumCatalogPage,
+	globalMenuPage,
 	productDetailsPage,
-	productMenuPage,
 }) => {
 	const {site} = await miniumSetUp(apiHelpers);
 
-	await productMenuPage.goToSite(site.name);
+	await globalMenuPage.goToSite(site.name);
 
 	await commerceThemeMiniumCatalogPage.focusGlobalSearchBarInput();
 	await commerceThemeMiniumCatalogPage.search('A');

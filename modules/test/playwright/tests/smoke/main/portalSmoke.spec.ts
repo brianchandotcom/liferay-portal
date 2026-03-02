@@ -115,9 +115,12 @@ test('Smoke', async ({
 	});
 
 	await test.step('When the admin user creates three widget pages for the site', async () => {
-		await productMenuPage.goToSite(siteName);
+		await globalMenuPage.goToSite(siteName);
 
-		await page.locator('.control-menu').getByText('Style Books').waitFor();
+		await page
+			.locator('.control-menu')
+			.getByText('Site Settings')
+			.waitFor();
 
 		await productMenuPage.goToPages();
 
@@ -203,7 +206,7 @@ test('Smoke', async ({
 	});
 
 	await test.step('When the admin opens the product menu and accesses the web content portlet', async () => {
-		await productMenuPage.goToSite(siteName);
+		await globalMenuPage.goToSite(siteName);
 
 		await productMenuPage.openProductMenuIfClosed();
 

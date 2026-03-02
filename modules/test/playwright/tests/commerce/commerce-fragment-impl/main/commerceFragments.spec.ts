@@ -9,23 +9,23 @@ import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../../utils/getRandomString';
 import getFragmentDefinition from '../../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	productMenuPageTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	pageEditorPagesTest,
 	isolatedSiteTest,
 	loginTest()
@@ -44,7 +44,7 @@ test(
 			'@LPD-63175',
 		],
 	},
-	async ({apiHelpers, page, productMenuPage, site}) => {
+	async ({apiHelpers, globalMenuPage, page, site}) => {
 		await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([
 				getFragmentDefinition({
@@ -80,7 +80,7 @@ test(
 			title: getRandomString(),
 		});
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 
 		await expect(page.locator('.account-selector-container')).toHaveCount(
 			1

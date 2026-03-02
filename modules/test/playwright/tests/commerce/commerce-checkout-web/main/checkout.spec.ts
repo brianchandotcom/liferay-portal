@@ -10,6 +10,7 @@ import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../../fixtures/notificationPagesTest';
@@ -41,6 +42,7 @@ export const test = mergeTests(
 		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	notificationPagesTest,
@@ -1909,13 +1911,13 @@ test(
 		commerceThemeMiniumPage,
 		editAccountChannelDefaultsPage,
 		editAccountPage,
+		globalMenuPage,
 		page,
-		productMenuPage,
 	}) => {
 		test.setTimeout(120000);
 
 		const initiateCheckout = async (site: string) => {
-			await productMenuPage.goToSite(site);
+			await globalMenuPage.goToSite(site);
 
 			await page.waitForLoadState('networkidle');
 

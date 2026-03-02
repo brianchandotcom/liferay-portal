@@ -11,10 +11,10 @@ import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {liferayConfig} from '../../../../liferay.config';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
@@ -41,8 +41,8 @@ export const test = mergeTests(
 		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	pageEditorPagesTest,
-	productMenuPageTest,
 	isolatedSiteTest,
 	loginTest()
 );
@@ -3088,8 +3088,8 @@ test(
 		apiHelpers,
 		commerceLayoutsPage,
 		displayPageTemplatesPage,
+		globalMenuPage,
 		page,
-		productMenuPage,
 		site,
 	}) => {
 		await apiHelpers.headlessAdminUser.postAccount({
@@ -3139,7 +3139,7 @@ test(
 			commerceLayoutsPage.defaultDisplayPageTemplateIcon
 		).toBeVisible();
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 
 		await commerceLayoutsPage
 			.accountSelectorButton('Account Selector')
@@ -3308,8 +3308,8 @@ test(
 		commerceAdminChannelDetailsPage,
 		commerceAdminChannelsPage,
 		commerceLayoutsPage,
+		globalMenuPage,
 		page,
-		productMenuPage,
 		site,
 	}) => {
 		await apiHelpers.headlessAdminUser.postAccount({
@@ -3346,14 +3346,14 @@ test(
 
 		await waitForAlert(page);
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 
 		await commerceLayoutsPage
 			.accountSelectorButton('Account Selector')
 			.click();
 		await commerceLayoutsPage.createNewOrderButton.click();
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 
 		await commerceLayoutsPage
 			.accountSelectorButton('Account Selector')

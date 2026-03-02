@@ -210,6 +210,7 @@ test(
 	{tag: ['@LPS-89116']},
 	async ({
 		apiHelpers,
+		globalMenuPage,
 		journalPage,
 		page,
 		pagesAdminPage,
@@ -222,7 +223,7 @@ test(
 
 		apiHelpers.data.push({id: site.id, type: 'site'});
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({

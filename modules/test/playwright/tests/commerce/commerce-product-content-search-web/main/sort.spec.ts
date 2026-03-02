@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../../fixtures/loginTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 
 export const test = mergeTests(
@@ -20,21 +20,21 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
-	loginTest(),
-	productMenuPageTest
+	globalMenuPagesTest,
+	loginTest()
 );
 
 async function setAndCheckSorting({
 	commerceThemeMiniumCatalogPage,
 	firstCardItem,
 	firstCardItemAfterChange,
+	globalMenuPage,
 	page,
-	productMenuPage,
 	siteName,
 	sortingOption1,
 	sortingOption2,
 }) {
-	await productMenuPage.goToSite(siteName);
+	await globalMenuPage.goToSite(siteName);
 	await page.waitForLoadState('networkidle');
 
 	await commerceThemeMiniumCatalogPage.optionsButton.click();
@@ -66,8 +66,8 @@ async function setAndCheckSorting({
 test('LPD-18714 Setting default sort for commerce products', async ({
 	apiHelpers,
 	commerceThemeMiniumCatalogPage,
+	globalMenuPage,
 	page,
-	productMenuPage,
 }) => {
 	test.setTimeout(180000);
 
@@ -105,8 +105,8 @@ test('LPD-18714 Setting default sort for commerce products', async ({
 			commerceThemeMiniumCatalogPage,
 			firstCardItem: firstCardItemSortingOption1,
 			firstCardItemAfterChange: firstCardItemSortingOption3,
+			globalMenuPage,
 			page,
-			productMenuPage,
 			siteName: siteName1,
 			sortingOption1,
 			sortingOption2: sortingOption3,
@@ -116,14 +116,14 @@ test('LPD-18714 Setting default sort for commerce products', async ({
 			commerceThemeMiniumCatalogPage,
 			firstCardItem: firstCardItemSortingOption2,
 			firstCardItemAfterChange: firstCardItemSortingOption4,
+			globalMenuPage,
 			page,
-			productMenuPage,
 			siteName: siteName2,
 			sortingOption1: sortingOption2,
 			sortingOption2: sortingOption4,
 		});
 
-		await productMenuPage.goToSite(siteName1);
+		await globalMenuPage.goToSite(siteName1);
 
 		expect(
 			await commerceThemeMiniumCatalogPage.orderByButton.innerText()

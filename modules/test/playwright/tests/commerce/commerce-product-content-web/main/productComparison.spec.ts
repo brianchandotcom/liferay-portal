@@ -8,10 +8,10 @@ import {expect, mergeTests} from '@playwright/test';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../../utils/performLogin';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -25,11 +25,11 @@ export const test = mergeTests(
 		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	templatesPageTest,
-	pageViewModePagesTest,
-	productMenuPageTest
+	pageViewModePagesTest
 );
 
 test(
@@ -125,7 +125,7 @@ test(
 test(
 	'Product Compare is removed upon logout and login',
 	{tag: ['@LPD-37427', '@LPD-60912']},
-	async ({apiHelpers, page, productComparisonPage, productMenuPage}) => {
+	async ({apiHelpers, globalMenuPage, page, productComparisonPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
 		});
@@ -144,7 +144,7 @@ test(
 			name: {en_US: 'Product'},
 		});
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([
@@ -165,7 +165,7 @@ test(
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 
 		await page.getByRole('checkbox', {disabled: false}).first().click();
 
@@ -178,7 +178,7 @@ test(
 		await performLogout(page);
 		await performLogin(page, 'test');
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 
 		await expect(productComparisonPage.compareBar).toHaveCount(0);
 	}

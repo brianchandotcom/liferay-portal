@@ -10,10 +10,10 @@ import path from 'path';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
 import {DLFILE_STATUS} from '../../../helpers/json-web-services/JSONWebServicesDocumentLibraryApiHelper';
@@ -35,10 +35,10 @@ const test = mergeTests(
 		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
-	productMenuPageTest,
 	siteSettingsPagesTest
 );
 
@@ -887,8 +887,8 @@ test(
 		documentLibraryEditDocumentTypesPage,
 		documentLibraryEditFilePage,
 		documentLibraryPage,
+		globalMenuPage,
 		page,
-		productMenuPage,
 		site,
 		siteSettingsLocalizationPage,
 	}) => {
@@ -923,7 +923,7 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
-		await productMenuPage.goToSite('Global');
+		await globalMenuPage.goToSite('Global');
 		await apiHelpers.headlessSite.deleteSite(site.id);
 		await documentLibraryPage.deleteDocumentType(dTypeTitle);
 

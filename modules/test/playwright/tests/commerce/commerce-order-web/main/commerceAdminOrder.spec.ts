@@ -8,9 +8,9 @@ import {expect, mergeTests} from '@playwright/test';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {
@@ -26,9 +26,9 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
-	loginTest(),
-	productMenuPageTest
+	loginTest()
 );
 
 test('LPD-44010 Check no delete dropdown in order admin page without delete permission', async ({

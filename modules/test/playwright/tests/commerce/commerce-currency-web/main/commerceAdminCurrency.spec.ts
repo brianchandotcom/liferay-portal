@@ -9,8 +9,8 @@ import {accountsPagesTest} from '../../../../fixtures/accountsPagesTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../../fixtures/loginTest';
-import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
@@ -24,8 +24,8 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	loginTest(),
-	productMenuPageTest,
 	usersAndOrganizationsPagesTest
 );
 
@@ -215,8 +215,8 @@ test('COMMERCE-9936 A disabled default currency should not be usable', async ({
 	apiHelpers,
 	commerceChannelDefaultsPage,
 	editAccountPage,
+	globalMenuPage,
 	page,
-	productMenuPage,
 }) => {
 	test.setTimeout(180000);
 
@@ -249,7 +249,7 @@ test('COMMERCE-9936 A disabled default currency should not be usable', async ({
 			}
 		);
 
-		await productMenuPage.goToSite(site.name);
+		await globalMenuPage.goToSite(site.name);
 
 		await expect(page.getByText('$ 24.00')).toBeVisible();
 	}

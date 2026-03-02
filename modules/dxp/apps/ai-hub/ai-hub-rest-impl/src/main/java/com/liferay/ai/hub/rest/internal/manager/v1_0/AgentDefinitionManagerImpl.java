@@ -5,10 +5,12 @@
 
 package com.liferay.ai.hub.rest.internal.manager.v1_0;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.dto.v1_0.Variable;
 import com.liferay.ai.hub.rest.internal.resource.v1_0.AgentDefinitionResourceImpl;
 import com.liferay.ai.hub.rest.manager.v1_0.AgentDefinitionManager;
+import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -159,7 +162,7 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 
 		Locale locale = dtoConverterContext.getLocale();
 
-		String workflowDefinitionName = StringUtil.randomString();
+		String workflowDefinitionName = PortalUUIDUtil.generate();
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			null, companyId, workflowDefinition.getGroupId(),
@@ -169,6 +172,12 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 				workflowDefinition.getTitle(locale.getDisplayLanguage())),
 			workflowDefinitionName, WorkflowDefinitionConstants.SCOPE_AI,
 			content.getBytes());
+
+		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
+			dtoConverterContext.getUserId());
+
+		long accountEntryId =
+			(accountEntry != null) ? accountEntry.getAccountEntryId() : 0;
 
 		Map<String, String> title =
 			(Map<String, String>)objectEntry.getPropertyValue("title_i18n");
@@ -201,11 +210,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 										"outputVariable")),
 								"r_accountToAIHubAgentDefinitions_" +
 									"accountEntryId",
-								GetterUtil.getLong(
-									objectEntry.getPropertyValue(
-										"r_accountToAIHubAgentDefinitions_" +
-											"accountEntryId")),
-								"title_i18n", title, "workflowDefinitionName",
+								accountEntryId, "title_i18n", title,
+								"workflowDefinitionName",
 								workflowDefinitionName));
 					}
 				},

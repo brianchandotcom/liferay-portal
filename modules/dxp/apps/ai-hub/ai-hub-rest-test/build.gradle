@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationImplementation group: "commons-beanutils", name: "commons-beanutils", version: "1.11.0"
 	testIntegrationImplementation group: "jakarta.annotation", name: "jakarta.annotation-api", version: "2.1.1"
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testIntegrationImplementation project(":apps:account:account-api")
 	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-api")
 	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-scope-api")

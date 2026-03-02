@@ -4,4 +4,5 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.ai.hub.agent,\
 	com.liferay.ai.hub.configuration,\
-	com.liferay.ai.hub.security
+	com.liferay.ai.hub.security,\
+	com.liferay.ai.hub.util

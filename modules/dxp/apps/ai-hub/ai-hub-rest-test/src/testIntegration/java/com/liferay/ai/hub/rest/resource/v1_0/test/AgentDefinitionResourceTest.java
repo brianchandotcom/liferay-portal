@@ -5,6 +5,10 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.ai.hub.rest.client.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.client.dto.v1_0.Variable;
 import com.liferay.ai.hub.rest.client.pagination.Page;
@@ -22,10 +26,12 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.NoSuchWorkflowDefinitionException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -59,6 +65,19 @@ public class AgentDefinitionResourceTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), TestPropsValues.getUserId());
+
 		_dtoConverterContext = new DefaultDTOConverterContext(
 			false, Map.of(), _dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, TestPropsValues.getUser());
@@ -82,6 +101,13 @@ public class AgentDefinitionResourceTest
 				"com.liferay.ai.hub.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
+
+		AccountEntry aiHubAccountEntry = _accountEntryLocalService.
+			getAccountEntryByExternalReferenceCode(
+				"L_AI_HUB", TestPropsValues.getCompanyId());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			aiHubAccountEntry.getAccountEntryId(), TestPropsValues.getUserId());
 	}
 
 	@AfterClass
@@ -308,6 +334,13 @@ public class AgentDefinitionResourceTest
 		assertEquals(
 			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
 	}
+
+	@Inject
+	private static AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private static AccountEntryUserRelLocalService
+		_accountEntryUserRelLocalService;
 
 	private static DTOConverterContext _dtoConverterContext;
 

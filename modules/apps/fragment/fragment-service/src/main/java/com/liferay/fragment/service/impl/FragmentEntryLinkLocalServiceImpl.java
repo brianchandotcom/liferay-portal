@@ -24,6 +24,7 @@ import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -337,8 +338,6 @@ public class FragmentEntryLinkLocalServiceImpl
 			FragmentEntry fragmentEntry)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(fragmentEntry.getGroupId());
-
 		return fragmentEntryLinkPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
@@ -348,26 +347,8 @@ public class FragmentEntryLinkLocalServiceImpl
 				).from(
 					FragmentEntryLinkTable.INSTANCE
 				).where(
-					FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
-						fragmentEntry.getExternalReferenceCode()
-					).and(
-						Predicate.withParentheses(
-							FragmentEntryLinkTable.INSTANCE.
-								fragmentEntryScopeERC.eq(
-									group.getExternalReferenceCode()
-								).or(
-									Predicate.withParentheses(
-										FragmentEntryLinkTable.INSTANCE.
-											fragmentEntryScopeERC.isNull(
-											).and(
-												FragmentEntryLinkTable.INSTANCE.
-													groupId.eq(
-														group.getGroupId())
-											))
-								))
-					).and(
-						FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
-					)
+					_getAllFragmentEntryLinksByFragmentEntryPredicate(
+						fragmentEntry, FragmentEntryLinkTable.INSTANCE)
 				).as(
 					"tempFragmentEntryLinkTable"
 				)
@@ -881,6 +862,32 @@ public class FragmentEntryLinkLocalServiceImpl
 		if ((layout != null) && !layout.isUnlocked(Constants.EDIT, userId)) {
 			throw new LockedLayoutException();
 		}
+	}
+
+	private Predicate _getAllFragmentEntryLinksByFragmentEntryPredicate(
+			FragmentEntry fragmentEntry,
+			FragmentEntryLinkTable fragmentEntryLinkTable)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(fragmentEntry.getGroupId());
+
+		return fragmentEntryLinkTable.fragmentEntryERC.eq(
+			fragmentEntry.getExternalReferenceCode()
+		).and(
+			Predicate.withParentheses(
+				fragmentEntryLinkTable.fragmentEntryScopeERC.eq(
+					group.getExternalReferenceCode()
+				).or(
+					Predicate.withParentheses(
+						fragmentEntryLinkTable.fragmentEntryScopeERC.isNull(
+						).and(
+							fragmentEntryLinkTable.groupId.eq(
+								group.getGroupId())
+						))
+				))
+		).and(
+			fragmentEntryLinkTable.deleted.eq(false)
+		);
 	}
 
 	private String _getProcessedHTML(

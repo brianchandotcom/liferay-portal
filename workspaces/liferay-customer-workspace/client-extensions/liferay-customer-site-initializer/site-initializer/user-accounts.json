@@ -214,11 +214,11 @@
 				]
 			}
 		],
-		"alternateName": "test",
-		"emailAddress": "test@liferay.com",
-		"externalReferenceCode": "USER_TEST",
-		"familyName": "Test",
-		"givenName": "Test",
-		"name": "Test Test"
+		"alternateName": "admin",
+		"emailAddress": "admin@liferay.com",
+		"externalReferenceCode": "USER_ADMIN",
+		"familyName": "Admin",
+		"givenName": "Admin",
+		"name": "Admin"
 	}
 ]

@@ -10,10 +10,10 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -33,8 +33,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.junit.Before;
-
-import org.skyscreamer.jsonassert.JSONAssert;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -78,9 +76,8 @@ public abstract class BaseAssigneeSectionDisplayContextTestCase {
 	}
 
 	protected void assertAssigneeFieldValue(
-			String expectedExternalReferenceCode, String expectedName,
-			String expectedPortrait, String expectedType,
-			ObjectEntry objectEntry, Map<String, Serializable> values)
+			Map<String, Object> expectedValueMap, ObjectEntry objectEntry,
+			Map<String, Serializable> values)
 		throws Exception {
 
 		objectEntry = objectEntryLocalService.partialUpdateObjectEntry(
@@ -94,17 +91,9 @@ public abstract class BaseAssigneeSectionDisplayContextTestCase {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			_jsonFactory.looseSerializeDeep(getProperties()));
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"externalReferenceCode", expectedExternalReferenceCode
-			).put(
-				"name", expectedName
-			).put(
-				"portrait", expectedPortrait
-			).put(
-				"type", expectedType
-			).toString(),
-			String.valueOf(jsonObject.getJSONObject("value")), true);
+		JSONObject valueJSONObject = jsonObject.getJSONObject("value");
+
+		AssertUtils.assertEquals(expectedValueMap, valueJSONObject.toMap());
 	}
 
 	protected Map<String, Object> getProperties() throws Exception {

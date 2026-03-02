@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.time.Duration;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -153,6 +155,9 @@ public class WebDriverUtil {
 
 		chromeOptions.setCapability(
 			"selenium:sessionTimeout", poshiProperties.timeoutPageLoadWait);
+
+		chromeOptions.setPageLoadTimeout(
+			Duration.ofSeconds(poshiProperties.timeoutPageLoadWait));
 
 		if (poshiProperties.testRunType.equals("parallel")) {
 			ChromeDriverService chromeDriverService =

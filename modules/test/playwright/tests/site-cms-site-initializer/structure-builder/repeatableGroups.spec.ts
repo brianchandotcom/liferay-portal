@@ -412,10 +412,14 @@ test(
 				'CMS Structure Repeatable Groups'
 			);
 
-			await expect(page.getByText(group1Label)).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: group1Label})
+			).toBeVisible();
 		}).toPass();
 
-		await expect(page.getByText(group2Label)).not.toBeVisible();
+		await expect(
+			page.getByRole('button', {name: group2Label})
+		).not.toBeVisible();
 
 		// Now go to Structures admin, delete the structure and check
 		// the other object definition was also deleted
@@ -469,7 +473,9 @@ test(
 				.first()
 				.waitFor({timeout: 1000});
 
-			await expect(page.getByText(group1Label)).not.toBeVisible({
+			await expect(
+				page.getByRole('button', {name: group1Label})
+			).not.toBeVisible({
 				timeout: 1000,
 			});
 		}).toPass();

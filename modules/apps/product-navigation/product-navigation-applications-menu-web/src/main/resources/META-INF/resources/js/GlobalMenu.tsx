@@ -132,6 +132,7 @@ export default function GlobalMenu({
 					aria-label={Liferay.Language.get('open-applications-menu')}
 					className="control-menu-nav-link dropdown-toggle lfr-portal-tooltip"
 					data-qa-id="globalMenu"
+					data-testid="globalMenu"
 					data-title={openButtonTitle}
 					data-title-set-as-html
 					data-tooltip-align="bottom-left"

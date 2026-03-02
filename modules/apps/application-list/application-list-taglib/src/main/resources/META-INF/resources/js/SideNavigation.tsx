@@ -121,6 +121,7 @@ function SideNavigation({
 			containerRef={containerRef}
 			data-canonical-name={canonicalName}
 			data-qa-id="sideNavigation"
+			data-testid="sideNavigation"
 			defaultOpen={initialVisible}
 			direction="left"
 			id="com_liferay_application_list_taglib_side_navigation"

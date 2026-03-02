@@ -272,8 +272,17 @@ test(
 			await homePage.assignedToMyRolesMenuItem.click();
 
 			await expect(page.getByText(account.name)).toBeHidden();
+
+			const myWorkflowTasksContainer = page
+				.locator('div.container-fluid-max')
+				.filter({
+					has: page.getByRole('heading', {name: 'My Workflow Tasks'}),
+				});
+
 			await expect(
-				page.getByRole('link', {name: objectEntry.title})
+				myWorkflowTasksContainer.getByRole('link', {
+					name: objectEntry.title,
+				})
 			).toBeVisible();
 		}
 		finally {

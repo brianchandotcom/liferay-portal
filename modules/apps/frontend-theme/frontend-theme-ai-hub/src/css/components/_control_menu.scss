@@ -1,0 +1,30 @@
+.ai-hub-control-menu {
+	border-bottom-width: 0.05rem;
+	border-color: $secondary-l0;
+
+	h1.tbar-section {
+		display: -webkit-box;
+		overflow: hidden;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+
+	@include media-breakpoint-down(sm) {
+		.tbar-item {
+			padding-left: 0.25rem;
+			padding-right: 0.25rem;
+		}
+	}
+
+	@media (max-resolution: 1dppx) {
+		border-color: $secondary-l2;
+	}
+}
+
+.top-bar {
+	top: var(--control-menu-container-height);
+
+	@include media-breakpoint-down(sm) {
+		position: static;
+	}
+}

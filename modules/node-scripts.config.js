@@ -216,6 +216,7 @@ module.exports = {
 		'@liferay/layout-type-controller-embedded': [],
 		'@liferay/layout-type-controller-panel': [],
 		'@liferay/layout-utility-page-terms-of-use': [],
+		'@liferay/liferay-ai-hub-theme': [],
 		'@liferay/liferay-cms-theme': [],
 		'@liferay/locked-items-web': [],
 		'@liferay/login-web': [],

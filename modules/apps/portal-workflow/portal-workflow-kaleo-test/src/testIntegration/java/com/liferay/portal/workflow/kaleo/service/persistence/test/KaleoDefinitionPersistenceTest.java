@@ -286,20 +286,21 @@ public class KaleoDefinitionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByC_S(0L, "null");
-
-		_persistence.countByC_S(0L, (String)null);
-	}
-
-	@Test
 	public void testCountByC_A() throws Exception {
 		_persistence.countByC_A(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_C_S() throws Exception {
+		_persistence.countByG_C_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_C_S(0L, 0L, "null");
+
+		_persistence.countByG_C_S(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -324,14 +325,16 @@ public class KaleoDefinitionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_S_A() throws Exception {
-		_persistence.countByC_S_A(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+	public void testCountByG_C_S_A() throws Exception {
+		_persistence.countByG_C_S_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_S_A(0L, "null", RandomTestUtil.randomBoolean());
+		_persistence.countByG_C_S_A(
+			0L, 0L, "null", RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_S_A(
-			0L, (String)null, RandomTestUtil.randomBoolean());
+		_persistence.countByG_C_S_A(
+			0L, 0L, (String)null, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

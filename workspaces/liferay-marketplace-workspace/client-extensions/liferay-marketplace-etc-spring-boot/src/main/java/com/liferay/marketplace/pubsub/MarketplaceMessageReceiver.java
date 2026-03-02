@@ -28,11 +28,12 @@ import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -192,21 +193,17 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
 			koroneikiAccount) {
 
-		List<PostalAddress> postalAddresses = new ArrayList<>();
+		return TransformUtil.transformToArray(
+			Arrays.asList(koroneikiAccount.getPostalAddresses()),
+			koroneikiPostalAddress -> {
+				PostalAddress postalAddress = PostalAddress.toDTO(
+					koroneikiPostalAddress.toString());
 
-		for (com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress
-				koroneikiPostalAddress :
-					koroneikiAccount.getPostalAddresses()) {
+				postalAddress.setAddressType(() -> "billing-and-shipping");
 
-			PostalAddress postalAddress = PostalAddress.toDTO(
-				koroneikiPostalAddress.toString());
-
-			postalAddress.setAddressType(() -> "billing-and-shipping");
-
-			postalAddresses.add(postalAddress);
-		}
-
-		return postalAddresses.toArray(new PostalAddress[0]);
+				return postalAddress;
+			},
+			PostalAddress.class);
 	}
 
 	private void _processKoroneikiAccountCreate(

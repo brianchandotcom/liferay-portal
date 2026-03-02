@@ -68,7 +68,13 @@ export default function CreateTaskModal({
 		},
 		onSubmit: async (values) => {
 			const {error} = await postTaskByScope({
-				body: values,
+				body: {
+					...values,
+					keywords: [
+						'L_CMP_TASK_' +
+							Math.floor(Math.random() * 100000000).toString(),
+					],
+				},
 				scopeKey,
 			});
 

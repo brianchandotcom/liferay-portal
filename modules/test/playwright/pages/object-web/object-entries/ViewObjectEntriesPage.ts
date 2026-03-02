@@ -313,10 +313,14 @@ export class ViewObjectEntriesPage {
 			.click();
 	}
 
-	async selectFileFromUserComputer(dirName: string, fileName: string) {
+	async selectFileFromUserComputer(
+		dirName: string,
+		fileName: string,
+		position?: number
+	) {
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
 
-		await this.selectFileButton.click();
+		await this.selectFileButton.nth(position ?? 0).click();
 
 		const fileChooser = await fileChooserPromise;
 

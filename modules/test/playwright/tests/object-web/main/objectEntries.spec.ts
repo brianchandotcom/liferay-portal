@@ -432,6 +432,140 @@ cmsTest.describe('Manage attachment ObjectField download permission', () => {
 	);
 });
 
+cmsTest.describe('Manage attachment ObjectField storage locations', () => {
+	cmsTest(
+		'can submit object entry with CMS storages types',
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const fileName = `file_${getRandomString()}.png`;
+			const fileTitle = `title ${getRandomString()}`;
+			const spaceName = `Space ${getRandomString()}`;
+			let space;
+
+			await test.step('Create a new Space and add a file entry to it', async () => {
+				space =
+					await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+						name: spaceName,
+						settings: {},
+						type: 'Space',
+					});
+
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						file: {
+							fileBase64: 'R0lGODlhAQABAAAAACw=',
+							name: fileName,
+						},
+						objectEntryFolderExternalReferenceCode: 'L_FILES',
+						title: fileTitle,
+					},
+					'cms/basic-documents',
+					space.name
+				);
+			});
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: [
+					{
+						businessType: 'Attachment',
+						name: 'cmsBasicDocument',
+						objectFieldSettings: [
+							{
+								name: 'acceptedFileExtensions',
+								value: 'jpeg, jpg, pdf, png, txt',
+							},
+							{
+								name: 'maximumFileSize',
+								value: 0,
+							},
+							{
+								name: 'fileSource',
+								value: 'CMSBasicDocument',
+							},
+						],
+					},
+					{
+						businessType: 'Attachment',
+						name: 'userComputerToCMSBasicDocument',
+						objectFieldSettings: [
+							{
+								name: 'acceptedFileExtensions',
+								value: 'jpeg, jpg, pdf, png, txt',
+							},
+							{
+								name: 'maximumFileSize',
+								value: 0,
+							},
+							{
+								name: 'fileSource',
+								value: 'userComputerToCMSBasicDocument',
+							},
+							{
+								name: 'showFilesInLibrary',
+								value: true,
+							},
+							{
+								name: 'storageDLFolderPath',
+								value: `/myCMSFolder`,
+							},
+							{
+								name: 'storageDepotGroup',
+								value: space.externalReferenceCode,
+							},
+						],
+					},
+				],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.selectFileButton.first().click();
+
+			await page.getByLabel(fileTitle, {exact: true}).click();
+
+			await page
+				.getByRole('button', {exact: true, name: 'Select'})
+				.click();
+
+			await viewObjectEntriesPage.selectFileFromUserComputer(
+				__dirname,
+				'astronaut.png',
+				1
+			);
+
+			await page
+				.getByRole('button', {name: 'astronaut.png'})
+				.waitFor({state: 'visible'});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page);
+
+			await expect(
+				viewObjectEntriesPage.page.getByText(fileName)
+			).toBeVisible();
+
+			await expect(
+				viewObjectEntriesPage.page.getByText('astronaut.png')
+			).toBeVisible();
+		}
+	);
+});
+
 cmsTest.describe('Manage object entries schedule properties', () => {
 	let _objectDefinition: ObjectDefinition;
 

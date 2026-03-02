@@ -495,8 +495,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		return objectEntryLocalService.moveObjectEntry(
-			getUserId(), objectEntryId, objectEntryFolderId, values,
-			serviceContext);
+			objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	@Override

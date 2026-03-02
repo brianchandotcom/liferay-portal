@@ -1908,7 +1908,7 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public ObjectEntry moveObjectEntry(
 			long objectEntryId, long objectEntryFolderId,
-			ServiceContext serviceContext)
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = getObjectEntry(objectEntryId);

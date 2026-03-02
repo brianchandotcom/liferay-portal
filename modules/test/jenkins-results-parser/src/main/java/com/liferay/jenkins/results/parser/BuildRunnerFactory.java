@@ -21,7 +21,7 @@ public class BuildRunnerFactory {
 		BuildRunner<?> buildRunner = null;
 
 		if (jobName.startsWith("archive-binaries-cache-controller(")) {
-			buildRunner = new ArchiveBinariesCacheControllerBuildRunner(
+			buildRunner = new ArchiveBinariesCachePortalControllerBuildRunner(
 				(PortalTopLevelBuildData)buildData);
 		}
 

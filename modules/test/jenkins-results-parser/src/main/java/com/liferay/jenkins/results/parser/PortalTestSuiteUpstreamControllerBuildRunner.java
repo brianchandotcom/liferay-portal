@@ -26,7 +26,7 @@ import org.json.JSONObject;
  */
 public class PortalTestSuiteUpstreamControllerBuildRunner
 	<S extends PortalTestSuiteUpstreamControllerBuildData>
-		extends BasePortalControllerBuildRunner<S> {
+		extends BaseUpstreamPortalControllerBuildRunner<S> {
 
 	@Override
 	public void run() {

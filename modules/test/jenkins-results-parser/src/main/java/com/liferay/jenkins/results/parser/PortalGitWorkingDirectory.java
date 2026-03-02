@@ -21,9 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.TimeoutException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,37 +30,6 @@ import org.json.JSONObject;
  * @author Peter Yoo
  */
 public class PortalGitWorkingDirectory extends GitWorkingDirectory {
-
-	public File archive(String fileName) {
-		File archiveFile = super.archive(fileName);
-
-		String upstreamBranchName = getUpstreamBranchName();
-
-		if (!JenkinsResultsParserUtil.isCloudCINode() ||
-			upstreamBranchName.startsWith("ee-")) {
-
-			return archiveFile;
-		}
-
-		setUpYarn();
-
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 10,
-			JenkinsResultsParserUtil.combine(
-				"zip -r -y ", fileName,
-				" $(git ls-files --directory --no-empty-directory --others | ",
-				"grep -v \\\\.gradle/) modules/yarn.lock"));
-
-		if (executionResult.getExitValue() != 0) {
-			throw new GitWorkingDirectoryRuntimeException(
-				this,
-				JenkinsResultsParserUtil.combine(
-					"Failed to add build/node to ", fileName, "\n",
-					executionResult.getStandardError()));
-		}
-
-		return archiveFile;
-	}
 
 	public Properties getAppServerProperties() {
 		if (_appServerProperties != null) {
@@ -359,97 +325,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return _testProperties;
 	}
 
-	public void setUpYarn() {
-		File workingDirectory = getWorkingDirectory();
-
-		try {
-			Map<String, String> filteredEnv = new HashMap<>();
-
-			Map<String, String> env = System.getenv();
-
-			for (Map.Entry<String, String> entry : env.entrySet()) {
-				String key = entry.getKey();
-
-				if (!key.startsWith("ANT_") && !key.startsWith("JAVA_") &&
-					!key.startsWith("JENKINS_HOME")) {
-
-					continue;
-				}
-
-				filteredEnv.put(key, entry.getValue());
-			}
-
-			Properties properties = new Properties();
-
-			String[] propertyNames = {
-				"nodejs.npm.ci.registry", "nodejs.node.env", "nodejs.npm.args",
-				"nodejs.npm.ci.sass.binary.site"
-			};
-
-			for (String propertyName : propertyNames) {
-				properties.put(
-					propertyName,
-					JenkinsResultsParserUtil.getBuildProperty(
-						"portal.build.properties[" + propertyName + "]"));
-			}
-
-			JenkinsResultsParserUtil.writePropertiesFile(
-				new File(
-					getWorkingDirectory(),
-					JenkinsResultsParserUtil.combine(
-						"build.", System.getenv("HOSTNAME"), ".properties")),
-				properties, true);
-
-			AntUtil.callTarget(
-				workingDirectory, "build.xml", "setup-sdk setup-yarn", null,
-				filteredEnv);
-
-			File nodeModulesCacheDir = new File(
-				workingDirectory, "modules/node_modules_cache");
-
-			if (!nodeModulesCacheDir.exists()) {
-				return;
-			}
-
-			for (File file :
-					nodeModulesCacheDir.listFiles(
-						JenkinsResultsParserUtil.newFilenameFilter(
-							"@esbuild-linux-.*(arm64|x64).*"))) {
-
-				Matcher matcher = _esBuildFileNamePattern.matcher(
-					file.getName());
-
-				if (matcher.find()) {
-					File esBuildDir = new File(
-						getWorkingDirectory(),
-						"modules/node_modules/@esbuild/" + matcher.group(1));
-
-					if (esBuildDir.exists()) {
-						continue;
-					}
-
-					File tmpDir = new File(getWorkingDirectory(), "tmp");
-
-					JenkinsResultsParserUtil.unTarGzip(file, tmpDir);
-
-					JenkinsResultsParserUtil.move(
-						new File(tmpDir, "package"), esBuildDir);
-
-					File esBuildBinFile = new File(esBuildDir, "bin/esbuild");
-
-					JenkinsResultsParserUtil.executeBashCommands(
-						"chmod +x " + esBuildBinFile);
-
-					JenkinsResultsParserUtil.delete(tmpDir);
-				}
-			}
-		}
-		catch (AntException | IOException | TimeoutException exception) {
-			throw new GitWorkingDirectoryRuntimeException(
-				this, "Failed to run setup-yarn in " + workingDirectory);
-		}
-	}
-
 	public static class Module {
 
 		public static Module getModule(Path path) {
@@ -562,9 +437,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 		return false;
 	}
-
-	private static final Pattern _esBuildFileNamePattern = Pattern.compile(
-		"@esbuild-(linux-.*?)-.*");
 
 	private Properties _appServerProperties;
 	private List<File> _jsUnitFiles;

@@ -131,6 +131,13 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			"liferay-portal-ee", getUpstreamBranchName() + "-private");
 	}
 
+	@Override
+	public synchronized void setUp() {
+		super.setUp();
+
+		_setUpBinariesCache();
+	}
+
 	public void setUpPortalProfile() {
 		String upstreamBranchName = getUpstreamBranchName();
 
@@ -293,6 +300,64 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			upstreamBranchName);
 	}
 
+	private void _setUpBinariesCache() {
+		if (!JenkinsResultsParserUtil.isCloudCINode() || _setUpBinariesCache) {
+			return;
+		}
+
+		String binariesCacheS3Path;
+
+		try {
+			binariesCacheS3Path = JenkinsResultsParserUtil.getBuildProperty(
+				"binaries.cache.s3.path", getUpstreamBranchName());
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"WARNING: Unable to get \"binaries.cache.s3.path\"");
+
+			_setUpBinariesCache = true;
+
+			return;
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(binariesCacheS3Path)) {
+			return;
+		}
+
+		File binariesCacheTarGzipFile = new File(
+			getDirectory(), "binaries-cache.tar.gz");
+
+		try {
+			CloudBucketUtil.downloadS3File(
+				binariesCacheTarGzipFile, binariesCacheS3Path);
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"WARNING: Unable to download " + binariesCacheS3Path);
+
+			_setUpBinariesCache = true;
+
+			return;
+		}
+
+		try {
+			JenkinsResultsParserUtil.unTarGzip(
+				binariesCacheTarGzipFile, getDirectory());
+
+			System.out.println(
+				"Successfully untared " + binariesCacheS3Path + " to " +
+					getDirectory());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+		finally {
+			JenkinsResultsParserUtil.delete(binariesCacheTarGzipFile);
+
+			_setUpBinariesCache = true;
+		}
+	}
+
 	private void _writeAppServerPropertiesFile() {
 		JenkinsResultsParserUtil.writePropertiesFile(
 			new File(
@@ -343,5 +408,6 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	private static final int _SETUP_PROFILE_DXP_RETRY_DELAY = 5;
 
 	private Properties _appServerProperties;
+	private boolean _setUpBinariesCache;
 
 }

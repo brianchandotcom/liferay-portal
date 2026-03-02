@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -132,7 +134,11 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 					kaleoNodeSettingValues, prompt, userMessage,
 					vertexAiGeminiStreamingChatModel)
 			).onErrorConsumer(
-				throwable -> vertexAiGeminiStreamingChatModel.close()
+				throwable -> {
+					vertexAiGeminiStreamingChatModel.close();
+
+					_log.error(throwable);
+				}
 			).systemMessageProviderFunction(
 				memoryId -> prompt
 			).toolProvider(
@@ -232,6 +238,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			vertexAiGeminiStreamingChatModel.close();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LLMNodeExecutor.class);
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

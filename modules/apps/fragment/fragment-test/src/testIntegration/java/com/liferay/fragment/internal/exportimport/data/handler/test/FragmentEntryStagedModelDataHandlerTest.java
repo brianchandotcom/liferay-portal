@@ -296,26 +296,18 @@ public class FragmentEntryStagedModelDataHandlerTest
 			"<h1> Drop Zone 1 </h1>", dropZoneId1 + "HeadingContent",
 			"<h1> Drop Zone 2 </h1>", dropZoneId2 + "HeadingContent");
 
-		_exportImportStagedModel(fragmentEntry, _layout);
+		_exportImportStagedModel(fragmentEntry);
 
-		Layout liveLayout = _layoutLocalService.fetchLayout(
-			_layout.getUuid(), liveGroup.getGroupId(),
-			_layout.isPrivateLayout());
+		FragmentEntry liveFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByUuidAndGroupId(
+				fragmentEntry.getUuid(), liveGroup.getGroupId());
 
-		_assertHTML(
-			_getFragmentEntryLinkRenderHTML(
-				company,
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinkByUuidAndGroupId(
-						publishedFragmentEntryLink.getUuid(),
-						liveGroup.getGroupId()),
-				liveGroup, liveLayout, locale),
-			"<h1> Drop Zone 1 </h1>", dropZoneId1 + "HeadingContent",
-			"<h1> Drop Zone 2 </h1>", dropZoneId2 + "HeadingContent");
+		Assert.assertEquals(
+			fragmentEntry.getHtml(), liveFragmentEntry.getHtml());
 
 		String addedDropZoneId = RandomTestUtil.randomString();
 
-		fragmentEntry = _updateFragmentEntryWithPropagation(
+		_updateFragmentEntryWithPropagation(
 			fragmentEntry,
 			StringBundler.concat(
 				"<div class=\"fragment_1\"><h1> Drop Zone 1 </h1>",
@@ -336,19 +328,14 @@ public class FragmentEntryStagedModelDataHandlerTest
 			"<h1> Added Drop Zone </h1>", "<h1> Drop Zone 2 </h1>",
 			dropZoneId2 + "HeadingContent");
 
-		_exportImportStagedModel(fragmentEntry, _layout);
+		_exportImportStagedModel(fragmentEntry);
 
-		_assertHTML(
-			_getFragmentEntryLinkRenderHTML(
-				company,
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinkByUuidAndGroupId(
-						publishedFragmentEntryLink.getUuid(),
-						liveGroup.getGroupId()),
-				liveGroup, liveLayout, locale),
-			"<h1> Drop Zone 1 </h1>", dropZoneId1 + "HeadingContent",
-			"<h1> Added Drop Zone </h1>", "<h1> Drop Zone 2 </h1>",
-			dropZoneId2 + "HeadingContent");
+		liveFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByUuidAndGroupId(
+				fragmentEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			fragmentEntry.getHtml(), liveFragmentEntry.getHtml());
 	}
 
 	@Override

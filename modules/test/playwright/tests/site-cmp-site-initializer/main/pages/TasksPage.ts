@@ -6,7 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
-import {DataSetPage} from './DataSetPage';
+import {DataSetPage} from '../../../site-cms-site-initializer/main/pages/DataSetPage';
 
 interface ExecItemActionArgs {
 	action: 'Assign Task' | 'Delete' | 'Update Due Date' | 'Update State';

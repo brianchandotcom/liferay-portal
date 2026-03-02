@@ -1,23 +1,23 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
-import {loginTest} from '../../../../fixtures/loginTest';
-import getRandomString from '../../../../utils/getRandomString';
-import {cmsPagesTest} from '../fixtures/cmsPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {cmsPagesTest} from '../../site-cms-site-initializer/main/fixtures/cmsPagesTest';
+import {cmpPagesTest} from './fixtures/cmpPagesTest';
 
 const test = mergeTests(
+	cmpPagesTest,
 	cmsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
-		'LPD-58677': {enabled: true},
 	}),
 	loginTest()
 );
@@ -26,8 +26,8 @@ test(
 	'Bulk update the due date of an task',
 	{tag: ['@LPD-75299']},
 	async ({apiHelpers, page, tasksPage}) => {
-		const cmpProject = 'cmp/projects';
-		const cmpTask = 'cmp/tasks';
+		const cmpProjectApplicationName = 'cmp/projects';
+		const cmpTaskApplicationName = 'cmp/tasks';
 
 		const tasks = [];
 		const taskNames = [
@@ -47,7 +47,7 @@ test(
 			{
 				title: getRandomString(),
 			},
-			cmpProject,
+			cmpProjectApplicationName,
 			assetLibrary.name
 		);
 
@@ -57,7 +57,7 @@ test(
 					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
 					title: taskName,
 				},
-				cmpTask,
+				cmpTaskApplicationName,
 				project.scopeKey
 			);
 			tasks.push(task);
@@ -118,7 +118,7 @@ test(
 
 			if (project) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
-					cmpProject,
+					cmpProjectApplicationName,
 					String(project.id)
 				);
 			}
@@ -126,7 +126,7 @@ test(
 			if (tasks) {
 				for (const task of tasks) {
 					await apiHelpers.objectEntry.deleteObjectEntry(
-						cmpTask,
+						cmpTaskApplicationName,
 						task.id
 					);
 				}
@@ -167,8 +167,8 @@ test(
 	'Bulk update the assignee of an task',
 	{tag: ['@LPD-75299']},
 	async ({apiHelpers, page, tasksPage}) => {
-		const cmpProject = 'cmp/projects';
-		const cmpTask = 'cmp/tasks';
+		const cmpProjectApplicationName = 'cmp/projects';
+		const cmpTaskApplicationName = 'cmp/tasks';
 
 		const tasks = [];
 		const taskNames = [
@@ -188,7 +188,7 @@ test(
 			{
 				title: getRandomString(),
 			},
-			cmpProject,
+			cmpProjectApplicationName,
 			assetLibrary.name
 		);
 
@@ -198,7 +198,7 @@ test(
 					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
 					title: taskName,
 				},
-				cmpTask,
+				cmpTaskApplicationName,
 				project.scopeKey
 			);
 			tasks.push(task);
@@ -223,10 +223,12 @@ test(
 
 				await page
 					.getByPlaceholder('Unassigned')
-					.fill('Publications Viewer');
+					.fill('Asset Library Content Reviewer');
 
 				await page
-					.getByRole('option', {name: 'Publications Viewer'})
+					.getByRole('option', {
+						name: 'Asset Library Content Reviewer',
+					})
 					.click();
 
 				await tasksPage.saveButton.click();
@@ -235,7 +237,9 @@ test(
 					await tasksPage.goto();
 
 					await expect(
-						page.getByRole('row', {name: 'Publications Viewer'})
+						page.getByRole('row', {
+							name: 'Asset Library Content Reviewer',
+						})
 					).toHaveCount(2, {timeout: 1000});
 				}).toPass({timeout: 10000});
 			});
@@ -245,7 +249,7 @@ test(
 
 			if (project) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
-					cmpProject,
+					cmpProjectApplicationName,
 					String(project.id)
 				);
 			}
@@ -253,7 +257,7 @@ test(
 			if (tasks) {
 				for (const task of tasks) {
 					await apiHelpers.objectEntry.deleteObjectEntry(
-						cmpTask,
+						cmpTaskApplicationName,
 						task.id
 					);
 				}
@@ -294,8 +298,8 @@ test(
 	'Bulk update the state of an task',
 	{tag: ['@LPD-75299']},
 	async ({apiHelpers, page, tasksPage}) => {
-		const cmpProject = 'cmp/projects';
-		const cmpTask = 'cmp/tasks';
+		const cmpProjectApplicationName = 'cmp/projects';
+		const cmpTaskApplicationName = 'cmp/tasks';
 
 		const tasks = [];
 		const taskNames = [
@@ -315,7 +319,7 @@ test(
 			{
 				title: getRandomString(),
 			},
-			cmpProject,
+			cmpProjectApplicationName,
 			assetLibrary.name
 		);
 
@@ -325,7 +329,7 @@ test(
 					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
 					title: taskName,
 				},
-				cmpTask,
+				cmpTaskApplicationName,
 				project.scopeKey
 			);
 			tasks.push(task);
@@ -367,7 +371,7 @@ test(
 
 			if (project) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
-					cmpProject,
+					cmpProjectApplicationName,
 					String(project.id)
 				);
 			}
@@ -375,7 +379,7 @@ test(
 			if (tasks) {
 				for (const task of tasks) {
 					await apiHelpers.objectEntry.deleteObjectEntry(
-						cmpTask,
+						cmpTaskApplicationName,
 						task.id
 					);
 				}

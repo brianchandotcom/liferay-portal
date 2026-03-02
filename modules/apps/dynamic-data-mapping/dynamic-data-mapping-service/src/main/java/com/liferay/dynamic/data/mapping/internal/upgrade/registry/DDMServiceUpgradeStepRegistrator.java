@@ -49,7 +49,7 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_5.DDMTemplateVersi
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_0.DDMFacetTemplateUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_1.WorkflowDefinitionLinkUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_2.DLFileEntryDDMFormInstanceRecordUpgradeProcess;
-import com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_3.BrowserSnifferTemplateUpgradeProcess;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_3.BrowserSnifferDDMTemplateTemplateUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_5.DDMTemplateLinkUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1.DDMFieldAttributeUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v7_0_4.PollsToDDMUpgradeProcess;
@@ -596,7 +596,8 @@ public class DDMServiceUpgradeStepRegistrator
 				DDMFormInstanceSettingsUpgradeProcess(_jsonFactory));
 
 		registry.register(
-			"5.3.2", "5.3.3", new BrowserSnifferTemplateUpgradeProcess());
+			"5.3.2", "5.3.3",
+			new BrowserSnifferDDMTemplateTemplateUpgradeProcess());
 
 		registry.register(
 			"5.3.3", "5.4.0",

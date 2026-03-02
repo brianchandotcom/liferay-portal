@@ -9,9 +9,12 @@ const WORKFLOW_DEFINITION_BASE_URI =
 	'/o/headless-admin-workflow/v1.0/workflow-definitions';
 
 async function getWorkflowDefinitions() {
-	const response = await fetch(`${WORKFLOW_DEFINITION_BASE_URI}?scope=ai`, {
-		method: 'GET',
-	});
+	const response = await fetch(
+		`${WORKFLOW_DEFINITION_BASE_URI}?active=true&scope=ai`,
+		{
+			method: 'GET',
+		}
+	);
 
 	return response.json();
 }

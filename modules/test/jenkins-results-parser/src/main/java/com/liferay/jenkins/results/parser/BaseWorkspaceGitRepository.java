@@ -1080,6 +1080,8 @@ public abstract class BaseWorkspaceGitRepository
 
 			JenkinsResultsParserUtil.unzip(gitArchiveFile, directory);
 
+			JenkinsResultsParserUtil.delete(gitArchiveFile);
+
 			if (_isDotGitDirArchiveRequired()) {
 				File dotGitArchiveFile = new File(
 					baseRepositoryDir, _getDotGitArchiveName());
@@ -1089,6 +1091,8 @@ public abstract class BaseWorkspaceGitRepository
 					_getGitArchiveS3BucketPath(_getDotGitArchiveName()));
 
 				JenkinsResultsParserUtil.unzip(dotGitArchiveFile, directory);
+
+				JenkinsResultsParserUtil.delete(dotGitArchiveFile);
 
 				GitUtil.ExecutionResult executionResult =
 					GitUtil.executeBashCommands(
@@ -1117,6 +1121,8 @@ public abstract class BaseWorkspaceGitRepository
 			CloudBucketUtil.uploadS3File(
 				_getGitArchiveS3BucketPath(), archiveFile);
 
+			JenkinsResultsParserUtil.delete(archiveFile);
+
 			if (_isDotGitDirArchiveRequired()) {
 				File dotGitDirArchiveFile = _archiveDotGitDir();
 
@@ -1124,7 +1130,7 @@ public abstract class BaseWorkspaceGitRepository
 					_getGitArchiveS3BucketPath(dotGitDirArchiveFile.getName()),
 					dotGitDirArchiveFile);
 
-				dotGitDirArchiveFile.delete();
+				JenkinsResultsParserUtil.delete(dotGitDirArchiveFile);
 			}
 		}
 

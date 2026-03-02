@@ -448,7 +448,7 @@ public class FragmentLayoutStructureItemImporter
 		if (fragmentEntry != null) {
 			fragmentEntryERC = fragmentEntry.getExternalReferenceCode();
 			fragmentEntryScopeERC = ScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentEntry.getGroupId(), groupId);
+				fragmentEntry.getGroupId(), layoutGroup.getGroupId());
 		}
 
 		String namespace = StringUtil.randomId();

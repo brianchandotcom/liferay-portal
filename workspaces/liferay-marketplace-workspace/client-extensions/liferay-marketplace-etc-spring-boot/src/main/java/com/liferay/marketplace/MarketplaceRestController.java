@@ -30,7 +30,6 @@ import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -41,17 +40,11 @@ import java.io.OutputStreamWriter;
 
 import java.math.BigDecimal;
 
-import java.net.URL;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -75,7 +68,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -247,58 +239,6 @@ public class MarketplaceRestController extends BaseRestController {
 		return ResponseEntity.ok(account);
 	}
 
-	@PostMapping("product/submit")
-	public void postProductSubmit(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST product submit " + json);
-		}
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
-			"modelCPDefinition");
-
-		Product product = _marketplaceService.getProduct(
-			modelCPDefinitionJSONObject.getLong("CProductId"));
-
-		_marketplaceService.postNotificationQueueEntry(
-			null, "MARKETPLACE-PRODUCT-SUBMIT-TEMPLATE",
-			new HashMapBuilder<String, Object>().put(
-				"[%CPDEFINITION_NAME%]",
-				product.getName(
-				).get(
-					modelCPDefinitionJSONObject.getString("defaultLanguageId")
-				)
-			).put(
-				"[%CPDEFINITION_THUMBNAIL%]",
-				new URL(
-					"http://" + lxcDXPMainDomain + product.getThumbnail()
-				).toString()
-			).put(
-				"[%CPDEFINITION_DEVELOPER_NAME%]",
-				_marketplaceService.getCatalog(
-					product.getCatalogId()
-				).getName()
-			).put(
-				"[%CPDEFINITION_URL%]",
-				new URL(
-					StringBundler.concat(
-						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-						"/web/marketplace/administrator-dashboard#/apps/",
-						modelCPDefinitionJSONObject.getLong("CProductId"))
-				).toString()
-			).put(
-				"[%CPDEFINITION_CREATEDATE%]", _format(product.getCreateDate())
-			).put(
-				"[%CPDEFINITION_ID%]",
-				String.valueOf(
-					modelCPDefinitionJSONObject.getLong("CPDefinitionId"))
-			).build());
-	}
-
 	@PostMapping("/tax-calculate/{orderId}")
 	public void postTaxCalculate(@PathVariable long orderId) throws Exception {
 		if (_log.isInfoEnabled()) {
@@ -421,23 +361,6 @@ public class MarketplaceRestController extends BaseRestController {
 					productId,
 				exception);
 		}
-	}
-
-	private String _format(Date date) {
-		return _format(date, "Not Applicable");
-	}
-
-	private String _format(Date date, String defaultValue) {
-		if (date == null) {
-			return defaultValue;
-		}
-
-		return date.toInstant(
-		).atZone(
-			ZoneId.of("UTC")
-		).format(
-			DateTimeFormatter.ofPattern("MMMM d, yyyy")
-		);
 	}
 
 	private Long _getAccountAdministratorRoleId(long accountId)

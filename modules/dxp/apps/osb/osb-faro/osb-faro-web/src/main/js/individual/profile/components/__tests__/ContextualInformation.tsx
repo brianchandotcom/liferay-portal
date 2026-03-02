@@ -1,7 +1,6 @@
 import ContextualInformation from '../ContextualInformation';
 import React from 'react';
 import {fromJS} from 'immutable';
-import {mockIndividual} from 'test/data';
 import {render} from '@testing-library/react';
 
 jest.unmock('react-dom');

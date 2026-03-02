@@ -6,7 +6,6 @@
 import {Locator, Page} from '@playwright/test';
 
 import {searchTableRowByValue} from '../account-admin-web/AccountsPage';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class PersonalDataErasurePage {
 	readonly actionsButton: Locator;
@@ -26,7 +25,6 @@ export class PersonalDataErasurePage {
 	readonly anonymizedAllRemainingDataMessage: Locator;
 	readonly anonymizeLink: Locator;
 	readonly anonymizeMenuItem: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly blogsRadioButton: Locator;
 	readonly contactsCenterRadioButton: Locator;
 	readonly deleteLink: Locator;
@@ -118,7 +116,6 @@ export class PersonalDataErasurePage {
 			.locator('nav')
 			.filter({hasText: 'All Selected'})
 			.getByRole('button');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.anonymizeButton = page.getByRole('button', {name: 'Anonymize'});
 		this.anonymizedAllRemainingDataMessage = page.getByText(
 			'You have successfully anonymized all remaining data.'

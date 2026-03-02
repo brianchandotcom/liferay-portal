@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
@@ -22,7 +21,6 @@ import evaluateKeepCheckingAfterFound from '../../object-web/main/utils/keepChec
 import {deleteItems} from './utils/deleteItems';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),

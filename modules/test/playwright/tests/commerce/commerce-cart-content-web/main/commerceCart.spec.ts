@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
@@ -18,7 +17,6 @@ import getRandomString from '../../../../utils/getRandomString';
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
-	applicationsMenuPageTest,
 	commercePagesTest,
 	isolatedSiteTest,
 	loginTest(),

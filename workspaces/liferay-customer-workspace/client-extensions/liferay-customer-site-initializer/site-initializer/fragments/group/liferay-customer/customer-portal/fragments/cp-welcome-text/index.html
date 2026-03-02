@@ -1,9 +1,13 @@
 [#assign
+	languageId = themeDisplay.getLanguageId()
 	userFirstName = themeDisplay.getUser().getFirstName()
+	userLastName = themeDisplay.getUser().getLastName()
 	welcomeText = languageUtil.get(locale, "welcome-to-customer-portal", "Welcome to Customer Portal")
 /]
 
-[#if userFirstName?has_content]
+[#if languageId == "ja_JP" && userLastName?has_content]
+	[#assign welcomeText = languageUtil.format(locale, "welcome-x", "${userLastName}  ${userFirstName}")]
+[#elseif userFirstName?has_content]
 	[#assign welcomeText = languageUtil.format(locale, "welcome-x", userFirstName)]
 [/#if]
 

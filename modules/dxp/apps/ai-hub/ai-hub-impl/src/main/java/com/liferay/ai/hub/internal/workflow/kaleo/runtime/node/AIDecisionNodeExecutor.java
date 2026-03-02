@@ -16,6 +16,8 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -167,7 +169,11 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						userMessage);
 				}
 			).onErrorConsumer(
-				throwable -> vertexAiGeminiStreamingChatModel.close()
+				throwable -> {
+					vertexAiGeminiStreamingChatModel.close();
+
+					_log.error(throwable);
+				}
 			).systemMessageProviderFunction(
 				memoryId -> prompt
 			).tools(
@@ -210,6 +216,9 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 					executionContext.getWorkflowContext(),
 					executionContext.getServiceContext())));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AIDecisionNodeExecutor.class);
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

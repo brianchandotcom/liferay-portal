@@ -42,11 +42,6 @@ public interface WorkflowDefinitionManager {
 		throws WorkflowException;
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
-			long companyId, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException;
-
-	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, String name, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;
@@ -65,33 +60,19 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			Boolean active, long companyId, String scope, int start, int end,
+			long companyId, long userId, Boolean active, String scope,
+			int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
-	}
-
-	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			long companyId, String scope, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		return getLatestWorkflowDefinitions(
-			null, companyId, scope, start, end, orderByComparator);
 	}
 
 	public default int getLatestWorkflowDefinitionsCount(
-			Boolean active, long companyId)
+			long companyId, Boolean active)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
-	}
-
-	public default int getLatestWorkflowDefinitionsCount(long companyId)
-		throws WorkflowException {
-
-		return getLatestWorkflowDefinitionsCount(null, companyId);
 	}
 
 	public default WorkflowDefinition getWorkflowDefinition(
@@ -161,21 +142,6 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * Saves a workflow definition without activating it or validating its data.
-	 * To save the definition, validate its data, and activate it, use {@link
-	 * #deployWorkflowDefinition(long, long, String, String, byte[])} instead.
-	 *
-	 * @param  companyId the company ID of the workflow definition
-	 * @param  userId the ID of the user saving the workflow definition
-	 * @param  title the workflow definition's title
-	 * @param  name the workflow definition's name
-	 * @param  scope the workflow definition's scope
-	 * @param  bytes the data saved as the workflow definition's content
-	 * @return the workflow definition
-	 * @throws WorkflowException if there was an issue saving the workflow
-	 *         definition
-	 */
 	public default WorkflowDefinition saveWorkflowDefinition(
 			String externalReferenceCode, long companyId, long groupId,
 			long userId, String title, String name, String scope, byte[] bytes)
@@ -184,20 +150,6 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * Saves a workflow definition without activating it or validating its data.
-	 * To save the definition, validate its data, and activate it, use {@link
-	 * #deployWorkflowDefinition(long, long, String, String, byte[])} instead.
-	 *
-	 * @param  companyId the company ID of the workflow definition
-	 * @param  userId the ID of the user saving the workflow definition
-	 * @param  title the workflow definition's title
-	 * @param  name the workflow definition's name
-	 * @param  bytes the data saved as the workflow definition's content
-	 * @return the workflow definition
-	 * @throws WorkflowException if there was an issue saving the workflow
-	 *         definition
-	 */
 	public default WorkflowDefinition saveWorkflowDefinition(
 			String externalReferenceCode, long companyId, long userId,
 			String title, String name, byte[] bytes)

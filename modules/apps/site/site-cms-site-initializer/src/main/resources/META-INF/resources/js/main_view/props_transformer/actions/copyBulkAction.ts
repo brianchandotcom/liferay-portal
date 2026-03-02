@@ -58,7 +58,7 @@ const copyBulkAction = ({
 			itemData: {
 				...selectedData,
 				embedded: {
-					...selectedData.items[0].embedded,
+					...(selectedData.items[0]?.embedded || {}),
 				},
 				title,
 			},

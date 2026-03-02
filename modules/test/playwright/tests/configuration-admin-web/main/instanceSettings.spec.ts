@@ -34,7 +34,7 @@ test('Asserts that a user can manage factory configurations', async ({
 		);
 
 		for (const providerName of providerNames) {
-			await page.getByRole('link', {name: 'Add'}).click();
+			await page.getByRole('link', {exact: true, name: 'Add'}).click();
 
 			await page.getByLabel('Provider Name').fill(providerName);
 

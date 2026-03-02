@@ -159,10 +159,11 @@
 	],
 	"objectViews": [
 	],
-	"panelCategoryKey": "",
+	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Agent Definitions"
 	},
+	"portlet": true,
 	"scope": "company",
 	"system": true,
 	"titleObjectFieldName": "name"

@@ -116,24 +116,18 @@ public class ViewRecycleBinSectionDisplayContextTest
 
 		_assertTrashEnabled(depotEntry2, true);
 
-		User user = UserTestUtil.addUser(
+		User user1 = UserTestUtil.addUser(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 			RoleConstants.CMS_ADMINISTRATOR);
 
-		DepotEntry depotEntry3 = _addDepotEntry(true, user.getUserId());
+		DepotEntry depotEntry3 = _addDepotEntry(true, user1.getUserId());
 
 		_assertTrashEnabled(depotEntry3, true);
 
-		filterString = getCMSSectionFilterString(displayContext);
+		setUser(adminUser);
 
-		Assert.assertTrue(
-			filterString.contains(
-				_getExpectedFilterString(depotEntry2.getGroupId())));
-
-		displayContext = getSectionDisplayContext(
-			getMockHttpServletRequest(user));
-
-		filterString = getCMSSectionFilterString(displayContext);
+		filterString = getCMSSectionFilterString(
+			getSectionDisplayContext(getMockHttpServletRequest(adminUser)));
 
 		Assert.assertTrue(
 			filterString.contains(
@@ -143,11 +137,43 @@ public class ViewRecycleBinSectionDisplayContextTest
 				_getExpectedFilterString(
 					depotEntry3.getGroupId(), depotEntry2.getGroupId())));
 
+		setUser(user1);
+
+		filterString = getCMSSectionFilterString(
+			getSectionDisplayContext(getMockHttpServletRequest(user1)));
+
+		Assert.assertTrue(
+			filterString.contains(
+				_getExpectedFilterString(
+					depotEntry2.getGroupId(), depotEntry3.getGroupId())) ||
+			filterString.contains(
+				_getExpectedFilterString(
+					depotEntry3.getGroupId(), depotEntry2.getGroupId())));
+
+		User user2 = UserTestUtil.addUser();
+
+		groupLocalService.addUserGroup(
+			user2.getUserId(), depotEntry1.getGroup());
+
+		groupLocalService.addUserGroup(
+			user2.getUserId(), depotEntry2.getGroup());
+
+		setUser(user2);
+
+		filterString = getCMSSectionFilterString(
+			getSectionDisplayContext(getMockHttpServletRequest(user2)));
+
+		Assert.assertTrue(
+			filterString,
+			filterString.contains(
+				_getExpectedFilterString(depotEntry2.getGroupId())));
+
 		_depotEntryLocalService.deleteDepotEntry(depotEntry1);
 		_depotEntryLocalService.deleteDepotEntry(depotEntry2);
 		_depotEntryLocalService.deleteDepotEntry(depotEntry3);
 
-		_userLocalService.deleteUser(user);
+		_userLocalService.deleteUser(user1);
+		_userLocalService.deleteUser(user2);
 	}
 
 	@Test

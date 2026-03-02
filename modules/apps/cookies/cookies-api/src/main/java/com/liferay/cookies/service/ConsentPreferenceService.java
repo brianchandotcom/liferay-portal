@@ -5,13 +5,18 @@
 
 package com.liferay.cookies.service;
 
+import com.liferay.cookies.model.ConsentPreference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -38,6 +43,23 @@ public interface ConsentPreferenceService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.cookies.service.impl.ConsentPreferenceServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the consent preference remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ConsentPreferenceServiceUtil} if injection and service tracking are not available.
 	 */
+	public ConsentPreference addConsentPreference(
+			long userId, String domain, Date expirationDate, String name,
+			String value)
+		throws PortalException;
+
+	public void deleteConsentPreference(long userId, String domain, String name)
+		throws PortalException;
+
+	public void deleteConsentPreferences(long userId, String domain);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ConsentPreference getConsentPreference(
+		long userId, String domain, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ConsentPreference> getConsentPreferences(
+		long userId, String domain);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -45,5 +67,8 @@ public interface ConsentPreferenceService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public ConsentPreference updateConsentPreference(
+		ConsentPreference consentPreference);
 
 }

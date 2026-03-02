@@ -754,22 +754,15 @@ public class RenderLayoutStructureTagTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, objectDefinition.getClassName());
-
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			StringPool.BLANK, _group.getGroupId());
-
-		List<InfoField<?>> allInfoFields = ListUtil.filter(
-			infoForm.getAllInfoFields(), InfoField::isEditable);
+		List<InfoField<?>> editableInfoFields = _getEditableInfoFields(
+			objectDefinition.getClassName());
 
 		ContentLayoutTestUtil.addFormToLayout(
 			false, String.valueOf(classNameId), "0", draftLayout,
 			_layoutStructureProvider,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				draftLayout.getPlid()),
-			allInfoFields.toArray(new InfoField<?>[0]));
+			editableInfoFields.toArray(new InfoField<?>[0]));
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 

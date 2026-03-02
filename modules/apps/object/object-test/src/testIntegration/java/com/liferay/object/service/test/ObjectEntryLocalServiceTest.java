@@ -1481,11 +1481,13 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(assigneeMap, values.get("assignee"));
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryWithAttachmentObjectField() throws Exception {
 		FileEntry tempFileEntry = _addTempFileEntry(StringUtil.randomString());
 
-		ObjectEntry objectEntry = _addObjectEntry(tempFileEntry);
+		ObjectEntry objectEntry = _addObjectEntry(
+			tempFileEntry.getFileEntryId(), "upload");
 
 		AssertUtils.assertFailure(
 			NoSuchFileEntryException.class,
@@ -1501,14 +1503,57 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertNotEquals(
 			tempFileEntry.getFileEntryId(), persistedFileEntryId);
 
-		DLFileEntry persistedDLFileEntry =
-			_dlFileEntryLocalService.getFileEntry(persistedFileEntryId);
+		_assertDLFileEntry(
+			persistedFileEntryId, _objectDefinition.getClassName(),
+			objectEntry.getObjectEntryId());
 
-		Assert.assertEquals(
-			_objectDefinition.getClassName(),
-			persistedDLFileEntry.getClassName());
-		Assert.assertEquals(
-			objectEntry.getObjectEntryId(), persistedDLFileEntry.getClassPK());
+		ObjectEntry cmsBasicDocumentObjectEntry =
+			_addCMSBasicDocumentObjectEntry();
+		ObjectField objectField1 = _addAttachmentObjectField(
+			ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA);
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			String.format(
+				"The value is invalid for object field \"%s\"",
+				objectField1.getName()),
+			() -> _addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					objectField1.getName(),
+					MapUtil.getLong(
+						cmsBasicDocumentObjectEntry.getValues(), "file")
+				).build()));
+
+		DLFileEntry dlFileEntry = _addDLFileEntry();
+		ObjectField objectField2 = _addAttachmentObjectField(
+			ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT);
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			String.format(
+				"The value is invalid for object field \"%s\"",
+				objectField2.getName()),
+			() -> _addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					objectField2.getName(), dlFileEntry.getFileEntryId()
+				).build()));
+
+		objectEntry = _addObjectEntry(
+			dlFileEntry.getFileEntryId(), objectField1.getName());
+
+		_assertDLFileEntry(
+			MapUtil.getLong(objectEntry.getValues(), objectField1.getName()),
+			StringPool.BLANK, 0);
+
+		objectEntry = _addObjectEntry(
+			MapUtil.getLong(cmsBasicDocumentObjectEntry.getValues(), "file"),
+			objectField2.getName());
+
+		_assertDLFileEntry(
+			MapUtil.getLong(objectEntry.getValues(), objectField2.getName()),
+			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 	}
 
 	@Test
@@ -4094,7 +4139,7 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			_addTempFileEntry(StringUtil.randomString()));
+			_addTempFileEntry(StringUtil.randomString()), "upload");
 
 		long persistedFileEntryId = MapUtil.getLong(
 			objectEntry.getValues(), "upload");
@@ -5496,7 +5541,7 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			_addTempFileEntry(StringUtil.randomString()));
+			_addTempFileEntry(StringUtil.randomString()), "upload");
 
 		long persistedFileEntryId = MapUtil.getLong(
 			objectEntry.getValues(), "upload");
@@ -7095,6 +7140,74 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	private ObjectField _addAttachmentObjectField(String fileSource)
+		throws Exception {
+
+		return ObjectFieldUtil.addCustomObjectField(
+			new AttachmentObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.
+							NAME_ACCEPTED_FILE_EXTENSIONS
+					).value(
+						"txt"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_FILE_SOURCE
+					).value(
+						fileSource
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+					).value(
+						"100"
+					).build())
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+	}
+
+	private ObjectEntry _addCMSBasicDocumentObjectEntry() throws Exception {
+		CMSTestUtil.getOrAddGroup(ObjectEntryLocalServiceTest.class);
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_DOCUMENT", TestPropsValues.getCompanyId());
+
+		return _addObjectEntry(
+			depotEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"file",
+				() -> {
+					DLFileEntry dlFileEntry = _addDLFileEntry();
+
+					return dlFileEntry.getFileEntryId();
+				}
+			).put(
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
+			).build());
+	}
+
 	private void _addComment(
 			Group group, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry)
@@ -7215,15 +7328,11 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 	}
 
-	private ObjectEntry _addObjectEntry(FileEntry fileEntry) throws Exception {
-		return _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "james@liferay.com"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).put(
-				"upload", fileEntry.getFileEntryId()
-			).build());
+	private ObjectEntry _addObjectEntry(
+			FileEntry fileEntry, String objectFieldName)
+		throws Exception {
+
+		return _addObjectEntry(fileEntry.getFileEntryId(), objectFieldName);
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -7247,6 +7356,20 @@ public class ObjectEntryLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null, values, serviceContext);
+	}
+
+	private ObjectEntry _addObjectEntry(
+			long fileEntryId, String objectFieldName)
+		throws Exception {
+
+		return _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				objectFieldName, fileEntryId
+			).put(
+				"emailAddressRequired", "james@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
 	}
 
 	private ObjectEntry _addObjectEntry(Map<String, Serializable> values)
@@ -7389,6 +7512,17 @@ public class ObjectEntryLocalServiceTest {
 			_objectEntryLocalService.getObjectEntriesCount(
 				0, _objectDefinition.getObjectDefinitionId()));
 		Assert.assertEquals(count, _count());
+	}
+
+	private void _assertDLFileEntry(
+			long dlFileEntryId, String expectedClassName, long expectedClassPK)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			dlFileEntryId);
+
+		Assert.assertEquals(expectedClassName, dlFileEntry.getClassName());
+		Assert.assertEquals(expectedClassPK, dlFileEntry.getClassPK());
 	}
 
 	private void _assertFailureObjectValidationRule(

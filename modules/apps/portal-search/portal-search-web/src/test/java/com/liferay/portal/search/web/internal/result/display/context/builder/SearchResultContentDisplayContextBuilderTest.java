@@ -59,7 +59,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testHasEditPermission() throws Exception {
+	public void testHasEditPermission1() throws Exception {
 		String title = RandomTestUtil.randomString();
 
 		Mockito.doReturn(
@@ -89,7 +89,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testHasEditPermissionFalse() throws Exception {
+	public void testHasEditPermission2() throws Exception {
 		Mockito.doReturn(
 			false
 		).when(
@@ -110,7 +110,7 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
-	public void testHasEditPermissionFromNullURL() throws Exception {
+	public void testHasEditPermission3() throws Exception {
 		Mockito.doReturn(
 			null
 		).when(

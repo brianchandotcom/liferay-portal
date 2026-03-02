@@ -68,7 +68,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -102,7 +101,7 @@ public class UploadAttachmentMVCActionCommandTest {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+		_objectField = ObjectFieldUtil.addCustomObjectField(
 			new AttachmentObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -164,71 +163,15 @@ public class UploadAttachmentMVCActionCommandTest {
 
 		_uploadHandler = ReflectionTestUtil.getFieldValue(
 			_mvcActionCommand, "_uploadHandler");
-
-		ReflectionTestUtil.setFieldValue(
-			_uploadHandler, "_portal",
-			ProxyUtil.newProxyInstance(
-				UploadAttachmentMVCActionCommandTest.class.getClassLoader(),
-				new Class<?>[] {Portal.class},
-				(proxy, method, args) -> {
-					if (!Objects.equals(
-							method.getName(), "getUploadPortletRequest")) {
-
-						return method.invoke(_portal, args);
-					}
-
-					return UploadTestUtil.createUploadPortletRequest(
-						UploadTestUtil.createUploadServletRequest(
-							_getMockHttpServletRequest(
-								objectField.getObjectFieldId()),
-							HashMapBuilder.put(
-								"file", new FileItem[] {_getFileItem()}
-							).build(),
-							new HashMap<>()),
-						null, RandomTestUtil.randomString());
-				}));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		ReflectionTestUtil.setFieldValue(_uploadHandler, "_portal", _portal);
 	}
 
 	@Test
 	public void testProcessAction() throws Exception {
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "doProcessAction",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			new MockLiferayPortletActionRequest(_getMockHttpServletRequest(0)),
-			mockLiferayPortletActionResponse);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayPortletActionResponse.getHttpServletResponse();
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			mockHttpServletResponse.getContentAsString());
-
-		JSONObject fileJSONObject = jsonObject.getJSONObject("file");
-
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
-			fileJSONObject.getLong("fileEntryId"));
-
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
-
-		Assert.assertFalse(
-			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(), DLFileEntry.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(dlFileEntry.getFileEntryId()), role.getRoleId(),
-				ActionKeys.DOWNLOAD));
+		_testProcessAction(0);
+		_testProcessAction(RandomTestUtil.randomInt(1, 10));
 	}
 
-	private FileItem _getFileItem() throws Exception {
+	private FileItem _getFileItem(int fileSize) throws Exception {
 		Path path = Files.createTempFile(null, ".txt");
 
 		Files.write(path, "".getBytes());
@@ -252,7 +195,7 @@ public class UploadAttachmentMVCActionCommandTest {
 				}
 
 				public long getSize() {
-					return 1;
+					return fileSize;
 				}
 
 				public File getStoreLocation() {
@@ -298,6 +241,64 @@ public class UploadAttachmentMVCActionCommandTest {
 		return mockHttpServletRequest;
 	}
 
+	private void _testProcessAction(int fileSize) throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			_uploadHandler, "_portal",
+			ProxyUtil.newProxyInstance(
+				UploadAttachmentMVCActionCommandTest.class.getClassLoader(),
+				new Class<?>[] {Portal.class},
+				(proxy, method, args) -> {
+					if (!Objects.equals(
+							method.getName(), "getUploadPortletRequest")) {
+
+						return method.invoke(_portal, args);
+					}
+
+					return UploadTestUtil.createUploadPortletRequest(
+						UploadTestUtil.createUploadServletRequest(
+							_getMockHttpServletRequest(
+								_objectField.getObjectFieldId()),
+							HashMapBuilder.put(
+								"file", new FileItem[] {_getFileItem(fileSize)}
+							).build(),
+							new HashMap<>()),
+						null, RandomTestUtil.randomString());
+				}));
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doProcessAction",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			new MockLiferayPortletActionRequest(_getMockHttpServletRequest(0)),
+			mockLiferayPortletActionResponse);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayPortletActionResponse.getHttpServletResponse();
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			mockHttpServletResponse.getContentAsString());
+
+		JSONObject fileJSONObject = jsonObject.getJSONObject("file");
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+			fileJSONObject.getLong("fileEntryId"));
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		Assert.assertFalse(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), DLFileEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(dlFileEntry.getFileEntryId()), role.getRoleId(),
+				ActionKeys.DOWNLOAD));
+
+		ReflectionTestUtil.setFieldValue(_uploadHandler, "_portal", _portal);
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -308,6 +309,7 @@ public class UploadAttachmentMVCActionCommandTest {
 	private JSONFactory _jsonFactory;
 
 	private MVCActionCommand _mvcActionCommand;
+	private ObjectField _objectField;
 
 	@Inject
 	private Portal _portal;

@@ -56,11 +56,13 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 	public KaleoDefinition getKaleoDefinition(long kaleoDefinitionId)
 		throws PortalException {
 
-		_kaleoDefinitionModelResourcePermission.check(
-			getPermissionChecker(), null, ActionKeys.VIEW);
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.getKaleoDefinition(kaleoDefinitionId);
 
-		return _kaleoDefinitionLocalService.getKaleoDefinition(
-			kaleoDefinitionId);
+		_kaleoDefinitionModelResourcePermission.check(
+			getPermissionChecker(), kaleoDefinition, ActionKeys.VIEW);
+
+		return kaleoDefinition;
 	}
 
 	@Override
@@ -68,12 +70,15 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		_kaleoDefinitionModelResourcePermission.check(
-			getPermissionChecker(), null, ActionKeys.VIEW);
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.
+				getKaleoDefinitionByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
-		return _kaleoDefinitionLocalService.
-			getKaleoDefinitionByExternalReferenceCode(
-				externalReferenceCode, companyId);
+		_kaleoDefinitionModelResourcePermission.check(
+			getPermissionChecker(), kaleoDefinition, ActionKeys.VIEW);
+
+		return kaleoDefinition;
 	}
 
 	@Override
@@ -81,11 +86,14 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 			String name, ServiceContext serviceContext)
 		throws PortalException {
 
-		_kaleoDefinitionModelResourcePermission.check(
-			getPermissionChecker(), null, ActionKeys.VIEW);
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.getKaleoDefinition(
+				name, serviceContext);
 
-		return _kaleoDefinitionLocalService.getKaleoDefinition(
-			name, serviceContext);
+		_kaleoDefinitionModelResourcePermission.check(
+			getPermissionChecker(), kaleoDefinition, ActionKeys.VIEW);
+
+		return kaleoDefinition;
 	}
 
 	@Override

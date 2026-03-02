@@ -210,7 +210,7 @@ test('Filters are displayed in the order stored in the filtersOrder field', asyn
 	const filter1Label = getRandomString();
 	const filter2Label = getRandomString();
 	const modifiedDateField = 'dateModified';
-	const filterIds = [];
+	const filterERCs = [];
 
 	await test.step('Create a couple of new date-time filters without start nor end dates', async () => {
 		const filter1 = await dataSetManagerApiHelpers.createDataSetDateFilter({
@@ -231,7 +231,7 @@ test('Filters are displayed in the order stored in the filtersOrder field', asyn
 			type: 'date-time',
 		});
 
-		filterIds.push(filter1.id, filter2.id);
+		filterERCs.push(filter1.externalReferenceCode, filter2.externalReferenceCode);
 	});
 
 	await test.step('Add a field, so FDS has something to show', async () => {
@@ -273,7 +273,7 @@ test('Filters are displayed in the order stored in the filtersOrder field', asyn
 	await test.step('Update filters order', async () => {
 		await dataSetManagerApiHelpers.updateDataSet({
 			erc: dataSetERC,
-			filtersOrder: filterIds.reverse().join(),
+			filtersOrder: filterERCs.reverse().join(),
 		});
 
 		await dataSetFragmentPage.page.reload();

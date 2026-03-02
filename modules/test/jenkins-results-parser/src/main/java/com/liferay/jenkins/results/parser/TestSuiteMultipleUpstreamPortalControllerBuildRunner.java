@@ -24,7 +24,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class TestSuiteMultipleUpstreamPortalControllerSingleSuiteBuildRunner
+public class TestSuiteMultipleUpstreamPortalControllerBuildRunner
 	<S extends ControllerPortalTopLevelBuildData>
 		extends BaseUpstreamPortalControllerBuildRunner<S> {
 
@@ -211,7 +211,7 @@ public class TestSuiteMultipleUpstreamPortalControllerSingleSuiteBuildRunner
 	public void tearDown() {
 	}
 
-	protected TestSuiteMultipleUpstreamPortalControllerSingleSuiteBuildRunner(
+	protected TestSuiteMultipleUpstreamPortalControllerBuildRunner(
 		S buildData) {
 
 		super(buildData);

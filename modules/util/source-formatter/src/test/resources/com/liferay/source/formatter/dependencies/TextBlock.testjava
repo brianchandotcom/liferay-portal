@@ -10,13 +10,19 @@ package com.liferay.source.formatter.dependencies;
  */
 public class TextBlock {
 
-	public void method() {
+	public void method1() {
 		String colors = """
          red
          green
          blue""";
 
 		System.out.println(colors);
+	}
+
+	public String method2() {
+		return """
+
+	Hello""";
 	}
 
 }

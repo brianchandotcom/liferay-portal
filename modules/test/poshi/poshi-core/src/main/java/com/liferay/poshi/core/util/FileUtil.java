@@ -235,6 +235,16 @@ public class FileUtil {
 		return sb.toString();
 	}
 
+	public static void renameFile(String sourcePath, String newName)
+		throws IOException {
+
+		Path source = Paths.get(sourcePath);
+
+		Path target = source.resolveSibling(newName);
+
+		Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+	}
+
 	public static void replaceStringInFile(
 			String filePath, String oldSub, String newSub)
 		throws IOException {

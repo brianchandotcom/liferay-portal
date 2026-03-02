@@ -37,7 +37,7 @@ public abstract class BasePortalControllerBuildRunner
 		retirePreviousBuilds();
 
 		if (allowConcurrentBuilds() || expirePreviousBuild()) {
-			invokeBuilds();
+			invokeBuild();
 
 			return;
 		}
@@ -75,7 +75,7 @@ public abstract class BasePortalControllerBuildRunner
 			return;
 		}
 
-		invokeBuilds();
+		invokeBuild();
 	}
 
 	protected BasePortalControllerBuildRunner(S buildData) {
@@ -229,7 +229,7 @@ public abstract class BasePortalControllerBuildRunner
 		return null;
 	}
 
-	protected abstract void invokeBuilds();
+	protected abstract void invokeBuild();
 
 	protected boolean previousBuildHasCurrentSHA() {
 		String portalBranchSHA = getPortalBranchAbbreviatedSHA();

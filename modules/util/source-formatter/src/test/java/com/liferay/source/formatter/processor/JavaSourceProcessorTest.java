@@ -1002,7 +1002,14 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testTextBlock() throws Exception {
-		test("TextBlock.testjava", "Do not use text block", 14);
+		test(
+			SourceProcessorTestParameters.create(
+				"TextBlock.testjava"
+			).addExpectedMessage(
+				"Do not use text block", 14
+			).addExpectedMessage(
+				"Do not use text block", 23
+			));
 	}
 
 	@Test

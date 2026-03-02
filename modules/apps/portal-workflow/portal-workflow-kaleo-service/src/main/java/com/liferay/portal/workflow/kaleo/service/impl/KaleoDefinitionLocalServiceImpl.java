@@ -5,6 +5,9 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -17,6 +20,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -31,6 +35,7 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionVers
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -322,9 +327,9 @@ public class KaleoDefinitionLocalServiceImpl
 		OrderByComparator<KaleoDefinition> orderByComparator,
 		ServiceContext serviceContext) {
 
-		return kaleoDefinitionPersistence.findByC_S_A(
-			serviceContext.getCompanyId(), scope, active, start, end,
-			orderByComparator);
+		return kaleoDefinitionPersistence.findByG_C_S_A(
+			_getGroupId(scope, serviceContext), serviceContext.getCompanyId(),
+			scope, active, start, end, orderByComparator);
 	}
 
 	@Override
@@ -333,25 +338,27 @@ public class KaleoDefinitionLocalServiceImpl
 		OrderByComparator<KaleoDefinition> orderByComparator,
 		ServiceContext serviceContext) {
 
-		return kaleoDefinitionPersistence.findByC_S(
-			serviceContext.getCompanyId(), scope, start, end,
-			orderByComparator);
+		return kaleoDefinitionPersistence.findByG_C_S(
+			_getGroupId(scope, serviceContext), serviceContext.getCompanyId(),
+			scope, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getScopeKaleoDefinitionsCount(
 		String scope, boolean active, ServiceContext serviceContext) {
 
-		return kaleoDefinitionPersistence.countByC_S_A(
-			serviceContext.getCompanyId(), scope, active);
+		return kaleoDefinitionPersistence.countByG_C_S_A(
+			_getGroupId(scope, serviceContext), serviceContext.getCompanyId(),
+			scope, active);
 	}
 
 	@Override
 	public int getScopeKaleoDefinitionsCount(
 		String scope, ServiceContext serviceContext) {
 
-		return kaleoDefinitionPersistence.countByC_S(
-			serviceContext.getCompanyId(), scope);
+		return kaleoDefinitionPersistence.countByG_C_S(
+			_getGroupId(scope, serviceContext), serviceContext.getCompanyId(),
+			scope);
 	}
 
 	@Override
@@ -400,9 +407,47 @@ public class KaleoDefinitionLocalServiceImpl
 		return kaleoDefinition;
 	}
 
+	private long _getGroupId(String scope, ServiceContext serviceContext) {
+		if (!Objects.equals(WorkflowDefinitionConstants.SCOPE_AI, scope)) {
+			return 0L;
+		}
+
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountUserId(
+					serviceContext.getUserId());
+
+		if (accountEntryUserRels.size() != 2) {
+			return 0L;
+		}
+
+		try {
+			for (AccountEntryUserRel accountEntryUserRel :
+					accountEntryUserRels) {
+
+				AccountEntry accountEntry =
+					accountEntryUserRel.getAccountEntry();
+
+				if (!Objects.equals(
+						accountEntry.getExternalReferenceCode(), "L_AI_HUB")) {
+
+					return accountEntry.getAccountEntryGroupId();
+				}
+			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		return 0L;
+	}
+
 	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private KaleoConditionLocalService _kaleoConditionLocalService;

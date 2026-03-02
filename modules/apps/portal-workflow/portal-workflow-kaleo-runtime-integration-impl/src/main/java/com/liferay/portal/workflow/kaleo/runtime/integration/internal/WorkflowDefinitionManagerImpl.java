@@ -98,16 +98,6 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
-			long companyId, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		return _getActiveWorkflowDefinitions(
-			companyId, start, end, orderByComparator, false);
-	}
-
-	@Override
-	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, String name, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
@@ -168,16 +158,18 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			Boolean active, long companyId, String scope, int start, int end,
+			long companyId, long userId, Boolean active, String scope,
+			int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(
-			companyId, active, scope, start, end, orderByComparator, false);
+			companyId, active, scope, start, end, orderByComparator, false,
+			userId);
 	}
 
 	@Override
-	public int getLatestWorkflowDefinitionsCount(Boolean active, long companyId)
+	public int getLatestWorkflowDefinitionsCount(long companyId, Boolean active)
 		throws WorkflowException {
 
 		try {
@@ -296,7 +288,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(
-			companyId, null, scope, start, end, orderByComparator, true);
+			companyId, null, scope, start, end, orderByComparator, true, 0L);
 	}
 
 	@Override
@@ -520,13 +512,14 @@ public class WorkflowDefinitionManagerImpl
 	private List<WorkflowDefinition> _getLatestWorkflowDefinitions(
 			long companyId, Boolean active, String scope, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator,
-			boolean liberal)
+			boolean liberal, long userId)
 		throws WorkflowException {
 
 		try {
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCompanyId(companyId);
+			serviceContext.setUserId(userId);
 
 			List<KaleoDefinition> kaleoDefinitions = null;
 

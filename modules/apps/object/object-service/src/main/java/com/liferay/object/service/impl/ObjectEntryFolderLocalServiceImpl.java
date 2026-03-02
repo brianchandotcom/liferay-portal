@@ -401,8 +401,7 @@ public class ObjectEntryFolderLocalServiceImpl
 			objectEntryFolder, parentObjectEntryFolderId, replace);
 
 		return _moveObjectEntryFolder(
-			userId, objectEntryFolder, parentObjectEntryFolderId,
-			serviceContext);
+			objectEntryFolder, parentObjectEntryFolderId, serviceContext);
 	}
 
 	@Override
@@ -819,8 +818,8 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	private ObjectEntryFolder _moveObjectEntryFolder(
-			long userId, ObjectEntryFolder objectEntryFolder,
-			long parentObjectEntryFolderId, ServiceContext serviceContext)
+			ObjectEntryFolder objectEntryFolder, long parentObjectEntryFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long groupId = objectEntryFolder.getGroupId();
@@ -847,7 +846,7 @@ public class ObjectEntryFolderLocalServiceImpl
 						objectEntryFolder.getObjectEntryFolderId())) {
 
 				_objectEntryLocalService.moveObjectEntry(
-					userId, objectEntry.getObjectEntryId(),
+					objectEntry.getObjectEntryId(),
 					objectEntry.getObjectEntryFolderId(),
 					objectEntry.getValues(), serviceContext);
 			}
@@ -859,7 +858,7 @@ public class ObjectEntryFolderLocalServiceImpl
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
 				_moveObjectEntryFolder(
-					userId, childObjectEntryFolder,
+					childObjectEntryFolder,
 					childObjectEntryFolder.getParentObjectEntryFolderId(),
 					serviceContext);
 			}

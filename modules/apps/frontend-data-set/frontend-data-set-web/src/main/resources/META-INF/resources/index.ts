@@ -40,6 +40,7 @@ export {ACTION_ITEM_TARGETS} from './utils/actionItems/constants';
 export {default as findAction} from './utils/actionItems/findAction';
 
 export {replaceTokens} from './utils/actionItems/formatActionURL';
+export {readConfigFromURL} from './utils/configInURL';
 
 export {default as FDS_EVENT} from './utils/eventsDefinitions';
 

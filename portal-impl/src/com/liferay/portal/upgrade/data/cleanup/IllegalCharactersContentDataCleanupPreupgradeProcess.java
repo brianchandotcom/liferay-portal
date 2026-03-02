@@ -70,13 +70,9 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 
 		String charSentence = "CHAR(" + charCode + ")";
 
-		if (db.getDBType() == DBType.DB2) {
-			charSentence = StringBundler.concat(
-				"CAST(CHR(", charCode, ") AS VARCHAR(", charCode,
-				") FOR BIT DATA");
-		}
-		else if ((db.getDBType() == DBType.ORACLE) ||
-				 (db.getDBType() == DBType.POSTGRESQL)) {
+		if ((db.getDBType() == DBType.DB2) ||
+			(db.getDBType() == DBType.ORACLE) ||
+			(db.getDBType() == DBType.POSTGRESQL)) {
 
 			charSentence = "CHR(" + charCode + ")";
 		}

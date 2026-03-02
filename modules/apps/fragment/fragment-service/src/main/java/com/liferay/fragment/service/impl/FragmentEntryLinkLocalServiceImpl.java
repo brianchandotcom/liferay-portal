@@ -29,6 +29,8 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.LimitStep;
+import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
@@ -67,6 +69,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -326,11 +329,21 @@ public class FragmentEntryLinkLocalServiceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws PortalException {
 
-		return fragmentEntryLinkFinder.findByG_FEERC_FESERC(
-			groupId, fragmentEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentEntry.getGroupId(), groupId),
-			start, end, orderByComparator);
+		Predicate predicate = _getAllFragmentEntryLinksByFragmentEntryPredicate(
+			fragmentEntry, FragmentEntryLinkTable.INSTANCE);
+
+		return fragmentEntryLinkPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				FragmentEntryLinkTable.INSTANCE
+			).from(
+				FragmentEntryLinkTable.INSTANCE
+			).where(
+				predicate.and(_getMaxCreateDatePredicate(fragmentEntry))
+			).orderBy(
+				_getOrderByStepLimitStepFunction(orderByComparator)
+			).limit(
+				start, end
+			));
 	}
 
 	@Override
@@ -888,6 +901,50 @@ public class FragmentEntryLinkLocalServiceImpl
 		).and(
 			fragmentEntryLinkTable.deleted.eq(false)
 		);
+	}
+
+	private Predicate _getMaxCreateDatePredicate(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		FragmentEntryLinkTable tempFragmentEntryLinkTable =
+			FragmentEntryLinkTable.INSTANCE.as("tempFragmentEntryLinkTable");
+
+		Predicate predicate = _getAllFragmentEntryLinksByFragmentEntryPredicate(
+			fragmentEntry, tempFragmentEntryLinkTable);
+
+		return FragmentEntryLinkTable.INSTANCE.createDate.in(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.max(
+					tempFragmentEntryLinkTable.createDate)
+			).from(
+				tempFragmentEntryLinkTable
+			).where(
+				predicate.and(
+					tempFragmentEntryLinkTable.groupId.eq(
+						FragmentEntryLinkTable.INSTANCE.groupId)
+				).and(
+					tempFragmentEntryLinkTable.classNameId.eq(
+						FragmentEntryLinkTable.INSTANCE.classNameId)
+				).and(
+					tempFragmentEntryLinkTable.classPK.eq(
+						FragmentEntryLinkTable.INSTANCE.classPK)
+				)
+			));
+	}
+
+	private Function<OrderByStep, LimitStep> _getOrderByStepLimitStepFunction(
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return orderByStep -> {
+			if (orderByComparator == null) {
+				return orderByStep.orderBy(
+					FragmentEntryLinkTable.INSTANCE.lastPropagationDate.
+						descending());
+			}
+
+			return orderByStep.orderBy(
+				FragmentEntryLinkTable.INSTANCE, orderByComparator);
+		};
 	}
 
 	private String _getProcessedHTML(

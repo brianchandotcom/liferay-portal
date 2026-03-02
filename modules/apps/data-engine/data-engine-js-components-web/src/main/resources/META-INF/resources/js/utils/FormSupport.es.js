@@ -171,7 +171,11 @@ function cleanRow(row) {
 		.map(cleanColumn)
 		.filter((column) => !!column.fields.length);
 
-	return row;
+	/**
+	 * Ensures row's column sizes sum is 12 by creating
+	 * dropzone column with remaining size
+	 */
+	return normalizeRowSizes(row);
 }
 
 export function getFieldIndexes(pages, fieldName) {
@@ -250,6 +254,31 @@ export function isEmpty(pages) {
 	return pages.every((page, pageIndex) => isEmptyPage(pages, pageIndex));
 }
 
+function normalizeRowSizes(row) {
+	const columns = Array.isArray(row.columns) ? row.columns : [];
+
+	if (!columns.length) {
+		return row;
+	}
+
+	const total = columns.reduce((sum, column) => sum + (column.size || 0), 0);
+
+	if (total === 12) {
+		return row;
+	}
+
+	const diff = 12 - total;
+
+	if (diff > 0) {
+		columns.push(implAddColumn(diff, []));
+	}
+
+	return {
+		...row,
+		columns,
+	};
+}
+
 export function setColumnFields(
 	pages,
 	pageIndex,
@@ -285,12 +314,14 @@ export function removeColumn(pages, pageIndex, rowIndex, columnIndex) {
 		let newRow = row;
 
 		if (currentRowIndex === rowIndex && currentPageIndex === pageIndex) {
-			newRow = {
+			const updatedColumns = row.columns.filter(
+				(_, currentColumnIndex) => currentColumnIndex !== columnIndex
+			);
+
+			newRow = normalizeRowSizes({
 				...row,
-				columns: row.columns.filter((col, currentColumnIndex) => {
-					return currentColumnIndex !== columnIndex;
-				}),
-			};
+				columns: updatedColumns,
+			});
 		}
 
 		return newRow;

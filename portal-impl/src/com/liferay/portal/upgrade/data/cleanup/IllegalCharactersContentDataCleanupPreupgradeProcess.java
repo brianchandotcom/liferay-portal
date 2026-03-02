@@ -76,8 +76,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 				") FOR BIT DATA");
 		}
 		else if ((db.getDBType() == DBType.ORACLE) ||
-				 (db.getDBType() == DBType.POSTGRESQL) ||
-				 (db.getDBType() == DBType.SQLSERVER)) {
+				 (db.getDBType() == DBType.POSTGRESQL)) {
 
 			charSentence = "CHR(" + charCode + ")";
 		}

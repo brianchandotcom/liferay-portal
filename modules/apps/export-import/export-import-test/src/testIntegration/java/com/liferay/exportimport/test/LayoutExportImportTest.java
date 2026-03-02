@@ -300,8 +300,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		exportImportLayouts(
 			new long[] {contentLayout.getLayoutId()}, getImportParameterMap());
 
-		Layout importedLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			contentLayout.getUuid(), importedGroup.getGroupId(), false);
+		Layout importedLayout =
+			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+				contentLayout.getExternalReferenceCode(),
+				importedGroup.getGroupId());
 
 		Layout importedDraftLayout = importedLayout.fetchDraftLayout();
 
@@ -310,9 +312,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			importedLayout.getName(), importedDraftLayout.getName());
 
 		Layout importedMasterPageTemplateLayout =
-			_layoutLocalService.fetchLayoutByUuidAndGroupId(
-				masterPageTemplateLayout.getUuid(), importedGroup.getGroupId(),
-				true);
+			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+				masterPageTemplateLayout.getExternalReferenceCode(),
+				importedGroup.getGroupId());
 
 		Layout importedDraftLayoutOfMasterPageTemplate =
 			importedMasterPageTemplateLayout.fetchDraftLayout();

@@ -25,6 +25,11 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseFragmentRenderer<T> implements FragmentRenderer {
 
 	@Override
+	public boolean isSelectable(HttpServletRequest httpServletRequest) {
+		return false;
+	}
+
+	@Override
 	public void render(
 			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest,
@@ -37,9 +42,12 @@ public abstract class BaseFragmentRenderer<T> implements FragmentRenderer {
 
 			T displayContext = getDisplayContext(httpServletRequest);
 
-			Class<?> clazz = displayContext.getClass();
+			if (displayContext != null) {
+				Class<?> clazz = displayContext.getClass();
 
-			httpServletRequest.setAttribute(clazz.getName(), displayContext);
+				httpServletRequest.setAttribute(
+					clazz.getName(), displayContext);
+			}
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -51,8 +59,9 @@ public abstract class BaseFragmentRenderer<T> implements FragmentRenderer {
 		}
 	}
 
-	protected abstract T getDisplayContext(
-		HttpServletRequest httpServletRequest);
+	protected T getDisplayContext(HttpServletRequest httpServletRequest) {
+		return null;
+	}
 
 	protected abstract String getJSPPath();
 

@@ -12,8 +12,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class PortalTestSuiteUpstreamControllerBuildData
-	extends PortalTopLevelBuildData {
+public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 
 	public String getTestrayBuildName() {
 		String testrayProjectName = getTestrayProjectName();
@@ -70,7 +69,7 @@ public class PortalTestSuiteUpstreamControllerBuildData
 		return testSuiteName;
 	}
 
-	protected PortalTestSuiteUpstreamControllerBuildData(
+	protected ControllerPortalTopLevelBuildData(
 		String runID, String jobName, String buildURL) {
 
 		super(runID, jobName, buildURL);

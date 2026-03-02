@@ -15,7 +15,7 @@ import java.util.Properties;
  * @author Michael Hashimoto
  */
 public class SingleUpstreamPortalControllerSingleSuiteBuildRunner
-	<S extends PortalTestSuiteUpstreamControllerBuildData>
+	<S extends ControllerPortalTopLevelBuildData>
 		extends BaseUpstreamPortalControllerBuildRunner<S> {
 
 	protected SingleUpstreamPortalControllerSingleSuiteBuildRunner(

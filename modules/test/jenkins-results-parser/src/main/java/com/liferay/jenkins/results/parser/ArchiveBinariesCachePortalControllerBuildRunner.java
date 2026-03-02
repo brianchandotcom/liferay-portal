@@ -27,7 +27,7 @@ public class ArchiveBinariesCachePortalControllerBuildRunner
 	}
 
 	@Override
-	protected void invokeBuilds() {
+	protected void invokeBuild() {
 		StringBuilder sb = new StringBuilder();
 
 		String invocationJobURL = _getInvocationJobURL();

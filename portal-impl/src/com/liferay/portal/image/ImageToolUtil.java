@@ -380,6 +380,32 @@ public class ImageToolUtil {
 		return _defaultCompanyLogo;
 	}
 
+	public static Image getDefaultLiferayLogo() {
+		if (_defaultLiferayLogo != null) {
+			return _defaultLiferayLogo;
+		}
+
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
+
+		try {
+			InputStream inputStream = classLoader.getResourceAsStream(
+				"com/liferay/portal/dependencies/liferay_logo.png");
+
+			if (inputStream == null) {
+				_log.error("Default liferay logo is not available");
+			}
+
+			_defaultLiferayLogo = getImage(inputStream);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to configure the default liferay logo: " +
+					exception.getMessage());
+		}
+
+		return _defaultLiferayLogo;
+	}
+
 	public static Image getDefaultOrganizationLogo() {
 		if (_defaultOrganizationLogo != null) {
 			return _defaultOrganizationLogo;
@@ -992,6 +1018,7 @@ public class ImageToolUtil {
 		new Snapshot<>(ImageToolUtil.class, CMYKImageTool.class);
 	private static Image _defaultCompanyGroupLogo;
 	private static Image _defaultCompanyLogo;
+	private static Image _defaultLiferayLogo;
 	private static Image _defaultOrganizationLogo;
 	private static Image _defaultSpacer;
 	private static Image _defaultUserFemalePortrait;

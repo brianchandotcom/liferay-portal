@@ -85,6 +85,8 @@ public abstract class BaseAssigneeSectionDisplayContext {
 		return JSONUtil.put(
 			"externalReferenceCode", user.getExternalReferenceCode()
 		).put(
+			"id", user.getUserId()
+		).put(
 			"name", user.getFullName()
 		).put(
 			"portrait", user.getPortraitURL(_themeDisplay)

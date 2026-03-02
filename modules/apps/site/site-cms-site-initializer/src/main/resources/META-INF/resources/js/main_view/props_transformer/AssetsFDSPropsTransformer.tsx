@@ -24,6 +24,7 @@ import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPer
 import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import openResetAssetPermissionModal from '../default_permission/ResetPermissionModalContent';
+import {handleFindAndReplace} from '../find_and_replace/utils/handleFindAndReplace';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import ExportTranslationModalContent from '../modal/ExportTranslationModalContent';
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
@@ -569,6 +570,22 @@ export default function AssetsFDSPropsTransformer({
 					apiURL: otherProps.apiURL,
 					dataSetId: otherProps.id,
 					selectedData,
+				});
+			}
+			else if (action?.data.id === 'find-and-replace') {
+				handleFindAndReplace({
+					availableLocales: additionalProps.availableLocales,
+					dataSetId: otherProps.id,
+					fdsItems: selectedData.items,
+					stickerConfig: {
+						fileMimeTypeCssClasses:
+							additionalProps.fileMimeTypeCssClasses,
+						fileMimeTypeIcons: additionalProps.fileMimeTypeIcons,
+						objectDefinitionCssClasses:
+							additionalProps.objectDefinitionCssClasses,
+						objectDefinitionIcons:
+							additionalProps.objectDefinitionIcons,
+					},
 				});
 			}
 			else if (action?.data?.id === 'permissions') {

@@ -566,16 +566,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			false);
 	}
 
-	@FeatureFlag(enable = false, value = "LPD-41367")
-	@Test
-	@TestInfo("LPD-77689")
-	public void testExportImportLayoutUtilityPageEntryWithPreviewFileEntry()
-		throws Exception {
-
-		_testExportImportLayoutUtilityPageEntryWithPreviewFileEntry();
-	}
-
-	@FeatureFlag("LPD-41367")
 	@Test
 	@TestInfo("LPD-77689")
 	public void testExportImportLayoutUtilityPageEntryWithPreviewFileEntryWithBatch()

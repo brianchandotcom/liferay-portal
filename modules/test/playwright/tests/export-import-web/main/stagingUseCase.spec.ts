@@ -63,7 +63,6 @@ const testWithBatchStagingFF = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
-		'LPD-41367': {enabled: true},
 	}),
 	loginTest(),
 	stagingConfigurationPageTest,

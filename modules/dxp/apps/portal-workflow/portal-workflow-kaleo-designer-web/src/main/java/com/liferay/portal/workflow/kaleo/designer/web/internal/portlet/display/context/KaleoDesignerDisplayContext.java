@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -76,7 +78,7 @@ public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
 		ActionExecutorManager actionExecutorManager,
-		RenderRequest renderRequest,
+		GroupLocalService groupLocalService, RenderRequest renderRequest,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		PortletResourcePermission portletResourcePermission,
 		ResourceBundleLoader resourceBundleLoader,
@@ -84,6 +86,7 @@ public class KaleoDesignerDisplayContext {
 		UserLocalService userLocalService) {
 
 		_actionExecutorManager = actionExecutorManager;
+		_groupLocalService = groupLocalService;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
 		_portletResourcePermission = portletResourcePermission;
@@ -99,10 +102,40 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public boolean canPublishWorkflowDefinition() {
-		return _portletResourcePermission.contains(
-			PermissionThreadLocal.getPermissionChecker(),
-			_themeDisplay.getCompanyGroupId(),
-			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
+		if (_containsAddNewWorkflowPermission(
+				_themeDisplay.getCompanyGroupId())) {
+
+			return true;
+		}
+
+		LiferayPortletRequest liferayPortletRequest =
+			_kaleoDesignerRequestHelper.getLiferayPortletRequest();
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			(KaleoDefinitionVersion)liferayPortletRequest.getAttribute(
+				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
+
+		if (kaleoDefinitionVersion != null) {
+			return _containsAddNewWorkflowPermission(
+				kaleoDefinitionVersion.getGroupId());
+		}
+
+		String groupExternalReferenceCode = getGroupExternalReferenceCode(
+			(RenderRequest)
+				_kaleoDesignerRequestHelper.getLiferayPortletRequest());
+
+		if (Validator.isNull(groupExternalReferenceCode)) {
+			return false;
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			groupExternalReferenceCode, _themeDisplay.getCompanyId());
+
+		if (group == null) {
+			return false;
+		}
+
+		return _containsAddNewWorkflowPermission(group.getGroupId());
 	}
 
 	public String getBackURL(RenderRequest renderRequest) {
@@ -719,6 +752,12 @@ public class KaleoDesignerDisplayContext {
 			});
 	}
 
+	private boolean _containsAddNewWorkflowPermission(long groupId) {
+		return _portletResourcePermission.contains(
+			PermissionThreadLocal.getPermissionChecker(), groupId,
+			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
+	}
+
 	private String _getConfigureAssignementLink() {
 		return _buildErrorLink(
 			"configure-assignments", _getWorkflowDefinitionLinkPortletURL());
@@ -777,6 +816,7 @@ public class KaleoDesignerDisplayContext {
 		KaleoDesignerDisplayContext.class);
 
 	private final ActionExecutorManager _actionExecutorManager;
+	private final GroupLocalService _groupLocalService;
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 	private KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;

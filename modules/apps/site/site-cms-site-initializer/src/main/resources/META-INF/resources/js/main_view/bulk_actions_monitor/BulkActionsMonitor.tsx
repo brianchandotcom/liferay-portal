@@ -22,7 +22,10 @@ import {
 	IBulkActionTaskType,
 } from '../../common/types/BulkActionTask';
 import {START_TASK} from '../../common/utils/events';
-import {displaySystemErrorToast} from '../../common/utils/toastUtil';
+import {
+	displayCreateTaskErrorToast,
+	displaySystemErrorToast,
+} from '../../common/utils/toastUtil';
 import BulkActionsMonitorItemList from './components/BulkActionsMonitorItemList';
 import {BulkActionTaskStarter} from './services/BulkActionTaskStarter';
 import {
@@ -124,8 +127,8 @@ function BulkActionsMonitor() {
 			previousTasksRef.current = newTasks;
 			setTasks(newTasks);
 		}
-		catch (error: any) {
-			console.error(error);
+		catch (error) {
+			displayCreateTaskErrorToast(null);
 		}
 		finally {
 			isFetchingRef.current = false;
@@ -214,7 +217,7 @@ function BulkActionsMonitor() {
 				if (response.data) {
 					bulkAction.onCreateSuccess(response);
 
-					const newTask = response.data as any;
+					const newTask = response.data as unknown as IBulkActionTask;
 
 					if (newTask) {
 						const {additionalData, selectedData} = bulkActionDTO;

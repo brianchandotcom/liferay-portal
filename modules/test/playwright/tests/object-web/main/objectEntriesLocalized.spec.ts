@@ -10,7 +10,6 @@ import {
 import {expect, mergeTests} from '@playwright/test';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
@@ -30,7 +29,6 @@ import {postListTypeDefinitionListTypeEntries} from './utils/postListTypeDefinit
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
-	applicationsMenuPageTest,
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	isolatedSiteTest,

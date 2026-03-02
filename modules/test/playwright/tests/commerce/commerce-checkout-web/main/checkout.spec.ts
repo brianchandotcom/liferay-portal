@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {accountsPagesTest} from '../../../../fixtures/accountsPagesTest';
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
@@ -33,7 +32,6 @@ import {miniumSetUp} from '../../utils/commerce';
 import {getDateFormatted, setFutureDate} from '../../utils/date';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	accountsPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,

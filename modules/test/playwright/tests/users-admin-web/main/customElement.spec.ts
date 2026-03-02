@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -15,7 +14,6 @@ import {WaitAction} from '../../client-extension-web/main/pages/EditClientExtens
 import {componentsPageTest} from '../../configuration-admin-web/main/fixtures/ComponentsPageTest';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	componentsPageTest,
 	editCustomElementPageTest,
 	featureFlagsTest({

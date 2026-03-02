@@ -6,7 +6,6 @@
 import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -32,7 +31,6 @@ const expect = baseExpect.extend({
 
 const autoSaveTest = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPD-11228': {enabled: true},
 		'LPD-36105': {enabled: true},

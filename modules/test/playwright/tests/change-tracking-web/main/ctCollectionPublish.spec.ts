@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
@@ -22,7 +21,6 @@ import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	blogsPagesTest,
 	changeTrackingPagesTest,
 	featureFlagsTest({

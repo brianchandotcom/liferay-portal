@@ -6,7 +6,6 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -34,7 +33,6 @@ import {navigationMenuWidgetPagesTest} from './fixtures/navigationMenuWidgetPage
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	customFieldsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({

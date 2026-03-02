@@ -8,7 +8,6 @@ import {createReadStream} from 'fs';
 import path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
@@ -34,7 +33,6 @@ import {portletPublishToLivePageTest} from './fixtures/portletPublishToLivePageT
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	exportImportPagesTest,
 	featureFlagsTest({

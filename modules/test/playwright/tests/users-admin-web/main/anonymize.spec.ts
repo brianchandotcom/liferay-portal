@@ -7,7 +7,6 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'node:path';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {contactsCenterPagesTest} from '../../../fixtures/contactsCenterPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -29,7 +28,6 @@ import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	blogsPagesTest,
 	contactsCenterPagesTest,
 	dataApiHelpersTest,

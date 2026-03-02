@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -17,7 +16,6 @@ import {stagingConfigurationPageTest} from '../../staging-configuration-web/main
 
 const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	isolatedSiteTest,
 	loginTest(),
 	navigationMenusPagesTest,

@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -16,7 +15,6 @@ import getRandomString from '../../../utils/getRandomString';
 import performLoginViaApi from '../../../utils/performLogin';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	captchaConfigPageTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},

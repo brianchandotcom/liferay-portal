@@ -5,14 +5,12 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
 import {searchTableRowByValue} from '../commerceDNDTablePage';
 
 export class CommerceAdminChannelDetailsCountriesPage {
 	readonly addCountryAddButton: Locator;
 	readonly addCountryButton: Locator;
 	readonly addCountryFrame: FrameLocator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly countriesTable: Locator;
 	readonly countriesTableRow: (
 		colPosition: number,
@@ -34,7 +32,6 @@ export class CommerceAdminChannelDetailsCountriesPage {
 		});
 		this.addCountryButton = page.getByLabel('Add Country');
 		this.addCountryFrame = page.frameLocator('iframe[title="Add Country"]');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.countriesTable = page.locator(
 			'#_com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet_editChannelContainer .fds table'
 		);

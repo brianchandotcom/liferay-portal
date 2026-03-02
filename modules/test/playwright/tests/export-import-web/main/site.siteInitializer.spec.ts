@@ -13,7 +13,6 @@ import fs from 'fs/promises';
 import * as path from 'path';
 import {getComparator} from 'playwright-core/lib/utils';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -28,7 +27,6 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	companyExportImportPageTest,
 	dataApiHelpersTest,
 	exportImportPagesTest,

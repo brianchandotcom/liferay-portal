@@ -5,14 +5,12 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
 import {searchTableRowByValue} from '../commerceDNDTablePage';
 
 export class CommerceAdminChannelDetailsCurrenciesPage {
 	readonly addCurrencyAddButton: Locator;
 	readonly addCurrencyButton: Locator;
 	readonly addCurrencyFrame: FrameLocator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly currenciesTable: Locator;
 	readonly currenciesTableRow: (
 		colPosition: number,
@@ -38,7 +36,6 @@ export class CommerceAdminChannelDetailsCurrenciesPage {
 		this.addCurrencyFrame = page.frameLocator(
 			'iframe[title="Add Currency"]'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.currenciesTable = page.locator(
 			'#_com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet_editChannelContainer .fds table'
 		);

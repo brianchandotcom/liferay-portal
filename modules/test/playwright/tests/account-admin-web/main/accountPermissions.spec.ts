@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
@@ -25,7 +24,6 @@ import {addAccountRole, initAccountAdministrator} from './utils/roles';
 
 export const test = mergeTests(
 	accountsPagesTest,
-	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	isolatedSiteTest,
 	featureFlagsTest({

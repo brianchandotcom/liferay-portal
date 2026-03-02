@@ -96,6 +96,49 @@ resource "kubernetes_manifest" "function_go_templating" {
 		}
 		spec={
 			package="xpkg.upbound.io/crossplane-contrib/function-go-templating:v0.11.3"
+			runtimeConfigRef={
+				name="function-go-templating-runtime-config"
+			}
+		}
+	}
+	provider=kubernetes
+}
+resource "kubernetes_manifest" "function_go_templating_runtime_config" {
+	manifest={
+		apiVersion="pkg.crossplane.io/v1beta1"
+		kind="DeploymentRuntimeConfig"
+		metadata={
+			name="function-go-templating-runtime-config"
+		}
+		spec={
+			deploymentTemplate={
+				spec={
+					selector={
+						matchLabels={
+							"pkg.crossplane.io/function"="function-go-templating"
+						}
+					}
+					template={
+						spec={
+							containers=[
+								{
+									name="package-runtime"
+									resources={
+										limits={
+											cpu="1000m"
+											memory="1Gi"
+										}
+										requests={
+											cpu="500m"
+											memory="512Mi"
+										}
+									}
+								},
+							]
+						}
+					}
+				}
+			}
 		}
 	}
 	provider=kubernetes

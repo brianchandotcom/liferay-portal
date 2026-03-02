@@ -117,22 +117,21 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	private String _preFormatArray(String line) {
 		Matcher matcher = _dashPattern1.matcher(line);
 
-		if (matcher.matches()) {
-			StringBundler sb = new StringBundler(3);
-
-			String indent = matcher.group(1);
-
-			sb.append(StringUtil.trimTrailing(indent));
-
-			sb.append("\n");
-			sb.append(
-				_preFormatArray(
-					indent.replaceFirst("-", " ") + matcher.group(2)));
-
-			return sb.toString();
+		if (!matcher.matches()) {
+			return line;
 		}
 
-		return line;
+		StringBundler sb = new StringBundler(3);
+
+		String indent = matcher.group(1);
+
+		sb.append(StringUtil.trimTrailing(indent));
+
+		sb.append("\n");
+		sb.append(
+			_preFormatArray(indent.replaceFirst("-", " ") + matcher.group(2)));
+
+		return sb.toString();
 	}
 
 	private static final String[] _INCLUDES = {

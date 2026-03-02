@@ -39,7 +39,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -249,10 +248,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public boolean isConfigurationEnabled() {
 		long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-41367")) {
-			return false;
-		}
 
 		PortletDataContext portletDataContext = new PortletDataContextImpl(
 			null, false);

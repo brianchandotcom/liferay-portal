@@ -2026,7 +2026,6 @@ public class BatchEnginePortletDataHandlerTest {
 			MapUtil.getString(importedObjectEntry.getValues(), picklistName));
 	}
 
-	@FeatureFlag("LPD-41367")
 	@Test
 	@TestInfo("LPD-70661")
 	public void testIsConfigurationEnabled() throws Exception {

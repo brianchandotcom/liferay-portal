@@ -39,23 +39,49 @@ public class FragmentEntryLinkCTEventListener implements CTEventListener {
 				continue;
 			}
 
-			String value = fragmentEntryLink.getEditableValues();
-
-			String parameter = "previewCTCollectionId=" + ctCollectionId;
-
-			while (value.contains(parameter)) {
-				int index = value.indexOf(parameter);
-
-				value = StringUtil.removeSubstring(
-					value,
-					value.substring(index - 1, index + parameter.length()));
-			}
-
-			fragmentEntryLink.setEditableValues(value);
+			fragmentEntryLink.setHtml(
+				_removePreviewCTCollectionId(
+					ctCollectionId, fragmentEntryLink.getHtml()));
+			fragmentEntryLink.setEditableValues(
+				_removePreviewCTCollectionId(
+					ctCollectionId, fragmentEntryLink.getEditableValues()));
 
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				fragmentEntryLink);
 		}
+	}
+
+	private String _removePreviewCTCollectionId(
+		long ctCollectionId, String string) {
+
+		String substring = "previewCTCollectionId=" + ctCollectionId;
+
+		while (string.contains(substring)) {
+			int index = string.indexOf(substring);
+
+			if (((index + substring.length()) < string.length()) &&
+				(string.charAt(index + substring.length()) == '&')) {
+
+				string = StringUtil.removeSubstring(
+					string,
+					string.substring(index, index + substring.length() + 1));
+			}
+			else if (((index - 1) >= 0) &&
+					 ((string.charAt(index - 1) == '?') ||
+					  (string.charAt(index - 1) == '&'))) {
+
+				string = StringUtil.removeSubstring(
+					string,
+					string.substring(index - 1, index + substring.length()));
+			}
+			else {
+				string = StringUtil.removeSubstring(
+					string,
+					string.substring(index, index + substring.length()));
+			}
+		}
+
+		return string;
 	}
 
 	@Reference

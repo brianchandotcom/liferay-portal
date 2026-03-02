@@ -2966,25 +2966,41 @@ public class RenderLayoutStructureTagTest {
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
-		String content = _getRenderLayoutHTML(layout);
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
 
-		Assert.assertTrue(
-			content,
-			content.contains(
-				StringBundler.concat(
-					"<a href=\"https://www.liferay.com/\"><img alt=\"\" class=",
-					"\"w-100\" data-lfr-editable-id=\"image-square\" data-lfr-",
-					"editable-type=\"image\" src=\"",
-					HtmlUtil.escape(
-						_dlURLHelper.getPreviewURL(
-							fileEntry, fileEntry.getFileVersion(),
-							ContentLayoutTestUtil.getThemeDisplay(
-								_companyLocalService.getCompany(
-									_group.getCompanyId()),
-								_group, layout),
-							StringPool.BLANK)),
-					"\" data-fileentryid=\"", fileEntry.getFileEntryId(),
-					"\"")));
+		_serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		try {
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout, mockHttpServletRequest);
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)mockHttpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Assert.assertTrue(
+				content,
+				content.contains(
+					StringBundler.concat(
+						"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
+						"class=\"w-100\" data-lfr-editable-id=",
+						"\"image-square\" data-lfr-editable-type=\"image\" ",
+						"src=\"",
+						HtmlUtil.escape(
+							_dlURLHelper.getPreviewURL(
+								fileEntry, fileEntry.getFileVersion(),
+								themeDisplay, StringPool.BLANK)),
+						"\" data-fileentryid=\"", fileEntry.getFileEntryId(),
+						"\"")));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test

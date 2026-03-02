@@ -1,0 +1,44 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Locator, Page} from '@playwright/test';
+
+type BreadcrumbActions = 'Edit' | 'Watch Project' | 'Delete';
+
+export class ProjectPage {
+	readonly deleteButton: Locator;
+	readonly detailsTab: Locator;
+	readonly moreActionsButton: Locator;
+	readonly newButton: Locator;
+	readonly newTaskButton: Locator;
+	readonly page: Page;
+	readonly tasksTab: Locator;
+
+	constructor(page: Page) {
+		this.deleteButton = page.getByRole('button', {
+			name: 'Delete',
+		});
+		this.detailsTab = page.getByRole('tab', {
+			name: 'Details',
+		});
+		this.moreActionsButton = page.getByRole('button', {
+			name: 'More Actions',
+		});
+		this.newButton = page.getByRole('button', {
+			name: 'New',
+		});
+		this.newTaskButton = page.getByRole('button', {
+			name: 'New Task',
+		});
+		this.page = page;
+		this.tasksTab = page.getByRole('tab', {
+			name: 'Tasks',
+		});
+	}
+
+	getBreadcrumbAction(filter: BreadcrumbActions) {
+		return this.page.getByRole('menuitem', {name: filter});
+	}
+}

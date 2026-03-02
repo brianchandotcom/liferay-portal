@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationObserver;
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnectionBuilder;
+import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch8.internal.connection.constants.ConnectionConstants;
 import com.liferay.portal.search.elasticsearch8.internal.sidecar.constants.SidecarConstants;
@@ -97,10 +97,11 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 				elasticsearchConfigurationWrapper, processExecutor,
 				_resolveHomePath(workPath), this, processFile, workPath);
 
-			ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
-				new ElasticsearchConnectionBuilder();
+			ElasticsearchConnection.Builder builder =
+				new ElasticsearchConnection.Builder(
+					() -> new String[] {_sidecar.getNetworkHostAddress()});
 
-			elasticsearchConnectionBuilder.active(
+			builder.active(
 				true
 			).compressionEnabled(
 				elasticsearchConfigurationWrapper.compressionEnabled()
@@ -112,17 +113,12 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 				elasticsearchConfigurationWrapper.maxConnectionsPerRoute()
 			).postCloseRunnable(
 				_sidecar::stop
-			).preConnectElasticsearchConnectionConsumer(
-				elasticsearchConnection -> {
-					_sidecar.start();
-
-					elasticsearchConnection.setNetworkHostAddresses(
-						new String[] {_sidecar.getNetworkHostAddress()});
-				}
+			).preConnectRunnable(
+				_sidecar::start
 			);
 
 			elasticsearchConnectionManager.addElasticsearchConnection(
-				elasticsearchConnectionBuilder.build());
+				builder.build());
 
 			_startupSuccessful = true;
 		}

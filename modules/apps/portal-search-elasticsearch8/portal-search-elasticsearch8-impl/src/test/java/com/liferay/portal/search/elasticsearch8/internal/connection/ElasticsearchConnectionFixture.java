@@ -75,27 +75,25 @@ public class ElasticsearchConnectionFixture
 			Mockito.mock(SidecarManager.class),
 			new File(_workPath.toFile(), "sidecar.process"), _workPath);
 
-		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
-			new ElasticsearchConnectionBuilder();
+		ElasticsearchConnection.Builder builder =
+			new ElasticsearchConnection.Builder(
+				() -> new String[] {sidecar.getNetworkHostAddress()});
 
-		elasticsearchConnectionBuilder.active(
+		builder.active(
 			true
 		).connectionId(
 			ConnectionConstants.SIDECAR_CONNECTION_ID
 		).postCloseRunnable(
 			sidecar::stop
-		).preConnectElasticsearchConnectionConsumer(
-			elasticsearchConnection -> {
+		).preConnectRunnable(
+			() -> {
 				_deleteTmpDir();
 
 				sidecar.start();
-
-				elasticsearchConnection.setNetworkHostAddresses(
-					new String[] {sidecar.getNetworkHostAddress()});
 			}
 		);
 
-		_elasticsearchConnection = elasticsearchConnectionBuilder.build();
+		_elasticsearchConnection = builder.build();
 
 		return _elasticsearchConnection;
 	}

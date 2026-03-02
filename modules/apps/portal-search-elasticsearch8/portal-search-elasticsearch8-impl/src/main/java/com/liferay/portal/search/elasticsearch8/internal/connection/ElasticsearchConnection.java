@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 
-import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * @author Michael C. Han
@@ -50,8 +50,8 @@ public class ElasticsearchConnection {
 			}
 		}
 
-		if (_preConnectElasticsearchConnectionConsumer != null) {
-			_preConnectElasticsearchConnectionConsumer.accept(this);
+		if (_preConnectRunnable != null) {
+			_preConnectRunnable.run();
 		}
 
 		_elasticsearchClient = _createElasticsearchClient();
@@ -85,78 +85,148 @@ public class ElasticsearchConnection {
 		return false;
 	}
 
-	public void setActive(boolean active) {
-		_active = active;
+	public static class Builder {
+
+		public Builder(Supplier<String[]> networkHostAddressesSupplier) {
+			_networkHostAddressesSupplier = networkHostAddressesSupplier;
+		}
+
+		public Builder active(boolean active) {
+			_active = active;
+
+			return this;
+		}
+
+		public Builder authenticationEnabled(boolean authenticationEnabled) {
+			_authenticationEnabled = authenticationEnabled;
+
+			return this;
+		}
+
+		public ElasticsearchConnection build() {
+			return new ElasticsearchConnection(this);
+		}
+
+		public Builder compressionEnabled(boolean compressionEnabled) {
+			_compressionEnabled = compressionEnabled;
+
+			return this;
+		}
+
+		public Builder connectionId(String connectionId) {
+			_connectionId = connectionId;
+
+			return this;
+		}
+
+		public Builder httpSSLEnabled(boolean httpSSLEnabled) {
+			_httpSSLEnabled = httpSSLEnabled;
+
+			return this;
+		}
+
+		public Builder maxConnections(int maxConnections) {
+			_maxConnections = maxConnections;
+
+			return this;
+		}
+
+		public Builder maxConnectionsPerRoute(int maxConnectionsPerRoute) {
+			_maxConnectionsPerRoute = maxConnectionsPerRoute;
+
+			return this;
+		}
+
+		public Builder password(String password) {
+			_password = password;
+
+			return this;
+		}
+
+		public Builder postCloseRunnable(Runnable postCloseRunnable) {
+			_postCloseRunnable = postCloseRunnable;
+
+			return this;
+		}
+
+		public Builder preConnectRunnable(Runnable preConnectRunnable) {
+			_preConnectRunnable = preConnectRunnable;
+
+			return this;
+		}
+
+		public Builder proxyConfig(ProxyConfig proxyConfig) {
+			_proxyConfig = proxyConfig;
+
+			return this;
+		}
+
+		public Builder truststorePassword(String truststorePassword) {
+			_truststorePassword = truststorePassword;
+
+			return this;
+		}
+
+		public Builder truststorePath(String truststorePath) {
+			_truststorePath = truststorePath;
+
+			return this;
+		}
+
+		public Builder truststoreType(String truststoreType) {
+			_truststoreType = truststoreType;
+
+			return this;
+		}
+
+		public Builder userName(String userName) {
+			_userName = userName;
+
+			return this;
+		}
+
+		private boolean _active;
+		private boolean _authenticationEnabled;
+		private boolean _compressionEnabled;
+		private String _connectionId;
+		private boolean _httpSSLEnabled;
+		private int _maxConnections;
+		private int _maxConnectionsPerRoute;
+		private final Supplier<String[]> _networkHostAddressesSupplier;
+		private String _password;
+		private Runnable _postCloseRunnable;
+		private Runnable _preConnectRunnable;
+		private ProxyConfig _proxyConfig;
+		private String _truststorePassword;
+		private String _truststorePath;
+		private String _truststoreType;
+		private String _userName;
+
 	}
 
-	public void setAuthenticationEnabled(boolean authenticationEnabled) {
-		_authenticationEnabled = authenticationEnabled;
-	}
-
-	public void setCompressionEnabled(boolean compressionEnabled) {
-		_compressionEnabled = compressionEnabled;
-	}
-
-	public void setConnectionId(String connectionId) {
-		_connectionId = connectionId;
-	}
-
-	public void setHttpSSLEnabled(boolean httpSSLEnabled) {
-		_httpSSLEnabled = httpSSLEnabled;
-	}
-
-	public void setMaxConnections(int maxConnections) {
-		_maxConnections = maxConnections;
-	}
-
-	public void setMaxConnectionsPerRoute(int maxConnectionsPerRoute) {
-		_maxConnectionsPerRoute = maxConnectionsPerRoute;
-	}
-
-	public void setNetworkHostAddresses(String[] networkHostAddresses) {
-		_networkHostAddresses = networkHostAddresses;
-	}
-
-	public void setPassword(String password) {
-		_password = password;
-	}
-
-	public void setPostCloseRunnable(Runnable postCloseRunnable) {
-		_postCloseRunnable = postCloseRunnable;
-	}
-
-	public void setPreConnectElasticsearchConnectionConsumer(
-		Consumer<ElasticsearchConnection>
-			preConnectElasticsearchConnectionConsumer) {
-
-		_preConnectElasticsearchConnectionConsumer =
-			preConnectElasticsearchConnectionConsumer;
-	}
-
-	public void setProxyConfig(ProxyConfig proxyConfig) {
-		_proxyConfig = proxyConfig;
-	}
-
-	public void setTruststorePassword(String truststorePassword) {
-		_truststorePassword = truststorePassword;
-	}
-
-	public void setTruststorePath(String truststorePath) {
-		_truststorePath = truststorePath;
-	}
-
-	public void setTruststoreType(String truststoreType) {
-		_truststoreType = truststoreType;
-	}
-
-	public void setUserName(String userName) {
-		_userName = userName;
+	private ElasticsearchConnection(Builder builder) {
+		_active = builder._active;
+		_authenticationEnabled = builder._authenticationEnabled;
+		_compressionEnabled = builder._compressionEnabled;
+		_connectionId = builder._connectionId;
+		_httpSSLEnabled = builder._httpSSLEnabled;
+		_maxConnections = builder._maxConnections;
+		_maxConnectionsPerRoute = builder._maxConnectionsPerRoute;
+		_networkHostAddressesSupplier = builder._networkHostAddressesSupplier;
+		_password = builder._password;
+		_postCloseRunnable = builder._postCloseRunnable;
+		_preConnectRunnable = builder._preConnectRunnable;
+		_proxyConfig = builder._proxyConfig;
+		_truststorePassword = builder._truststorePassword;
+		_truststorePath = builder._truststorePath;
+		_truststoreType = builder._truststoreType;
+		_userName = builder._userName;
 	}
 
 	private ElasticsearchClient _createElasticsearchClient() {
 		RestClientTransport restClientTransport =
 			new RestClientTransportFactory.Builder(
-				_networkHostAddresses
+				_networkHostAddressesSupplier.get()
 			).authenticationEnabled(
 				_authenticationEnabled
 			).compressionEnabled(
@@ -190,24 +260,23 @@ public class ElasticsearchConnection {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchConnection.class);
 
-	private boolean _active;
-	private boolean _authenticationEnabled;
-	private boolean _compressionEnabled;
-	private String _connectionId;
+	private final boolean _active;
+	private final boolean _authenticationEnabled;
+	private final boolean _compressionEnabled;
+	private final String _connectionId;
 	private ElasticsearchClient _elasticsearchClient;
-	private boolean _httpSSLEnabled;
-	private int _maxConnections;
-	private int _maxConnectionsPerRoute;
-	private String[] _networkHostAddresses;
-	private String _password;
-	private Runnable _postCloseRunnable;
-	private Consumer<ElasticsearchConnection>
-		_preConnectElasticsearchConnectionConsumer;
-	private ProxyConfig _proxyConfig;
+	private final boolean _httpSSLEnabled;
+	private final int _maxConnections;
+	private final int _maxConnectionsPerRoute;
+	private final Supplier<String[]> _networkHostAddressesSupplier;
+	private final String _password;
+	private final Runnable _postCloseRunnable;
+	private final Runnable _preConnectRunnable;
+	private final ProxyConfig _proxyConfig;
 	private RestClientTransport _restClientTransport;
-	private String _truststorePassword;
-	private String _truststorePath;
-	private String _truststoreType;
-	private String _userName;
+	private final String _truststorePassword;
+	private final String _truststorePath;
+	private final String _truststoreType;
+	private final String _userName;
 
 }

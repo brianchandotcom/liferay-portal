@@ -357,7 +357,6 @@ public class FragmentEntryLinkLocalServiceImpl
 			DSLQueryFactoryUtil.count(
 			).from(
 				DSLQueryFactoryUtil.selectDistinct(
-					FragmentEntryLinkTable.INSTANCE.classNameId,
 					FragmentEntryLinkTable.INSTANCE.classPK
 				).from(
 					FragmentEntryLinkTable.INSTANCE

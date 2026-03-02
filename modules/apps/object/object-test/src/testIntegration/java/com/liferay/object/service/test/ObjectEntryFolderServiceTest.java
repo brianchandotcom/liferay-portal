@@ -6,6 +6,9 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
@@ -15,13 +18,16 @@ import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.object.test.util.ObjectEntryFolderTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -30,6 +36,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -64,6 +72,80 @@ public class ObjectEntryFolderServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		_setUser(_adminUser);
+	}
+
+	@Test
+	public void testAddObjectEntryFolder() throws Exception {
+		_setUser(_adminUser);
+
+		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
+			_group.getGroupId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			_adminUser.getUserId());
+
+		Assert.assertNotNull(parentObjectEntryFolder);
+
+		_setUser(_user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(),
+				" must have ADD_OBJECT_ENTRY_FOLDER permission for ",
+				ObjectEntryFolder.class.getName(), " ",
+				parentObjectEntryFolder.getObjectEntryFolderId()),
+			() -> _addObjectEntryFolder(
+				_group.getGroupId(),
+				parentObjectEntryFolder.getObjectEntryFolderId(),
+				_user.getUserId()));
+	}
+
+	@Test
+	public void testAddObjectEntryFolderInDepotEntry() throws Exception {
+		_setUser(_adminUser);
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
+			depotEntry.getGroupId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			_adminUser.getUserId());
+
+		Assert.assertNotNull(parentObjectEntryFolder);
+
+		_setUser(_user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(),
+				" must have ADD_ENTRY permission for ",
+				ObjectEntryFolder.class.getName(), " ",
+				parentObjectEntryFolder.getObjectEntryFolderId()),
+			() -> _addObjectEntryFolder(
+				depotEntry.getGroupId(),
+				parentObjectEntryFolder.getObjectEntryFolderId(),
+				_user.getUserId()));
+
+		User user = UserTestUtil.addUser(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+			RoleConstants.CMS_ADMINISTRATOR);
+
+		_setUser(user);
+
+		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+			depotEntry.getGroupId(),
+			parentObjectEntryFolder.getObjectEntryFolderId(), user.getUserId());
+
+		Assert.assertNotNull(objectEntryFolder);
 	}
 
 	@Test
@@ -175,6 +257,20 @@ public class ObjectEntryFolderServiceTest {
 		_testRestoreObjectEntryFolderFromTrash(_user, _user);
 	}
 
+	private ObjectEntryFolder _addObjectEntryFolder(
+			long groupId, long parentObjectEntryFolderId, long userId)
+		throws PortalException {
+
+		return _objectEntryFolderService.addObjectEntryFolder(
+			null, groupId, parentObjectEntryFolderId,
+			RandomTestUtil.randomString(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			StringUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(groupId, userId));
+	}
+
 	private void _setUser(User user) throws Exception {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
@@ -223,6 +319,12 @@ public class ObjectEntryFolderServiceTest {
 	}
 
 	private User _adminUser;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -16,7 +16,7 @@ test(
 		await systemSettingsPage.goToSystemSetting('Third Party', 'AUI');
 
 		const checkbox = systemSettingsPage.page.getByLabel(
-			'enable-aui-preload'
+			'Preload Widely Used AUI'
 		);
 
 		await expect(checkbox).not.toBeChecked();

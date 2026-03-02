@@ -14,6 +14,8 @@ import com.liferay.fragment.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_4_0.FragmentEntryLinkUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v3_0_1.BrowserSnifferFragmentEntryTemplateUpgradeProcess;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -272,6 +274,38 @@ public class FragmentServiceUpgradeStepRegistrator
 		registry.register(
 			"3.0.0", "3.0.1",
 			new BrowserSnifferFragmentEntryTemplateUpgradeProcess());
+
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+			StringBundler.concat(
+				"update FragmentEntry set html = ( select ",
+				"FragmentEntryVersion.html from FragmentEntryVersion where ",
+				"FragmentEntry.fragmentEntryId = ",
+				"FragmentEntryVersion.fragmentEntryId and ",
+				"FragmentEntry.fragmentCollectionId = ",
+				"FragmentEntryVersion.fragmentCollectionId and ",
+				"FragmentEntry.modifiedDate = ",
+				"FragmentEntryVersion.modifiedDate ) where exists (select 1 ",
+				"from FragmentEntryVersion where ",
+				"FragmentEntry.fragmentEntryId = ",
+				"FragmentEntryVersion.fragmentEntryId and ",
+				"FragmentEntry.fragmentCollectionId = ",
+				"FragmentEntryVersion.fragmentCollectionId and ",
+				"FragmentEntry.modifiedDate = ",
+				"FragmentEntryVersion.modifiedDate)"));
+		String sql = StringBundler.concat(
+			"update FragmentEntry join FragmentEntryVersion on ",
+			"FragmentEntry.fragmentEntryId = ",
+			"FragmentEntryVersion.fragmentEntryId and ",
+			"FragmentEntry.fragmentCollectionId = ",
+			"FragmentEntryVersion.fragmentCollectionId and ",
+			"FragmentEntry.modifiedDate = FragmentEntryVersion.modifiedDate ",
+			"set FragmentEntry.html = FragmentEntryVersion.html");
+
+		dbTypeToSQLMap.add(DBType.MARIADB, sql);
+		dbTypeToSQLMap.add(DBType.MYSQL, sql);
+
+		registry.register(
+			"3.0.1", "3.0.2", UpgradeProcessFactory.runSQL(dbTypeToSQLMap));
 	}
 
 	@Reference

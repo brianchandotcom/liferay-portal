@@ -95,7 +95,7 @@ public class ListTypeDefinitionResourceImpl
 
 			@Override
 			public String getLabelLanguageKey() {
-				return "model.resource.com.liferay.list.type";
+				return "picklists";
 			}
 
 			@Override

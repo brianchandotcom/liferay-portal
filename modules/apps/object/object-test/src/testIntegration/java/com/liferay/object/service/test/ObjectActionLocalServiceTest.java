@@ -87,6 +87,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.events.Action;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -99,7 +101,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -141,6 +142,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -159,6 +161,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.Closeable;
 import java.io.Serializable;
@@ -191,6 +195,9 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -2028,11 +2035,12 @@ public class ObjectActionLocalServiceTest {
 
 		Assert.assertEquals(0, _argumentsList.size());
 
-		int authResult = _userLocalService.authenticateByUserId(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			TestPropsValues.USER_PASSWORD, null, null, null);
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		Assert.assertEquals(Authenticator.SUCCESS, authResult);
+		httpServletRequest.setAttribute(
+			WebKeys.USER_ID, TestPropsValues.getUserId());
+
+		_loginPostAction.run(httpServletRequest, new MockHttpServletResponse());
 
 		Assert.assertEquals(1, _argumentsList.size());
 
@@ -2070,11 +2078,16 @@ public class ObjectActionLocalServiceTest {
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/modelUser", "Object/lastName"));
 
-		authResult = _userLocalService.authenticateByUserId(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), null, null, null);
+		httpServletRequest.setAttribute(
+			WebKeys.USER_ID, RandomTestUtil.randomLong());
 
-		Assert.assertEquals(Authenticator.FAILURE, authResult);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.internal.events.LoginPostAction",
+				LoggerTestUtil.DEBUG)) {
+
+			_loginPostAction.run(
+				httpServletRequest, new MockHttpServletResponse());
+		}
 
 		Assert.assertEquals(0, _argumentsList.size());
 
@@ -4038,6 +4051,12 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.events.LoginPostAction",
+		type = LifecycleAction.class
+	)
+	private Action _loginPostAction;
 
 	@Inject
 	private NotificationQueueEntryLocalService

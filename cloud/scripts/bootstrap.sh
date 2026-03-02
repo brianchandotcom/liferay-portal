@@ -12,11 +12,11 @@ function main {
 
 	_check_utils curl jq tar
 
-	local config_file==$(_get_config_file "${1:-}")
+	local config_file=$(_get_config_file "${1:-}")
 
-	local provider==$(_get_provider "${config_file}")
+	local provider=$(_get_provider "${config_file}")
 
-	local extracted_dir==$(_download_and_extract_files "${provider}")
+	local extracted_dir=$(_download_and_extract_files "${provider}")
 
 	trap "rm --force --recursive \"${extracted_dir}\"" EXIT
 
@@ -40,7 +40,7 @@ function _download_and_extract_files {
 
 	local prefix="bootstrap/liferay-${1}-bootstrap"
 
-	local json==$( \
+	local json=$( \
 		curl \
 			--location \
 			--silent \
@@ -53,7 +53,7 @@ function _download_and_extract_files {
 		exit 1
 	fi
 
-	local latest_path==$( \
+	local latest_path=$( \
 		jq \
 			--raw-output \
 			".items
@@ -68,9 +68,9 @@ function _download_and_extract_files {
 		exit 1
 	fi
 
-	local temp_dir==$(mktemp --directory --tmpdir liferay-bootstrap.XXXXXX)
+	local temp_dir=$(mktemp --directory --tmpdir liferay-bootstrap.XXXXXX)
 
-	local output_file=="${temp_dir}/$(basename "${latest_path}")"
+	local output_file="${temp_dir}/$(basename "${latest_path}")"
 
 	curl \
 		--location \
@@ -108,7 +108,7 @@ function _get_config_file {
 function _get_provider {
 	local config_file="${1}"
 
-	local provider==$(jq -r ".provider // empty" "${config_file}")
+	local provider=$(jq -r ".provider // empty" "${config_file}")
 
 	if [ -z "${provider}" ]
 	then

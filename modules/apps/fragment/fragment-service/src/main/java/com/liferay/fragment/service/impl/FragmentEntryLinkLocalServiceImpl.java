@@ -29,6 +29,8 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.LimitStep;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.petra.string.StringPool;
@@ -513,11 +515,16 @@ public class FragmentEntryLinkLocalServiceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws PortalException {
 
-		return fragmentEntryLinkFinder.findByG_FEERC_FESERC_P_L(
-			groupId, fragmentEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentEntry.getGroupId(), groupId),
-			-1, start, end, orderByComparator);
+		return fragmentEntryLinkPersistence.dslQuery(
+			_getLayoutFragmentEntryLinksByFragmentEntryGroupByStep(
+				fragmentEntry,
+				DSLQueryFactoryUtil.select(FragmentEntryLinkTable.INSTANCE),
+				true, groupId
+			).orderBy(
+				_getOrderByStepLimitStepFunction(orderByComparator)
+			).limit(
+				start, end
+			));
 	}
 
 	@Override
@@ -525,58 +532,12 @@ public class FragmentEntryLinkLocalServiceImpl
 			long groupId, FragmentEntry fragmentEntry)
 		throws PortalException {
 
-		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
-			LayoutTable.INSTANCE.plid
-		).from(
-			LayoutTable.INSTANCE
-		).leftJoinOn(
-			LayoutPageTemplateEntryTable.INSTANCE,
-			LayoutTable.INSTANCE.plid.eq(
-				LayoutPageTemplateEntryTable.INSTANCE.plid
-			).or(
-				LayoutTable.INSTANCE.classPK.eq(
-					LayoutPageTemplateEntryTable.INSTANCE.plid)
-			)
-		).where(
-			LayoutPageTemplateEntryTable.INSTANCE.plid.isNull()
-		).as(
-			"tempLayoutTable", LayoutTable.INSTANCE
-		);
-
-		String fragmentEntryScopeERC =
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentEntry.getGroupId(), groupId);
-
-		Predicate fragmentEntryScopeERCPredicate =
-			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
-				fragmentEntryScopeERC);
-
-		if (Validator.isNull(fragmentEntryScopeERC)) {
-			fragmentEntryScopeERCPredicate =
-				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull();
-		}
-
 		return fragmentEntryLinkPersistence.dslQueryCount(
-			DSLQueryFactoryUtil.countDistinct(
-				FragmentEntryLinkTable.INSTANCE.plid
-			).from(
-				FragmentEntryLinkTable.INSTANCE
-			).innerJoinON(
-				tempLayoutTableTable,
-				FragmentEntryLinkTable.INSTANCE.plid.eq(
-					(Expression<Long>)tempLayoutTableTable.getColumn("plid"))
-			).where(
-				FragmentEntryLinkTable.INSTANCE.groupId.eq(
-					groupId
-				).and(
-					FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
-						fragmentEntry.getExternalReferenceCode())
-				).and(
-					fragmentEntryScopeERCPredicate
-				).and(
-					FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
-				)
-			));
+			_getLayoutFragmentEntryLinksByFragmentEntryGroupByStep(
+				fragmentEntry,
+				DSLQueryFactoryUtil.countDistinct(
+					FragmentEntryLinkTable.INSTANCE.plid),
+				false, groupId));
 	}
 
 	@Override
@@ -587,11 +548,16 @@ public class FragmentEntryLinkLocalServiceImpl
 				OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws PortalException {
 
-		return fragmentEntryLinkFinder.findByG_FEERC_FESERC_P_L(
-			groupId, fragmentEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentEntry.getGroupId(), groupId),
-			layoutPageTemplateType, start, end, orderByComparator);
+		return fragmentEntryLinkPersistence.dslQuery(
+			_getLayoutPageTemplateFragmentEntryLinksByFragmentEntryGroupByStep(
+				fragmentEntry,
+				DSLQueryFactoryUtil.select(FragmentEntryLinkTable.INSTANCE),
+				layoutPageTemplateType, true, groupId
+			).orderBy(
+				_getOrderByStepLimitStepFunction(orderByComparator)
+			).limit(
+				start, end
+			));
 	}
 
 	@Override
@@ -600,59 +566,12 @@ public class FragmentEntryLinkLocalServiceImpl
 			int layoutPageTemplateType)
 		throws PortalException {
 
-		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
-			LayoutTable.INSTANCE.plid
-		).from(
-			LayoutTable.INSTANCE
-		).innerJoinON(
-			LayoutPageTemplateEntryTable.INSTANCE,
-			LayoutTable.INSTANCE.plid.eq(
-				LayoutPageTemplateEntryTable.INSTANCE.plid
-			).or(
-				LayoutTable.INSTANCE.classPK.eq(
-					LayoutPageTemplateEntryTable.INSTANCE.plid)
-			)
-		).where(
-			LayoutPageTemplateEntryTable.INSTANCE.type.eq(
-				layoutPageTemplateType)
-		).as(
-			"tempLayoutTable", LayoutTable.INSTANCE
-		);
-
-		String fragmentEntryScopeERC =
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentEntry.getGroupId(), groupId);
-
-		Predicate fragmentEntryScopeERCPredicate =
-			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
-				fragmentEntryScopeERC);
-
-		if (Validator.isNull(fragmentEntryScopeERC)) {
-			fragmentEntryScopeERCPredicate =
-				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull();
-		}
-
 		return fragmentEntryLinkPersistence.dslQueryCount(
-			DSLQueryFactoryUtil.countDistinct(
-				FragmentEntryLinkTable.INSTANCE.plid
-			).from(
-				FragmentEntryLinkTable.INSTANCE
-			).innerJoinON(
-				tempLayoutTableTable,
-				FragmentEntryLinkTable.INSTANCE.plid.eq(
-					(Expression<Long>)tempLayoutTableTable.getColumn("plid"))
-			).where(
-				FragmentEntryLinkTable.INSTANCE.groupId.eq(
-					groupId
-				).and(
-					FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
-						fragmentEntry.getExternalReferenceCode())
-				).and(
-					fragmentEntryScopeERCPredicate
-				).and(
-					FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
-				)
-			));
+			_getLayoutPageTemplateFragmentEntryLinksByFragmentEntryGroupByStep(
+				fragmentEntry,
+				DSLQueryFactoryUtil.countDistinct(
+					FragmentEntryLinkTable.INSTANCE.plid),
+				layoutPageTemplateType, false, groupId));
 	}
 
 	@Override
@@ -900,6 +819,127 @@ public class FragmentEntryLinkLocalServiceImpl
 				))
 		).and(
 			fragmentEntryLinkTable.deleted.eq(false)
+		);
+	}
+
+	private Predicate _getFragmentEntryLinksByFragmentEntryPredicate(
+			FragmentEntry fragmentEntry, long scopeGroupId)
+		throws PortalException {
+
+		String fragmentEntryScopeERC =
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), scopeGroupId);
+
+		if (Validator.isNotNull(fragmentEntryScopeERC)) {
+			return FragmentEntryLinkTable.INSTANCE.groupId.eq(
+				scopeGroupId
+			).and(
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+					fragmentEntry.getExternalReferenceCode())
+			).and(
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
+					fragmentEntryScopeERC)
+			).and(
+				FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
+			);
+		}
+
+		return FragmentEntryLinkTable.INSTANCE.groupId.eq(
+			scopeGroupId
+		).and(
+			FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+				fragmentEntry.getExternalReferenceCode())
+		).and(
+			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull()
+		).and(
+			FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
+		);
+	}
+
+	private GroupByStep _getLayoutFragmentEntryLinksByFragmentEntryGroupByStep(
+			FragmentEntry fragmentEntry, FromStep fromStep,
+			boolean maxCreateDatePredicate, long scopeGroupId)
+		throws PortalException {
+
+		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
+			LayoutTable.INSTANCE.plid
+		).from(
+			LayoutTable.INSTANCE
+		).leftJoinOn(
+			LayoutPageTemplateEntryTable.INSTANCE,
+			LayoutTable.INSTANCE.plid.eq(
+				LayoutPageTemplateEntryTable.INSTANCE.plid
+			).or(
+				LayoutTable.INSTANCE.classPK.eq(
+					LayoutPageTemplateEntryTable.INSTANCE.plid)
+			)
+		).where(
+			LayoutPageTemplateEntryTable.INSTANCE.plid.isNull()
+		).as(
+			"tempLayoutTable", LayoutTable.INSTANCE
+		);
+
+		Predicate predicate = _getFragmentEntryLinksByFragmentEntryPredicate(
+			fragmentEntry, scopeGroupId);
+
+		if (maxCreateDatePredicate) {
+			predicate = predicate.and(
+				_getMaxCreateDatePredicate(fragmentEntry));
+		}
+
+		return fromStep.from(
+			FragmentEntryLinkTable.INSTANCE
+		).innerJoinON(
+			tempLayoutTableTable,
+			FragmentEntryLinkTable.INSTANCE.plid.eq(
+				(Expression<Long>)tempLayoutTableTable.getColumn("plid"))
+		).where(
+			predicate
+		);
+	}
+
+	private GroupByStep
+			_getLayoutPageTemplateFragmentEntryLinksByFragmentEntryGroupByStep(
+				FragmentEntry fragmentEntry, FromStep fromStep,
+				int layoutPageTemplateType, boolean maxCreateDatePredicate,
+				long scopeGroupId)
+		throws PortalException {
+
+		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
+			LayoutTable.INSTANCE.plid
+		).from(
+			LayoutTable.INSTANCE
+		).innerJoinON(
+			LayoutPageTemplateEntryTable.INSTANCE,
+			LayoutTable.INSTANCE.plid.eq(
+				LayoutPageTemplateEntryTable.INSTANCE.plid
+			).or(
+				LayoutTable.INSTANCE.classPK.eq(
+					LayoutPageTemplateEntryTable.INSTANCE.plid)
+			)
+		).where(
+			LayoutPageTemplateEntryTable.INSTANCE.type.eq(
+				layoutPageTemplateType)
+		).as(
+			"tempLayoutTable", LayoutTable.INSTANCE
+		);
+
+		Predicate predicate = _getFragmentEntryLinksByFragmentEntryPredicate(
+			fragmentEntry, scopeGroupId);
+
+		if (maxCreateDatePredicate) {
+			predicate = predicate.and(
+				_getMaxCreateDatePredicate(fragmentEntry));
+		}
+
+		return fromStep.from(
+			FragmentEntryLinkTable.INSTANCE
+		).innerJoinON(
+			tempLayoutTableTable,
+			FragmentEntryLinkTable.INSTANCE.plid.eq(
+				(Expression<Long>)tempLayoutTableTable.getColumn("plid"))
+		).where(
+			predicate
 		);
 	}
 

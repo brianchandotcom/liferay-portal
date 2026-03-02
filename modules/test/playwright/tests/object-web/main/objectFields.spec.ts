@@ -15,6 +15,7 @@ import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -30,6 +31,68 @@ const test = mergeTests(
 	loginTest(),
 	objectPagesTest
 );
+
+const cmsTest = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+		'LPD-17564': {enabled: true},
+		'LPD-34594': {enabled: true},
+	})
+);
+
+cmsTest.describe('Manage object field attachment storage locations', () => {
+	cmsTest(
+		'can create field with CMS storage types',
+		async ({apiHelpers, objectFieldsPage, page}) => {
+			const spaceName = `Space ${getRandomString()}`;
+
+			await test.step('Create a new Space', async () => {
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: spaceName,
+					settings: {},
+					type: 'Space',
+				});
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await objectFieldsPage.goto(objectDefinition.label.en_US);
+
+			const CMSFilesLabel = 'cmsFiles' + getRandomString();
+			const userToCMSLabel = 'userToCMS' + getRandomString();
+
+			await objectFieldsPage.addObjectField({
+				attachmentSource:
+					"Upload Directly from the User's Computer (CMS Files)",
+				objectFieldBusinessType: 'Attachment',
+				objectFieldLabel: userToCMSLabel,
+			});
+
+			await objectFieldsPage.addObjectField({
+				attachmentSource: 'Upload or Select from CMS Files',
+				objectFieldBusinessType: 'Attachment',
+				objectFieldLabel: CMSFilesLabel,
+			});
+
+			await expect(
+				page.getByRole('link', {name: userToCMSLabel})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('link', {name: CMSFilesLabel})
+			).toBeVisible();
+		}
+	);
+});
 
 test.describe('Manage object fields through Model Builder', () => {
 	test.beforeEach(({page}) => {
@@ -1049,7 +1112,8 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 			if (objectFieldBusinessType === 'Attachment') {
 				await objectFieldsPage.addObjectField({
-					attachmentSource: 'Upload Directly from the User',
+					attachmentSource:
+						"Upload Directly from the User's Computer (Documents and Media)",
 					objectFieldBusinessType,
 					objectFieldLabel,
 				});

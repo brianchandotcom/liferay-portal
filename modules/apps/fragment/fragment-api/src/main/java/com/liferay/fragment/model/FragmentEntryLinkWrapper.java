@@ -263,6 +263,11 @@ public class FragmentEntryLinkWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public FragmentEntry fetchFragmentEntry() {
+		return model.fetchFragmentEntry();
+	}
+
 	/**
 	 * Returns the fully qualified class name of this fragment entry link.
 	 *
@@ -409,11 +414,6 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public String getFragmentEntryERC() {
 		return model.getFragmentEntryERC();
-	}
-
-	@Override
-	public long getFragmentEntryGroupId() {
-		return model.getFragmentEntryGroupId();
 	}
 
 	/**

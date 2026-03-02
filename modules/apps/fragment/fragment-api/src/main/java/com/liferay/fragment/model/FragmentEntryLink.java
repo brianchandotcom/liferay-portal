@@ -51,6 +51,8 @@ public interface FragmentEntryLink
 
 			};
 
+	public FragmentEntry fetchFragmentEntry();
+
 	public com.liferay.portal.kernel.json.JSONObject
 		getConfigurationJSONObject();
 
@@ -62,8 +64,6 @@ public interface FragmentEntryLink
 
 	public com.liferay.portal.kernel.json.JSONObject
 		getEditableValuesJSONObject(boolean strict);
-
-	public long getFragmentEntryGroupId();
 
 	public boolean isCacheable();
 

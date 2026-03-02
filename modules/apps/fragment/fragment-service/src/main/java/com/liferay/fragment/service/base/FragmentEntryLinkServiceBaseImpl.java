@@ -7,7 +7,6 @@ package com.liferay.fragment.service.base;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
-import com.liferay.fragment.service.persistence.FragmentEntryLinkFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -117,9 +116,6 @@ public abstract class FragmentEntryLinkServiceBaseImpl
 
 	@Reference
 	protected FragmentEntryLinkPersistence fragmentEntryLinkPersistence;
-
-	@Reference
-	protected FragmentEntryLinkFinder fragmentEntryLinkFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

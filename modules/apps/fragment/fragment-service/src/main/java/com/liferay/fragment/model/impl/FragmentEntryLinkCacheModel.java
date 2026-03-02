@@ -295,6 +295,9 @@ public class FragmentEntryLinkCacheModel
 
 			_editableValuesJSONObjectMethodHandle.invokeExact(
 				fragmentEntryLinkImpl, editableValuesJSONObject);
+
+			_fragmentEntryMethodHandle.invokeExact(
+				fragmentEntryLinkImpl, fragmentEntry);
 		}
 		catch (Throwable throwable) {
 			ReflectionUtil.throwException(throwable);
@@ -355,6 +358,9 @@ public class FragmentEntryLinkCacheModel
 
 		editableValuesJSONObject =
 			(com.liferay.portal.kernel.json.JSONObject)objectInput.readObject();
+
+		fragmentEntry =
+			(com.liferay.fragment.model.FragmentEntry)objectInput.readObject();
 	}
 
 	@Override
@@ -484,6 +490,8 @@ public class FragmentEntryLinkCacheModel
 		objectOutput.writeObject(configurationJSONObject);
 
 		objectOutput.writeObject(editableValuesJSONObject);
+
+		objectOutput.writeObject(fragmentEntry);
 	}
 
 	public long mvccVersion;
@@ -520,9 +528,11 @@ public class FragmentEntryLinkCacheModel
 		configurationJSONObject;
 	public volatile com.liferay.portal.kernel.json.JSONObject
 		editableValuesJSONObject;
+	public volatile com.liferay.fragment.model.FragmentEntry fragmentEntry;
 
 	private static final MethodHandle _configurationJSONObjectMethodHandle;
 	private static final MethodHandle _editableValuesJSONObjectMethodHandle;
+	private static final MethodHandle _fragmentEntryMethodHandle;
 
 	static {
 		MethodHandles.Lookup lookup = ReflectionUtil.getImplLookup();
@@ -535,6 +545,10 @@ public class FragmentEntryLinkCacheModel
 			_editableValuesJSONObjectMethodHandle = lookup.findSetter(
 				FragmentEntryLinkImpl.class, "_editableValuesJSONObject",
 				com.liferay.portal.kernel.json.JSONObject.class);
+
+			_fragmentEntryMethodHandle = lookup.findSetter(
+				FragmentEntryLinkImpl.class, "_fragmentEntry",
+				com.liferay.fragment.model.FragmentEntry.class);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new ExceptionInInitializerError(reflectiveOperationException);

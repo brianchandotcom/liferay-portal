@@ -172,41 +172,6 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 			illegalArgumentException -> Assert.fail(), true);
 	}
 
-	private String _getContent(
-		String dictionaryKey, Object dictionaryValue,
-		boolean supportedConfiguration, String testValue) {
-
-		StringBundler sb = new StringBundler(13);
-
-		sb.append(_TEST_KEY);
-		sb.append(StringPool.EQUAL);
-		sb.append(StringPool.QUOTE);
-		sb.append(testValue);
-		sb.append(StringPool.QUOTE);
-
-		if (dictionaryKey != null) {
-			if (supportedConfiguration &&
-				dictionaryKey.equals(
-					ExtendedObjectClassDefinition.Scope.GROUP.
-						getPropertyKey())) {
-
-				sb.append(StringPool.RETURN_NEW_LINE);
-				sb.append(
-					ExtendedObjectClassDefinition.Scope.COMPANY.
-						getPropertyKey());
-				sb.append(StringPool.EQUAL);
-				sb.append(_convertDictionaryValue(COMPANY_IDS[1]));
-			}
-
-			sb.append(StringPool.RETURN_NEW_LINE);
-			sb.append(dictionaryKey);
-			sb.append(StringPool.EQUAL);
-			sb.append(_convertDictionaryValue(dictionaryValue));
-		}
-
-		return sb.toString();
-	}
-
 	private void _checkConfiguration(
 			UnsafeBiConsumer<Long, ResultSet, Exception> unsafeBiConsumer)
 		throws Exception {
@@ -263,6 +228,41 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 		}
 
 		return StringBundler.concat(StringPool.QUOTE, value, StringPool.QUOTE);
+	}
+
+	private String _getContent(
+		String dictionaryKey, Object dictionaryValue,
+		boolean supportedConfiguration, String testValue) {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(_TEST_KEY);
+		sb.append(StringPool.EQUAL);
+		sb.append(StringPool.QUOTE);
+		sb.append(testValue);
+		sb.append(StringPool.QUOTE);
+
+		if (dictionaryKey != null) {
+			if (supportedConfiguration &&
+				dictionaryKey.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.
+						getPropertyKey())) {
+
+				sb.append(StringPool.RETURN_NEW_LINE);
+				sb.append(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey());
+				sb.append(StringPool.EQUAL);
+				sb.append(_convertDictionaryValue(COMPANY_IDS[1]));
+			}
+
+			sb.append(StringPool.RETURN_NEW_LINE);
+			sb.append(dictionaryKey);
+			sb.append(StringPool.EQUAL);
+			sb.append(_convertDictionaryValue(dictionaryValue));
+		}
+
+		return sb.toString();
 	}
 
 	private void _testCompanyScopedConfiguration(

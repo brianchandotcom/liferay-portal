@@ -476,6 +476,9 @@ public class WebServerServlet extends HttpServlet {
 		else if (path.startsWith("/company_group_logo")) {
 			return ImageToolUtil.getDefaultCompanyGroupLogo();
 		}
+		else if (path.startsWith("/liferay_instance_logo")) {
+			return ImageToolUtil.getDefaultLiferayInstanceLogo();
+		}
 		else if (path.startsWith("/organization_logo")) {
 			return ImageToolUtil.getDefaultOrganizationLogo();
 		}

@@ -19,6 +19,8 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.data.cleanup.IllegalCharactersContentDataCleanupPreupgradeProcess;
 
+import java.io.StringReader;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -166,7 +168,10 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 		DB db = DBManagerUtil.getDB();
 
 		for (int charCode : illegalCharacters) {
-			if ((charCode == 0) && (db.getDBType() == DBType.POSTGRESQL)) {
+			if ((charCode == 0) &&
+				((db.getDBType() == DBType.DB2) ||
+				 (db.getDBType() == DBType.POSTGRESQL))) {
+
 				continue;
 			}
 
@@ -174,31 +179,41 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 				RandomTestUtil.randomString() +
 					"äëïöüÄËÏÖÜàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ";
 
-			String content = StringBundler.concat(
-				"'", cleanContent, (char)charCode, "'");
-
-			if (_db.getDBType() == DBType.SQLSERVER) {
-				content = "N" + content;
-			}
+			String content = cleanContent + (char)charCode;
 
 			_contentId = RandomTestUtil.nextLong();
 
-			runSQL(
-				_connection,
-				StringBundler.concat(
-					"insert into DDMContent (",
-					"mvccVersion, ctCollectionId, contentId, groupId, data_) ",
-					"values (0, 0, ", _contentId, ", ",
-					RandomTestUtil.nextLong(), ", ", content, ")"));
+			try (PreparedStatement preparedStatement =
+					_connection.prepareStatement(
+						StringBundler.concat(
+							"insert into DDMContent (mvccVersion, ",
+							"ctCollectionId, contentId, groupId, data_) ",
+							"values (0, 0, ?, ?, ?)"))) {
+
+				preparedStatement.setLong(1, _contentId);
+				preparedStatement.setLong(2, RandomTestUtil.nextLong());
+				preparedStatement.setCharacterStream(
+					3, new StringReader(content), content.length());
+
+				preparedStatement.executeUpdate();
+			}
 
 			_journalId = RandomTestUtil.nextLong();
 
-			runSQL(
-				_connection,
-				StringBundler.concat(
-					"insert into JournalArticle (mvccVersion, ctCollectionId, ",
-					"id_, groupId, content) values (0, 0, ", _journalId, ", ",
-					RandomTestUtil.nextLong(), ", ", content, ")"));
+			try (PreparedStatement preparedStatement =
+					_connection.prepareStatement(
+						StringBundler.concat(
+							"insert into JournalArticle (mvccVersion, ",
+							"ctCollectionId, id_, groupId, content) values (",
+							"0, 0, ?, ?, ?)"))) {
+
+				preparedStatement.setLong(1, _journalId);
+				preparedStatement.setLong(2, RandomTestUtil.nextLong());
+				preparedStatement.setCharacterStream(
+					3, new StringReader(content), content.length());
+
+				preparedStatement.executeUpdate();
+			}
 
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					IllegalCharactersContentDataCleanupPreupgradeProcess.class.

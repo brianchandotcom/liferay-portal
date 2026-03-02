@@ -24,108 +24,12 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class PortalTestSuiteUpstreamControllerBuildRunner
+public class TestSuiteMultipleUpstreamPortalControllerSingleSuiteBuildRunner
 	<S extends PortalTestSuiteUpstreamControllerBuildData>
 		extends BaseUpstreamPortalControllerBuildRunner<S> {
 
 	@Override
 	public void run() {
-		invokeBuilds();
-	}
-
-	@Override
-	public void tearDown() {
-	}
-
-	protected PortalTestSuiteUpstreamControllerBuildRunner(S buildData) {
-		super(buildData);
-	}
-
-	protected String getInvocationJobName() {
-		S buildData = getBuildData();
-
-		return JenkinsResultsParserUtil.combine(
-			"test-portal-testsuite-upstream(",
-			buildData.getPortalUpstreamBranchName(), ")");
-	}
-
-	protected String getInvocationJobURL(String testSuite) {
-		String invocationJobName = getInvocationJobName();
-
-		String masterURL = null;
-
-		try {
-			masterURL = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.osb.jenkins.web.master.url", invocationJobName,
-				testSuite);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		if (masterURL == null) {
-			masterURL = JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				"http://" + getInvocationCohortName() + ".liferay.com", null, 1,
-				invocationJobName, getSlaveLabel(testSuite), 24, 2);
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			masterURL, "/job/", invocationJobName);
-	}
-
-	protected String getSlaveLabel(String testSuite) {
-		String slaveLabel = null;
-
-		String invocationJobName = getInvocationJobName();
-
-		try {
-			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.osb.jenkins.web.slave.label", invocationJobName,
-				testSuite);
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-					"cloud.fleet.primary.label");
-			}
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-					"master.auto.scaling.group.name");
-			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-			slaveLabel = SLAVE_LABEL_DEFAULT;
-		}
-
-		return slaveLabel;
-	}
-
-	protected String getTestPortalBuildProfile(String testSuite) {
-		return _getTestSuiteBuildProperty(
-			"portal.testsuite.upstream.test.portal.build.profile", testSuite);
-	}
-
-	protected String getTestraySlackChannels(String testSuite) {
-		return _getTestSuiteBuildProperty(
-			"portal.testsuite.upstream.testray.slack.channels", testSuite);
-	}
-
-	protected String getTestraySlackIconEmoji(String testSuite) {
-		return _getTestSuiteBuildProperty(
-			"portal.testsuite.upstream.testray.slack.icon.emoji", testSuite);
-	}
-
-	protected String getTestraySlackUsername(String testSuite) {
-		return _getTestSuiteBuildProperty(
-			"portal.testsuite.upstream.testray.slack.username", testSuite);
-	}
-
-	@Override
-	protected void invokeBuilds() {
 		List<String> testSuiteNames = _getSelectedTestSuiteNames();
 
 		if (testSuiteNames.isEmpty()) {
@@ -197,7 +101,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				"TEST_PORTAL_BUILD_PROFILE",
 				getTestPortalBuildProfile(testSuiteName));
 
-			String testrayProjectName = _getTestrayProjectName(testSuiteName);
+			String testrayProjectName = getTestrayProjectName(testSuiteName);
 
 			if (testrayProjectName != null) {
 				String testrayRoutineName = JenkinsResultsParserUtil.combine(
@@ -211,8 +115,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 						new Date(buildData.getStartTime()),
 						"yyyy-MM-dd[HH:mm:ss]", "America/Los_Angeles"));
 
-				if (_getTestrayRoutineName(testSuiteName) != null) {
-					testrayRoutineName = _getTestrayRoutineName(testSuiteName);
+				if (getTestrayRoutineName(testSuiteName) != null) {
+					testrayRoutineName = getTestrayRoutineName(testSuiteName);
 				}
 
 				invocationParameters.put(
@@ -303,7 +207,29 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		updateBuildDescription();
 	}
 
-	protected static final String SLAVE_LABEL_DEFAULT = "slave";
+	@Override
+	public void tearDown() {
+	}
+
+	protected TestSuiteMultipleUpstreamPortalControllerSingleSuiteBuildRunner(
+		S buildData) {
+
+		super(buildData);
+	}
+
+	@Override
+	protected String getInvocationJobName() {
+		S buildData = getBuildData();
+
+		return JenkinsResultsParserUtil.combine(
+			"test-portal-testsuite-upstream(",
+			buildData.getPortalUpstreamBranchName(), ")");
+	}
+
+	@Override
+	protected void invokeBuild() {
+		throw new UnsupportedOperationException();
+	}
 
 	private List<Build> _getBuildHistory() {
 		S buildData = getBuildData();
@@ -448,38 +374,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		}
 
 		return _selectedTestSuiteNames;
-	}
-
-	private String _getTestrayProjectName(String testSuite) {
-		return _getTestSuiteBuildProperty(
-			"portal.testsuite.upstream.testray.project.name", testSuite);
-	}
-
-	private String _getTestrayRoutineName(String testSuite) {
-		String testrayRoutineName = _getTestSuiteBuildProperty(
-			"portal.testsuite.upstream.testray.routine.name", testSuite);
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
-			testrayRoutineName = _getTestSuiteBuildProperty(
-				"portal.testsuite.upstream.testray.build.type", testSuite);
-		}
-
-		return testrayRoutineName;
-	}
-
-	private String _getTestSuiteBuildProperty(
-		String propertyName, String testSuite) {
-
-		S buildData = getBuildData();
-
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(), propertyName,
-				buildData.getPortalUpstreamBranchName(), testSuite);
-		}
-		catch (IOException ioException) {
-			return null;
-		}
 	}
 
 	private List<String> _getTestSuiteNames() {

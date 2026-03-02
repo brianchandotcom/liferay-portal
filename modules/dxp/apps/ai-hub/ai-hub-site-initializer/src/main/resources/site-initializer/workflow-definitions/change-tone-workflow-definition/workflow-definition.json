@@ -1,6 +1,7 @@
 {
 	"active": true,
 	"externalReferenceCode": "L_CHANGE_TONE",
+	"groupExternalReferenceCode": "[$ACCOUNT_ENTRY_GROUP_ERC:L_AI_HUB$]",
 	"name": "Change Tone",
 	"scope": "ai",
 	"title": "Change Tone",

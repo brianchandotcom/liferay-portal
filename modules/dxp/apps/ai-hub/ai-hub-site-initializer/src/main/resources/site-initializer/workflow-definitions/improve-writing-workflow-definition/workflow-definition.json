@@ -1,6 +1,7 @@
 {
 	"active": true,
 	"externalReferenceCode": "L_IMPROVE_WRITING",
+	"groupExternalReferenceCode": "[$ACCOUNT_ENTRY_GROUP_ERC:L_AI_HUB$]",
 	"name": "Improve Writing",
 	"scope": "ai",
 	"title": "Improve Writing",

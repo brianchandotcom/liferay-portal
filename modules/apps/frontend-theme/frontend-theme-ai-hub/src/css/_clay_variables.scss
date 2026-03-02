@@ -1,0 +1,52 @@
+@import 'clay/atlas/variables/_globals';
+
+$ai-hub-breadcrumb-min-height: 72px !default;
+
+$border-radius: 0.5rem;
+
+$border-radius-lg: 0.5rem;
+$border-radius-sm: 0.5rem;
+
+$breadcrumb-divider-svg-icon: clay-icon(slash, $gray-600);
+
+$breadcrumb-divider-svg-icon-height: 15px;
+
+$breadcrumb-font-size: 1.125rem !default;
+
+$btn-xs-border-radius: 0.25rem;
+
+$btn-sizes: () !default;
+$btn-sizes: map-deep-merge(
+	(
+		btn-xs: (
+			border-radius: $btn-xs-border-radius,
+		),
+	),
+	$btn-sizes
+);
+
+$custom-checkbox-indicator-border-radius: 0.25rem;
+
+$nav-divider-color: $secondary-l1;
+
+$sticker-sm-border-radius: 0.25rem;
+
+$sticker-sizes: () !default;
+$sticker-sizes: map-deep-merge(
+	(
+		sticker-xs: (
+			border-radius: $sticker-sm-border-radius,
+		),
+	),
+	$sticker-sizes
+);
+
+$sticker-sm: () !default;
+$sticker-sm: map-deep-merge(
+	(
+		border-radius: $sticker-sm-border-radius,
+	),
+	$sticker-sm
+);
+
+$table-list-border-radius: 0;

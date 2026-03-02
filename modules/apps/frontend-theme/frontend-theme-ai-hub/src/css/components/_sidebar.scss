@@ -1,0 +1,23 @@
+.sidebar-container {
+	background-color: $light-l1;
+	border-right: 0.05rem solid $secondary-l0;
+
+	@media (max-resolution: 1dppx) {
+		border-right-color: $secondary-l2;
+	}
+
+	.lfr-layout-structure-item-sidebar & {
+		position: static;
+		transform: none;
+		width: unset;
+	}
+}
+
+.fds .sidebar-light {
+	border-left: 0.05rem solid $secondary-l0;
+	box-shadow: none;
+
+	@media (max-resolution: 1dppx) {
+		border-left-color: $secondary-l2;
+	}
+}

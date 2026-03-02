@@ -169,11 +169,13 @@ public class WorkflowDefinitionManagerImpl
 	@Override
 	public List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			Boolean active, long companyId, String scope, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			OrderByComparator<WorkflowDefinition> orderByComparator,
+			long userId)
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(
-			companyId, active, scope, start, end, orderByComparator, false);
+			companyId, active, scope, start, end, orderByComparator, false,
+			userId);
 	}
 
 	@Override
@@ -296,7 +298,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(
-			companyId, null, scope, start, end, orderByComparator, true);
+			companyId, null, scope, start, end, orderByComparator, true, 0L);
 	}
 
 	@Override
@@ -520,13 +522,14 @@ public class WorkflowDefinitionManagerImpl
 	private List<WorkflowDefinition> _getLatestWorkflowDefinitions(
 			long companyId, Boolean active, String scope, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator,
-			boolean liberal)
+			boolean liberal, long userId)
 		throws WorkflowException {
 
 		try {
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCompanyId(companyId);
+			serviceContext.setUserId(userId);
 
 			List<KaleoDefinition> kaleoDefinitions = null;
 
@@ -548,14 +551,12 @@ public class WorkflowDefinitionManagerImpl
 				kaleoDefinitions = _get(
 					liberal,
 					() -> _kaleoDefinitionLocalService.getScopeKaleoDefinitions(
-						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
-						end,
+						scope, active, start, end,
 						KaleoDefinitionOrderByComparator.getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
 						serviceContext),
 					() -> _kaleoDefinitionService.getScopeKaleoDefinitions(
-						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
-						end,
+						scope, active, start, end,
 						KaleoDefinitionOrderByComparator.getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
 						serviceContext));

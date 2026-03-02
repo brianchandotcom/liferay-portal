@@ -9,7 +9,7 @@ package com.liferay.jenkins.results.parser;
  * @author Yi-Chen Tsai
  */
 public class TestSuiteSingleUpstreamPortalControllerSingleSuiteBuildRunner
-	<S extends PortalTestSuiteUpstreamControllerBuildData>
+	<S extends ControllerPortalTopLevelBuildData>
 		extends SingleUpstreamPortalControllerSingleSuiteBuildRunner<S> {
 
 	protected TestSuiteSingleUpstreamPortalControllerSingleSuiteBuildRunner(

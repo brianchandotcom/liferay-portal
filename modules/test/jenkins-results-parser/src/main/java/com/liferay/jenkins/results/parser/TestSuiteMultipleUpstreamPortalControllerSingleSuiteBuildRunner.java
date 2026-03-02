@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class TestSuiteMultipleUpstreamPortalControllerSingleSuiteBuildRunner
-	<S extends PortalTestSuiteUpstreamControllerBuildData>
+	<S extends ControllerPortalTopLevelBuildData>
 		extends BaseUpstreamPortalControllerBuildRunner<S> {
 
 	@Override

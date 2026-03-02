@@ -166,6 +166,7 @@ public class PortalTopLevelBuildData
 	private static final String _TYPE = "portal_top_level";
 
 	private static final Pattern _jobNamePattern = Pattern.compile(
-		"[^\\(]+\\((?<upstreamBranchName>[^\\)]+)\\)");
+		"[^\\(]+\\((?<upstreamBranchName>[^_\\)]+)" +
+			"(_(?<testSuiteName>[^\\)]+))?\\)");
 
 }

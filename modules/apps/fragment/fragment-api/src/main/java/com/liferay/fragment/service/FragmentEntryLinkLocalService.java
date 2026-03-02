@@ -145,12 +145,9 @@ public interface FragmentEntryLinkLocalService
 	public void deleteFragmentEntryLinks(long[] fragmentEntryLinkIds)
 		throws PortalException;
 
-	public void deleteFragmentEntryLinksByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC);
-
-	public void deleteFragmentEntryLinksByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted);
+	public void deleteFragmentEntryLinksByFragmentEntry(
+			FragmentEntry fragmentEntry, boolean deleted)
+		throws PortalException;
 
 	public List<FragmentEntryLink>
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
@@ -270,14 +267,15 @@ public interface FragmentEntryLinkLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentEntryLink> getAllFragmentEntryLinksByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator);
+	public List<FragmentEntryLink> getAllFragmentEntryLinksByFragmentEntry(
+			FragmentEntry fragmentEntry, int start, int end,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAllFragmentEntryLinksCountByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC);
+	public int getAllFragmentEntryLinksCountByFragmentEntry(
+			FragmentEntry fragmentEntry)
+		throws PortalException;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -365,12 +363,9 @@ public interface FragmentEntryLinkLocalService
 	public List<FragmentEntryLink> getFragmentEntryLinks(String rendererKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC);
+	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinksByPlid(
@@ -431,17 +426,9 @@ public interface FragmentEntryLinkLocalService
 	public int getFragmentEntryLinksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFragmentEntryLinksCountByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFragmentEntryLinksCountByFragmentEntryERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFragmentEntryLinksCountByFragmentEntryERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC, boolean deleted);
+	public int getFragmentEntryLinksCountByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry, boolean deleted)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFragmentEntryLinksCountByPlid(long groupId, long plid);
@@ -450,27 +437,29 @@ public interface FragmentEntryLinkLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getLayoutFragmentEntryLinksByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry, int start, int end,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutFragmentEntryLinksCountByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink>
-		getLayoutFragmentEntryLinksByFragmentEntryERC(
-			long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-			int start, int end,
-			OrderByComparator<FragmentEntryLink> orderByComparator);
+			getLayoutPageTemplateFragmentEntryLinksByFragmentEntry(
+				long groupId, FragmentEntry fragmentEntry,
+				int layoutPageTemplateType, int start, int end,
+				OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutFragmentEntryLinksCountByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentEntryLink>
-		getLayoutPageTemplateFragmentEntryLinksByFragmentEntryERC(
-			long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-			int layoutPageTemplateType, int start, int end,
-			OrderByComparator<FragmentEntryLink> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		int layoutPageTemplateType);
+	public int getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntry(
+			long groupId, FragmentEntry fragmentEntry,
+			int layoutPageTemplateType)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

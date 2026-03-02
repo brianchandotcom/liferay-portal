@@ -51,12 +51,8 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 
 	public String getContent();
 
-	public int getGlobalUsageCount();
-
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
-
-	public String getScopeERC();
 
 	public String getTypeLabel();
 

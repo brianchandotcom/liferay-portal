@@ -14975,6 +14975,9 @@ public class FragmentEntryLinkPersistenceImpl
 					fragmentEntryLinkModelImpl.setEditableValuesJSONObject(
 						cachedFragmentEntryLinkModelImpl.
 							getEditableValuesJSONObject());
+
+					fragmentEntryLinkModelImpl.setFragmentEntry(
+						cachedFragmentEntryLinkModelImpl.getFragmentEntry());
 				}
 			}
 		}

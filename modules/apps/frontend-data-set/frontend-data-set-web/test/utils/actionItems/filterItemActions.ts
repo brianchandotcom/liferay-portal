@@ -361,4 +361,73 @@ describe('filterItemActions', () => {
 			expect(disabledActions[0].target).toEqual('infoPanel');
 		});
 	});
+
+	describe('workflow actions', () => {
+		it('expands the workflow action placeholder into available workflow transitions from itemData', () => {
+			const itemDataWithWorkflow = {
+				...availableItemData,
+				actions: {
+					...availableItemData.actions,
+					workflow_approve: {
+						href: '/approve',
+						label: 'Approve',
+						method: 'PUT',
+						name: 'approve',
+					},
+					workflow_reject: {
+						href: '/reject',
+						label: 'Reject',
+						method: 'PUT',
+						name: 'reject',
+					},
+				},
+			};
+
+			const actionsWithWorkflowPlaceholder: IItemsActions[] = [
+				{
+					label: 'Workflow',
+					target: 'modal-workflow-transition',
+				},
+			];
+
+			const filteredActions = filterItemActions({
+				actions: actionsWithWorkflowPlaceholder,
+				itemData: itemDataWithWorkflow,
+				selectedItemsKey: 'id',
+			});
+
+			expect(filteredActions.length).toEqual(2);
+			expect(filteredActions[0].label).toEqual('Approve');
+			expect(filteredActions[0].target).toEqual(
+				'modal-workflow-transition'
+			);
+			expect(filteredActions[0].data).toEqual({
+				requestBody: '{"transitionName":"approve"}',
+				title: 'Approve',
+			});
+			expect(filteredActions[1].label).toEqual('Reject');
+		});
+
+		it('removes the workflow action placeholder if no workflow transitions are available', () => {
+			const actionsWithWorkflowPlaceholder: IItemsActions[] = [
+				{
+					label: 'Workflow',
+					target: 'modal-workflow-transition',
+				},
+				{
+					label: 'Other',
+					target: 'link',
+				},
+			];
+
+			const filteredActions = filterItemActions({
+				actions: actionsWithWorkflowPlaceholder,
+				itemData: availableItemData,
+				selectedItemsKey: 'id',
+			});
+
+			expect(filteredActions.length).toEqual(1);
+			expect(filteredActions[0].label).toEqual('Other');
+		});
+	});
 });

@@ -1064,7 +1064,7 @@ spec:
                                 {{- with .resource }}
                                     {{- with .status }}
                                         {{- with .atProvider }}
-                                            {{- $databaseAddress = .address -}}
+                                            {{- $databaseAddress = .address | toString -}}
                                             {{- $databasePort = .port | toString -}}
                                         {{- end -}}
                                     {{- end -}}
@@ -1082,7 +1082,7 @@ spec:
                                 {{- with .resource }}
                                     {{- with .status }}
                                         {{- with .atProvider }}
-                                            {{- $searchEndpoint = .endpoint -}}
+                                            {{- $searchEndpoint = .endpoint | toString -}}
                                         {{- end -}}
                                     {{- end -}}
                                 {{- end -}}
@@ -1095,14 +1095,14 @@ spec:
                                 {{- with .resource }}
                                     {{- with .metadata }}
                                         {{- with .annotations }}
-                                            {{- $storageName = index . "crossplane.io/external-name" -}}
+                                            {{- $storageName = index . "crossplane.io/external-name" | toString -}}
                                         {{- end -}}
                                     {{- end -}}
                                 {{- end -}}
                             {{- end -}}
                         {{- end -}}
 
-                        {{- if and $databaseAddress $databasePassword $searchEndpoint $storageName }}
+                        {{- if and $databaseAddress $databasePassword $databasePort $searchEndpoint $searchPassword $storageName }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
@@ -1138,15 +1138,15 @@ spec:
                                                 name: {{ .observed.composite.resource.metadata.name }}
                                                 uid: {{ .observed.composite.resource.metadata.uid }}
                                     stringData:
-                                        DATABASE_ENDPOINT: {{ $databaseAddress | toString }}
-                                        DATABASE_PASSWORD: {{ $databasePassword | default "" | toString }}
+                                        DATABASE_ENDPOINT: {{ $databaseAddress | quote }}
+                                        DATABASE_PASSWORD: {{ $databasePassword | quote }}
                                         DATABASE_PORT: {{ $databasePort | default 5432 | quote }}
-                                        DATABASE_USERNAME: {{ $database.resource.spec.forProvider.username | toString }}
-                                        OPENSEARCH_ENDPOINT: {{ $searchEndpoint | toString }}
-                                        OPENSEARCH_PASSWORD: {{ $searchPassword | default "" | toString }}
-                                        OPENSEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | toString }}
-                                        S3_BUCKET_ID: {{ $storageName | toString }}
-                                        S3_BUCKET_REGION: {{ $storage.resource.spec.forProvider.region | toString }}
+                                        DATABASE_USERNAME: {{ $database.resource.spec.forProvider.username | quote }}
+                                        OPENSEARCH_ENDPOINT: {{ $searchEndpoint | quote }}
+                                        OPENSEARCH_PASSWORD: {{ $searchPassword | quote }}
+                                        OPENSEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | quote }}
+                                        S3_BUCKET_ID: {{ $storageName | quote }}
+                                        S3_BUCKET_REGION: {{ $storage.resource.spec.forProvider.region | quote }}
                                     type: Opaque
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
@@ -1154,7 +1154,7 @@ spec:
                         apiVersion: aws.liferay.com/v1alpha1
                         kind: LiferayInfrastructure
                         status:
-                        {{- if and $databaseAddress $databasePassword $searchEndpoint $storageName }}
+                        {{- if and $databaseAddress $databasePassword $databasePort $searchEndpoint $searchPassword $storageName }}
                             managedServiceDetailsReady: true
                         {{- else }}
                             managedServiceDetailsReady: false

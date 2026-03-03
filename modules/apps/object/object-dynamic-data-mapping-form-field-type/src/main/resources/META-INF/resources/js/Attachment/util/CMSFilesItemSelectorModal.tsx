@@ -41,7 +41,7 @@ export type CMSFile = {
 		file: {
 			fileURL: string;
 			id: number;
-			mimeType: string;
+			mimeType?: string;
 			name?: string;
 			thumbnailURL?: string;
 		};
@@ -198,7 +198,9 @@ function CMSFilesItemSelectorModal({
 							};
 
 							if (
-								!item.embedded.file.mimeType.startsWith('image')
+								!item.embedded?.file?.mimeType?.startsWith(
+									'image'
+								)
 							) {
 								return {
 									...props,

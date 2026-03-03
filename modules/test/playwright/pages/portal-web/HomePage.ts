@@ -14,9 +14,9 @@ export class HomePage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.applicationsMenuButton = page.getByLabel(
-			'Open Applications MenuCtrl+'
-		);
+		this.applicationsMenuButton = page.getByRole('button', {
+			name: 'Open Applications Menu',
+		});
 	}
 
 	async goto() {

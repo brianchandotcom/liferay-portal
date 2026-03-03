@@ -39,6 +39,7 @@ spec:
                         {{- $namespace := $xr.metadata.namespace -}}
                         {{- $oidcProvider := `}}{{ .Values.aws.oidcProvider | quote }}{{` -}}
                         {{- $privateSubnetIdsList := $privateSubnetIds | fromJson -}}
+                        {{- $subnetCount := len $privateSubnetIdsList -}}
 
                         {{- $backupSpec := $xr.spec.backup -}}
                         {{- $backupRegion := $backupSpec.region | default $baseRegion -}}
@@ -868,8 +869,8 @@ spec:
                                     instanceCount: {{ $searchSpec.instanceCount }}
                                     instanceType: {{ $searchSpec.instanceType }}
                                     zoneAwarenessConfig:
-                                        availabilityZoneCount: 2
-                                    zoneAwarenessEnabled: true
+                                        availabilityZoneCount: {{ $subnetCount }}
+                                    zoneAwarenessEnabled: {{ gt $subnetCount 1 }}
                                 domainEndpointOptions:
                                     enforceHttps: true
                                     tlsSecurityPolicy: Policy-Min-TLS-1-2-2019-07
@@ -893,7 +894,7 @@ spec:
                                             component: search-security-group
                                             environmentId: {{ $environmentId }}
                                             projectId: {{ $projectId }}
-                                    subnetIds: {{ slice $privateSubnetIdsList 0 2 | toJson }}
+                                    subnetIds: {{ $privateSubnetIdsList | toJson }}
                             managementPolicies: {{ $managementPolicies }}
                             writeConnectionSecretToRef:
                                 name: liferay-search-credentials

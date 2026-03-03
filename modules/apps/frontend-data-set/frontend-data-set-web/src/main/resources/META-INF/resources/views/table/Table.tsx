@@ -393,7 +393,11 @@ const Body = ({
 									: getLocalizedValue(
 												item,
 												fields[0].fieldName
-										  )?.value
+										  )?.value &&
+										  typeof getLocalizedValue(
+												item,
+												fields[0].fieldName
+										  )?.value !== 'object'
 										? getLocalizedValue(
 												item,
 												fields[0].fieldName

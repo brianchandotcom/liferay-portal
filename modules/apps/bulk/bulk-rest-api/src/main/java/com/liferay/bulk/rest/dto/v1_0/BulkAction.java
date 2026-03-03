@@ -66,7 +66,8 @@ import java.util.function.Supplier;
 			name = "DeleteBulkAction", value = DeleteBulkAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "DeleteObjectEntryBulkAction", value = DeleteBulkAction.class
+			name = "DeleteObjectEntryBulkAction",
+			value = DeleteObjectEntryBulkAction.class
 		),
 		@JsonSubTypes.Type(
 			name = "DueDateBulkAction", value = DueDateBulkAction.class

@@ -13,6 +13,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -23,6 +25,8 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alessio Antonio Rendina
@@ -44,7 +48,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.addCPTaxCategory(
 			externalReferenceCode, nameMap, descriptionMap, serviceContext);
@@ -66,9 +70,8 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 	public void deleteCPTaxCategory(long cpTaxCategoryId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+		_modelResourcePermission.check(
+			getPermissionChecker(), cpTaxCategoryId, ActionKeys.DELETE);
 
 		cpTaxCategoryLocalService.deleteCPTaxCategory(cpTaxCategoryId);
 	}
@@ -124,9 +127,8 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 	public CPTaxCategory getCPTaxCategory(long cpTaxCategoryId)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
+		_modelResourcePermission.check(
+			getPermissionChecker(), cpTaxCategoryId, ActionKeys.VIEW);
 
 		return cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
 	}
@@ -138,7 +140,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.searchCPTaxCategories(
 			companyId, keywords, start, end, sort);
@@ -150,13 +152,20 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+		_modelResourcePermission.check(
+			getPermissionChecker(), cpTaxCategoryId, ActionKeys.UPDATE);
 
 		return cpTaxCategoryLocalService.updateCPTaxCategory(
 			externalReferenceCode, cpTaxCategoryId, nameMap, descriptionMap);
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.commerce.product.model.CPTaxCategory)"
+	)
+	private volatile ModelResourcePermission<CPTaxCategory>
+		_modelResourcePermission;
 
 	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME_TAX + ")")
 	private PortletResourcePermission _portletResourcePermission;

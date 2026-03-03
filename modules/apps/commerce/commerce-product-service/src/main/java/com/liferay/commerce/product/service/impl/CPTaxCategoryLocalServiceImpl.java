@@ -14,6 +14,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -43,6 +45,7 @@ import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortFieldBuilder;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.util.PortalInstances;
 
 import java.io.Serializable;
 
@@ -86,7 +89,16 @@ public class CPTaxCategoryLocalServiceImpl
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
 
-		return cpTaxCategoryPersistence.update(cpTaxCategory);
+		cpTaxCategory = cpTaxCategoryPersistence.update(cpTaxCategory);
+
+		// Resources
+
+		_resourceLocalService.addResources(
+			cpTaxCategory.getCompanyId(), 0, user.getUserId(),
+			CPTaxCategory.class.getName(), cpTaxCategory.getCPTaxCategoryId(),
+			false, false, false);
+
+		return cpTaxCategory;
 	}
 
 	@Override
@@ -97,6 +109,12 @@ public class CPTaxCategoryLocalServiceImpl
 
 	@Override
 	public void deleteCPTaxCategories(long companyId) {
+		if (!PortalInstances.isCurrentCompanyInDeletionProcess()) {
+			throw new UnsupportedOperationException(
+				"Deleting tax categories by company must be called when " +
+					"deleting a company");
+		}
+
 		cpTaxCategoryPersistence.removeByCompanyId(companyId);
 	}
 
@@ -113,6 +131,13 @@ public class CPTaxCategoryLocalServiceImpl
 		// Commerce product definitions
 
 		_cpDefinitionLocalService.updateCPDefinitionsByCPTaxCategoryId(
+			cpTaxCategory.getCPTaxCategoryId());
+
+		// Resources
+
+		_resourceLocalService.deleteResource(
+			cpTaxCategory.getCompanyId(), CPTaxCategory.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
 			cpTaxCategory.getCPTaxCategoryId());
 
 		return cpTaxCategory;
@@ -314,6 +339,9 @@ public class CPTaxCategoryLocalServiceImpl
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private Searcher _searcher;

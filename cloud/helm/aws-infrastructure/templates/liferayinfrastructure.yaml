@@ -16,6 +16,7 @@ spec:
     environmentId: {{ .Values.environmentId }}
     overlay: {{ .Values.overlay | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId }}
+    region: {{ .Values.region }}
     search:
         opensearch: {{ .Values.search.opensearch | toYaml | nindent 12 }}
     storage: {{ .Values.storage | toYaml | nindent 8 }}

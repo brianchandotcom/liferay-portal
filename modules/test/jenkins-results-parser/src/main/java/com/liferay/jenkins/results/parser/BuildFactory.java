@@ -142,6 +142,11 @@ public class BuildFactory {
 				buildURL, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.equals("test-docker-release-pullrequest")) {
+			return new DockerReleaseTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.startsWith("test-jenkins-acceptance-pullrequest")) {
 			return new JenkinsTopLevelBuild(
 				buildURL, (TopLevelBuild)parentBuild);

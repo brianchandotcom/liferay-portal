@@ -795,6 +795,9 @@ public class AssetCategoryLocalServiceTest {
 				assetCategory.getParentCategoryId(),
 				parentAssetCategory.getCategoryId());
 			Assert.assertEquals(
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				parentAssetCategory.getParentCategoryId());
+			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY,
 				parentAssetCategory.getStatus());
 

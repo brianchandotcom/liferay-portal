@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import fetch from 'jest-fetch-mock';
 import React from 'react';
 
 import '@testing-library/jest-dom';
@@ -15,15 +16,6 @@ const renderComponent = (props: {apiURL: string; backURL: string}) => {
 	return <ViewImportReportEntryDetail {...props} />;
 };
 
-const mockData = (data: any) => {
-	global.fetch = jest.fn(() =>
-		Promise.resolve({
-			json: () => Promise.resolve(data),
-			ok: true,
-		} as Response)
-	);
-};
-
 jest.mock('frontend-js-components-web', () => ({
 	...(jest.requireActual('frontend-js-components-web') as any),
 	openModal: jest.fn(),
@@ -31,12 +23,11 @@ jest.mock('frontend-js-components-web', () => ({
 
 describe('ViewImportReportEntryDetail', () => {
 	afterEach(() => {
-		jest.restoreAllMocks();
 		jest.clearAllMocks();
 	});
 
 	it('renders loading state initially', async () => {
-		mockData({});
+		fetch.mockResponseOnce(JSON.stringify({}));
 
 		const {container} = render(
 			renderComponent({
@@ -50,28 +41,30 @@ describe('ViewImportReportEntryDetail', () => {
 		expect(loadingSpinner).toBeInTheDocument();
 	});
 
-	it('renders error details when loaded', async () => {
-		mockData({
-			classExternalReferenceCode: '',
-			classPK: 123,
-			creator: {
-				name: 'John Doe',
-			},
-			dateCreated: '2025-06-05T08:51:54Z',
-			dateModified: '2025-06-05T08:51:54Z',
-			errorMessage: 'Error message',
-			errorStacktrace: 'Error stack trace',
-			id: 456,
-			modelName: 'ModelName',
-			scope: {
-				label: 'Scope label',
-				type: 'Scope Type',
-			},
-			type: {
-				code: 1,
-				label: 'Type label',
-			},
-		});
+	it('renders error details when loaded and shows stack trace modal', async () => {
+		fetch.mockResponseOnce(
+			JSON.stringify({
+				classExternalReferenceCode: '',
+				classPK: 123,
+				creator: {
+					name: 'John Doe',
+				},
+				dateCreated: '2025-06-05T08:51:54Z',
+				dateModified: '2025-06-05T08:51:54Z',
+				errorMessage: 'Error message',
+				errorStacktrace: 'Error stack trace',
+				id: 456,
+				modelName: 'ModelName',
+				scope: {
+					label: 'Scope label',
+					type: 'Scope Type',
+				},
+				type: {
+					code: 1,
+					label: 'Type label',
+				},
+			})
+		);
 
 		const {getByRole} = render(
 			renderComponent({

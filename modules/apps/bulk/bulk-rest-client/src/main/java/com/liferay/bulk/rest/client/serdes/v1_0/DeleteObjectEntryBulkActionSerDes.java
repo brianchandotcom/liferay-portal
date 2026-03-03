@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.bulk.rest.client.serdes.v1_0;
 
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
-import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectEntryBulkAction;
 import com.liferay.bulk.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -22,24 +22,28 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class DeleteBulkActionSerDes {
+public class DeleteObjectEntryBulkActionSerDes {
 
-	public static DeleteBulkAction toDTO(String json) {
-		DeleteBulkActionJSONParser deleteBulkActionJSONParser =
-			new DeleteBulkActionJSONParser();
+	public static DeleteObjectEntryBulkAction toDTO(String json) {
+		DeleteObjectEntryBulkActionJSONParser
+			deleteObjectEntryBulkActionJSONParser =
+				new DeleteObjectEntryBulkActionJSONParser();
 
-		return deleteBulkActionJSONParser.parseToDTO(json);
+		return deleteObjectEntryBulkActionJSONParser.parseToDTO(json);
 	}
 
-	public static DeleteBulkAction[] toDTOs(String json) {
-		DeleteBulkActionJSONParser deleteBulkActionJSONParser =
-			new DeleteBulkActionJSONParser();
+	public static DeleteObjectEntryBulkAction[] toDTOs(String json) {
+		DeleteObjectEntryBulkActionJSONParser
+			deleteObjectEntryBulkActionJSONParser =
+				new DeleteObjectEntryBulkActionJSONParser();
 
-		return deleteBulkActionJSONParser.parseToDTOs(json);
+		return deleteObjectEntryBulkActionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(DeleteBulkAction deleteBulkAction) {
-		if (deleteBulkAction == null) {
+	public static String toJSON(
+		DeleteObjectEntryBulkAction deleteObjectEntryBulkAction) {
+
+		if (deleteObjectEntryBulkAction == null) {
 			return "null";
 		}
 
@@ -47,21 +51,7 @@ public class DeleteBulkActionSerDes {
 
 		sb.append("{");
 
-		if (deleteBulkAction.getClassName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"className\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(deleteBulkAction.getClassName()));
-
-			sb.append("\"");
-		}
-
-		if (deleteBulkAction.getBulkActionItems() != null) {
+		if (deleteObjectEntryBulkAction.getBulkActionItems() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -70,13 +60,18 @@ public class DeleteBulkActionSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < deleteBulkAction.getBulkActionItems().length;
+			for (int i = 0;
+				 i < deleteObjectEntryBulkAction.getBulkActionItems().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(deleteBulkAction.getBulkActionItems()[i]));
+					String.valueOf(
+						deleteObjectEntryBulkAction.getBulkActionItems()[i]));
 
-				if ((i + 1) < deleteBulkAction.getBulkActionItems().length) {
+				if ((i + 1) <
+						deleteObjectEntryBulkAction.
+							getBulkActionItems().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -84,17 +79,19 @@ public class DeleteBulkActionSerDes {
 			sb.append("]");
 		}
 
-		if (deleteBulkAction.getSelectionScope() != null) {
+		if (deleteObjectEntryBulkAction.getSelectionScope() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"selectionScope\": ");
 
-			sb.append(String.valueOf(deleteBulkAction.getSelectionScope()));
+			sb.append(
+				String.valueOf(
+					deleteObjectEntryBulkAction.getSelectionScope()));
 		}
 
-		if (deleteBulkAction.getType() != null) {
+		if (deleteObjectEntryBulkAction.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -102,7 +99,7 @@ public class DeleteBulkActionSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-			sb.append(deleteBulkAction.getType());
+			sb.append(deleteObjectEntryBulkAction.getType());
 			sb.append("\"");
 		}
 
@@ -112,74 +109,69 @@ public class DeleteBulkActionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		DeleteBulkActionJSONParser deleteBulkActionJSONParser =
-			new DeleteBulkActionJSONParser();
+		DeleteObjectEntryBulkActionJSONParser
+			deleteObjectEntryBulkActionJSONParser =
+				new DeleteObjectEntryBulkActionJSONParser();
 
-		return deleteBulkActionJSONParser.parseToMap(json);
+		return deleteObjectEntryBulkActionJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(DeleteBulkAction deleteBulkAction) {
-		if (deleteBulkAction == null) {
+	public static Map<String, String> toMap(
+		DeleteObjectEntryBulkAction deleteObjectEntryBulkAction) {
+
+		if (deleteObjectEntryBulkAction == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (deleteBulkAction.getClassName() == null) {
-			map.put("className", null);
-		}
-		else {
-			map.put(
-				"className", String.valueOf(deleteBulkAction.getClassName()));
-		}
-
-		if (deleteBulkAction.getBulkActionItems() == null) {
+		if (deleteObjectEntryBulkAction.getBulkActionItems() == null) {
 			map.put("bulkActionItems", null);
 		}
 		else {
 			map.put(
 				"bulkActionItems",
-				String.valueOf(deleteBulkAction.getBulkActionItems()));
+				String.valueOf(
+					deleteObjectEntryBulkAction.getBulkActionItems()));
 		}
 
-		if (deleteBulkAction.getSelectionScope() == null) {
+		if (deleteObjectEntryBulkAction.getSelectionScope() == null) {
 			map.put("selectionScope", null);
 		}
 		else {
 			map.put(
 				"selectionScope",
-				String.valueOf(deleteBulkAction.getSelectionScope()));
+				String.valueOf(
+					deleteObjectEntryBulkAction.getSelectionScope()));
 		}
 
-		if (deleteBulkAction.getType() == null) {
+		if (deleteObjectEntryBulkAction.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(deleteBulkAction.getType()));
+			map.put(
+				"type", String.valueOf(deleteObjectEntryBulkAction.getType()));
 		}
 
 		return map;
 	}
 
-	public static class DeleteBulkActionJSONParser
-		extends BaseJSONParser<DeleteBulkAction> {
+	public static class DeleteObjectEntryBulkActionJSONParser
+		extends BaseJSONParser<DeleteObjectEntryBulkAction> {
 
 		@Override
-		protected DeleteBulkAction createDTO() {
-			return new DeleteBulkAction();
+		protected DeleteObjectEntryBulkAction createDTO() {
+			return new DeleteObjectEntryBulkAction();
 		}
 
 		@Override
-		protected DeleteBulkAction[] createDTOArray(int size) {
-			return new DeleteBulkAction[size];
+		protected DeleteObjectEntryBulkAction[] createDTOArray(int size) {
+			return new DeleteObjectEntryBulkAction[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "className")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
+			if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "selectionScope")) {
@@ -194,15 +186,10 @@ public class DeleteBulkActionSerDes {
 
 		@Override
 		protected void setField(
-			DeleteBulkAction deleteBulkAction, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			DeleteObjectEntryBulkAction deleteObjectEntryBulkAction,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "className")) {
-				if (jsonParserFieldValue != null) {
-					deleteBulkAction.setClassName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
+			if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
@@ -215,20 +202,21 @@ public class DeleteBulkActionSerDes {
 							(String)jsonParserFieldValues[i]);
 					}
 
-					deleteBulkAction.setBulkActionItems(bulkActionItemsArray);
+					deleteObjectEntryBulkAction.setBulkActionItems(
+						bulkActionItemsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "selectionScope")) {
 				if (jsonParserFieldValue != null) {
-					deleteBulkAction.setSelectionScope(
+					deleteObjectEntryBulkAction.setSelectionScope(
 						SelectionScopeSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					deleteBulkAction.setType(
-						DeleteBulkAction.Type.create(
+					deleteObjectEntryBulkAction.setType(
+						DeleteObjectEntryBulkAction.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

@@ -21,6 +21,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.CopyBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteAssetVersionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectEntryBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DueDateBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkAction;
@@ -469,6 +470,18 @@ public abstract class BaseBulkActionResourceTestCase {
 				if (((DeleteAssetVersionBulkAction)bulkAction).getVersions() ==
 						null) {
 
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("className", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof DeleteBulkAction)) {
+					continue;
+				}
+
+				if (((DeleteBulkAction)bulkAction).getClassName() == null) {
 					valid = false;
 				}
 
@@ -1111,6 +1124,23 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("className", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof DeleteBulkAction) ||
+					!(bulkAction2 instanceof DeleteBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DeleteBulkAction)bulkAction1).getClassName(),
+						((DeleteBulkAction)bulkAction2).getClassName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dueDate", additionalAssertFieldName)) {
 				if (!(bulkAction1 instanceof DueDateBulkAction) ||
 					!(bulkAction2 instanceof DueDateBulkAction)) {
@@ -1682,12 +1712,16 @@ public abstract class BaseBulkActionResourceTestCase {
 			() -> {
 				DeleteBulkAction bulkAction = new DeleteBulkAction();
 
+				bulkAction.setClassName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
 				bulkAction.setType(BulkAction.Type.create("DeleteBulkAction"));
 
 				return bulkAction;
 			},
 			() -> {
-				DeleteBulkAction bulkAction = new DeleteBulkAction();
+				DeleteObjectEntryBulkAction bulkAction =
+					new DeleteObjectEntryBulkAction();
 
 				bulkAction.setType(
 					BulkAction.Type.create("DeleteObjectEntryBulkAction"));

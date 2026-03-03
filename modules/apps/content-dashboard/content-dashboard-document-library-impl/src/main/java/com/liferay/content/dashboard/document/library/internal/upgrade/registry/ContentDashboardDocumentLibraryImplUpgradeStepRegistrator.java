@@ -6,9 +6,10 @@
 package com.liferay.content.dashboard.document.library.internal.upgrade.registry;
 
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.content.dashboard.document.library.internal.upgrade.v1_0_17.AssetVocabularyUpgradeProcess;
+import com.liferay.content.dashboard.document.library.internal.upgrade.v1_0_18.AssetVocabularyUpgradeProcess;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -32,9 +33,16 @@ public class ContentDashboardDocumentLibraryImplUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.2", "1.0.17",
+			new com.liferay.content.dashboard.document.library.internal.upgrade.
+				v1_0_17.AssetVocabularyUpgradeProcess(
+					_assetVocabularyLocalService, _classNameLocalService,
+					_companyLocalService));
+
+		registry.register(
+			"1.0.17", "1.0.18",
 			new AssetVocabularyUpgradeProcess(
-				_assetVocabularyLocalService, _classNameLocalService,
-				_companyLocalService));
+				_assetVocabularyLocalService, _companyLocalService,
+				_groupLocalService));
 	}
 
 	@Reference
@@ -45,5 +53,8 @@ public class ContentDashboardDocumentLibraryImplUpgradeStepRegistrator
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

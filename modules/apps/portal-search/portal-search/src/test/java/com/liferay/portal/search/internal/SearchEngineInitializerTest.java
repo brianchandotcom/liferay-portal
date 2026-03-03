@@ -97,8 +97,10 @@ public class SearchEngineInitializerTest {
 		SearchEngineInitializer searchEngineInitializer =
 			new SearchEngineInitializer(
 				RandomTestUtil.randomLong(), _concurrentReindexManager,
-				executionMode, indexers, _portalExecutorManager,
-				_syncReindexManager);
+				executionMode,
+				_portalExecutorManager.getPortalExecutor(
+					SearchEngineInitializer.class.getName()),
+				indexers, _syncReindexManager);
 
 		searchEngineInitializer.reindex();
 	}

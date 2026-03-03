@@ -1107,6 +1107,13 @@ spec:
                                 encryptAtRest:
                                     enabled: true
                                 engineVersion: {{ $searchSpec.engineVersion | quote }}
+                                logPublishingOptions:
+                                    -   cloudwatchLogGroupArn: arn:aws:logs:{{ $searchRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-audit-logs
+                                        enabled: true
+                                        logType: AUDIT_LOGS
+                                    -   cloudwatchLogGroupArn: arn:aws:logs:{{ $searchRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-index-logs
+                                        enabled: true
+                                        logType: INDEX_SLOW_LOGS
                                 nodeToNodeEncryption:
                                     enabled: true
                                 region: {{ $searchRegion }}
@@ -1164,6 +1171,56 @@ spec:
                                         projectId: {{ $projectId }}
                                 region: {{ $searchRegion }}
                             managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+                        kind: Group
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $searchName }}-audit-logs
+                            name: {{ $searchName }}-audit-logs
+                        spec:
+                            forProvider:
+                                region: {{ $searchRegion }}
+                                retentionInDays: 7
+                        ---
+                        apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+                        kind: Group
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $searchName }}-index-logs
+                            name: {{ $searchName }}-index-logs
+                        spec:
+                            forProvider:
+                                region: {{ $searchRegion }}
+                                retentionInDays: 7
+                        ---
+                        apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+                        kind: ResourcePolicy
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $searchName }}-log-publishing-policy
+                            name: {{ $searchName }}-log-publishing-policy
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                policyDocument: |
+                                    {
+                                        "Statement": [
+                                            {
+                                                "Action": [
+                                                    "logs:CreateLogStream",
+                                                    "logs:PutLogEvents"
+                                                ],
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "Service": "es.amazonaws.com"
+                                                },
+                                                "Resource": "arn:aws:logs:{{ $searchRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-*"
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    }
+                                region: {{ $searchRegion }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object

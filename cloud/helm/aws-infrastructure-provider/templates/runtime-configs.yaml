@@ -117,6 +117,44 @@ kind: DeploymentRuntimeConfig
 metadata:
     annotations:
         argocd.argoproj.io/sync-wave: "-90"
+    name: aws-cloudwatchlogs-config
+spec:
+    deploymentTemplate:
+        spec:
+            selector:
+                matchLabels:
+                    pkg.crossplane.io/provider: provider-aws-cloudwatchlogs
+            template:
+                metadata:
+                    annotations:
+                        instrumentation.opentelemetry.io/inject-dotnet: "false"
+                        instrumentation.opentelemetry.io/inject-java: "false"
+                        instrumentation.opentelemetry.io/inject-nodejs: "false"
+                        instrumentation.opentelemetry.io/inject-python: "false"
+                        sidecar.opentelemetry.io/inject: "false"
+                    labels:
+                        pkg.crossplane.io/provider: provider-aws-cloudwatchlogs
+                spec:
+                    containers:
+                        -   name: package-runtime
+                            resources:
+                                limits:
+                                    memory: 1Gi
+                                requests:
+                                    cpu: 25m
+                                    memory: 512Mi
+                    serviceAccountName: provider-aws-cloudwatchlogs
+    serviceAccountTemplate:
+        metadata:
+            annotations:
+                eks.amazonaws.com/role-arn: arn:aws:iam::{{ $accountId }}:role/{{ $cluster }}-provider-aws-cloudwatchlogs-role
+            name: provider-aws-cloudwatchlogs
+---
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-90"
     name: aws-ec2-config
 spec:
     deploymentTemplate:

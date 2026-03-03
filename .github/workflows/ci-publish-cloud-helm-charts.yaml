@@ -5,8 +5,6 @@ jobs:
     publish-aws:
         if: ${{github.repository == 'liferay/liferay-portal'}}
         needs: publish-default
-        secrets:
-            GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-aws
@@ -14,8 +12,6 @@ jobs:
             working_directory: ./cloud/helm/aws
     publish-aws-infrastructure:
         if: ${{github.repository == 'liferay/liferay-portal'}}
-        secrets:
-            GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-aws-infrastructure
@@ -23,8 +19,6 @@ jobs:
             working_directory: ./cloud/helm/aws-infrastructure
     publish-aws-infrastructure-provider:
         if: ${{github.repository == 'liferay/liferay-portal'}}
-        secrets:
-            GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-aws-infrastructure-provider
@@ -99,8 +93,6 @@ jobs:
                 working-directory: ./cloud/helm/aws-marketplace
     publish-default:
         if: ${{github.repository == 'liferay/liferay-portal'}}
-        secrets:
-            GAR_PASSWORD: ${{secrets.GAR_PASSWORD}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-default

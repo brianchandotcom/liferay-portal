@@ -3858,7 +3858,9 @@ public class JenkinsResultsParserUtil {
 
 	public static boolean isCINode() {
 		if (_ciNode == null) {
-			if (isNullOrEmpty(System.getenv("JENKINS_URL"))) {
+			if (isNullOrEmpty(System.getenv("JENKINS_URL")) &&
+				isNullOrEmpty(System.getenv("MASTER_NETWORK_NAME"))) {
+
 				_ciNode = false;
 			}
 			else {

@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -201,10 +202,6 @@ public class SectionDisplayContextHelper {
 				DepotConstants.TYPE_SPACE);
 		}
 
-		if (ListUtil.isEmpty(depotEntryGroupIds)) {
-			return creationMenu;
-		}
-
 		depotEntryGroupIds = _filter(
 			depotEntryGroupIds, ActionKeys.ADD_ENTRY,
 			_getRootObjectEntryFolderExternalReferenceCodes(
@@ -219,7 +216,7 @@ public class SectionDisplayContextHelper {
 			JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray(
 				depotEntryGroupIds, dropdownItem, themeDisplay.getLocale());
 
-			if (depotEntriesJSONArray == null) {
+			if (depotEntriesJSONArray.length() == 0) {
 				continue;
 			}
 
@@ -425,18 +422,11 @@ public class SectionDisplayContextHelper {
 		List<Long> acceptedGroupIds = _getAcceptedGroupIds(objectDefinitionId);
 
 		if (acceptedGroupIds.isEmpty()) {
-			return null;
+			return Collections.emptyList();
 		}
 
-		List<Long> validGroupIds = new ArrayList<>();
-
-		for (long groupId : depotEntryGroupIds) {
-			if (acceptedGroupIds.contains(groupId)) {
-				validGroupIds.add(groupId);
-			}
-		}
-
-		return validGroupIds;
+		return new ArrayList<>(
+			SetUtil.intersect(acceptedGroupIds, depotEntryGroupIds));
 	}
 
 	private List<Long> _getAcceptedGroupIds(long objectDefinitionId) {
@@ -484,10 +474,6 @@ public class SectionDisplayContextHelper {
 
 	private JSONArray _getDepotEntriesJSONArray(
 		List<Long> groupIds, Locale locale) {
-
-		if (ListUtil.isEmpty(groupIds)) {
-			return null;
-		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

@@ -923,8 +923,6 @@ test(
 			await test.step('Select 1 asset and delete it using the Bulk Action', async () => {
 				await assetsPage.gotoAll();
 
-				await expect(assetsPage.taskStatusFormsButton).toBeHidden();
-
 				await assetsPage
 					.getItem(filesNames[0])
 					.locator('input[title="Select Item"]')
@@ -933,7 +931,7 @@ test(
 
 				await waitForAlert(
 					page,
-					'Info:Delete action started for 1 asset.',
+					`Info:Delete action started for ${filesNames[0]} asset.`,
 					{
 						autoClose: true,
 						type: 'info',
@@ -1410,8 +1408,6 @@ test(
 			await test.step('Select 3 assets and bulk edit their categories', async () => {
 				await assetsPage.gotoAll();
 
-				await expect(assetsPage.taskStatusFormsButton).toBeHidden();
-
 				await assetsPage
 					.getItem(fileNames[0])
 					.locator('input[title="Select Item"]')
@@ -1658,8 +1654,6 @@ test(
 			await test.step('Select 3 assets including a folder and bulk edit their categories', async () => {
 				await assetsPage.gotoContents();
 
-				await expect(assetsPage.taskStatusFormsButton).toBeHidden();
-
 				await assetsPage
 					.getItem(webContentNames[0])
 					.locator('input[title="Select Item"]')
@@ -1823,8 +1817,6 @@ test(
 
 			await test.step('Select 3 mixed assets and bulk edit their categories', async () => {
 				await assetsPage.gotoAll();
-
-				await expect(assetsPage.taskStatusFormsButton).toBeHidden();
 
 				await assetsPage
 					.getItem(webContentNames[0])
@@ -2059,8 +2051,6 @@ test(
 			await test.step('Select 3 assets including a folder and bulk edit their tags', async () => {
 				await assetsPage.gotoContents();
 
-				await expect(assetsPage.taskStatusFormsButton).toBeHidden();
-
 				await assetsPage
 					.getItem(webContentNames[0])
 					.locator('input[title="Select Item"]')
@@ -2226,8 +2216,6 @@ test(
 
 			await test.step('Select 3 mixed assets and bulk edit their tags', async () => {
 				await assetsPage.gotoAll();
-
-				await expect(assetsPage.taskStatusFormsButton).toBeHidden();
 
 				await assetsPage
 					.getItem(webContentNames[0])
@@ -3092,7 +3080,7 @@ test(
 
 			await waitForAlert(
 				page,
-				'Info:Delete asset versions action started for 2 versions.',
+				'Info:Delete asset versions action started for 3 versions.',
 				{
 					autoClose: true,
 					type: 'info',

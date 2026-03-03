@@ -351,9 +351,8 @@ test(
 
 			const dataSetFragmentPage: DataSetPage = new DataSetPage(page);
 
-			const row = dataSetFragmentPage.table.bodyRows.filter({
-				hasText: file1Title,
-			});
+			const row =
+				dataSetFragmentPage.table.bodyRows.getByLabel(file1Title);
 
 			await expect(row.getByText(file1Title)).toBeVisible();
 		}

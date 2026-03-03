@@ -169,7 +169,7 @@ export class AssetsPage {
 				exact: true,
 				name: action,
 			}),
-			trigger: this.getCardItem(filter).getByLabel('More actions'),
+			trigger: this.getCardItem(filter).getByLabel(`${filter} Actions`),
 		});
 	}
 }

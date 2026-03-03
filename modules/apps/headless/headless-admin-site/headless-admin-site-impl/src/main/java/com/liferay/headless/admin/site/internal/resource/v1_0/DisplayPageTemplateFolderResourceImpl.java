@@ -82,7 +82,8 @@ public class DisplayPageTemplateFolderResourceImpl
 
 			@Override
 			public String getKey() {
-				return DisplayPageTemplateFolderResourceImpl.class.getName();
+				return LayoutPageTemplateCollection.class.getName() + "#" +
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE;
 			}
 
 			@Override

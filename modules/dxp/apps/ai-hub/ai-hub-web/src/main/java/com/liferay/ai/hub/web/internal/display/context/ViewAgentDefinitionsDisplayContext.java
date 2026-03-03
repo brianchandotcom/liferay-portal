@@ -87,7 +87,6 @@ public class ViewAgentDefinitionsDisplayContext {
 
 	private String _getAgentDefinitionURL() throws Exception {
 		Company company = _themeDisplay.getCompany();
-
 		Group group = _groupLocalService.getGroup(
 			_themeDisplay.getScopeGroupId());
 

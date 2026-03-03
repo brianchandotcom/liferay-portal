@@ -13,6 +13,7 @@ database:
     username: liferay_database_admin
 deletionProtection: false
 enabled: true
+endpoints: {}
 gateway: {}
 license: {}
 overlay: {}

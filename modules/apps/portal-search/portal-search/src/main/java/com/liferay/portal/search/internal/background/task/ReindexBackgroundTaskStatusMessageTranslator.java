@@ -36,9 +36,6 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 			return;
 		}
 
-		String reindexType = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute(_REINDEX_TYPE));
-
 		String className = message.getString(
 			ReindexBackgroundTaskConstants.CLASS_NAME);
 
@@ -58,39 +55,42 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		long[] companyIds = GetterUtil.getLongValues(
 			backgroundTaskStatus.getAttribute(
 				ReindexBackgroundTaskConstants.COMPANY_IDS));
-
-		int completedCompanyCount = GetterUtil.getInteger(
-			backgroundTaskStatus.getAttribute(_COMPLETED_COMPANY_COUNT));
-
+		int completedCompaniesCount = GetterUtil.getInteger(
+			backgroundTaskStatus.getAttribute("completedCompaniesCount"));
 		int percentage = 100;
 
-		if (_REINDEX_TYPE_PORTAL.equals(reindexType)) {
-			int activeCompanyCount = companyIds.length - completedCompanyCount;
+		String reindexType = GetterUtil.getString(
+			backgroundTaskStatus.getAttribute("reindexType"));
 
-			if (activeCompanyCount > 0) {
-				String[] pastIndexers = GetterUtil.getStringValues(
-					backgroundTaskStatus.getAttribute(_PAST_INDEXERS));
+		if (reindexType.equals("portal")) {
+			int activeCompaniesCount =
+				companyIds.length - completedCompaniesCount;
+
+			if (activeCompaniesCount > 0) {
 				int indexerCount = GetterUtil.getInteger(
-					backgroundTaskStatus.getAttribute(_INDEXER_COUNT));
+					backgroundTaskStatus.getAttribute("indexerCount"));
+
+				String[] pastIndexers = GetterUtil.getStringValues(
+					backgroundTaskStatus.getAttribute("pastIndexers"));
 
 				Set<String> pastIndexersSet = SetUtil.fromArray(pastIndexers);
 
 				if (pastIndexersSet.isEmpty()) {
 					backgroundTaskStatus.setAttribute(
-						_PAST_INDEXERS, new String[] {className});
+						"pastIndexers", new String[] {className});
 				}
 				else if (pastIndexersSet.add(className)) {
 					backgroundTaskStatus.setAttribute(
-						_INDEXER_COUNT, ++indexerCount);
+						"indexerCount", ++indexerCount);
 					backgroundTaskStatus.setAttribute(
-						_PAST_INDEXERS,
+						"pastIndexers",
 						ArrayUtil.toStringArray(pastIndexersSet));
 				}
 
 				Set<Indexer<?>> indexers = IndexerRegistryUtil.getIndexers();
 
 				percentage = _getPercentage(
-					completedCompanyCount, companyIds.length, indexerCount,
+					completedCompaniesCount, companyIds.length, indexerCount,
 					indexers.size(), count, total);
 
 				if (companyIds.length > 1) {
@@ -98,12 +98,13 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 				}
 			}
 		}
-		else if (_REINDEX_TYPE_SINGLE.equals(reindexType)) {
-			int activeCompanyCount = companyIds.length - completedCompanyCount;
+		else if (reindexType.equals("single")) {
+			int activeCompaniesCount =
+				companyIds.length - completedCompaniesCount;
 
-			if (activeCompanyCount > 0) {
+			if (activeCompaniesCount > 0) {
 				percentage = _getPercentage(
-					completedCompanyCount, companyIds.length, 0, 1, count,
+					completedCompaniesCount, companyIds.length, 0, 1, count,
 					total);
 
 				if (companyIds.length > 1) {
@@ -117,8 +118,8 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 	}
 
 	private int _getPercentage(
-		int companyCount, int companyTotal, int indexerCount, int indexerTotal,
-		long documentCount, long documentTotal) {
+		int companiesCount, int companyTotal, int indexerCount,
+		int indexerTotal, long documentCount, long documentTotal) {
 
 		if ((companyTotal <= 0) || (indexerTotal <= 0)) {
 			return 100;
@@ -134,7 +135,7 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 			(indexerCount + indexerPercentage) / indexerTotal;
 
 		double totalPercentage =
-			(companyCount + companyPercentage) / companyTotal;
+			(companiesCount + companyPercentage) / companyTotal;
 
 		return (int)Math.min(Math.ceil(totalPercentage * 100), 100);
 	}
@@ -144,7 +145,8 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 
 		long[] companyIds = GetterUtil.getLongValues(
 			message.get(ReindexBackgroundTaskConstants.COMPANY_IDS));
-		String phase = message.getString(ReindexBackgroundTaskConstants.PHASE);
+		String phase = GetterUtil.getString(
+			message.getString(ReindexBackgroundTaskConstants.PHASE));
 
 		backgroundTaskStatus.setAttribute(
 			ReindexBackgroundTaskConstants.COMPANY_ID,
@@ -152,35 +154,33 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		backgroundTaskStatus.setAttribute(
 			ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds);
 
-		if (ReindexBackgroundTaskConstants.PORTAL_START.equals(phase)) {
-			backgroundTaskStatus.setAttribute(
-				_REINDEX_TYPE, _REINDEX_TYPE_PORTAL);
+		if (phase.equals(ReindexBackgroundTaskConstants.PORTAL_START)) {
 			backgroundTaskStatus.setAttribute(
 				ReindexBackgroundTaskConstants.PHASE, phase);
+			backgroundTaskStatus.setAttribute("reindexType", "portal");
 		}
-		else if (ReindexBackgroundTaskConstants.SINGLE_START.equals(phase)) {
-			backgroundTaskStatus.setAttribute(
-				_REINDEX_TYPE, _REINDEX_TYPE_SINGLE);
+		else if (phase.equals(ReindexBackgroundTaskConstants.SINGLE_START)) {
 			backgroundTaskStatus.setAttribute(
 				ReindexBackgroundTaskConstants.PHASE, phase);
+			backgroundTaskStatus.setAttribute("reindexType", "single");
 		}
-		else if (ReindexBackgroundTaskConstants.PORTAL_END.equals(phase) ||
-				 ReindexBackgroundTaskConstants.SINGLE_END.equals(phase)) {
+		else if (phase.equals(ReindexBackgroundTaskConstants.PORTAL_END) ||
+				 phase.equals(ReindexBackgroundTaskConstants.SINGLE_END)) {
 
-			int completedCompanyCount = GetterUtil.getInteger(
-				backgroundTaskStatus.getAttribute(_COMPLETED_COMPANY_COUNT));
+			int completedCompaniesCount = GetterUtil.getInteger(
+				backgroundTaskStatus.getAttribute("completedCompaniesCount"));
 
-			completedCompanyCount++;
+			completedCompaniesCount++;
 
 			backgroundTaskStatus.setAttribute(
-				_COMPLETED_COMPANY_COUNT, completedCompanyCount);
+				"completedCompaniesCount", completedCompaniesCount);
 
-			backgroundTaskStatus.setAttribute(_INDEXER_COUNT, 0);
-			backgroundTaskStatus.setAttribute(_PAST_INDEXERS, new String[0]);
+			backgroundTaskStatus.setAttribute("indexerCount", 0);
+			backgroundTaskStatus.setAttribute("pastIndexers", new String[0]);
 
-			int percentage;
+			int percentage = 0;
 
-			if (completedCompanyCount >= companyIds.length) {
+			if (completedCompaniesCount >= companyIds.length) {
 				backgroundTaskStatus.setAttribute(
 					ReindexBackgroundTaskConstants.PHASE, phase);
 
@@ -188,7 +188,7 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 			}
 			else {
 				percentage = (int)Math.ceil(
-					(double)completedCompanyCount / companyIds.length * 100);
+					(double)completedCompaniesCount / companyIds.length * 100);
 
 				percentage = Math.min(percentage, 99);
 			}
@@ -197,18 +197,5 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 				"percentage", String.valueOf(percentage));
 		}
 	}
-
-	private static final String _COMPLETED_COMPANY_COUNT =
-		"completedCompanyCount";
-
-	private static final String _INDEXER_COUNT = "indexerCount";
-
-	private static final String _PAST_INDEXERS = "pastIndexers";
-
-	private static final String _REINDEX_TYPE = "reindexType";
-
-	private static final String _REINDEX_TYPE_PORTAL = "portal";
-
-	private static final String _REINDEX_TYPE_SINGLE = "single";
 
 }

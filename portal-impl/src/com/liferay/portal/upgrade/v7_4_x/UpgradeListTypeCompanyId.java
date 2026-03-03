@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -144,7 +145,8 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 			for (String columnName : columnNames) {
 				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
+						AutoBatchPreparedStatementUtil.autoBatch(
+							connection,
 							StringBundler.concat(
 								"update ", tableName, " set ", columnName,
 								" = ? where ", columnName,
@@ -155,8 +157,10 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 						preparedStatement.setLong(2, entry.getKey());
 						preparedStatement.setLong(3, companyId);
 
-						preparedStatement.executeUpdate();
+						preparedStatement.addBatch();
 					}
+
+					preparedStatement.executeBatch();
 				}
 			}
 		}

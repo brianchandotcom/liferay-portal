@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
@@ -144,7 +145,8 @@ public class UpgradePartitionedConfigurationTableTest
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						PortalInstancePool.getDefaultCompanyId());
 				PreparedStatement preparedStatement =
-					connection.prepareStatement(
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection,
 						"insert into Configuration_ (configurationId, " +
 							"dictionary) values (?, ?)")) {
 
@@ -155,7 +157,7 @@ public class UpgradePartitionedConfigurationTableTest
 					preparedStatement.setString(
 						2, configurationEntry.getDictionary());
 
-					preparedStatement.executeUpdate();
+					preparedStatement.addBatch();
 				}
 
 				for (ConfigurationEntry configurationEntry :
@@ -165,8 +167,10 @@ public class UpgradePartitionedConfigurationTableTest
 					preparedStatement.setString(
 						2, configurationEntry.getDictionary());
 
-					preparedStatement.executeUpdate();
+					preparedStatement.addBatch();
 				}
+
+				preparedStatement.executeBatch();
 			}
 
 			Bundle bundle = BundleUtil.getBundle(

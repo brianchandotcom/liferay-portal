@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getDistributors } from 'clarity-distributors-api';
+import { getDistributors } from 'clarity-solution-js-import-maps-entry';
 import { APIProvider, Map as GoogleMap } from '@vis.gl/react-google-maps';
 
 import AdvancedMarkerWithInfoWindow from './AdvancedMarkerWithInfoWindow';

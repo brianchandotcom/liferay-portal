@@ -12816,6 +12816,19 @@ ${update.properties}</echo>
 
 		<if>
 			<and>
+				<equals arg1="${portal.version}" arg2="6.1.30" />
+				<equals arg1="${database.type}" arg2="postgresql" />
+			</and>
+			<then>
+				<property name="database.url.parameters" value="?autosave=conservative&amp;reWriteBatchedInserts=true" />
+			</then>
+			<else>
+				<property name="database.url.parameters" value="" />
+			</else>
+		</if>
+
+		<if>
+			<and>
 				<isset property="portal.version" />
 				<or>
 					<equals arg1="database.partition.enabled" arg2="true" />
@@ -12844,7 +12857,7 @@ upgrade.database.dl.storage.check.disabled=true
 
 jdbc.default.jndi.name=
 jdbc.default.driverClassName=${database.driver}
-jdbc.default.url=${database.url}
+jdbc.default.url=${database.url}${database.url.parameters}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}
 

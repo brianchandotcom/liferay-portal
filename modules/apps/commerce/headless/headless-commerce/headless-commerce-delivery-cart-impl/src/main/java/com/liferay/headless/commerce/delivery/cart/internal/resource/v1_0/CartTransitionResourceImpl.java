@@ -96,11 +96,11 @@ public class CartTransitionResourceImpl extends BaseCartTransitionResourceImpl {
 		if (inProgressCommerceOrderStatus.isTransitionCriteriaMet(
 				commerceOrder)) {
 
-			if (commerceOrder.isApproved() &&
-				!ListUtil.exists(
-					commerceOrder.getCommerceOrderItems(),
-					CommerceOrderItemModel::isPriceOnApplication)) {
+			boolean priceOnApplication = ListUtil.exists(
+				commerceOrder.getCommerceOrderItems(),
+				CommerceOrderItemModel::isPriceOnApplication);
 
+			if (commerceOrder.isApproved() && !priceOnApplication) {
 				transitionOVPs.add(new ObjectValuePair<>(0L, "checkout"));
 			}
 			else if (commerceOrder.isDraft()) {
@@ -130,11 +130,10 @@ public class CartTransitionResourceImpl extends BaseCartTransitionResourceImpl {
 							_getCommercePaymentMethodGroupRelId(commerceOrder));
 
 				if (((deliveryCommerceTermEntriesCount == 0) ||
-					 ((deliveryCommerceTermEntriesCount > 0) &&
-					  (commerceOrder.getDeliveryCommerceTermEntryId() > 0))) &&
+					 (commerceOrder.getDeliveryCommerceTermEntryId() > 0)) &&
 					((paymentCommerceTermEntriesCount == 0) ||
-					 ((paymentCommerceTermEntriesCount > 0) &&
-					  (commerceOrder.getPaymentCommerceTermEntryId() > 0)))) {
+					 (commerceOrder.getPaymentCommerceTermEntryId() > 0)) &&
+					!priceOnApplication) {
 
 					transitionOVPs.add(
 						new ObjectValuePair<>(0L, "quick-checkout"));

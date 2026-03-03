@@ -6,6 +6,8 @@
 package com.liferay.portal.cache.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
@@ -27,10 +29,16 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -203,6 +211,46 @@ public class ClusterGeneralTest implements Serializable {
 
 		Assert.assertFalse(
 			_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster));
+	}
+
+	@Test
+	public void testValidateDocumentOnSeparateNodes() throws Exception {
+		long groupId = TestPropsValues.getGroupId();
+		long userId = TestPropsValues.getUserId();
+
+		long fileEntryId1 = _tomcatNode1.syncExecute(
+			() -> {
+				FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+					null, userId, groupId,
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+					TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+					ServiceContextTestUtil.getServiceContext(groupId, userId));
+
+				return fileEntry.getFileEntryId();
+			});
+
+		Assert.assertNotNull(
+			_tomcatNode2.syncExecute(
+				() -> DLAppLocalServiceUtil.getFileEntry(fileEntryId1)));
+
+		long fileEntryId2 = _tomcatNode2.syncExecute(
+			() -> {
+				FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+					null, userId, groupId,
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+					TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+					ServiceContextTestUtil.getServiceContext(groupId, userId));
+
+				return fileEntry.getFileEntryId();
+			});
+
+		Assert.assertNotEquals(fileEntryId1, fileEntryId2);
+
+		Assert.assertNotNull(
+			_tomcatNode1.syncExecute(
+				() -> DLAppLocalServiceUtil.getFileEntry(fileEntryId2)));
 	}
 
 	private static String _getLocalClusterNodeId() {

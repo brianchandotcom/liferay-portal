@@ -54,7 +54,6 @@ export function Default(args: any) {
 							<ClayMultiStepNav.Divider />
 
 							<ClayMultiStepNav.Indicator
-								complete={complete}
 								label={1 + i}
 								onClick={() => setValue(i)}
 								subTitle={subTitle}

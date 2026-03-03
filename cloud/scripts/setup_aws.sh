@@ -26,7 +26,7 @@ function main {
 
 	_setup_aws_gitops
 
-	_port_forward_argocd
+	_port_forward_argo_cd
 }
 
 function _generate_tfvars {
@@ -79,7 +79,7 @@ function _popd {
 	popd > /dev/null
 }
 
-function _port_forward_argocd {
+function _port_forward_argo_cd {
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/gitops/platform"
 
 	local argocd_namespace=$(terraform output -raw argocd_namespace)

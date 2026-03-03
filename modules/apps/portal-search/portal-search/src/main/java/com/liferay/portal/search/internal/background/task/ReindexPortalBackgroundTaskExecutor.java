@@ -70,12 +70,10 @@ public class ReindexPortalBackgroundTaskExecutor
 			String className, long[] companyIds, String executionMode)
 		throws Exception {
 
+		long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
 		ExecutorService executorService =
 			_searchEngineHelper.getDocumentsProducerExecutorService();
-
 		List<Future<?>> futures = new ArrayList<>();
-
-		long backgroundTaskId = BackgroundTaskThreadLocal.getBackgroundTaskId();
 
 		try (SafeCloseable safeCloseable1 = SearchContext.openBatchMode()) {
 			for (long companyId : companyIds) {

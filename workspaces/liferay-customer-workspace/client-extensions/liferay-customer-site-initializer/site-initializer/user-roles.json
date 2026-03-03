@@ -17,5 +17,12 @@
 		"roles": [
 			"Partner"
 		]
+	},
+	{
+		"emailAddress": "test@liferay.com",
+		"roles": [
+			"Administrator",
+			"Liferay Staff"
+		]
 	}
 ]

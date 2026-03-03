@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -72,33 +71,35 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		String cleanContent = RandomTestUtil.randomString();
+		String cleanContent = RandomTestUtil.randomString() + "\\n";
 
-		String content = "'" + cleanContent + "\\u0000'";
-
-		if (_db.getDBType() == DBType.SQLSERVER) {
-			content = "N" + content;
-		}
+		String content = cleanContent + "\\u0000";
 
 		_contentId = RandomTestUtil.nextLong();
 
-		runSQL(
-			_connection,
-			StringBundler.concat(
-				"insert into DDMContent (",
-				"mvccVersion, ctCollectionId, contentId, groupId, data_) ",
-				"values (0, 0, ", _contentId, ", ", RandomTestUtil.nextLong(),
-				", ", content, ")"));
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"insert into DDMContent (mvccVersion, ctCollectionId, " +
+					"contentId, groupId, data_) values (0, 0, ?, ?, ?)")) {
+
+			preparedStatement.setLong(1, _contentId);
+			preparedStatement.setLong(2, RandomTestUtil.nextLong());
+			preparedStatement.setString(3, content);
+
+			preparedStatement.executeUpdate();
+		}
 
 		_journalId = RandomTestUtil.nextLong();
 
-		runSQL(
-			_connection,
-			StringBundler.concat(
-				"insert into JournalArticle (",
-				"mvccVersion, ctCollectionId, id_, groupId, content) values (",
-				"0, 0, ", _journalId, ", ", RandomTestUtil.nextLong(), ", ",
-				content, ")"));
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"insert into JournalArticle (mvccVersion, ctCollectionId, " +
+					"id_, groupId, content) values (0, 0, ?, ?, ?)")) {
+
+			preparedStatement.setLong(1, _journalId);
+			preparedStatement.setLong(2, RandomTestUtil.nextLong());
+			preparedStatement.setString(3, content);
+
+			preparedStatement.executeUpdate();
+		}
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				NullUnicodeContentDataCleanupPreupgradeProcess.class.getName(),

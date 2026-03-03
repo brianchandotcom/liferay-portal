@@ -267,7 +267,9 @@ public class FriendlyURLServlet extends HttpServlet {
 									String.valueOf(
 										layoutUtilityPageEntry.
 											getLayoutUtilityPageEntryId()),
-									user.getRoleIds(), ActionKeys.VIEW)) {
+									permissionChecker.getRoleIds(
+										user.getUserId(), layout.getGroupId()),
+									ActionKeys.VIEW)) {
 
 							if (AuthLoginGroupSettingsUtil.isPromptEnabled(
 									group.getGroupId())) {

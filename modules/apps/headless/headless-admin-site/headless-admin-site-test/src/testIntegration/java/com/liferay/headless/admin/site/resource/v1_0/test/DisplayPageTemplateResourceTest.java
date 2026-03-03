@@ -308,9 +308,26 @@ public class DisplayPageTemplateResourceTest
 	@Override
 	@Test
 	public void testPatchSiteDisplayPageTemplate() throws Exception {
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, testGroup.getGroupId(),
+				PageSpecification.Status.APPROVED);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				testGroup.getGroupId(), PageSpecification.Status.APPROVED);
+
+		displayPageTemplate.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
+
 		DisplayPageTemplate expectedDisplayPageTemplate =
 			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
-				randomDisplayPageTemplate());
+				displayPageTemplate);
 
 		_testPatchSiteDisplayPageTemplate(
 			expectedDisplayPageTemplate, new DisplayPageTemplate());

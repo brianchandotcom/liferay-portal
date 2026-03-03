@@ -25,6 +25,7 @@ import {
 	performLogout,
 	userData,
 } from '../../../../utils/performLogin';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import getFragmentDefinition from '../../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
@@ -2161,5 +2162,130 @@ test(
 
 			await expect(page.getByText('Heading Example')).toBeVisible();
 		});
+	}
+);
+
+test(
+	'Price On Application Order cannot be checked out',
+	{tag: ['@LPD-80337']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'person',
+		});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'com.liferay.commerce.fragment.internal.renderer.PendingAccountOrdersDataSetFragmentRenderer',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Order Actions');
+
+		await expect(
+			page.getByText('The order actions component will be shown here.')
+		).toBeVisible();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const basePriceListId =
+			await apiHelpers.headlessCommerceAdminPricing.getBasePriceListId(
+				catalog.id
+			);
+
+		await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+			price: 15,
+			priceListId: basePriceListId.items[0].id,
+			priceOnApplication: true,
+			skuId: product.skus[0].id,
+		});
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: product.skus[0].id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+		await displayPageTemplatesPage.clickMoreActions(
+			displayPageTemplateName,
+			'Mark as Default'
+		);
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelsPage
+			.ordersTabToggle('Quick Checkout')
+			.click();
+		await commerceAdminChannelsPage.headerActionsSaveButton.click();
+
+		await waitForAlert(page);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`,
+			{waitUntil: 'networkidle'}
+		);
+
+		await expect(
+			commerceLayoutsPage.orderActionsButton('Checkout')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.orderActionsButton('Quick Checkout')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.orderActionsButton('Request a Quote')
+		).toHaveCount(1);
 	}
 );

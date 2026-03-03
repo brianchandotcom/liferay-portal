@@ -25,4 +25,17 @@ public class TextBlock {
 	Hello""";
 	}
 
+	public String method3() {
+		return """
+
+	rm font.ttf
+}
+
+function _get_duration {
+	echo $(ffprobe -i ${1} -loglevel error -of default=noprint_wrappers=1:nokey=1 -show_entries format=duration | cut -d. -f1)
+}
+
+function _get_resources {""";
+	}
+
 }

@@ -1009,6 +1009,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Do not use text block", 14
 			).addExpectedMessage(
 				"Do not use text block", 23
+			).addExpectedMessage(
+				"Do not use text block", 29
 			));
 	}
 

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -303,7 +304,9 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
 		throws PortalException {
 
-		if (fragmentEntry.getUsageCount() > 0) {
+		if (!GroupThreadLocal.isDeleteInProcess() &&
+			(fragmentEntry.getUsageCount() > 0)) {
+
 			throw new RequiredFragmentEntryException();
 		}
 

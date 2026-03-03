@@ -11,21 +11,21 @@ import {openModal} from 'frontend-js-components-web';
 
 import {ViewImportReportEntryDetail} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/report/ViewImportReportEntryDetail';
 
-const renderComponent = (props) => {
+const renderComponent = (props: {apiURL: string; backURL: string}) => {
 	return <ViewImportReportEntryDetail {...props} />;
 };
 
-const mockData = (data) => {
+const mockData = (data: any) => {
 	global.fetch = jest.fn(() =>
 		Promise.resolve({
 			json: () => Promise.resolve(data),
 			ok: true,
-		})
+		} as Response)
 	);
 };
 
 jest.mock('frontend-js-components-web', () => ({
-	...jest.requireActual('frontend-js-components-web'),
+	...(jest.requireActual('frontend-js-components-web') as any),
 	openModal: jest.fn(),
 }));
 

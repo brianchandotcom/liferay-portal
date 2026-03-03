@@ -17,11 +17,6 @@ type Props = {
 	as?: React.ElementType;
 
 	/**
-	 * HTML properties that are applied to the step button.
-	 */
-	buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
-
-	/**
 	 * Flag to indicate if step should show its been completed
 	 * @deprecated since v3.91.0 - this is no longer necessary.
 	 */
@@ -31,6 +26,11 @@ type Props = {
 	 * Flag to indicate if step should be disabled
 	 */
 	disabled?: boolean;
+
+	/**
+	 * HTML properties that are applied to the step element.
+	 */
+	elementProps?: React.HTMLAttributes<HTMLElement>;
 
 	innerRef?: React.Ref<HTMLElement>;
 
@@ -58,10 +58,10 @@ type Props = {
 const MultiStepNavIndicator = React.forwardRef<HTMLDivElement, Props>(
 	(
 		{
-			as = 'div',
-			buttonProps,
+			as,
 			complete,
 			disabled,
+			elementProps,
 			innerRef,
 			label,
 			onClick,
@@ -73,8 +73,7 @@ const MultiStepNavIndicator = React.forwardRef<HTMLDivElement, Props>(
 		const {state} = useContext(ItemContext);
 
 		const isComplete = complete ?? state === 'complete';
-		const isButtonTag = onClick || buttonProps?.onClick || disabled;
-		const Tag = isButtonTag ? 'button' : as;
+		const Tag = as || (onClick ? 'button' : 'div');
 
 		return (
 			<div
@@ -88,12 +87,15 @@ const MultiStepNavIndicator = React.forwardRef<HTMLDivElement, Props>(
 				)}
 
 				<Tag
-					className="multi-step-icon"
+					{...elementProps}
+					className={classNames(
+						'multi-step-icon',
+						elementProps?.className
+					)}
+					onClick={onClick || elementProps?.onClick}
 					ref={innerRef}
-					{...(isButtonTag && {
-						...buttonProps,
+					{...(Tag === 'button' && {
 						disabled,
-						onClick,
 						type: 'button',
 					})}
 				>

@@ -7,6 +7,7 @@ package com.liferay.ai.hub.web.internal.fragment.renderer;
 
 import com.liferay.ai.hub.web.internal.display.context.EditAgentDefinitionDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,13 +33,16 @@ public class EditAgentDefinitionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new EditAgentDefinitionDisplayContext(
-			httpServletRequest, _portal);
+			_groupLocalService, httpServletRequest, _portal);
 	}
 
 	@Override
 	protected String getJSPPath() {
 		return "/edit_agent_definition.jsp";
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

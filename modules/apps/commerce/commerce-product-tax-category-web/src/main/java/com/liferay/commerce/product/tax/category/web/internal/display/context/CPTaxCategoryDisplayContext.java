@@ -11,18 +11,24 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.tax.category.web.internal.dao.search.CPTaxCategoryRowChecker;
 import com.liferay.commerce.product.tax.category.web.internal.util.CPTaxCategoryUtil;
 import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateComparator;
-import com.liferay.commerce.tax.model.CommerceTaxMethod;
-import com.liferay.commerce.tax.service.CommerceTaxMethodService;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -33,6 +39,8 @@ import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,45 +50,75 @@ import java.util.List;
 public class CPTaxCategoryDisplayContext {
 
 	public CPTaxCategoryDisplayContext(
-		CommerceTaxMethodService commerceTaxMethodService,
 		CPTaxCategoryService cpTaxCategoryService,
+		ModelResourcePermission<CPTaxCategory> modelResourcePermission,
 		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_commerceTaxMethodService = commerceTaxMethodService;
 		_cpTaxCategoryService = cpTaxCategoryService;
+		_modelResourcePermission = modelResourcePermission;
 		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		cpRequestHelper = new CPRequestHelper(
 			PortalUtil.getHttpServletRequest(renderRequest));
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
-	public CommerceTaxMethod getCommerceTaxMethod() throws PortalException {
-		if (_commerceTaxMethod != null) {
-			return _commerceTaxMethod;
-		}
+	public List<DropdownItem> getActionDropdownItems(
+		CPTaxCategory cpTaxCategory, String currentURL) {
 
-		long commerceTaxMethodId = ParamUtil.getLong(
-			_renderRequest, "commerceTaxMethodId");
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_renderRequest);
 
-		if (commerceTaxMethodId > 0) {
-			_commerceTaxMethod = _commerceTaxMethodService.getCommerceTaxMethod(
-				commerceTaxMethodId);
-		}
-
-		return _commerceTaxMethod;
-	}
-
-	public long getCommerceTaxMethodId() throws PortalException {
-		CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod();
-
-		if (commerceTaxMethod == null) {
-			return 0;
-		}
-
-		return commerceTaxMethod.getCommerceTaxMethodId();
+		return DropdownItemListBuilder.add(
+			() -> hasDeleteCPTaxCategoryPermission(cpTaxCategory),
+			dropDownItem -> {
+				dropDownItem.setData(
+					HashMapBuilder.<String, Object>put(
+						"action", "delete"
+					).put(
+						"confirmationMessage",
+						LanguageUtil.get(
+							httpServletRequest,
+							"are-you-sure-you-want-to-delete-this")
+					).put(
+						"deleteURL",
+						PortletURLBuilder.createActionURL(
+							_renderResponse
+						).setActionName(
+							"/cp_tax_category/edit_cp_tax_category"
+						).setCMD(
+							Constants.DELETE
+						).setRedirect(
+							currentURL
+						).setParameter(
+							"cpTaxCategoryId",
+							cpTaxCategory.getCPTaxCategoryId()
+						).buildString()
+					).build());
+				dropDownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).add(
+			() -> hasEditCPTaxCategoryPermission(cpTaxCategory),
+			dropDownItem -> {
+				dropDownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/cp_tax_category/edit_cp_tax_category"
+					).setRedirect(
+						currentURL
+					).setParameter(
+						"cpTaxCategoryId", cpTaxCategory.getCPTaxCategoryId()
+					).buildString());
+				dropDownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+			}
+		).build();
 	}
 
 	public CPTaxCategory getCPTaxCategory() throws PortalException {
@@ -145,15 +183,30 @@ public class CPTaxCategoryDisplayContext {
 		).buildPortletURL();
 	}
 
+	public String getRowURL(CPTaxCategory cpTaxCategory, String currentURL)
+		throws Exception {
+
+		if (hasEditCPTaxCategoryPermission(cpTaxCategory)) {
+			return PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/cp_tax_category/edit_cp_tax_category"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"cpTaxCategoryId", cpTaxCategory.getCPTaxCategoryId()
+			).buildString();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public SearchContainer<CPTaxCategory> getSearchContainer()
 		throws PortalException {
 
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		_searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null,
@@ -168,16 +221,16 @@ public class CPTaxCategoryDisplayContext {
 		if (Validator.isBlank(getKeywords())) {
 			_searchContainer.setResultsAndTotal(
 				() -> _cpTaxCategoryService.getCPTaxCategories(
-					themeDisplay.getCompanyId(), _searchContainer.getStart(),
+					_themeDisplay.getCompanyId(), _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					_searchContainer.getOrderByComparator()),
 				_cpTaxCategoryService.getCPTaxCategoriesCount(
-					themeDisplay.getCompanyId()));
+					_themeDisplay.getCompanyId()));
 		}
 		else {
 			_searchContainer.setResultsAndTotal(
 				_cpTaxCategoryService.searchCPTaxCategories(
-					themeDisplay.getCompanyId(), getKeywords(),
+					_themeDisplay.getCompanyId(), getKeywords(),
 					_searchContainer.getStart(), _searchContainer.getEnd(),
 					CPTaxCategoryUtil.getCPTaxCategorySort(
 						getOrderByCol(), getOrderByType())));
@@ -188,13 +241,32 @@ public class CPTaxCategoryDisplayContext {
 		return _searchContainer;
 	}
 
-	public boolean hasManageCPTaxCategoriesPermission() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
+	public boolean hasAddCPTaxCategoriesPermission() {
 		return _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			_themeDisplay.getPermissionChecker(), null,
+			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORIES);
+	}
+
+	public boolean hasDeleteCPTaxCategoryPermission(CPTaxCategory cpTaxCategory)
+		throws Exception {
+
+		return _modelResourcePermission.contains(
+			_themeDisplay.getPermissionChecker(), cpTaxCategory,
+			ActionKeys.DELETE);
+	}
+
+	public boolean hasEditCPTaxCategoryPermission(CPTaxCategory cpTaxCategory)
+		throws Exception {
+
+		return _modelResourcePermission.contains(
+			_themeDisplay.getPermissionChecker(), cpTaxCategory,
+			ActionKeys.UPDATE);
+	}
+
+	public boolean hasViewCPTaxCategoriesPermission() {
+		return _portletResourcePermission.contains(
+			_themeDisplay.getPermissionChecker(), null,
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 	}
 
 	protected String getKeywords() {
@@ -206,15 +278,11 @@ public class CPTaxCategoryDisplayContext {
 	private OrderByComparator<CPTaxCategory> _getCPTaxCategoryOrderByComparator(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
 		OrderByComparator<CPTaxCategory> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
+			boolean orderByAsc = orderByType.equals("asc");
+
 			orderByComparator = CPTaxCategoryCreateDateComparator.getInstance(
 				orderByAsc);
 		}
@@ -224,16 +292,16 @@ public class CPTaxCategoryDisplayContext {
 
 	private RowChecker _getRowChecker() {
 		if (_rowChecker == null) {
-			_rowChecker = new EmptyOnClickRowChecker(_renderResponse);
+			_rowChecker = new CPTaxCategoryRowChecker(this, _renderResponse);
 		}
 
 		return _rowChecker;
 	}
 
-	private CommerceTaxMethod _commerceTaxMethod;
-	private final CommerceTaxMethodService _commerceTaxMethodService;
 	private CPTaxCategory _cpTaxCategory;
 	private final CPTaxCategoryService _cpTaxCategoryService;
+	private final ModelResourcePermission<CPTaxCategory>
+		_modelResourcePermission;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletResourcePermission _portletResourcePermission;
@@ -241,5 +309,6 @@ public class CPTaxCategoryDisplayContext {
 	private final RenderResponse _renderResponse;
 	private RowChecker _rowChecker;
 	private SearchContainer<CPTaxCategory> _searchContainer;
+	private final ThemeDisplay _themeDisplay;
 
 }

@@ -11,7 +11,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,14 +30,17 @@ public class CPTaxCategoryManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public CPTaxCategoryManagementToolbarDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer<?> searchContainer) {
+			CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext,
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			searchContainer);
+			cpTaxCategoryDisplayContext.getSearchContainer());
+
+		_cpTaxCategoryDisplayContext = cpTaxCategoryDisplayContext;
 	}
 
 	@Override
@@ -96,6 +99,11 @@ public class CPTaxCategoryManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isShowCreationMenu() {
+		return _cpTaxCategoryDisplayContext.hasAddCPTaxCategoriesPermission();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list"};
 	}
@@ -104,5 +112,7 @@ public class CPTaxCategoryManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date"};
 	}
+
+	private final CPTaxCategoryDisplayContext _cpTaxCategoryDisplayContext;
 
 }

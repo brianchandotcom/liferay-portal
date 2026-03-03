@@ -29,15 +29,17 @@ definition {
 			Search.searchCP(searchTerm = ${featureFlag});
 		}
 
-		Check.checkToggleSwitch(
-			locator1 = "FeatureFlag#TOGGLE_ROW",
-			title_row = ${featureFlag},
-			toggle_state = "");
+		if (IsElementNotPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = ${featureFlag}, toggle_state = ${toggleState})) {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = ${featureFlag},
+				toggle_state = "");
 
-		WaitForElementPresent(
-			locator1 = "FeatureFlag#TOGGLE_ROW",
-			title_row = ${featureFlag},
-			toggle_state = ${toggleState});
+			WaitForElementPresent(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = ${featureFlag},
+				toggle_state = ${toggleState});
+		}
 	}
 
 }

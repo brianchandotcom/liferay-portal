@@ -11,9 +11,9 @@
 CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<c:if test="<%= cpTaxCategoryDisplayContext.hasManageCPTaxCategoriesPermission() %>">
+<c:if test="<%= cpTaxCategoryDisplayContext.hasViewCPTaxCategoriesPermission() %>">
 	<clay:management-toolbar
-		managementToolbarDisplayContext="<%= new CPTaxCategoryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, cpTaxCategoryDisplayContext.getSearchContainer()) %>"
+		managementToolbarDisplayContext="<%= new CPTaxCategoryManagementToolbarDisplayContext(cpTaxCategoryDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 		propsTransformer="{CPTaxCategoryManagementToolbarPropsTransformer} from commerce-product-tax-category-web"
 	/>
 
@@ -33,19 +33,23 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 					keyProperty="CPTaxCategoryId"
 					modelVar="cpTaxCategory"
 				>
+
+					<%
+					String availableActions = StringPool.BLANK;
+
+					if (cpTaxCategoryDisplayContext.hasDeleteCPTaxCategoryPermission(cpTaxCategory)) {
+						availableActions = "deleteEntries";
+					}
+
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", availableActions
+						).build());
+					%>
+
 					<liferay-ui:search-container-column-text
 						cssClass="font-weight-bold important table-cell-expand"
-						href='<%=
-							PortletURLBuilder.createRenderURL(
-								renderResponse
-							).setMVCRenderCommandName(
-								"/cp_tax_category/edit_cp_tax_category"
-							).setRedirect(
-								currentURL
-							).setParameter(
-								"cpTaxCategoryId", cpTaxCategory.getCPTaxCategoryId()
-							).buildPortletURL()
-						%>'
+						href="<%= cpTaxCategoryDisplayContext.getRowURL(cpTaxCategory, currentURL) %>"
 						name="name"
 						value="<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>"
 					/>

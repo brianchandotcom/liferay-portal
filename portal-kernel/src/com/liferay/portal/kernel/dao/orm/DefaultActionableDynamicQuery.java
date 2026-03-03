@@ -23,7 +23,6 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -291,36 +290,15 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 
 		addOrderCriteria(dynamicQuery);
 
-		Callable<Long> callable = () -> {
-			List<Object> objects = (List<Object>)executeDynamicQuery(
-				_dynamicQueryMethod, dynamicQuery);
-
-			_offset += objects.size();
-
-			if (objects.isEmpty()) {
-				return -1L;
-			}
-
-			doPerformActions(objects);
-
-			if (objects.size() < _interval) {
-				return -1L;
-			}
-
-			BaseModel<?> baseModel = (BaseModel<?>)objects.get(
-				objects.size() - 1);
-
-			return (Long)baseModel.getPrimaryKeyObj();
-		};
-
-		TransactionConfig transactionConfig = getTransactionConfig();
-
 		try {
+			TransactionConfig transactionConfig = getTransactionConfig();
+
 			if (transactionConfig == null) {
-				return callable.call();
+				return _performActions(dynamicQuery);
 			}
 
-			return TransactionInvokerUtil.invoke(transactionConfig, callable);
+			return TransactionInvokerUtil.invoke(
+				transactionConfig, () -> _performActions(dynamicQuery));
 		}
 		catch (Throwable throwable) {
 			if (throwable instanceof PortalException) {
@@ -387,6 +365,30 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		if (_performActionMethod != null) {
 			_performActionMethod.performAction(object);
 		}
+	}
+
+	private long _performActions(DynamicQuery dynamicQuery) throws Exception {
+		List<Object> objects = (List<Object>)executeDynamicQuery(
+			_dynamicQueryMethod, dynamicQuery);
+
+		_offset += objects.size();
+
+		if (objects.isEmpty()) {
+			return -1L;
+		}
+
+		long lastPrimaryKey = -1L;
+
+		if (objects.size() >= _interval) {
+			BaseModel<?> baseModel = (BaseModel<?>)objects.get(
+				objects.size() - 1);
+
+			lastPrimaryKey = (Long)baseModel.getPrimaryKeyObj();
+		}
+
+		doPerformActions(objects);
+
+		return lastPrimaryKey;
 	}
 
 	private static final Snapshot<PortalExecutorManager>

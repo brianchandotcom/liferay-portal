@@ -5,6 +5,10 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.ai.hub.configuration.AIHubConfiguration;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
@@ -50,6 +54,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
@@ -101,6 +106,19 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), TestPropsValues.getUserId());
+
 		_classNameLocalService.invalidate();
 
 		_originalPermissionChecker =
@@ -132,6 +150,13 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				"com.liferay.ai.hub.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
+
+		AccountEntry aiHubAccountEntry =
+			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+				"L_AI_HUB", TestPropsValues.getCompanyId());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			aiHubAccountEntry.getAccountEntryId(), TestPropsValues.getUserId());
 
 		_group = GroupTestUtil.addGroup();
 		_mcpServerObjectDefinition =
@@ -822,6 +847,13 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		SseUtil.closeAll();
 	}
+
+	@Inject
+	private static AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private static AccountEntryUserRelLocalService
+		_accountEntryUserRelLocalService;
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;

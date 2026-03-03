@@ -500,10 +500,6 @@ public class AssetCategoryLocalServiceImpl
 
 				parentAssetCategory.setVocabularyId(
 					assetVocabulary.getVocabularyId());
-
-				parentAssetCategory =
-					assetCategoryLocalService.updateAssetCategory(
-						parentAssetCategory);
 			}
 			else if ((parentVocabularyId !=
 						AssetVocabularyConstants.EMPTY_VOCABULARY_ID) &&
@@ -511,6 +507,23 @@ public class AssetCategoryLocalServiceImpl
 						 AssetVocabularyConstants.EMPTY_VOCABULARY_ID)) {
 
 				assetCategory.setVocabularyId(parentVocabularyId);
+			}
+
+			boolean emptyParentCategory = false;
+
+			if (parentAssetCategory.getParentCategoryId() ==
+					AssetCategoryConstants.EMPTY_PARENT_CATEGORY_ID) {
+
+				emptyParentCategory = true;
+
+				parentAssetCategory.setParentCategoryId(
+					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+			}
+
+			if (emptyParentCategory || (assetVocabulary != null)) {
+				parentAssetCategory =
+					assetCategoryLocalService.updateAssetCategory(
+						parentAssetCategory);
 			}
 
 			assetCategory.setParentCategoryId(

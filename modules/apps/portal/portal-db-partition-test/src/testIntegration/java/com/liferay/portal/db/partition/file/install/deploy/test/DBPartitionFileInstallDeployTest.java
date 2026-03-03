@@ -130,9 +130,9 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 	@Test
 	public void testInvalidGroupScopedConfiguration() throws Exception {
 		_testScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-			_group.getGroupId(), () -> _checkConfigurationNotExists(),
 			() -> _checkConfigurationNotExists(),
+			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+			_group.getGroupId(),
 			illegalArgumentException -> Assert.assertEquals(
 				StringBundler.concat(
 					"Unable to process group scoped configuration ",
@@ -140,7 +140,7 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 					".config because required property \"companyId\" is ",
 					"missing"),
 				illegalArgumentException.getMessage()),
-			false);
+			false, () -> _checkConfigurationNotExists());
 	}
 
 	@Test
@@ -164,12 +164,11 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 	@Test
 	public void testSystemScopedConfiguration() throws Exception {
 		_testScopedConfiguration(
-			null, null,
 			() -> _checkConfigurationExists(
 				PortalInstancePool.getDefaultCompanyId(), _TEST_VALUE_1),
+			null, null, illegalArgumentException -> Assert.fail(), true,
 			() -> _checkConfigurationExists(
-				PortalInstancePool.getDefaultCompanyId(), _TEST_VALUE_2),
-			illegalArgumentException -> Assert.fail(), true);
+				PortalInstancePool.getDefaultCompanyId(), _TEST_VALUE_2));
 	}
 
 	private void _checkConfiguration(
@@ -270,10 +269,10 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 		throws Exception {
 
 		_testScopedConfiguration(
-			dictionaryKey, dictionaryValue,
 			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_1),
-			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_2),
-			illegalArgumentException -> Assert.fail(), true);
+			dictionaryKey, dictionaryValue,
+			illegalArgumentException -> Assert.fail(), true,
+			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_2));
 	}
 
 	private void _testGroupScopedConfiguration(
@@ -281,10 +280,10 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 		throws Exception {
 
 		_testScopedConfiguration(
-			dictionaryKey, dictionaryValue,
 			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_1),
-			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_2),
-			illegalArgumentException -> Assert.fail(), true);
+			dictionaryKey, dictionaryValue,
+			illegalArgumentException -> Assert.fail(), true,
+			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_2));
 	}
 
 	private void _testPortletInstanceScopedConfiguration(
@@ -292,21 +291,20 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 		throws Exception {
 
 		_testScopedConfiguration(
-			dictionaryKey, dictionaryValue,
-			() -> _checkConfigurationNotExists(),
-			() -> _checkConfigurationNotExists(),
+			() -> _checkConfigurationNotExists(), dictionaryKey,
+			dictionaryValue,
 			unsupportedOperationException -> Assert.assertEquals(
 				"Scope PORTLET_INSTANCE does not support database partition",
 				unsupportedOperationException.getMessage()),
-			false);
+			false, () -> _checkConfigurationNotExists());
 	}
 
 	private void _testScopedConfiguration(
-			String dictionaryKey, Object dictionaryValue,
 			UnsafeRunnable<Exception> addValidatorRunnable,
-			UnsafeRunnable<Exception> updateValidatorRunnable,
+			String dictionaryKey, Object dictionaryValue,
 			UnsafeConsumer<Exception, Exception> exceptionValidatorConsumer,
-			boolean supportedConfiguration)
+			boolean supportedConfiguration,
+			UnsafeRunnable<Exception> updateValidatorRunnable)
 		throws Exception {
 
 		Assert.assertNotNull(_fileInstaller);

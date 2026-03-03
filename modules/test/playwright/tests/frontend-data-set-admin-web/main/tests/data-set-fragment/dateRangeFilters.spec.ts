@@ -231,7 +231,10 @@ test('Filters are displayed in the order stored in the filtersOrder field', asyn
 			type: 'date-time',
 		});
 
-		filterERCs.push(filter1.externalReferenceCode, filter2.externalReferenceCode);
+		filterERCs.push(
+			filter1.externalReferenceCode,
+			filter2.externalReferenceCode
+		);
 	});
 
 	await test.step('Add a field, so FDS has something to show', async () => {

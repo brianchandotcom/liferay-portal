@@ -74,7 +74,10 @@ test(
 
 		await assetsPage.gotoFiles();
 
-		assetsPage.getCardItem(folderTitle).getByLabel('More actions').click();
+		assetsPage
+			.getCardItem(folderTitle)
+			.getByLabel(`${folderTitle} Actions`)
+			.click();
 
 		expect(
 			page.getByRole('menuitem', {exact: true, name: 'View'})

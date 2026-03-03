@@ -26,7 +26,7 @@ const contextualInfoConfig: DataDrivenConfig = [
 			{className: 'col-12', icon: 'globe-pin', key: 'country'},
 			{className: 'col-12', key: 'city'},
 			{className: 'col-12', key: 'languageId'},
-			{className: 'col-12', key: 'timeZoneOffset'}
+			{className: 'col-12', key: 'timezoneOffset'}
 		],
 		title: Liferay.Language.get('last-session-location')
 	},
@@ -53,10 +53,9 @@ interface IContextualInfoProps {
 	contextData: Map<string, any>;
 	email?: string;
 	showEmptyState?: boolean;
-	uuid?: string;
 	userId?: string;
+	uuid?: string;
 }
-
 const CONTEXTUAL_INFO_LABEL_MAP: Record<string, string> = {
 	browserName: Liferay.Language.get('browser'),
 	city: Liferay.Language.get('city'),
@@ -69,7 +68,7 @@ const CONTEXTUAL_INFO_LABEL_MAP: Record<string, string> = {
 	platformName: Liferay.Language.get('operating-system'),
 	screenHeight: Liferay.Language.get('screen-height'),
 	screenWidth: Liferay.Language.get('screen-width'),
-	timeZoneOffset: Liferay.Language.get('time-zone'),
+	timezoneOffset: Liferay.Language.get('time-zone'),
 	userAgent: Liferay.Language.get('user-agent'),
 	userId: 'userId',
 	uuid: 'UUID'
@@ -90,9 +89,9 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 		if (key === 'userId') return userId;
 		if (key === 'uuid') return uuid;
 
-		if (key === 'timeZoneOffset') {
+		if (key === 'timezoneOffset') {
 			const region = contextData?.get('region');
-			const timeZoneOffset = contextData?.get('timeZoneOffset');
+			const timeZoneOffset = contextData?.get('timezoneOffset');
 
 			if (timeZoneOffset || region) {
 				return formatTimeZoneOffset(timeZoneOffset, region);

@@ -279,14 +279,14 @@ public class LoginMVCActionCommandTest {
 			new MockLiferayPortletActionRequest() {
 
 				@Override
-				public Portlet getPortlet() {
-					return _portletLocalService.getPortletById(
-						LoginPortletKeys.LOGIN);
+				public HttpServletRequest getOriginalHttpServletRequest() {
+					return new MockHttpServletRequest();
 				}
 
 				@Override
-				public String getPortletName() {
-					return LoginPortletKeys.LOGIN;
+				public Portlet getPortlet() {
+					return _portletLocalService.getPortletById(
+						LoginPortletKeys.LOGIN);
 				}
 
 				{
@@ -296,6 +296,12 @@ public class LoginMVCActionCommandTest {
 
 					portletApp.setSpecMajorVersion(2);
 				}
+
+				@Override
+				public String getPortletName() {
+					return LoginPortletKeys.LOGIN;
+				}
+
 			};
 
 		mockLiferayPortletActionRequest.setAttribute(

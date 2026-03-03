@@ -464,6 +464,14 @@ public class AssetCategoryLocalServiceImpl
 			assetCategoryLocalService.getOrAddEmptyCategory(
 				externalReferenceCode, userId, groupId);
 
+		if ((assetCategory.getParentCategoryId() !=
+				AssetCategoryConstants.EMPTY_PARENT_CATEGORY_ID) ||
+			(assetCategory.getVocabularyId() !=
+				AssetVocabularyConstants.EMPTY_VOCABULARY_ID)) {
+
+			return assetCategory;
+		}
+
 		AssetVocabulary assetVocabulary = null;
 
 		if (Validator.isNotNull(vocabularyExternalReferenceCode)) {

@@ -28,6 +28,18 @@
 	}
 }
 
+.cms-find-and-replace {
+	.fds {
+		.management-bar-wrapper {
+			border-bottom: 0;
+		}
+
+		.list-item__success {
+			background-color: $success-l2;
+		}
+	}
+}
+
 .cms-related-assets {
 	padding-top: 1px;
 	position: relative;

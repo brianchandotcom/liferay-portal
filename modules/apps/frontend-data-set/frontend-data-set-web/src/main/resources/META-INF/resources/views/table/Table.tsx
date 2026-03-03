@@ -382,28 +382,23 @@ const Body = ({
 				}
 			>
 				{(item: any) => {
+					let accessibleName = Liferay.Language.get('item') ?? '';
+
+					[accessibleNameField, fields[0].fieldName, 'id'].find(
+						(key) => {
+							const value = getLocalizedValue(item, key)?.value;
+							if (!value || typeof value === 'object') {
+								return false;
+							}
+							accessibleName = value;
+
+							return true;
+						}
+					);
+
 					return (
 						<Row
-							accessibleName={
-								(accessibleNameField
-									? getLocalizedValue(
-											item,
-											item[accessibleNameField]
-										)?.value
-									: getLocalizedValue(
-												item,
-												fields[0].fieldName
-										  )?.value &&
-										  typeof getLocalizedValue(
-												item,
-												fields[0].fieldName
-										  )?.value !== 'object'
-										? getLocalizedValue(
-												item,
-												fields[0].fieldName
-											)?.value
-										: Liferay.Language.get('item')) ?? ''
-							}
+							accessibleName={accessibleName}
 							active={
 								allItemsSelectedActive ||
 								!!selectedItemsValue?.find(

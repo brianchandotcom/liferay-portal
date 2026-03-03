@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,27 +32,6 @@ public class IndexableActionableDynamicQuery
 		}
 
 		_documents.add(document);
-
-		long size = _documents.size();
-
-		if (size >= getInterval()) {
-			indexInterval();
-		}
-		else if ((size % _STATUS_INTERVAL) == 0) {
-			sendStatusMessage(size);
-		}
-	}
-
-	public void addDocuments(Document... documents) throws PortalException {
-		if (ArrayUtil.isEmpty(documents)) {
-			return;
-		}
-
-		for (Document document : documents) {
-			if (document != null) {
-				_documents.add(document);
-			}
-		}
 
 		long size = _documents.size();
 

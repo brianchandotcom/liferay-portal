@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "resource.name=" + CPConstants.RESOURCE_NAME_TAX,
 	service = PortletResourcePermission.class
 )
-public class CommerceTaxModelResourcePermissionWrapper
+public class CommerceTaxPortletResourcePermissionWrapper
 	extends BasePortletResourcePermissionWrapper {
 
 	@Override

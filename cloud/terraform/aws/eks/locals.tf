@@ -1,5 +1,5 @@
 locals {
-	az_count=min(length(data.aws_availability_zones.available.names), 3)
+	az_count=min(length(data.aws_availability_zones.available.names), var.max_availability_zones)
 	cluster_name="${var.deployment_name}-eks"
 	default_private_subnets=[for i in range(local.az_count) : cidrsubnet(var.vpc_cidr, 8, i + 1)]
 	default_public_subnets=[for i in range(local.az_count) : cidrsubnet(var.vpc_cidr, 8, i + 101)]

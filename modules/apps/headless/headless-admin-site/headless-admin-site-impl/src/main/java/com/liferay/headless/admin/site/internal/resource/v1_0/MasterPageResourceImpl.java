@@ -100,7 +100,8 @@ public class MasterPageResourceImpl
 
 			@Override
 			public String getKey() {
-				return MasterPageResourceImpl.class.getName();
+				return LayoutPageTemplateEntry.class.getName() + "#" +
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT;
 			}
 
 			@Override

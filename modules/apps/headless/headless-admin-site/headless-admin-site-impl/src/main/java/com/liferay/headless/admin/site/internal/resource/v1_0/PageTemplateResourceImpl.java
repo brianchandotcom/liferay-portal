@@ -125,7 +125,8 @@ public class PageTemplateResourceImpl
 
 			@Override
 			public String getKey() {
-				return PageTemplateResourceImpl.class.getName();
+				return LayoutPageTemplateEntry.class.getName() + "#" +
+					LayoutPageTemplateEntryTypeConstants.BASIC;
 			}
 
 			@Override

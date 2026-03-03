@@ -18,7 +18,7 @@ function main {
 
 	_generate_tfvars "${1}" "${_SCRIPTS_DIR}/global_terraform.tfvars"
 
-	echo "Attempting to login to your AWS account via SSO..."
+	echo "Attempting to login to your AWS account via SSO."
 
 	aws sso login
 
@@ -48,7 +48,7 @@ function _generate_tfvars {
 
 	local tfvars_file="${2}"
 
-	echo "Generating ${tfvars_file} from ${configuration_json_file}..."
+	echo "Generating ${tfvars_file} from ${configuration_json_file}."
 
 	local tfvars_content=$(
 		jq --raw-output '.variables
@@ -93,8 +93,10 @@ function _port_forward_argo_cd {
 			--output jsonpath="{.data.password}" \
 		| base64 --decode)
 
-	echo "Port-forwarding the ArgoCD service at http://localhost:8080...."
-	echo "Login with Username: admin and Password: ${argocd_password} to continue monitoring setup."
+	echo "Port-forwarding the ArgoCD service at http://localhost:8080."
+	echo ""
+	echo "Login with username and password \"${argocd_password}\" to continue monitoring setup."
+	echo ""
 	echo "Use CTRL+C to exit when finished."
 
 	kubectl \
@@ -113,7 +115,7 @@ function _pushd {
 function _setup_aws_eks {
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 
-	echo "Setting up the AWS EKS cluster..."
+	echo "Setting up the AWS EKS cluster."
 
 	_terraform_init_and_apply "."
 
@@ -133,13 +135,13 @@ function _setup_aws_eks {
 function _setup_aws_gitops {
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/gitops"
 
-	echo "Setting up GitOps Infrastructure..."
+	echo "Setting up GitOps infrastructure."
 
 	_terraform_init_and_apply "./platform"
 
 	_terraform_init_and_apply "./resources"
 
-	echo "GitOps Infrastructure setup complete."
+	echo "GitOps infrastructure setup complete."
 
 	_popd
 }

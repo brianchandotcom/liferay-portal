@@ -30,7 +30,8 @@ public class JavaSimpleValue extends BaseJavaExpression {
 		String s = StringBundler.concat(indent, prefix, _name, suffix);
 
 		if ((maxLineLength == NO_MAX_LINE_LENGTH) ||
-			(getLineLength(s) <= maxLineLength)) {
+			(getLineLength(s) <= maxLineLength) ||
+			(_name.endsWith("\"\"\"") && _name.startsWith("\"\"\""))) {
 
 			return s;
 		}

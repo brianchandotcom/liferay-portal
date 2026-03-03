@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -109,9 +110,21 @@ public class SaveScimConfigurationMVCActionCommandTest {
 		OAuth2Authorization oAuth2Authorization = oAuth2Authorizations.get(0);
 
 		Assert.assertEquals(
+			10,
+			DateUtil.getDaysBetween(
+				oAuth2Authorization.getAccessTokenExpirationDate(),
+				oAuth2Authorization.getCreateDate()));
+
+		Assert.assertEquals(
 			companyAdminUser.getUserId(), oAuth2Authorization.getUserId());
 
 		oAuth2Authorization = oAuth2Authorizations.get(1);
+
+		Assert.assertEquals(
+			365,
+			DateUtil.getDaysBetween(
+				oAuth2Authorization.getAccessTokenExpirationDate(),
+				oAuth2Authorization.getCreateDate()));
 
 		Assert.assertEquals(
 			adminUser.getUserId(), oAuth2Authorization.getUserId());

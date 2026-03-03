@@ -107,6 +107,20 @@ public class DisplayPageTemplateFolderResourceImpl
 			}
 
 			@Override
+			public boolean isApplicableModel(
+				LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+				if (layoutPageTemplateCollection.getType() ==
+						LayoutPageTemplateCollectionTypeConstants.
+							DISPLAY_PAGE) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+			@Override
 			public boolean isStagingSupported() {
 				return true;
 			}

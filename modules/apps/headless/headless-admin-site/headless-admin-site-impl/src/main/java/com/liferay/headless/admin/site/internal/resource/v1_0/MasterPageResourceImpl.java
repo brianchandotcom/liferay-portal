@@ -130,6 +130,19 @@ public class MasterPageResourceImpl
 			}
 
 			@Override
+			public boolean isApplicableModel(
+				LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+				if (layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+			@Override
 			public boolean isStagingSupported() {
 				return true;
 			}

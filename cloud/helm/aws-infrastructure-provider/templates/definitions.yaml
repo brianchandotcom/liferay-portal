@@ -120,6 +120,9 @@ spec:
                                                 username:
                                                     default: liferay_search_admin
                                                     type: string
+                                                volumeSizeGB:
+                                                    default: 20
+                                                    type: integer
                                             type: object
                                     type: object
                                 storage:

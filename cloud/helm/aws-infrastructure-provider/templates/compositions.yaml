@@ -1096,7 +1096,7 @@ spec:
                                 domainName: {{ $searchName }}
                                 ebsOptions:
                                     ebsEnabled: true
-                                    volumeSize: 20
+                                    volumeSize: {{ $searchSpec.volumeSizeGB }}
                                     volumeType: gp3
                                 encryptAtRest:
                                     enabled: true

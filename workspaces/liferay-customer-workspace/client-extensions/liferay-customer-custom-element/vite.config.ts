@@ -5,9 +5,9 @@
 
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
-import {UserConfigExport, defineConfig} from 'vite';
+import {defineConfig} from 'vite';
 
-export default defineConfig({
+export default defineConfig(({command}) => ({
 	build: {
 		assetsDir: 'static',
 		outDir: 'build',
@@ -31,10 +31,18 @@ export default defineConfig({
 	plugins: [react()],
 	resolve: {
 		alias: {
+			...(command === 'serve'
+				? {
+						'@liferay/oauth2-provider-web/client': path.resolve(
+							__dirname,
+							'./dev-stubs/oauth2-stub.ts'
+						),
+					}
+				: {}),
 			'~': path.resolve(__dirname, './src/'),
 		},
 	},
 	server: {
 		port: 3000,
 	},
-} as UserConfigExport);
+}));

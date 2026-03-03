@@ -17,6 +17,7 @@ import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.helper.CommerceRoleHelper;
+import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
 import com.liferay.commerce.payment.constants.CommercePaymentEntryActionKeys;
@@ -451,6 +452,9 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 					CommerceNotificationActionKeys.
 						ADD_COMMERCE_NOTIFICATION_TEMPLATE
 				});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.inventory",
+				new String[] {CommerceInventoryActionKeys.VIEW_INVENTORIES});
 			companyResourceActionIds.put(
 				"com.liferay.commerce.model.CommerceOrderType",
 				new String[] {ActionKeys.VIEW});

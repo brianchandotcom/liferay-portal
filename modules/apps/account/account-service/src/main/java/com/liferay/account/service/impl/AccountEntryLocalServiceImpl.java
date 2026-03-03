@@ -556,7 +556,7 @@ public class AccountEntryLocalServiceImpl
 						AccountEntryTable.INSTANCE),
 					userId, parentAccountEntryId, keywords, types, status)
 			).union(
-				_getUerAccountEntriesGroupByStep(
+				_getUserAccountEntriesGroupByStep(
 					DSLQueryFactoryUtil.selectDistinct(
 						AccountEntryTable.INSTANCE),
 					userId, parentAccountEntryId, keywords, types, status)
@@ -1034,7 +1034,7 @@ public class AccountEntryLocalServiceImpl
 		return searchRequestBuilder.build();
 	}
 
-	private GroupByStep _getUerAccountEntriesGroupByStep(
+	private GroupByStep _getUserAccountEntriesGroupByStep(
 		FromStep fromStep, long userId, Long parentAccountId, String keywords,
 		String[] types, Integer status) {
 
@@ -1074,7 +1074,7 @@ public class AccountEntryLocalServiceImpl
 					userId, parentAccountEntryId, keywords, types, status)));
 		accountEntryIds.addAll(
 			dslQuery(
-				_getUerAccountEntriesGroupByStep(
+				_getUserAccountEntriesGroupByStep(
 					DSLQueryFactoryUtil.selectDistinct(
 						AccountEntryTable.INSTANCE.accountEntryId),
 					userId, parentAccountEntryId, keywords, types, status)));

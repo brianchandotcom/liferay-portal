@@ -28,11 +28,6 @@ public class EditAgentDefinitionFragmentRenderer
 	}
 
 	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return false;
-	}
-
-	@Override
 	protected EditAgentDefinitionDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 

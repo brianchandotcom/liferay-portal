@@ -16,6 +16,8 @@
 			).put(
 				"isOpen", open
 			).put(
+				"isPriceOnApplication", priceOnApplication
+			).put(
 				"manageNotesPermission", manageNotesPermission
 			).put(
 				"manageRestrictedNotesPermission", manageRestrictedNotesPermission

@@ -32,6 +32,7 @@ boolean manageRestrictedNotesPermission = (boolean)request.getAttribute("liferay
 String namespace = (String)request.getAttribute("liferay-commerce:order-actions:namespace");
 boolean open = (boolean)request.getAttribute("liferay-commerce:order-actions:open");
 String orderSummaryURL = (String)request.getAttribute("liferay-commerce:order-actions:orderSummaryURL");
+boolean priceOnApplication = (boolean)request.getAttribute("liferay-commerce:order-actions:priceOnApplication");
 boolean quickCheckoutEnabled = (boolean)request.getAttribute("liferay-commerce:order-actions:quickCheckoutEnabled");
 String reorderURL = (String)request.getAttribute("liferay-commerce:order-actions:reorderURL");
 Map<String, Object> returnableOrderItemsContextParams = (Map<String, Object>)request.getAttribute("liferay-commerce:order-actions:returnableOrderItemsContextParams");

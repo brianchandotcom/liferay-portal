@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSend
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -89,6 +90,24 @@ public class IndexableActionableDynamicQuery
 	}
 
 	@Override
+	protected void doPerformActions(List<Object> objects) throws Exception {
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+			CTSQLModeThreadLocal.getCTSQLMode();
+
+		if (ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT) {
+			_performActions(objects);
+		}
+		else {
+			try (SafeCloseable safeCloseable =
+					CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
+						CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
+
+				_performActions(objects);
+			}
+		}
+	}
+
+	@Override
 	protected long doPerformActions(long previousPrimaryKey)
 		throws PortalException {
 
@@ -117,27 +136,6 @@ public class IndexableActionableDynamicQuery
 		sendStatusMessage();
 	}
 
-	@Override
-	protected void performAction(Object object) throws PortalException {
-		long ctCollectionId = 0;
-
-		if (object instanceof CTModel) {
-			CTModel<?> ctModel = (CTModel<?>)object;
-
-			ctCollectionId = ctModel.getCtCollectionId();
-		}
-
-		try (SafeCloseable safeCloseable1 =
-				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
-					CTSQLModeThreadLocal.CTSQLMode.DEFAULT);
-			SafeCloseable safeCloseable2 =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId)) {
-
-			super.performAction(object);
-		}
-	}
-
 	protected void sendStatusMessage() {
 		sendStatusMessage(0);
 	}
@@ -151,6 +149,34 @@ public class IndexableActionableDynamicQuery
 
 		ReindexStatusMessageSenderUtil.sendStatusMessage(
 			modelClass.getName(), _count + documentIntervalCount, _total);
+	}
+
+	private void _performActions(List<Object> objects) throws Exception {
+		long currentCTCollectionId =
+			CTCollectionThreadLocal.getCTCollectionId();
+
+		for (Object object : objects) {
+			long ctCollectionId = 0;
+
+			if (object instanceof CTModel) {
+				CTModel<?> ctModel = (CTModel<?>)object;
+
+				ctCollectionId = ctModel.getCtCollectionId();
+			}
+
+			if (ctCollectionId == currentCTCollectionId) {
+				performAction(object);
+			}
+			else {
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								ctCollectionId)) {
+
+					performAction(object);
+				}
+			}
+		}
 	}
 
 	private static final long _STATUS_INTERVAL = 100;

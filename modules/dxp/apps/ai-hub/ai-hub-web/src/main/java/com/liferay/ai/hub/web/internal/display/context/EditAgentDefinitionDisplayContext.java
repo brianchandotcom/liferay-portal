@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
@@ -57,18 +56,15 @@ public class EditAgentDefinitionDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		Company company = _themeDisplay.getCompany();
 
-		String portalURL = company.getPortalURL(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		Group group = _groupLocalService.getGroup(
+			_themeDisplay.getScopeGroupId());
+
+		String aiHubURL = StringBundler.concat(
+			company.getPortalURL(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			"/web", group.getFriendlyURL());
 
 		return HashMapBuilder.<String, Object>put(
-			"backURL",
-			() -> {
-				Group group = _groupLocalService.getGroup(
-					_themeDisplay.getScopeGroupId());
-
-				return StringBundler.concat(
-					portalURL, "/web", group.getFriendlyURL(), "/agents");
-			}
+			"backURL", aiHubURL + "/agents"
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")
@@ -96,13 +92,7 @@ public class EditAgentDefinitionDisplayContext {
 					WorkflowPortletKeys.KALEO_DESIGNER);
 
 				String url = _addGroupExternalReferenceCodeParameter(
-					namespace,
-					StringBundler.concat(
-						portalURL,
-						PropsValues.
-							LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
-						GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
-						PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL));
+					namespace, aiHubURL + "/workflow-definition");
 
 				return HttpComponentsUtil.addParameters(
 					_addNameParameter(namespace, url), "p_p_id",

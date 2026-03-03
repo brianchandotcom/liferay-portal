@@ -18,8 +18,6 @@ const BASE_SEARCH_PARAMS = {
 	nestedFields: 'description,embedded,file.thumbnailURL',
 };
 
-const CMS_FILES_CREATE_URL = `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}/web/cms/files`;
-
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
@@ -117,7 +115,6 @@ function CMSFilesItemSelectorModal({
 						]
 					: undefined
 			}
-			createItemURL={CMS_FILES_CREATE_URL}
 			fdsProps={{
 				...fdsProps,
 				customRenderers: {

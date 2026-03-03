@@ -8,12 +8,41 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {samplePageTest} from '../../frontend-taglib/main/fixtures/samplePageTest';
 import {TabName} from '../../frontend-taglib/main/pages/SamplePage';
+import {apiHelpersTest} from "../../../fixtures/apiHelpersTest";
 
 export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	samplePageTest
+);
+
+test(
+	'Check dropdown menu has show',
+	{tag: '@LPD-64072'},
+	async ({page, samplePage}) => {
+		await test.step('Select Logo Selector link', async () => {
+			await samplePage.selectTab(TabName.ICON_MENU);
+		});
+
+		const buttonMenuTrigger = page.getByRole('button', {
+			name: 'Sample Add',
+		});
+
+		await buttonMenuTrigger.waitFor({state: 'visible'});
+
+		await buttonMenuTrigger.click();
+
+		const locator = page.locator('div.open.show.lfr-icon-menu-open');
+
+		await page.addLocatorHandler(locator, async () => {
+			await expect(locator).toBeVisible();
+
+			await expect(
+				page.locator('.dropdown.lfr-icon-menu.open')
+			).toBeVisible();
+		});
+	}
 );
 
 test(

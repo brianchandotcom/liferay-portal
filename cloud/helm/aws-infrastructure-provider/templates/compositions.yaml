@@ -840,6 +840,7 @@ spec:
 
                         {{- $searchName := printf "%.21s-search" $baseName -}}
                         {{- $searchSpec := $xr.spec.search.opensearch }}
+                        {{- $searchRegion := $searchSpec.region | default $baseRegion }}
 
                         ---
                         apiVersion: opensearch.aws.m.upbound.io/v1beta1

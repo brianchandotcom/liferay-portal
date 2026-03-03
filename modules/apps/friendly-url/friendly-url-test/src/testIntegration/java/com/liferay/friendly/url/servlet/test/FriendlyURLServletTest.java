@@ -1159,15 +1159,16 @@ public class FriendlyURLServletTest {
 		Layout layoutUtilityPageEntryLayout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
 
+		_user = UserTestUtil.addUser();
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
-
-		_user = UserTestUtil.addUser(group.getGroupId());
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));

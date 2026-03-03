@@ -16139,6 +16139,18 @@ public class ObjectEntryResourceTest {
 	}
 
 	private DLFolder _getDLFolder(
+			long groupId, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Repository repository = _portletFileRepository.getPortletRepository(
+			groupId, objectDefinition.getPortletId());
+
+		return _dlFolderLocalService.getFolder(
+			repository.getGroupId(), repository.getDlFolderId(),
+			String.valueOf(TestPropsValues.getUserId()));
+	}
+
+	private DLFolder _getDLFolder(
 			ObjectDefinition objectDefinition, boolean showInDocsAndMedia)
 		throws Exception {
 
@@ -16164,12 +16176,7 @@ public class ObjectEntryResourceTest {
 				objectDefinition.getShortName());
 		}
 
-		Repository repository = _portletFileRepository.getPortletRepository(
-			groupId, objectDefinition.getPortletId());
-
-		return _dlFolderLocalService.getFolder(
-			repository.getGroupId(), repository.getDlFolderId(),
-			String.valueOf(TestPropsValues.getUserId()));
+		return _getDLFolder(groupId, objectDefinition);
 	}
 
 	private String _getEndpoint(
@@ -18158,18 +18165,23 @@ public class ObjectEntryResourceTest {
 				StringUtil.randomString() + ".txt"),
 			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
 			ContentTypes.TEXT_PLAIN);
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE,
 				_getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, false), fileEntry,
-					objectDefinition,
+					_getDLFolder(depotEntry.getGroupId(), objectDefinition),
+					fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				RandomTestUtil.randomString() + ".txt", null,
+				depotEntry.getGroupId(), customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE,
 			useExternalReferenceCode);
@@ -18827,7 +18839,8 @@ public class ObjectEntryResourceTest {
 				_toFileEntryJSONObject(
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString() + ".txt",
-					ContentTypes.TEXT_PLAIN, objectFieldName)
+					fileEntry.getFolder(), ContentTypes.TEXT_PLAIN,
+					objectFieldName)
 			).toString(),
 			_getEndpoint(objectDefinition, _testGroupId), Http.Method.POST);
 
@@ -19117,18 +19130,23 @@ public class ObjectEntryResourceTest {
 				StringUtil.randomString() + ".txt"),
 			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
 			ContentTypes.TEXT_PLAIN);
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
 
 		_testPostCustomObjectEntryWithAttachmentObjectField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE,
 				_getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, false), fileEntry,
-					objectDefinition,
+					_getDLFolder(depotEntry.getGroupId(), objectDefinition),
+					fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				RandomTestUtil.randomString() + ".txt", null,
+				depotEntry.getGroupId(), customFileEntry1.getMimeType()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE);
 
@@ -21230,7 +21248,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONObject _toFileEntryJSONObject(
-			String fileContent, String fileName, String mimeType,
+			String fileContent, String fileName, Folder folder, String mimeType,
 			String objectFieldName)
 		throws Exception {
 
@@ -21242,13 +21260,20 @@ public class ObjectEntryResourceTest {
 
 		if (StringUtil.equals(
 				objectFieldName,
-				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)) {
-
-			Folder folder = new Folder();
-
-			folder.setSiteId(_testGroupId);
+				_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE)) {
 
 			fileEntry.setFolder(folder);
+		}
+		else if (StringUtil.equals(
+					objectFieldName,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)) {
+
+			fileEntry.setFolder(
+				new Folder() {
+					{
+						setSiteId(_testGroupId);
+					}
+				});
 		}
 
 		fileEntry.setName(fileName);

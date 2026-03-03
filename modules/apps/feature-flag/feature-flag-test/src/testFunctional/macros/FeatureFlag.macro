@@ -1,27 +1,33 @@
 definition {
 
 	@summary = "Default summary"
-	macro disableFeatureFlag(featureFlag = null, scope = null) {
+	macro disableFeatureFlag(configurationScope = null, featureFlag = null, scope = null) {
 		FeatureFlag.toggleFeatureFlag(
+			configurationScope = ${configurationScope},
 			featureFlag = ${featureFlag},
 			scope = ${scope},
 			toggleState = "Disabled");
 	}
 
 	@summary = "Default summary"
-	macro enableFeatureFlag(featureFlag = null, scope = null) {
+	macro enableFeatureFlag(configurationScope = null, featureFlag = null, scope = null) {
 		FeatureFlag.toggleFeatureFlag(
+			configurationScope = ${configurationScope},
 			featureFlag = ${featureFlag},
 			scope = ${scope},
 			toggleState = "Enabled");
 	}
 
 	@summary = "Default summary"
-	macro toggleFeatureFlag(toggleState = null, featureFlag = null, scope = null) {
+	macro toggleFeatureFlag(toggleState = null, configurationScope = null, featureFlag = null, scope = null) {
+		if (!(isSet(toggleState))) {
+			var configurationScope = "Virtual Instance Scope";
+		}
+
 		if (isSet(scope)) {
 			Click(
 				key_configurationName = ${scope},
-				key_configurationScope = "Virtual Instance Scope",
+				key_configurationScope = ${configurationScope},
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
 

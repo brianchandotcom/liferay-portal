@@ -545,7 +545,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 				"taskCount");
 
 		return GetterUtil.getInteger(
-			scriptedMetricAggregationResult.getValue());
+			String.valueOf(scriptedMetricAggregationResult.getValue()));
 	}
 
 	private List<Task> _getTasks(long processId) {

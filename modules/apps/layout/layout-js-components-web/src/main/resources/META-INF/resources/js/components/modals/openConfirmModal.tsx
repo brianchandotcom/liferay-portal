@@ -13,6 +13,7 @@ type Status = 'danger' | 'info' | 'warning';
 
 type Props = {
 	buttonLabel: string;
+	cancelButtonLabel?: string;
 	center?: boolean;
 	hideCancel?: boolean;
 	onCancel?: () => Promise<void>;
@@ -35,6 +36,7 @@ export default function openConfirmModal(props: Props) {
 
 function openStandardConfirmModal({
 	buttonLabel,
+	cancelButtonLabel,
 	center,
 	hideCancel,
 	onCancel = () => Promise.resolve(),
@@ -51,7 +53,7 @@ function openStandardConfirmModal({
 			buttons.push({
 				autoFocus: true,
 				displayType: 'secondary' as const,
-				label: Liferay.Language.get('cancel'),
+				label: cancelButtonLabel || Liferay.Language.get('cancel'),
 				onClick: ({processClose} = {processClose: () => {}}) => {
 					processClose();
 
@@ -88,6 +90,7 @@ function openStandardConfirmModal({
 
 async function openOptOutConfirmModal({
 	buttonLabel,
+	cancelButtonLabel,
 	center,
 	onCancel = () => Promise.resolve(),
 	onCloseFocusElement,
@@ -110,6 +113,7 @@ async function openOptOutConfirmModal({
 				ModalContent({
 					body: text,
 					buttonLabel,
+					cancelButtonLabel,
 					onCancel: () => {
 						closeModal();
 
@@ -149,6 +153,7 @@ function optOut(key: string) {
 function ModalContent({
 	body,
 	buttonLabel,
+	cancelButtonLabel,
 	onCancel,
 	onConfirm,
 	optOutLabel = Liferay.Language.get('do-not-show-me-this-again'),
@@ -158,6 +163,7 @@ function ModalContent({
 }: {
 	body?: string;
 	buttonLabel: string;
+	cancelButtonLabel?: string;
 	onCancel: () => void;
 	onConfirm: () => void;
 	optOutLabel?: string;
@@ -196,7 +202,8 @@ function ModalContent({
 								}
 							}}
 						>
-							{Liferay.Language.get('cancel')}
+							{cancelButtonLabel ||
+								Liferay.Language.get('cancel')}
 						</ClayButton>
 
 						<ClayButton

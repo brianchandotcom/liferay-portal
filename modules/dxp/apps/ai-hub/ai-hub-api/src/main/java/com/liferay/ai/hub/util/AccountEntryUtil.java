@@ -5,11 +5,9 @@
 
 package com.liferay.ai.hub.util;
 
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,18 +20,17 @@ public class AccountEntryUtil {
 	public static AccountEntry getUserAccountEntry(long userId)
 		throws Exception {
 
-		List<AccountEntry> accountEntries =
-			AccountEntryLocalServiceUtil.getUserAccountEntries(
-				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				AccountConstants.ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		List<AccountEntryUserRel> accountEntryUserRels =
+			AccountEntryUserRelLocalServiceUtil.
+				getAccountEntryUserRelsByAccountUserId(userId);
 
-		if (accountEntries.isEmpty()) {
+		if (accountEntryUserRels.size() != 2) {
 			return null;
 		}
 
-		for (AccountEntry accountEntry : accountEntries) {
+		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
+			AccountEntry accountEntry = accountEntryUserRel.getAccountEntry();
+
 			if (!Objects.equals(
 					accountEntry.getExternalReferenceCode(), "L_AI_HUB")) {
 

@@ -102,8 +102,8 @@ public class AgentDefinitionResourceTest
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
-		AccountEntry aiHubAccountEntry = _accountEntryLocalService.
-			getAccountEntryByExternalReferenceCode(
+		AccountEntry aiHubAccountEntry =
+			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
 				"L_AI_HUB", TestPropsValues.getCompanyId());
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(

@@ -137,19 +137,19 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 			}
 
 			if (userId != getUserId()) {
-				return null;
+				return Collections.emptyList();
 			}
+
+			return depotEntryLocalService.getDepotEntryGroupIds(
+				companyId, userId, type);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
-
-			return null;
 		}
 
-		return depotEntryLocalService.getDepotEntryGroupIds(
-			companyId, userId, type);
+		return Collections.emptyList();
 	}
 
 	@Override

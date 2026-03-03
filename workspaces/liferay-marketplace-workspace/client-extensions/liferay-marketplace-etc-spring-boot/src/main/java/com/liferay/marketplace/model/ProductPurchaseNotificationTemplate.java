@@ -134,11 +134,11 @@ public class ProductPurchaseNotificationTemplate {
 		Catalog catalog = _product.getCatalog();
 
 		return new HashMapBuilder<>().put(
-			"[%CTA_TEXT%]", "Go to Dashboard"
-		).put(
 			"[%CATALOG_NAME%]", catalog.getName()
 		).put(
 			"[%CREATOR_EMAIL_ADDRESS%]", _order.getCreatorEmailAddress()
+		).put(
+			"[%CTA_TEXT%]", "Go to Dashboard"
 		).put(
 			"[%DESCRIPTION%]", _getOrderConfirmationDescription()
 		).put(

@@ -564,6 +564,75 @@ cmsTest.describe('Manage attachment ObjectField storage locations', () => {
 			).toBeVisible();
 		}
 	);
+
+	cmsTest(
+		'draft files are not shown on CMS files selector',
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			let space;
+
+			await test.step('Create a new Space and add a draft file to it', async () => {
+				space =
+					await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+						name: `Space ${getRandomString()}`,
+						settings: {},
+						type: 'Space',
+					});
+
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						objectEntryFolderExternalReferenceCode: 'L_FILES',
+						status: {code: 2},
+					},
+					'cms/basic-documents',
+					space.name
+				);
+			});
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: [
+					{
+						businessType: 'Attachment',
+						name: 'cmsBasicDocument',
+						objectFieldSettings: [
+							{
+								name: 'acceptedFileExtensions',
+								value: 'jpeg, jpg, pdf, png, txt',
+							},
+							{
+								name: 'maximumFileSize',
+								value: 0,
+							},
+							{
+								name: 'fileSource',
+								value: 'CMSBasicDocument',
+							},
+						],
+					},
+				],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.selectFileButton.click();
+
+			await expect(page.getByText('No Results Found')).toBeVisible();
+		}
+	);
 });
 
 cmsTest.describe('Manage object entries schedule properties', () => {

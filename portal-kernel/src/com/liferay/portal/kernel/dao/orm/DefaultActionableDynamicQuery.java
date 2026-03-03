@@ -234,6 +234,39 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		}
 	}
 
+	protected void doPerformActions(List<Object> objects) throws Exception {
+		PortalExecutorManager portalExecutorManager =
+			_portalExecutorManagerSnapshot.get();
+
+		ExecutorService executorService =
+			portalExecutorManager.getPortalExecutor(
+				DefaultActionableDynamicQuery.class.getName());
+
+		if (_parallel && (executorService != null)) {
+			List<Future<Void>> futures = new ArrayList<>(objects.size());
+
+			for (Object object : objects) {
+				futures.add(
+					executorService.submit(
+						new CompanyInheritableThreadLocalCallable<>(
+							() -> {
+								performAction(object);
+
+								return null;
+							})));
+			}
+
+			for (Future<Void> future : futures) {
+				future.get();
+			}
+		}
+		else {
+			for (Object object : objects) {
+				performAction(object);
+			}
+		}
+	}
+
 	protected long doPerformActions(long previousPrimaryKey)
 		throws PortalException {
 
@@ -268,36 +301,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 				return -1L;
 			}
 
-			PortalExecutorManager portalExecutorManager =
-				_portalExecutorManagerSnapshot.get();
-
-			ExecutorService executorService =
-				portalExecutorManager.getPortalExecutor(
-					DefaultActionableDynamicQuery.class.getName());
-
-			if (_parallel && (executorService != null)) {
-				List<Future<Void>> futures = new ArrayList<>(objects.size());
-
-				for (Object object : objects) {
-					futures.add(
-						executorService.submit(
-							new CompanyInheritableThreadLocalCallable<>(
-								() -> {
-									performAction(object);
-
-									return null;
-								})));
-				}
-
-				for (Future<Void> future : futures) {
-					future.get();
-				}
-			}
-			else {
-				for (Object object : objects) {
-					performAction(object);
-				}
-			}
+			doPerformActions(objects);
 
 			if (objects.size() < _interval) {
 				return -1L;

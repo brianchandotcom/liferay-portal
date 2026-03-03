@@ -62,6 +62,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -2382,9 +2383,16 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
-				objectEntryFolderExternalReferenceCode, groupId, companyId,
-				serviceContext);
+			_objectEntryFolderLocalService.
+				fetchObjectEntryFolderByExternalReferenceCode(
+					objectEntryFolderExternalReferenceCode, groupId, companyId);
+
+		if (objectEntryFolder == null) {
+			objectEntryFolder =
+				_objectEntryFolderService.getOrAddEmptyObjectEntryFolder(
+					objectEntryFolderExternalReferenceCode, groupId, companyId,
+					serviceContext);
+		}
 
 		return objectEntryFolder.getObjectEntryFolderId();
 	}
@@ -3866,6 +3874,9 @@ public class DefaultObjectEntryManagerImpl
 	)
 	private DTOConverter<com.liferay.object.model.ObjectEntry, ObjectEntry>
 		_objectEntryDTOConverter;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;

@@ -103,25 +103,21 @@ test('User is able to propagate pages separately on site templates', async ({
 
 	await page.goto(`/web/${siteName}${widgetPageDataInitial.friendlyUrlPath}`);
 
-	const widgetPageDataPhase1 = await apiHelpers.headlessDelivery.getSitePage(
-		pageName,
-		siteId
-	);
-	const homePageDataPhase1 = await apiHelpers.headlessDelivery.getSitePage(
-		homePageName,
-		siteId
-	);
+	const widgetPageDataWidgetPagePropagation =
+		await apiHelpers.headlessDelivery.getSitePage(pageName, siteId);
+	const homePageDataWidgetPagePropagation =
+		await apiHelpers.headlessDelivery.getSitePage(homePageName, siteId);
 
 	expect
 		.soft(
-			Date.parse(widgetPageDataPhase1.dateModified),
-			'PHASE 1: Widget page should be updated'
+			Date.parse(widgetPageDataWidgetPagePropagation.dateModified),
+			'Widget page changed: Widget page should be updated'
 		)
 		.toBeGreaterThan(Date.parse(widgetPageDataInitial.dateModified));
 	expect
 		.soft(
-			homePageDataPhase1.dateModified,
-			'PHASE 1: Home page should remain unchanged'
+			homePageDataWidgetPagePropagation.dateModified,
+			'Widget page changed: Home page should remain unchanged'
 		)
 		.toBe(homePageDataInitial.dateModified);
 
@@ -135,27 +131,25 @@ test('User is able to propagate pages separately on site templates', async ({
 	await applicationsMenuPage.goToSites();
 	await page.getByText(siteName).click();
 
-	const widgetPageDataPhase2 = await apiHelpers.headlessDelivery.getSitePage(
-		pageName,
-		siteId
-	);
-	const homePageDataPhase2 = await apiHelpers.headlessDelivery.getSitePage(
-		homePageName,
-		siteId
-	);
+	const widgetPageDataHomePagePropagation =
+		await apiHelpers.headlessDelivery.getSitePage(pageName, siteId);
+	const homePageDataHomePagePropagation =
+		await apiHelpers.headlessDelivery.getSitePage(homePageName, siteId);
 
 	expect
 		.soft(
-			widgetPageDataPhase2.dateModified,
-			'PHASE 2: Widget page should NOT change again'
+			widgetPageDataHomePagePropagation.dateModified,
+			'Home page changed: Widget page should NOT change again'
 		)
-		.toBe(widgetPageDataPhase1.dateModified);
+		.toBe(widgetPageDataWidgetPagePropagation.dateModified);
 	expect
 		.soft(
-			Date.parse(homePageDataPhase2.dateModified),
-			'PHASE 2: Home page should be updated'
+			Date.parse(homePageDataHomePagePropagation.dateModified),
+			'Home page changed: Home page should be updated'
 		)
-		.toBeGreaterThan(Date.parse(homePageDataPhase1.dateModified));
+		.toBeGreaterThan(
+			Date.parse(homePageDataWidgetPagePropagation.dateModified)
+		);
 });
 
 test(

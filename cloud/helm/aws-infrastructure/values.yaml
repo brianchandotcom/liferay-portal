@@ -18,8 +18,9 @@ gateway: {}
 license: {}
 overlay: {}
 search:
-    engineVersion: OpenSearch_2.15
-    instanceCount: 1
-    instanceType: t3.small.search
-    username: liferay_search_admin
+    opensearch:
+        engineVersion: OpenSearch_2.15
+        instanceCount: 1
+        instanceType: t3.small.search
+        username: liferay_search_admin
 storage: {}

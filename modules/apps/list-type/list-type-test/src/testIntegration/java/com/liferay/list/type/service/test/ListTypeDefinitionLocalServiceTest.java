@@ -208,6 +208,8 @@ public class ListTypeDefinitionLocalServiceTest {
 			ExportImportThreadLocal.setExportImportConfigurationId(
 				exportImportConfigurationId);
 
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
 			ListTypeDefinition listTypeDefinition =
 				_listTypeDefinitionLocalService.getOrAddEmptyListTypeDefinition(
 					externalReferenceCode, companyId, userId,
@@ -249,6 +251,10 @@ public class ListTypeDefinitionLocalServiceTest {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED,
 				listTypeDefinition.getStatus());
+		}
+		finally {
+			ExportImportThreadLocal.setExportImportConfigurationId(0);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 	}
 

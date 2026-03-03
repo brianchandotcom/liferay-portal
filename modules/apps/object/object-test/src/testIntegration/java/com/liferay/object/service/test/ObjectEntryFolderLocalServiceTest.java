@@ -420,6 +420,8 @@ public class ObjectEntryFolderLocalServiceTest {
 			ExportImportThreadLocal.setExportImportConfigurationId(
 				exportImportConfigurationId);
 
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
 			ObjectEntryFolder objectEntryFolder =
 				_objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
 					externalReferenceCode, TestPropsValues.getGroupId(),
@@ -462,6 +464,10 @@ public class ObjectEntryFolderLocalServiceTest {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED,
 				objectEntryFolder.getStatus());
+		}
+		finally {
+			ExportImportThreadLocal.setExportImportConfigurationId(0);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 	}
 

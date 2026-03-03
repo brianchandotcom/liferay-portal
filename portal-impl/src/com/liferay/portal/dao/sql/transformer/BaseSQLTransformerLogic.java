@@ -139,7 +139,8 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 	protected Pattern getInstrPattern() {
 		return Pattern.compile(
-			"INSTR\\(\\s*([^,]+?)\\s*,\\s*(CHR\\(\\d+\\)|[^)]+)\\s*\\)",
+			"INSTR\\(\\s*([^,]+?)\\s*,\\s*((?:(?:CHAR|CHR)\\(\\d+\\)[^)]*)|" +
+				"[^)]+)\\s*\\)",
 			Pattern.CASE_INSENSITIVE);
 	}
 

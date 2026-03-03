@@ -42,26 +42,22 @@ public class NullUnicodeContentDataCleanupPreupgradeProcess
 
 		DB db = DBManagerUtil.getDB();
 
-		String likeClause = "'%\\\\u0000%'";
-		String newData = "''";
-		String oldData = "'\\u0000'";
+		String likeClause = "%\\\\u0000%";
 
 		if ((db.getDBType() == DBType.DB2) ||
 			(db.getDBType() == DBType.ORACLE)) {
 
-			likeClause = "'%\\u0000%'";
-		}
-		else if (db.getDBType() == DBType.SQLSERVER) {
-			likeClause = "N'%\\u0000%'";
-			newData = "N" + newData;
-			oldData = "N" + oldData;
+			likeClause = "%\\u0000%";
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"update ", tableName, " set ", columnName, " = replace(",
-					columnName, ", ", oldData, ", ", newData, ") where ",
-					columnName, " like ", likeClause))) {
+					columnName, ", ?, ?) where ", columnName, " like ?"))) {
+
+			preparedStatement.setString(1, "\\u0000");
+			preparedStatement.setString(2, "");
+			preparedStatement.setString(3, likeClause);
 
 			int count = preparedStatement.executeUpdate();
 

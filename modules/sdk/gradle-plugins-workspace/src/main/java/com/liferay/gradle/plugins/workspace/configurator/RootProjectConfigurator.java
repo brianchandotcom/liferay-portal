@@ -275,7 +275,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, workspaceExtension, providedModulesConfiguration,
 			verifyProductTask);
 
-		_addTaskUpgradeSourceCode(project);
+		UpgradeSourceCodeTask upgradeSourceCodeTask = _addTaskUpgradeSourceCode(
+			project);
+
+		_configureTaskUpgradeSourceCode(
+			upgradeSourceCodeTask, workspaceExtension);
 
 		_addTaskUpgradeJakarta(project);
 	}
@@ -1523,19 +1527,19 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return formatSourceTask;
 	}
 
-	private FormatSourceTask _addTaskUpgradeSourceCode(Project project) {
-		FormatSourceTask formatSourceTask = GradleUtil.addTask(
+	private UpgradeSourceCodeTask _addTaskUpgradeSourceCode(Project project) {
+		UpgradeSourceCodeTask upgradeSourceCodeTask = GradleUtil.addTask(
 			project, UPGRADE_SOURCE_CODE_TASK_NAME,
 			UpgradeSourceCodeTask.class);
 
-		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
-		formatSourceTask.setCheckCategoryNames("Upgrade");
-		formatSourceTask.setDescription(
+		upgradeSourceCodeTask.onlyIf(_skipIfExecutingParentTaskSpec);
+		upgradeSourceCodeTask.setCheckCategoryNames("Upgrade");
+		upgradeSourceCodeTask.setDescription(
 			"Runs source code upgrade for breaking changes in the new " +
 				"Liferay version.");
-		formatSourceTask.setGroup("build");
+		upgradeSourceCodeTask.setGroup("build");
 
-		return formatSourceTask;
+		return upgradeSourceCodeTask;
 	}
 
 	private VerifyBundleTask _addTaskVerifyBundle(
@@ -1878,6 +1882,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureTaskUpgradeSourceCode(
+		UpgradeSourceCodeTask upgradeSourceCodeTask,
+		WorkspaceExtension workspaceExtension) {
+
+		Property<String> toVersionProperty =
+			upgradeSourceCodeTask.getToVersionProperty();
+
+		toVersionProperty.convention(
+			workspaceExtension.getTargetPlatformVersion());
 	}
 
 	private void _configureWorkspaceExtension(

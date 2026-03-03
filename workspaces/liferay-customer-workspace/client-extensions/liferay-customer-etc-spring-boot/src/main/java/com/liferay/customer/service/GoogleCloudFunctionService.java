@@ -43,6 +43,32 @@ public class GoogleCloudFunctionService {
 	public JSONObject fetchCustomerAccountUsage(String accountKey)
 		throws Exception {
 
+		return _handleRequest(
+			StringBundler.concat(
+				_gcfBaseUrl, _FUNCTION_CUSTOMER_USAGE_API_PATH,
+				"/api/v1/customer/usage/accounts/", accountKey),
+			accountKey);
+	}
+
+	@Cacheable("accountUsage")
+	public JSONObject fetchCustomerAccountUsage(String accountKey, String month)
+		throws Exception {
+
+		return _handleRequest(
+			StringBundler.concat(
+				_gcfBaseUrl, _FUNCTION_CUSTOMER_USAGE_API_PATH,
+				"/api/v1/accounts/", accountKey, "/usage/month/", month),
+			accountKey);
+	}
+
+	@CacheEvict(allEntries = true, value = "accountUsage")
+	@Scheduled(cron = "0 0 * * * *")
+	public void scheduledCacheEviction() throws Exception {
+	}
+
+	private JSONObject _handleRequest(String url, String accountKey)
+		throws Exception {
+
 		try (InputStream inputStream = new ByteArrayInputStream(
 				_gcfServiceAccountKey.getBytes())) {
 
@@ -58,10 +84,7 @@ public class GoogleCloudFunctionService {
 			).createRequestFactory(
 				new HttpCredentialsAdapter(idTokenCredential)
 			).buildGetRequest(
-				new GenericUrl(
-					StringBundler.concat(
-						_gcfBaseUrl, _FUNCTION_CUSTOMER_USAGE_API_PATH,
-						"/api/v1/customer/usage/accounts/", accountKey))
+				new GenericUrl(url)
 			).setThrowExceptionOnExecuteError(
 				false
 			);
@@ -97,11 +120,6 @@ public class GoogleCloudFunctionService {
 				}
 			}
 		}
-	}
-
-	@CacheEvict(allEntries = true, value = "accountUsage")
-	@Scheduled(cron = "0 0 * * * *")
-	public void scheduledCacheEviction() throws Exception {
 	}
 
 	private static final String _FUNCTION_CUSTOMER_USAGE_API_PATH =

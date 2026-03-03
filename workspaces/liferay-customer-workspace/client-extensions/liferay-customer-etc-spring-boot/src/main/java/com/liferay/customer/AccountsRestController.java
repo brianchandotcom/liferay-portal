@@ -9,6 +9,7 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.customer.constants.HeatTagConstants;
 import com.liferay.customer.constants.JiraIssueConstants;
+import com.liferay.customer.constants.ProductConstants;
 import com.liferay.customer.model.AccountUsage;
 import com.liferay.customer.model.JiraSupportIssue;
 import com.liferay.customer.permission.BusinessEventPermission;
@@ -16,6 +17,7 @@ import com.liferay.customer.service.GoogleCloudFunctionService;
 import com.liferay.customer.service.JiraService;
 import com.liferay.customer.service.KoroneikiService;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,10 +26,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -127,12 +133,8 @@ public class AccountsRestController extends BaseRestController {
 						"' and state eq 'Active'",
 					1, 1000, StringPool.BLANK);
 
-			JSONObject jsonObject =
-				_googleCloudFunctionService.fetchCustomerAccountUsage(
-					externalReferenceCode);
-
-			AccountUsage accountUsage = new AccountUsage(
-				productPurchases, jsonObject);
+			AccountUsage accountUsage = _fetchAccountUsage(
+				externalReferenceCode, productPurchases);
 
 			JSONObject accountUsageJSONObject = accountUsage.toJSONObject();
 
@@ -232,6 +234,39 @@ public class AccountsRestController extends BaseRestController {
 
 		accountResource.getAccountByExternalReferenceCode(
 			externalReferenceCode);
+	}
+
+	private AccountUsage _fetchAccountUsage(
+			String accountKey, List<ProductPurchase> productPurchases)
+		throws Exception {
+
+		for (ProductPurchase productPurchase : productPurchases) {
+			Product product = productPurchase.getProduct();
+
+			String name = product.getName();
+
+			if (ArrayUtil.contains(
+					ProductConstants.SAAS_PLAN_SUBSCRIPTION_NAMES, name)) {
+
+				return new AccountUsage(
+					productPurchases,
+					_googleCloudFunctionService.fetchCustomerAccountUsage(
+						accountKey));
+			}
+
+			if (name.equals(ProductConstants.NAME_PRODUCTION_ENVIRONMENT)) {
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+
+				return new AccountUsage(
+					productPurchase,
+					_googleCloudFunctionService.fetchCustomerAccountUsage(
+						accountKey, dateFormat.format(new Date())));
+			}
+		}
+
+		throw new Exception(
+			"Unable to find a valid product for account with Key: " +
+				accountKey);
 	}
 
 	private String _getAuthorization() {

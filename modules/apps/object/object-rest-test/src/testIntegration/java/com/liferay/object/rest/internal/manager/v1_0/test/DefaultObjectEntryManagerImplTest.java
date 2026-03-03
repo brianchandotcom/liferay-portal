@@ -9154,6 +9154,58 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testUpdateObjectEntryWithObjectEntryFolder() throws Exception {
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				null, _group.getGroupId(), TestPropsValues.getUserId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				StringUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), StringUtil.randomString()
+				).build(),
+				StringUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition4,
+			new ObjectEntry() {
+				{
+					objectEntryFolderExternalReferenceCode =
+						objectEntryFolder.getExternalReferenceCode();
+					objectEntryFolderId =
+						objectEntryFolder.getObjectEntryFolderId();
+					properties = Collections.emptyMap();
+				}
+			},
+			_group.getGroupKey());
+
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.USER, _objectDefinition4.getClassName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.USER, _objectDefinition4.getClassName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.UPDATE);
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.USER, ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
+
+		_user = _addUser();
+
+		ObjectEntry updatedObjectEntry =
+			_defaultObjectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition4,
+				objectEntry.getId(), objectEntry);
+
+		Assert.assertEquals(
+			Long.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+			updatedObjectEntry.getObjectEntryFolderId());
+	}
+
+	@Test
 	public void testUpdateObjectEntryWithPortletImportInProcess()
 		throws Exception {
 

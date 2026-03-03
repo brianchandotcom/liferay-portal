@@ -33,7 +33,7 @@ components:
                     DefaultPermissionBulkAction: "#/components/schemas/DefaultPermissionBulkAction"
                     DeleteAssetVersionBulkAction: "#/components/schemas/DeleteAssetVersionBulkAction"
                     DeleteBulkAction: "#/components/schemas/DeleteBulkAction"
-                    DeleteObjectEntryBulkAction: "#/components/schemas/DeleteBulkAction"
+                    DeleteObjectEntryBulkAction: "#/components/schemas/DeleteObjectEntryBulkAction"
                     DueDateBulkAction: "#/components/schemas/DueDateBulkAction"
                     ExpireBulkAction: "#/components/schemas/ExpireBulkAction"
                     KeywordBulkAction: "#/components/schemas/KeywordBulkAction"
@@ -147,6 +147,9 @@ components:
                 -   properties:
                         className:
                             type: string
+        DeleteObjectEntryBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
         DocumentBulkSelection:
             properties:
                 documentIds:

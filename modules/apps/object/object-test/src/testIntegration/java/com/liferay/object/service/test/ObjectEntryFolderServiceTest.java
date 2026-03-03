@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -100,8 +101,11 @@ public class ObjectEntryFolderServiceTest {
 				_user.getUserId()));
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryFolderInDepotEntry() throws Exception {
+		CMSTestUtil.getOrAddGroup(ObjectEntryFolderServiceTest.class);
+
 		_setUser(_adminUser);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(

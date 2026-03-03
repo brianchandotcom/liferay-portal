@@ -182,3 +182,39 @@ siteTest(
 		});
 	}
 );
+
+test(
+	'Default instance name is Liferay and instance logo is shown',
+	{tag: '@LPD-77422'},
+	async ({applicationsMenuPage, page}) => {
+		await applicationsMenuPage.goto();
+
+		await expect(
+			page
+				.getByRole('dialog')
+				.getByRole('link', {exact: true, name: 'Liferay'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: 'Liferay DXP Site Current'})
+		).toBeVisible();
+
+		await expect(
+			page
+				.getByRole('navigation', {name: 'Applications Menu'})
+				.locator('img')
+				.first()
+		).toHaveAttribute('src', /liferay_instance_logo/);
+
+		await expect(
+			page.getByRole('dialog').getByText('Liferay DXP', {exact: true})
+		).toBeVisible();
+
+		await expect(
+			page
+				.getByRole('navigation', {name: 'Applications Menu'})
+				.locator('img')
+				.last()
+		).toHaveAttribute('src', /liferay_logo/);
+	}
+);

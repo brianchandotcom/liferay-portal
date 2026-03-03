@@ -29,13 +29,21 @@ jobs:
                         echo "Chart version ${CHART_VERSION} already exists. Skipping publish."
                     fi
                 working-directory: ${{inputs.working_directory}}
+            -   id: auth
+                if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Authenticate to Google Cloud
+                uses: google-github-actions/auth@v2
+                with:
+                    service_account: ${{secrets.GCP_SA}}
+                    token_format: access_token
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Log in to GAR
                 run: |
-                    echo "${{secrets.GAR_PASSWORD}}" \
+                    echo "${{steps.auth.outputs.access_token}}" \
                         | helm registry login "${{inputs.registry}}" \
                             --password-stdin \
-                            --username _json_key_base64
+                            --username oauth2accesstoken
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Package and push Helm chart
                 run: |
@@ -72,6 +80,3 @@ on:
             working_directory:
                 required: true
                 type: string
-        secrets:
-            GAR_PASSWORD:
-                required: true

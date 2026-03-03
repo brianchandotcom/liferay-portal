@@ -11,7 +11,7 @@ _ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 function main {
 	if [ "${#}" -ne 1 ]
 	then
-		echo "Usage: ${0} <config-json>"
+		echo "Usage: ${0} <config-json-file>"
 
 		exit 1
 	fi
@@ -30,16 +30,16 @@ function main {
 }
 
 function _generate_tfvars {
-	local json_file="${1}"
+	local config_json_file="${1}"
 
-	if [ ! -f "${json_file}" ]
+	if [ ! -f "${config_json_file}" ]
 	then
-		echo "JSON file ${json_file} does not exist."
+		echo "JSON file ${config_json_file} does not exist."
 
 		exit 1
 	fi
 
-	if ! jq --exit-status '.variables | objects' "${json_file}" > /dev/null
+	if ! jq --exit-status '.variables | objects' "${config_json_file}" > /dev/null
 	then
 		echo "The JSON file must contain a root object named 'variables'."
 
@@ -48,7 +48,7 @@ function _generate_tfvars {
 
 	local tfvars_file="${2}"
 
-	echo "Generating ${tfvars_file} from ${json_file}..."
+	echo "Generating ${tfvars_file} from ${config_json_file}..."
 
 	local tfvars_content=$(
 		jq --raw-output '.variables
@@ -61,7 +61,7 @@ function _generate_tfvars {
 		  	"\(.key) = \(.value | @json)"
 		  else
 		  	"\(.key) = \(.value)"
-		  end' "${json_file}")
+		  end' "${config_json_file}")
 
 	if [ -z "${tfvars_content}" ]
 	then

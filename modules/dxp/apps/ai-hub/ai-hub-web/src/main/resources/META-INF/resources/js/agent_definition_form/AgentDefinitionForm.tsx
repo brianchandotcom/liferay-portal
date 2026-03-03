@@ -97,69 +97,71 @@ export default function AgentDefinitionForm({
 		}
 	};
 
-	async function _setFormData() {
-		if (!externalReferenceCode) {
-			setFormData({
-				active: false,
-				description: '',
-				externalReferenceCode: '',
-				inputVariables: '',
-				outputVariable: '',
-				r_accountToAIHubAgentDefinitions_accountEntryERC:
-					accountEntryExternalReferenceCode,
-				title_i18n: {},
-				workflowDefinitionName: '',
-			});
-
-			return;
-		}
-
-		try {
-			const agentDefinition = await getAgentDefinition(
-				externalReferenceCode
-			);
-
-			setFormData({
-				active: agentDefinition.active,
-				description: agentDefinition.description,
-				externalReferenceCode: agentDefinition.externalReferenceCode,
-				inputVariables: agentDefinition.inputVariables,
-				outputVariable: agentDefinition.outputVariable,
-				r_accountToAIHubAgentDefinitions_accountEntryERC:
-					agentDefinition.r_accountToAIHubAgentDefinitions_accountEntryERC,
-				title_i18n: agentDefinition.title_i18n,
-				workflowDefinitionName: agentDefinition.workflowDefinitionName,
-			});
-		}
-		catch (error) {
-			openToast({
-				message: Liferay.Language.get('failed-to-load-agent-data'),
-				type: 'danger',
-			});
-		}
-	}
-
-	async function _setWorkflowDefinitions() {
-		try {
-			const response = await getWorkflowDefinitions();
-
-			setWorkflowDefinitions(response.items || []);
-		}
-		catch (error) {
-			console.error(error);
-
-			openToast({
-				message: Liferay.Language.get(
-					'failed-to-load-workflow-definitions'
-				),
-				type: 'danger',
-			});
-		}
-	}
-
 	useEffect(() => {
-		_setFormData();
-		_setWorkflowDefinitions();
+		async function fetchFormData() {
+			if (!externalReferenceCode) {
+				setFormData({
+					active: false,
+					description: '',
+					externalReferenceCode: '',
+					inputVariables: '',
+					outputVariable: '',
+					r_accountToAIHubAgentDefinitions_accountEntryERC:
+						accountEntryExternalReferenceCode,
+					title_i18n: {},
+					workflowDefinitionName: '',
+				});
+
+				return;
+			}
+
+			try {
+				const agentDefinition = await getAgentDefinition(
+					externalReferenceCode
+				);
+
+				setFormData({
+					active: agentDefinition.active,
+					description: agentDefinition.description,
+					externalReferenceCode:
+						agentDefinition.externalReferenceCode,
+					inputVariables: agentDefinition.inputVariables,
+					outputVariable: agentDefinition.outputVariable,
+					r_accountToAIHubAgentDefinitions_accountEntryERC:
+						agentDefinition.r_accountToAIHubAgentDefinitions_accountEntryERC,
+					title_i18n: agentDefinition.title_i18n,
+					workflowDefinitionName:
+						agentDefinition.workflowDefinitionName,
+				});
+			}
+			catch (error) {
+				openToast({
+					message: Liferay.Language.get('failed-to-load-agent-data'),
+					type: 'danger',
+				});
+			}
+		}
+
+		async function fetchWorkflowDefinitions() {
+			try {
+				const response = await getWorkflowDefinitions();
+
+				setWorkflowDefinitions(response.items || []);
+			}
+			catch (error) {
+				console.error(error);
+
+				openToast({
+					message: Liferay.Language.get(
+						'failed-to-load-workflow-definitions'
+					),
+					type: 'danger',
+				});
+			}
+		}
+
+		fetchFormData();
+		fetchWorkflowDefinitions();
 	}, [accountEntryExternalReferenceCode, externalReferenceCode]);
 
 	return (

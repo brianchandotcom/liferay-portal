@@ -5,6 +5,7 @@
 
 package com.liferay.object.dynamic.data.mapping.internal.storage;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -24,6 +25,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -63,10 +66,12 @@ import java.text.NumberFormat;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -170,6 +175,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			DDMForm ddmForm = ddmFormValues.getDDMForm();
 
+			Set<Long> fileEntryIds = new HashSet<>();
+
 			ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 				new DefaultDTOConverterContext(
 					true,
@@ -184,6 +191,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 						setProperties(
 							() -> _toProperties(
 								ddmFormValues.getDDMFormFieldValuesMap(true),
+								fileEntryIds,
 								ObjectFieldUtil.toObjectFieldsMap(
 									_objectFieldLocalService.getObjectFields(
 										objectDefinition.
@@ -193,6 +201,10 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				_getScopeKey(
 					ddmStorageAdapterSaveRequest.getGroupId(),
 					objectDefinition));
+
+			for (Long fileEntryId : fileEntryIds) {
+				_dlAppService.deleteFileEntry(fileEntryId);
+			}
 
 			return DDMStorageAdapterSaveResponse.Builder.newBuilder(
 				GetterUtil.getLong(objectEntry.getId())
@@ -396,7 +408,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	private Map<String, Object> _toProperties(
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
-			Map<String, ObjectField> objectFieldsMap)
+			Set<Long> fileEntryIds, Map<String, ObjectField> objectFieldsMap)
 		throws Exception {
 
 		Map<String, Object> properties = new HashMap<>();
@@ -432,8 +444,24 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					value.getString(value.getDefaultLocale()));
 
 				if (objectField.compareBusinessType(
-						ObjectFieldConstants.
-							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+					String fileSource = ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+						objectField.getObjectFieldSettings());
+
+					if (!Objects.equals(
+							fileSource,
+							ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
+
+						fileEntryIds.add(GetterUtil.getLong(valueString));
+					}
+
+					properties.put(objectField.getName(), valueString);
+				}
+				else if (objectField.compareBusinessType(
+							ObjectFieldConstants.
+								BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 					properties.put(
 						objectField.getName(),
@@ -495,6 +523,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDDMStorageAdapter.class);
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

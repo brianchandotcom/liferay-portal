@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -25,7 +26,8 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 				"select ctCollectionId, virtualHostId, hostname from " +
 					"VirtualHost where hostname != LOWER(hostname)");
 
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
+			PreparedStatement preparedStatement2 =        AutoBatchPreparedStatementUtil.autoBatch(
+				connection,
 				"update VirtualHost set hostname = ? where ctCollectionId = " +
 					"? and virtualHostId = ?")) {
 
@@ -46,7 +48,7 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 				preparedStatement2.setLong(3, virtualHostId);
 
 				try {
-					preparedStatement2.executeUpdate();
+					preparedStatement2.addBatch();
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -62,6 +64,8 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 							virtualHostId);
 				}
 			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 

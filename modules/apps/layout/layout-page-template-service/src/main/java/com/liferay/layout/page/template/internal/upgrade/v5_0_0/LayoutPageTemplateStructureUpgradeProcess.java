@@ -22,7 +22,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement deletePreparedStatement =
-				connection.prepareStatement(
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
 					"delete from LayoutPageTemplateStructure where " +
 						"ctCollectionId = ? and " +
 							"layoutPageTemplateStructureId = ?");
@@ -57,7 +58,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 						deletePreparedStatement.setLong(
 							2, layoutPageTemplateStructureId);
 
-						deletePreparedStatement.executeUpdate();
+						deletePreparedStatement.addBatch();
 
 						continue;
 					}
@@ -71,6 +72,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.addBatch();
 				}
+
+				deletePreparedStatement.executeBatch();
 
 				preparedStatement2.executeBatch();
 			}

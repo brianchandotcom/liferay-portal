@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -7511,10 +7512,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	private void _updateLastLogin(Connection connection, List<User> users)
 		throws SQLException {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				CustomSQLUtil.get(
-					UserLocalServiceImpl.class.getName() +
-						".updateLastLogin"))) {
+		try (PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					CustomSQLUtil.get(
+						UserLocalServiceImpl.class.getName() +
+							".updateLastLogin"))) {
 
 			for (User user : users) {
 				preparedStatement.setTimestamp(

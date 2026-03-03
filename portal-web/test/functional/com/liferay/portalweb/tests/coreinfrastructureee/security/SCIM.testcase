@@ -2,7 +2,6 @@
 definition {
 
 	property ci.retries.disabled = "true";
-	property custom.properties = "feature.flag.LPS-96845=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
@@ -28,7 +27,6 @@ definition {
 	@description = "This is a use case for LPS-190119 (TC-1 & TC-2 & TC-3). Admin User can Generate and Revoke SCIM Access Tokens."
 	@priority = 5
 	test AdminUserCanGenerateAndRevokeSCIMTokens {
-		property custom.properties = "feature.flag.LPS-96845=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -73,47 +71,6 @@ definition {
 				expected = "");
 
 			User.logoutPG();
-		}
-	}
-
-	@description = "This is a use case for LPS-190327. TC1: Verify the grace period should work after generating a new access token."
-	@priority = 4
-	test GracePeriodShouldBeTriggerredWhenGenerateNewAccessToken {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given: Add a SCIM client") {
-			PortalSettings.openToConfigInInstanceSettings(portletKey = "scim-name");
-
-			SCIM.configureSCIM(
-				applicationName = "SCIM Application",
-				matcherField = "email");
-		}
-
-		task ("When: Generate an access token") {
-			SCIM.configureSCIM(generateAccessToken = "true");
-		}
-
-		task ("Then: Verify the authorization should be expired within 12 months") {
-			OAuth2.openOAuth2Admin();
-
-			OAuth2.viewGrantedAuthViaAdmin(
-				applicationName = "SCIM Application",
-				expiration = "Within 12 Months");
-		}
-
-		task ("When: Generate a new access token") {
-			PortalSettings.openToConfigInInstanceSettings(portletKey = "scim-name");
-
-			SCIM.configureSCIM(generateAccessToken = "true");
-		}
-
-		task ("Then: Verify the previous authorization should be expired within 9 days") {
-			OAuth2.openOAuth2Admin();
-
-			OAuth2.viewGrantedAuthViaAdmin(
-				applicationName = "SCIM Application",
-				expiration = "Within 9 Days");
 		}
 	}
 

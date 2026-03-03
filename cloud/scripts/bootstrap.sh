@@ -12,11 +12,17 @@ function main {
 
 	_check_utils curl jq tar
 
-	local config_file=$(_get_config_file "${1:-}")
+	local config_file
 
-	local provider=$(_get_provider "${config_file}")
+	config_file=$(_get_config_file "${1:-}")
 
-	local extracted_dir=$(_download_and_extract_files "${provider}")
+	local provider
+
+	provider=$(_get_provider "${config_file}")
+
+	local extracted_dir
+
+	extracted_dir=$(_download_and_extract_files "${provider}")
 
 	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${@}"
 }

@@ -8,8 +8,6 @@ package com.liferay.site.cms.site.initializer.internal.bulk.selection;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.rest.filter.factory.FilterFactory;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.cms.site.initializer.util.ResetAssetPermissionUtil;
 
 import java.io.Serializable;
@@ -76,13 +73,8 @@ public class ResetPermissionObjectBulkSelectionAction
 
 			values = objectEntry.getValues();
 
-			long objectDefinitionId = _getObjectDefinitionId(
-				objectEntry.getCompanyId());
-
 			bulkSelection.forEach(
 				object -> {
-					String status = "completed";
-
 					try {
 						if (object instanceof ObjectEntry) {
 							ObjectEntry objectObjectEntry = (ObjectEntry)object;
@@ -129,26 +121,6 @@ public class ResetPermissionObjectBulkSelectionAction
 						}
 
 						numberOfFailedItems.getAndIncrement();
-						status = "failed";
-					}
-					finally {
-						_objectEntryLocalService.addObjectEntry(
-							0, user.getUserId(), objectDefinitionId,
-							ObjectEntryFolderConstants.
-								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-							null,
-							HashMapBuilder.<String, Serializable>put(
-								"bulkActionTaskId", bulkActionTaskId
-							).put(
-								"executionStatus", status
-							).put(
-								"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionT" +
-									"askId",
-								bulkActionTaskId
-							).put(
-								"type", "ObjectEntryFolder"
-							).build(),
-							new ServiceContext());
 					}
 				});
 		}
@@ -168,15 +140,6 @@ public class ResetPermissionObjectBulkSelectionAction
 
 			_partialUpdateObjectEntry(objectEntry, values);
 		}
-	}
-
-	private long _getObjectDefinitionId(long companyId) throws PortalException {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BULK_ACTION_TASK_ITEM", companyId);
-
-		return objectDefinition.getObjectDefinitionId();
 	}
 
 	private ObjectEntry _partialUpdateObjectEntry(

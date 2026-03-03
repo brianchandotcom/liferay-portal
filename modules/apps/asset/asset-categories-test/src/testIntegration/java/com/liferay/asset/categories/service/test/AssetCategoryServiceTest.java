@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -165,6 +167,72 @@ public class AssetCategoryServiceTest {
 				externalReferenceCode, _group.getGroupId());
 
 			Assert.assertNotNull(assetCategory);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-79415")
+	public void testGetOrAddEmptyCategoryWithAncestors() throws Exception {
+		Assert.assertThrows(
+			NoSuchCategoryException.class,
+			() -> _assetCategoryService.getOrAddEmptyCategoryWithAncestors(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString()));
+
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user));
+			SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Assert.assertThrows(
+				PrincipalException.class,
+				() -> _assetCategoryService.getOrAddEmptyCategoryWithAncestors(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()));
+
+			RoleTestUtil.addResourcePermission(
+				role, "com.liferay.asset.categories",
+				ResourceConstants.SCOPE_GROUP,
+				String.valueOf(_group.getGroupId()), ActionKeys.ADD_CATEGORY);
+
+			Assert.assertThrows(
+				PrincipalException.class,
+				() -> _assetCategoryService.getOrAddEmptyCategoryWithAncestors(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()));
+
+			AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+				_group.getGroupId());
+
+			Assert.assertNotNull(
+				_assetCategoryService.getOrAddEmptyCategoryWithAncestors(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					assetVocabulary.getExternalReferenceCode()));
+
+			RoleTestUtil.addResourcePermission(
+				role, "com.liferay.asset.categories",
+				ResourceConstants.SCOPE_GROUP,
+				String.valueOf(_group.getGroupId()), ActionKeys.ADD_VOCABULARY);
+
+			Assert.assertNotNull(
+				_assetCategoryService.getOrAddEmptyCategoryWithAncestors(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()));
+		}
+		finally {
+			_roleLocalService.deleteRole(role);
+			_userLocalService.deleteUser(user);
 		}
 	}
 

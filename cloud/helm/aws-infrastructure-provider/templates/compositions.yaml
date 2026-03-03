@@ -1110,6 +1110,8 @@ spec:
                                 nodeToNodeEncryption:
                                     enabled: true
                                 region: {{ $searchRegion }}
+                                softwareUpdateOptions:
+                                    autoSoftwareUpdateEnabled: {{ $searchSpec.autoSoftwareUpdates }}
                                 tags:
                                     Name: {{ $searchName }}
                                 vpcOptions:

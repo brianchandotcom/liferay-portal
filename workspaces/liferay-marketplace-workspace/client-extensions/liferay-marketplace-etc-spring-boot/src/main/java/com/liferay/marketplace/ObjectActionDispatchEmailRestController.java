@@ -1,11 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
@@ -45,7 +46,7 @@ public class ObjectActionDispatchEmailRestController
 		if (Objects.equals(_getModelName(jsonObject), "product") &&
 			Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
 
-			_postProductSubmitNotification(jsonObject);
+			_onAfterAddProductNotification(jsonObject);
 		}
 	}
 
@@ -57,11 +58,11 @@ public class ObjectActionDispatchEmailRestController
 		return null;
 	}
 
-	private void _postProductSubmitNotification(JSONObject jsonObject)
+	private void _onAfterAddProductNotification(JSONObject jsonObject)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("POST product submit notification " + jsonObject);
+			_log.info("On after add product notification " + jsonObject);
 		}
 
 		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
@@ -73,36 +74,34 @@ public class ObjectActionDispatchEmailRestController
 		_marketplaceService.postNotificationQueueEntry(
 			null, "MARKETPLACE-PRODUCT-SUBMIT-TEMPLATE",
 			new HashMapBuilder<String, Object>().put(
-				"[%CPDEFINITION_NAME%]",
+				"[%CATALOG_NAME%]",
+				() -> {
+					Catalog catalog = product.getCatalog();
+
+					return catalog.getName();
+				}
+			).put(
+				"[%CREATE_DATE%]",
+				MarketplaceUtil.format(product.getCreateDate())
+			).put(
+				"[%DASHBOARD_URL%]",
+				new URL(
+					StringBundler.concat(
+						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+						"/web/marketplace/administrator-dashboard#/apps/",
+						product.getProductId())
+				).toString()
+			).put(
+				"[%PRODUCT_NAME%]",
 				product.getName(
 				).get(
 					modelCPDefinitionJSONObject.getString("defaultLanguageId")
 				)
 			).put(
-				"[%CPDEFINITION_THUMBNAIL%]",
+				"[%PRODUCT_THUMBNAIL%]",
 				new URL(
 					"http://" + lxcDXPMainDomain + product.getThumbnail()
 				).toString()
-			).put(
-				"[%CPDEFINITION_DEVELOPER_NAME%]",
-				_marketplaceService.getCatalog(
-					product.getCatalogId()
-				).getName()
-			).put(
-				"[%CPDEFINITION_URL%]",
-				new URL(
-					StringBundler.concat(
-						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-						"/web/marketplace/administrator-dashboard#/apps/",
-						modelCPDefinitionJSONObject.getLong("CProductId"))
-				).toString()
-			).put(
-				"[%CPDEFINITION_CREATEDATE%]",
-				MarketplaceUtil.format(product.getCreateDate())
-			).put(
-				"[%CPDEFINITION_ID%]",
-				String.valueOf(
-					modelCPDefinitionJSONObject.getLong("CPDefinitionId"))
 			).build());
 	}
 

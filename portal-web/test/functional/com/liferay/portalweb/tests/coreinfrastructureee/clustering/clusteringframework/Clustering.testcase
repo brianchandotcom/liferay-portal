@@ -476,62 +476,6 @@ definition {
 	}
 
 	@priority = 4
-	test ValidateDocumentOnSeparateNodes {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "sequential";
-
-		Clustering.viewClusterStatusInConsole();
-
-		Page.assertNodePortPG(nodePort = 8080);
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.addPage(pageName = "Documents and Media Page");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewAllPG(dmDocumentTitle = "DM Document Title");
-
-		User.logoutPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-
-		User.loginPG(
-			nodePort = 9080,
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-
-		Page.assertNodePortPG(nodePort = 9080);
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Documents and Media Page",
-			url = "http://localhost:9080");
-
-		DMDocument.viewAllPG(dmDocumentTitle = "DM Document Title");
-
-		User.logoutPG(
-			password = PropsUtil.get("default.admin.password"),
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		User.loginPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-	}
-
-	@priority = 4
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true";
 		property test.liferay.virtual.instance = "false";

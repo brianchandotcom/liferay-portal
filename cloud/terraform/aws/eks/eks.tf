@@ -1,7 +1,3 @@
-locals {
-	cluster_name="${var.deployment_name}-eks"
-	oidc_provider_arn="arn:${var.arn_partition}:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${module.eks.oidc_provider}"
-}
 module "eks" {
 	addons={
 		amazon-cloudwatch-observability={

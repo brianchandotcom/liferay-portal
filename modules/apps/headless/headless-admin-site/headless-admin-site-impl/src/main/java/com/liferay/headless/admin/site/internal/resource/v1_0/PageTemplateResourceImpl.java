@@ -155,6 +155,19 @@ public class PageTemplateResourceImpl
 			}
 
 			@Override
+			public boolean isApplicableModel(
+				LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+				if (layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.BASIC) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+			@Override
 			public boolean isStagingSupported() {
 				return true;
 			}

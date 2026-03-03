@@ -156,6 +156,19 @@ public class DisplayPageTemplateResourceImpl
 			}
 
 			@Override
+			public boolean isApplicableModel(
+				LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+				if (layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+			@Override
 			public boolean isStagingSupported() {
 				return true;
 			}

@@ -85,4 +85,52 @@ describe('ViewImportReportEntryDetail', () => {
 			})
 		);
 	});
+
+	it('shows "no stack trace" info modal when errorStacktrace is missing', async () => {
+		fetch.mockResponseOnce(
+			JSON.stringify({
+				classExternalReferenceCode: '',
+				classPK: 123,
+				creator: {
+					name: 'John Doe',
+				},
+				dateCreated: '2025-06-05T08:51:54Z',
+				dateModified: '2025-06-05T08:51:54Z',
+				errorMessage: 'Error message',
+				errorStacktrace: null,
+				id: 456,
+				modelName: 'ModelName',
+				scope: {
+					label: 'Scope label',
+					type: 'Scope Type',
+				},
+				type: {
+					code: 1,
+					label: 'Type label',
+				},
+			})
+		);
+
+		const {findByRole} = render(
+			renderComponent({
+				apiURL: '/group/__mocks__/get-import-error-detail',
+				backURL: 'www.localhost:8080',
+			})
+		);
+
+		const viewStackTraceButton = await findByRole('button', {
+			name: 'view-stack-trace',
+		});
+
+		fireEvent.click(viewStackTraceButton);
+
+		expect(openModal).toHaveBeenCalledWith(
+			expect.objectContaining({
+				bodyHTML:
+					'this-error-was-detected-as-a-controlled-validation-error-during-the-import-process-and-did-not-originate-from-a-system-exception.-because-of-this-no-stack-trace-was-generated',
+				status: 'info',
+				title: 'no-stack-trace-available',
+			})
+		);
+	});
 });

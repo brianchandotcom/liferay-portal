@@ -521,14 +521,20 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				"select companyId, privateLayout, layoutId, portletId from " +
 					"JournalContentSearch where JournalContentSearch.groupId " +
 						"= ? and JournalContentSearch.articleId = ?");
-			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				"delete from JournalContentSearch where " +
-					"JournalContentSearch.groupId = ? and " +
-						"JournalContentSearch.articleId = ?");
-			PreparedStatement preparedStatement4 = connection.prepareStatement(
-				"insert into JournalContentSearch(contentSearchId, " +
-					"companyId, groupId, privateLayout, layoutId, portletId, " +
-						"articleId) values (?, ?, ?, ?, ?, ?, ?)")) {
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"delete from JournalContentSearch where " +
+						"JournalContentSearch.groupId = ? and " +
+							"JournalContentSearch.articleId = ?");
+			PreparedStatement preparedStatement4 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into JournalContentSearch(contentSearchId, ",
+						"companyId, groupId, privateLayout, layoutId, ",
+						"portletId, articleId) values (?, ?, ?, ?, ?, ?, ",
+						"?)"))) {
 
 			preparedStatement1.setLong(1, groupId);
 			preparedStatement1.setString(2, portletId);
@@ -560,7 +566,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 							preparedStatement3.setLong(1, groupId);
 							preparedStatement3.setString(2, articleId);
 
-							preparedStatement3.executeUpdate();
+							preparedStatement3.addBatch();
 
 							preparedStatement4.setLong(1, increment());
 							preparedStatement4.setLong(2, companyId);
@@ -571,9 +577,13 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 								6, journalContentSearchPortletId);
 							preparedStatement4.setString(7, articleId);
 
-							preparedStatement4.executeUpdate();
+							preparedStatement4.addBatch();
 						}
 					}
+
+					preparedStatement3.executeBatch();
+
+					preparedStatement4.executeBatch();
 				}
 			}
 		}

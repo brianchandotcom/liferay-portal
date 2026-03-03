@@ -785,6 +785,61 @@ public class DDMFormDisplayContextTest {
 	}
 
 	@Test
+	public void testRedirectURLPreservesParameters() throws Exception {
+		DDMFormDisplayContext ddmFormDisplayContext = Mockito.spy(
+			_createDDMFormDisplayContext());
+
+		String url = "http://localhost:8080/page";
+
+		DDMFormInstanceSettings settings = Mockito.mock(
+			DDMFormInstanceSettings.class);
+
+		Mockito.when(
+			settings.redirectURL()
+		).thenReturn(
+			url
+		);
+
+		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
+
+		Mockito.when(
+			ddmFormInstance.getSettingsModel()
+		).thenReturn(
+			settings
+		);
+
+		Mockito.doReturn(
+			ddmFormInstance
+		).when(
+			ddmFormDisplayContext
+		).getFormInstance();
+
+		ThemeDisplay themeDisplay = _mockThemeDisplay(false);
+
+		Mockito.doReturn(
+			themeDisplay
+		).when(
+			ddmFormDisplayContext
+		).getThemeDisplay();
+
+		try (MockedStatic<PortalUtil> portalUtilMockedStatic =
+				Mockito.mockStatic(PortalUtil.class)) {
+
+			String preservedURL = url + "?doAsUserId=1234";
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.addPreservedParameters(
+					Mockito.eq(themeDisplay), Mockito.eq(url))
+			).thenReturn(
+				preservedURL
+			);
+
+			Assert.assertEquals(
+				preservedURL, ddmFormDisplayContext.getRedirectURL());
+		}
+	}
+
+	@Test
 	public void testSubmissionLimitReachedDefaultMessage() throws Exception {
 		String limitToOneSubmissionPerUserBody =
 			"You can fill out this form only once. Contact the owner of the " +

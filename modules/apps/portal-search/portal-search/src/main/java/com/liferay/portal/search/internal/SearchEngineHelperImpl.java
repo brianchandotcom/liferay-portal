@@ -142,7 +142,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 			0, maxPoolSize, 60, TimeUnit.SECONDS, new SynchronousQueue<>(),
 			new NamedThreadFactory(
-				"DocumentsConsumer-", Thread.NORM_PRIORITY, null),
+				"DocumentsConsumer", Thread.NORM_PRIORITY, null),
 			new ThreadPoolExecutor.CallerRunsPolicy());
 
 		threadPoolExecutor.allowCoreThreadTimeOut(true);
@@ -165,7 +165,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 			0, maxPoolSize, 60, TimeUnit.SECONDS, new SynchronousQueue<>(),
 			new NamedThreadFactory(
-				"DocumentsProducer-", Thread.NORM_PRIORITY, null),
+				"DocumentsProducer", Thread.NORM_PRIORITY, null),
 			new ThreadPoolExecutor.CallerRunsPolicy());
 
 		threadPoolExecutor.allowCoreThreadTimeOut(true);

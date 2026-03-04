@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.buffer.util;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -26,9 +27,6 @@ import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Michael C. Han
@@ -71,44 +69,37 @@ public class IndexerRequestBufferExecutorUtil {
 		IndexerRequestBuffer transferCopyIndexerRequestBuffer =
 			indexerRequestBuffer.transferCopy();
 
-		AtomicReference<Future<?>> futureAtomicReference =
-			new AtomicReference<>();
+		DefaultNoticeableFuture<Void> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>(
+				new CompanyInheritableThreadLocalCallable<>(
+					() -> {
+						ServiceContextThreadLocal.pushServiceContext(
+							finalServiceContext);
 
-		FutureTask<?> futureTask = new FutureTask<Void>(
-			new CompanyInheritableThreadLocalCallable<>(
-				() -> {
-					ServiceContextThreadLocal.pushServiceContext(
-						finalServiceContext);
+						try (SafeCloseable safeCloseable1 =
+								CTCollectionThreadLocal.
+									setCTCollectionIdWithSafeCloseable(
+										ctCollectionId);
+							SafeCloseable safeCloseable2 =
+								SearchContext.openBatchMode(false)) {
 
-					try (SafeCloseable safeCloseable1 =
-							CTCollectionThreadLocal.
-								setCTCollectionIdWithSafeCloseable(
-									ctCollectionId);
-						SafeCloseable safeCloseable2 =
-							SearchContext.openBatchMode(false)) {
+							_execute(
+								transferCopyIndexerRequestBuffer,
+								transferCopyIndexerRequestBuffer.size(), false);
+						}
+						catch (Exception exception) {
+							_log.error(exception);
+						}
+						finally {
+							ServiceContextThreadLocal.popServiceContext();
+						}
 
-						_execute(
-							transferCopyIndexerRequestBuffer,
-							transferCopyIndexerRequestBuffer.size(), false);
-					}
-					catch (Exception exception) {
-						_log.error(exception);
-					}
-					finally {
-						ServiceContextThreadLocal.popServiceContext();
+						return null;
+					}));
 
-						SearchContext.unregisterBatchModeSyncFuture(
-							futureAtomicReference.get());
-					}
+		SearchContext.registerBatchModeSyncFuture(defaultNoticeableFuture);
 
-					return null;
-				}));
-
-		futureAtomicReference.set(futureTask);
-
-		SearchContext.registerBatchModeSyncFuture(futureTask);
-
-		executorService.execute(futureTask);
+		executorService.execute(defaultNoticeableFuture);
 	}
 
 	private static void _execute(

@@ -55,11 +55,13 @@ export function MockCacheProvider({
 	objectDefinitions,
 	picklists,
 	spaces,
+	workflows,
 }: {
 	children: ReactNode;
 	objectDefinitions?: ObjectDefinitions;
 	picklists?: Picklist[];
 	spaces?: Space[];
+	workflows?: Workflow[];
 }) {
 	return (
 		<CacheContext.Provider
@@ -68,6 +70,7 @@ export function MockCacheProvider({
 					objectDefinitions,
 					picklists,
 					spaces,
+					workflows,
 				}),
 				promisesRef: {current: {}},
 				update: () => {},

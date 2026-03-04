@@ -168,9 +168,9 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			Boolean active, long companyId, String scope, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator,
-			long userId)
+			Boolean active, long companyId, long userId, String scope,
+			int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(

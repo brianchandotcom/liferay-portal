@@ -85,8 +85,6 @@ public class ObjectEntryFolderServiceTest {
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			_adminUser.getUserId());
 
-		Assert.assertNotNull(parentObjectEntryFolder1);
-
 		CMSTestUtil.getOrAddGroup(ObjectEntryFolderServiceTest.class);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
@@ -104,8 +102,6 @@ public class ObjectEntryFolderServiceTest {
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			_adminUser.getUserId());
 
-		Assert.assertNotNull(parentObjectEntryFolder2);
-
 		_setUser(_user);
 
 		AssertUtils.assertFailure(
@@ -119,7 +115,6 @@ public class ObjectEntryFolderServiceTest {
 				_group.getGroupId(),
 				parentObjectEntryFolder1.getObjectEntryFolderId(),
 				_user.getUserId()));
-
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
@@ -138,12 +133,10 @@ public class ObjectEntryFolderServiceTest {
 
 		_setUser(user);
 
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+		_addObjectEntryFolder(
 			depotEntry.getGroupId(),
 			parentObjectEntryFolder2.getObjectEntryFolderId(),
 			user.getUserId());
-
-		Assert.assertNotNull(objectEntryFolder);
 	}
 
 	@Test

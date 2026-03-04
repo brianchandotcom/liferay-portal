@@ -114,7 +114,6 @@ public class SaveScimConfigurationMVCActionCommandTest {
 			DateUtil.getDaysBetween(
 				oAuth2Authorization.getAccessTokenExpirationDate(),
 				oAuth2Authorization.getCreateDate()));
-
 		Assert.assertEquals(
 			companyAdminUser.getUserId(), oAuth2Authorization.getUserId());
 
@@ -125,7 +124,6 @@ public class SaveScimConfigurationMVCActionCommandTest {
 			DateUtil.getDaysBetween(
 				oAuth2Authorization.getAccessTokenExpirationDate(),
 				oAuth2Authorization.getCreateDate()));
-
 		Assert.assertEquals(
 			adminUser.getUserId(), oAuth2Authorization.getUserId());
 

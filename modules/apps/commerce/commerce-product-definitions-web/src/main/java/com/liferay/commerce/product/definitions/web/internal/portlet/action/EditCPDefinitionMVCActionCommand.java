@@ -619,8 +619,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private CPDefinition _updateCPDefinition(
-			CPDefinition cpDefinition, ServiceContext serviceContext)
+			long cpDefinitionId, ServiceContext serviceContext)
 		throws Exception {
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
 
 		Date displayDate = cpDefinition.getDisplayDate();
 
@@ -1063,7 +1066,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			_updateTaxCategoryInfo(_actionRequest, cpDefinitionId);
 
 			_updateCPDefinition(
-				_cpDefinition,
+				_cpDefinition.getCPDefinitionId(),
 				_getServiceContext(_actionRequest, _cpDefinition));
 
 			return null;
@@ -1093,7 +1096,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			_updateSubscriptionInfo(_actionRequest, _cpDefinition);
 
 			_updateCPDefinition(
-				_cpDefinition,
+				_cpDefinition.getCPDefinitionId(),
 				_getServiceContext(_actionRequest, _cpDefinition));
 
 			return null;
@@ -1116,7 +1119,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		@Override
 		public CPDefinition call() throws Exception {
 			return _updateCPDefinition(
-				_cpDefinition,
+				_cpDefinition.getCPDefinitionId(),
 				_getServiceContext(_actionRequest, _cpDefinition));
 		}
 
@@ -1144,7 +1147,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				_actionRequest, _cpDefinition.getCPDefinitionId());
 
 			_updateCPDefinition(
-				_cpDefinition,
+				_cpDefinition.getCPDefinitionId(),
 				_getServiceContext(_actionRequest, _cpDefinition));
 
 			return null;

@@ -25,9 +25,11 @@ import {ASSET_TYPE} from './util/constants';
 
 const AssetTypeInfoPanelContent = ({
 	additionalProps: {assetLibraries, cmsGroupId, commentsProps, ...otherProps},
+	dataSetId,
 	items: selectedAssets = [],
 }: {
 	additionalProps: any;
+	dataSetId?: string;
 	items: ISearchAssetObjectEntry[];
 }) => {
 	if (selectedAssets?.length !== 1) {
@@ -85,6 +87,7 @@ const AssetTypeInfoPanelContent = ({
 					),
 					cmsGroupId,
 					commentsProps,
+					dataSetId,
 					selectedAssets,
 					type,
 				} as IAssetTypeInfoPanelContext

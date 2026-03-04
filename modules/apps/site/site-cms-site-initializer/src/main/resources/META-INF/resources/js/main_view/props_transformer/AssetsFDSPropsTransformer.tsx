@@ -184,6 +184,7 @@ export default function AssetsFDSPropsTransformer({
 		infoPanelComponent: (items: {items: ISearchAssetObjectEntry[]}) => (
 			<AssetTypeInfoPanel
 				additionalProps={additionalProps as any}
+				dataSetId={otherProps.id}
 				{...items}
 			/>
 		),

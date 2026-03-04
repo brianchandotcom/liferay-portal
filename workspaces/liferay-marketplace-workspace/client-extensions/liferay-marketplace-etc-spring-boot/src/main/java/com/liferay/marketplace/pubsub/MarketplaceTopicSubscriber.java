@@ -122,9 +122,6 @@ public class MarketplaceTopicSubscriber {
 					30
 				).setName(
 					subscriptionName
-				).setTopic(
-					String.valueOf(
-						TopicName.ofProjectTopicName(_projectId, topicName))
 				).setRetryPolicy(
 					RetryPolicy.newBuilder(
 					).setMaximumBackoff(
@@ -138,6 +135,9 @@ public class MarketplaceTopicSubscriber {
 							600
 						).build()
 					).build()
+				).setTopic(
+					String.valueOf(
+						TopicName.ofProjectTopicName(_projectId, topicName))
 				).build());
 		}
 

@@ -8,10 +8,8 @@ import '@testing-library/jest-dom';
 // eslint-disable-next-line
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {fireEvent, render, waitFor} from '@testing-library/react';
-import {openToast} from 'frontend-js-components-web';
 import React from 'react';
 
-import StructureService from '../../../../src/main/resources/META-INF/resources/js/common/services/StructureService';
 import {getWorkflowDefinitions} from '../../../../src/main/resources/META-INF/resources/js/common/services/WorkflowService';
 import AssignDefaultWorkflowModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/AssignDefaultWorkflowModalContent';
 
@@ -22,26 +20,17 @@ jest.mock(
 	})
 );
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/common/services/StructureService',
-	() => ({
-		updateStructureWorkflow: jest.fn(),
-	})
-);
-
-jest.mock('frontend-js-components-web', () => ({
-	openToast: jest.fn(),
-}));
-
 (getWorkflowDefinitions as jest.Mock).mockResolvedValue([
 	{name: 'Single Approver'},
 ]);
 
 const mockCloseModal = jest.fn();
+const mockSubmitModal = jest.fn();
 
 const DEFAULT_PROPS = {
 	closeModal: mockCloseModal,
 	structureWorkflows: [{id: '1', name: 'Structure A', workflow: ''}],
+	submitModal: mockSubmitModal,
 };
 
 const renderComponent = (props = DEFAULT_PROPS) => {
@@ -89,50 +78,38 @@ describe('AssignDefaultWorkflowModalContent', () => {
 	});
 
 	it('calls StructureService.updateStructureWorkflow only once on assign workflow click', async () => {
-		(
-			StructureService.updateStructureWorkflow as jest.Mock
-		).mockResolvedValue({error: false});
-
-		const {getByRole} = renderComponent({
+		const {getByLabelText, getByRole} = renderComponent({
 			closeModal: mockCloseModal,
 			structureWorkflows: [
 				{id: '1', name: 'Structure A', workflow: ''},
 				{id: '2', name: 'Structure B', workflow: ''},
 			],
+			submitModal: mockSubmitModal,
 		});
-
-		fireEvent.click(getByRole('button', {name: 'assign-workflow'}));
 
 		await waitFor(() => {
 			expect(
-				StructureService.updateStructureWorkflow
-			).toHaveBeenCalledTimes(1);
-
-			expect(openToast).toHaveBeenCalledWith(
-				expect.objectContaining({
-					message:
-						'x-workflow-was-successfully-assigned-to-multiple-content-structure',
-					type: 'success',
-				})
-			);
+				getByRole('option', {name: 'Single Approver'})
+			).toBeInTheDocument();
 		});
-	});
 
-	it('shows an error toast if there are errors', async () => {
-		(
-			StructureService.updateStructureWorkflow as jest.Mock
-		).mockResolvedValue({error: true});
-
-		const {getByRole} = renderComponent();
+		fireEvent.change(getByLabelText('default-workflow'), {
+			target: {value: 'Single Approver'},
+		});
 
 		fireEvent.click(getByRole('button', {name: 'assign-workflow'}));
 
 		await waitFor(() => {
-			expect(openToast).toHaveBeenCalledWith(
-				expect.objectContaining({
-					type: 'danger',
-				})
-			);
+			expect(mockSubmitModal).toHaveBeenCalledTimes(1);
+			expect(mockSubmitModal).toHaveBeenCalledWith('Single Approver');
+			expect(mockCloseModal).toHaveBeenCalledTimes(1);
 		});
+	});
+
+	it('keeps assign button disabled until workflow is changed', async () => {
+		const {getByRole} = renderComponent();
+
+		expect(getByRole('button', {name: 'assign-workflow'})).toBeDisabled();
+		expect(mockSubmitModal).not.toHaveBeenCalled();
 	});
 });

@@ -45,7 +45,7 @@ describe('PicklistOptions', () => {
 	it('opens the add option modal when the Add New button from the management toolbar is pressed', async () => {
 		renderComponent({options: new Map()});
 
-		await userEvent.click(screen.getByTitle('add-new'));
+		await userEvent.click(screen.getByRole('button', {name: 'add-new'}));
 
 		await waitFor(() => {
 			expect(screen.getByText('add-option')).toBeInTheDocument();
@@ -79,7 +79,7 @@ describe('PicklistOptions', () => {
 	it('edits an option', async () => {
 		renderComponent();
 
-		await userEvent.click(screen.getByRole('button', {name: 'actions'}));
+		await userEvent.click(screen.getByRole('button', {name: 'x-actions'}));
 
 		await userEvent.click(screen.getByText('edit'));
 
@@ -101,7 +101,7 @@ describe('PicklistOptions', () => {
 
 		renderComponent();
 
-		await userEvent.click(screen.getByRole('button', {name: 'actions'}));
+		await userEvent.click(screen.getByRole('button', {name: 'x-actions'}));
 
 		await userEvent.click(screen.getByText('delete'));
 
@@ -136,7 +136,7 @@ describe('PicklistOptions', () => {
 			).toBeInTheDocument();
 		});
 
-		await userEvent.click(screen.getByTitle('actions'));
+		await userEvent.click(screen.getByRole('button', {name: 'actions'}));
 
 		await userEvent.click(screen.getByRole('menuitem', {name: 'delete'}));
 

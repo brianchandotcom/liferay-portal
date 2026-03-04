@@ -1,4 +1,6 @@
 aws: {}
+backup-restore:
+    enabled: true
 crossplaneNamespace: crossplane-system
 eck-operator:
     installCRDs: true

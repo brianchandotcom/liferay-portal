@@ -21,6 +21,7 @@ import {
 	IBulkActionTaskStarterDTO,
 	IBulkActionTaskType,
 } from '../../common/types/BulkActionTask';
+import {FDS_EVENT_UPDATE_DISPLAY} from '../../common/utils/constants';
 import {START_TASK} from '../../common/utils/events';
 import {
 	displayCreateTaskErrorToast,
@@ -34,8 +35,6 @@ import {
 	URL_TASKS_REPORT,
 } from './util/constants';
 import {getBulkActionTaskMessage} from './util/notifications';
-
-const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
 
 function BulkActionsMonitor() {
 	const [active, setActive] = useState<boolean>(false);

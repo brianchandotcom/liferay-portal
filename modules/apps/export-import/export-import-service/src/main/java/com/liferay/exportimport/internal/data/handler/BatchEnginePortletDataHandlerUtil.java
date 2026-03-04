@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -40,6 +41,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -126,34 +128,10 @@ public class BatchEnginePortletDataHandlerUtil {
 				() -> {
 					List<String> filterStrings = new ArrayList<>();
 
-					if (ExportImportDateUtil.isRangeFromLastPublishDate(
-							portletDataContext) &&
-						!ExportImportThreadLocal.
-							isInitialLayoutStagingInProcess()) {
-
-						String lastPublishDateFilterString =
-							_getLastPublishDateFilterString(
-								changesetEntryLocalService,
-								classNameLocalService,
-								exportImportDescriptor.getModelClassName(),
-								portletDataContext);
-
-						if (Validator.isNull(lastPublishDateFilterString)) {
-							return null;
-						}
-
-						filterStrings.add(lastPublishDateFilterString);
-					}
-					else {
-						String dateRangeFilterString =
-							_getDateRangeFilterString(portletDataContext);
-
-						if (Validator.isNull(dateRangeFilterString)) {
-							return null;
-						}
-
-						filterStrings.add(dateRangeFilterString);
-					}
+					_addDateFilterStrings(
+						changesetEntryLocalService, classNameLocalService,
+						exportImportDescriptor, filterStrings,
+						portletDataContext);
 
 					if (exportImportDescriptorParameters != null) {
 						String exportImportDescriptorFilterString =
@@ -271,6 +249,45 @@ public class BatchEnginePortletDataHandlerUtil {
 		}
 
 		return importParameters;
+	}
+
+	private static void _addDateFilterStrings(
+		ChangesetEntryLocalService changesetEntryLocalService,
+		ClassNameLocalService classNameLocalService,
+		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+			exportImportDescriptor,
+		List<String> filterStrings, PortletDataContext portletDataContext) {
+
+		if (Objects.equals(
+				exportImportDescriptor.getModelClassName(),
+				Layout.class.getName())) {
+
+			return;
+		}
+
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext) &&
+			!ExportImportThreadLocal.isInitialLayoutStagingInProcess()) {
+
+			String lastPublishDateFilterString =
+				_getLastPublishDateFilterString(
+					changesetEntryLocalService, classNameLocalService,
+					exportImportDescriptor.getModelClassName(),
+					portletDataContext);
+
+			if (Validator.isNotNull(lastPublishDateFilterString)) {
+				filterStrings.add(lastPublishDateFilterString);
+			}
+
+			return;
+		}
+
+		String dateRangeFilterString = _getDateRangeFilterString(
+			portletDataContext);
+
+		if (Validator.isNotNull(dateRangeFilterString)) {
+			filterStrings.add(dateRangeFilterString);
+		}
 	}
 
 	private static String _getDateRangeFilterString(

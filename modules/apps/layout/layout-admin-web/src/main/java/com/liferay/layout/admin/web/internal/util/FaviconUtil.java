@@ -72,10 +72,14 @@ public class FaviconUtil {
 				}
 
 				FileEntry fileEntry =
-					DLAppLocalServiceUtil.getFileEntryByExternalReferenceCode(
-						layout.getFaviconFileEntryERC(), groupId);
+					DLAppLocalServiceUtil.fetchFileEntryByExternalReferenceCode(
+						groupId, layout.getFaviconFileEntryERC());
 
-				return fileEntry.getTitle();
+				if (fileEntry != null) {
+					return fileEntry.getTitle();
+				}
+
+				return StringPool.BLANK;
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {

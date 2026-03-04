@@ -5,7 +5,7 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.layout.page.template.kernel.provider.util.LayoutPageTemplateEntryLayoutProviderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -1731,8 +1731,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 			}
 
 			FileEntry fileEntry =
-				DLAppServiceUtil.getFileEntryByExternalReferenceCode(
-					getFaviconFileEntryERC(), groupId);
+				DLAppLocalServiceUtil.fetchFileEntryByExternalReferenceCode(
+					groupId, getFaviconFileEntryERC());
+
+			if (fileEntry == null) {
+				return null;
+			}
 
 			return HtmlUtil.escape(
 				StringBundler.concat(

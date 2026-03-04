@@ -105,11 +105,13 @@ async function handleBulkDeletion({
 	dataSetId,
 	getCustomBulkDeleteMessage,
 	selectedData,
+	showConfirmationModal,
 }: {
 	apiURL: string;
 	dataSetId: string;
 	getCustomBulkDeleteMessage?: typeof getBulkDeleteMessage;
 	selectedData: IBulkActionFDSData;
+	showConfirmationModal?: boolean;
 }): Promise<void> {
 	const spaces = await getEntriesSpaces(selectedData?.items || []);
 
@@ -130,8 +132,10 @@ async function handleBulkDeletion({
 		allEntriesHaveTrashEnabled,
 		someEntriesHaveTrashEnabled
 	);
-
-	if (allEntriesHaveTrashEnabled) {
+	if (showConfirmationModal) {
+		showModal(apiURL, confirmationMessage, dataSetId, title, selectedData);
+	}
+	else if (allEntriesHaveTrashEnabled) {
 		if (!isFromRecycleBin(selectedData)) {
 			executeBulkDeleteAction(apiURL, dataSetId, selectedData);
 		}
@@ -206,16 +210,19 @@ export default async function deleteAssetEntriesBulkAction({
 	dataSetId = '',
 	getCustomBulkDeleteMessage,
 	selectedData,
+	showConfirmationModal,
 }: {
 	apiURL?: string;
 	dataSetId?: string;
 	getCustomBulkDeleteMessage?: typeof getBulkDeleteMessage;
 	selectedData: IBulkActionFDSData;
+	showConfirmationModal?: boolean;
 }): Promise<void> {
 	await handleBulkDeletion({
 		apiURL,
 		dataSetId,
 		getCustomBulkDeleteMessage,
 		selectedData,
+		showConfirmationModal,
 	});
 }

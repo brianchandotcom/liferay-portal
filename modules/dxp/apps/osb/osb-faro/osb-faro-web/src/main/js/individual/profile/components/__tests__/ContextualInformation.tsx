@@ -12,7 +12,7 @@ describe('ContextualInformation', () => {
 		country: 'Australia',
 		deviceType: 'Desktop',
 		region: 'AEST',
-		timeZoneOffset: '-03:00'
+		timezoneOffset: '-03:00'
 	};
 
 	it('should render the snapshot', () => {

@@ -6152,13 +6152,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			attributes.put(Field.GROUP_ID, groupId);
 		}
 
+		Locale locale = LocaleUtil.getDefault();
+
 		attributes.put("city", city);
 		attributes.put("country", country);
 		attributes.put("emailAddress", emailAddress);
-		attributes.put("firstName", firstName);
-		attributes.put("fullName", fullName);
-		attributes.put("lastName", lastName);
-		attributes.put("middleName", middleName);
+		attributes.put(
+			"firstName_" + LocaleUtil.toLanguageId(locale), firstName);
+		attributes.put("fullName_" + LocaleUtil.toLanguageId(locale), fullName);
+		attributes.put("lastName_" + LocaleUtil.toLanguageId(locale), lastName);
+		attributes.put(
+			"middleName_" + LocaleUtil.toLanguageId(locale), middleName);
 		attributes.put("params", params);
 		attributes.put("region", region);
 		attributes.put("screenName", screenName);

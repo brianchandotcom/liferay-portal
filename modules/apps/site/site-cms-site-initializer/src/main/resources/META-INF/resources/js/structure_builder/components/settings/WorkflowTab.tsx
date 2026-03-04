@@ -64,7 +64,7 @@ function DefaultWorkflowSelector({workflows}: {workflows: Workflow[]}) {
 	const options = [
 		{label: Liferay.Language.get('no-workflow'), value: ''},
 		...workflows.map((workflow) => ({
-			label: workflow.name,
+			label: workflow.title,
 			value: workflow.name,
 		})),
 	];

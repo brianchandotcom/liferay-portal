@@ -7,4 +7,5 @@ export type Workflow = {
 	externalReferenceCode: string;
 	id: number;
 	name: string;
+	title: string;
 };

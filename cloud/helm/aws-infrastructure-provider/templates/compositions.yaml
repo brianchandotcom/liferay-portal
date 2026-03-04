@@ -119,6 +119,123 @@ spec:
                                     status: Enabled
                             managementPolicies: {{ $managementPolicies }}
                         ---
+                        apiVersion: kubernetes.m.crossplane.io/v1alpha1
+                        kind: Object
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-artifact-repository
+                            labels:
+                                app: liferay
+                                component: argo-wf
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-backup-restore-artifact-repository
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                manifest:
+                                    apiVersion: v1
+                                    kind: ConfigMap
+                                    metadata:
+                                        annotations:
+                                            workflows.argoproj.io/default-artifact-repository: artifact-repository
+                                        labels:
+                                            app: liferay
+                                            component: argo-wf
+                                            environmentId: {{ $environmentId }}
+                                            projectId: {{ $projectId }}
+                                        name: backup-restore-artifact-repository
+                                        namespace: {{ $namespace }}
+                                    data:
+                                        artifact-repository: |
+                                            s3:
+                                                bucket: {{ $baseName }}-argo-wf
+                                                endpoint: s3.amazonaws.com
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: kubernetes.m.crossplane.io/v1alpha1
+                        kind: Object
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-role-binding
+                            labels:
+                                app: liferay
+                                component: backup-restore-role
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-backup-restore-role-binding
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                manifest:
+                                    apiVersion: rbac.authorization.k8s.io/v1
+                                    kind: RoleBinding
+                                    metadata:
+                                        labels:
+                                            app: liferay
+                                            component: backup-restore-role
+                                            environmentId: {{ $environmentId }}
+                                            projectId: {{ $projectId }}
+                                        name: backup-restore-role-binding
+                                        namespace: {{ $namespace }}
+                                    roleRef:
+                                        apiGroup: rbac.authorization.k8s.io
+                                        kind: ClusterRole
+                                        name: backup-restore-cluster-role
+                                    subjects:
+                                        -   kind: ServiceAccount
+                                            name: backup-restore-service-account
+                                            namespace: {{ $namespace }}
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        {{- $backupRestoreRole := dict -}}
+
+                        {{- if .observed.resources -}}
+                            {{- $backupRestoreRole = index .observed.resources "backup-restore-role" -}}
+                        {{- end -}}
+
+                        {{- $backupRestoreRoleArn := "" -}}
+
+                        {{- if kindIs "map" $backupRestoreRole -}}
+                            {{- with $backupRestoreRole -}}
+                                {{- with .resource -}}
+                                    {{- with .status -}}
+                                        {{- with .atProvider -}}
+                                            {{- $backupRestoreRoleArn = .arn -}}
+                                        {{- end -}}
+                                    {{- end -}}
+                                {{- end -}}
+                            {{- end -}}
+                        {{- end }}
+                        apiVersion: kubernetes.m.crossplane.io/v1alpha1
+                        kind: Object
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-service-account
+                            labels:
+                                app: liferay
+                                component: backup-restore-role
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-backup-restore-service-account
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                manifest:
+                                    apiVersion: v1
+                                    kind: ServiceAccount
+                                    metadata:
+                                        annotations:
+                                            eks.amazonaws.com/role-arn: {{ $backupRestoreRoleArn }}
+                                        labels:
+                                            app: liferay
+                                            component: backup-restore-role
+                                            environmentId: {{ $environmentId }}
+                                            projectId: {{ $projectId }}
+                                        name: backup-restore-service-account
+                                        namespace: {{ $namespace }}
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
                         apiVersion: backup.aws.m.upbound.io/v1beta1
                         kind: Plan
                         metadata:
@@ -236,7 +353,7 @@ spec:
                                                 "Condition": {
                                                     "StringEquals": {
                                                         "{{ $oidcProvider }}:aud": "sts.amazonaws.com",
-                                                        "{{ $oidcProvider }}:sub": "system:serviceaccount:{{ $namespace }}:backup-restore"
+                                                        "{{ $oidcProvider }}:sub": "system:serviceaccount:{{ $namespace }}:backup-restore-service-account"
                                                     }
                                                 },
                                                 "Effect": "Allow",

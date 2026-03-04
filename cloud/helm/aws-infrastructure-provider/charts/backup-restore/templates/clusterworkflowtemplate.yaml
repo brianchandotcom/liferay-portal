@@ -1,10 +1,9 @@
-{{- if .Values.createClusterResources -}}
 apiVersion: argoproj.io/v1alpha1
 kind: ClusterWorkflowTemplate
 metadata:
     labels:
-        {{- include "liferayAWSBackupRestore.labels" . | nindent 8 }}
-    name: {{ include "liferayAWSBackupRestore.name" . }}
+        component: backup-restore-platform
+    name: backup-restore-cluster-workflow-template
 spec:
     arguments:
         parameters:
@@ -12,13 +11,15 @@ spec:
     artifactGC:
         {{- .Values.argo.workflowSpec.artifactGC | toYaml | nindent 8 }}
     artifactRepositoryRef:
-        configMap: {{ include "liferayAWSBackupRestore.artifactRepositoryConfigMapName" . }}
+        configMap: backup-restore-artifact-repository
     entrypoint: main
     podGC:
         {{- .Values.argo.workflowSpec.podGC | toYaml | nindent 8 }}
+    serviceAccountName: backup-restore-service-account
     templates:
         -   inputs:
                 parameters:
+                    -   name: liferay-infrastructure-name
                     -   name: restore-phase
                     -   default: "null"
                         name: snapshot-identifier
@@ -35,8 +36,8 @@ spec:
                     apiVersion: aws.liferay.com/v1alpha1
                     kind: LiferayInfrastructure
                     metadata:
-                        name: {{ include "liferayAWSBackupRestore.liferayInfrastructureName" . }}
-                        namespace: {{ .Release.Namespace }}
+                        name: {{ "{{" }}inputs.parameters.liferay-infrastructure-name}}
+                        namespace: {{ "{{" }}workflow.namespace}}
                     spec:
                         database:
                             snapshotIdentifier: {{ "{{" }}inputs.parameters.snapshot-identifier}}
@@ -45,6 +46,7 @@ spec:
                 mergeStrategy: merge
         -   inputs:
                 parameters:
+                    -   name: liferay-infrastructure-name
                     -   name: restore-phase
                     -   default: "null"
                         name: snapshot-identifier
@@ -53,6 +55,8 @@ spec:
             steps:
                 -   -   arguments:
                             parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: "{{ "{{" }}inputs.parameters.restore-phase}}"
                                 -   name: snapshot-identifier
@@ -85,12 +89,24 @@ spec:
         -   name: get-current-infrastructure-state
             outputs:
                 parameters:
+                    -   name: backup-service-role-arn
+                        valueFrom:
+                            path: /tmp/backup-service-role-arn.txt
+                    -   name: backup-vault-name
+                        valueFrom:
+                            path: /tmp/backup-vault-name.txt
                     -   name: data-active
                         valueFrom:
                             path: /tmp/data-active.txt
                     -   name: data-inactive
                         valueFrom:
                             path: /tmp/data-inactive.txt
+                    -   name: liferay-infrastructure-name
+                        valueFrom:
+                            path: /tmp/liferay-infrastructure-name.txt
+                    -   name: liferay-workload-name
+                        valueFrom:
+                            path: /tmp/liferay-workload-name.txt
                     -   name: s3-bucket-id-active
                         valueFrom:
                             path: /tmp/s3-bucket-id-active.txt
@@ -103,8 +119,11 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "liferayAWSBackupRestore.script.getCurrentInfrastructureState" . | nindent 20 }}
-        -   name: get-peer-recovery-points
+                    {{- include "backupRestore.script.getCurrentInfrastructureState" . | nindent 20 }}
+        -   inputs:
+                parameters:
+                    -   name: backup-vault-name
+            name: get-peer-recovery-points
             outputs:
                 parameters:
                     -   name: rds-snapshot-id
@@ -119,34 +138,42 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "liferayAWSBackupRestore.script.getPeerRecoveryPoints" . | nindent 20 }}
+                    {{- include "backupRestore.script.getPeerRecoveryPoints" . | nindent 20 }}
         -   container:
                 args:
                     -   rollout
                     -   restart
                     -   statefulset
-                    -   "{{ .Values.liferayWorkload.name }}"
+                    -   "{{ "{{" }}inputs.parameters.liferay-workload-name}}"
                 command: [kubectl]
                 image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
+            inputs:
+                parameters:
+                    -   name: liferay-workload-name
             name: kubectl-rollout-restart
         -   container:
                 args:
                     -   rollout
                     -   status
                     -   statefulset
-                    -   "{{ .Values.liferayWorkload.name }}"
+                    -   "{{ "{{" }}inputs.parameters.liferay-workload-name}}"
                     -   --timeout={{ .Values.liferayWorkload.rolloutTimeout }}
                 command: [kubectl]
                 image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
+            inputs:
+                parameters:
+                    -   name: liferay-workload-name
             name: kubectl-rollout-status
         -   dag:
                 tasks:
                     -   arguments:
                             parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: none
                                 -   name: target-active-data-plane
@@ -163,10 +190,17 @@ spec:
                         template: clean-up-s3-bucket
                     -   name: get-current-infrastructure-state
                         template: get-current-infrastructure-state
-                    -   name: get-peer-recovery-points
+                    -   arguments:
+                            parameters:
+                                -   name: backup-vault-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.backup-vault-name}}"
+                        depends: get-current-infrastructure-state
+                        name: get-peer-recovery-points
                         template: get-peer-recovery-points
                     -   arguments:
                             parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: promoting
                                 -   name: target-active-data-plane
@@ -174,11 +208,17 @@ spec:
                         depends: restore-rds-instance && restore-s3-bucket
                         name: promote-inactive-data-plane
                         template: apply-wait-infrastructure
-                    -   depends: promote-inactive-data-plane
+                    -   arguments:
+                            parameters:
+                                -   name: liferay-workload-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-workload-name}}"
+                        depends: promote-inactive-data-plane
                         name: restart-liferay
                         template: restart-liferay
                     -   arguments:
                             parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: provisioning
                                 -   name: snapshot-identifier
@@ -190,6 +230,8 @@ spec:
                         template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
+                                -   name: backup-service-role-arn
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.backup-service-role-arn}}"
                                 -   name: s3-recovery-point-arn
                                     value: "{{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.s3-recovery-point-arn}}"
                                 -   name: s3-bucket-id
@@ -199,6 +241,8 @@ spec:
                         template: restore-s3-bucket
                     -   arguments:
                             parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: none
                                 -   name: target-active-data-plane
@@ -216,6 +260,7 @@ spec:
             name: main
         -   inputs:
                 parameters:
+                    -   name: backup-service-role-arn
                     -   name: s3-bucket-id
                     -   name: s3-recovery-point-arn
             name: restore-s3-bucket
@@ -225,12 +270,23 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "liferayAWSBackupRestore.script.restoreS3Bucket" . | nindent 20 }}
-        -   name: restart-liferay
+                    {{- include "backupRestore.script.restoreS3Bucket" . | nindent 20 }}
+        -   inputs:
+                parameters:
+                    -   name: liferay-workload-name
+            name: restart-liferay
             steps:
-                -   -   name: kubectl-rollout-restart
+                -   -   arguments:
+                            parameters:
+                                -   name: liferay-workload-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-workload-name}}"
+                        name: kubectl-rollout-restart
                         template: kubectl-rollout-restart
-                -   -   name: kubectl-rollout-status
+                -   -   arguments:
+                            parameters:
+                                -   name: liferay-workload-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-workload-name}}"
+                        name: kubectl-rollout-status
                         template: kubectl-rollout-status
         -   inputs:
                 parameters:
@@ -242,7 +298,6 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "liferayAWSBackupRestore.script.waitInfrastructureReady" . | nindent 20 }}
+                    {{- include "backupRestore.script.waitInfrastructureReady" . | nindent 20 }}
     ttlStrategy:
         {{- .Values.argo.workflowSpec.ttlStrategy | toYaml | nindent 8 }}
-{{- end -}}

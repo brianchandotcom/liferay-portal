@@ -1,4 +1,4 @@
-{{- define "liferayAWSBackupRestore.script.getCurrentInfrastructureState" -}}
+{{- define "backupRestore.script.getCurrentInfrastructureState" -}}
 #!/bin/sh
 
 set -eu
@@ -10,8 +10,8 @@ function main {
 		kubectl \
 			get \
 			liferayinfrastructure \
-			"{{ include "liferayAWSBackupRestore.liferayInfrastructureName" . }}" \
-			--output json)
+			--output json \
+			| jq ".items[0]")
 
 	local restore_phase=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.restorePhase")
 
@@ -22,9 +22,50 @@ function main {
 		exit 1
 	fi
 
-	local data_active=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.targetActiveDataPlane // \"blue\"")
+	local backup_service_role_arn
+
+	backup_service_role_arn=$( \
+		kubectl \
+			get \
+			roles.iam.aws.m.upbound.io \
+			--output jsonpath="{.items[0].status.atProvider.arn}" \
+			--selector "component=backup-service-role")
+
+	echo "${backup_service_role_arn}" > /tmp/backup-service-role-arn.txt
+
+	local backup_vault_name
+
+	backup_vault_name=$( \
+		kubectl \
+			get \
+			vaults.backup.aws.m.upbound.io \
+			--output jsonpath="{.items[0].metadata.name}" \
+			--selector "component=backup-vault")
+
+	echo "${backup_vault_name}" > /tmp/backup-vault-name.txt
+
+	local data_active
+
+	data_active=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.targetActiveDataPlane // \"blue\"")
 
 	echo "${data_active}" > /tmp/data-active.txt
+
+	local liferay_infrastructure_name
+
+	liferay_infrastructure_name=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".metadata.name")
+
+	echo "${liferay_infrastructure_name}" > /tmp/liferay-infrastructure-name.txt
+
+	local liferay_workload_name
+
+	liferay_workload_name=$( \
+		kubectl \
+			get \
+			statefulset \
+			--output jsonpath="{.items[0].metadata.name}" \
+			--selector "component=liferay")
+
+	echo "${liferay_workload_name}" > /tmp/liferay-workload-name.txt
 
 	kubectl \
 		get \
@@ -55,7 +96,7 @@ function main {
 main
 {{- end -}}
 
-{{- define "liferayAWSBackupRestore.script.getPeerRecoveryPoints" -}}
+{{- define "backupRestore.script.getPeerRecoveryPoints" -}}
 #!/bin/sh
 
 set -eu
@@ -92,7 +133,7 @@ function main {
 		aws \
 			backup \
 			describe-recovery-point \
-			--backup-vault-name "{{ printf "%s-backup-vault" (include "liferayAWSBackupRestore.infraResourceBaseName" .) }}" \
+			--backup-vault-name "{{ "{{" }}inputs.parameters.backup-vault-name}}" \
 			--recovery-point-arn "{{ "{{" }}workflow.parameters.recovery-point-arn}}")
 
 	local creation_date
@@ -124,7 +165,7 @@ function main {
 		aws \
 			backup \
 			list-recovery-points-by-backup-vault \
-			--backup-vault-name "{{ printf "%s-backup-vault" (include "liferayAWSBackupRestore.infraResourceBaseName" .) }}" \
+			--backup-vault-name "{{ "{{" }}inputs.parameters.backup-vault-name}}" \
 			--by-created-after "${by_created_after}" \
 			--by-created-before "${by_created_before}" \
 			| jq --arg creation_date "${creation_date}" "[.RecoveryPoints[] | select(.CreationDate == \$creation_date)]")
@@ -159,7 +200,7 @@ function main {
 main
 {{- end -}}
 
-{{- define "liferayAWSBackupRestore.script.restoreS3Bucket" -}}
+{{- define "backupRestore.script.restoreS3Bucket" -}}
 #!/bin/sh
 
 set -eu
@@ -171,7 +212,7 @@ function main {
 		aws \
 			backup \
 			start-restore-job \
-			--iam-role-arn "{{ printf "arn:aws:iam::%v:role/%s-backup-service-role" .Values.global.aws.accountId (include "liferayAWSBackupRestore.infraResourceBaseName" .) }}" \
+			--iam-role-arn "{{ "{{" }}inputs.parameters.backup-service-role-arn}}" \
 			--metadata "DestinationBucketName={{ "{{" }}inputs.parameters.s3-bucket-id}},NewBucket=false" \
 			--recovery-point-arn "{{ "{{" }}inputs.parameters.s3-recovery-point-arn}}" \
 			--resource-type "S3" \
@@ -225,7 +266,7 @@ function main {
 main
 {{- end -}}
 
-{{- define "liferayAWSBackupRestore.script.waitInfrastructureReady" -}}
+{{- define "backupRestore.script.waitInfrastructureReady" -}}
 #!/bin/sh
 
 set -eu
@@ -243,8 +284,7 @@ function main {
 			kubectl \
 				get \
 				liferayinfrastructure \
-				"{{ include "liferayAWSBackupRestore.liferayInfrastructureName" . }}" \
-				--output jsonpath="{.status.conditions[?(@.type==\"Ready\")]}" 2>/dev/null || echo "{}")
+				--output jsonpath="{.items[0].status.conditions[?(@.type==\"Ready\")]}" 2>/dev/null || echo "{}")
 
 		local observed_generation=$(echo "${ready_condition}" | jq --raw-output ".observedGeneration // 0")
 		local status=$(echo "${ready_condition}" | jq --raw-output ".status // \"False\"")

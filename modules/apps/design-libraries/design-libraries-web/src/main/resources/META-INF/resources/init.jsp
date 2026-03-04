@@ -5,6 +5,4 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
-
-<liferay-ui:message key="no-entries-were-found" />
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>

@@ -75,38 +75,19 @@ public class ObjectEntryFolderServiceTest {
 		_setUser(_adminUser);
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryFolder() throws Exception {
 		_setUser(_adminUser);
 
-		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
+		ObjectEntryFolder parentObjectEntryFolder1 = _addObjectEntryFolder(
 			_group.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			_adminUser.getUserId());
 
-		Assert.assertNotNull(parentObjectEntryFolder);
+		Assert.assertNotNull(parentObjectEntryFolder1);
 
-		_setUser(_user);
-
-		AssertUtils.assertFailure(
-			PrincipalException.MustHavePermission.class,
-			StringBundler.concat(
-				"User ", _user.getUserId(),
-				" must have ADD_OBJECT_ENTRY_FOLDER permission for ",
-				ObjectEntryFolder.class.getName(), " ",
-				parentObjectEntryFolder.getObjectEntryFolderId()),
-			() -> _addObjectEntryFolder(
-				_group.getGroupId(),
-				parentObjectEntryFolder.getObjectEntryFolderId(),
-				_user.getUserId()));
-	}
-
-	@FeatureFlag("LPD-17564")
-	@Test
-	public void testAddObjectEntryFolderInDepotEntry() throws Exception {
 		CMSTestUtil.getOrAddGroup(ObjectEntryFolderServiceTest.class);
-
-		_setUser(_adminUser);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -118,12 +99,12 @@ public class ObjectEntryFolderServiceTest {
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
 
-		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
+		ObjectEntryFolder parentObjectEntryFolder2 = _addObjectEntryFolder(
 			depotEntry.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			_adminUser.getUserId());
 
-		Assert.assertNotNull(parentObjectEntryFolder);
+		Assert.assertNotNull(parentObjectEntryFolder2);
 
 		_setUser(_user);
 
@@ -131,12 +112,24 @@ public class ObjectEntryFolderServiceTest {
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _user.getUserId(),
+				" must have ADD_OBJECT_ENTRY_FOLDER permission for ",
+				ObjectEntryFolder.class.getName(), " ",
+				parentObjectEntryFolder1.getObjectEntryFolderId()),
+			() -> _addObjectEntryFolder(
+				_group.getGroupId(),
+				parentObjectEntryFolder1.getObjectEntryFolderId(),
+				_user.getUserId()));
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(),
 				" must have ADD_ENTRY permission for ",
 				ObjectEntryFolder.class.getName(), " ",
-				parentObjectEntryFolder.getObjectEntryFolderId()),
+				parentObjectEntryFolder2.getObjectEntryFolderId()),
 			() -> _addObjectEntryFolder(
 				depotEntry.getGroupId(),
-				parentObjectEntryFolder.getObjectEntryFolderId(),
+				parentObjectEntryFolder2.getObjectEntryFolderId(),
 				_user.getUserId()));
 
 		User user = UserTestUtil.addUser(
@@ -147,7 +140,8 @@ public class ObjectEntryFolderServiceTest {
 
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
 			depotEntry.getGroupId(),
-			parentObjectEntryFolder.getObjectEntryFolderId(), user.getUserId());
+			parentObjectEntryFolder2.getObjectEntryFolderId(),
+			user.getUserId());
 
 		Assert.assertNotNull(objectEntryFolder);
 	}

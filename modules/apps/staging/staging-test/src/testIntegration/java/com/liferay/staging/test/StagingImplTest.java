@@ -410,17 +410,12 @@ public class StagingImplTest {
 		long count = _changesetEntryLocalService.getChangesetEntriesCount(
 			changesetCollection.getChangesetCollectionId());
 
-		LayoutTestUtil.addTypePortletLayout(stagingGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 
 		Assert.assertEquals(
 			count + 1,
 			_changesetEntryLocalService.getChangesetEntriesCount(
 				changesetCollection.getChangesetCollectionId()));
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		Map<String, Serializable> attributes = serviceContext.getAttributes();
 
 		List<String> portletIds = new ArrayList<>();
 
@@ -434,11 +429,10 @@ public class StagingImplTest {
 				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, false, true,
 				UserIdStrategy.CURRENT_USER_ID);
 
-		attributes.putAll(parameters);
-
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			_group.getGroupId(), false, parameters);
+			_group.getGroupId(), false, new long[] {layout.getLayoutId()},
+			RandomTestUtil.randomString(), parameters);
 
 		Assert.assertEquals(
 			count,

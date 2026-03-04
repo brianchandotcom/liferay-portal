@@ -126,8 +126,6 @@ public class AsyncAntivirusDLStoreTest {
 
 	@After
 	public void tearDown() throws Exception {
-		//_configuration.delete();
-
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
 
@@ -363,6 +361,24 @@ public class AsyncAntivirusDLStoreTest {
 	}
 
 	@Test
+	public void testFileEntryUpdatedWithVirusThenFileVersionDeleted()
+		throws Exception {
+
+		_testScanUpdatedFileEntry();
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"DL_STORE_IMPL", _CLASS_NAME_DB_STORE);
+			SafeCloseable safeCloseable2 =
+				_updateAntivirusAsyncDLStoreWithSafeCloseable()) {
+
+			Thread.sleep(_SLEEP_TIME);
+
+			_testScanUpdatedFileEntry();
+		}
+	}
+
+	@Test
 	public void testQueueOverflow() throws Exception {
 		AtomicInteger calledSchedule = new AtomicInteger();
 
@@ -567,24 +583,6 @@ public class AsyncAntivirusDLStoreTest {
 			});
 	}
 
-	@Test
-	public void testWhenFileUpdatedWithVirusThenVersionDeleted()
-		throws Exception {
-
-		_testScanUpdateUser();
-
-		try (SafeCloseable safeCloseable1 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"DL_STORE_IMPL", _CLASS_NAME_DB_STORE);
-			SafeCloseable safeCloseable2 =
-				_setAntivirusAsyncDLStoreWithSafeCloseable()) {
-
-			Thread.sleep(_SLEEP_TIME);
-
-			_testScanUpdateUser();
-		}
-	}
-
 	private AntivirusAsyncEventListener _create(
 		Map<AntivirusAsyncEvent, Runnable> runnables) {
 
@@ -646,31 +644,6 @@ public class AsyncAntivirusDLStoreTest {
 		};
 	}
 
-	private SafeCloseable _setAntivirusAsyncDLStoreWithSafeCloseable()
-		throws Exception {
-
-		_configuration = _configurationAdmin.getConfiguration(
-			AntivirusAsyncConfiguration.class.getName(), "?");
-
-		_configuration.update(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"batchScanCronExpression", "0 0 * 5 * ?"
-			).put(
-				"maximumQueueSize", 1
-			).put(
-				"retryCronExpression", "0 0/5 * * * ?"
-			).build());
-
-		DLStore dlStore = _getService(
-			DLStore.class.getName(),
-			"com.liferay.antivirus.async.store.internal.AntivirusAsyncDLStore");
-
-		Store store = ReflectionTestUtil.getAndSetFieldValue(
-			dlStore, "_store", _dbStore);
-
-		return () -> ReflectionTestUtil.setFieldValue(dlStore, "_store", store);
-	}
-
 	private SafeCloseable _sync() {
 		Destination destination = MessageBusUtil.getDestination(
 			AntivirusAsyncDestinationNames.ANTIVIRUS);
@@ -692,7 +665,7 @@ public class AsyncAntivirusDLStoreTest {
 		};
 	}
 
-	private void _testScanUpdateUser() throws Exception {
+	private void _testScanUpdatedFileEntry() throws Exception {
 		AtomicBoolean firedEventPrepare = new AtomicBoolean();
 		AtomicBoolean firedEventSuccess = new AtomicBoolean();
 		AtomicBoolean firedEventVirusFound = new AtomicBoolean();
@@ -785,6 +758,31 @@ public class AsyncAntivirusDLStoreTest {
 								dlFileEntry.getName())));
 				});
 		}
+	}
+
+	private SafeCloseable _updateAntivirusAsyncDLStoreWithSafeCloseable()
+		throws Exception {
+
+		_configuration = _configurationAdmin.getConfiguration(
+			AntivirusAsyncConfiguration.class.getName(), "?");
+
+		_configuration.update(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"batchScanCronExpression", "0 0 * 5 * ?"
+			).put(
+				"maximumQueueSize", 1
+			).put(
+				"retryCronExpression", "0 0/5 * * * ?"
+			).build());
+
+		DLStore dlStore = _getService(
+			DLStore.class.getName(),
+			"com.liferay.antivirus.async.store.internal.AntivirusAsyncDLStore");
+
+		Store store = ReflectionTestUtil.getAndSetFieldValue(
+			dlStore, "_store", _dbStore);
+
+		return () -> ReflectionTestUtil.setFieldValue(dlStore, "_store", store);
 	}
 
 	private void _withAsyncAntivirusConfiguration(

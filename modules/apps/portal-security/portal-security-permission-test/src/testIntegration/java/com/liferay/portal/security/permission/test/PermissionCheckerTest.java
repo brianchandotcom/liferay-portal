@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -960,6 +961,46 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
+	public void testIsGroupAdminWithDifferentCompanyAdmin() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
+
+			_user = UserTestUtil.addCompanyAdminUser(_company);
+
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(_user);
+
+			Company testCompany = _companyLocalService.getCompany(
+				TestPropsValues.getCompanyId());
+
+			Assert.assertFalse(
+				permissionChecker.isGroupAdmin(testCompany.getGroupId()));
+		}
+		catch (Throwable throwable) {
+			boolean found = false;
+
+			Throwable causeThrowable = throwable;
+
+			while (!found && (causeThrowable != null)) {
+				if (causeThrowable instanceof
+						NoSuchResourcePermissionException) {
+
+					found = true;
+				}
+
+				causeThrowable = causeThrowable.getCause();
+			}
+
+			if (!found) {
+				throw throwable;
+			}
+		}
+	}
+
+	@Test
 	public void testIsGroupAdminWithGroupAdmin() throws Exception {
 		_user = UserTestUtil.addGroupAdminUser(_group);
 
@@ -1269,6 +1310,9 @@ public class PermissionCheckerTest {
 
 	@DeleteAfterTestRun
 	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

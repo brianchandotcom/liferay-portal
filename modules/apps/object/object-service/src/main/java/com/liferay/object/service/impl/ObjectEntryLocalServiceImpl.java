@@ -1916,27 +1916,21 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderPersistence.findByPrimaryKey(objectEntryFolderId);
 
-		_checkObjectDefinitionScope(
-			objectEntry.getObjectDefinitionId(),
-			objectEntryFolder.getGroupId());
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		_removeInvalidAssetCategories(
-			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
-			objectEntryId, serviceContext);
-		_removeInvalidAssetTags(
-			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
-			objectEntryId, serviceContext);
+		_checkObjectDefinitionScope(
+			objectDefinition.getObjectDefinitionId(),
+			objectEntryFolder.getGroupId());
 
 		objectEntry.setGroupId(objectEntryFolder.getGroupId());
 		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
 
 		objectEntry = updateObjectEntry(objectEntry);
 
-		_deleteFromLocalizationTable(objectDefinition, objectEntryId);
+		_deleteFromLocalizationTable(
+			objectDefinition, objectEntryId);
 
 		_insertIntoLocalizationTable(
 			new HashMap<>(), objectDefinition, objectEntryId,
@@ -1946,10 +1940,19 @@ public class ObjectEntryLocalServiceImpl
 			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
 				false, objectDefinition, _objectFieldLocalService),
 			objectEntryId, true, values);
+
 		_updateTable(
 			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
 				true, objectDefinition, _objectFieldLocalService),
 			objectEntryId, true, values);
+
+		_removeInvalidAssetCategories(
+			objectEntry.getGroupId(), objectDefinition.getClassName(),
+			objectEntryId, serviceContext);
+
+		_removeInvalidAssetTags(
+			objectEntry.getGroupId(), objectDefinition.getClassName(),
+			objectEntryId, serviceContext);
 
 		_updateAsset(
 			serviceContext.getUserId(), objectEntry,
@@ -1960,10 +1963,9 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectDefinitionResourcePermissionUtil.updateResourcePermissions(
 			objectDefinition.getCompanyId(), objectEntry.getGroupId(),
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-			serviceContext);
+			objectDefinition.getClassName(), objectEntryId, serviceContext);
 
-		return objectEntry;
+		return getObjectEntry(objectEntryId);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

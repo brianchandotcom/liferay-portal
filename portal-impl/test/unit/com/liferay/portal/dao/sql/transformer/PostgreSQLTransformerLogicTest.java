@@ -90,6 +90,11 @@ public class PostgreSQLTransformerLogicTest
 	}
 
 	@Override
+	protected String getInstrTransformedSQL() {
+		return "select POSITION('fooText' in foo) from Foo";
+	}
+
+	@Override
 	protected String getIntegerDivisionTransformedSQL() {
 		return "select foo / bar from Foo";
 	}

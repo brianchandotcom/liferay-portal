@@ -31,9 +31,16 @@ type VerifyPermissionsOptions = {
 	permissions: Array<{action: string; checked: boolean; role: string}>;
 };
 
-async function checkModalHeader(heading: string, menuitem: string, page) {
+async function checkModalHeader(
+	heading: string,
+	menuitem: string,
+	page,
+	objectName?: string
+) {
 	await expect(async () => {
-		await page.getByRole('button', {exact: true, name: 'Actions'}).click();
+		await (await getTableRowByText(page, objectName))
+			.getByRole('button', {name: 'Actions'})
+			.click();
 
 		await handleClickMenuItem(menuitem, page);
 
@@ -912,21 +919,29 @@ test(
 				page.getByRole('link', {name: folderName}).first()
 			).toBeVisible();
 
-			await checkModalHeader('Permissions', 'Permissions', page);
+			await checkModalHeader(
+				'Permissions',
+				'Permissions',
+				page,
+				folderName
+			);
 			await checkModalHeader(
 				'Edit Default Permissions',
 				'Default Permissions',
-				page
+				page,
+				folderName
 			);
 			await checkModalHeader(
 				'Edit Default Permissions',
 				'Edit and Propagate Default Permissions',
-				page
+				page,
+				folderName
 			);
 			await checkModalHeader(
 				'Confirm Reset to Default Permissions',
 				'Reset to Default Permissions',
-				page
+				page,
+				folderName
 			);
 		}
 		finally {

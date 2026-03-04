@@ -10,7 +10,7 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.headless.delivery.dto.v1_0.ClientExtension;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -322,10 +323,17 @@ public class PageDefinitionDTOConverter
 							return null;
 						}
 
+						FileEntry fileEntry =
+							_dlAppLocalService.
+								fetchFileEntryByExternalReferenceCode(
+									groupId, faviconFileEntryERC);
+
+						if (fileEntry == null) {
+							return null;
+						}
+
 						return ContentDocumentUtil.toContentDocument(
-							_dlURLHelper, "settings.favIcon.image",
-							_dlAppService.getFileEntryByExternalReferenceCode(
-								faviconFileEntryERC, groupId),
+							_dlURLHelper, "settings.favIcon.image", fileEntry,
 							dtoConverterContext.getUriInfo());
 					});
 				setGlobalCSSClientExtensions(
@@ -445,7 +453,7 @@ public class PageDefinitionDTOConverter
 		_clientExtensionEntryRelLocalService;
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

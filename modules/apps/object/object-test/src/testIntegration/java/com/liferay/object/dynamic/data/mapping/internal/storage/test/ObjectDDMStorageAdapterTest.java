@@ -6,6 +6,11 @@
 package com.liferay.object.dynamic.data.mapping.internal.storage.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -27,20 +32,29 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -48,9 +62,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.ByteArrayInputStream;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -94,8 +111,36 @@ public class ObjectDDMStorageAdapterTest {
 							LocaleUtil.US, "ListTypeEntry2"))),
 				new ServiceContext());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			ListUtil.fromArray(
+				new AttachmentObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"attachmentObjectField"
+				).objectFieldSettings(
+					ListUtil.fromArray(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.
+								VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
+						).build())
+				).build(),
 				new MultiselectPicklistObjectFieldBuilder(
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
@@ -112,11 +157,6 @@ public class ObjectDDMStorageAdapterTest {
 				).name(
 					"picklistObjectField"
 				).build()));
-
-		_objectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId());
 	}
 
 	@After
@@ -136,9 +176,23 @@ public class ObjectDDMStorageAdapterTest {
 
 		ddmForm.addDDMFormField(
 			_createDDMFormField(
-				"multiselectDDMFormField", "multiselectPicklistObjectField"));
+				"string", "multiselectDDMFormField",
+				DDMFormFieldTypeConstants.SELECT,
+				"multiselectPicklistObjectField"));
 		ddmForm.addDDMFormField(
-			_createDDMFormField("selectDDMFormField", "picklistObjectField"));
+			_createDDMFormField(
+				"string", "selectDDMFormField",
+				DDMFormFieldTypeConstants.SELECT, "picklistObjectField"));
+		ddmForm.addDDMFormField(
+			_createDDMFormField(
+				"document-library", "uploadDDMFormField1",
+				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
+				"attachmentObjectField"));
+		ddmForm.addDDMFormField(
+			_createDDMFormField(
+				"document-library", "uploadDDMFormField2",
+				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
+				"attachmentObjectField"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -153,6 +207,21 @@ public class ObjectDDMStorageAdapterTest {
 				"selectDDMFormField",
 				DDMFormValuesTestUtil.createLocalizedValue(
 					"[\"Option1\"]", LocaleUtil.US)));
+
+		FileEntry fileEntry = _addFileEntry();
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"uploadDDMFormField1",
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"{\"fileEntryId\":" + fileEntry.getFileEntryId() + "}",
+					LocaleUtil.US)));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"uploadDDMFormField2",
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"{\"fileEntryId\":" + fileEntry.getFileEntryId() + "}",
+					LocaleUtil.US)));
 
 		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
 			objectDDMStorageAdapter.save(
@@ -176,6 +245,21 @@ public class ObjectDDMStorageAdapterTest {
 		Assert.assertEquals(
 			"ListTypeEntry1",
 			MapUtil.getString(objectEntry.getValues(), "picklistObjectField"));
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			MapUtil.getLong(objectEntry.getValues(), "attachmentObjectField"));
+
+		Assert.assertEquals(
+			_objectDefinition.getClassName(), dlFileEntry.getClassName());
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId(), dlFileEntry.getClassPK());
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			"No DLFileEntry exists with the primary key " +
+				fileEntry.getFileEntryId(),
+			() -> _dlFileEntryLocalService.getDLFileEntry(
+				fileEntry.getFileEntryId()));
 
 		DDMStorageAdapterGetResponse ddmStorageAdapterGetResponse =
 			objectDDMStorageAdapter.get(
@@ -207,6 +291,23 @@ public class ObjectDDMStorageAdapterTest {
 			ddmFormFieldOptionValue, listTypeEntryKey);
 	}
 
+	private FileEntry _addFileEntry() throws Exception {
+		String content = RandomTestUtil.randomString();
+		Folder folder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			new ByteArrayInputStream(content.getBytes()), 0, null, null, null,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private void _assertDDMFormFieldValue(
 		DDMFormValues ddmFormValues, String ddmFormFieldName,
 		Value expectedValue) {
@@ -223,18 +324,25 @@ public class ObjectDDMStorageAdapterTest {
 	}
 
 	private DDMFormField _createDDMFormField(
-		String ddmFormFieldName, String objectFieldName) {
+		String dataType, String ddmFormFieldName, String ddmFormFieldType,
+		String objectFieldName) {
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			ddmFormFieldName, RandomTestUtil.randomString(),
-			DDMFormFieldTypeConstants.SELECT, "string", true, false, false);
+			ddmFormFieldName, RandomTestUtil.randomString(), ddmFormFieldType,
+			dataType, true, false, false);
 
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+		if (Objects.equals(
+				ddmFormFieldType, DDMFormFieldTypeConstants.SELECT)) {
 
-		_adDDMFormFieldOption(ddmFormFieldOptions, "Option1", "ListTypeEntry1");
-		_adDDMFormFieldOption(ddmFormFieldOptions, "Option2", "ListTypeEntry2");
+			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+			_adDDMFormFieldOption(
+				ddmFormFieldOptions, "Option1", "ListTypeEntry1");
+			_adDDMFormFieldOption(
+				ddmFormFieldOptions, "Option2", "ListTypeEntry2");
+
+			ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		}
 
 		ddmFormField.setProperty(
 			"objectFieldName", "[\"" + objectFieldName + "\"]");
@@ -261,6 +369,12 @@ public class ObjectDDMStorageAdapterTest {
 
 	@Inject
 	private static DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

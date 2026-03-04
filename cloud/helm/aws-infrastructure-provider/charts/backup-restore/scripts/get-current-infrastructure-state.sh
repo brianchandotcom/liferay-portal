@@ -3,9 +3,7 @@
 set -eu
 
 function main {
-	local liferay_infrastructure_json
-
-	liferay_infrastructure_json=$( \
+	local liferay_infrastructure_json=$( \
 		kubectl \
 			get \
 			liferayinfrastructure \
@@ -21,9 +19,7 @@ function main {
 		exit 1
 	fi
 
-	local backup_service_role_arn
-
-	backup_service_role_arn=$( \
+	local backup_service_role_arn=$( \
 		kubectl \
 			get \
 			roles.iam.aws.m.upbound.io \
@@ -32,9 +28,7 @@ function main {
 
 	echo "${backup_service_role_arn}" > /tmp/backup-service-role-arn.txt
 
-	local backup_vault_name
-
-	backup_vault_name=$( \
+	local backup_vault_name=$( \
 		kubectl \
 			get \
 			vaults.backup.aws.m.upbound.io \
@@ -43,21 +37,15 @@ function main {
 
 	echo "${backup_vault_name}" > /tmp/backup-vault-name.txt
 
-	local data_active
-
-	data_active=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.targetActiveDataPlane // \"blue\"")
+	local data_active=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.targetActiveDataPlane // \"blue\"")
 
 	echo "${data_active}" > /tmp/data-active.txt
 
-	local liferay_infrastructure_name
-
-	liferay_infrastructure_name=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".metadata.name")
+	local liferay_infrastructure_name=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".metadata.name")
 
 	echo "${liferay_infrastructure_name}" > /tmp/liferay-infrastructure-name.txt
 
-	local liferay_workload_name
-
-	liferay_workload_name=$( \
+	local liferay_workload_name=$( \
 		kubectl \
 			get \
 			statefulset \

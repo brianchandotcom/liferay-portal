@@ -6,6 +6,7 @@
 package com.liferay.portal.workflow.kaleo.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 
 /**
  * Provides a wrapper for {@link KaleoInstanceService}.
@@ -25,6 +26,20 @@ public class KaleoInstanceServiceWrapper
 		KaleoInstanceService kaleoInstanceService) {
 
 		_kaleoInstanceService = kaleoInstanceService;
+	}
+
+	@Override
+	public KaleoInstance addKaleoInstance(
+			String kaleoDefinitionName, Integer kaleoDefinitionVersion,
+			String transitionName,
+			java.util.Map<String, java.io.Serializable> workflowContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			boolean waitForCompletion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoInstanceService.addKaleoInstance(
+			kaleoDefinitionName, kaleoDefinitionVersion, transitionName,
+			workflowContext, serviceContext, waitForCompletion);
 	}
 
 	/**

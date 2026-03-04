@@ -5,13 +5,21 @@
 
 package com.liferay.portal.workflow.kaleo.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceServiceUtil;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.portal.workflow.kaleo.service.KaleoInstanceServiceUtil</code> service
+ * <code>KaleoInstanceServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -32,4 +40,63 @@ package com.liferay.portal.workflow.kaleo.service.http;
  * @generated
  */
 public class KaleoInstanceServiceHttp {
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoInstance
+			addKaleoInstance(
+				HttpPrincipal httpPrincipal, String kaleoDefinitionName,
+				Integer kaleoDefinitionVersion, String transitionName,
+				java.util.Map<String, java.io.Serializable> workflowContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext,
+				boolean waitForCompletion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoInstanceServiceUtil.class, "addKaleoInstance",
+				_addKaleoInstanceParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, kaleoDefinitionName, kaleoDefinitionVersion,
+				transitionName, workflowContext, serviceContext,
+				waitForCompletion);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.workflow.kaleo.model.KaleoInstance)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		KaleoInstanceServiceHttp.class);
+
+	private static final Class<?>[] _addKaleoInstanceParameterTypes0 =
+		new Class[] {
+			String.class, Integer.class, String.class, java.util.Map.class,
+			com.liferay.portal.kernel.service.ServiceContext.class,
+			boolean.class
+		};
+
 }

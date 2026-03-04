@@ -5,7 +5,13 @@
 
 package com.liferay.portal.workflow.kaleo.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for KaleoInstance. This utility wraps
@@ -26,6 +32,17 @@ public class KaleoInstanceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoInstanceServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static KaleoInstance addKaleoInstance(
+			String kaleoDefinitionName, Integer kaleoDefinitionVersion,
+			String transitionName, Map<String, Serializable> workflowContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			boolean waitForCompletion)
+		throws PortalException {
+
+		return getService().addKaleoInstance(
+			kaleoDefinitionName, kaleoDefinitionVersion, transitionName,
+			workflowContext, serviceContext, waitForCompletion);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.

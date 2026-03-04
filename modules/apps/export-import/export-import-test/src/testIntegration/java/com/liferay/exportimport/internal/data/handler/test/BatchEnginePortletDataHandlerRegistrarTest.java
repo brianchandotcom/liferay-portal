@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEventExtraDataContributor;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -78,8 +79,10 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	@TestInfo({"LPD-56301", "LPD-65119", "LPD-68124"})
-	public void test() throws Exception {
+	@TestInfo({"LPD-56301", "LPD-65119", "LPD-68124", "LPD-80308"})
+	public void testBatchEnginePortletDataHandlerRegistration()
+		throws Exception {
+
 		String portletId1 = RandomTestUtil.randomString();
 
 		Assert.assertNull(
@@ -96,6 +99,14 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 		String className2 = RandomTestUtil.randomString();
 		String className3 = RandomTestUtil.randomString();
 
+		String key1 = RandomTestUtil.randomString();
+		String key2 = RandomTestUtil.randomString();
+		String key3 = RandomTestUtil.randomString();
+
+		String languageKey1 = RandomTestUtil.randomString();
+		String languageKey2 = RandomTestUtil.randomString();
+		String languageKey3 = RandomTestUtil.randomString();
+
 		try (SafeCloseable safeCloseable1 = _registerServiceWithSafeCloseable(
 				Portlet.class,
 				new GenericPortlet() {
@@ -111,7 +122,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			SafeCloseable safeCloseable3 = _registerServiceWithSafeCloseable(
 				VulcanBatchEngineTaskItemDelegate.class,
 				new TestExportImportVulcanBatchEngineTaskItemDelegate(
-					className1, portletId1),
+					className1, key1, languageKey1, portletId1),
 				HashMapDictionaryBuilder.put(
 					"batch.engine.task.item.delegate", "true"
 				).put(
@@ -123,7 +134,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			SafeCloseable safeCloseable4 = _registerServiceWithSafeCloseable(
 				VulcanBatchEngineTaskItemDelegate.class,
 				new TestExportImportVulcanBatchEngineTaskItemDelegate(
-					className2, portletId1),
+					className2, key2, languageKey2, portletId1),
 				HashMapDictionaryBuilder.put(
 					"batch.engine.task.item.delegate", "true"
 				).put(
@@ -135,7 +146,20 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			SafeCloseable safeCloseable5 = _registerServiceWithSafeCloseable(
 				VulcanBatchEngineTaskItemDelegate.class,
 				new TestExportImportVulcanBatchEngineTaskItemDelegate(
-					className3, portletId2),
+					className2, key3, languageKey3, portletId1),
+				HashMapDictionaryBuilder.put(
+					"batch.engine.task.item.delegate", "true"
+				).put(
+					"batch.engine.task.item.delegate.class.name", className2
+				).put(
+					"export.import.vulcan.batch.engine.task.item.delegate",
+					"true"
+				).build());
+			SafeCloseable safeCloseable6 = _registerServiceWithSafeCloseable(
+				VulcanBatchEngineTaskItemDelegate.class,
+				new TestExportImportVulcanBatchEngineTaskItemDelegate(
+					className3, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), portletId2),
 				HashMapDictionaryBuilder.put(
 					"batch.engine.task.item.delegate", "true"
 				).put(
@@ -146,6 +170,17 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					"export.import.vulcan.batch.engine.task.item.delegate",
 					"true"
 				).build())) {
+
+			Assert.assertEquals(
+				1, _getRegisteredPortletDataHandlersCount(portletId1));
+			Assert.assertEquals(
+				1, _getRegisteredPortletDataHandlersCount(portletId2));
+			Assert.assertEquals(
+				1,
+				_getRegisteredSystemEventExtraDataContributorCount(portletId1));
+			Assert.assertEquals(
+				0,
+				_getRegisteredSystemEventExtraDataContributorCount(portletId2));
 
 			_assertPortletDataHandler(
 				TestPropsValues.getCompanyId(), portletId1,
@@ -159,11 +194,14 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					_hasPortletDataHandlerControls(
 						new PortletDataHandlerControl[] {
 							new PortletDataHandlerBoolean(
-								portletId1, className1, className1, true, false,
-								null, className1, null),
+								portletId1, key1, languageKey1, true, false,
+								null, key1, null),
 							new PortletDataHandlerBoolean(
-								portletId1, className2, className2, true, false,
-								null, className2, null)
+								portletId1, key2, languageKey2, true, false,
+								null, key2, null),
+							new PortletDataHandlerBoolean(
+								portletId1, key3, languageKey3, true, false,
+								null, key3, null)
 						},
 						portletDataHandler.
 							getExportPortletDataHandlerControls()));
@@ -180,11 +218,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 						new PortletDataHandlerControl[0],
 						portletDataHandler.
 							getExportPortletDataHandlerControls()));
-
-			Assert.assertEquals(
-				1, _getRegisteredPortletDataHandlersCount(portletId1));
-			Assert.assertEquals(
-				1, _getRegisteredPortletDataHandlersCount(portletId2));
 
 			_assertPortletDataHandler(
 				RandomTestUtil.randomLong(), portletId1,
@@ -204,6 +237,37 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 
 			safeCloseable3.close();
 
+			Assert.assertEquals(
+				1,
+				_getRegisteredSystemEventExtraDataContributorCount(portletId1));
+
+			_assertPortletDataHandler(
+				TestPropsValues.getCompanyId(), portletId1,
+				portletDataHandler ->
+					StringUtil.contains(
+						ClassUtil.getClassName(portletDataHandler),
+						"BatchEnginePortletDataHandler", StringPool.PERIOD) &&
+					Arrays.equals(
+						new String[] {className2},
+						portletDataHandler.getClassNames()) &&
+					_hasPortletDataHandlerControls(
+						new PortletDataHandlerControl[] {
+							new PortletDataHandlerBoolean(
+								portletId1, key2, languageKey2, true, false,
+								null, key2, null),
+							new PortletDataHandlerBoolean(
+								portletId1, key3, languageKey3, true, false,
+								null, key3, null)
+						},
+						portletDataHandler.
+							getExportPortletDataHandlerControls()));
+
+			safeCloseable4.close();
+
+			Assert.assertEquals(
+				0,
+				_getRegisteredSystemEventExtraDataContributorCount(portletId1));
+
 			_assertPortletDataHandler(
 				TestPropsValues.getCompanyId(), portletId1,
 				portletDataHandler ->
@@ -218,7 +282,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 						portletDataHandler.
 							getExportPortletDataHandlerControls()));
 
-			safeCloseable4.close();
+			safeCloseable5.close();
 
 			_assertPortletDataHandler(
 				TestPropsValues.getCompanyId(), portletId1,
@@ -271,6 +335,23 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 		Collection<ServiceReference<PortletDataHandler>> serviceReferences =
 			bundleContext.getServiceReferences(
 				PortletDataHandler.class,
+				"(jakarta.portlet.name=" + portletId + ")");
+
+		return serviceReferences.size();
+	}
+
+	private int _getRegisteredSystemEventExtraDataContributorCount(
+			String portletId)
+		throws InvalidSyntaxException {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			BatchEnginePortletDataHandlerRegistrarTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Collection<ServiceReference<SystemEventExtraDataContributor>>
+			serviceReferences = bundleContext.getServiceReferences(
+				SystemEventExtraDataContributor.class,
 				"(jakarta.portlet.name=" + portletId + ")");
 
 		return serviceReferences.size();
@@ -345,9 +426,12 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				   VulcanBatchEngineTaskItemDelegate<Object> {
 
 		public TestExportImportVulcanBatchEngineTaskItemDelegate(
-			String className, String portletId) {
+			String className, String key, String languageKey,
+			String portletId) {
 
 			_className = className;
+			_key = key;
+			_languageKey = languageKey;
 			_portletId = portletId;
 		}
 
@@ -374,12 +458,12 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 
 				@Override
 				public String getKey() {
-					return _className;
+					return _key;
 				}
 
 				@Override
 				public String getLabelLanguageKey() {
-					return _className;
+					return _languageKey;
 				}
 
 				@Override
@@ -460,6 +544,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 		}
 
 		private final String _className;
+		private final String _key;
+		private final String _languageKey;
 		private final String _portletId;
 
 	}

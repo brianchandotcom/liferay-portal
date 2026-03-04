@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.check.util.YMLSourceUtil;
 
 import java.io.IOException;
 
@@ -41,9 +43,25 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
+			String blockStyleLeadingSpaces = null;
+			boolean insideBlockStyle = false;
+			String leadingSpaces = null;
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (insideBlockStyle) {
+					leadingSpaces = SourceUtil.getLeadingSpaces(line);
+
+					if (leadingSpaces.length() >
+							blockStyleLeadingSpaces.length()) {
+
+						sb.append(line);
+						sb.append("\n");
+
+						continue;
+					}
+				}
+
 				line = _removeWhitespaceAfterOpenBracket(line);
 				line = _removeWhitespaceAfterOpenCurlyBrace(line);
 				line = _removeWhitespaceBeforeCloseBracket(line);
@@ -52,6 +70,13 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 				sb.append(line);
 
 				sb.append("\n");
+
+				if (!YMLSourceUtil.isBlockStyle(line)) {
+					continue;
+				}
+
+				blockStyleLeadingSpaces = SourceUtil.getLeadingSpaces(line);
+				insideBlockStyle = true;
 			}
 		}
 

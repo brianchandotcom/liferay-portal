@@ -419,6 +419,7 @@ export default function TasksFDSPropsTransformer({
 						};
 					},
 					selectedData,
+					showConfirmationModal: true,
 				});
 			}
 			else if (action?.data?.id === 'update-due-date') {

@@ -23,6 +23,7 @@ import performLoginViaApi, {performLogout} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {closeProductMenu} from '../../../utils/productMenu';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
@@ -147,6 +148,11 @@ test.describe('Missing reference warnings for Navigation Menu Items', () => {
 					.check();
 
 				await page.getByRole('button', {name: 'Select'}).click();
+
+				await waitForAlert(
+					page,
+					'Success:2 Vocabularies were added to this menu.'
+				);
 			});
 
 			await test.step('Delete a Vocabulary to simulate a missing reference', async () => {

@@ -11,6 +11,7 @@ import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../utils/constants';
 import ContentPreview from './ContentPreview';
 import FilePreview from './FilePreview';
 import FolderPreview from './FolderPreview';
+import VideoPreview from './VideoPreview';
 
 interface AssetPreviewProps {
 	item: ISearchAssetObjectEntry;
@@ -22,6 +23,10 @@ export default function AssetPreview(props: AssetPreviewProps) {
 
 	if (item.embedded.file) {
 		return <FilePreview file={item.embedded.file} />;
+	}
+
+	if (item.embedded.videoURL) {
+		return <VideoPreview previewURL={item.embedded.videoURL} />;
 	}
 
 	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {

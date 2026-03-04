@@ -74,6 +74,7 @@ export interface IAssetObjectEntry {
 	taxonomyCategoryIds: number[];
 	title: string;
 	title_i18n: any;
+	videoURL?: string;
 }
 
 export interface IAssetObjectDefinitionBrief {

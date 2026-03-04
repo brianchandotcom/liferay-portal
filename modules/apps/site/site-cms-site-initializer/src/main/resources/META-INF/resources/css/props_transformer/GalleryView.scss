@@ -6,8 +6,11 @@
 
 		&-wrapper > * {
 			margin: 0;
-			padding: 0;
 			width: 100%;
+
+			&:not(.video-preview) {
+				padding: 0;
+			}
 		}
 	}
 

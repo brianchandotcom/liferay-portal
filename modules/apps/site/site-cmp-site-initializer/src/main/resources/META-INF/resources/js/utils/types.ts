@@ -65,6 +65,10 @@ export interface IProjectObjectEntry {
 }
 
 export interface IItemsActions {
+	items: IItems[];
+}
+
+export interface IItems {
 	data: {
 		id: string;
 	};

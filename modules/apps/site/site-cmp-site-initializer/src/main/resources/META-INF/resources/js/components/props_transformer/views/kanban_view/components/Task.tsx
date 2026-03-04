@@ -30,7 +30,7 @@ import {
 	displayAssignSuccessToast,
 	displayDeleteSuccessToast,
 } from '../../../../../utils/toastUtil';
-import {ITask} from '../../../../../utils/types';
+import {IItemsActions, ITask} from '../../../../../utils/types';
 import StateLabel from '../../../../StateLabel';
 import DeleteTaskModal from '../../../../modal/DeleteTaskModal';
 import EditAssigneeModalContent from '../../../../modal/EditAssigneeModalContent';
@@ -38,6 +38,13 @@ import {KanbanViewContext} from '../context';
 import {ItemTypes} from './Column';
 
 import './Task.scss';
+
+function getURL(actionId: string, itemsActions: IItemsActions[], task: ITask) {
+	return itemsActions
+		.flatMap((group) => group.items || [])
+		.find((action) => action.data.id === actionId)
+		?.href.replace('{embedded.id}', String(task.embedded.id));
+}
 
 const TaskCard = React.memo(
 	forwardRef<HTMLDivElement, {isDragging?: boolean; task: ITask}>(
@@ -67,19 +74,11 @@ const TaskCard = React.memo(
 													'edit'
 												),
 												onClick: () => {
-													const editURL = itemsActions
-														.find(
-															(action) =>
-																action.data
-																	.id ===
-																'edit'
-														)
-														?.href.replace(
-															'{embedded.id}',
-															String(
-																task.embedded.id
-															)
-														);
+													const editURL = getURL(
+														'edit',
+														itemsActions,
+														task
+													);
 
 													if (editURL) {
 														navigate(editURL);
@@ -92,19 +91,11 @@ const TaskCard = React.memo(
 													'view'
 												),
 												onClick: () => {
-													const viewURL = itemsActions
-														.find(
-															(action) =>
-																action.data
-																	.id ===
-																'actionLink'
-														)
-														?.href.replace(
-															'{embedded.id}',
-															String(
-																task.embedded.id
-															)
-														);
+													const viewURL = getURL(
+														'actionLink',
+														itemsActions,
+														task
+													);
 
 													if (viewURL) {
 														navigate(viewURL);

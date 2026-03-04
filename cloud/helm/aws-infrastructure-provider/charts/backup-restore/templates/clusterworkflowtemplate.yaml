@@ -71,6 +71,29 @@ spec:
                                     value: "{{ "{{" }}steps.apply-infrastructure.outputs.parameters.generation}}"
                         name: wait-infrastructure-ready
                         template: wait-infrastructure-ready
+        -   inputs:
+                parameters:
+                    -   name: liferay-infrastructure-name
+                    -   name: s3-bucket-id
+                    -   name: target-active-data-plane
+            name: clean-up-infrastructure
+            steps:
+                -   -   arguments:
+                            parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
+                                -   name: restore-phase
+                                    value: none
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
+                        name: clean-up-rds-instance
+                        template: apply-wait-infrastructure
+                    -   arguments:
+                            parameters:
+                                -   name: s3-bucket-id
+                                    value: "{{ "{{" }}inputs.parameters.s3-bucket-id}}"
+                        name: clean-up-s3-bucket
+                        template: clean-up-s3-bucket
         -   container:
                 args:
                     -   "s3"
@@ -174,20 +197,13 @@ spec:
                             parameters:
                                 -   name: liferay-infrastructure-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
-                                -   name: restore-phase
-                                    value: none
+                                -   name: s3-bucket-id
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.s3-bucket-id-active}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
                         depends: restart-liferay
-                        name: clean-up-rds-instance
-                        template: apply-wait-infrastructure
-                    -   arguments:
-                            parameters:
-                                -   name: s3-bucket-id
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.s3-bucket-id-active}}"
-                        depends: restart-liferay
-                        name: clean-up-s3-bucket
-                        template: clean-up-s3-bucket
+                        name: clean-up-infrastructure
+                        template: clean-up-infrastructure
                     -   name: get-current-infrastructure-state
                         template: get-current-infrastructure-state
                     -   arguments:
@@ -243,13 +259,13 @@ spec:
                             parameters:
                                 -   name: liferay-infrastructure-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
-                                -   name: restore-phase
-                                    value: none
+                                -   name: s3-bucket-id
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.s3-bucket-id-inactive}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}"
-                        depends: "!restore-rds-instance.Omitted && !restore-rds-instance.Skipped && !promote-inactive-data-plane.Succeeded"
-                        name: roll-back-rds-instance
-                        template: apply-wait-infrastructure
+                        depends: "(!restore-rds-instance.Omitted && !restore-rds-instance.Skipped || !restore-s3-bucket.Omitted && !restore-s3-bucket.Skipped) && !promote-inactive-data-plane.Succeeded"
+                        name: roll-back-infrastructure
+                        template: clean-up-infrastructure
                     -   arguments:
                             parameters:
                                 -   name: liferay-infrastructure-name
@@ -263,13 +279,6 @@ spec:
                         depends: "promote-inactive-data-plane.Succeeded && !restart-liferay.Succeeded"
                         name: roll-back-restart
                         template: roll-back-restart
-                    -   arguments:
-                            parameters:
-                                -   name: s3-bucket-id
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.s3-bucket-id-inactive}}"
-                        depends: "!restore-s3-bucket.Omitted && !restore-s3-bucket.Skipped && !promote-inactive-data-plane.Succeeded"
-                        name: roll-back-s3-bucket
-                        template: clean-up-s3-bucket
             name: main
         -   inputs:
                 parameters:
@@ -329,18 +338,12 @@ spec:
                             parameters:
                                 -   name: liferay-infrastructure-name
                                     value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
-                                -   name: restore-phase
-                                    value: none
-                                -   name: target-active-data-plane
-                                    value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
-                        name: clean-up-rds-instance
-                        template: apply-wait-infrastructure
-                    -   arguments:
-                            parameters:
                                 -   name: s3-bucket-id
                                     value: "{{ "{{" }}inputs.parameters.s3-bucket-id}}"
-                        name: clean-up-s3-bucket
-                        template: clean-up-s3-bucket
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
+                        name: clean-up-infrastructure
+                        template: clean-up-infrastructure
         -   inputs:
                 parameters:
                     -   name: expected-generation

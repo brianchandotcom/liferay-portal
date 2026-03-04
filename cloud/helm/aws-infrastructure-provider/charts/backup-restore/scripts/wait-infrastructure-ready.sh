@@ -28,7 +28,7 @@ function main {
 		sleep 30
 	done
 
-	echo "The system timed out waiting for the Liferay Infrastructure to be ready." >&2
+	echo "The system timed out waiting for the LiferayInfrastructure to be ready." >&2
 
 	exit 1
 }

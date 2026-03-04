@@ -6152,7 +6152,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			attributes.put(Field.GROUP_ID, groupId);
 		}
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getMostRelevantLocale();
 
 		attributes.put("city", city);
 		attributes.put("country", country);

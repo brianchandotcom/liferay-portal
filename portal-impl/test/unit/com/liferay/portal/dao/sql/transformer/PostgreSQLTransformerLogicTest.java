@@ -94,6 +94,15 @@ public class PostgreSQLTransformerLogicTest
 		return "select POSITION('fooText' in foo) from Foo";
 	}
 
+	protected String getInstrWithPostColumnModificatorTransformedSQL() {
+		return "select POSITION(CHR(10) in foo COLLATE " +
+			"Latin1_General_100_BIN2) from Foo";
+	}
+
+	protected String getInstrWithPreColumnModificatorTransformedSQL() {
+		return "select POSITION(CHAR(10) in BINARY foo) from Foo";
+	}
+
 	@Override
 	protected String getIntegerDivisionTransformedSQL() {
 		return "select foo / bar from Foo";

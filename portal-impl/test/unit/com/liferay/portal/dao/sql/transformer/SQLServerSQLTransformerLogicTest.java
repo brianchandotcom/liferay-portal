@@ -68,6 +68,15 @@ public class SQLServerSQLTransformerLogicTest
 		return "select CHARINDEX('fooText', foo) from Foo";
 	}
 
+	protected String getInstrWithPostColumnModificatorTransformedSQL() {
+		return "select CHARINDEX(CHR(10), foo COLLATE " +
+			"Latin1_General_100_BIN2) from Foo";
+	}
+
+	protected String getInstrWithPreColumnModificatorTransformedSQL() {
+		return "select CHARINDEX(CHAR(10), BINARY foo) from Foo";
+	}
+
 	@Override
 	protected String getIntegerDivisionTransformedSQL() {
 		return "select foo / bar from Foo";

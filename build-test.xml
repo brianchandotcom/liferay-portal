@@ -6081,6 +6081,21 @@ ${custom.upgrade.properties}</echo>
 									</then>
 								</elseif>
 								<elseif>
+									<and>
+										<contains string="${database.version}" substring="11.8" />
+										<equals arg1="${database.type}" arg2="mariadb" />
+									</and>
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												mariadb --host=${database.host} --password=${database.password} --ssl-verify-server-cert=OFF --user=${database.username} < /tmp/create.sql
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
 									<or>
 										<equals arg1="${database.type}" arg2="mariadb" />
 										<equals arg1="${database.type}" arg2="mysql" />
@@ -8219,6 +8234,15 @@ ${docker.start.error}</fail>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
 						<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '/opt/ibm/db2/V11.1/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<contains string="${database.version}" substring="11.8" />
+						<equals arg1="${database.type}" arg2="mariadb" />
+					</and>
+					<then>
+						<property name="docker.database.wait.condition">mariadb-admin ping > /dev/null 2>&amp;1</property>
 					</then>
 				</elseif>
 				<elseif>

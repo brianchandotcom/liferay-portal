@@ -548,14 +548,12 @@ public class WorkflowDefinitionManagerImpl
 				kaleoDefinitions = _get(
 					liberal,
 					() -> _kaleoDefinitionLocalService.getScopeKaleoDefinitions(
-						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
-						end,
+						scope, active, start, end,
 						KaleoDefinitionOrderByComparator.getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
 						serviceContext),
 					() -> _kaleoDefinitionService.getScopeKaleoDefinitions(
-						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
-						end,
+						scope, active, start, end,
 						KaleoDefinitionOrderByComparator.getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
 						serviceContext));

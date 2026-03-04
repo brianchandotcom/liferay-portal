@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -361,8 +362,8 @@ public class CPOptionCategoryLocalServiceImpl
 			Map<Locale, String> titleMap)
 		throws PortalException {
 
-		if (Validator.isBlank(key)) {
-			throw new CPOptionCategoryKeyException("Key is mandatory");
+		if (Validator.isNull(key)) {
+			throw new CPOptionCategoryKeyException("Key is null");
 		}
 
 		CPOptionCategory cpOptionCategory =
@@ -374,8 +375,8 @@ public class CPOptionCategoryLocalServiceImpl
 			throw new CPOptionCategoryKeyException();
 		}
 
-		if ((titleMap == null) || titleMap.isEmpty()) {
-			throw new CPOptionCategoryTitleException("Title is mandatory");
+		if (MapUtil.isEmpty(titleMap)) {
+			throw new CPOptionCategoryTitleException("Title is empty");
 		}
 	}
 

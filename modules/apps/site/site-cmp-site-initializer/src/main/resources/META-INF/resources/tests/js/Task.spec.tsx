@@ -134,8 +134,13 @@ describe('Kanban Task', () => {
 
 	it('navigates when edit and view actions are clicked', async () => {
 		const itemsActions = [
-			{data: {id: 'edit'}, href: '/edit/{embedded.id}'},
-			{data: {id: 'actionLink'}, href: '/view/{embedded.id}'},
+			{items: []},
+			{
+				items: [
+					{data: {id: 'edit'}, href: '/edit/{embedded.id}'},
+					{data: {id: 'actionLink'}, href: '/view/{embedded.id}'},
+				],
+			},
 		];
 
 		const {getByText} = renderTask(itemsActions);

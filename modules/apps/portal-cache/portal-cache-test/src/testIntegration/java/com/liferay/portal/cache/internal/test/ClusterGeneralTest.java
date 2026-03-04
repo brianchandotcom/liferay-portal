@@ -218,39 +218,12 @@ public class ClusterGeneralTest implements Serializable {
 		long groupId = TestPropsValues.getGroupId();
 		long userId = TestPropsValues.getUserId();
 
-		long fileEntryId1 = _tomcatNode1.syncExecute(
-			() -> {
-				FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-					null, userId, groupId,
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-					TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
-					ServiceContextTestUtil.getServiceContext(groupId, userId));
-
-				return fileEntry.getFileEntryId();
-			});
-
-		Assert.assertNotNull(
-			_tomcatNode2.syncExecute(
-				() -> DLAppLocalServiceUtil.getFileEntry(fileEntryId1)));
-
-		long fileEntryId2 = _tomcatNode2.syncExecute(
-			() -> {
-				FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-					null, userId, groupId,
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-					TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
-					ServiceContextTestUtil.getServiceContext(groupId, userId));
-
-				return fileEntry.getFileEntryId();
-			});
-
-		Assert.assertNotEquals(fileEntryId1, fileEntryId2);
-
-		Assert.assertNotNull(
-			_tomcatNode1.syncExecute(
-				() -> DLAppLocalServiceUtil.getFileEntry(fileEntryId2)));
+		_testValidateDocumentOnSeparateNodes(
+			_tomcatNode1, _tomcatNode2, userId, groupId,
+			RandomTestUtil.randomString());
+		_testValidateDocumentOnSeparateNodes(
+			_tomcatNode2, _tomcatNode1, userId, groupId,
+			RandomTestUtil.randomString());
 	}
 
 	private static String _getLocalClusterNodeId() {
@@ -689,6 +662,30 @@ public class ClusterGeneralTest implements Serializable {
 					return FeatureFlagManagerUtil.isEnabled(
 						PortalUtil.getDefaultCompanyId(), key);
 				}));
+	}
+
+	private void _testValidateDocumentOnSeparateNodes(
+			TomcatNode tomcatNode1, TomcatNode tomcatNode2, long userId,
+			long groupId, String fileName)
+		throws Exception {
+
+		long fileEntryId = tomcatNode1.syncExecute(
+			() -> {
+				FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+					null, userId, groupId,
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+					ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
+					null, null, null,
+					ServiceContextTestUtil.getServiceContext(groupId, userId));
+
+				return fileEntry.getFileEntryId();
+			});
+
+		FileEntry syncedFileEntry = tomcatNode2.syncExecute(
+			() -> DLAppLocalServiceUtil.getFileEntry(fileEntryId));
+
+		Assert.assertNotNull(syncedFileEntry);
+		Assert.assertEquals(fileName, syncedFileEntry.getFileName());
 	}
 
 	private static transient TomcatNode _tomcatNode1;

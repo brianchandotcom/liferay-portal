@@ -5,15 +5,10 @@
 
 package com.liferay.design.libraries.web.internal.portlet;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.design.libraries.web.internal.constants.DesignLibrariesAdminPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import jakarta.portlet.Portlet;
-import jakarta.portlet.PortletException;
-import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
-
-import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
 

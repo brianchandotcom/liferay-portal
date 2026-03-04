@@ -29,11 +29,11 @@ public interface PanelCategoryKeys {
 	public static final String APPLICATIONS_MENU_APPLICATIONS_CONTENT =
 		"applications_menu.applications.content";
 
-	public static final String APPLICATIONS_MENU_APPLICATIONS_DESIGN =
-		"applications_menu.applications.design";
-
 	public static final String APPLICATIONS_MENU_APPLICATIONS_CUSTOM_APPS =
 		"applications_menu.applications.custom.apps";
+
+	public static final String APPLICATIONS_MENU_APPLICATIONS_DESIGN =
+		"applications_menu.applications.design";
 
 	public static final String APPLICATIONS_MENU_APPLICATIONS_PUBLICATIONS =
 		"applications_menu.applications.publications";

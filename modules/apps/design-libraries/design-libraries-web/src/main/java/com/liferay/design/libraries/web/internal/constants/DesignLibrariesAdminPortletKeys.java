@@ -12,6 +12,6 @@ public class DesignLibrariesAdminPortletKeys {
 
 	public static final String DESIGN_LIBRARIES_ADMIN =
 		"com_liferay_design_libraries_web_internal_portlet_" +
-		"DesignLibrariesAdminPortlet";
+			"DesignLibrariesAdminPortlet";
 
 }

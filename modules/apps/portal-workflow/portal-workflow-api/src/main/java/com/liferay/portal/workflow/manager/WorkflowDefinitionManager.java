@@ -65,22 +65,12 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			Boolean active, long companyId, String scope, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator,
-			long userId)
+			Boolean active, long companyId, long userId, String scope,
+			int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
-	}
-
-	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			long companyId, String scope, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator,
-			long userId)
-		throws WorkflowException {
-
-		return getLatestWorkflowDefinitions(
-			null, companyId, scope, start, end, orderByComparator, userId);
 	}
 
 	public default int getLatestWorkflowDefinitionsCount(

@@ -252,6 +252,19 @@ spec:
                         template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
+                                -   name: liferay-workload-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-workload-name}}"
+                                -   name: s3-bucket-id
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.s3-bucket-id-inactive}}"
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}"
+                        depends: "promote-inactive-data-plane.Succeeded && !restart-liferay.Succeeded"
+                        name: roll-back-restart
+                        template: roll-back-restart
+                    -   arguments:
+                            parameters:
                                 -   name: s3-bucket-id
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.s3-bucket-id-inactive}}"
                         depends: "!restore-s3-bucket.Omitted && !restore-s3-bucket.Skipped && !promote-inactive-data-plane.Succeeded"
@@ -288,6 +301,46 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.liferay-workload-name}}"
                         name: kubectl-rollout-status
                         template: kubectl-rollout-status
+        -   inputs:
+                parameters:
+                    -   name: liferay-infrastructure-name
+                    -   name: liferay-workload-name
+                    -   name: s3-bucket-id
+                    -   name: target-active-data-plane
+            name: roll-back-restart
+            steps:
+                -   -   arguments:
+                            parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
+                                -   name: restore-phase
+                                    value: promoting
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
+                        name: apply-wait-infrastructure
+                        template: apply-wait-infrastructure
+                -   -   arguments:
+                            parameters:
+                                -   name: liferay-workload-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-workload-name}}"
+                        name: restart-liferay
+                        template: restart-liferay
+                -   -   arguments:
+                            parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
+                                -   name: restore-phase
+                                    value: none
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
+                        name: clean-up-rds-instance
+                        template: apply-wait-infrastructure
+                    -   arguments:
+                            parameters:
+                                -   name: s3-bucket-id
+                                    value: "{{ "{{" }}inputs.parameters.s3-bucket-id}}"
+                        name: clean-up-s3-bucket
+                        template: clean-up-s3-bucket
         -   inputs:
                 parameters:
                     -   name: expected-generation

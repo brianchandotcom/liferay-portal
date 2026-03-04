@@ -244,6 +244,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		_testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinition();
 		_testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostTaskWithTypeLLMNodeWithToolWorkflowDefinition();
+		_testPostTaskWithTypeMakeShorter();
 	}
 
 	private static byte[] _getContentBytes(String fileName) throws Exception {
@@ -752,6 +753,69 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		Assert.assertTrue(response, response.contains("\"nodename\":\"llm\""));
 		Assert.assertTrue(response, response.contains("yes"));
+
+		SseUtil.closeAll();
+	}
+
+	private void _testPostTaskWithTypeMakeShorter() throws Exception {
+		CountDownLatch countDownLatch = new CountDownLatch(4);
+		List<String> lines = new ArrayList<>();
+
+		String sseEventSinkKey = SseEventSourceTestUtil.open(
+			List.of(countDownLatch), lines, "tasks/subscribe");
+
+		String inputText =
+			"This is a long and detailed sentence that should be shortened " +
+				"by the AI model for testing purposes.";
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"context", JSONUtil.put("text", inputText)
+			).put(
+				"sseEventSinkKey", sseEventSinkKey
+			).put(
+				"type", WorkflowDefinitionConstants.NAME_MAKE_SHORTER
+			).toString(),
+			"ai-hub/v1.0/tasks",
+			HashMapBuilder.put(
+				"Liferay-AI-Hub-On-Behalf-Of",
+				_generateToken(TestPropsValues.getUserId())
+			).build(),
+			Http.Method.POST);
+
+		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+		Assert.assertEquals("event: Make Shorter", lines.get(2));
+
+		JSONObject outputJSONObject = _jsonFactory.createJSONObject(
+			StringUtil.removeSubstring(lines.get(3), "data: "));
+
+		Assert.assertEquals(
+			"makeShorter", outputJSONObject.getString("nodeName"));
+
+		String output = outputJSONObject.getString("data");
+
+		Assert.assertTrue(output.length() < inputText.length());
+
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				WorkflowInstance workflowInstance =
+					_workflowInstanceManager.getWorkflowInstance(
+						TestPropsValues.getCompanyId(),
+						jsonObject.getLong("externalReferenceCode"));
+
+				Map<String, Serializable> workflowContext =
+					workflowInstance.getWorkflowContext();
+
+				String rewrittenText = GetterUtil.getString(
+					workflowContext.get("rewrittenText"));
+
+				Assert.assertTrue(rewrittenText.length() < inputText.length());
+
+				return null;
+			});
 
 		SseUtil.closeAll();
 	}

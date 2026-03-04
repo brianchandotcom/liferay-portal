@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEventExtraDataContributor;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -80,7 +82,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -301,35 +302,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor,
 		String taskItemDelegateName) {
 
-		Class<?> modelClass = exportImportDescriptor.getModelClass();
-
-		if (modelClass != null) {
-			SystemEventExtraDataContributor systemEventExtraDataContributor =
-				(baseModel, extraData) -> {
-					if ((baseModel == null) ||
-						!StringUtil.equals(
-							modelClass.getName(),
-							baseModel.getModelClassName()) ||
-						!exportImportDescriptor.isApplicableModel(baseModel)) {
-
-						return extraData;
-					}
-
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-						extraData);
-
-					jsonObject.put("type", exportImportDescriptor.getKey());
-
-					return jsonObject.toString();
-				};
-
-			_serviceRegistrations.put(
-				exportImportDescriptor.getKey(),
-				bundleContext.registerService(
-					SystemEventExtraDataContributor.class,
-					systemEventExtraDataContributor, null));
-		}
-
 		_registrations.add(
 			new Registration() {
 
@@ -381,10 +353,13 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		setPublishToLiveByDefault(true);
 		_updateDeletionSystemEventStagedModelTypes();
 		_updatePortletDataHandlerControls();
+
+		_updateSystemEventExtraDataContributor(bundleContext);
 	}
 
 	public ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-		unregisterExportImportVulcanBatchEngineTaskItemDelegate(String key) {
+		unregisterExportImportVulcanBatchEngineTaskItemDelegate(
+			BundleContext bundleContext, String key) {
 
 		Iterator<Registration> iterator = _registrations.iterator();
 
@@ -396,19 +371,12 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					registration.getExportImportDescriptor(
 					).getKey())) {
 
-				ServiceRegistration<?> serviceRegistration =
-					_serviceRegistrations.remove(
-						registration.getExportImportDescriptor(
-						).getKey());
-
-				if (serviceRegistration != null) {
-					serviceRegistration.unregister();
-				}
-
 				iterator.remove();
 
 				_updateDeletionSystemEventStagedModelTypes();
 				_updatePortletDataHandlerControls();
+
+				_updateSystemEventExtraDataContributor(bundleContext);
 
 				return registration.getExportImportDescriptor();
 			}
@@ -928,6 +896,22 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor.getKey(), null);
 	}
 
+	private Set<String> _getSharedClassNames() {
+		Set<String> classNames = new LinkedHashSet<>();
+		Set<String> sharedClassNames = new HashSet<>();
+
+		for (Registration registration : _registrations) {
+			String modelClassName = registration.getExportImportDescriptor(
+			).getModelClassName();
+
+			if (!classNames.add(modelClassName)) {
+				sharedClassNames.add(modelClassName);
+			}
+		}
+
+		return sharedClassNames;
+	}
+
 	private <T> T _getSoleProperty(
 		Function
 			<ExportImportVulcanBatchEngineTaskItemDelegate.
@@ -941,6 +925,48 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		Registration registration = _registrations.get(0);
 
 		return function.apply(registration.getExportImportDescriptor());
+	}
+
+	private String _getSystemEventType(
+		BaseModel<?> baseModel, Set<String> sharedClassNames) {
+
+		for (Registration registration : _registrations) {
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					registration.getExportImportDescriptor();
+
+			String modelClassName = exportImportDescriptor.getModelClassName();
+
+			if (!StringUtil.equals(
+					baseModel.getModelClassName(), modelClassName) ||
+				!sharedClassNames.contains(modelClassName)) {
+
+				continue;
+			}
+
+			Function<BaseModel<?>, Boolean> applicableModelFunction =
+				exportImportDescriptor.getApplicableModelFunction();
+
+			if (applicableModelFunction == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"ExportImportDescriptor with key ",
+							exportImportDescriptor.getKey(),
+							"  declares shared model class ", modelClassName,
+							" but does not implement ",
+							"getApplicableModelFunction()"));
+				}
+
+				continue;
+			}
+
+			if (applicableModelFunction.apply(baseModel)) {
+				return exportImportDescriptor.getKey();
+			}
+		}
+
+		return null;
 	}
 
 	private long _getUserId() {
@@ -983,6 +1009,53 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 	}
 
+	private void _updateSystemEventExtraDataContributor(
+		BundleContext bundleContext) {
+
+		Set<String> sharedClassNames = _getSharedClassNames();
+
+		if (_serviceRegistration == null) {
+			if ((_registrations.size() > 1) && !sharedClassNames.isEmpty()) {
+				SystemEventExtraDataContributor
+					systemEventExtraDataContributor =
+						(baseModel, extraData) -> {
+							if (baseModel == null) {
+								return extraData;
+							}
+
+							String type = _getSystemEventType(
+								baseModel, _getSharedClassNames());
+
+							if (type != null) {
+								JSONObject jsonObject =
+									JSONFactoryUtil.createJSONObject(extraData);
+
+								jsonObject.put("type", type);
+
+								return jsonObject.toString();
+							}
+
+							return extraData;
+						};
+
+				_serviceRegistration = bundleContext.registerService(
+					SystemEventExtraDataContributor.class,
+					systemEventExtraDataContributor,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"jakarta.portlet.name", getPortletId()
+					).build());
+			}
+		}
+		else if ((_registrations.size() <= 1) || sharedClassNames.isEmpty()) {
+			try {
+				_serviceRegistration.unregister();
+			}
+			finally {
+				_serviceRegistration = null;
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEnginePortletDataHandler.class);
 
@@ -997,8 +1070,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final GroupLocalService _groupLocalService;
 	private final LayoutLocalService _layoutLocalService;
 	private final List<Registration> _registrations = new ArrayList<>();
-	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
-		new ConcurrentHashMap<>();
+	private ServiceRegistration<?> _serviceRegistration;
 	private final StagingGroupHelper _stagingGroupHelper;
 
 	private interface Registration {

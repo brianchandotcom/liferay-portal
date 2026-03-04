@@ -34,6 +34,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,6 +82,15 @@ public class DisplayPageTemplateFolderResourceImpl
 		return new ExportImportDescriptor<>() {
 
 			@Override
+			public Function<LayoutPageTemplateCollection, Boolean>
+				getApplicableModelFunction() {
+
+				return layoutPageTemplateCollection ->
+					layoutPageTemplateCollection.getType() ==
+						LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE;
+			}
+
+			@Override
 			public String getKey() {
 				return LayoutPageTemplateCollection.class.getName() + "#" +
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE;
@@ -104,20 +114,6 @@ public class DisplayPageTemplateFolderResourceImpl
 			@Override
 			public Scope getScope() {
 				return Scope.SITE;
-			}
-
-			@Override
-			public boolean isApplicableModel(
-				LayoutPageTemplateCollection layoutPageTemplateCollection) {
-
-				if (layoutPageTemplateCollection.getType() ==
-						LayoutPageTemplateCollectionTypeConstants.
-							DISPLAY_PAGE) {
-
-					return true;
-				}
-
-				return false;
 			}
 
 			@Override

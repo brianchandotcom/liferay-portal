@@ -232,7 +232,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			exportImportDescriptor =
 				batchEnginePortletDataHandler.
 					unregisterExportImportVulcanBatchEngineTaskItemDelegate(
-						exportImportDescriptor.getKey());
+						_bundleContext, exportImportDescriptor.getKey());
 
 			if (exportImportDescriptor != null) {
 				BatchEnginePortletDataHandlerRegistryUtil.unregisterKey(

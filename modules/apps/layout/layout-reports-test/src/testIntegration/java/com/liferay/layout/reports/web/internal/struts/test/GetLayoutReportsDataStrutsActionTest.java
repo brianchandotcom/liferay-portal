@@ -132,9 +132,7 @@ public class GetLayoutReportsDataStrutsActionTest {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				segmentsEntry.getExternalReferenceCode(),
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					segmentsEntry.getGroupId(), _group.getGroupId()),
+				segmentsEntry.getExternalReferenceCode(), null,
 				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

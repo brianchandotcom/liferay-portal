@@ -74,7 +74,7 @@ public class SpecificationResourceTest
 	public void testPostSpecification() throws Exception {
 		super.testPostSpecification();
 
-		_testPostSpecificationWithRandomOptionCategory();
+		_testPostSpecificationWithOptionCategory();
 	}
 
 	@Override
@@ -90,27 +90,6 @@ public class SpecificationResourceTest
 				facetable = true;
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				title = LanguageUtils.getLanguageIdMap(
-					RandomTestUtil.randomLocaleStringMap());
-			}
-		};
-	}
-
-	protected Specification randomSpecificationWithOptionCategory()
-		throws Exception {
-
-		return new Specification() {
-			{
-				externalReferenceCode = RandomTestUtil.randomString();
-				facetable = true;
-				id = RandomTestUtil.randomLong();
-				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				optionCategory = new OptionCategory() {
-					{
-						externalReferenceCode =
-							_cpOptionCategory.getExternalReferenceCode();
-					}
-				};
 				title = LanguageUtils.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());
 			}
@@ -193,11 +172,16 @@ public class SpecificationResourceTest
 		return specificationResource.postSpecification(randomSpecification());
 	}
 
-	private void _testPostSpecificationWithRandomOptionCategory()
-		throws Exception {
+	private void _testPostSpecificationWithOptionCategory() throws Exception {
+		Specification randomSpecification = randomSpecification();
 
-		Specification randomSpecification =
-			randomSpecificationWithOptionCategory();
+		randomSpecification.setOptionCategory(
+			new OptionCategory() {
+				{
+					externalReferenceCode =
+						_cpOptionCategory.getExternalReferenceCode();
+				}
+			});
 
 		Specification postSpecification =
 			specificationResource.postSpecification(randomSpecification);

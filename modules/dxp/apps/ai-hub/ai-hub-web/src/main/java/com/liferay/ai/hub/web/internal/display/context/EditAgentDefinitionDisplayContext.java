@@ -54,7 +54,6 @@ public class EditAgentDefinitionDisplayContext {
 			_themeDisplay.getUserId());
 
 		Company company = _themeDisplay.getCompany();
-
 		Group group = _groupLocalService.getGroup(
 			_themeDisplay.getScopeGroupId());
 

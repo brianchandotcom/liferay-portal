@@ -373,11 +373,12 @@
 			<finder-column name="companyId" />
 			<finder-column comparator="LIKE" name="treePath" />
 		</finder>
-		<finder name="G_C_P_N" return-type="ObjectEntryFolder" unique="true">
+		<finder name="G_C_P_N_NotS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="parentObjectEntryFolderId" />
 			<finder-column name="name" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectEntryVersion" remote-service="true" uuid="true">

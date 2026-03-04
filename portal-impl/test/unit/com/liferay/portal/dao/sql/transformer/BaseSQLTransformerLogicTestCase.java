@@ -278,7 +278,7 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	protected abstract String getDropTableIfExistsTextTransformedSQL();
 
 	protected String getInstrOriginalSQL() {
-		return "select INSTR(foo) from Foo";
+		return "select INSTR(foo, 'fooText') from Foo";
 	}
 
 	protected String getInstrTransformedSQL() {

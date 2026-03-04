@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -420,32 +419,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				parentLayouts = getMissingParentLayouts(layout, targetGroupId);
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled(
-					layout.getCompanyId(), "LPS-199086")) {
-
-				try {
-					StagingConfiguration stagingConfiguration =
-						_configurationProvider.getCompanyConfiguration(
-							StagingConfiguration.class,
-							CompanyThreadLocal.getCompanyId());
-
-					if (stagingConfiguration.publishParentLayoutsByDefault()) {
-						for (Layout parentLayout : parentLayouts) {
-							if (!layouts.contains(parentLayout)) {
-								layouts.add(parentLayout);
-							}
-						}
-					}
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-			}
-			else {
-				for (Layout parentLayout : parentLayouts) {
-					if (!layouts.contains(parentLayout)) {
-						layouts.add(parentLayout);
-					}
+			for (Layout parentLayout : parentLayouts) {
+				if (!layouts.contains(parentLayout)) {
+					layouts.add(parentLayout);
 				}
 			}
 

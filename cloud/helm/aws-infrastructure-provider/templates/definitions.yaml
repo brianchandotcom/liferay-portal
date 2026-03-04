@@ -77,7 +77,7 @@ spec:
                                             default: db.t3.medium
                                             type: string
                                         multiAz:
-                                            default: true
+                                            default: false
                                             type: boolean
                                         region:
                                             type: string

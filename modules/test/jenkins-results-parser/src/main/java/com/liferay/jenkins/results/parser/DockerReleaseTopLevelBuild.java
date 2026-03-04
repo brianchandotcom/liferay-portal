@@ -9,7 +9,7 @@ package com.liferay.jenkins.results.parser;
  * @author Charlotte Wong
  */
 public class DockerReleaseTopLevelBuild
-	extends DefaultTopLevelBuild implements PortalWorkspaceBuild {
+	extends DefaultTopLevelBuild implements WorkspaceBuild {
 
 	public DockerReleaseTopLevelBuild(
 		String buildURL, TopLevelBuild topLevelBuild) {
@@ -20,7 +20,7 @@ public class DockerReleaseTopLevelBuild
 
 		sb.append("https://github.com/");
 		sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
-		sb.append("/liferay-portal");
+		sb.append("/liferay-docker");
 
 		sb.append("/pull/");
 		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
@@ -30,7 +30,7 @@ public class DockerReleaseTopLevelBuild
 
 	@Override
 	public String getBaseGitRepositoryName() {
-		return "liferay-portal";
+		return "liferay-docker";
 	}
 
 	@Override
@@ -43,13 +43,6 @@ public class DockerReleaseTopLevelBuild
 		return Job.BuildProfile.DXP;
 	}
 
-	@Override
-	public PortalWorkspace getPortalWorkspace() {
-		Workspace workspace = getWorkspace();
-
-		return (PortalWorkspace)workspace;
-	}
-
 	public PullRequest getPullRequest() {
 		return _pullRequest;
 	}
@@ -59,7 +52,7 @@ public class DockerReleaseTopLevelBuild
 		PullRequest pullRequest = getPullRequest();
 
 		Workspace workspace = WorkspaceFactory.newWorkspace(
-			"liferay-portal", getParameterValue("UPSTREAM_BRANCH_NAME"),
+			"liferay-docker", getParameterValue("GITHUB_UPSTREAM_BRANCH_NAME"),
 			"test-docker-release-pullrequest");
 
 		if (workspace instanceof PortalWorkspace) {
@@ -99,7 +92,8 @@ public class DockerReleaseTopLevelBuild
 	}
 
 	private String _getUpstreamBranchSHA() {
-		String upstreamBranchSHA = getParameterValue("UPSTREAM_BRANCH_SHA");
+		String upstreamBranchSHA = getParameterValue(
+			"GITHUB_UPSTREAM_BRANCH_SHA");
 
 		if (JenkinsResultsParserUtil.isSHA(upstreamBranchSHA)) {
 			return upstreamBranchSHA;

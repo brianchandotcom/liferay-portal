@@ -74,6 +74,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -122,42 +123,58 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	public void exportDeletionSystemEvents(
-			PortletDataContext portletDataContext,
+			String className, PortletDataContext portletDataContext,
 			List<SystemEvent> systemEvents)
 		throws Exception {
 
 		List<Registration> activeRegistrations = _getActiveRegistrations(
 			portletDataContext);
 
+		Map<String, List<String>> typedExternalReferenceCodes = new HashMap<>();
+		List<String> untypedExternalReferenceCodes = new ArrayList<>();
+
+		for (SystemEvent systemEvent : systemEvents) {
+			String externalReferenceCode =
+				systemEvent.getClassExternalReferenceCode();
+
+			if (externalReferenceCode != null) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					systemEvent.getExtraData());
+
+				String type = jsonObject.getString("type");
+
+				if (Validator.isNull(type)) {
+					untypedExternalReferenceCodes.add(externalReferenceCode);
+				}
+				else {
+					typedExternalReferenceCodes.computeIfAbsent(
+						type, __ -> new ArrayList<>()
+					).add(
+						externalReferenceCode
+					);
+				}
+			}
+		}
+
 		for (Registration registration : activeRegistrations) {
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 				exportImportDescriptor =
 					registration.getExportImportDescriptor();
 
-			if ((activeRegistrations.size() > 1) &&
-				!portletDataContext.getBooleanParameter(
-					getPortletId(), exportImportDescriptor.getKey())) {
+			if (!StringUtil.equals(
+					className, exportImportDescriptor.getModelClassName()) ||
+				((activeRegistrations.size() > 1) &&
+				 !portletDataContext.getBooleanParameter(
+					 getPortletId(), exportImportDescriptor.getKey()))) {
 
 				continue;
 			}
 
-			List<String> externalReferenceCodes = TransformUtil.transform(
-				systemEvents,
-				systemEvent -> {
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-						systemEvent.getExtraData());
+			List<String> externalReferenceCodes = new ArrayList<>(
+				typedExternalReferenceCodes.getOrDefault(
+					exportImportDescriptor.getKey(), Collections.emptyList()));
 
-					String type = jsonObject.getString("type");
-
-					if (Validator.isNull(type) ||
-						StringUtil.equals(
-							type, exportImportDescriptor.getKey())) {
-
-						return systemEvent.getClassExternalReferenceCode();
-					}
-
-					return null;
-				});
+			externalReferenceCodes.addAll(untypedExternalReferenceCodes);
 
 			if (externalReferenceCodes.isEmpty()) {
 				continue;

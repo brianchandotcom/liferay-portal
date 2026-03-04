@@ -94,8 +94,9 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 		renderRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
 			new KaleoDesignerDisplayContext(
-				_actionExecutorManager, _groupLocalService, renderRequest,
+				_actionExecutorManager, _groupLocalService,
 				_kaleoDefinitionVersionLocalService, _portletResourcePermission,
+				renderRequest,
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 				_scriptManagementConfigurationHelper, _userLocalService));
 

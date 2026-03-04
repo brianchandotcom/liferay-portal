@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -230,9 +231,10 @@ public class KaleoDesignerDisplayContextTest {
 		);
 
 		_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
-			Mockito.mock(ActionExecutorManager.class), renderRequest,
+			Mockito.mock(ActionExecutorManager.class),
+			Mockito.mock(GroupLocalService.class),
 			Mockito.mock(KaleoDefinitionVersionLocalService.class),
-			_portletResourcePermission,
+			_portletResourcePermission, renderRequest,
 			Mockito.mock(ResourceBundleLoader.class),
 			Mockito.mock(ScriptManagementConfigurationHelper.class),
 			_userLocalService);

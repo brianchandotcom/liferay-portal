@@ -78,10 +78,10 @@ public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
 		ActionExecutorManager actionExecutorManager,
-		GroupLocalService groupLocalService, RenderRequest renderRequest,
+		GroupLocalService groupLocalService,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		PortletResourcePermission portletResourcePermission,
-		ResourceBundleLoader resourceBundleLoader,
+		RenderRequest renderRequest, ResourceBundleLoader resourceBundleLoader,
 		ScriptManagementConfigurationHelper scriptManagementConfigurationHelper,
 		UserLocalService userLocalService) {
 

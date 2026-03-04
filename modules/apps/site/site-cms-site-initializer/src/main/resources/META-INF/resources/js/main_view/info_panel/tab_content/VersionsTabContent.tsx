@@ -19,7 +19,7 @@ import VersionService from '../services/VersionService';
 const MAX_LIST_SIZE = 10;
 
 const VersionsTabContent = () => {
-	const {actions, asset}: IAssetTypeInfoPanelContext = useContext(
+	const {actions, asset, dataSetId}: IAssetTypeInfoPanelContext = useContext(
 		AssetTypeInfoPanelContext
 	);
 
@@ -65,6 +65,7 @@ const VersionsTabContent = () => {
 				<List>
 					<AssetVersionsListItem
 						{...assetVersions}
+						dataSetId={dataSetId}
 						file={asset?.file}
 						getAssetVersions={getAssetVersions}
 						objectEntryTitle={asset?.title}

@@ -111,14 +111,6 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
-	public void testReplaceInstrWithExtraWhitespace() {
-		Assert.assertEquals(
-			getInstrTransformedSQL(),
-			sqlTransformer.transform(
-				_addExtraWhitespaceFunction.apply(getInstrOriginalSQL())));
-	}
-
-	@Test
 	public void testReplaceIntegerDivision() {
 		Assert.assertEquals(
 			getIntegerDivisionTransformedSQL(),

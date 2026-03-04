@@ -441,6 +441,7 @@ com.liferay.portal.kernel.comment.CommentConstants=com.liferay.comment.constants
 com.liferay.portal.kernel.display.context.util.BaseRequestHelper=com.liferay.portal.kernel.display.context.helper.BaseRequestHelper
 com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper=com.liferay.portal.kernel.display.context.helper.BaseStrutsRequestHelper
 com.liferay.portal.kernel.editor.EditorConstants=com.liferay.portal.kernel.editor.constants.EditorConstants
+com.liferay.portal.kernel.image.ImageToolUtil=com.liferay.portal.image.ImageToolUtil
 com.liferay.portal.kernel.io.AutoDeleteFileInputStream=com.liferay.petra.io.AutoDeleteFileInputStream
 com.liferay.portal.kernel.io.SerializationConstants=com.liferay.portal.kernel.io.constants.SerializationConstants
 com.liferay.portal.kernel.jmx.MBeanRegistry=com.liferay.portal.jmx.MBeanRegistry

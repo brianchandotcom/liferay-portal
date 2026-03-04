@@ -8,8 +8,6 @@ argo:
             secondsAfterCompletion: 86400
 awsBackupService:
     restoreWaitTimeoutSeconds: 7200
-createClusterResources: true
-fullnameOverride: ""
 images:
     awsCli:
         repository: amazon/aws-cli
@@ -18,12 +16,9 @@ images:
         repository: dtzar/helm-kubectl
         tag: 4.1.1
 liferayInfrastructure:
-    name: ""
     waitTimeoutSeconds: 3600
 liferayWorkload:
-    name: liferay-default
     rolloutTimeout: 15m
-nameOverride: ""
 resources:
     default:
         limits:

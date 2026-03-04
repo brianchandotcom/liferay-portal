@@ -109,10 +109,10 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
@@ -1533,12 +1533,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertEquals(
 			dlFileEntry.getExternalReferenceCode(),
 			layout.getFaviconFileEntryERC());
-
-		Long groupId = ScopeUtil.getItemGroupId(
-			layout.getCompanyId(), layout.getFaviconFileEntryScopeERC(),
-			layout.getGroupId());
-
-		Assert.assertEquals(dlFileEntry.getGroupId(), groupId.longValue());
+		Assert.assertTrue(
+			Validator.isNull(layout.getFaviconFileEntryScopeERC()));
 	}
 
 	private void _testPostSiteSitePageSuccessPagePermissions()

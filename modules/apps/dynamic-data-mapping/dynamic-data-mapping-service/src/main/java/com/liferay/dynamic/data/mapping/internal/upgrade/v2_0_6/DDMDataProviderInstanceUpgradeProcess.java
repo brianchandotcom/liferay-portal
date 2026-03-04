@@ -290,7 +290,7 @@ public class DDMDataProviderInstanceUpgradeProcess extends UpgradeProcess {
 			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 				while (resultSet1.next()) {
 					JSONObject jsonObject = _jsonFactory.createJSONObject(
-						resultSet1.getString(2));
+						resultSet1.getString("definition"));
 
 					boolean updated = _updateDDMStructure(jsonObject);
 

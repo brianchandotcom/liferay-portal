@@ -6,6 +6,7 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.web.internal.constants.FragmentTypeConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
@@ -23,11 +24,12 @@ public class FragmentManagementToolbarDisplayContextFactory {
 	}
 
 	public FragmentManagementToolbarDisplayContext
-		getFragmentManagementToolbarDisplayContext(
-			HttpServletRequest httpServletRequest,
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			FragmentDisplayContext fragmentDisplayContext) {
+			getFragmentManagementToolbarDisplayContext(
+				HttpServletRequest httpServletRequest,
+				LiferayPortletRequest liferayPortletRequest,
+				LiferayPortletResponse liferayPortletResponse,
+				FragmentDisplayContext fragmentDisplayContext)
+		throws PortalException {
 
 		String type = fragmentDisplayContext.getFragmentType();
 

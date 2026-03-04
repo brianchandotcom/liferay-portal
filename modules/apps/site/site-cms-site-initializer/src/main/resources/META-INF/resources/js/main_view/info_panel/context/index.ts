@@ -20,6 +20,7 @@ export interface IAssetTypeInfoPanelContext {
 	};
 	cmsGroupId: number | string;
 	commentsProps: any;
+	dataSetId?: string;
 	selectedAssets: ISearchAssetObjectEntry[];
 	type: string;
 }

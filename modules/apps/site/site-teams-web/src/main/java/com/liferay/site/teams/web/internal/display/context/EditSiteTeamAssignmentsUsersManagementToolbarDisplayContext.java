@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.users.admin.item.selector.UserSiteTeamItemSelectorCriterion;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,6 +60,14 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
+	}
+
+	public String getAvailableActions(long teamId, long userId) {
+		if (TeamLocalServiceUtil.hasUserTeam(userId, teamId)) {
+			return "deleteUsers";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

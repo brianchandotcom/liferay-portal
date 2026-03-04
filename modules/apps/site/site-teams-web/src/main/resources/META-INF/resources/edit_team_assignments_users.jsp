@@ -9,6 +9,8 @@
 
 <%
 EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayContext = new EditSiteTeamAssignmentsUsersDisplayContext(request, renderRequest, renderResponse);
+
+EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignmentsUsersManagementToolbarDisplayContext = new EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, editSiteTeamAssignmentsUsersDisplayContext);
 %>
 
 <clay:navigation-bar
@@ -17,7 +19,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 />
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, editSiteTeamAssignmentsUsersDisplayContext) %>"
+	managementToolbarDisplayContext="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext %>"
 	propsTransformer="{EditTeamAssignmentsUsersManagementToolbarPropsTransformer} from site-teams-web"
 />
 
@@ -39,6 +41,14 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 			modelVar="user2"
 			rowIdProperty="screenName"
 		>
+
+			<%
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"actions", editSiteTeamAssignmentsUsersManagementToolbarDisplayContext.getAvailableActions(editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), user2.getUserId())
+				).build());
+			%>
+
 			<c:choose>
 				<c:when test='<%= Objects.equals(editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle(), "icon") %>'>
 					<liferay-ui:search-container-column-text>

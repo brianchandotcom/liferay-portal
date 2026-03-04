@@ -32,6 +32,44 @@ const test = mergeTests(
 );
 
 test(
+	'Renders video preview for External Video entries',
+	{tag: '@LPD-78868'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/external-videos';
+		const fileName = getRandomString();
+
+		const VIDEO_ID = 'IqCSx3omX4o';
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: `title ${fileName}`,
+				videoURL: `https://www.youtube.com/watch?v=${VIDEO_ID}`,
+			},
+			applicationName,
+			'Default'
+		);
+
+		apiHelpers.data.push({
+			id: objectEntry.id,
+			type: 'document',
+		});
+
+		await assetsPage.gotoFiles();
+
+		await expect(
+			page.getByRole('combobox', {name: 'Gallery View Selected'})
+		).toBeVisible();
+
+		const videoPreview = page.locator(
+			`div.video-preview:has(iframe[src*="${VIDEO_ID}"])`
+		);
+
+		await expect(videoPreview).toBeVisible();
+	}
+);
+
+test(
 	'Opens in Gallery View by default',
 	{tag: '@LPD-68467'},
 	async ({apiHelpers, assetsPage, page}) => {

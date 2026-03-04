@@ -85,8 +85,8 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 			segmentsExperience.getGroupId());
 
 		if (groupId == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isDebugEnabled()) {
+				_log.debug(
 					StringBundler.concat(
 						"Unable to resolve group ID for segments experience ",
 						segmentsExperience.getSegmentsExperienceId(),
@@ -103,8 +103,8 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 					segmentsExperience.getSegmentsEntryERC(), groupId);
 
 		if (segmentsEntry == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isDebugEnabled()) {
+				_log.debug(
 					StringBundler.concat(
 						"Unable to get segments entry with external reference ",
 						"code ", segmentsExperience.getSegmentsEntryERC(),

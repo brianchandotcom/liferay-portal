@@ -1718,8 +1718,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 				getCompanyId(), getFaviconFileEntryScopeERC(), getGroupId());
 
 			if (groupId == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
+				if (_log.isDebugEnabled()) {
+					_log.debug(
 						StringBundler.concat(
 							"Unable to resolve group ID for favicon file ",
 							"entry in layout with PLID ", getPlid(),

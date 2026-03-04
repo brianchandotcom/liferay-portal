@@ -58,8 +58,8 @@ public class FaviconUtil {
 					layout.getGroupId());
 
 				if (groupId == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
+					if (_log.isDebugEnabled()) {
+						_log.debug(
 							StringBundler.concat(
 								"Unable to resolve group ID for favicon file ",
 								"entry in layout with PLID ", layout.getPlid(),

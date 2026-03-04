@@ -29,9 +29,13 @@ const VersionsTabContent = () => {
 	}>({count: 0, items: []});
 
 	const getAssetVersions = useCallback(async () => {
-		setAssetVersions({count: 0, items: []});
+		const href = actions?.versions?.href;
 
-		const href: string = actions?.versions?.href || '';
+		if (!href) {
+			return;
+		}
+
+		setAssetVersions({count: 0, items: []});
 
 		try {
 			const {data, error} = await VersionService.getObjectEntryVersions(

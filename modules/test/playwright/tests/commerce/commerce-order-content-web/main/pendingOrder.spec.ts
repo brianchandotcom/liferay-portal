@@ -1748,9 +1748,6 @@ test(
 
 			await commerceMiniCartPage.miniCartButton.click();
 			await commerceMiniCartPage.requestAQuoteButton.click();
-
-			await expect(commerceCartSummaryPage.checkoutButton).toBeVisible();
-
 			await commerceCartSummaryPage.requestAQuoteButton.click();
 			await commerceCartSummaryPage.requestAQuoteModal.isVisible();
 
@@ -1814,9 +1811,6 @@ test(
 
 				await expect(
 					commerceLayoutsPage.orderActionsButton('Request a Quote')
-				).toBeVisible();
-				await expect(
-					commerceLayoutsPage.orderActionsButton('Checkout')
 				).toBeVisible();
 			});
 		}

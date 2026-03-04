@@ -351,9 +351,6 @@ public class DisplayPageTemplateResourceTest
 				}
 			});
 
-		_updateLayoutPageTemplateEntryStatus(
-			expectedDisplayPageTemplate.getExternalReferenceCode());
-
 		expectedDisplayPageTemplate.setMarkedAsDefault(Boolean.TRUE);
 
 		_testPatchSiteDisplayPageTemplate(
@@ -2345,21 +2342,6 @@ public class DisplayPageTemplateResourceTest
 					thumbnailURLReference.getUrl(),
 				problem.getTitle());
 		}
-	}
-
-	private void _updateLayoutPageTemplateEntryStatus(
-			String externalReferenceCode)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				getLayoutPageTemplateEntryByExternalReferenceCode(
-					externalReferenceCode, testGroup.getGroupId());
-
-		_layoutPageTemplateEntryLocalService.updateStatus(
-			TestPropsValues.getUserId(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

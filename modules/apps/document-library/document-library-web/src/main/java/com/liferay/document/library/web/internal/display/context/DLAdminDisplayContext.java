@@ -6,9 +6,6 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
-import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.configuration.DLFileOrderConfigurationProvider;
@@ -17,7 +14,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -33,7 +29,6 @@ import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvi
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -90,14 +85,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.trash.TrashHelper;
 
 import jakarta.portlet.PortletPreferences;
@@ -107,7 +100,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -775,11 +767,25 @@ public class DLAdminDisplayContext {
 
 		long repositoryId = getRepositoryId();
 
-		if (hasFilterParameters()) {
+		long[] categoryIds = ParamUtil.getLongValues(
+			_httpServletRequest, "categoryId");
+		String[] tags = ParamUtil.getStringValues(_httpServletRequest, "tag");
+
+		if (hasFilterParameters() || ArrayUtil.isNotEmpty(categoryIds) ||
+			ArrayUtil.isNotEmpty(tags)) {
+
 			List<RepositoryEntry> repositoryEntries = new ArrayList<>();
 
 			SearchContext searchContext = _getSearchContext(
 				dlSearchContainer, "none");
+
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
+				searchContext.setAssetCategoryIds(categoryIds);
+			}
+
+			if (ArrayUtil.isNotEmpty(tags)) {
+				searchContext.setAssetTagNames(tags);
+			}
 
 			Repository repository = RepositoryLocalServiceUtil.fetchRepository(
 				repositoryId);
@@ -838,68 +844,16 @@ public class DLAdminDisplayContext {
 
 		long folderId = getFolderId();
 
-		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
-		String tagName = ParamUtil.getString(_httpServletRequest, "tag");
+		int dlAppStatus = _getStatus();
 
-		if ((categoryId > 0) || Validator.isNotNull(tagName)) {
-			long[] classNameIds = {
-				PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()),
-				PortalUtil.getClassNameId(
-					DLFileShortcutConstants.getClassName())
-			};
-
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
-				classNameIds, dlSearchContainer);
-
-			assetEntryQuery.setEnablePermissions(true);
-			assetEntryQuery.setExcludeZeroViewCount(false);
-
-			List<RepositoryEntry> results = new ArrayList<>();
-
-			for (AssetEntry assetEntry :
-					AssetEntryServiceUtil.getEntries(assetEntryQuery)) {
-
-				if (Objects.equals(
-						assetEntry.getClassName(),
-						DLFileEntryConstants.getClassName())) {
-
-					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-						assetEntry.getClassPK());
-
-					if (_isAncestorFolder(folderId, fileEntry) ||
-						((folderId ==
-							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-						 (fileEntry.getRepositoryId() == repositoryId))) {
-
-						results.add(fileEntry);
-					}
-				}
-				else {
-					results.add(
-						DLAppLocalServiceUtil.getFileShortcut(
-							assetEntry.getClassPK()));
-				}
-			}
-
-			dlSearchContainer.setResultsAndTotal(
-				() -> results,
-				AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
-		}
-		else {
-			int dlAppStatus = _getStatus();
-
-			dlSearchContainer.setResultsAndTotal(
-				() ->
-					(List)
-						DLAppServiceUtil.
-							getFoldersAndFileEntriesAndFileShortcuts(
-								repositoryId, folderId, dlAppStatus, true,
-								dlSearchContainer.getStart(),
-								dlSearchContainer.getEnd(),
-								dlSearchContainer.getOrderByComparator()),
-				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-					repositoryId, folderId, dlAppStatus, true));
-		}
+		dlSearchContainer.setResultsAndTotal(
+			() ->
+				(List)DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+					repositoryId, folderId, dlAppStatus, true,
+					dlSearchContainer.getStart(), dlSearchContainer.getEnd(),
+					dlSearchContainer.getOrderByComparator()),
+			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+				repositoryId, folderId, dlAppStatus, true));
 
 		return dlSearchContainer;
 	}
@@ -1232,18 +1186,6 @@ public class DLAdminDisplayContext {
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			searchContext.setFolderIds(new long[] {folderId});
 		}
-	}
-
-	private boolean _isAncestorFolder(long folderId, FileEntry fileEntry) {
-		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
-
-		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
-
-		List<String> treePaths = Arrays.asList(
-			StringUtil.split(
-				dlFileEntry.getTreePath(), CharPool.FORWARD_SLASH));
-
-		return treePaths.contains(String.valueOf(folderId));
 	}
 
 	private boolean _isExternalRepositorySearch() {

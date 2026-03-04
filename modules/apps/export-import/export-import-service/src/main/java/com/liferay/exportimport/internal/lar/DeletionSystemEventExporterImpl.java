@@ -140,7 +140,7 @@ public class DeletionSystemEventExporterImpl
 
 				if (batchEnginePortletDataHandler != null) {
 					batchEnginePortletDataHandler.exportDeletionSystemEvents(
-						portletDataContext, entry.getValue());
+						entry.getKey(), portletDataContext, entry.getValue());
 				}
 			}
 		}

@@ -108,14 +108,14 @@ public class SettingsTestUtil {
 			Assert.assertNull(favIconItemExternalReference);
 		}
 		else {
-			Long groupId = ScopeUtil.getItemGroupId(
-				layout.getCompanyId(), layout.getFaviconFileEntryScopeERC(),
-				layout.getGroupId());
-
 			DLFileEntry dlFileEntry =
 				DLFileEntryLocalServiceUtil.
-					fetchDLFileEntryByExternalReferenceCode(
-						layout.getFaviconFileEntryERC(), groupId);
+					getDLFileEntryByExternalReferenceCode(
+						layout.getFaviconFileEntryERC(),
+						ScopeUtil.getItemGroupId(
+							layout.getCompanyId(),
+							layout.getFaviconFileEntryScopeERC(),
+							layout.getGroupId()));
 
 			Assert.assertEquals(
 				dlFileEntry.getExternalReferenceCode(),
@@ -129,7 +129,7 @@ public class SettingsTestUtil {
 			}
 			else {
 				Group group =
-					GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+					GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 						scope.getExternalReferenceCode(),
 						layout.getCompanyId());
 

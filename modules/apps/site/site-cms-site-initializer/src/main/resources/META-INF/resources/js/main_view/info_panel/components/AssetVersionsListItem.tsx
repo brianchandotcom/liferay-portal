@@ -16,11 +16,13 @@ import {VERSION_ACTIONS} from '../tab_content';
 import {L_CONTENTS, L_FILES} from '../util/constants';
 
 const AssetVersionsListItem = ({
+	dataSetId,
 	file,
 	getAssetVersions,
 	items,
 	objectEntryTitle,
 }: {
+	dataSetId?: string;
 	file?: IAssetFile;
 	getAssetVersions: () => Promise<void>;
 	items: IAssetObjectEntry[];
@@ -77,7 +79,8 @@ const AssetVersionsListItem = ({
 											event,
 											item,
 											getAssetVersions,
-											objectEntryTitle
+											objectEntryTitle,
+											dataSetId
 										);
 									}}
 								>

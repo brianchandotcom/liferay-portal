@@ -8,16 +8,21 @@ package com.liferay.site.cmp.site.initializer.internal.model.listener.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -27,6 +32,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
 import com.liferay.site.cms.site.initializer.util.RoleUtil;
+
+import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -111,6 +122,38 @@ public class ObjectEntryModelListenerTest {
 			ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW);
 	}
 
+	@Test
+	public void testOnAfterUpdate() throws Exception {
+		ObjectEntry projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
+
+		User user1 = UserTestUtil.addUser(projectObjectEntry.getGroupId());
+		User user2 = UserTestUtil.addUser(projectObjectEntry.getGroupId());
+
+		Map<String, Serializable> values = projectObjectEntry.getValues();
+
+		values.put("r_userToCMPProjectManager_userId", user1.getUserId());
+		values.put("r_userToCMPProjectSponsor_userId", user2.getUserId());
+
+		projectObjectEntry.setValues(values);
+
+		projectObjectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
+			TestPropsValues.getUserId(), projectObjectEntry.getObjectEntryId(),
+			projectObjectEntry.getObjectEntryFolderId(), values,
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertUserGroupRoles(
+			2,
+			List.of(
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+				DepotRolesConstants.ASSET_LIBRARY_MEMBER),
+			projectObjectEntry.getGroupId(), user1.getUserId());
+
+		_assertUserGroupRoles(
+			1,
+			Collections.singletonList(DepotRolesConstants.ASSET_LIBRARY_MEMBER),
+			projectObjectEntry.getGroupId(), user2.getUserId());
+	}
+
 	private void _assertResourceActions(
 			ObjectEntry objectEntry, String roleName, String... actionIds)
 		throws Exception {
@@ -130,8 +173,28 @@ public class ObjectEntryModelListenerTest {
 		}
 	}
 
+	private void _assertUserGroupRoles(
+		int expectedCount, List<String> expectedUserGroupRoleNames,
+		long groupId, long userId) {
+
+		List<Role> userGroupRoles = _roleLocalService.getUserGroupRoles(
+			userId, groupId);
+
+		Assert.assertEquals(
+			userGroupRoles.toString(), expectedCount, userGroupRoles.size());
+
+		List<String> userGroupRoleNames = TransformUtil.transform(
+			userGroupRoles, Role::getName);
+
+		Assert.assertTrue(
+			userGroupRoleNames.containsAll(expectedUserGroupRoleNames));
+	}
+
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

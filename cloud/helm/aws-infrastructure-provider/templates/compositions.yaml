@@ -532,6 +532,7 @@ spec:
                                 autoGeneratePassword: true
                                 backupRetentionPeriod: 7
                                 copyTagsToSnapshot: true
+                                databaseInsightsMode: {{ $databaseSpec.databaseInsightsMode | quote }}
                                 dbName: lportal
                                 dbSubnetGroupNameSelector:
                                     matchLabels:

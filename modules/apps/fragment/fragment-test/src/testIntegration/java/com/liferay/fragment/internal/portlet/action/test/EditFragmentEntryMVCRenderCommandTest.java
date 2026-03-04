@@ -60,7 +60,7 @@ public class EditFragmentEntryMVCRenderCommandTest {
 
 	@Test
 	@TestInfo("LPD-79101")
-	public void testRenderWithoutPermissions() throws Exception {
+	public void testRender() throws Exception {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 

@@ -10,6 +10,7 @@ import com.liferay.gradle.plugins.target.platform.TargetPlatformIDEPlugin;
 import com.liferay.gradle.plugins.target.platform.TargetPlatformPlugin;
 import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.VersionUtil;
 import com.liferay.gradle.util.Validator;
@@ -95,10 +96,17 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId,
 			targetPlatformVersion);
 
-		GradleUtil.addDependency(
-			project,
-			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_LIFERAY_PORTAL, bomTestArtifactId, targetPlatformVersion);
+		if (GradleUtil.toBoolean(
+				GradleUtil.getProperty(
+					project,
+					WorkspacePlugin.PROPERTY_PREFIX + "use.test.boms"))) {
+
+			GradleUtil.addDependency(
+				project,
+				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
+				_GROUP_ID_LIFERAY_PORTAL, bomTestArtifactId,
+				targetPlatformVersion);
+		}
 
 		GradleUtil.addDependency(
 			project,

@@ -14,7 +14,7 @@ function main {
 
 	if [ ${restore_phase} = "promoting" ] || [ ${restore_phase} = "provisioning" ]
 	then
-		echo "LiferayInfrastructure spec.restorePhase is set to ${restore_phase}. A restore is in progress." >&2
+		echo "The LiferayInfrastructure spec.restorePhase is set to ${restore_phase}. A restore is in progress." >&2
 
 		exit 1
 	fi

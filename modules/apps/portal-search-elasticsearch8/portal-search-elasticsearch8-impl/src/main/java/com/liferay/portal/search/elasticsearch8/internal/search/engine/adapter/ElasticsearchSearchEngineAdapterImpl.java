@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -47,9 +48,6 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -164,28 +162,18 @@ public class ElasticsearchSearchEngineAdapterImpl
 			BulkDocumentRequest transferCopyBulkDocumentRequest =
 				bulkDocumentRequest.transferCopy();
 
-			AtomicReference<Future<?>> futureAtomicReference =
-				new AtomicReference<>();
-
-			FutureTask<?> futureTask = new FutureTask<Void>(
-				() -> {
-					try {
+			DefaultNoticeableFuture<Void> defaultNoticeableFuture =
+				new DefaultNoticeableFuture<>(
+					() -> {
 						_documentRequestExecutor.executeBulkDocumentRequest(
 							transferCopyBulkDocumentRequest);
-					}
-					finally {
-						SearchContext.unregisterBatchModeSyncFuture(
-							futureAtomicReference.get());
-					}
 
-					return null;
-				});
+						return null;
+					});
 
-			futureAtomicReference.set(futureTask);
+			SearchContext.registerBatchModeSyncFuture(defaultNoticeableFuture);
 
-			SearchContext.registerBatchModeSyncFuture(futureTask);
-
-			executorService.execute(futureTask);
+			executorService.execute(defaultNoticeableFuture);
 
 			return null;
 		}

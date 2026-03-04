@@ -528,8 +528,10 @@ spec:
                             forProvider:
                                 allocatedStorage: {{ $databaseSpec.storageGB }}
                                 applyImmediately: {{ and (eq $dataPlane $targetActiveDataPlane) (ne $restorePhase "none") }}
+                                autoMinorVersionUpgrade: {{ $databaseSpec.autoMinorVersionUpgrade }}
                                 autoGeneratePassword: true
                                 backupRetentionPeriod: 7
+                                copyTagsToSnapshot: true
                                 dbName: lportal
                                 dbSubnetGroupNameSelector:
                                     matchLabels:
@@ -538,11 +540,13 @@ spec:
                                         dataPlane: {{ $dataPlane }}
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
+                                deleteProtection: {{ $databaseSpec.deleteProtection }}
                                 engine: {{ $databaseSpec.engine | quote }}
                                 engineVersion: {{ $databaseSpec.engineVersion | quote }}
+                                iamDatabaseAuthenticationEnabled: true
                                 identifier: {{ $baseName }}-database-{{ $dataPlane }}
                                 instanceClass: {{ $databaseSpec.instanceClass }}
-                                multiAz: false
+                                multiAz: {{ $databaseSpec.multiAz }}
                                 passwordSecretRef:
                                     key: password
                                     name: liferay-database-{{ $dataPlane }}-password
@@ -551,6 +555,7 @@ spec:
                                 {{- if and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
                                 snapshotIdentifier: {{ $databaseSpec.snapshotIdentifier }}
                                 {{- end }}
+                                storageEncrypted: true
                                 storageType: gp3
                                 username: {{ $databaseSpec.username }}
                                 vpcSecurityGroupIdSelector:

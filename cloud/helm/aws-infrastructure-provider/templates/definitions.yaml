@@ -58,6 +58,15 @@ spec:
                                     type: object
                                 database:
                                     properties:
+                                        autoMinorVersionUpgrade:
+                                            default: true
+                                            type: boolean
+                                        databaseInsightsMode:
+                                            default: standard
+                                            type: string
+                                        deleteProtection:
+                                            default: true
+                                            type: boolean
                                         engine:
                                             default: postgres
                                             type: string
@@ -67,6 +76,9 @@ spec:
                                         instanceClass:
                                             default: db.t3.medium
                                             type: string
+                                        multiAz:
+                                            default: true
+                                            type: boolean
                                         region:
                                             type: string
                                         snapshotIdentifier:

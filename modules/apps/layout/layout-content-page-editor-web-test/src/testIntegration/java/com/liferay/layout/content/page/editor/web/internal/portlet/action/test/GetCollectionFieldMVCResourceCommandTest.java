@@ -462,9 +462,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		SegmentsExperience segmentsExperience1 =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), layout.getGroupId(),
-				segmentsEntry1.getExternalReferenceCode(),
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					segmentsEntry1.getGroupId(), layout.getGroupId()),
+				segmentsEntry1.getExternalReferenceCode(), null,
 				layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -477,9 +475,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		SegmentsExperience segmentsExperience2 =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), layout.getGroupId(),
-				segmentsEntry2.getExternalReferenceCode(),
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					segmentsEntry2.getGroupId(), layout.getGroupId()),
+				segmentsEntry2.getExternalReferenceCode(), null,
 				layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()

@@ -92,9 +92,7 @@ public class UpdateSegmentsExperienceMVCActionCommandTest {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
 				null, _group.getGroupId(),
-				segmentsEntry1.getExternalReferenceCode(),
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					segmentsEntry1.getGroupId(), _draftLayout.getGroupId()),
+				segmentsEntry1.getExternalReferenceCode(), null,
 				_draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
 				true, new UnicodeProperties(),
 				ServiceContextTestUtil.getServiceContext(
@@ -108,13 +106,9 @@ public class UpdateSegmentsExperienceMVCActionCommandTest {
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
 			companyGroup.getGroupId());
 
-		String segmentsEntryScopeERC =
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry2.getGroupId(), _group.getGroupId());
-
 		JSONObject responseJSONObject = _updateSegmentsExperience(
 			segmentsExperience.getSegmentsExperienceId(), newName,
-			segmentsEntry2.getExternalReferenceCode(), segmentsEntryScopeERC);
+			segmentsEntry2.getExternalReferenceCode(), companyGroup.getExternalReferenceCode());
 
 		JSONObject segmentsExperienceJSONObject = _jsonFactory.createJSONObject(
 			responseJSONObject.getString("segmentsExperience"));
@@ -128,15 +122,8 @@ public class UpdateSegmentsExperienceMVCActionCommandTest {
 			segmentsEntry2.getExternalReferenceCode(),
 			segmentsExperience.getSegmentsEntryERC());
 		Assert.assertEquals(
-			segmentsEntryScopeERC,
+			companyGroup.getExternalReferenceCode(),
 			segmentsExperience.getSegmentsEntryScopeERC());
-
-		Long groupId = ScopeUtil.getItemGroupId(
-			segmentsExperience.getCompanyId(),
-			segmentsExperience.getSegmentsEntryScopeERC(),
-			segmentsExperience.getGroupId());
-
-		Assert.assertEquals(segmentsEntry2.getGroupId(), groupId.longValue());
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

@@ -119,7 +119,7 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "backupRestore.script.getCurrentInfrastructureState" . | nindent 20 }}
+                    {{- tpl (.Files.Get "scripts/get-current-infrastructure-state.sh") . | nindent 20 }}
         -   inputs:
                 parameters:
                     -   name: backup-vault-name
@@ -138,7 +138,7 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "backupRestore.script.getPeerRecoveryPoints" . | nindent 20 }}
+                    {{- tpl (.Files.Get "scripts/get-peer-recovery-points.sh") . | nindent 20 }}
         -   container:
                 args:
                     -   rollout
@@ -270,7 +270,7 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "backupRestore.script.restoreS3Bucket" . | nindent 20 }}
+                    {{- tpl (.Files.Get "scripts/restore-s3-bucket.sh") . | nindent 20 }}
         -   inputs:
                 parameters:
                     -   name: liferay-workload-name
@@ -298,6 +298,6 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- include "backupRestore.script.waitInfrastructureReady" . | nindent 20 }}
+                    {{- tpl (.Files.Get "scripts/wait-infrastructure-ready.sh") . | nindent 20 }}
     ttlStrategy:
         {{- .Values.argo.workflowSpec.ttlStrategy | toYaml | nindent 8 }}

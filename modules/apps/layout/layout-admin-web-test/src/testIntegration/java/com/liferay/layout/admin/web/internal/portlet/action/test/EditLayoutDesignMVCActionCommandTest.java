@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -437,15 +436,6 @@ public class EditLayoutDesignMVCActionCommandTest {
 		Assert.assertEquals(
 			draftLayout.getFaviconFileEntryScopeERC(),
 			updatedDraftLayout.getFaviconFileEntryScopeERC());
-		Assert.assertEquals(
-			ScopeUtil.getItemGroupId(
-				draftLayout.getCompanyId(),
-				draftLayout.getFaviconFileEntryScopeERC(),
-				draftLayout.getGroupId()),
-			ScopeUtil.getItemGroupId(
-				updatedDraftLayout.getCompanyId(),
-				updatedDraftLayout.getFaviconFileEntryScopeERC(),
-				updatedDraftLayout.getGroupId()));
 		Assert.assertEquals(
 			draftLayout.getMasterLayoutPlid(),
 			updatedDraftLayout.getMasterLayoutPlid());

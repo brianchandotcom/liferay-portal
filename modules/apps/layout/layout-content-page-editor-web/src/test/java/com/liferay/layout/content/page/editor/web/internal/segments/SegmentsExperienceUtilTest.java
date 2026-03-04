@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.model.SegmentsExperience;
@@ -165,10 +164,7 @@ public class SegmentsExperienceUtilTest {
 				"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
 			).put(
 				"segmentsEntryGroupId",
-				ScopeUtil.getItemGroupId(
-					segmentsExperience.getCompanyId(),
-					segmentsExperience.getSegmentsEntryScopeERC(),
-					segmentsExperience.getGroupId())
+				Long.valueOf(segmentsExperience.getGroupId())
 			).put(
 				"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
 			).put(

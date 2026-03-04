@@ -851,7 +851,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		if (group.isCompany()) {
-			return isCompanyAdmin();
+			return isCompanyAdmin(group.getCompanyId());
 		}
 		else if (group.isLayoutPrototype()) {
 			return LayoutPrototypePermissionUtil.contains(

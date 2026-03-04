@@ -478,12 +478,20 @@ public class ObjectEntryFolderLocalServiceImpl
 			ObjectEntryFolder.class.getName(),
 			objectEntryFolder.getObjectEntryFolderId());
 
-		objectEntryFolder.setParentObjectEntryFolderId(
+		long parentObjectEntryFolderId =
 			ObjectEntryFolderUtil.getObjectEntryFolderId(
 				objectEntryFolder.getParentObjectEntryFolderId(),
 				GetterUtil.getLong(
 					trashEntry.getTypeSettingsProperty(
-						"parentObjectEntryFolderId"))));
+						"parentObjectEntryFolderId")));
+
+		objectEntryFolder.setParentObjectEntryFolderId(
+			parentObjectEntryFolderId);
+		objectEntryFolder.setName(
+			_getUniqueName(
+				objectEntryFolder.getGroupId(),
+				objectEntryFolder.getCompanyId(), parentObjectEntryFolderId,
+				objectEntryFolder.getName()));
 
 		return _restoreObjectEntryFolderFromTrash(
 			objectEntryFolder, serviceContext, trashEntry, userId);

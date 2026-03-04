@@ -83,6 +83,7 @@ import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRe
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -384,6 +385,26 @@ public abstract class BaseSectionDisplayContextTestCase
 		DepotEntry depotEntry1 = addDepotEntry(
 			StringUtil.randomString(), TestPropsValues.getUserId());
 
+		User user1 = UserTestUtil.addUser();
+
+		User user2 = UserTestUtil.addUser();
+
+		groupLocalService.addUserGroup(
+			user2.getUserId(), depotEntry1.getGroup());
+
+		User user3 = UserTestUtil.addUser();
+
+		groupLocalService.addUserGroup(
+			user3.getUserId(), depotEntry1.getGroup());
+
+		Role role = _getRoleWithPermissions(ActionKeys.ADD_ENTRY, depotEntry1);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			user3.getUserId(), depotEntry1.getGroupId(),
+			new long[] {role.getRoleId()});
+
+		// Create menu in root folder
+
 		_assertCreationMenu(
 			getCreationMenu(adminUser), expectedCreationMenuItems);
 
@@ -393,108 +414,23 @@ public abstract class BaseSectionDisplayContextTestCase
 		_assertCreationMenu(
 			getCreationMenu(adminUser), expectedCreationMenuItems);
 
-		User user = UserTestUtil.addUser();
+		setUser(user1);
 
-		setUser(user);
+		_assertCreationMenu(getCreationMenu(user1), Collections.emptyMap());
 
-		_assertCreationMenu(getCreationMenu(user), Collections.emptyMap());
+		setUser(user2);
 
-		groupLocalService.addUserGroup(
-			user.getUserId(), depotEntry1.getGroup());
+		_assertCreationMenu(getCreationMenu(user2), Collections.emptyMap());
 
-		_assertCreationMenu(getCreationMenu(user), Collections.emptyMap());
+		setUser(user3);
 
-		Role role = _getRoleWithPermissions(ActionKeys.ADD_ENTRY, depotEntry1);
+		_assertCreationMenu(getCreationMenu(user3), expectedCreationMenuItems);
 
-		_userGroupRoleLocalService.addUserGroupRoles(
-			user.getUserId(), depotEntry1.getGroupId(),
-			new long[] {role.getRoleId()});
-
-		_assertCreationMenu(getCreationMenu(user), expectedCreationMenuItems);
-
-		_depotEntryLocalService.deleteDepotEntry(depotEntry1);
-		_depotEntryLocalService.deleteDepotEntry(depotEntry2);
-
-		_userLocalService.deleteUser(user);
-	}
-
-	@Test
-	public void testGetCreationMenuInSubfolder() throws Exception {
-		if (getRootObjectEntryFolderExternalReferenceCode() == null) {
-			return;
-		}
-
-		Map<String, String> expectedCreationMenuItems =
-			getExpectedCreationMenuItems();
-
-		if (expectedCreationMenuItems.isEmpty()) {
-			return;
-		}
-
-		expectedCreationMenuItems = _getLocalizedKeysMap(
-			expectedCreationMenuItems);
-
-		DepotEntry depotEntry = addDepotEntry(
-			StringUtil.randomString(), TestPropsValues.getUserId());
-
-		ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
-			depotEntry.getGroup());
+		// Create menu with custom object definitions
 
 		setUser(adminUser);
 
-		_assertCreationMenu(
-			getCreationMenu(objectEntryFolder, adminUser),
-			expectedCreationMenuItems);
-
-		User user = UserTestUtil.addUser();
-
-		setUser(user);
-
-		_assertCreationMenu(
-			getCreationMenu(objectEntryFolder, user), Collections.emptyMap());
-
-		groupLocalService.addUserGroup(user.getUserId(), depotEntry.getGroup());
-
-		_assertCreationMenu(
-			getCreationMenu(objectEntryFolder, user), Collections.emptyMap());
-
-		Role role = _getRoleWithPermissions(ActionKeys.ADD_ENTRY, depotEntry);
-
-		_userGroupRoleLocalService.addUserGroupRoles(
-			user.getUserId(), depotEntry.getGroupId(),
-			new long[] {role.getRoleId()});
-
-		_assertCreationMenu(
-			getCreationMenu(objectEntryFolder, user),
-			expectedCreationMenuItems);
-
-		_depotEntryLocalService.deleteDepotEntry(depotEntry);
-
-		_userLocalService.deleteUser(user);
-	}
-
-	@Test
-	@TestInfo("LPD-50664")
-	public void testGetCreationMenuWithCustomObjectDefinitions()
-		throws Exception {
-
-		Map<String, String> expectedCreationMenuItems =
-			getExpectedCreationMenuItems();
-
-		if (expectedCreationMenuItems.isEmpty()) {
-			return;
-		}
-
-		expectedCreationMenuItems = _getLocalizedKeysMap(
-			expectedCreationMenuItems);
-
-		DepotEntry depotEntry = addDepotEntry(
-			StringUtil.randomString(), TestPropsValues.getUserId());
-
-		setUser(adminUser);
-
-		_assertCreationMenu(
-			getCreationMenu(adminUser), expectedCreationMenuItems);
+		List<ObjectDefinition> objectDefinitions = new ArrayList<>();
 
 		TreeMap<String, String> expectedCustomCreationMenuItems = new TreeMap<>(
 			String.CASE_INSENSITIVE_ORDER);
@@ -519,9 +455,9 @@ public abstract class BaseSectionDisplayContextTestCase
 					objectDefinition,
 					_getRootObjectEntryFolderExternalReferenceCode(
 						objectFolderExternalReferenceCode)));
-		}
 
-		expectedCreationMenuItems.putAll(expectedCustomCreationMenuItems);
+			objectDefinitions.add(objectDefinition);
+		}
 
 		addCustomObjectDefinition(
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
@@ -550,9 +486,55 @@ public abstract class BaseSectionDisplayContextTestCase
 			WorkflowConstants.STATUS_APPROVED);
 
 		_assertCreationMenu(
-			getCreationMenu(adminUser), expectedCreationMenuItems);
+			getCreationMenu(adminUser),
+			HashMapBuilder.putAll(
+				expectedCreationMenuItems
+			).putAll(
+				expectedCustomCreationMenuItems
+			).build());
 
-		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+
+		// Create menu within an object entry folder
+
+		if (getRootObjectEntryFolderExternalReferenceCode() != null) {
+			setUser(adminUser);
+
+			ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
+				depotEntry1.getGroup());
+
+			_assertCreationMenu(
+				getCreationMenu(objectEntryFolder, adminUser),
+				expectedCreationMenuItems);
+
+			setUser(user1);
+
+			_assertCreationMenu(
+				getCreationMenu(objectEntryFolder, user1),
+				Collections.emptyMap());
+
+			setUser(user2);
+
+			_assertCreationMenu(
+				getCreationMenu(objectEntryFolder, user2),
+				Collections.emptyMap());
+
+			setUser(user3);
+
+			_assertCreationMenu(
+				getCreationMenu(objectEntryFolder, user3),
+				expectedCreationMenuItems);
+		}
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry1);
+		_depotEntryLocalService.deleteDepotEntry(depotEntry2);
+
+		_userLocalService.deleteUser(user1);
+		_userLocalService.deleteUser(user2);
+		_userLocalService.deleteUser(user3);
 	}
 
 	@Test
@@ -815,8 +797,9 @@ public abstract class BaseSectionDisplayContextTestCase
 	}
 
 	private void _assertCreationMenuContainsDropdownItem(
-		CreationMenu creationMenu, JSONArray expectedAssetLibrariesJSONArray,
-		String expectedLabel) {
+			CreationMenu creationMenu,
+			JSONArray expectedAssetLibrariesJSONArray, String expectedLabel)
+		throws Exception {
 
 		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
 			"primaryItems");

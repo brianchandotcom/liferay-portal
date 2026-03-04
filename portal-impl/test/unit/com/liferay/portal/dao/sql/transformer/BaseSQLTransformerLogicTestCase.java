@@ -111,6 +111,22 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
+	public void testReplaceInstrWithPostColumnModificator() {
+		Assert.assertEquals(
+			getInstrWithPostColumnModificatorTransformedSQL(),
+			sqlTransformer.transform(
+				getInstrWithPostColumnModificatorOriginalSQL()));
+	}
+
+	@Test
+	public void testReplaceInstrWithPreColumnModificator() {
+		Assert.assertEquals(
+			getInstrWithPreColumnModificatorTransformedSQL(),
+			sqlTransformer.transform(
+				getInstrWithPreColumnModificatorOriginalSQL()));
+	}
+
+	@Test
 	public void testReplaceIntegerDivision() {
 		Assert.assertEquals(
 			getIntegerDivisionTransformedSQL(),
@@ -275,6 +291,23 @@ public abstract class BaseSQLTransformerLogicTestCase {
 
 	protected String getInstrTransformedSQL() {
 		return getInstrOriginalSQL();
+	}
+
+	protected String getInstrWithPostColumnModificatorOriginalSQL() {
+		return "select INSTR(foo COLLATE Latin1_General_100_BIN2, CHR(10)) " +
+			"from Foo";
+	}
+
+	protected String getInstrWithPostColumnModificatorTransformedSQL() {
+		return getInstrWithPostColumnModificatorOriginalSQL();
+	}
+
+	protected String getInstrWithPreColumnModificatorOriginalSQL() {
+		return "select INSTR(BINARY foo, CHAR(10)) from Foo";
+	}
+
+	protected String getInstrWithPreColumnModificatorTransformedSQL() {
+		return getInstrWithPreColumnModificatorOriginalSQL();
 	}
 
 	protected String getIntegerDivisionOriginalSQL() {

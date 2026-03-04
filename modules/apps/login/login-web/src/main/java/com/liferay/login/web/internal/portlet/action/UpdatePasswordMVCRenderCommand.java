@@ -45,7 +45,7 @@ public class UpdatePasswordMVCRenderCommand implements MVCRenderCommand {
 			return "/login.jsp";
 		}
 
-		return "/udpate_password.jsp";
+		return "/update_password.jsp";
 	}
 
 }

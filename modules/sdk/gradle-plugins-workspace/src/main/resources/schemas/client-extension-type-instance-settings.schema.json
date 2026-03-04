@@ -4649,12 +4649,6 @@
 					"title": "Publish Displayed Content by Default",
 					"type": "boolean"
 				},
-				"publishParentLayoutsByDefault": {
-					"default": true,
-					"description": "If checked, parent pages are always published to live.",
-					"title": "Publish Parent Pages by Default",
-					"type": "boolean"
-				},
 				"stagingDeleteTempLAROnFailure": {
 					"default": true,
 					"description": "Uncheck to avoid deleting the temporary LAR during a failed staging publish process. In remote staging contexts, this only applies for the staging environment.",

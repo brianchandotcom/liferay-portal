@@ -6,8 +6,15 @@
 package com.liferay.document.library.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -16,6 +23,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -33,6 +41,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -96,13 +105,71 @@ public class DLAdminDisplayContextTest {
 	}
 
 	@Test
+	public void testGetSearchContainerFilterCategory() throws Exception {
+		Folder parentFolder1 = DLAppTestUtil.addFolder(_group.getGroupId());
+		Folder parentFolder2 = DLAppTestUtil.addFolder(_group.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(), "Vocabulary",
+				new ServiceContext());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
+
+		_addFileEntry(parentFolder1, serviceContext);
+		_addFileEntry(parentFolder2, serviceContext);
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			_getMockLiferayPortletActionRequest(
+				assetCategory.getCategoryId(), parentFolder1.getFolderId(),
+				null, null));
+
+		Assert.assertEquals(1, searchContainer.getTotal());
+	}
+
+	@Test
+	public void testGetSearchContainerFilterTag() throws Exception {
+		Folder parentFolder1 = DLAppTestUtil.addFolder(_group.getGroupId());
+		Folder parentFolder2 = DLAppTestUtil.addFolder(_group.getGroupId());
+
+		String assetTagName = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_assetTagLocalService.addTag(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			assetTagName, serviceContext);
+
+		serviceContext.setAssetTagNames(new String[] {assetTagName});
+
+		_addFileEntry(parentFolder1, serviceContext);
+		_addFileEntry(parentFolder2, serviceContext);
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			_getMockLiferayPortletActionRequest(
+				-1, parentFolder1.getFolderId(), null, assetTagName));
+
+		Assert.assertEquals(1, searchContainer.getTotal());
+	}
+
+	@Test
 	public void testGetSearchContainerWithSearch() throws Exception {
 		for (int i = 0; i < 25; i++) {
 			_addDLFileEntry("alpha_" + i + ".txt", "alpha");
 		}
 
 		SearchContainer<Object> searchContainer = _getSearchContainer(
-			_getMockLiferayPortletActionRequestWithSearch("alpha"));
+			_getMockLiferayPortletActionRequest(-1, -1, "alpha", null));
 
 		Assert.assertEquals(25, searchContainer.getTotal());
 	}
@@ -140,6 +207,18 @@ public class DLAdminDisplayContextTest {
 			content.getBytes(), null, null, null, serviceContext);
 	}
 
+	private void _addFileEntry(
+			Folder parentFolder, ServiceContext serviceContext)
+		throws Exception {
+
+		_dlAppService.addFileEntry(
+			null, _group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
+			null, serviceContext);
+	}
+
 	private MockLiferayPortletActionRequest
 			_getMockLiferayPortletActionRequest()
 		throws Exception {
@@ -160,16 +239,32 @@ public class DLAdminDisplayContextTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequestWithSearch(String keywords)
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			long categoryId, long folderId, String keywords, String tagName)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.setParameter(
-			"mvcRenderCommandName", "/document_library/search");
-		mockLiferayPortletActionRequest.setParameter("keywords", keywords);
+		if (categoryId > 0) {
+			mockLiferayPortletActionRequest.setParameter(
+				"categoryId", String.valueOf(categoryId));
+		}
+
+		if (folderId > 0) {
+			mockLiferayPortletActionRequest.setParameter(
+				"folderId", String.valueOf(folderId));
+		}
+
+		if (Validator.isNotNull(keywords)) {
+			mockLiferayPortletActionRequest.setParameter(
+				"mvcRenderCommandName", "/document_library/search");
+			mockLiferayPortletActionRequest.setParameter("keywords", keywords);
+		}
+
+		if (Validator.isNotNull(tagName)) {
+			mockLiferayPortletActionRequest.setParameter("tag", tagName);
+		}
 
 		return mockLiferayPortletActionRequest;
 	}
@@ -203,6 +298,15 @@ public class DLAdminDisplayContextTest {
 		return themeDisplay;
 	}
 
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
 	private Company _company;
 
 	@Inject
@@ -216,6 +320,9 @@ public class DLAdminDisplayContextTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLAppService _dlAppService;
 
 	@DeleteAfterTestRun
 	private Group _group;

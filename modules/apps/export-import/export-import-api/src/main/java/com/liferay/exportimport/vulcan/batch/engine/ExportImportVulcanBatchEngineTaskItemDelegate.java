@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Alejandro Tardín
@@ -25,6 +26,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		getExportImportDescriptor();
 
 	public interface ExportImportDescriptor<T extends BaseModel<T>> {
+
+		public default Function<T, Boolean> getApplicableModelFunction() {
+			return null;
+		}
 
 		public default String getDescription(Locale locale) {
 			return null;
@@ -67,10 +72,6 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		}
 
 		public default boolean isActive(PortletDataContext portletDataContext) {
-			return true;
-		}
-
-		public default boolean isApplicableModel(T t) {
 			return true;
 		}
 

@@ -260,14 +260,14 @@ public class ObjectEntryFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_P_N() throws Exception {
-		_persistence.countByG_C_P_N(
+	public void testCountByG_C_P_N_NotS() throws Exception {
+		_persistence.countByG_C_P_N_NotS(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "");
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByG_C_P_N(0L, 0L, 0L, "null");
+		_persistence.countByG_C_P_N_NotS(0L, 0L, 0L, "null", 0);
 
-		_persistence.countByG_C_P_N(0L, 0L, 0L, (String)null);
+		_persistence.countByG_C_P_N_NotS(0L, 0L, 0L, (String)null, 0);
 	}
 
 	@Test
@@ -602,27 +602,6 @@ public class ObjectEntryFolderPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				objectEntryFolder, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
-
-		Assert.assertEquals(
-			Long.valueOf(objectEntryFolder.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				objectEntryFolder, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
-			Long.valueOf(objectEntryFolder.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				objectEntryFolder, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
-			Long.valueOf(objectEntryFolder.getParentObjectEntryFolderId()),
-			ReflectionTestUtil.<Long>invoke(
-				objectEntryFolder, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "parentObjectEntryFolderId"));
-		Assert.assertEquals(
-			objectEntryFolder.getName(),
-			ReflectionTestUtil.invoke(
-				objectEntryFolder, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected ObjectEntryFolder addObjectEntryFolder() throws Exception {

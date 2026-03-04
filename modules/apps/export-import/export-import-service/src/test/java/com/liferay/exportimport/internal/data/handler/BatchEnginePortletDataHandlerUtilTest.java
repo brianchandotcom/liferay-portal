@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -197,7 +198,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 				_mockExportImportDescriptor(), _mockGroupLocalService(null),
 				_mockPortletDataContext(), _getStagingGroupHelper(false));
 
-		Assert.assertNull(parameters.get("filter"));
+		Assert.assertEquals(StringPool.BLANK, parameters.get("filter"));
 	}
 
 	@Test
@@ -217,7 +218,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 				_mockGroupLocalService(null), _mockPortletDataContext(),
 				_getStagingGroupHelper(false));
 
-		Assert.assertEquals("param1 eq value1", parameters.get("filter"));
+		Assert.assertEquals("(param1 eq value1)", parameters.get("filter"));
 		Assert.assertEquals("value1", parameters.get("param1"));
 		Assert.assertEquals("value2", parameters.get("param2"));
 	}

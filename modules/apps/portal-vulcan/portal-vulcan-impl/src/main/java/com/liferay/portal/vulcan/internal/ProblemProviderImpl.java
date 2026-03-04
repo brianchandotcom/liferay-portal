@@ -33,6 +33,16 @@ public class ProblemProviderImpl implements ProblemProvider {
 				(ProblemMapper<Throwable>)_serviceTrackerMap.getService(
 					clazz.getName());
 
+			if ((problemMapper == null) &&
+				(clazz.getDeclaringClass() != null)) {
+
+				clazz = (Class<? extends Throwable>)clazz.getDeclaringClass();
+
+				problemMapper =
+					(ProblemMapper<Throwable>)_serviceTrackerMap.getService(
+						clazz.getName());
+			}
+
 			if (problemMapper != null) {
 				return problemMapper.getProblem(throwable);
 			}

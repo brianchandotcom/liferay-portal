@@ -3002,6 +3002,9 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		if (StringUtil.equals(
+				fileSource,
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT) ||
+			StringUtil.equals(
 				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
 			Folder folder = fileEntry.getFolder();

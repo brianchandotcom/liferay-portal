@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -173,9 +173,9 @@ public class SitePageResourceImpl
 				return HashMapBuilder.<String, Serializable>put(
 					"filter",
 					() -> {
-						if ((portletDataContext.getLayoutIds() == null) ||
-							ExportImportDateUtil.isRangeFromLastPublishDate(
-								portletDataContext)) {
+						if (ExportImportThreadLocal.
+								isInitialLayoutStagingInProcess() ||
+							(portletDataContext.getLayoutIds() == null)) {
 
 							return null;
 						}

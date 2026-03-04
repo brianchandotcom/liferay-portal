@@ -64,6 +64,11 @@ public class SQLServerSQLTransformerLogicTest
 	}
 
 	@Override
+	protected String getInstrTransformedSQL() {
+		return "select CHARINDEX('fooText', foo) from Foo";
+	}
+
+	@Override
 	protected String getIntegerDivisionTransformedSQL() {
 		return "select foo / bar from Foo";
 	}

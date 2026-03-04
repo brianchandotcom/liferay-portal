@@ -789,29 +789,32 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	private String _getUniqueName(
-			String name, ObjectEntryFolder parentObjectEntryFolder)
+			long groupId, long companyId, long parentObjectEntryFolderId,
+			String name)
 		throws PortalException {
 
-		if (_isUniqueName(name, parentObjectEntryFolder)) {
+		if (_isUniqueName(
+				groupId, companyId, parentObjectEntryFolderId, name)) {
+
 			return name;
 		}
 
 		return UniqueUtil.getUniqueValue(
 			"copy",
-			uniqueValue -> _isUniqueName(uniqueValue, parentObjectEntryFolder),
+			uniqueValue -> _isUniqueName(
+				groupId, companyId, parentObjectEntryFolderId, uniqueValue),
 			name);
 	}
 
 	private boolean _isUniqueName(
-		String copyValue, ObjectEntryFolder parentObjectEntryFolder) {
+		long groupId, long companyId, long parentObjectEntryFolderId,
+		String name) {
 
-		ObjectEntryFolder objectEntryFolder =
-			objectEntryFolderPersistence.fetchByG_C_P_N(
-				parentObjectEntryFolder.getGroupId(),
-				parentObjectEntryFolder.getCompanyId(),
-				parentObjectEntryFolder.getObjectEntryFolderId(), copyValue);
+		int count = objectEntryFolderPersistence.countByG_C_P_N_NotS(
+			groupId, companyId, parentObjectEntryFolderId, name,
+			WorkflowConstants.STATUS_IN_TRASH);
 
-		if (objectEntryFolder == null) {
+		if (count == 0) {
 			return true;
 		}
 
@@ -950,7 +953,10 @@ public class ObjectEntryFolderLocalServiceImpl
 				parentObjectEntryFolderId);
 
 		String uniqueName = _getUniqueName(
-			objectEntryFolder.getName(), parentObjectEntryFolder);
+			parentObjectEntryFolder.getGroupId(),
+			parentObjectEntryFolder.getCompanyId(),
+			parentObjectEntryFolder.getObjectEntryFolderId(),
+			objectEntryFolder.getName());
 
 		if (StringUtil.equals(objectEntryFolder.getName(), uniqueName)) {
 			return;
@@ -958,11 +964,12 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		if (replace) {
 			ObjectEntryFolder duplicateObjectEntryFolder =
-				objectEntryFolderPersistence.fetchByG_C_P_N(
+				objectEntryFolderPersistence.fetchByG_C_P_N_NotS_First(
 					parentObjectEntryFolder.getGroupId(),
 					parentObjectEntryFolder.getCompanyId(),
 					parentObjectEntryFolder.getObjectEntryFolderId(),
-					objectEntryFolder.getName());
+					objectEntryFolder.getName(),
+					WorkflowConstants.STATUS_IN_TRASH, null);
 
 			if (duplicateObjectEntryFolder != null) {
 				duplicateObjectEntryFolder.setName(
@@ -1037,8 +1044,9 @@ public class ObjectEntryFolderLocalServiceImpl
 		}
 
 		ObjectEntryFolder objectEntryFolder =
-			objectEntryFolderPersistence.fetchByG_C_P_N(
-				groupId, companyId, parentObjectEntryFolderId, name);
+			objectEntryFolderPersistence.fetchByG_C_P_N_NotS_First(
+				groupId, companyId, parentObjectEntryFolderId, name,
+				WorkflowConstants.STATUS_IN_TRASH, null);
 
 		if ((objectEntryFolder != null) &&
 			(objectEntryFolder.getObjectEntryFolderId() !=

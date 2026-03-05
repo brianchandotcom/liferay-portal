@@ -42,7 +42,9 @@ public class IndexableActionableDynamicQuery {
 				"performActionUnsafeFunction is null");
 		}
 
-		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+		_hasBackgroundTask = BackgroundTaskThreadLocal.hasBackgroundTask();
+
+		if (_hasBackgroundTask) {
 			try {
 				_total = (Long)_dynamicQueryCountMethod.invoke(
 					_baseLocalService, _createDynamicQuery(),
@@ -288,7 +290,7 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	private void _sendStatusMessage() {
-		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
+		if (!_hasBackgroundTask) {
 			return;
 		}
 
@@ -308,6 +310,7 @@ public class IndexableActionableDynamicQuery {
 	private final List<Document> _documents = new ArrayList<>();
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
+	private boolean _hasBackgroundTask;
 	private int _interval = Indexer.DEFAULT_INTERVAL;
 	private Class<?> _modelClass;
 

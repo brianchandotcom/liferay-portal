@@ -84,39 +84,6 @@ test.fixme(
 );
 
 test.fixme(
-	'Can display content left to right in Wiki',
-	async ({page, site, wikiPage}) => {
-		await wikiPage.goto(site.friendlyUrlPath);
-
-		await test.step('Navigate to Main wiki node', async () => {
-			await wikiPage.goToWikiNode('Main');
-		});
-
-		await test.step('Edit the first wiki page', async () => {
-			await wikiPage.goToEditFirstWikiPage();
-		});
-
-		await test.step('Add LTR content', async () => {
-			await wikiPage.addSourceContentToWikiPage(
-				'<p dir="ltr">This content should display left to right</p>'
-			);
-		});
-
-		await test.step('Publish and verify', async () => {
-			await wikiPage.publishPage();
-
-			await wikiPage.goToFirstWikiPage();
-
-			await expect(
-				page.locator('[dir="ltr"]').filter({
-					hasText: 'This content should display left to right',
-				})
-			).toBeVisible();
-		});
-	}
-);
-
-test.fixme(
 	'Can display content right to left in Wiki with Arabic locale',
 	async ({page, site, wikiPage}) => {
 		await wikiPage.goto(site.friendlyUrlPath);

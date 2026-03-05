@@ -6100,8 +6100,6 @@ public class JournalArticleLocalServiceImpl
 					}
 				}
 			});
-		indexableActionableDynamicQuery.setTransactionConfig(
-			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
 		indexableActionableDynamicQuery.performActions();
 	}

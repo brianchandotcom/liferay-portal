@@ -320,7 +320,7 @@ public class LayoutTestUtil {
 	}
 
 	public static Layout addTypeLinkToLayoutLayout(
-			long groupId, boolean privateLayout, long linkedToLayoutId)
+			long groupId, boolean privateLayout, long linkToLayoutId)
 		throws Exception {
 
 		Layout layout = addTypePortletLayout(groupId, privateLayout);
@@ -329,7 +329,7 @@ public class LayoutTestUtil {
 			layout.getTypeSettingsProperties();
 
 		typeSettingsUnicodeProperties.setProperty(
-			"linkToLayoutId", String.valueOf(linkedToLayoutId));
+			"linkToLayoutId", String.valueOf(linkToLayoutId));
 
 		layout.setType(LayoutConstants.TYPE_LINK_TO_LAYOUT);
 
@@ -337,10 +337,10 @@ public class LayoutTestUtil {
 	}
 
 	public static Layout addTypeLinkToLayoutLayout(
-			long groupId, long linkedToLayoutId)
+			long groupId, long linkToLayoutId)
 		throws Exception {
 
-		return addTypeLinkToLayoutLayout(groupId, false, linkedToLayoutId);
+		return addTypeLinkToLayoutLayout(groupId, false, linkToLayoutId);
 	}
 
 	public static Layout addTypeLinkToURLLayout(

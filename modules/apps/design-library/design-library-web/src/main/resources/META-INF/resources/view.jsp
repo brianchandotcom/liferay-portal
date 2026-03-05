@@ -7,4 +7,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:message key="no-entries-were-found" />
+<%
+ViewDesignLibraryAdminDisplayContext viewDesignLibraryAdminDisplayContext = new ViewDesignLibraryAdminDisplayContext(request);
+%>
+
+<div>
+	<frontend-data-set:headless-display
+		apiURL="<%= viewDesignLibraryAdminDisplayContext.getAPIURL() %>"
+		emptyState="<%= viewDesignLibraryAdminDisplayContext.getEmptyState() %>"
+		formName="fm"
+		id="<%= DesignLibraryAdminFDSNames.ALL_DESIGN_LIBRARIES_SECTION %>"
+		propsTransformer="{DesignLibraryAdminFDSPropsTransformer} from design-library-web"
+	/>
+</div>

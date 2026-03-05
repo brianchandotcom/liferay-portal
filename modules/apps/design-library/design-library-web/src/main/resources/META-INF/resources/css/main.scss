@@ -1,0 +1,21 @@
+@import 'atlas-variables';
+
+.c-empty-state-footer {
+	.btn {
+		background-color: $primary;
+		border-color: $primary;
+		color: $white;
+
+		&:active {
+			background-color: $primary-d2;
+			border-color: transparent;
+			color: $white;
+		}
+
+		&:hover {
+			background-color: $primary-d1;
+			border-color: transparent;
+			color: $white;
+		}
+	}
+}

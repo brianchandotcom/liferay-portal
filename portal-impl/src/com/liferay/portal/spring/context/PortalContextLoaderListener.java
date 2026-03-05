@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
@@ -353,6 +354,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 				_log.error("Unable to create " + tempDirPath, ioException);
 			}
 		}
+
+		AutoDeployDir autoDeployDir = AutoDeployDir.getDefault();
+
+		autoDeployDir.scanDirectory();
 
 		ModuleFrameworkUtil.createFramework();
 

@@ -67,14 +67,12 @@ public class GlobalStartupAction extends SimpleAction {
 		// Auto deploy
 
 		try {
-			AutoDeployDir autoDeployDir = AutoDeployDir.getDefault();
-
 			if (PropsValues.AUTO_DEPLOY_ENABLED) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Registering auto deploy directories");
 				}
 
-				AutoDeployUtil.registerDir(autoDeployDir);
+				AutoDeployUtil.registerDir(AutoDeployDir.getDefault());
 			}
 			else {
 				if (_log.isInfoEnabled()) {

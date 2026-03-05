@@ -1,13 +1,14 @@
-@import 'components/container';
 @import 'components/ckeditor';
+@import 'components/container';
 @import 'components/control_menu';
 @import 'components/fds';
+@import 'components/headings';
+@import 'components/images';
 @import 'components/links';
 @import 'components/management_bar';
 @import 'components/section_header';
 @import 'components/sidebar';
 
-
 .ai-hub p {
-  margin: 0;
+	margin: 0;
 }

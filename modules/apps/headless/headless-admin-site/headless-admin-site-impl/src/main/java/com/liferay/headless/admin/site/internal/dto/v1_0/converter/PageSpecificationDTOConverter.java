@@ -384,6 +384,16 @@ public class PageSpecificationDTOConverter
 		};
 	}
 
+	private String _getSiteTemplatePageSpecificationERC(Layout layout) {
+		Layout layoutSetPrototypeLayout = layout.getLayoutSetPrototypeLayout();
+
+		if (layoutSetPrototypeLayout == null) {
+			return null;
+		}
+
+		return layoutSetPrototypeLayout.getExternalReferenceCode();
+	}
+
 	private WidgetPageSection[] _getWidgetPageSections(
 		DTOConverterContext dtoConverterContext, Layout layout) {
 
@@ -459,17 +469,7 @@ public class PageSpecificationDTOConverter
 					() -> _getPageExperiences(dtoConverterContext, layout));
 				setSettings(() -> _getSettings(layout));
 				setSiteTemplatePageSpecificationExternalReferenceCode(
-					() -> {
-						Layout layoutSetPrototypeLayout =
-							layout.getLayoutSetPrototypeLayout();
-
-						if (layoutSetPrototypeLayout == null) {
-							return null;
-						}
-
-						return layoutSetPrototypeLayout.
-							getExternalReferenceCode();
-					});
+					() -> _getSiteTemplatePageSpecificationERC(layout));
 				setStatus(
 					() -> {
 						if (layout.isDraftLayout()) {
@@ -507,6 +507,8 @@ public class PageSpecificationDTOConverter
 				layout.getCompanyId(), null));
 		pageSpecification.setExternalReferenceCode(
 			layout::getExternalReferenceCode);
+		pageSpecification.setSiteTemplatePageSpecificationExternalReferenceCode(
+			() -> _getSiteTemplatePageSpecificationERC(layout));
 		pageSpecification.setStatus(() -> PageSpecification.Status.APPROVED);
 		pageSpecification.setType(() -> type);
 
@@ -542,17 +544,7 @@ public class PageSpecificationDTOConverter
 					});
 				setSettings(() -> _getSettings(layout));
 				setSiteTemplatePageSpecificationExternalReferenceCode(
-					() -> {
-						Layout layoutSetPrototypeLayout =
-							layout.getLayoutSetPrototypeLayout();
-
-						if (layoutSetPrototypeLayout == null) {
-							return null;
-						}
-
-						return layoutSetPrototypeLayout.
-							getExternalReferenceCode();
-					});
+					() -> _getSiteTemplatePageSpecificationERC(layout));
 				setStatus(() -> Status.APPROVED);
 				setType(() -> Type.WIDGET_PAGE_SPECIFICATION);
 				setWidgetPageSections(

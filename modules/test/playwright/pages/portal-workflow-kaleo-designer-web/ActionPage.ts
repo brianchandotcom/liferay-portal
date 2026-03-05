@@ -5,24 +5,57 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {DiagramViewPage} from '../../pages/portal-workflow-kaleo-designer-web/DiagramViewPage';
+
 export class ActionPage {
+	readonly backButton: Locator;
+	readonly diagramViewPage: DiagramViewPage;
+	readonly editActionButton: Locator;
 	readonly nameInput: Locator;
 	readonly page: Page;
 	readonly scriptInput: Locator;
 	readonly selectActionType: Locator;
+	readonly selectActionTypeStatus: Locator;
 
 	constructor(page: Page) {
+		this.backButton = page.getByRole('button', {
+			name: 'Back',
+		});
+		this.diagramViewPage = new DiagramViewPage(page);
+		this.editActionButton = page
+			.getByRole('tablist')
+			.filter({hasText: 'Actions'})
+			.locator('a');
 		this.nameInput = page.locator('#name');
 		this.page = page;
 		this.scriptInput = page.locator('#script');
 		this.selectActionType = page.locator('#type');
+		this.selectActionTypeStatus = page.locator('#update-status');
 	}
 
-	async fillWorkflowAction(name: string, script: string, typeOption: string) {
-		await this.nameInput.fill(name);
+	async fillWorkflowAction({
+		name,
+		script,
+		statusOption,
+		typeOption,
+	}: {
+		name: string;
+		script?: string;
+		statusOption?: string;
+		typeOption: string;
+	}) {
 		await this.selectActionType.selectOption(typeOption);
-		await this.scriptInput.fill(script);
-		await this.scriptInput.blur();
+
+		if (typeOption === 'Update Status') {
+			await this.selectActionTypeStatus.selectOption(statusOption);
+		}
+		else if (typeOption === 'Groovy' || typeOption === 'Java') {
+			await this.scriptInput.fill(script);
+			await this.scriptInput.blur();
+		}
+
+		await this.nameInput.fill(name);
+		await this.nameInput.blur();
 	}
 
 	async getTypeSelectOption(optionValue: string) {

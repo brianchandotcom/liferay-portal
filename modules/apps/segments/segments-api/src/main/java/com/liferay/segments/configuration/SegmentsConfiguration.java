@@ -7,7 +7,6 @@ package com.liferay.segments.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -33,7 +32,6 @@ public interface SegmentsConfiguration {
 	)
 	public boolean segmentationEnabled();
 
-	@ExtendedAttributeDefinition(featureFlagKey = "LPD-78863")
 	@Meta.AD(
 		deflt = "120",
 		description = "segments-preview-check-interval-description", min = "1",

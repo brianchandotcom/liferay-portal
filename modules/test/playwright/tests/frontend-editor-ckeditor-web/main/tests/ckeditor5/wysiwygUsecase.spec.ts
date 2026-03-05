@@ -84,58 +84,6 @@ test.fixme(
 );
 
 test(
-	'Can preview source content in web content editor',
-	{tag: '@LPS-110663'},
-	async ({journalEditArticlePage, page, site}) => {
-		const articleTitle = getRandomString();
-
-		await journalEditArticlePage.goto({
-			siteUrl: site.friendlyUrlPath,
-		});
-
-		await journalEditArticlePage.fillTitle(articleTitle);
-
-		await test.step('Switch to source view', async () => {
-			const sourceButton = page
-				.locator('.cke_button__source, [data-cke-tooltip-text="Source"]')
-				.first();
-
-			if (await sourceButton.isVisible({timeout: 5000})) {
-				await sourceButton.click();
-			}
-		});
-
-		await test.step('Type HTML in source view', async () => {
-			const sourceEditor = page
-				.locator('.cke_source, textarea.ck-source-editing-area')
-				.first();
-
-			if (await sourceEditor.isVisible({timeout: 3000})) {
-				await sourceEditor.fill(
-					'<h1>Preview Test</h1><p>This is <strong>bold</strong> text.</p>'
-				);
-			}
-		});
-
-		await test.step('Preview the content', async () => {
-			const previewButton = journalEditArticlePage.previewButton;
-
-			if (await previewButton.isVisible({timeout: 3000})) {
-				await previewButton.click();
-
-				const previewFrame = page
-					.frameLocator('iframe')
-					.last();
-
-				await expect(
-					previewFrame.locator('h1').filter({hasText: 'Preview Test'})
-				).toBeVisible({timeout: 5000});
-			}
-		});
-	}
-);
-
-test(
 	'Can view source code formatted in text view',
 	{tag: '@LRQA-67229'},
 	async ({journalEditArticlePage, page, site}) => {

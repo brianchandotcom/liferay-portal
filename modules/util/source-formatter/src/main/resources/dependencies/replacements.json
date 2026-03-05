@@ -5579,6 +5579,17 @@
 	},
 	{
 		"classNames": [
+			"AssetVocabularyLocalService",
+			"AssetVocabularyLocalServiceUtil",
+			"AssetVocabularyService",
+			"AssetVocabularyServiceUtil"
+		],
+		"from": "updateVocabulary(long paramName, String paramName, String paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-80776",
+		"to": "updateVocabulary(param#0#, param#2#, param#3#, param#4#, param#5#, param#6#)"
+	},
+	{
+		"classNames": [
 			"AssetEntryLocalService",
 			"AssetEntryLocalServiceUtil"
 		],

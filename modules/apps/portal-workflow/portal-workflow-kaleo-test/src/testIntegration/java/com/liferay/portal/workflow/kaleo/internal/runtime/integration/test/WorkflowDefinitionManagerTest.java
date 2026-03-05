@@ -766,7 +766,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.getWorkflowDefinition(
-				externalReferenceCode, TestPropsValues.getCompanyId());
+				TestPropsValues.getCompanyId(), externalReferenceCode);
 
 		Assert.assertEquals(
 			externalReferenceCode,

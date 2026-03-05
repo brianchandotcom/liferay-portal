@@ -105,7 +105,7 @@ public class AIHubSiteInitializerTest {
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.getWorkflowDefinition(
-				externalReferenceCode, TestPropsValues.getCompanyId());
+				TestPropsValues.getCompanyId(), externalReferenceCode);
 
 		Assert.assertEquals(name, workflowDefinition.getName());
 

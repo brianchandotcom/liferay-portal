@@ -1650,9 +1650,9 @@ public class ObjectDefinitionResourceTest
 
 		WorkflowDefinition workflowDefinition1 =
 			_workflowDefinitionManager.getWorkflowDefinition(
+				TestPropsValues.getCompanyId(),
 				WorkflowDefinitionConstants.
-					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER,
-				TestPropsValues.getCompanyId());
+					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER);
 
 		WorkflowDefinitionLink workflowDefinitionLink1 =
 			new WorkflowDefinitionLink() {
@@ -2751,9 +2751,9 @@ public class ObjectDefinitionResourceTest
 
 		WorkflowDefinition workflowDefinition1 =
 			_workflowDefinitionManager.getWorkflowDefinition(
+				TestPropsValues.getCompanyId(),
 				WorkflowDefinitionConstants.
-					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER,
-				TestPropsValues.getCompanyId());
+					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER);
 
 		WorkflowDefinitionLink workflowDefinitionLink1 =
 			new WorkflowDefinitionLink() {
@@ -2953,9 +2953,9 @@ public class ObjectDefinitionResourceTest
 
 		WorkflowDefinition workflowDefinition1 =
 			_workflowDefinitionManager.getWorkflowDefinition(
+				TestPropsValues.getCompanyId(),
 				WorkflowDefinitionConstants.
-					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER,
-				TestPropsValues.getCompanyId());
+					EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER);
 
 		WorkflowDefinitionLink workflowDefinitionLink1 =
 			new WorkflowDefinitionLink() {

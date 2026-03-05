@@ -213,15 +213,7 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public WorkflowDefinition getWorkflowDefinition(
-			long companyId, String name, int version)
-		throws PortalException {
-
-		return _getWorkflowDefinition(companyId, name, version, false);
-	}
-
-	@Override
-	public WorkflowDefinition getWorkflowDefinition(
-			String externalReferenceCode, long companyId)
+			long companyId, String externalReferenceCode)
 		throws PortalException {
 
 		try {
@@ -238,6 +230,14 @@ public class WorkflowDefinitionManagerImpl
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
+	}
+
+	@Override
+	public WorkflowDefinition getWorkflowDefinition(
+			long companyId, String name, int version)
+		throws PortalException {
+
+		return _getWorkflowDefinition(companyId, name, version, false);
 	}
 
 	@Override

@@ -5,12 +5,10 @@
 This package (`@liferay/eslint-plugin`) defines Liferay-specific ESLint rules and presets used across the monorepo, especially `liferay-portal/modules`.
 
 Primary goals:
-- Provide reusable presets (`general`, `react`, `metal`, `portal`).
-- Enforce frontend coding conventions through custom rules.
-- Keep rule behavior testable and documented.
-- Support monorepo-specific enforcement (for example deep-import boundaries).
-
----
+- Provide reusable presets (`general`, `react`, `metal`, `portal`)
+- Enforce frontend coding conventions through custom rules
+- Keep rule behavior testable and documented
+- Support monorepo-specific enforcement (for example deep-import boundaries)
 
 ## Package Map
 
@@ -32,8 +30,6 @@ Rule family layout convention:
 - Docs: `rules/<family>/docs/rules/<rule-name>.md`
 - Export map: `rules/<family>/index.js`
 
----
-
 ## Preset Inheritance
 
 - `general` -> base preset (`eslint:recommended`, prettier compatibility, core + Liferay rules)
@@ -44,11 +40,9 @@ Rule family layout convention:
 Key nuance:
 - Some implemented rules are exported but intentionally not enabled in a preset by default (for example `@liferay/no-arrow`, `@liferay/portal/no-cross-module-deep-import`).
 
----
-
 ## Rule Authoring Contract
 
-When adding/updating a rule:
+When adding/updating a rule,
 
 1. Add implementation file in `lib/rules`.
 
@@ -68,8 +62,6 @@ Implementation expectations:
 - Prefer stable messages for assertions (`messageId` + `messages`) when practical.
 - Keep rules deterministic and file-path aware only when strictly necessary.
 
----
-
 ## Testing Standards
 
 Use parser-matrix testing via `MultiTester` to reduce parser-specific regressions:
@@ -83,25 +75,21 @@ Unit test pattern:
 - `output` when autofix is expected
 - `skip` per parser only when required
 
-Integration tests (`test/integration.js`) are used to verify rule interaction under full preset application (especially autofix ordering and compatibility).
+Integration tests (`test/integration.js`) verify rule interaction under full preset application (especially autofix ordering and compatibility).
 
 Run tests:
 - `yarn test`
 
----
-
 ## Docs Standards
 
-Each rule doc should include:
+Each rule doc should include
 - Problem statement / intent
 - Incorrect examples
 - Correct examples
 - Optional "Further Reading" links
 
 Keep doc filenames exactly aligned with rule names:
-- `<rule-name>.md` for each rule implementation.
-
----
+- `[rule-name].md` for each rule implementation.
 
 ## How Enforcement Works In `liferay-portal`
 
@@ -117,29 +105,23 @@ Workspace wiring:
 - `modules/package.json` includes `@liferay/eslint-plugin` in `devDependencies`.
 - Yarn workspaces include `frontend-sdk/*`, so this package participates directly in monorepo development.
 
----
-
 ## Deep Import Rule Enforcement
 
-`@liferay/portal/no-cross-module-deep-import` depends on:
+`@liferay/portal/no-cross-module-deep-import` depends on
 - `modules/node-scripts.config.js` (auto-generated import map / allowlist)
 
-If this file is stale or missing expected exports, the deep-import rule will report false positives/negatives. Treat config generation state as part of lint correctness.
-
----
+If this file is stale or missing expected exports, the deep-import rule reports false positives/negatives. Treat config generation state as part of lint correctness.
 
 ## Contributor Checklist (Rule Changes)
 
 Before submitting:
-- Rule implementation added/updated
-- Rule exported in family `index.js`
-- Unit tests added/updated
-- Docs added/updated
-- Preset activation decision made and reflected in `configs/*.js`
-- `README.md` rule listings updated if applicable
+- Rule implementation is added/updated
+- Rule is exported in family `index.js`
+- Unit tests are added/updated
+- Docs are added/updated
+- Preset activation decision is made and reflected in `configs/*.js`
+- `README.md` rule listings are updated if applicable
 - `yarn test` passes
-
----
 
 ## Current Coverage Notes
 

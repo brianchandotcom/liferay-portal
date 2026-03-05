@@ -2,18 +2,18 @@
 
 ## Purpose
 
-`@liferay/prettier-config` is the shareable Prettier config package for Liferay style defaults. In this repo it primarily acts as the canonical preset object, while `liferay-portal` itself usually references the same options directly in project `.prettierrc.js` files.
+`@liferay/prettier-config` is the shareable Prettier config package for Liferay style defaults. In this repo it acts as the canonical preset object, while `liferay-portal` itself usually references the same options directly in project `.prettierrc.js` files.
 
 ## Repository Map
 
-- `index.js`: ESM config export (uses `@liferay/prettier-plugin` object directly).
-- `index.cjs`: CommonJS export compatibility.
-- `package.json`: exports map, dependency on `@liferay/prettier-plugin`, release scripts.
-- `CONTRIBUTING.md`: release process for publishing.
+- `index.js`: ESM config export (uses `@liferay/prettier-plugin` object directly)
+- `index.cjs`: CommonJS export compatibility
+- `package.json`: exports map, dependency on `@liferay/prettier-plugin`, release scripts
+- `CONTRIBUTING.md`: release process for publishing
 
 ## Current Formatting Defaults
 
-The default config enforces:
+The default config enforces
 
 - `useTabs: true`
 - `tabWidth: 4`
@@ -25,13 +25,13 @@ The default config enforces:
 
 ## How It Interacts With `liferay-portal`
 
-- `liferay-portal/modules/.prettierrc.js` currently defines equivalent options and loads `@liferay/prettier-plugin` directly.
+- `liferay-portal/modules/.prettierrc.js` defines equivalent options and loads `@liferay/prettier-plugin` directly.
 - `modules/package.json` includes `@liferay/prettier-plugin` as a dev dependency.
 - This package is useful for consumers that want a single shared config import, but portal modules currently keep explicit local config files.
 
 ## Contribution Workflow
 
-When changing defaults:
+When changing defaults
 
 1. Update both `index.js` and `index.cjs` consistently.
 

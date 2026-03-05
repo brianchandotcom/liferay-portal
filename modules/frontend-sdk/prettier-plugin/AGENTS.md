@@ -2,22 +2,22 @@
 
 ## Purpose
 
-`@liferay/prettier-plugin` extends Prettier with Liferay-specific formatting behavior that standard Prettier does not provide, especially:
+`@liferay/prettier-plugin` extends Prettier with Liferay-specific formatting behavior that standard Prettier does not provide, especially
 
 - blank-line handling around comments
 - newline placement before `else`/`catch`/`finally` blocks
 
 ## Repository Map
 
-- `index.mjs`: plugin entry (`options`, `parsers`, `printers`, `defaultOptions`).
-- `options.mjs`: custom plugin options for comment ignore patterns.
+- `index.mjs`: plugin entry (`options`, `parsers`, `printers`, `defaultOptions`)
+- `options.mjs`: custom plugin options for comment ignore patterns
 - `parsers.mjs`: wraps Prettier babel/typescript parsers and applies custom transforms.
 - `printers.mjs`: prints transformed formatted text from custom AST format.
-- `rules/lines-around-comments.mjs`: comment newline normalization.
-- `rules/newline-before-block-statements.mjs`: newline enforcement for block transitions.
-- `utils/visitNode.mjs`: bottom-up AST traversal helper.
-- `test/*.test.mjs`: node:test coverage for babel and typescript parsers.
-- `dist/index.js`: bundled output (build artifact).
+- `rules/lines-around-comments.mjs`: comment newline normalization
+- `rules/newline-before-block-statements.mjs`: newline enforcement for block transitions
+- `utils/visitNode.mjs`: bottom-up AST traversal helper
+- `test/*.test.mjs`: node:test coverage for babel and typescript parsers
+- `dist/index.js`: bundled output (build artifact)
 
 ## How It Works
 
@@ -25,7 +25,7 @@
 
 1. Plugin strips itself from `plugins` before recursive `format()` call to avoid self-recursion.
 
-1. Formatted text is reparsed, transformed by custom rules, then returned as a synthetic `FormattedText` AST.
+1. Formatted text is re-parsed, transformed by custom rules, then returned as a synthetic `FormattedText` AST.
 
 1. Custom printer emits the transformed text.
 
@@ -38,7 +38,7 @@
 
 ## Contribution Workflow
 
-When adding/changing behavior:
+When adding/changing behavior,
 
 1. Implement logic in `rules/*.mjs` (or parser/printer glue if needed).
 

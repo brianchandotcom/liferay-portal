@@ -2,8 +2,7 @@
 
 ## Purpose
 
-`@liferay/node-scripts` is the shared frontend toolchain for `liferay-portal/modules`.
-It is the operational layer behind build, format, lint, test, preflight, TypeScript checks, and generated config workflows across the monorepo.
+`@liferay/node-scripts` is the shared frontend toolchain for `liferay-portal/modules`. It is the operational layer behind build, format, lint, test, preflight, TypeScript checks, and generated config workflows across the monorepo.
 
 This package is not just project-local tooling. Changes here can affect hundreds of modules at once.
 
@@ -16,7 +15,7 @@ Primary integration points:
 -   `modules/**/package.json`
     -   Most JS modules use `node-scripts` commands directly.
 -   `modules/node-scripts.config.js`
-    -   Global generated import/export map consumed by build and lint flows.
+    -   Global generated import/export map is consumed by build and lint flows.
 
 ## Command Router And Contracts
 
@@ -48,12 +47,12 @@ Main build entry:
 Core phases:
 
 1. Load global/project configuration values by reading project config files (especially each module's `node-scripts.config.js`) through helpers in `configuration/*`.
-2. Clean selected output dirs to avoid stale artifacts.
+2. Clean selected output directories to avoid stale artifacts.
 3. Process CSS and Sass (`bundle/css/*`, `bundle/sass/*`).
-4. Run esbuild bundles for main/export entrypoints (`bundle/esbuild/*`).
+4. Run esbuild bundles for main/export entry points (`bundle/esbuild/*`).
 5. Generate bridges and metadata (`bundle/amd/*`).
 
-Linking and import behavior is centralized in:
+Linking and import behavior is centralized in
 
 -   `bundle/esbuild/plugins/getLinkerPlugin.mjs`
 
@@ -72,7 +71,7 @@ Global generated config:
 -   Rebuild with: `node-scripts generate:global-config`
 -   Freshness check: `preflight/checkGlobalNodeScriptsConfig.mjs`
 
-If global config is stale, preflight will fail and build/lint assumptions may drift.
+If global configuration is stale, preflight fails and build/lint assumptions may drift.
 
 ## Generated Artifacts (Do Not Hand-Maintain)
 
@@ -124,21 +123,21 @@ Jest execution details:
 
 ## How To Add A New Feature
 
-When adding a command:
+When adding a command
 
 1. Register command in `bin.js` (description, params, script path).
 2. Add a dedicated `.mjs` entry with a default `main()` export.
 3. Parse flags with `util/getNamedArguments.mjs`.
 4. Enforce cwd contracts explicitly when needed.
 
-When adding build behavior:
+When adding build behavior
 
 1. Keep orchestration in `bundle/index.mjs` small.
 2. Put new logic into focused modules (`bundle/*`, `util/*`); treat `configuration/*` as config-reader/derivation helpers, not as the canonical source of configuration.
 3. If changing import/link semantics, modify `getLinkerPlugin.mjs` carefully.
 4. Validate generated bridge/manifest/package outputs.
 
-When adding policy checks:
+When adding policy checks
 
 1. Add check in `preflight/`.
 2. Register it in `runPreflight.mjs`.

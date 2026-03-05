@@ -8,8 +8,8 @@
 
 - `index.js`: exports plugin list and attaches `defaultConfig`.
 - `plugins.js`: registers rule implementations via `stylelint.createPlugin()`.
-- `rules/*.js`: custom stylelint rule implementations.
-- `package.json`: package metadata and release scripts.
+- `rules/*.js`: custom stylelint rule implementations
+- `package.json`: package metadata and release scripts
 
 Current custom rules in this package:
 
@@ -22,7 +22,7 @@ Current custom rules in this package:
 ## How It Interacts With `liferay-portal`
 
 - `modules/.stylelintrc.js` imports `{defaultConfig}` from this package and spreads `defaultConfig.rules`.
-- `modules/.stylelintrc.js` loads plugin runtime with:
+- `modules/.stylelintrc.js` loads plugin runtime with
   - `plugins: require.resolve('@liferay/stylelint-plugin')`
 - Portal then applies local overrides (for example disabling `liferay/no-block-comments`).
 - `modules/package.json` pins `@liferay/stylelint-plugin` as a dev dependency.
@@ -35,7 +35,7 @@ Current custom rules in this package:
 
 ## Contribution Workflow
 
-When adding/changing rules:
+When adding/changing rules,
 
 1. Implement/update rule in `rules/<rule-name>.js`.
 

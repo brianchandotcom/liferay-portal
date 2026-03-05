@@ -45,8 +45,7 @@ public class CalendarBookingModelIndexerWriterContributor
 						}));
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(CalendarBooking calendarBooking) ->
-				indexerDocumentBuilder.getDocument(calendarBooking));
+			indexerDocumentBuilder::getDocument);
 	}
 
 	@Override

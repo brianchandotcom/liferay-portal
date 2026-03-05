@@ -49,8 +49,7 @@ public class CalendarBookingBatchReindexer {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(CalendarBooking calendarBooking) ->
-				_indexerDocumentBuilder.getDocument(calendarBooking));
+			_indexerDocumentBuilder::getDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

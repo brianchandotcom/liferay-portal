@@ -70,7 +70,7 @@ public class DDLRecordModelIndexerWriterContributor
 				dynamicQuery.add(recordSetProperty.in(recordSetDynamicQuery));
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(DDLRecord record) -> indexerDocumentBuilder.getDocument(record));
+			indexerDocumentBuilder::getDocument);
 	}
 
 	private static final int[] _SCOPES = {

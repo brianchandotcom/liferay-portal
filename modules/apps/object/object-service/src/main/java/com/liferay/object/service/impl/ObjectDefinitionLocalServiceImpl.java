@@ -3650,6 +3650,8 @@ public class ObjectDefinitionLocalServiceImpl
 			_handleException(
 				new NoSuchObjectFieldException(), "titleObjectFieldId",
 				objectFieldId);
+
+			return;
 		}
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {

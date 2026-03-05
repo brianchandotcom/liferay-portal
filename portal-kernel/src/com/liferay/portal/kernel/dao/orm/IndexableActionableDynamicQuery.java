@@ -177,10 +177,6 @@ public class IndexableActionableDynamicQuery {
 		_sendStatusMessage();
 	}
 
-	private void _performAction(Object object) throws Throwable {
-		_performActionUnsafeConsumer.accept(object);
-	}
-
 	private long _performActions(DynamicQuery dynamicQuery) throws Throwable {
 		List<Object> objects = (List<Object>)_dynamicQueryMethod.invoke(
 			_baseLocalService, dynamicQuery);
@@ -260,7 +256,7 @@ public class IndexableActionableDynamicQuery {
 			}
 
 			if (ctCollectionId == currentCTCollectionId) {
-				_performAction(object);
+				_performActionUnsafeConsumer.accept(object);
 			}
 			else {
 				try (SafeCloseable safeCloseable =
@@ -268,7 +264,7 @@ public class IndexableActionableDynamicQuery {
 							setCTCollectionIdWithSafeCloseable(
 								ctCollectionId)) {
 
-					_performAction(object);
+					_performActionUnsafeConsumer.accept(object);
 				}
 			}
 		}

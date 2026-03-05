@@ -96,7 +96,7 @@ test.describe('manage object definitions through model builder', () => {
 		await otherObjectFolderLocator.hover();
 
 		await otherObjectFolderLocator
-			.getByRole('button', {name: 'Go to Folder'})
+			.getByRole('button', {exact: true, name: 'Go to Folder'})
 			.click();
 
 		await modelBuilderDiagramPage.toggleSidebarsButton.click();

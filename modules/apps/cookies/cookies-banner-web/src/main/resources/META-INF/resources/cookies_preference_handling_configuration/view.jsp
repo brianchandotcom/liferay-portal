@@ -62,6 +62,8 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 	</div>
 </div>
 
+<aui:input name="modifiedDate" type="hidden" />
+
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-75032") %>'>
 	<div class="row">
 		<div class="col-sm-12 form-group">
@@ -119,6 +121,12 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
 					onConfirm: (isConfirmed) => {
 						if (isConfirmed) {
+							var modifiedDate = document.getElementById(
+								'<portlet:namespace />modifiedDate'
+							);
+
+							modifiedDate.value = new Date().getTime();
+
 							form.submit();
 						}
 					},

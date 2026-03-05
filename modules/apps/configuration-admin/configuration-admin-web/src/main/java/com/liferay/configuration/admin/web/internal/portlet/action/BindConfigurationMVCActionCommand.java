@@ -177,9 +177,11 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 				_settingsLocatorHelper.getConfigurationPidMapping(
 					ConfigurationPidUtil.getRawPid(pid));
 
-			ConfigurationUtil.validateProperties(
-				configurationPidMapping.getConfigurationBeanClass(),
-				themeDisplay.getLocale(), properties);
+			if (configurationPidMapping != null) {
+				ConfigurationUtil.validateProperties(
+					configurationPidMapping.getConfigurationBeanClass(),
+					themeDisplay.getLocale(), properties);
+			}
 
 			configurationModel = _bindConfiguration(
 				themeDisplay.getCompanyId(), configurationModel, properties,

@@ -102,7 +102,7 @@ export async function updateConsentManagerConfiguration(
 		);
 	}
 
-	const enabledCheckbox = page.getByLabel('Enabled');
+	const enabledCheckbox = page.getByLabel('Enabled', {exact: true});
 
 	await enabledCheckbox.waitFor({state: 'visible'});
 

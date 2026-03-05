@@ -60,8 +60,8 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 		WorkflowDefinition workflowDefinition = _saveWorkflowDefinition();
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowDefinition.getName(), workflowDefinition.getVersion());
+			TestPropsValues.getCompanyId(), workflowDefinition.getName(),
+			TestPropsValues.getUserId(), workflowDefinition.getVersion());
 
 		_workflowDefinitionManager.getWorkflowDefinition(
 			TestPropsValues.getCompanyId(), workflowDefinition.getName(),

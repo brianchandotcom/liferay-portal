@@ -154,7 +154,7 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public void undeployWorkflowDefinition(
-			long companyId, long userId, String name, int version)
+			long companyId, String name, long userId, int version)
 		throws WorkflowException;
 
 	public WorkflowDefinition updateActive(

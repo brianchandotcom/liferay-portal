@@ -512,8 +512,8 @@ public class WorkflowDefinitionResourceTest
 			workflowDefinitionName, workflowDefinitionVersion, false);
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowDefinitionName, workflowDefinitionVersion);
+			TestPropsValues.getCompanyId(), workflowDefinitionName,
+			TestPropsValues.getUserId(), workflowDefinitionVersion);
 	}
 
 	private JSONObject _getWorkflowDefinitionJSONObject(String fileName)

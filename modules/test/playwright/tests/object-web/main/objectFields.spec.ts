@@ -896,8 +896,8 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	}) => {
 		const {items} = await apiHelpers.objectAdmin.getAllObjectDefinitions();
 
-		const systemObjectDefinition = items.find((item: ObjectDefinition) => {
-			return item.system === true;
+		const accountObjectDefinition = items.find((item: ObjectDefinition) => {
+			return item.externalReferenceCode === 'L_ACCOUNT';
 		});
 
 		const objectFieldAPIClient =
@@ -906,7 +906,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		const objectFieldLabel = 'objectFieldLabel';
 
 		await objectFieldAPIClient.postObjectDefinitionObjectField(
-			systemObjectDefinition.id,
+			accountObjectDefinition.id,
 			{
 				DBType: 'String',
 				businessType: 'Text',
@@ -916,7 +916,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			}
 		);
 
-		await objectFieldsPage.goto(systemObjectDefinition.label.en_US);
+		await objectFieldsPage.goto(accountObjectDefinition.label.en_US);
 
 		await objectFieldsPage.openObjectField(objectFieldLabel);
 
@@ -1215,14 +1215,14 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			const {items} =
 				await apiHelpers.objectAdmin.getAllObjectDefinitions();
 
-			const systemObjectDefinition = items.find(
+			const accountObjectDefinition = items.find(
 				(item: ObjectDefinition) => {
-					return item.system === true;
+					return item.externalReferenceCode === 'L_ACCOUNT';
 				}
 			);
 
 			await objectDefinitionField.postObjectDefinitionObjectField(
-				systemObjectDefinition.id,
+				accountObjectDefinition.id,
 				{
 					DBType: 'String',
 					businessType: 'Text',
@@ -1236,7 +1236,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				}
 			);
 
-			await objectFieldsPage.goto(systemObjectDefinition.label.en_US);
+			await objectFieldsPage.goto(accountObjectDefinition.label.en_US);
 
 			await page
 				.getByRole('row')

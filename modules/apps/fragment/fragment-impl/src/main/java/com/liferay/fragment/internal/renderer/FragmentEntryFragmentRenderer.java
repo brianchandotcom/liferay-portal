@@ -216,12 +216,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			}
 		}
 
-		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
-
-		if ((fragmentEntry == null) &&
-			Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
-
-			fragmentEntry =
+		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+			FragmentEntry fragmentEntry =
 				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryLink.getRendererKey());
 
@@ -229,6 +225,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				return false;
 			}
 		}
+
+		FragmentEntry fragmentEntry = fragmentEntryLink.fetchFragmentEntry();
 
 		if (fragmentEntry == null) {
 			return fragmentEntryLink.isCacheable();

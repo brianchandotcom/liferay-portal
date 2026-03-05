@@ -66,8 +66,8 @@ public class ObjectEntryInfoItemFriendlyURLProvider
 				(groupId != mainFriendlyURLEntry.getGroupId())) {
 
 				return _getGroupFriendlyURL(
-					objectEntry.getObjectEntryId(), mainFriendlyURLEntry,
-					languageId);
+					objectEntry.getObjectEntryId(), languageId,
+					mainFriendlyURLEntry);
 			}
 		}
 
@@ -108,8 +108,8 @@ public class ObjectEntryInfoItemFriendlyURLProvider
 	}
 
 	private String _getGroupFriendlyURL(
-		long objectEntryId, FriendlyURLEntry friendlyURLEntry,
-		String languageId) {
+		long objectEntryId, String languageId,
+		FriendlyURLEntry friendlyURLEntry) {
 
 		Group group = _groupLocalService.fetchGroup(
 			friendlyURLEntry.getGroupId());

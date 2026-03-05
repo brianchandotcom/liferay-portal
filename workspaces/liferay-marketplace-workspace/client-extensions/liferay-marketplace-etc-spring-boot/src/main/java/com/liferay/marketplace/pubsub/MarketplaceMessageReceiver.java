@@ -239,18 +239,16 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					"emailAddress eq '" + emailAddress + "'",
 					Pagination.of(1, 1), "", "");
 
-			if (userAccountsPage.fetchFirstItem() != null) {
-				continue;
+			if (userAccountsPage.fetchFirstItem() == null) {
+				_marketplaceService.postUserAccount(
+					new UserAccount() {
+						{
+							setEmailAddress(contact::getEmailAddress);
+							setFamilyName(contact::getLastName);
+							setGivenName(contact::getFirstName);
+						}
+					});
 			}
-
-			_marketplaceService.postUserAccount(
-				new UserAccount() {
-					{
-						setEmailAddress(contact::getEmailAddress);
-						setFamilyName(contact::getLastName);
-						setGivenName(contact::getFirstName);
-					}
-				});
 
 			_marketplaceService.postAccountUserAccountByEmailAddress(
 				account.getId(), emailAddress);

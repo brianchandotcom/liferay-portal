@@ -46,12 +46,12 @@ public class SegmentsFeatureFlagListener implements FeatureFlagListener {
 							GroupConstants.ANY_PARENT_GROUP_ID, true)) {
 
 					try {
-						_updateSegmentsEntries(
+						_processSegmentsEntries(
 							enabled,
 							_segmentsEntryLocalService.getSegmentsEntries(
 								group.getGroupId(), QueryUtil.ALL_POS,
 								QueryUtil.ALL_POS, null));
-						_updateSegmentsExperiences(
+						_processSegmentsExperiences(
 							enabled,
 							_segmentsExperienceLocalService.
 								getSegmentsExperiences(
@@ -60,9 +60,7 @@ public class SegmentsFeatureFlagListener implements FeatureFlagListener {
 					catch (PortalException portalException) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
-								"Unable to update segments entries and " +
-									"segments experiences for group " +
-										group.getGroupId(),
+								"Unable to process group " + group.getGroupId(),
 								portalException);
 						}
 					}
@@ -70,7 +68,7 @@ public class SegmentsFeatureFlagListener implements FeatureFlagListener {
 			});
 	}
 
-	private void _updateSegmentsEntries(
+	private void _processSegmentsEntries(
 		boolean active, List<SegmentsEntry> segmentsEntries) {
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
@@ -87,7 +85,7 @@ public class SegmentsFeatureFlagListener implements FeatureFlagListener {
 		}
 	}
 
-	private void _updateSegmentsExperiences(
+	private void _processSegmentsExperiences(
 		boolean active, List<SegmentsExperience> segmentsExperiences) {
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {

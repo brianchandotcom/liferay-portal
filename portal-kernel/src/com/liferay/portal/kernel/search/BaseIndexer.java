@@ -486,6 +486,22 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
+	public Document safeGetDocument(T object) {
+		try {
+			return getDocument(object);
+		}
+		catch (SearchException searchException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get document for " + getClassName(),
+					searchException);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		try {
 			QueryConfig queryConfig = searchContext.getQueryConfig();

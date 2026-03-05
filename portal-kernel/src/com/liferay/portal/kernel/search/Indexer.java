@@ -150,6 +150,15 @@ public interface Indexer<T> {
 		reindex(object);
 	}
 
+	public default Document safeGetDocument(T object) {
+		try {
+			return getDocument(object);
+		}
+		catch (SearchException searchException) {
+			return null;
+		}
+	}
+
 	public Hits search(SearchContext searchContext) throws SearchException;
 
 	public Hits search(

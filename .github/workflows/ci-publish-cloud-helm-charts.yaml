@@ -107,6 +107,8 @@ on:
         branches:
             -   master
         paths:
+            -   .github/workflows/ci-publish-cloud-helm-charts.yaml
+            -   .github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
             -   cloud/helm/**
 permissions:
     id-token: write

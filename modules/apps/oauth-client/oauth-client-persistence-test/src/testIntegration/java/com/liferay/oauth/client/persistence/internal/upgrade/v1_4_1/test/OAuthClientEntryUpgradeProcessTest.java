@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  * @author Manuele Castro
  */
 @RunWith(Arquillian.class)
-public class OAuthClientEntryMatcherFieldUpgradeProcessTest {
+public class OAuthClientEntryUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -161,7 +161,7 @@ public class OAuthClientEntryMatcherFieldUpgradeProcessTest {
 
 	private static final String _CLASS_NAME =
 		"com.liferay.oauth.client.persistence.internal.upgrade.v1_4_1." +
-			"OAuthClientEntryMatcherFieldUpgradeProcess";
+			"OAuthClientEntryUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.oauth.client.persistence.internal.upgrade.registry.OAuthClientPersistenceServiceUpgradeStepRegistrator))"

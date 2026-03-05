@@ -269,6 +269,17 @@ gradle.beforeProject {
 				}
 			}
 
+			pluginManager.withPlugin("com.liferay.node") {
+				File nodeScriptsConfigFile = project.file("node-scripts.config.js")
+
+				if (tasks.findByName("packageRunBuild") && nodeScriptsConfigFile.exists()) {
+					packageRunBuild {
+						inputs.file nodeScriptsConfigFile
+						inputs.file project.rootProject.file("node-scripts.config.js")
+					}
+				}
+			}
+
 			pluginManager.withPlugin("com.liferay.osgi.defaults.plugin") {
 				if ((project.path.endsWith("-test") &&
 					!project.path.contains("third-party")) ||

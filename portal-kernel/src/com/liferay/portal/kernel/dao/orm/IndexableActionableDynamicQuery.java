@@ -127,8 +127,8 @@ public class IndexableActionableDynamicQuery {
 		_modelClass = modelClass;
 	}
 
-	public void setPerformActionMethod(
-		UnsafeFunction<?, Document, PortalException>
+	public <T extends BaseModel<T>> void setPerformActionMethod(
+		UnsafeFunction<T, Document, PortalException>
 			performActionUnsafeFunction) {
 
 		_performActionUnsafeFunction = performActionUnsafeFunction;

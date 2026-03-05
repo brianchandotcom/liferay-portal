@@ -24,9 +24,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Manuele Castro
  */
-public class OAuthClientEntryMatcherFieldUpgradeProcess extends UpgradeProcess {
+public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 
-	public OAuthClientEntryMatcherFieldUpgradeProcess(
+	public OAuthClientEntryUpgradeProcess(
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;

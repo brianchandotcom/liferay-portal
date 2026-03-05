@@ -250,14 +250,10 @@ describe('FormSupport', () => {
 
 		FormSupport.removeNestedEmptyRows(pages, 0);
 
-		expect(nestedFieldset.rows).toEqual([
-			expect.objectContaining({
-				columns: [
-					expect.objectContaining({
-						fields: ['Text67163348'],
-					}),
-				],
-			}),
+		expect(nestedFieldset.rows).toHaveLength(1);
+
+		expect(nestedFieldset.rows[0].columns[0].fields).toEqual([
+			'Text67163348',
 		]);
 	});
 

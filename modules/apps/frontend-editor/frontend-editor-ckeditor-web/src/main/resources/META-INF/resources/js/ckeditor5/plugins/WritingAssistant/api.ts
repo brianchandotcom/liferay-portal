@@ -35,7 +35,7 @@ export async function createEventSource() {
 
 async function postToken() {
 	try {
-		const response = await fetch(`${AI_HUB_ENDPOINT}/tokens`, {
+		const response = await fetch('/o/ai-hub-client/v1.0/tokens', {
 			method: 'POST',
 		});
 

@@ -26,11 +26,13 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Connection;
@@ -51,10 +53,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -67,7 +71,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override
 	public void clearCache(long ctCollectionId) {
-		_ctClosuresMap.remove(ctCollectionId);
+		_ctClosuresPortalCache.remove(ctCollectionId);
 	}
 
 	@Override
@@ -77,8 +81,14 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override
 	public CTClosure create(long ctCollectionId, long classNameId) {
-		Map<Long, CTClosure> ctClosures = _ctClosuresMap.computeIfAbsent(
-			ctCollectionId, key -> new LRUMap<>(5));
+		Map<Long, CTClosure> ctClosures = _ctClosuresPortalCache.get(
+			ctCollectionId);
+
+		if (ctClosures == null) {
+			ctClosures = new ConcurrentHashMap<>();
+
+			_ctClosuresPortalCache.put(ctCollectionId, ctClosures);
+		}
 
 		CTClosure ctClosure = ctClosures.get(classNameId);
 
@@ -107,6 +117,12 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		ctClosures.put(classNameId, ctClosure);
 
 		return ctClosure;
+	}
+
+	@Activate
+	protected void activate() {
+		_ctClosuresPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM, _CT_CLOSURES_PORTAL_CACHE_NAME);
 	}
 
 	private Map<Node, Collection<Node>> _buildClosureMap(
@@ -490,6 +506,9 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		return preparedStatement;
 	}
 
+	private static final String _CT_CLOSURES_PORTAL_CACHE_NAME =
+		CTClosureFactoryImpl.class.getName() + "._ctClosuresPortalCache";
+
 	private static final int _ORACLE_IN_CLAUSE_LIMIT = 1000;
 
 	private static final int _SQL_PLACEHOLDER_LIMIT = 65533;
@@ -499,8 +518,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTClosureFactoryImpl.class);
 
-	private final Map<Long, Map<Long, CTClosure>> _ctClosuresMap = new LRUMap<>(
-		10);
+	private PortalCache<Long, Map<Long, CTClosure>> _ctClosuresPortalCache;
 
 	@Reference
 	private CTCollectionPersistence _ctCollectionPersistence;

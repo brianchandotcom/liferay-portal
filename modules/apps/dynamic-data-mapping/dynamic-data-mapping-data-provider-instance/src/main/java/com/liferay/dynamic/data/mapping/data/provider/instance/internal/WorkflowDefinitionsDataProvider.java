@@ -63,7 +63,7 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 			List<WorkflowDefinition> workflowDefinitions =
 				workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
 					ddmDataProviderRequest.getCompanyId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+					null, QueryUtil.ALL_POS);
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 

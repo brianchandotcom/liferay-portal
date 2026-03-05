@@ -255,8 +255,8 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public List<WorkflowDefinition> liberalGetActiveWorkflowDefinitions(
-			long companyId, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			long companyId, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator, int start)
 		throws WorkflowException {
 
 		return _getActiveWorkflowDefinitions(

@@ -66,7 +66,7 @@ public class WorkflowDefinitionManagerUtil {
 			_workflowDefinitionManagerSnapshot.get();
 
 		return workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
-			companyId, start, end, orderByComparator);
+			companyId, end, orderByComparator, start);
 	}
 
 	public static WorkflowDefinition liberalGetLatestWorkflowDefinition(

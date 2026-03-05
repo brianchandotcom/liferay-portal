@@ -166,7 +166,7 @@ public class CommerceChannelDisplayContext
 
 		return _workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
 			_commerceChannelRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			null, QueryUtil.ALL_POS);
 	}
 
 	public String getAddChannelURL() throws Exception {

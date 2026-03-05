@@ -34,37 +34,6 @@ import org.json.JSONObject;
  */
 public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
-	public File archive(String fileName) {
-		File archiveFile = super.archive(fileName);
-
-		String upstreamBranchName = getUpstreamBranchName();
-
-		if (!JenkinsResultsParserUtil.isCloudCINode() ||
-			upstreamBranchName.startsWith("ee-")) {
-
-			return archiveFile;
-		}
-
-		setUpYarn();
-
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 10,
-			JenkinsResultsParserUtil.combine(
-				"zip -r -y ", fileName,
-				" $(git ls-files --directory --no-empty-directory --others | ",
-				"grep -v \\\\.gradle/) modules/yarn.lock"));
-
-		if (executionResult.getExitValue() != 0) {
-			throw new GitWorkingDirectoryRuntimeException(
-				this,
-				JenkinsResultsParserUtil.combine(
-					"Failed to add build/node to ", fileName, "\n",
-					executionResult.getStandardError()));
-		}
-
-		return archiveFile;
-	}
-
 	public Properties getAppServerProperties() {
 		if (_appServerProperties != null) {
 			return _appServerProperties;

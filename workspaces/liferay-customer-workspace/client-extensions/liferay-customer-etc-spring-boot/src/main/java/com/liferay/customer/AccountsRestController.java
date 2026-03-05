@@ -10,8 +10,10 @@ import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Access
 import com.liferay.customer.constants.HeatTagConstants;
 import com.liferay.customer.constants.JiraIssueConstants;
 import com.liferay.customer.constants.ProductConstants;
-import com.liferay.customer.model.AccountUsage;
+import com.liferay.customer.model.ExperienceUsageStrategy;
 import com.liferay.customer.model.JiraSupportIssue;
+import com.liferay.customer.model.SaaSUsageStrategy;
+import com.liferay.customer.model.UsageStrategy;
 import com.liferay.customer.permission.BusinessEventPermission;
 import com.liferay.customer.service.GoogleCloudFunctionService;
 import com.liferay.customer.service.JiraService;
@@ -133,13 +135,13 @@ public class AccountsRestController extends BaseRestController {
 						"' and state eq 'Active'",
 					1, 1000, StringPool.BLANK);
 
-			AccountUsage accountUsage = _fetchAccountUsage(
+			UsageStrategy usageStrategy = _fetchUsageStrategy(
 				externalReferenceCode, productPurchases);
 
-			JSONObject accountUsageJSONObject = accountUsage.toJSONObject();
+			JSONObject usageStrategyJSONObject = usageStrategy.toJSONObject();
 
 			return new ResponseEntity<>(
-				accountUsageJSONObject.toString(), HttpStatus.OK);
+				usageStrategyJSONObject.toString(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -236,7 +238,7 @@ public class AccountsRestController extends BaseRestController {
 			externalReferenceCode);
 	}
 
-	private AccountUsage _fetchAccountUsage(
+	private UsageStrategy _fetchUsageStrategy(
 			String accountKey, List<ProductPurchase> productPurchases)
 		throws Exception {
 
@@ -248,7 +250,7 @@ public class AccountsRestController extends BaseRestController {
 			if (ArrayUtil.contains(
 					ProductConstants.SAAS_PLAN_SUBSCRIPTION_NAMES, name)) {
 
-				return new AccountUsage(
+				return new SaaSUsageStrategy(
 					productPurchases,
 					_googleCloudFunctionService.fetchCustomerAccountUsage(
 						accountKey));
@@ -257,7 +259,7 @@ public class AccountsRestController extends BaseRestController {
 			if (name.equals(ProductConstants.NAME_PRODUCTION_ENVIRONMENT)) {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
 
-				return new AccountUsage(
+				return new ExperienceUsageStrategy(
 					productPurchase,
 					_googleCloudFunctionService.fetchCustomerAccountUsage(
 						accountKey, dateFormat.format(new Date())));
@@ -265,7 +267,7 @@ public class AccountsRestController extends BaseRestController {
 		}
 
 		throw new Exception(
-			"Unable to find a valid product for account with Key: " +
+			"Unable to find a valid product for account with key: " +
 				accountKey);
 	}
 

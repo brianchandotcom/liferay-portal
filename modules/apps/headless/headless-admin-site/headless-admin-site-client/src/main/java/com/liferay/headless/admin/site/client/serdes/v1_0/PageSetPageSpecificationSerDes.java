@@ -87,6 +87,27 @@ public class PageSetPageSpecificationSerDes {
 			sb.append("\"");
 		}
 
+		if (pageSetPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() !=
+					null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"siteTemplatePageSpecificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					pageSetPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (pageSetPageSpecification.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -151,6 +172,20 @@ public class PageSetPageSpecificationSerDes {
 					pageSetPageSpecification.getExternalReferenceCode()));
 		}
 
+		if (pageSetPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() ==
+					null) {
+
+			map.put("siteTemplatePageSpecificationExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"siteTemplatePageSpecificationExternalReferenceCode",
+				String.valueOf(
+					pageSetPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
+		}
+
 		if (pageSetPageSpecification.getStatus() == null) {
 			map.put("status", null);
 		}
@@ -189,6 +224,12 @@ public class PageSetPageSpecificationSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"siteTemplatePageSpecificationExternalReferenceCode")) {
 
 				return false;
 			}
@@ -233,6 +274,16 @@ public class PageSetPageSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					pageSetPageSpecification.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"siteTemplatePageSpecificationExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					pageSetPageSpecification.
+						setSiteTemplatePageSpecificationExternalReferenceCode(
+							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

@@ -1580,20 +1580,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"siteTemplatePageSpecificationExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (contentPageSpecification.
-						getSiteTemplatePageSpecificationExternalReferenceCode() ==
-							null) {
-
-					valid = false;
-				}
-
-				continue;
-			}
-
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1955,22 +1941,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 				if (!Objects.deepEquals(
 						contentPageSpecification1.getSettings(),
 						contentPageSpecification2.getSettings())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"siteTemplatePageSpecificationExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						contentPageSpecification1.
-							getSiteTemplatePageSpecificationExternalReferenceCode(),
-						contentPageSpecification2.
-							getSiteTemplatePageSpecificationExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2483,8 +2453,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		return new ContentPageSpecification() {
 			{
 				draftContentPageSpecificationExternalReferenceCode =
-					RandomTestUtil.randomString();
-				siteTemplatePageSpecificationExternalReferenceCode =
 					RandomTestUtil.randomString();
 			}
 		};

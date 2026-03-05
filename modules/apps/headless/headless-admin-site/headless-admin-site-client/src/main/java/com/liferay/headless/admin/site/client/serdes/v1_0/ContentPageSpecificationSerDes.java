@@ -107,27 +107,6 @@ public class ContentPageSpecificationSerDes {
 			sb.append(String.valueOf(contentPageSpecification.getSettings()));
 		}
 
-		if (contentPageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode() !=
-					null) {
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(
-				"\"siteTemplatePageSpecificationExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				_escape(
-					contentPageSpecification.
-						getSiteTemplatePageSpecificationExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
 		if (contentPageSpecification.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -163,6 +142,27 @@ public class ContentPageSpecificationSerDes {
 
 			sb.append(
 				_escape(contentPageSpecification.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (contentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() !=
+					null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"siteTemplatePageSpecificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					contentPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
 
 			sb.append("\"");
 		}
@@ -244,20 +244,6 @@ public class ContentPageSpecificationSerDes {
 				String.valueOf(contentPageSpecification.getSettings()));
 		}
 
-		if (contentPageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode() ==
-					null) {
-
-			map.put("siteTemplatePageSpecificationExternalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"siteTemplatePageSpecificationExternalReferenceCode",
-				String.valueOf(
-					contentPageSpecification.
-						getSiteTemplatePageSpecificationExternalReferenceCode()));
-		}
-
 		if (contentPageSpecification.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -275,6 +261,20 @@ public class ContentPageSpecificationSerDes {
 				"externalReferenceCode",
 				String.valueOf(
 					contentPageSpecification.getExternalReferenceCode()));
+		}
+
+		if (contentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() ==
+					null) {
+
+			map.put("siteTemplatePageSpecificationExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"siteTemplatePageSpecificationExternalReferenceCode",
+				String.valueOf(
+					contentPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
 		}
 
 		if (contentPageSpecification.getStatus() == null) {
@@ -322,17 +322,17 @@ public class ContentPageSpecificationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "settings")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteTemplatePageSpecificationExternalReferenceCode")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				return false;
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"siteTemplatePageSpecificationExternalReferenceCode")) {
 
 				return false;
 			}
@@ -384,16 +384,6 @@ public class ContentPageSpecificationSerDes {
 						SettingsSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteTemplatePageSpecificationExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					contentPageSpecification.
-						setSiteTemplatePageSpecificationExternalReferenceCode(
-							(String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
@@ -420,6 +410,16 @@ public class ContentPageSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					contentPageSpecification.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"siteTemplatePageSpecificationExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					contentPageSpecification.
+						setSiteTemplatePageSpecificationExternalReferenceCode(
+							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

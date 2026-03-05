@@ -9,8 +9,8 @@ import Loading from '../../../../components/Loading';
 import {OrderStatus} from '../../../../enums/Order';
 import {usePlacedOrder} from '../../../../hooks/data/usePlacedOrder';
 
-import './LDPNextSteps.scss';
 import i18n from '../../../../i18n';
+import './LDPNextSteps.scss';
 
 const Content = ({
 	description,

@@ -134,8 +134,12 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 
 			const link = await _productPurchase.getNextStepsLink(order);
 
+			const orderId = order?.id || cart?.id;
+
 			if (licenseType === 'PAID') {
-				await marketplaceOAuth2.taxCalculate(cart?.id);
+				await marketplaceOAuth2
+					.taxCalculate(orderId)
+					.catch(console.error);
 			}
 
 			if (link.startsWith('http')) {

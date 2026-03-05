@@ -49,6 +49,11 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	public void performActions() {
+		if (_performActionUnsafeConsumer == null) {
+			throw new IllegalStateException(
+				"performActionUnsafeConsumer is null");
+		}
+
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			try {
 				_total = _performCount();
@@ -173,9 +178,7 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	private void _performAction(Object object) throws Throwable {
-		if (_performActionUnsafeConsumer != null) {
-			_performActionUnsafeConsumer.accept(object);
-		}
+		_performActionUnsafeConsumer.accept(object);
 	}
 
 	private long _performActions(DynamicQuery dynamicQuery) throws Throwable {

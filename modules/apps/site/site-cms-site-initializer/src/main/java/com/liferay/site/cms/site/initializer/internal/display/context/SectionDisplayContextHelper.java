@@ -181,11 +181,11 @@ public class SectionDisplayContextHelper {
 			return creationMenu;
 		}
 
+		List<Long> depotEntryGroupIds = null;
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		List<Long> depotEntryGroupIds = null;
 
 		ObjectEntryFolder objectEntryFolder = _getObjectEntryFolder(
 			themeDisplay.getCompanyId(),

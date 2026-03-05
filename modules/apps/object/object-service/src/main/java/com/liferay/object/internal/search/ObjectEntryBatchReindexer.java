@@ -6,7 +6,6 @@
 package com.liferay.object.internal.search;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -48,8 +47,7 @@ public class ObjectEntryBatchReindexer {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(ObjectEntry objectEntry) -> indexerDocumentBuilder.getDocument(
-				objectEntry));
+			indexerDocumentBuilder::getDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

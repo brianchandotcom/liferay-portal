@@ -38,8 +38,7 @@ public class DDMFormInstanceRecordBatchReindexer {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
-				_indexerDocumentBuilder.getDocument(ddmFormInstanceRecord));
+			_indexerDocumentBuilder::getDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

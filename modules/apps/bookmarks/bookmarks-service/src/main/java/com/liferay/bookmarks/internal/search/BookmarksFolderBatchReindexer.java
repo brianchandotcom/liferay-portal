@@ -38,8 +38,7 @@ public class BookmarksFolderBatchReindexer {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(BookmarksFolder bookmarksFolder) ->
-				_indexerDocumentBuilder.getDocument(bookmarksFolder));
+			_indexerDocumentBuilder::getDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

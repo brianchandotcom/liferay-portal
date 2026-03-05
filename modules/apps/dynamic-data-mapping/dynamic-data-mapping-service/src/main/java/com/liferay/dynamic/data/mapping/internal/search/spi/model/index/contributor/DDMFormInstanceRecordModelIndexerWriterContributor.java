@@ -71,8 +71,7 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 					ddmFormInstanceProperty.in(ddmFormInstanceDynamicQuery));
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
-				indexerDocumentBuilder.getDocument(ddmFormInstanceRecord));
+			indexerDocumentBuilder::getDocument);
 	}
 
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;

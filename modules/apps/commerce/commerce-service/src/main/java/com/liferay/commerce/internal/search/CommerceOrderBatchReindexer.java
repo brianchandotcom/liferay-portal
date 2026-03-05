@@ -39,8 +39,7 @@ public class CommerceOrderBatchReindexer {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(CommerceOrder commerceOrder) ->
-				_indexerDocumentBuilder.getDocument(commerceOrder));
+			_indexerDocumentBuilder::getDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

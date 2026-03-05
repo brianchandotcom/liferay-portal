@@ -38,7 +38,7 @@ public class DDLRecordBatchReindexer {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(DDLRecord record) -> _indexerDocumentBuilder.getDocument(record));
+			_indexerDocumentBuilder::getDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

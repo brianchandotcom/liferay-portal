@@ -84,8 +84,7 @@ public class JournalArticleModelIndexerWriterContributor
 				_batchIndexingHelper.getBulkSize(
 					JournalArticle.class.getName()));
 			indexableActionableDynamicQuery.setPerformActionMethod(
-				(JournalArticle journalArticle) ->
-					indexerDocumentBuilder.getDocument(journalArticle));
+				indexerDocumentBuilder::getDocument);
 		}
 		else {
 			indexableActionableDynamicQuery.setAddCriteriaMethod(

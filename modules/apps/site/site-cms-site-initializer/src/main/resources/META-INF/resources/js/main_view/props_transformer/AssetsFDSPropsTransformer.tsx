@@ -51,7 +51,7 @@ export type AdditionalProps = {
 	assetLibraries: AssetLibrary[];
 	autocompleteURL: string;
 	availableExportFileFormats: any[];
-	availableTargetLocales: any[];
+	availableLocales: any[];
 	baseFolderViewURL: string;
 	brokenLinksCheckerEnabled: boolean;
 	cmsGroupId?: number;
@@ -365,14 +365,14 @@ export default function AssetsFDSPropsTransformer({
 								itemData.embedded?.title_i18n || {}
 							)
 								.map((languageId) =>
-									additionalProps.availableTargetLocales.find(
+									additionalProps.availableLocales.find(
 										(locale) =>
 											locale.languageId === languageId
 									)
 								)
 								.filter(Boolean),
 							availableTargetLocales:
-								additionalProps.availableTargetLocales,
+								additionalProps.availableLocales,
 							closeModal,
 							defaultSourceLanguageId:
 								itemData.embedded?.defaultLanguageId,

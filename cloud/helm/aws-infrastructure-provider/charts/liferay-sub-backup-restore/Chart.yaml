@@ -1,4 +1,4 @@
 apiVersion: v2
-name: backup-restore
+name: liferay-sub-backup-restore
 type: application
 version: 0.1.0

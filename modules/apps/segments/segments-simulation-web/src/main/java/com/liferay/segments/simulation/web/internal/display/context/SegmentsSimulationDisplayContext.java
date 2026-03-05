@@ -187,14 +187,8 @@ public class SegmentsSimulationDisplayContext {
 					curSegmentsExperience.getSegmentsEntryERC(),
 					segmentsExperience.getSegmentsEntryERC()) &&
 				 Objects.equals(
-					 ScopeUtil.getItemGroupId(
-						 curSegmentsExperience.getCompanyId(),
 						 curSegmentsExperience.getSegmentsEntryScopeERC(),
-						 curSegmentsExperience.getGroupId()),
-					 ScopeUtil.getItemGroupId(
-						 segmentsExperience.getCompanyId(),
-						 segmentsExperience.getSegmentsEntryScopeERC(),
-						 segmentsExperience.getGroupId()))) ||
+						 segmentsExperience.getSegmentsEntryScopeERC())) ||
 				curSegmentsExperience.hasDefaultSegmentsEntry()) {
 
 				if (curSegmentsExperience.getSegmentsExperienceId() ==

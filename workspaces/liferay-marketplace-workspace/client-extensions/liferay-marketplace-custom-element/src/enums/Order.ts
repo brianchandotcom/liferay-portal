@@ -30,6 +30,7 @@ export enum OrderTypes {
 	ADDONS = 'ADDONS',
 	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
 	CLOUD_APP = 'CLOUD_APP',
+	CMP = 'CMP_BETA',
 	COMPOSITE_APP = 'COMPOSITE_APP',
 	DXP = 'DXP',
 	DXP_APP = 'DXP_APP',
@@ -62,7 +63,9 @@ export const orderTypeLabel = {
 	[OrderTypes.ADDONS]: 'Add-Ons',
 	[OrderTypes.CLIENT_EXTENSION]: 'Client Extension',
 	[OrderTypes.CLOUD_APP]: 'Cloud',
+	[OrderTypes.CMP]: 'Content Marketing Platform',
 	[OrderTypes.COMPOSITE_APP]: 'Composite App',
+	[OrderTypes.DXP]: 'DXP Free',
 	[OrderTypes.DXP_APP]: 'DXP',
 	[OrderTypes.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
 	[OrderTypes.OTHER]: 'Other',
@@ -97,21 +100,19 @@ export const paymentWorkflowDisplayType = {
 } as const;
 
 export function getOrderStatusLabel(order: PlacedOrder) {
-	if (order.orderTypeExternalReferenceCode === OrderTypes.ADDONS) {
-		if (order.paymentStatus !== PaymentStatus.PAID) {
-			return orderWorkflowStatusCodeLabels[
-				OrderWorkflowStatusCode.PENDING_PAYMENT
-			];
-		}
-
+	if (
+		order.orderTypeExternalReferenceCode === OrderTypes.ADDONS ||
+		order.orderTypeExternalReferenceCode === OrderTypes.CMP ||
+		order.orderTypeExternalReferenceCode === OrderTypes.DXP
+	) {
 		return (
 			{
-				[OrderWorkflowStatusCode.CANCELLED]: 'Cancelled',
-				[OrderWorkflowStatusCode.COMPLETED]: 'Environment Ready',
-				[OrderWorkflowStatusCode.IN_PROGRESS]: 'In Progress',
-				[OrderWorkflowStatusCode.ON_HOLD]: 'On Hold',
+				[OrderWorkflowStatusCode.CANCELLED]: 'Expired',
+				[OrderWorkflowStatusCode.COMPLETED]: 'Active',
+				[OrderWorkflowStatusCode.IN_PROGRESS]: 'Active',
+				[OrderWorkflowStatusCode.ON_HOLD]: 'Pending',
 				[OrderWorkflowStatusCode.PENDING]: 'Pending',
-				[OrderWorkflowStatusCode.PROCESSING]: 'Processing',
+				[OrderWorkflowStatusCode.PROCESSING]: 'Pending',
 			}[order.orderStatusInfo.code] || order.orderStatusInfo.label
 		);
 	}

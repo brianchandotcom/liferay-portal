@@ -86,7 +86,7 @@ yarn run lint
     -   `README.md`, `CHANGELOG.md`, `BREAKING.md`
     -   `tsconfig.json`, `tsconfig.declarations.json`
 -   Shared Jest config is at module root: `jest.config.js`.
--   Runing unit tests from the module root utilizes node-scripts to run the tests in the correct context.
+-   Running unit tests from the module root utilizes node-scripts to run the tests in the correct context.
 -   Package builds use `clay/build-package-esbuild.js` for CJS/ESM outputs.
 
 ## Build and Publish Model
@@ -151,7 +151,7 @@ Release notes:
 
 ## Code Conventions
 
--   Follow existing formatting and style conventions enforced by node-scipts at portal root.
+-   Follow existing formatting and style conventions enforced by node-scripts at portal root.
 -   Keep public API changes intentional and typed; match existing prop/type naming patterns in the package.
 -   Never import across package source paths (for example, `../../clay-button/src`). Always import from package entrypoints (`@clayui/...`).
 -   If a cross-package import is needed and the dependency is missing, add that package as an explicit dependency in the consuming package.

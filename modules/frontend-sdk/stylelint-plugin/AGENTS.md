@@ -38,10 +38,14 @@ Current custom rules in this package:
 When adding/changing rules:
 
 1. Implement/update rule in `rules/<rule-name>.js`.
-2. Register it in `plugins.js`.
-3. Add/update `defaultConfig.rules` in `index.js` if it should be enabled by default.
-4. Validate downstream effect in `modules/.stylelintrc.js` (which may override defaults).
-5. Run:
+
+1. Register it in `plugins.js`.
+
+1. Add/update `defaultConfig.rules` in `index.js` if it should be enabled by default.
+
+1. Validate downstream effect in `modules/.stylelintrc.js` (which may override defaults).
+
+1. Run:
    - `yarn run format:check`
 
 ## Guardrails

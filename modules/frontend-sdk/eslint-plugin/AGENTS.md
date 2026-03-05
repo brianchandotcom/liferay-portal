@@ -51,11 +51,16 @@ Key nuance:
 When adding/updating a rule:
 
 1. Add implementation file in `lib/rules`.
-2. Export rule from the family `index.js`.
-3. Add unit tests using `MultiTester`.
-4. Add markdown docs in `docs/rules`.
-5. Decide whether to enable in preset config (`configs/*.js`) or keep opt-in.
-6. If autofix is provided, verify behavior with integration-level interactions if needed.
+
+1. Export rule from the family `index.js`.
+
+1. Add unit tests using `MultiTester`.
+
+1. Add markdown docs in `docs/rules`.
+
+1. Decide whether to enable in preset config (`configs/*.js`) or keep opt-in.
+
+1. If autofix is provided, verify behavior with integration-level interactions if needed.
 
 Implementation expectations:
 - Export `{create, meta}`.

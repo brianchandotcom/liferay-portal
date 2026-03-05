@@ -22,7 +22,6 @@ import {
 	ColorCategoryMap,
 	DropdownColorPicker,
 } from './DropdownColorPicker';
-import OldColorPicker from './OldColorPicker';
 import {parseColorValue} from './parseColorValue';
 
 import './ColorPicker.scss';
@@ -80,7 +79,7 @@ interface Props {
 	value: string;
 }
 
-function ColorPicker({
+export default function ColorPicker({
 	activeItemId = '',
 	canDetachTokenValues = true,
 	defaultTokenLabel = DEFAULT_TOKEN_LABEL,
@@ -457,13 +456,5 @@ function ColorPicker({
 				</div>
 			) : null}
 		</ClayForm.Group>
-	);
-}
-
-export default function ColorPickerWrapper(props: Props) {
-	return Liferay.FeatureFlags['LPD-40054'] ? (
-		<ColorPicker {...props} />
-	) : (
-		<OldColorPicker {...props} />
 	);
 }

@@ -28,61 +28,6 @@ const test = mergeTests(
 	wikiPagesTest
 );
 
-test.fixme(
-	'Can add a hyperlink to existing text in web content',
-	{tag: '@LPS-110663'},
-	async ({journalEditArticlePage, page, site}) => {
-		const articleTitle = getRandomString();
-
-		await journalEditArticlePage.goto({
-			siteUrl: site.friendlyUrlPath,
-		});
-
-		await journalEditArticlePage.fillTitle(articleTitle);
-
-		await test.step('Type text in the editor', async () => {
-			await journalEditArticlePage.contentFrame
-				.locator('.cke_editable')
-				.click();
-
-			await journalEditArticlePage.contentFrame
-				.locator('.cke_editable')
-				.fill('Click here for more information');
-		});
-
-		await test.step('Select text and add hyperlink', async () => {
-			await journalEditArticlePage.contentFrame
-				.locator('.cke_editable')
-				.selectText();
-
-			const linkButton = page.locator(
-				'.cke_button__link, .ck-button[data-cke-tooltip-text="Link"]'
-			);
-
-			if (await linkButton.isVisible({timeout: 3000})) {
-				await linkButton.click();
-
-				const urlInput = page.getByLabel('URL*').or(
-					page.getByPlaceholder('https://example.com')
-				);
-
-				if (await urlInput.isVisible({timeout: 3000})) {
-					await urlInput.fill('https://www.liferay.com');
-
-					await page
-						.getByRole('button', {name: 'OK'})
-						.or(page.getByRole('button', {name: 'Save'}))
-						.click();
-				}
-			}
-		});
-
-		await test.step('Publish the article', async () => {
-			await journalEditArticlePage.publishArticle();
-		});
-	}
-);
-
 test(
 	'Can view source code formatted in text view',
 	{tag: '@LRQA-67229'},

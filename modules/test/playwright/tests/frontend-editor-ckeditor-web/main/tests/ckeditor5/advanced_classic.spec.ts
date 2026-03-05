@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import {advancedClassicPageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditor5/classicPageTest';
+import getRandomString from "../../../../../utils/getRandomString";
 
 export const test = mergeTests(
 	advancedClassicPageTest,
@@ -143,6 +144,38 @@ test(
 
 		await expect(
 			classicPage.editable.locator('img[src*="moon-png"]')
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can add a hyperlink to existing text',
+	{tag: '@LPS-110663'},
+	async ({classicPage, page}) => {
+		await test.step('Type some text in the editor', async () => {
+			await classicPage.editable.fill(getRandomString());
+		});
+
+		await test.step('Select text and add hyperlink', async () => {
+			await classicPage.editable.selectText();
+
+			await classicPage.toolbar.container
+				.getByRole('button', {name: 'Link'})
+				.click();
+
+			const urlInput = page.getByLabel('Link URL');
+
+			if (await urlInput.isVisible({timeout: 3000})) {
+				await urlInput.fill('https://www.liferay.com');
+
+			await page
+				.getByLabel('Insert', { exact: true })
+				.click();
+			}
+		});
+
+		await expect(
+			classicPage.editable.locator('a[href*="https://www.liferay.com"]')
 		).toBeVisible();
 	}
 );

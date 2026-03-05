@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
@@ -73,6 +74,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -122,6 +124,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
 /**
  * @author Alejandro Tardín
  */
@@ -169,6 +174,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Test
 	public void testPostBulkAction() throws Exception {
 		_testPostBulkActionWithTypeAssignStructureDefaultWorkflow();
+		_testPostBulkActionWithTypeAssignTo();
 		_testPostBulkActionWithTypeCopy();
 		_testPostBulkActionWithTypeDefaultPermission();
 		_testPostBulkActionWithTypeDefaultPermissionSingleRole();
@@ -657,6 +663,36 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				_cmsBulkActionTaskObjectDefinition.getClassName());
 
 		Assert.assertTrue(workflowDefinitionLinks.isEmpty());
+	}
+
+	private void _testPostBulkActionWithTypeAssignTo() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(BulkActionResourceTest.class);
+
+		bundle = BundleUtil.getBundle(
+			bundle.getBundleContext(), "com.liferay.site.cmp.site.initializer");
+
+		try {
+			if (bundle != null) {
+				bundle.stop();
+			}
+
+			AssignToBulkAction assignToBulkAction = new AssignToBulkAction();
+
+			assignToBulkAction.setBulkActionItems(
+				new BulkActionItem[] {new BulkActionItem()});
+			assignToBulkAction.setType(BulkAction.Type.ASSIGN_TO_BULK_ACTION);
+
+			assertHttpResponseStatusCode(
+				400,
+				bulkActionResource.postBulkActionHttpResponse(
+					null, null, null, null, null, null, null, null,
+					assignToBulkAction));
+		}
+		finally {
+			if (bundle != null) {
+				bundle.start();
+			}
+		}
 	}
 
 	private void _testPostBulkActionWithTypeCopy() throws Exception {

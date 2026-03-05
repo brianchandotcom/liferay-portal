@@ -595,6 +595,34 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	@TestInfo("LPD-81019")
+	public void testLayoutSetPrototypeLayoutERCPropagation() throws Exception {
+		long prototypeGroupId = _layoutSetPrototypeGroup.getGroupId();
+
+		Layout contentLayout = _addLayout(prototypeGroupId);
+		Layout embeddedLayout = LayoutTestUtil.addTypeEmbeddedLayout(
+			prototypeGroupId, true);
+		Layout linkToPageLayout = LayoutTestUtil.addTypeLinkToLayoutLayout(
+			prototypeGroupId, true, prototypeLayout.getLayoutId());
+		Layout linkToURLLayout = LayoutTestUtil.addTypeLinkToURLLayout(
+			prototypeGroupId, true, "http://www.liferay.com");
+		Layout nodeLayout = LayoutTestUtil.addTypeNodeLayout(
+			prototypeGroupId, true);
+		Layout widgetLayout = LayoutTestUtil.addTypePortletLayout(
+			prototypeGroupId, true);
+
+		propagateChanges(group);
+
+		_assertLayoutSetPrototypeLayoutERC(contentLayout, group.getGroupId());
+		_assertLayoutSetPrototypeLayoutERC(embeddedLayout, group.getGroupId());
+		_assertLayoutSetPrototypeLayoutERC(
+			linkToPageLayout, group.getGroupId());
+		_assertLayoutSetPrototypeLayoutERC(linkToURLLayout, group.getGroupId());
+		_assertLayoutSetPrototypeLayoutERC(nodeLayout, group.getGroupId());
+		_assertLayoutSetPrototypeLayoutERC(widgetLayout, group.getGroupId());
+	}
+
+	@Test
 	public void testMasterPageTemplateThemeSettingsAfterLayoutPropagation()
 		throws Exception {
 
@@ -1535,6 +1563,20 @@ public class LayoutSetPrototypePropagationTest
 		return PortletIdCodec.encode(
 			editableValuesJSONObject.getString("portletId"),
 			editableValuesJSONObject.getString("instanceId"));
+	}
+
+	private void _assertLayoutSetPrototypeLayoutERC(
+			Layout prototypeLayout, long groupId)
+		throws Exception {
+
+		Layout propagatedLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				prototypeLayout.getUuid(), groupId, false);
+
+		Assert.assertNotNull(propagatedLayout);
+		Assert.assertEquals(
+			prototypeLayout.getExternalReferenceCode(),
+			propagatedLayout.getLayoutSetPrototypeLayoutERC());
 	}
 
 	private void _propagateChanges(int failCount, int layoutCount)

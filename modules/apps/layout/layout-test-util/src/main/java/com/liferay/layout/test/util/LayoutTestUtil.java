@@ -275,7 +275,14 @@ public class LayoutTestUtil {
 	}
 
 	public static Layout addTypeEmbeddedLayout(long groupId) throws Exception {
-		Layout layout = addTypePortletLayout(groupId, false);
+		return addTypeEmbeddedLayout(groupId, false);
+	}
+
+	public static Layout addTypeEmbeddedLayout(
+			long groupId, boolean privateLayout)
+		throws Exception {
+
+		Layout layout = addTypePortletLayout(groupId, privateLayout);
 
 		layout.setType(LayoutConstants.TYPE_EMBEDDED);
 
@@ -313,10 +320,10 @@ public class LayoutTestUtil {
 	}
 
 	public static Layout addTypeLinkToLayoutLayout(
-			long groupId, long linkedToLayoutId)
+			long groupId, boolean privateLayout, long linkedToLayoutId)
 		throws Exception {
 
-		Layout layout = addTypePortletLayout(groupId, false);
+		Layout layout = addTypePortletLayout(groupId, privateLayout);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -329,10 +336,18 @@ public class LayoutTestUtil {
 		return LayoutLocalServiceUtil.updateLayout(layout);
 	}
 
-	public static Layout addTypeLinkToURLLayout(long groupId, String url)
+	public static Layout addTypeLinkToLayoutLayout(
+			long groupId, long linkedToLayoutId)
 		throws Exception {
 
-		Layout layout = addTypePortletLayout(groupId, false);
+		return addTypeLinkToLayoutLayout(groupId, false, linkedToLayoutId);
+	}
+
+	public static Layout addTypeLinkToURLLayout(
+			long groupId, boolean privateLayout, String url)
+		throws Exception {
+
+		Layout layout = addTypePortletLayout(groupId, privateLayout);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -340,6 +355,22 @@ public class LayoutTestUtil {
 		typeSettingsUnicodeProperties.setProperty("url", url);
 
 		layout.setType(LayoutConstants.TYPE_URL);
+
+		return LayoutLocalServiceUtil.updateLayout(layout);
+	}
+
+	public static Layout addTypeLinkToURLLayout(long groupId, String url)
+		throws Exception {
+
+		return addTypeLinkToURLLayout(groupId, false, url);
+	}
+
+	public static Layout addTypeNodeLayout(long groupId, boolean privateLayout)
+		throws Exception {
+
+		Layout layout = addTypePortletLayout(groupId, privateLayout);
+
+		layout.setType(LayoutConstants.TYPE_NODE);
 
 		return LayoutLocalServiceUtil.updateLayout(layout);
 	}

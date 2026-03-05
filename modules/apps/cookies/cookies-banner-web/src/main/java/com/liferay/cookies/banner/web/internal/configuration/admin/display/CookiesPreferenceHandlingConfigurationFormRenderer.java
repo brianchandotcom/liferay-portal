@@ -30,7 +30,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -141,10 +140,14 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 		).put(
 			"modifiedDate",
 			() -> {
-				Date now = new Date();
+				long modifiedDate = ParamUtil.getLong(
+					httpServletRequest, "modifiedDate");
 
-				return ParamUtil.getLong(
-					httpServletRequest, "modifiedDate", now.getTime());
+				if (modifiedDate <= 0) {
+					return null;
+				}
+
+				return modifiedDate;
 			}
 		).put(
 			"storeConsent",

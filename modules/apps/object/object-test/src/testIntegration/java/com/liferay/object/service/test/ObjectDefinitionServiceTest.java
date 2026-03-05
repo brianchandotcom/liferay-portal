@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -52,6 +51,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
+import com.liferay.site.cms.site.initializer.util.RoleUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -146,12 +146,7 @@ public class ObjectDefinitionServiceTest {
 
 		CMSTestUtil.getOrAddGroup(ObjectDefinitionServiceTest.class);
 
-		User user = UserTestUtil.addUser();
-
-		Role role = RoleLocalServiceUtil.getRole(
-			user.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
-
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+		User user = _addCMSAdministratorUser();
 
 		_testAddCustomObjectDefinition(0, user);
 
@@ -286,15 +281,8 @@ public class ObjectDefinitionServiceTest {
 
 		CMSTestUtil.getOrAddGroup(ObjectDefinitionServiceTest.class);
 
-		User user = UserTestUtil.addUser();
-
-		Role role = RoleLocalServiceUtil.getRole(
-			user.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
-
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
-
 		_testPublishCustomObjectDefinition(
-			_addCustomObjectDefinition(_adminUser), user);
+			_addCustomObjectDefinition(_adminUser), _addCMSAdministratorUser());
 	}
 
 	@Test
@@ -382,6 +370,17 @@ public class ObjectDefinitionServiceTest {
 			_addCustomObjectDefinition(_adminUser), _adminUser, _adminUser);
 		_testUpdateTitleObjectFieldId(
 			_addCustomObjectDefinition(_user1), _user1, _user1);
+	}
+
+	private User _addCMSAdministratorUser() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleUtil.getOrAddCMSAdministratorRole(
+			user.getCompanyId(), user.getUserId());
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+
+		return user;
 	}
 
 	private ObjectDefinition _addCustomObjectDefinition(User user)

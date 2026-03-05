@@ -27,9 +27,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * @author Andrew Betts
@@ -53,30 +51,6 @@ public class IndexableActionableDynamicQuery {
 		else if ((size % _STATUS_INTERVAL) == 0) {
 			sendStatusMessage(size);
 		}
-	}
-
-	public ActionableDynamicQuery.AddCriteriaMethod getAddCriteriaMethod() {
-		return _addCriteriaMethod;
-	}
-
-	public ActionableDynamicQuery.AddOrderCriteriaMethod
-		getAddOrderCriteriaMethod() {
-
-		return _addOrderCriteriaMethod;
-	}
-
-	public ActionableDynamicQuery.PerformActionMethod<?>
-		getPerformActionMethod() {
-
-		return _performActionMethod;
-	}
-
-	public ActionableDynamicQuery.PerformCountMethod getPerformCountMethod() {
-		return _performCountMethod;
-	}
-
-	public boolean isParallel() {
-		return _parallel;
 	}
 
 	public void performActions() {
@@ -106,8 +80,6 @@ public class IndexableActionableDynamicQuery {
 				}
 			}
 			finally {
-				_offset = 0;
-
 				actionsCompleted();
 			}
 		}
@@ -122,10 +94,6 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	public long performCount() throws PortalException {
-		if (_performCountMethod != null) {
-			return _performCountMethod.performCount();
-		}
-
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_modelClass, _classLoader);
 
@@ -141,12 +109,6 @@ public class IndexableActionableDynamicQuery {
 		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod) {
 
 		_addCriteriaMethod = addCriteriaMethod;
-	}
-
-	public void setAddOrderCriteriaMethod(
-		ActionableDynamicQuery.AddOrderCriteriaMethod addOrderCriteriaMethod) {
-
-		_addOrderCriteriaMethod = addOrderCriteriaMethod;
 	}
 
 	public void setBaseLocalService(BaseLocalService baseLocalService) {
@@ -177,10 +139,6 @@ public class IndexableActionableDynamicQuery {
 		_groupId = groupId;
 	}
 
-	public void setGroupIdPropertyName(String groupIdPropertyName) {
-		_groupIdPropertyName = groupIdPropertyName;
-	}
-
 	public void setInterval(int interval) {
 		_interval = interval;
 	}
@@ -189,28 +147,10 @@ public class IndexableActionableDynamicQuery {
 		_modelClass = modelClass;
 	}
 
-	public void setParallel(boolean parallel) {
-		if (_parallel == parallel) {
-			return;
-		}
-
-		_parallel = parallel;
-
-		if (parallel) {
-			_documents = new ConcurrentLinkedDeque<>();
-		}
-	}
-
 	public void setPerformActionMethod(
 		ActionableDynamicQuery.PerformActionMethod<?> performActionMethod) {
 
 		_performActionMethod = performActionMethod;
-	}
-
-	public void setPerformCountMethod(
-		ActionableDynamicQuery.PerformCountMethod performCountMethod) {
-
-		_performCountMethod = performCountMethod;
 	}
 
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName) {
@@ -242,21 +182,14 @@ public class IndexableActionableDynamicQuery {
 		}
 
 		if (_groupId > 0) {
-			Property property = PropertyFactoryUtil.forName(
-				_groupIdPropertyName);
+			Property property = PropertyFactoryUtil.forName("groupId");
 
 			dynamicQuery.add(property.eq(_groupId));
 		}
 	}
 
 	protected void addOrderCriteria(DynamicQuery dynamicQuery) {
-		if (_addOrderCriteriaMethod == null) {
-			dynamicQuery.addOrder(
-				OrderFactoryUtil.asc(_primaryKeyPropertyName));
-		}
-		else {
-			_addOrderCriteriaMethod.addOrderCriteria(dynamicQuery);
-		}
+		dynamicQuery.addOrder(OrderFactoryUtil.asc(_primaryKeyPropertyName));
 	}
 
 	protected void doPerformActions(List<Object> objects) throws Exception {
@@ -283,17 +216,12 @@ public class IndexableActionableDynamicQuery {
 			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 				_modelClass, _classLoader);
 
-			if (_addOrderCriteriaMethod == null) {
-				Property property = PropertyFactoryUtil.forName(
-					_primaryKeyPropertyName);
+			Property property = PropertyFactoryUtil.forName(
+				_primaryKeyPropertyName);
 
-				dynamicQuery.add(property.gt(previousPrimaryKey));
+			dynamicQuery.add(property.gt(previousPrimaryKey));
 
-				dynamicQuery.setLimit(0, _interval);
-			}
-			else {
-				dynamicQuery.setLimit(_offset, _interval + _offset);
-			}
+			dynamicQuery.setLimit(0, _interval);
 
 			addDefaultCriteria(dynamicQuery);
 
@@ -373,7 +301,7 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	protected void indexInterval() throws PortalException {
-		if ((_documents == null) || _documents.isEmpty()) {
+		if (_documents.isEmpty()) {
 			return;
 		}
 
@@ -420,8 +348,6 @@ public class IndexableActionableDynamicQuery {
 	private long _performActions(DynamicQuery dynamicQuery) throws Exception {
 		List<Object> objects = (List<Object>)executeDynamicQuery(
 			_dynamicQueryMethod, dynamicQuery);
-
-		_offset += objects.size();
 
 		if (objects.isEmpty()) {
 			return -1L;
@@ -476,26 +402,20 @@ public class IndexableActionableDynamicQuery {
 			IndexableActionableDynamicQuery.class, IndexWriterHelper.class);
 
 	private ActionableDynamicQuery.AddCriteriaMethod _addCriteriaMethod;
-	private ActionableDynamicQuery.AddOrderCriteriaMethod
-		_addOrderCriteriaMethod;
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;
 	private long _companyId;
 	private long _count;
-	private Collection<Document> _documents = new ArrayList<>();
+	private final List<Document> _documents = new ArrayList<>();
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
 	private long _groupId;
-	private String _groupIdPropertyName = "groupId";
 	private int _interval = Indexer.DEFAULT_INTERVAL;
 	private Class<?> _modelClass;
-	private int _offset;
-	private boolean _parallel;
 
 	@SuppressWarnings("rawtypes")
 	private ActionableDynamicQuery.PerformActionMethod _performActionMethod;
 
-	private ActionableDynamicQuery.PerformCountMethod _performCountMethod;
 	private String _primaryKeyPropertyName;
 	private long _total;
 	private TransactionConfig _transactionConfig;

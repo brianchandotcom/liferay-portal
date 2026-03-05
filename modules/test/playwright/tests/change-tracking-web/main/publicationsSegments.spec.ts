@@ -7,16 +7,12 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import {createSegmentsEntry, editSegmentsEntry} from './utils/segments';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	featureFlagsTest({
-		'LPD-78863': {enabled: true, system: true},
-	}),
 	changeTrackingPagesTest,
 	pageEditorPagesTest
 );

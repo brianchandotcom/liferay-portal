@@ -673,14 +673,7 @@ public class FragmentEntryLinkLocalServiceImpl
 			FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
-		if (!Objects.equals(
-				fragmentEntryLink.getFragmentEntryERC(),
-				fragmentEntry.getExternalReferenceCode()) ||
-			((fragmentEntryLink.getFragmentEntryERC() == null) &&
-			 !Objects.equals(
-				 fragmentEntry.getFragmentEntryKey(),
-				 fragmentEntryLink.getRendererKey()))) {
-
+		if (!_isValidFragmentEntry(fragmentEntry, fragmentEntryLink)) {
 			throw new UnsupportedOperationException(
 				"Unable to propagate fragment entry " +
 					fragmentEntry.getFragmentEntryId());
@@ -1021,6 +1014,30 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return _fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 			fragmentEntryLink, fragmentEntryProcessorContext);
+	}
+
+	private boolean _isValidFragmentEntry(
+		FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink) {
+
+		FragmentEntry fragmentEntryLinkFragmentEntry =
+			fragmentEntryLink.fetchFragmentEntry();
+
+		if ((fragmentEntryLinkFragmentEntry != null) &&
+			(fragmentEntry.getFragmentEntryId() ==
+				fragmentEntryLinkFragmentEntry.getFragmentEntryId())) {
+
+			return true;
+		}
+
+		if ((fragmentEntryLinkFragmentEntry == null) &&
+			Validator.isNotNull(fragmentEntryLink.getFragmentEntryERC())) {
+
+			return false;
+		}
+
+		return Objects.equals(
+			fragmentEntry.getFragmentEntryKey(),
+			fragmentEntryLink.getRendererKey());
 	}
 
 	private String _replaceResources(FragmentEntry fragmentEntry, String html)

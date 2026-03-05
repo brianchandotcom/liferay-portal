@@ -508,8 +508,8 @@ public class WorkflowDefinitionResourceTest
 		}
 
 		_workflowDefinitionManager.updateActive(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowDefinitionName, workflowDefinitionVersion, false);
+			false, TestPropsValues.getCompanyId(), workflowDefinitionName,
+			TestPropsValues.getUserId(), workflowDefinitionVersion);
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
 			TestPropsValues.getCompanyId(), workflowDefinitionName,

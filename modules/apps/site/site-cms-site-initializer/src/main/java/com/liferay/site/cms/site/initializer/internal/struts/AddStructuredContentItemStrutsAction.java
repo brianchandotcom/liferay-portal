@@ -13,22 +13,17 @@ import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -84,52 +79,19 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 				themeDisplay.getSiteDefaultLocale(), null,
 				themeDisplay.getUser());
 
-		String objectEntryFolderExternalReferenceCode = ParamUtil.getString(
-			httpServletRequest, "objectEntryFolderExternalReferenceCode");
+		objectEntry.setObjectEntryFolderExternalReferenceCode(
+			() -> ParamUtil.getString(
+				httpServletRequest, "objectEntryFolderExternalReferenceCode"));
+		objectEntry.setStatus(
+			() -> new Status() {
+				{
+					setCode(() -> WorkflowConstants.STATUS_DRAFT);
+				}
+			});
 
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderLocalService.
-				fetchObjectEntryFolderByExternalReferenceCode(
-					objectEntryFolderExternalReferenceCode,
-					ParamUtil.getLong(httpServletRequest, "groupId"),
-					objectDefinition.getCompanyId());
-
-		String filterString = StringBundler.concat(
-			"status eq ", WorkflowConstants.STATUS_DRAFT,
-			" and title eq null and userId eq ", themeDisplay.getUserId());
-
-		if (objectEntryFolder != null) {
-			filterString = StringBundler.concat(
-				"folderId eq ", objectEntryFolder.getObjectEntryFolderId(),
-				" and ", filterString);
-		}
-
-		Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
-			objectDefinition.getCompanyId(), objectDefinition,
-			String.valueOf(ParamUtil.getLong(httpServletRequest, "groupId")),
-			null, defaultDTOConverterContext, filterString, Pagination.of(1, 1),
-			null, null);
-
-		if (page.getTotalCount() > 0) {
-			objectEntry = page.fetchFirstItem();
-		}
-		else {
-			objectEntry.setObjectEntryFolderExternalReferenceCode(
-				() -> ParamUtil.getString(
-					httpServletRequest,
-					"objectEntryFolderExternalReferenceCode"));
-			objectEntry.setStatus(
-				() -> new Status() {
-					{
-						setCode(() -> WorkflowConstants.STATUS_DRAFT);
-					}
-				});
-
-			objectEntry = objectEntryManager.addObjectEntry(
-				defaultDTOConverterContext, objectDefinition, objectEntry,
-				String.valueOf(
-					ParamUtil.getLong(httpServletRequest, "groupId")));
-		}
+		objectEntry = objectEntryManager.addObjectEntry(
+			defaultDTOConverterContext, objectDefinition, objectEntry,
+			String.valueOf(ParamUtil.getLong(httpServletRequest, "groupId")));
 
 		httpServletResponse.sendRedirect(
 			ActionUtil.getEditURL(
@@ -163,9 +125,6 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
-
-	@Reference
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;

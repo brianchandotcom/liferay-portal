@@ -59,27 +59,6 @@ public class WidgetPageSpecificationSerDes {
 			sb.append(String.valueOf(widgetPageSpecification.getSettings()));
 		}
 
-		if (widgetPageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode() !=
-					null) {
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(
-				"\"siteTemplatePageSpecificationExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				_escape(
-					widgetPageSpecification.
-						getSiteTemplatePageSpecificationExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
 		if (widgetPageSpecification.getWidgetPageSections() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +126,27 @@ public class WidgetPageSpecificationSerDes {
 			sb.append("\"");
 		}
 
+		if (widgetPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() !=
+					null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"siteTemplatePageSpecificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					widgetPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (widgetPageSpecification.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -201,20 +201,6 @@ public class WidgetPageSpecificationSerDes {
 				String.valueOf(widgetPageSpecification.getSettings()));
 		}
 
-		if (widgetPageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode() ==
-					null) {
-
-			map.put("siteTemplatePageSpecificationExternalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"siteTemplatePageSpecificationExternalReferenceCode",
-				String.valueOf(
-					widgetPageSpecification.
-						getSiteTemplatePageSpecificationExternalReferenceCode()));
-		}
-
 		if (widgetPageSpecification.getWidgetPageSections() == null) {
 			map.put("widgetPageSections", null);
 		}
@@ -242,6 +228,20 @@ public class WidgetPageSpecificationSerDes {
 				"externalReferenceCode",
 				String.valueOf(
 					widgetPageSpecification.getExternalReferenceCode()));
+		}
+
+		if (widgetPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode() ==
+					null) {
+
+			map.put("siteTemplatePageSpecificationExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"siteTemplatePageSpecificationExternalReferenceCode",
+				String.valueOf(
+					widgetPageSpecification.
+						getSiteTemplatePageSpecificationExternalReferenceCode()));
 		}
 
 		if (widgetPageSpecification.getStatus() == null) {
@@ -281,12 +281,6 @@ public class WidgetPageSpecificationSerDes {
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteTemplatePageSpecificationExternalReferenceCode")) {
-
-				return false;
-			}
-			else if (Objects.equals(
 						jsonParserFieldName, "widgetPageSections")) {
 
 				return false;
@@ -296,6 +290,12 @@ public class WidgetPageSpecificationSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"siteTemplatePageSpecificationExternalReferenceCode")) {
 
 				return false;
 			}
@@ -318,16 +318,6 @@ public class WidgetPageSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					widgetPageSpecification.setSettings(
 						SettingsSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"siteTemplatePageSpecificationExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					widgetPageSpecification.
-						setSiteTemplatePageSpecificationExternalReferenceCode(
-							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -376,6 +366,16 @@ public class WidgetPageSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					widgetPageSpecification.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"siteTemplatePageSpecificationExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					widgetPageSpecification.
+						setSiteTemplatePageSpecificationExternalReferenceCode(
+							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

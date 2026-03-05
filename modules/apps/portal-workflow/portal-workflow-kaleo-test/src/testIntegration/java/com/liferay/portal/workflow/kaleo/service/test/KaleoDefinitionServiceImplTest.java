@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -245,8 +246,8 @@ public class KaleoDefinitionServiceImplTest {
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _companyAdminUser.getUserId(), " must have ",
-				"ADD_DEFINITION, ", WorkflowConstants.RESOURCE_NAME,
-				" permission for null "),
+				ActionKeys.ADD_DEFINITION, " permission for ",
+				WorkflowConstants.RESOURCE_NAME, StringPool.SPACE),
 			this::_addKaleoDefinition);
 
 		// Administrator with "company.administrator.can.publish" enabled
@@ -268,8 +269,9 @@ public class KaleoDefinitionServiceImplTest {
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
-				"User ", user.getUserId(), " must have ADD_DEFINITION, ",
-				WorkflowConstants.RESOURCE_NAME, " permission for null "),
+				"User ", user.getUserId(), " must have ",
+				ActionKeys.ADD_DEFINITION, " permission for ",
+				WorkflowConstants.RESOURCE_NAME, StringPool.SPACE),
 			() -> _addKaleoDefinition(
 				ServiceContextTestUtil.getServiceContext(
 					accountEntry.getAccountEntryGroupId(), user.getUserId())));
@@ -355,8 +357,8 @@ public class KaleoDefinitionServiceImplTest {
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
 				"User ", _companyAdminUser.getUserId(), " must have ",
-				"ADD_DEFINITION, ", WorkflowConstants.RESOURCE_NAME,
-				" permission for null "),
+				ActionKeys.ADD_DEFINITION, " permission for ",
+				WorkflowConstants.RESOURCE_NAME, StringPool.SPACE),
 			() -> _kaleoDefinitionService.updateKaleoDefinition(
 				kaleoDefinition.getExternalReferenceCode(),
 				kaleoDefinition.getKaleoDefinitionId(),
@@ -396,8 +398,9 @@ public class KaleoDefinitionServiceImplTest {
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
-				"User ", user.getUserId(), " must have ADD_DEFINITION, ",
-				WorkflowConstants.RESOURCE_NAME, " permission for null "),
+				"User ", user.getUserId(), " must have ",
+				ActionKeys.ADD_DEFINITION, " permission for ",
+				WorkflowConstants.RESOURCE_NAME, StringPool.SPACE),
 			() -> _kaleoDefinitionService.updateKaleoDefinition(
 				kaleoDefinition.getExternalReferenceCode(),
 				kaleoDefinition.getKaleoDefinitionId(),

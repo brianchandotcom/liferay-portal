@@ -1,0 +1,11 @@
+assemble:
+    -   fromTask: bootJar
+liferay-dev-etc-cron-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Dev Etc Cron OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Delivery.everything
+    type: oAuthApplicationHeadlessServer

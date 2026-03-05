@@ -144,7 +144,8 @@ public abstract class BulkAction implements Cloneable, Serializable {
 		PERMISSION_BULK_ACTION("PermissionBulkAction"),
 		RESET_PERMISSION_BULK_ACTION("ResetPermissionBulkAction"),
 		STATUS_BULK_ACTION("StatusBulkAction"),
-		TAXONOMY_CATEGORY_BULK_ACTION("TaxonomyCategoryBulkAction");
+		TAXONOMY_CATEGORY_BULK_ACTION("TaxonomyCategoryBulkAction"),
+		UPDATE_VALUES_BULK_ACTION("UpdateValuesBulkAction");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

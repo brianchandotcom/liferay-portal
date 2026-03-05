@@ -81,6 +81,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -271,6 +272,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		_testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinition();
 		_testPostTaskWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostTaskWithTypeLLMNodeWithToolWorkflowDefinition();
+		_testPostTaskWithTypeMakeLonger();
 		_testPostTaskWithTypeMakeShorter();
 	}
 
@@ -728,24 +730,32 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		SseUtil.closeAll();
 	}
 
-	private void _testPostTaskWithTypeMakeShorter() throws Exception {
+	private void _testPostTaskWithTypeMakeLonger() throws Exception {
+		_testPostTaskWithTypeMakeLongerOrMakeShorter(
+			(input, output) -> Assert.assertTrue(
+				output.length() > input.length()),
+			"makeLonger", "Make Longer", "Small",
+			WorkflowDefinitionConstants.NAME_MAKE_LONGER);
+	}
+
+	private void _testPostTaskWithTypeMakeLongerOrMakeShorter(
+			BiConsumer<String, String> assertion, String nodeName,
+			String outBoundEventName, String text, String type)
+		throws Exception {
+
 		CountDownLatch countDownLatch = new CountDownLatch(4);
 		List<String> lines = new ArrayList<>();
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
 			List.of(countDownLatch), lines, "tasks/subscribe");
 
-		String inputText =
-			"This is a long and detailed sentence that should be shortened " +
-				"by the AI model for testing purposes.";
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"context", JSONUtil.put("text", inputText)
+				"context", JSONUtil.put("text", text)
 			).put(
 				"sseEventSinkKey", sseEventSinkKey
 			).put(
-				"type", WorkflowDefinitionConstants.NAME_MAKE_SHORTER
+				"type", type
 			).toString(),
 			"ai-hub/v1.0/tasks",
 			HashMapBuilder.put(
@@ -757,17 +767,16 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
-		Assert.assertEquals("event: Make Shorter", lines.get(2));
+		Assert.assertEquals("event: " + outBoundEventName, lines.get(2));
 
 		JSONObject outputJSONObject = _jsonFactory.createJSONObject(
 			StringUtil.removeSubstring(lines.get(3), "data: "));
 
-		Assert.assertEquals(
-			"makeShorter", outputJSONObject.getString("nodeName"));
+		Assert.assertEquals(nodeName, outputJSONObject.getString("nodeName"));
 
 		String output = outputJSONObject.getString("data");
 
-		Assert.assertTrue(output.length() < inputText.length());
+		assertion.accept(text, output);
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -780,15 +789,24 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				Map<String, Serializable> workflowContext =
 					workflowInstance.getWorkflowContext();
 
-				String rewrittenText = GetterUtil.getString(
-					workflowContext.get("rewrittenText"));
-
-				Assert.assertTrue(rewrittenText.length() < inputText.length());
+				assertion.accept(
+					text,
+					GetterUtil.getString(workflowContext.get("rewrittenText")));
 
 				return null;
 			});
 
 		SseUtil.closeAll();
+	}
+
+	private void _testPostTaskWithTypeMakeShorter() throws Exception {
+		_testPostTaskWithTypeMakeLongerOrMakeShorter(
+			(input, output) -> Assert.assertTrue(
+				output.length() < input.length()),
+			"makeShorter", "Make Shorter",
+			"This is a long and detailed sentence that should be shortened " +
+				"by the AI model for testing purposes.",
+			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
 	}
 
 	@Inject

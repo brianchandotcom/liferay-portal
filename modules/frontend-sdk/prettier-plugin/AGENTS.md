@@ -22,9 +22,12 @@
 ## How It Works
 
 1. The parser runs Prettier formatting first.
-2. Plugin strips itself from `plugins` before recursive `format()` call to avoid self-recursion.
-3. Formatted text is reparsed, transformed by custom rules, then returned as a synthetic `FormattedText` AST.
-4. Custom printer emits the transformed text.
+
+1. Plugin strips itself from `plugins` before recursive `format()` call to avoid self-recursion.
+
+1. Formatted text is reparsed, transformed by custom rules, then returned as a synthetic `FormattedText` AST.
+
+1. Custom printer emits the transformed text.
 
 ## How It Interacts With `liferay-portal`
 
@@ -38,11 +41,14 @@
 When adding/changing behavior:
 
 1. Implement logic in `rules/*.mjs` (or parser/printer glue if needed).
-2. Add/adjust tests in `test/*.test.mjs` for both babel and typescript paths.
-3. Run:
+
+1. Add/adjust tests in `test/*.test.mjs` for both babel and typescript paths.
+
+1. Run:
    - `yarn test`
    - `yarn run format:check`
-4. Build distributable bundle when needed:
+
+1. Build distributable bundle when needed:
    - `yarn build`
 
 ## Guardrails

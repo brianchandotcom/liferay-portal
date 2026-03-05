@@ -34,10 +34,13 @@ The default config enforces:
 When changing defaults:
 
 1. Update both `index.js` and `index.cjs` consistently.
-2. Verify downstream impact in `modules/.prettierrc.js` and other local Prettier configs that mirror these values.
-3. Run:
+
+1. Verify downstream impact in `modules/.prettierrc.js` and other local Prettier configs that mirror these values.
+
+1. Run:
    - `yarn run format:check`
-4. If changing plugin behavior assumptions, coordinate with `frontend-sdk/prettier-plugin`.
+
+1. If changing plugin behavior assumptions, coordinate with `frontend-sdk/prettier-plugin`.
 
 ## Release Notes
 

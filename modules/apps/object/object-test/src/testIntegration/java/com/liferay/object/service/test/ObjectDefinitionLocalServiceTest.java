@@ -37,6 +37,7 @@ import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.NoSuchObjectFolderException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
+import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObjectFieldIdException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionClassNameException;
 import com.liferay.object.exception.ObjectDefinitionEnableFormContainerException;
@@ -102,6 +103,7 @@ import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
@@ -244,79 +246,46 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Accumulate error
 
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+		_assertObjectDefinitionValidationExceptionValidationErrors(
+			List.of(
+				DuplicateObjectDefinitionExternalReferenceCodeException.class.
+					getName(),
+				ObjectDefinitionLabelException.class.getName(),
+				ObjectDefinitionNameException.MustBeginWithUpperCaseLetter.
+					class.getName(),
+				ObjectDefinitionPluralLabelException.class.getName(),
+				ObjectDefinitionScopeException.class.getName(),
+				ObjectFieldLabelException.class.getName(),
+				ObjectFieldListTypeDefinitionIdException.class.getName(),
+				ObjectFieldNameException.MustBeginWithLowerCaseLetter.class.
+					getName(),
+				ObjectFieldNameException.MustNotBeDuplicate.class.getName()),
+			() -> {
+				ObjectDefinition objectDefinition =
+					ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
-		try (SafeCloseable safeCloseable1 =
-				ObjectDefinitionValidationThreadLocal.
-					setAccumulateErrorWithSafeCloseable(true);
-			SafeCloseable safeCloseable2 =
-				ObjectDefinitionValidationThreadLocal.
-					setValidationErrorsWithSafeCloseable(new ArrayList<>())) {
-
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				objectDefinition.getExternalReferenceCode(),
-				TestPropsValues.getUserId(), 0, null, false, true, true, true,
-				false, false, false, false, null, null, null, null, null, null,
-				true, RandomTestUtil.randomString(),
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(),
-				ListUtil.fromArray(
-					new PicklistObjectFieldBuilder(
-					).name(
-						"Test"
-					).build(),
-					new TextObjectFieldBuilder(
-					).name(
-						"Test"
-					).build()),
-				Collections.emptyList(), new ServiceContext());
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionValidationException
-					objectDefinitionValidationException) {
-
-			List<String> exceptionClassNames = TransformUtil.transform(
-				objectDefinitionValidationException.getValidationErrors(),
-				ValidationError::getExceptionClassName);
-
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					DuplicateObjectDefinitionExternalReferenceCodeException.
-						class.getName()));
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					ObjectDefinitionLabelException.class.getName()));
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					ObjectDefinitionNameException.MustBeginWithUpperCaseLetter.
-						class.getName()));
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					ObjectDefinitionPluralLabelException.class.getName()));
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					ObjectDefinitionScopeException.class.getName()));
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					ObjectFieldLabelException.class.getName()));
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					ObjectFieldListTypeDefinitionIdException.class.getName()));
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					ObjectFieldNameException.MustBeginWithLowerCaseLetter.class.
-						getName()));
-			Assert.assertTrue(
-				exceptionClassNames.contains(
-					ObjectFieldNameException.MustNotBeDuplicate.class.
-						getName()));
-		}
+				_objectDefinitionLocalService.addCustomObjectDefinition(
+					objectDefinition.getExternalReferenceCode(),
+					TestPropsValues.getUserId(), 0, null, false, true, true,
+					true, false, false, false, false, null, null, null, null,
+					null, null, true, RandomTestUtil.randomString(),
+					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+					Collections.emptyList(),
+					ListUtil.fromArray(
+						new PicklistObjectFieldBuilder(
+						).name(
+							"Test"
+						).build(),
+						new TextObjectFieldBuilder(
+						).name(
+							"Test"
+						).build()),
+					Collections.emptyList(), new ServiceContext());
+			});
 
 		// Enable form container
 
-		objectDefinition =
+		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, false, true, true,
 				true, false, false, false, false, null,
@@ -3187,6 +3156,48 @@ public class ObjectDefinitionLocalServiceTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateCustomObjectDefinition() throws Exception {
+		_assertObjectDefinitionValidationExceptionValidationErrors(
+			List.of(
+				NoSuchObjectFieldException.class.getName(),
+				ObjectDefinitionAccountEntryRestrictedObjectFieldIdException.
+					class.getName(),
+				ObjectDefinitionActiveException.class.getName(),
+				ObjectDefinitionLabelException.class.getName(),
+				ObjectDefinitionPluralLabelException.class.getName(),
+				ObjectFieldLabelException.class.getName(),
+				ObjectFieldListTypeDefinitionIdException.class.getName(),
+				ObjectFieldNameException.MustBeginWithLowerCaseLetter.class.
+					getName(),
+				ObjectFieldNameException.MustNotBeDuplicate.class.getName()),
+			() -> {
+				ObjectDefinition objectDefinition =
+					ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					objectDefinition.getExternalReferenceCode(),
+					objectDefinition.getObjectDefinitionId(), 0,
+					RandomTestUtil.randomLong(), 0, RandomTestUtil.randomLong(),
+					true, true, RandomTestUtil.randomString(), true, false,
+					true, objectDefinition.isEnableFriendlyURLCustomization(),
+					true, false, objectDefinition.isEnableObjectEntryHistory(),
+					objectDefinition.isEnableObjectEntrySchedule(), false,
+					objectDefinition.isEnableObjectEntryVersioning(),
+					objectDefinition.getFriendlyURLSeparator(), null,
+					objectDefinition.getName(), null, null, false, null,
+					objectDefinition.getScope(), objectDefinition.getStatus(),
+					Collections.emptyList(),
+					ListUtil.fromArray(
+						new PicklistObjectFieldBuilder(
+						).name(
+							"Test"
+						).build(),
+						new TextObjectFieldBuilder(
+						).name(
+							"Test"
+						).build()),
+					Collections.emptyList(), new ServiceContext());
+			});
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, false, true, false,
@@ -3927,6 +3938,38 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionSettingsExpectedValues.get(
 					objectDefinitionSetting.getName()),
 				objectDefinitionSetting.getValue());
+		}
+	}
+
+	private void _assertObjectDefinitionValidationExceptionValidationErrors(
+		List<String> expectedExceptionClassNames,
+		UnsafeRunnable<Exception> unsafeRunnable) {
+
+		try (SafeCloseable safeCloseable1 =
+				ObjectDefinitionValidationThreadLocal.
+					setAccumulateErrorWithSafeCloseable(true);
+			SafeCloseable safeCloseable2 =
+				ObjectDefinitionValidationThreadLocal.
+					setValidationErrorsWithSafeCloseable(new ArrayList<>())) {
+
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception instanceof ObjectDefinitionValidationException);
+
+			ObjectDefinitionValidationException
+				objectDefinitionValidationException =
+					(ObjectDefinitionValidationException)exception;
+
+			List<String> exceptionClassNames = TransformUtil.transform(
+				objectDefinitionValidationException.getValidationErrors(),
+				ValidationError::getExceptionClassName);
+
+			Assert.assertTrue(
+				exceptionClassNames.containsAll(expectedExceptionClassNames));
 		}
 	}
 

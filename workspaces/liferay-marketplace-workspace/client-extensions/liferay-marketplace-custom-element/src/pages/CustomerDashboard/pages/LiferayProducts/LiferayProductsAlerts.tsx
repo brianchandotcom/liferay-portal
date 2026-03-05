@@ -30,11 +30,11 @@ const statusAlert = {
 	},
 };
 
-type LiferayServicesAlertsProps = {
+type LiferayProductsAlertsProps = {
 	orderStatusCode: number;
 };
 
-const LiferayServicesAlerts: React.FC<LiferayServicesAlertsProps> = ({
+const LiferayProductsAlerts: React.FC<LiferayProductsAlertsProps> = ({
 	orderStatusCode,
 }) => {
 	const alert = (statusAlert as any)[orderStatusCode];
@@ -46,4 +46,4 @@ const LiferayServicesAlerts: React.FC<LiferayServicesAlertsProps> = ({
 	return <ClayAlert displayType={alert.displayType}>{alert.text}</ClayAlert>;
 };
 
-export default LiferayServicesAlerts;
+export default LiferayProductsAlerts;

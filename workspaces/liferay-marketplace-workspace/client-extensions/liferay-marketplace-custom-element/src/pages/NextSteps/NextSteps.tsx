@@ -36,7 +36,7 @@ import {
 	getProductCategoriesByVocabularyName,
 	getProductSpecification,
 } from '../../utils/productUtils';
-import LDPNextSteps from '../ProductPurchase/pages/LiferayService/LDPNextSteps';
+import LDPNextSteps from '../ProductPurchase/pages/LiferayProduct/LDPNextSteps';
 
 type NextStepsBodyProps = ReturnType<typeof useGetProductByOrderId>['data'];
 

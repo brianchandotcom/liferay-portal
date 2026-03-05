@@ -16,10 +16,10 @@ import PaymentStatusBadge from '../../../FinanceDashboard/components/PaymentStat
 import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
 
 const searchParams = new URLSearchParams({
-	filter: SearchBuilder.eq(
-		'orderTypeExternalReferenceCode',
-		OrderTypes.ADDONS
-	),
+	filter: SearchBuilder.in('orderTypeExternalReferenceCode', [
+		OrderTypes.ADDONS,
+		OrderTypes.DXP,
+	]),
 	nestedFields: 'placedOrderItems',
 	sort: 'createDate:desc',
 });
@@ -32,18 +32,18 @@ const LiferayServicesListView = () => {
 	return (
 		<Page
 			description={i18n.translate(
-				'manage-your-liferay-services-purchased-from-the-marketplace'
+				'manage-your-products-purchased-from-the-marketplace'
 			)}
-			title={i18n.translate('liferay-services')}
+			title={i18n.translate('products')}
 		>
-			<div className="customer-liferay-services">
+			<div className="customer-products">
 				<ListView<PlacedOrder>
 					emptyStateProps={{
 						className:
 							'border px-4 py-6 d-flex align-items-center flex-column justify-content-center',
 						type: 'BLANK',
 					}}
-					id={`customer-liferay-services${selectedAccount?.id}`}
+					id={`customer-products${selectedAccount?.id}`}
 					initialContext={{
 						pageSize: 20,
 						paginationDeltaOptions: [20, 40, 80, 120],

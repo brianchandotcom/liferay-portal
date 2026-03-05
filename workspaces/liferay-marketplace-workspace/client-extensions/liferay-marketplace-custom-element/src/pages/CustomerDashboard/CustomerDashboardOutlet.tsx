@@ -14,14 +14,14 @@ import './CustomerDashboard.scss';
 
 export const dashboardNavigationItems = [
 	{
+		itemTitle: i18n.translate('my-products'),
+		path: '/products',
+		symbol: 'display-content',
+	},
+	{
 		itemTitle: i18n.translate('my-apps'),
 		path: '/',
 		symbol: 'grid',
-	},
-	{
-		itemTitle: i18n.translate('my-liferay-services'),
-		path: '/services',
-		symbol: 'display-content',
 	},
 	{
 		itemTitle: i18n.translate('my-solutions'),

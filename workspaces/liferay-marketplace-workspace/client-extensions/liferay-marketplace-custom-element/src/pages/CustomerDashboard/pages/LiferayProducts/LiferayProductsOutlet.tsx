@@ -6,13 +6,13 @@
 import i18n from '../../../../i18n';
 import {BaseOutlet} from '../Apps/App/AppOutlet';
 
-const LiferayServicesOutlet = () => (
+const LiferayProductsOutlet = () => (
 	<BaseOutlet
-		backTitle={i18n.translate('back-to-liferay-services')}
-		backURL="../services"
+		backTitle={i18n.translate('back-to-my-products')}
+		backURL="../products"
 		routes={[{name: i18n.translate('details'), path: ''}]}
 		showActions={false}
 	/>
 );
 
-export default LiferayServicesOutlet;
+export default LiferayProductsOutlet;

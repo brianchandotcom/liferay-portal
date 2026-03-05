@@ -20,9 +20,9 @@ import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
 import Support from './pages/Apps/App/Support/Support';
 import Connections from './pages/Connections';
-import LiferayService from './pages/LiferayServices/LiferayService';
-import LiferayServicesOutlet from './pages/LiferayServices/LiferayServicesOutlet';
-import LiferayServicesListView from './pages/LiferayServices/index';
+import LiferayProduct from './pages/LiferayProducts/LiferayProduct';
+import LiferayProductsOutlet from './pages/LiferayProducts/LiferayProductsOutlet';
+import LiferayProductsListView from './pages/LiferayProducts/index';
 import Solutions from './pages/Solutions';
 import Solution from './pages/Solutions/Solution';
 import SolutionOutlet from './pages/Solutions/SolutionOutlet';
@@ -50,13 +50,13 @@ const CustomerDashboardRouter = () => {
 					<Route element={<Support />} path="support" />
 				</Route>
 
-				<Route element={<LiferayServicesListView />} path="services" />
+				<Route element={<LiferayProductsListView />} path="products" />
 
 				<Route
-					element={<LiferayServicesOutlet />}
-					path="services/:orderId"
+					element={<LiferayProductsOutlet />}
+					path="products/:orderId"
 				>
-					<Route element={<LiferayService />} index />
+					<Route element={<LiferayProduct />} index />
 				</Route>
 
 				<Route element={<Solutions />} path="solutions" />

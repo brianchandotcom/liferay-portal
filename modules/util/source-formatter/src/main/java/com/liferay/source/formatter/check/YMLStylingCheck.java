@@ -58,6 +58,16 @@ public class YMLStylingCheck extends BaseFileCheck {
 		return s;
 	}
 
+	private String _fixNullValue(String s) {
+		if (s.equals("NULL") || s.equals("Null") || s.equals("null") ||
+			s.equals("~")) {
+
+			return "null";
+		}
+
+		return s;
+	}
+
 	private String _fixQuotes(String s) {
 		if (Validator.isNull(s) || (s.length() == 1)) {
 			return s;
@@ -95,7 +105,7 @@ public class YMLStylingCheck extends BaseFileCheck {
 				unquotedValue.startsWith("*") ||
 				unquotedValue.startsWith("[") ||
 				unquotedValue.startsWith("{") ||
-				_isBooleanValue(unquotedValue)) {
+				_isBooleanValue(unquotedValue) || _isNullValue(unquotedValue)) {
 
 				return s;
 			}
@@ -159,6 +169,7 @@ public class YMLStylingCheck extends BaseFileCheck {
 				String newValue = _fixQuotes(value);
 
 				newValue = _fixBooleanValue(newValue);
+				newValue = _fixNullValue(newValue);
 
 				if (value.equals(newValue)) {
 					continue;
@@ -197,6 +208,16 @@ public class YMLStylingCheck extends BaseFileCheck {
 
 	private boolean _isBooleanValue(String s) {
 		if (_isBooleanFalse(s) || _isBooleanTrue(s)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isNullValue(String s) {
+		if (s.equals("NULL") || s.equals("Null") || s.equals("null") ||
+			s.equals("~")) {
+
 			return true;
 		}
 

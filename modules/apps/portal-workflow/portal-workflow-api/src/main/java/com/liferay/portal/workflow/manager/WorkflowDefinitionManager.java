@@ -38,7 +38,7 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
-			int start, int end)
+			int end, int start)
 		throws WorkflowException;
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
@@ -69,7 +69,7 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public default int getLatestWorkflowDefinitionsCount(
-			long companyId, Boolean active)
+			Boolean active, long companyId)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -92,11 +92,6 @@ public interface WorkflowDefinitionManager {
 
 		throw new UnsupportedOperationException();
 	}
-
-	public List<WorkflowDefinition> getWorkflowDefinitions(
-			long companyId, String name, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException;
 
 	public default int getWorkflowDefinitionsCount(long companyId, String name)
 		throws WorkflowException {

@@ -19,6 +19,7 @@ import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
 import com.liferay.bulk.rest.dto.v1_0.StatusBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkAction;
+import com.liferay.bulk.rest.dto.v1_0.UpdateValuesBulkAction;
 import com.liferay.bulk.rest.internal.odata.entity.v1_0.BulkActionEntityModel;
 import com.liferay.bulk.rest.internal.selection.v1_0.BulkActionBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.BulkActionResource;
@@ -456,6 +457,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
 			return _editObjectCategoriesBulkSelectionAction;
 		}
+		else if (BulkAction.Type.UPDATE_VALUES_BULK_ACTION.equals(type)) {
+			return _updateObjectValuesBulkSelectionAction;
+		}
 
 		throw new UnsupportedOperationException();
 	}
@@ -597,6 +601,14 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).put(
 				"toRemoveCategoryIds",
 				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToRemove()
+			).build();
+		}
+		else if (BulkAction.Type.UPDATE_VALUES_BULK_ACTION.equals(type)) {
+			UpdateValuesBulkAction updateValuesBulkAction =
+				(UpdateValuesBulkAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"values", (Serializable)updateValuesBulkAction.getValues()
 			).build();
 		}
 
@@ -1054,5 +1066,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Reference
 	private TrashHelper _trashHelper;
+
+	@Reference(target = "(bulk.selection.action.key=update.object.values)")
+	private BulkSelectionAction<Object> _updateObjectValuesBulkSelectionAction;
 
 }

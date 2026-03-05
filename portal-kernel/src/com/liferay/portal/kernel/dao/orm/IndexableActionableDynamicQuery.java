@@ -66,35 +66,32 @@ public class IndexableActionableDynamicQuery {
 		}
 
 		try {
-			try {
-				long previousPrimaryKey = -1;
+			long previousPrimaryKey = -1;
 
-				while (true) {
-					long lastPrimaryKey;
+			while (true) {
+				long lastPrimaryKey;
 
-					try {
-						lastPrimaryKey = _performActions(
-							_createActionDynamicQuery(previousPrimaryKey));
-					}
-					finally {
-						_indexInterval();
-					}
-
-					if (lastPrimaryKey < 0) {
-						break;
-					}
-
-					previousPrimaryKey = lastPrimaryKey;
+				try {
+					lastPrimaryKey = _performActions(
+						_createActionDynamicQuery(previousPrimaryKey));
 				}
-			}
-			finally {
-				_actionsCompleted();
+				finally {
+					_indexInterval();
+				}
+
+				if (lastPrimaryKey < 0) {
+					break;
+				}
+
+				previousPrimaryKey = lastPrimaryKey;
 			}
 		}
 		catch (Throwable throwable) {
 			ReflectionUtil.throwException(throwable);
 		}
 		finally {
+			_actionsCompleted();
+
 			_count = _total;
 
 			_sendStatusMessage();

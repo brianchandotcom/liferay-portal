@@ -29,6 +29,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.PermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.StatusBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.UpdateValuesBulkAction;
 import com.liferay.bulk.rest.client.http.HttpInvoker;
 import com.liferay.bulk.rest.client.pagination.Page;
 import com.liferay.bulk.rest.client.resource.v1_0.BulkActionResource;
@@ -635,6 +636,18 @@ public abstract class BaseBulkActionResourceTestCase {
 				if (((TaxonomyCategoryBulkAction)bulkAction).
 						getTaxonomyCategoryIdsToRemove() == null) {
 
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("values", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof UpdateValuesBulkAction)) {
+					continue;
+				}
+
+				if (((UpdateValuesBulkAction)bulkAction).getValues() == null) {
 					valid = false;
 				}
 
@@ -1329,6 +1342,23 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("values", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof UpdateValuesBulkAction) ||
+					!(bulkAction2 instanceof UpdateValuesBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((UpdateValuesBulkAction)bulkAction1).getValues(),
+						((UpdateValuesBulkAction)bulkAction2).getValues())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1768,6 +1798,15 @@ public abstract class BaseBulkActionResourceTestCase {
 
 				bulkAction.setType(
 					BulkAction.Type.create("TaxonomyCategoryBulkAction"));
+
+				return bulkAction;
+			},
+			() -> {
+				UpdateValuesBulkAction bulkAction =
+					new UpdateValuesBulkAction();
+
+				bulkAction.setType(
+					BulkAction.Type.create("UpdateValuesBulkAction"));
 
 				return bulkAction;
 			});

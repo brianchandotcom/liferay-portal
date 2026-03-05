@@ -21,6 +21,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.PermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.StatusBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.UpdateValuesBulkAction;
 import com.liferay.bulk.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -131,6 +132,11 @@ public class BulkActionSerDes {
 			if (typeString.equals("TaxonomyCategoryBulkAction")) {
 				return TaxonomyCategoryBulkActionSerDes.toJSON(
 					(TaxonomyCategoryBulkAction)bulkAction);
+			}
+
+			if (typeString.equals("UpdateValuesBulkAction")) {
+				return UpdateValuesBulkActionSerDes.toJSON(
+					(UpdateValuesBulkAction)bulkAction);
 			}
 
 			throw new IllegalArgumentException("Unknown type " + typeString);
@@ -278,6 +284,10 @@ public class BulkActionSerDes {
 
 				if (typeString.equals("TaxonomyCategoryBulkAction")) {
 					return TaxonomyCategoryBulkAction.toDTO(json);
+				}
+
+				if (typeString.equals("UpdateValuesBulkAction")) {
+					return UpdateValuesBulkAction.toDTO(json);
 				}
 
 				throw new IllegalArgumentException(

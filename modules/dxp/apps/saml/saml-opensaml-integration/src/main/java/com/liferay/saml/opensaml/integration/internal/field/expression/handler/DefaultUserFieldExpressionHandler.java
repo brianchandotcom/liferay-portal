@@ -257,6 +257,7 @@ public class DefaultUserFieldExpressionHandler
 		}
 
 		Contact contact = newUser.getContact();
+
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
 		calendar.setTime(contact.getBirthday());

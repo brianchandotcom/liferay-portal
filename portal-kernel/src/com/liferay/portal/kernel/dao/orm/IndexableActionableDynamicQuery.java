@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
@@ -36,22 +36,10 @@ import java.util.function.Consumer;
  */
 public class IndexableActionableDynamicQuery {
 
-	public void addDocument(Document document) throws PortalException {
-		if (document == null) {
-			return;
-		}
-
-		_documents.add(document);
-
-		if (_documents.size() >= _interval) {
-			_indexInterval();
-		}
-	}
-
 	public void performActions() {
-		if (_performActionUnsafeConsumer == null) {
+		if (_performActionUnsafeFunction == null) {
 			throw new IllegalStateException(
-				"performActionUnsafeConsumer is null");
+				"performActionUnsafeFunction is null");
 		}
 
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
@@ -140,9 +128,10 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	public void setPerformActionMethod(
-		UnsafeConsumer<?, PortalException> performActionUnsafeConsumer) {
+		UnsafeFunction<?, Document, PortalException>
+			performActionUnsafeFunction) {
 
-		_performActionUnsafeConsumer = performActionUnsafeConsumer;
+		_performActionUnsafeFunction = performActionUnsafeFunction;
 	}
 
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName) {
@@ -167,6 +156,18 @@ public class IndexableActionableDynamicQuery {
 			Property property = PropertyFactoryUtil.forName("companyId");
 
 			dynamicQuery.add(property.eq(_companyId));
+		}
+	}
+
+	private void _addDocument(Document document) throws PortalException {
+		if (document == null) {
+			return;
+		}
+
+		_documents.add(document);
+
+		if (_documents.size() >= _interval) {
+			_indexInterval();
 		}
 	}
 
@@ -270,7 +271,8 @@ public class IndexableActionableDynamicQuery {
 			}
 
 			if (ctCollectionId == currentCTCollectionId) {
-				_performActionUnsafeConsumer.accept(object);
+				_addDocument(
+					(Document)_performActionUnsafeFunction.apply(object));
 			}
 			else {
 				try (SafeCloseable safeCloseable =
@@ -278,7 +280,8 @@ public class IndexableActionableDynamicQuery {
 							setCTCollectionIdWithSafeCloseable(
 								ctCollectionId)) {
 
-					_performActionUnsafeConsumer.accept(object);
+					_addDocument(
+						(Document)_performActionUnsafeFunction.apply(object));
 				}
 			}
 		}
@@ -309,7 +312,7 @@ public class IndexableActionableDynamicQuery {
 	private Class<?> _modelClass;
 
 	@SuppressWarnings("rawtypes")
-	private UnsafeConsumer _performActionUnsafeConsumer;
+	private UnsafeFunction _performActionUnsafeFunction;
 
 	private String _primaryKeyPropertyName;
 	private long _total;

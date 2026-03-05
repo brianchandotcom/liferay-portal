@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -77,7 +79,7 @@ public class IndexableActionableDynamicQueryTest {
 	public void testAddDocument() throws Exception {
 		indexableActionableDynamicQuery.setInterval(1);
 
-		indexableActionableDynamicQuery.addDocument(document1);
+		_addDocument(document1);
 
 		verifyDocumentsUpdated(document1);
 	}
@@ -86,12 +88,12 @@ public class IndexableActionableDynamicQueryTest {
 	public void testAddDocumentWithinInterval() throws Exception {
 		indexableActionableDynamicQuery.setInterval(3);
 
-		indexableActionableDynamicQuery.addDocument(document1);
-		indexableActionableDynamicQuery.addDocument(document2);
+		_addDocument(document1);
+		_addDocument(document2);
 
 		verifyNoDocumentsUpdated();
 
-		indexableActionableDynamicQuery.addDocument(document3);
+		_addDocument(document3);
 
 		verifyDocumentsUpdated(document1, document2, document3);
 	}
@@ -111,6 +113,15 @@ public class IndexableActionableDynamicQueryTest {
 		new IndexableActionableDynamicQuery();
 	protected IndexWriterHelper indexWriterHelper = Mockito.mock(
 		IndexWriterHelper.class);
+
+	private void _addDocument(Document document) throws Exception {
+		Method method = IndexableActionableDynamicQuery.class.getDeclaredMethod(
+			"_addDocument", Document.class);
+
+		method.setAccessible(true);
+
+		method.invoke(indexableActionableDynamicQuery, document);
+	}
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();

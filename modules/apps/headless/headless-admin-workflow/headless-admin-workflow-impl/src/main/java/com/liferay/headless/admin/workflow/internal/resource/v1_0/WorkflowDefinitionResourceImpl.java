@@ -192,12 +192,12 @@ public class WorkflowDefinitionResourceImpl
 			).build(),
 			transform(
 				_workflowDefinitionManager.getLatestWorkflowDefinitions(
-					contextCompany.getCompanyId(), contextUser.getUserId(),
-					active,
+					active, contextCompany.getCompanyId(),
+					pagination.getEndPosition(),
+					_toOrderByComparator((Sort)ArrayUtil.getValue(sorts, 0)),
 					GetterUtil.getString(
 						scope, WorkflowDefinitionConstants.SCOPE_ALL),
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					_toOrderByComparator((Sort)ArrayUtil.getValue(sorts, 0))),
+					pagination.getStartPosition(), contextUser.getUserId()),
 				this::_toWorkflowDefinition),
 			pagination,
 			_workflowDefinitionManager.getLatestWorkflowDefinitionsCount(

@@ -16,9 +16,11 @@ import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngin
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
@@ -44,16 +46,19 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, null,
-			"(export.import.vulcan.batch.engine.task.item.delegate=true)",
-			new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
-				bundleContext));
+		InitialRequestSyncUtil.registerSyncCallable(
+			() -> _serviceTrackerListDCLSingleton.getSingleton(
+				() -> ServiceTrackerListFactory.open(
+					bundleContext, null,
+					"(export.import.vulcan.batch.engine.task.item.delegate=" +
+						"true)",
+					new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
+						bundleContext))));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerList.close();
+		_serviceTrackerListDCLSingleton.destroy(ServiceTrackerList::close);
 	}
 
 	private Dictionary<String, Object> _setEnabledCompanyId(
@@ -103,8 +108,9 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 	private final Map<String, ServiceRegistration<PortletDataHandler>>
 		_portletIdServiceRegistrations = new HashMap<>();
-	private ServiceTrackerList<ServiceRegistration<PortletDataHandler>>
-		_serviceTrackerList;
+	private final DCLSingleton
+		<ServiceTrackerList<ServiceRegistration<PortletDataHandler>>>
+			_serviceTrackerListDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

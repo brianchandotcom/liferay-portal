@@ -233,14 +233,6 @@ public class IndexableActionableDynamicQuery {
 			lastPrimaryKey = (Long)baseModel.getPrimaryKeyObj();
 		}
 
-		_performActionsInDefaultCTSQLMode(objects);
-
-		return lastPrimaryKey;
-	}
-
-	private void _performActionsInDefaultCTSQLMode(List<Object> objects)
-		throws Throwable {
-
 		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
 			CTSQLModeThreadLocal.getCTSQLMode();
 
@@ -255,6 +247,8 @@ public class IndexableActionableDynamicQuery {
 				_performActionsWithCTCollection(objects);
 			}
 		}
+
+		return lastPrimaryKey;
 	}
 
 	private void _performActionsWithCTCollection(List<Object> objects)

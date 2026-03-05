@@ -51,118 +51,48 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String portletId = PortalUtil.getPortletId(
-			(PortletRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAKARTA_PORTLET_REQUEST));
-
-		int consentRenewalPeriod = ParamUtil.getInteger(
-			httpServletRequest, "consentRenewalPeriod", 12);
-
-		int cookiesConfigurationProviderConsentRenewalPeriod =
-			_cookiesConfigurationProvider.
-				getCookiesPreferenceHandlingConsentRenewalPeriod(
-					ExtendedObjectClassDefinition.Scope.COMPANY,
-					themeDisplay.getCompanyId());
-
-		if (portletId.equals(ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)) {
-			cookiesConfigurationProviderConsentRenewalPeriod =
-				_cookiesConfigurationProvider.
-					getCookiesPreferenceHandlingConsentRenewalPeriod(
-						ExtendedObjectClassDefinition.Scope.SYSTEM, 0L);
-		}
-		else if (portletId.equals(
-					ConfigurationAdminPortletKeys.SITE_SETTINGS)) {
-
-			cookiesConfigurationProviderConsentRenewalPeriod =
-				_cookiesConfigurationProvider.
-					getCookiesPreferenceHandlingConsentRenewalPeriod(
-						ExtendedObjectClassDefinition.Scope.GROUP,
-						themeDisplay.getScopeGroupId());
-		}
-
 		boolean enabled = ParamUtil.getBoolean(httpServletRequest, "enabled");
 
-		if (!enabled &&
-			(consentRenewalPeriod !=
-				cookiesConfigurationProviderConsentRenewalPeriod)) {
+		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
+			HashMapBuilder.<String, Object>put("enabled", enabled);
 
-			consentRenewalPeriod =
-				cookiesConfigurationProviderConsentRenewalPeriod;
-		}
+		if (enabled) {
+			hashMapWrapper.put(
+				"consentRenewalPeriod",
+				ParamUtil.getInteger(
+					httpServletRequest, "consentRenewalPeriod", 12)
+			).put(
+				"explicitConsentMode",
+				ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
+			).put(
+				"modifiedDate",
+				() -> {
+					long modifiedDate = ParamUtil.getLong(
+						httpServletRequest, "modifiedDate");
 
-		if ((consentRenewalPeriod < 1) || (consentRenewalPeriod > 12)) {
-			consentRenewalPeriod = 12;
-		}
+					if (modifiedDate <= 0) {
+						return null;
+					}
 
-		boolean cookiesConfigurationProviderExplicitConsentMode =
-			_cookiesConfigurationProvider.
-				isCookiesPreferenceHandlingExplicitConsentMode(
-					ExtendedObjectClassDefinition.Scope.COMPANY,
-					themeDisplay.getCompanyId());
+					return modifiedDate;
+				}
+			).put(
+				"storeConsent",
+				() -> {
+					if (FeatureFlagManagerUtil.isEnabled(
+							_portal.getCompanyId(httpServletRequest),
+							"LPD-75032")) {
 
-		if (portletId.equals(ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)) {
-			cookiesConfigurationProviderExplicitConsentMode =
-				_cookiesConfigurationProvider.
-					isCookiesPreferenceHandlingExplicitConsentMode(
-						ExtendedObjectClassDefinition.Scope.SYSTEM, 0L);
-		}
-		else if (portletId.equals(
-					ConfigurationAdminPortletKeys.SITE_SETTINGS)) {
+						return ParamUtil.getBoolean(
+							httpServletRequest, "storeConsent");
+					}
 
-			cookiesConfigurationProviderExplicitConsentMode =
-				_cookiesConfigurationProvider.
-					isCookiesPreferenceHandlingExplicitConsentMode(
-						ExtendedObjectClassDefinition.Scope.GROUP,
-						themeDisplay.getScopeGroupId());
-		}
-
-		boolean explicitConsentMode = ParamUtil.getBoolean(
-			httpServletRequest, "explicitConsentMode");
-
-		if (!enabled &&
-			(cookiesConfigurationProviderExplicitConsentMode !=
-				explicitConsentMode)) {
-
-			explicitConsentMode =
-				cookiesConfigurationProviderExplicitConsentMode;
-		}
-
-		return HashMapBuilder.<String, Object>put(
-			"consentRenewalPeriod", consentRenewalPeriod
-		).put(
-			"enabled", enabled
-		).put(
-			"explicitConsentMode", explicitConsentMode
-		).put(
-			"modifiedDate",
-			() -> {
-				long modifiedDate = ParamUtil.getLong(
-					httpServletRequest, "modifiedDate");
-
-				if (modifiedDate <= 0) {
 					return null;
 				}
+			);
+		}
 
-				return modifiedDate;
-			}
-		).put(
-			"storeConsent",
-			() -> {
-				if (FeatureFlagManagerUtil.isEnabled(
-						_portal.getCompanyId(httpServletRequest),
-						"LPD-75032")) {
-
-					return ParamUtil.getBoolean(
-						httpServletRequest, "storeConsent");
-				}
-
-				return null;
-			}
-		).build();
+		return hashMapWrapper.build();
 	}
 
 	@Override

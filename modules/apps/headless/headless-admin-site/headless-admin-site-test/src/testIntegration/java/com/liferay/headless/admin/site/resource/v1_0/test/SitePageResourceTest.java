@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -1836,7 +1837,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private TaxonomyCategoryBrief _getTaxonomyCategoryBrief(
-		Group group, String parentTaxonomyCategoryExternalReferenceCode) {
+		String externalReferenceCode, Group group,
+		String parentTaxonomyCategoryExternalReferenceCode) {
 
 		return new TaxonomyCategoryBrief() {
 			{
@@ -1869,8 +1871,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						});
 				}
 
-				setTaxonomyCategoryExternalReferenceCode(
-					RandomTestUtil::randomString);
+				setTaxonomyCategoryExternalReferenceCode(externalReferenceCode);
 			}
 		};
 	}
@@ -3346,10 +3347,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		TaxonomyCategoryBrief taxonomyCategoryBrief1 =
 			_getTaxonomyCategoryBrief(
+				RandomTestUtil.randomString(),
 				_groupLocalService.getGroup(testCompany.getGroupId()), null);
 
 		TaxonomyCategoryBrief taxonomyCategoryBrief2 =
-			_getTaxonomyCategoryBrief(null, RandomTestUtil.randomString());
+			_getTaxonomyCategoryBrief(
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString());
 
 		SitePage randomSitePage = _getRandomSitePage(
 			RandomTestUtil.randomString(), null,
@@ -3373,6 +3377,48 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			testCompany.getGroupId(), taxonomyCategoryBrief1);
 		_assertTaxonomyCategoryBrief(
 			testGroup.getGroupId(), taxonomyCategoryBrief2);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		TaxonomyCategoryBrief taxonomyCategoryBrief3 =
+			_getTaxonomyCategoryBrief(
+				assetCategory.getExternalReferenceCode(), null,
+				RandomTestUtil.randomString());
+
+		randomSitePage.setTaxonomyCategoryBriefs(
+			new TaxonomyCategoryBrief[] {taxonomyCategoryBrief3});
+
+		putSitePage = sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			randomSitePage.getExternalReferenceCode(), false, randomSitePage);
+
+		TaxonomyCategoryBrief[] putTaxonomyCategoryBriefs =
+			putSitePage.getTaxonomyCategoryBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(putTaxonomyCategoryBriefs), 3,
+			putTaxonomyCategoryBriefs.length);
+
+		TaxonomyCategoryBrief putTaxonomyCategoryBrief =
+			putTaxonomyCategoryBriefs[0];
+
+		Assert.assertNotEquals(
+			taxonomyCategoryBrief3.getParentTaxonomyCategory(),
+			putTaxonomyCategoryBrief.getParentTaxonomyCategory());
+		Assert.assertNotEquals(
+			taxonomyCategoryBrief3.getParentTaxonomyVocabulary(),
+			putTaxonomyCategoryBrief.getParentTaxonomyVocabulary());
 	}
 
 	private void _testPutSiteSitePageWithPageElements() throws Exception {

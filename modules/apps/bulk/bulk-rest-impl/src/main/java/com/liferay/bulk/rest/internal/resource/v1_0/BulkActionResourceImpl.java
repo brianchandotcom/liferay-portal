@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -420,7 +421,14 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			return _assignStructureDefaultWorkflowBulkSelectionAction;
 		}
 		else if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
-			return _assignToObjectBulkSelectionAction;
+			BulkSelectionAction<Object> assignToObjectBulkSelectionAction =
+				_assignToObjectBulkSelectionActionSnapshot.get();
+
+			if (assignToObjectBulkSelectionAction == null) {
+				throw new UnsupportedOperationException();
+			}
+
+			return assignToObjectBulkSelectionAction;
 		}
 		else if (BulkAction.Type.COPY_BULK_ACTION.equals(type)) {
 			return _copyObjectBulkSelectionAction;
@@ -973,6 +981,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return bulkActionItem;
 	}
 
+	private static final Snapshot<BulkSelectionAction<Object>>
+		_assignToObjectBulkSelectionActionSnapshot = new Snapshot<>(
+			BulkActionResourceImpl.class,
+			Snapshot.cast(BulkSelectionAction.class),
+			"(bulk.selection.action.key=assign.to.object)", true);
 	private static final EntityModel _entityModel = new BulkActionEntityModel();
 
 	@Reference(
@@ -980,9 +993,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	)
 	private BulkSelectionAction<Object>
 		_assignStructureDefaultWorkflowBulkSelectionAction;
-
-	@Reference(target = "(bulk.selection.action.key=assign.to.object)")
-	private BulkSelectionAction<Object> _assignToObjectBulkSelectionAction;
 
 	@Reference
 	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;

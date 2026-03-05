@@ -26,7 +26,6 @@ import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.SitePageNavigationSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
-import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
@@ -707,14 +706,14 @@ public class SitePageResourceImpl
 			return serviceContext;
 		}
 
-		WidgetPageSpecification widgetPageSpecification =
-			PageSpecificationUtil.getWidgetPageSpecification(
+		PageSpecification pageSpecification =
+			PageSpecificationUtil.getPageSpecification(
 				sitePage.getPageSpecifications());
 
-		if (widgetPageSpecification != null) {
+		if (pageSpecification != null) {
 			ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
-				groupId, widgetPageSpecification, serviceContext,
-				widgetPageSpecification.
+				groupId, pageSpecification, serviceContext,
+				pageSpecification.
 					getSiteTemplatePageSpecificationExternalReferenceCode());
 		}
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 export class EditAccountChannelDefaultsPage {
 	readonly addDefaultBillingAddressButton: Locator;
@@ -149,11 +149,15 @@ export class EditAccountChannelDefaultsPage {
 
 	async addDefaultPaymentTerm(paymentTermId: number) {
 		await this.addDefaultPaymentTermButton.click();
-		await this.addDefaultPaymentTermSelector.selectOption(
-			paymentTermId.toString()
-		);
-		await this.modalSaveButton.click();
-		await this.page.waitForTimeout(200);
+		await expect(async () => {
+			await this.addDefaultPaymentTermSelector.selectOption(
+				paymentTermId.toString()
+			);
+			await expect(this.addDefaultPaymentTermSelector).toHaveValue(
+				paymentTermId.toString()
+			);
+			await this.modalSaveButton.click();
+		}).toPass({timeout: 5000});
 	}
 
 	searchTableRowByValue = async function (

@@ -596,7 +596,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 	commerceAdminOrdersPage,
 	page,
 }) => {
-	test.setTimeout(180000);
+	test.setTimeout(120000);
 
 	const {channel} = await miniumSetUp(apiHelpers);
 
@@ -841,6 +841,10 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 		)
 	).click();
 
+	await expect(
+		commerceAdminOrderDetailsPage.selectPaymentTerms
+	).toBeVisible();
+
 	await commerceAdminOrderDetailsPage.selectPaymentTerms.click();
 	await commerceAdminOrderDetailsPage.selectPaymentTerms.selectOption(
 		paymentTerm1.id.toString()
@@ -889,9 +893,15 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 
 	await commerceAdminOrderDetailsPage.orderSummaryLink.click();
 
+	await expect(
+		commerceAdminOrderDetailsPage.orderSummarySubtotalInput
+	).toBeVisible();
+
 	await commerceAdminOrderDetailsPage.orderSummarySubtotalInput.fill('2');
 
 	await commerceAdminOrderDetailsPage.orderSummarySaveButton.click();
+
+	await page.waitForLoadState('domcontentloaded');
 
 	await expect(
 		await commerceAdminOrderDetailsPage.orderSummarySubtotal

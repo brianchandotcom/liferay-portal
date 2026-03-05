@@ -732,32 +732,32 @@ export class CommerceAdminChannelDetailsPage {
 		shippingOption?: string
 	) {
 		let isNestedFrame: boolean;
+
 		if (tableName === 'Payment Methods') {
 			isNestedFrame = false;
+
 			await (await this.eligibilityTab(isNestedFrame, tableName)).click();
-			await (
-				await this.eligibilityOptionButton(
-					eligibilityOption,
-					isNestedFrame,
-					tableName
-				)
-			).click();
 
-			await expect(
-				await this.placeHolderTerm(
-					isNestedFrame,
-					tableName,
-					'Find a Payment Term'
-				)
-			).toBeVisible();
+			const eligibilityButton = await this.eligibilityOptionButton(
+				eligibilityOption,
+				isNestedFrame,
+				tableName
+			);
 
-			await (
-				await this.placeHolderTerm(
-					isNestedFrame,
-					tableName,
-					'Find a Payment Term'
-				)
-			).fill(entryName);
+			await expect(eligibilityButton).toBeVisible();
+
+			await eligibilityButton.click();
+
+			const placeholderInput = await this.placeHolderTerm(
+				isNestedFrame,
+				tableName,
+				'Find a Payment Term'
+			);
+
+			await expect(placeholderInput).toBeVisible();
+
+			await placeholderInput.fill(entryName);
+
 			await (await this.selectButton(isNestedFrame, tableName)).click();
 			await (
 				await this.frameSaveButton(isNestedFrame, tableName)
@@ -769,35 +769,34 @@ export class CommerceAdminChannelDetailsPage {
 		}
 		else if (tableName === 'Shipping Methods') {
 			isNestedFrame = true;
+
 			await (await this.shippingOptionsTab(tableName)).click();
 			await (
 				await this.shippingOptionsTableLink(shippingOption, tableName)
 			).click();
 			await (await this.detailsButton(tableName)).click();
 			await (await this.eligibilityTab(isNestedFrame, tableName)).click();
-			await (
-				await this.eligibilityOptionButton(
-					eligibilityOption,
-					isNestedFrame,
-					tableName
-				)
-			).click();
 
-			await expect(
-				await this.placeHolderTerm(
-					isNestedFrame,
-					tableName,
-					'Find a Delivery Term'
-				)
-			).toBeVisible();
+			const eligibilityButton = await this.eligibilityOptionButton(
+				eligibilityOption,
+				isNestedFrame,
+				tableName
+			);
 
-			await (
-				await this.placeHolderTerm(
-					isNestedFrame,
-					tableName,
-					'Find a Delivery Term'
-				)
-			).fill(entryName);
+			await expect(eligibilityButton).toBeVisible();
+
+			await eligibilityButton.click();
+
+			const placeholderInput = await this.placeHolderTerm(
+				isNestedFrame,
+				tableName,
+				'Find a Delivery Term'
+			);
+
+			await expect(placeholderInput).toBeVisible();
+
+			await placeholderInput.fill(entryName);
+
 			await (await this.selectButton(isNestedFrame, tableName)).click();
 			await (
 				await this.frameSaveButton(isNestedFrame, tableName)

@@ -1,0 +1,314 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "#FFFFFF",
+						"borderWidth": "0",
+						"minHeight": "100vh",
+						"textColor": "#54555F"
+					},
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+							"fragmentStyle": {
+								"overflow": "hidden"
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": "",
+										"borderRadius": "",
+										"borderWidth": "0",
+										"marginBottom": "",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "",
+										"overflow": "visible",
+										"paddingBottom": "6",
+										"paddingTop": "5",
+										"shadow": "",
+										"textAlign": ""
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "3"
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"marginLeft": "0",
+												"marginRight": "0",
+												"paddingLeft": "3",
+												"paddingRight": "3"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"contentDisplay": "FlexColumn",
+										"justify": "SpaceBetween",
+										"paddingBottom": 6,
+										"paddingTop": 4,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"paddingBottom": "5"
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"customCSS": ".font-size-heading-f1 {\nfont-size:  36px;\nfont-weight: 600;\nline-height: 40px;\n}",
+											"fragment": {
+												"key": "text",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"fontSize": "font-size-heading-f1",
+												"smallCaps": false,
+												"tabletScreenCenter": false
+											},
+											"fragmentFields": [
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>Products</p>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"borderColor": "#ffffff",
+												"fontSize": "33px",
+												"fontWeight": "600",
+												"textColor": "#282934"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"customCSS": ".component-paragraph {\nline-height: 36px;\n}",
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>Products is a comprehensive digital platform that enables organizations to create, manage, and optimize personalized digital experiences. Through a flexible CMS, content marketing capabilities (CMP), and digital self-service solutions (DSR), Liferay empowers businesses to deliver relevant content, simplify access to services, and enhance engagement with users, customers, and partners. The integration of a Liferay Data Platform (LDP) provides a unified view of the customer, while the Digital Experience Platform (DXP) orchestrates content, data, and applications to deliver consistent, scalable, and value-driven omnichannel experiences.</p>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontSize": "18px",
+												"textColor": "#82828C"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": "#FFFFFF",
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"allowEmptySearches": "true",
+													"basicFacetSelection": "false",
+													"federatedSearchKey": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"boost": "",
+													"customHeading": "",
+													"disabled": "false",
+													"displayStyle": "default",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"displayStyleGroupKey": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"filterField": "assetCategoryIds",
+													"filterQueryType": "match",
+													"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/marketplace-product-type/product.json$]",
+													"immutable": "true",
+													"invisible": "true",
+													"occur": "must",
+													"parameterName": "",
+													"parentQueryName": "",
+													"queryName": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"cpContentListRendererKey": "list-default",
+													"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
+													"displayStyle": "ddmTemplate_LIFERAY-PRODUCTS-SEARCH-RESULTS",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"displayStyleGroupKey": "[$GROUP_ID$]",
+													"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+													"lfrAppShowShareWithFriendsLink": "false",
+													"lfrFacebookApiKey": "",
+													"lfrFacebookCanvasPageUrl": "",
+													"lfrFacebookShowAddAppLink": "false",
+													"lfrIgoogleShowAddAppLink": "false",
+													"lfrNetvibesShowAddAppLink": "false",
+													"lfrWidgetShowAddAppLink": "false",
+													"paginate": "false",
+													"paginationDelta": "15",
+													"selectionStyle": "adt",
+													"simple--cpTypeListEntryRendererKey": "list-entry-default",
+													"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+												},
+												"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"hidden": true
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"displayStyle": "default",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"displayStyleGroupKey": "[$GROUP_ID$]",
+											"fields": "[{\"field\": \"createDate-\", \"label\": \"created\"}]"
+										},
+										"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "notification-welcome",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"hidden": true
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		},
+		"styleBook": {
+			"key": "Marketplace",
+			"name": "Marketplace"
+		}
+	},
+	"version": 1.1
+}

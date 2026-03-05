@@ -1,11 +1,11 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/liferay-services-marketplace",
+	"friendlyURL": "/products",
 	"hidden": false,
-	"name": "Liferay Services",
+	"name": "Products",
 	"name_i18n": {
-		"en_US": "Liferay Services"
+		"en_US": "Products"
 	},
 	"private": false,
 	"system": false,

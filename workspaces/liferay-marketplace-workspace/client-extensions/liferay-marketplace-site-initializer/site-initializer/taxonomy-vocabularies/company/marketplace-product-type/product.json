@@ -1,0 +1,11 @@
+{
+	"description": "Liferay Product",
+	"description_i18n": {
+		"en_US": "Liferay Product"
+	},
+	"name": "Liferay Product",
+	"name_i18n": {
+		"en_US": "Liferay Product"
+	},
+	"viewableBy": "Anyone"
+}

@@ -44,6 +44,25 @@ public class EnvironmentBuildPropertiesUtil {
 			EnvironmentBuildProperties environmentBuildProperties =
 				new EnvironmentBuildProperties(environment, urlString);
 
+			String masterHostname = System.getenv("MASTER_HOSTNAME");
+
+			if (masterHostname.equals("test-5-1")) {
+				environmentBuildProperties.setProperty(
+					"github.webhook.base.invocation.url",
+					environmentBuildProperties.getProperty(
+						"github.webhook.base.invocation.url[staging]"));
+
+				environmentBuildProperties.setProperty(
+					"github.webhook.url",
+					environmentBuildProperties.getProperty(
+						"github.webhook.url[aws-staging]"));
+
+				environmentBuildProperties.setProperty(
+					"github.webhook.url[aws]",
+					environmentBuildProperties.getProperty(
+						"github.webhook.url[aws-staging]"));
+			}
+
 			environmentBuildProperties.store(environmentBuildPropertiesFile);
 
 			System.out.println("Writing " + environmentBuildPropertiesFile);

@@ -59,9 +59,7 @@ public class YMLStylingCheck extends BaseFileCheck {
 	}
 
 	private String _fixNullValue(String s) {
-		if (s.equals("NULL") || s.equals("Null") || s.equals("null") ||
-			s.equals("~")) {
-
+		if (_isNullValue(s)) {
 			return "null";
 		}
 

@@ -1,0 +1,56 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jessyca Ferreira
+ */
+public class LPD_80777 {
+
+	public void method(
+		long userId, long groupId, long parentStructureId, long classNameId,
+		String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, DDMForm ddmForm,
+		DDMFormLayout ddmFormLayout, String storageType, int type,
+		ServiceContext serviceContext) {
+
+		DDMStructureLocalServiceUtil.addStructure(
+			123, groupId, parentStructureId, classNameId, structureKey, nameMap,
+			descriptionMap, ddmForm, ddmFormLayout, storageType, type,
+			serviceContext);
+		DDMStructureLocalServiceUtil.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
+			serviceContext);
+		_ddmStructureLocalService.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
+			serviceContext);
+	}
+
+	public void method(
+		long userId, long groupId, long parentStructureId, long classNameId,
+		String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, String definition,
+		String storageType, ServiceContext serviceContext) {
+
+		DDMStructureLocalServiceUtil.addStructure(
+			123, groupId, parentStructureId, classNameId, structureKey, nameMap,
+			descriptionMap, definition, storageType, serviceContext);
+		DDMStructureLocalServiceUtil.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, definition, storageType, serviceContext);
+		_ddmStructureLocalService.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, definition, storageType, serviceContext);
+	}
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+}

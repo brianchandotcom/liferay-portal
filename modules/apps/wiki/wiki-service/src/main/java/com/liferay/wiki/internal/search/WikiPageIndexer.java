@@ -354,13 +354,12 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			(WikiNode node) -> _reindexPages(
-				companyId, node.getGroupId(), node.getNodeId()));
+			(WikiNode node) -> _reindexPages(companyId, node.getNodeId()));
 
 		actionableDynamicQuery.performActions();
 	}
 
-	private void _reindexPages(long companyId, long groupId, long nodeId)
+	private void _reindexPages(long companyId, long nodeId)
 		throws PortalException {
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
@@ -377,7 +376,6 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 				dynamicQuery.add(headProperty.eq(true));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setGroupId(groupId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(WikiPage page) -> {
 				try {

@@ -233,7 +233,7 @@ const useProjectUsageData = (
 							SiteAndUserDataEnum.CLIENT_EXTENSIONS_CAPACITY_CPU
 						],
 						infoText: i18n.translate(
-							'additional-vcpus-allocated-to-customer-s-extension-environments-within-the-liferay-cloud-infrastructure-to-run-client-extensions-a-vcpu-means-a-virtual-machine-s-virtual-processor-to-which-a-physical-cpu-is-assigned-in-whole-or-in-part-for-the-avoidance-of-doubt-in-the-event-of-simultaneous-multithreading-in-the-same-physical-cpu-each-thread-will-be-considered-a-vcpu'
+							'additional-vcpus-allocated-to-customer-s-extension-environments-within-the-liferay-cloud-infrastructure-to-run-client-extensions'
 						),
 						maxCountText: i18n.translate('total-vcpu'),
 						title: i18n.translate('extensions-vcpu'),

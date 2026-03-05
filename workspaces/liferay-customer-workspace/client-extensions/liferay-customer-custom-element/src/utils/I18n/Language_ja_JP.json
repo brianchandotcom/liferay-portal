@@ -653,7 +653,7 @@
 	"total-ram": "合計RAM",
 	"total-storage": "合計ストレージ",
 	"total-unique-authenticated-users-who-visited-sites-on-this-account-at-least-once-per-month": "このアカウントで月に1回以上サイトを訪問したユニークな認証ユーザーの合計。",
-	"total-vcpu": "合計vCPU",
+	"total-vcpu": "総vCPU",
 	"total-volume": "総ボリューム",
 	"traffic-networking": "トラフィック／ネットワーク",
 	"try-again-later": "後でもう一度試してください。",

@@ -328,7 +328,7 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public void undeployWorkflowDefinition(
-			long companyId, long userId, String name, int version)
+			long companyId, String name, long userId, int version)
 		throws WorkflowException {
 
 		String className = WorkflowDefinition.class.getName();

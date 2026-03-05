@@ -75,8 +75,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 			false);
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
-			workflowDefinition.getCompanyId(), dtoConverterContext.getUserId(),
-			workflowDefinition.getName(), workflowDefinition.getVersion());
+			workflowDefinition.getCompanyId(), workflowDefinition.getName(),
+			dtoConverterContext.getUserId(), workflowDefinition.getVersion());
 	}
 
 	@Override

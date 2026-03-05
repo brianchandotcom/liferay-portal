@@ -212,7 +212,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			user.getCompanyId(), user.getUserId(), name, 1, false);
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
-			user.getCompanyId(), user.getUserId(), name, 1);
+			user.getCompanyId(), name, user.getUserId(), 1);
 	}
 
 	@Override

@@ -113,7 +113,7 @@ public class WorkflowDefinitionResourceImpl
 		throws Exception {
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
-			contextCompany.getCompanyId(), contextUser.getUserId(), name,
+			contextCompany.getCompanyId(), name, contextUser.getUserId(),
 			GetterUtil.getInteger(version));
 	}
 

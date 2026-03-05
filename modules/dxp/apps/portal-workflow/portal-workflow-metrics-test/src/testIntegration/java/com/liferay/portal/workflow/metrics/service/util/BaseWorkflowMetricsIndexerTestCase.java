@@ -360,8 +360,8 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 				false);
 
 			workflowDefinitionManager.undeployWorkflowDefinition(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				workflowDefinition.getName(), workflowDefinition.getVersion());
+				TestPropsValues.getCompanyId(), workflowDefinition.getName(),
+				TestPropsValues.getUserId(), workflowDefinition.getVersion());
 
 			workflowDefinition = null;
 		}

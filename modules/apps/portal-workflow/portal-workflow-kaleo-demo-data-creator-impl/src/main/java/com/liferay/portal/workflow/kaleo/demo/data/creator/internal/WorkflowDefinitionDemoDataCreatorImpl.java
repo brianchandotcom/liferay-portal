@@ -65,8 +65,8 @@ public class WorkflowDefinitionDemoDataCreatorImpl
 				workflowDefinition.getVersion(), false);
 
 			_workflowDefinitionManager.undeployWorkflowDefinition(
-				workflowDefinition.getCompanyId(),
-				workflowDefinition.getUserId(), workflowDefinition.getName(),
+				workflowDefinition.getCompanyId(), workflowDefinition.getName(),
+				workflowDefinition.getUserId(),
 				workflowDefinition.getVersion());
 		}
 	}

@@ -110,7 +110,7 @@ export enum ProductType {
 
 export enum ProductTypeVocabulary {
 	APP = 'App',
-	LIFERAY_SERVICE = 'Liferay Service',
+	LIFERAY_PRODUCTS = 'Liferay Products',
 	SOLUTION = 'Solution',
 }
 

@@ -76,7 +76,7 @@ export const productTypeRoutes = {
 			});
 		},
 	},
-	[ProductTypeVocabulary.LIFERAY_SERVICE]: {
+	[ProductTypeVocabulary.LIFERAY_PRODUCTS]: {
 		metadata: {
 			tinyStepsDisplay: true,
 			useCart: true,

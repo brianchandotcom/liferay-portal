@@ -91,16 +91,12 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 <aui:script>
 	var form = document.<portlet:namespace />fm;
 
-	var consentRenewalPeriod = document.getElementById(
-		'<portlet:namespace />consentRenewalPeriod'
-	);
-
-	var originalConsentRenewalPeriod = consentRenewalPeriod
-		? consentRenewalPeriod.value
-		: null;
-
 	if (form) {
 		form.addEventListener('submit', (event) => {
+			var consentRenewalPeriod = document.getElementById(
+				'<portlet:namespace />consentRenewalPeriod'
+			);
+
 			if (!consentRenewalPeriod.value || isNaN(consentRenewalPeriod.value)) {
 				event.preventDefault();
 				event.stopImmediatePropagation();
@@ -110,9 +106,9 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			var enabled = document.getElementById('<portlet:namespace />enabled');
 
 			if (
-				consentRenewalPeriod.value !== originalConsentRenewalPeriod &&
+				consentRenewalPeriod.value !==
+					'<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>' &&
 				enabled.checked &&
-				originalConsentRenewalPeriod !== null &&
 				<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>
 			) {
 				event.preventDefault();

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -94,6 +94,10 @@ import java.util.function.Supplier;
 		@JsonSubTypes.Type(
 			name = "TaxonomyCategoryBulkAction",
 			value = TaxonomyCategoryBulkAction.class
+		),
+		@JsonSubTypes.Type(
+			name = "UpdateValuesBulkAction",
+			value = UpdateValuesBulkAction.class
 		)
 	}
 )
@@ -355,7 +359,8 @@ public abstract class BulkAction implements Serializable {
 		PERMISSION_BULK_ACTION("PermissionBulkAction"),
 		RESET_PERMISSION_BULK_ACTION("ResetPermissionBulkAction"),
 		STATUS_BULK_ACTION("StatusBulkAction"),
-		TAXONOMY_CATEGORY_BULK_ACTION("TaxonomyCategoryBulkAction");
+		TAXONOMY_CATEGORY_BULK_ACTION("TaxonomyCategoryBulkAction"),
+		UPDATE_VALUES_BULK_ACTION("UpdateValuesBulkAction");
 
 		@JsonCreator
 		public static Type create(String value) {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
@@ -121,6 +122,8 @@ public class SideNavigationDisplayContext {
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
 
 		return HashMapBuilder.<String, Object>put(
+			"canonicalName", panelCategory.getLabel(LocaleUtil.ENGLISH)
+		).put(
 			"categoryImageUrl", getPanelCategoryImageUrl()
 		).put(
 			"expandedKeys", getExpandedKeys()
@@ -275,6 +278,8 @@ public class SideNavigationDisplayContext {
 
 			propsItems.add(
 				HashMapBuilder.<String, Object>put(
+					"canonicalName", panelApp.getLabel(LocaleUtil.ENGLISH)
+				).put(
 					"href",
 					panelApp.getPortletURL(
 						_httpServletRequest

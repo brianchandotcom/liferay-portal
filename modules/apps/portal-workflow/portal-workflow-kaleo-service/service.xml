@@ -1156,6 +1156,7 @@
 	<exceptions>
 		<exception>DuplicateKaleoDefinitionName</exception>
 		<exception>KaleoDefinitionContent</exception>
+		<exception>KaleoDefinitionGroupId</exception>
 		<exception>KaleoDefinitionName</exception>
 	</exceptions>
 </service-builder>

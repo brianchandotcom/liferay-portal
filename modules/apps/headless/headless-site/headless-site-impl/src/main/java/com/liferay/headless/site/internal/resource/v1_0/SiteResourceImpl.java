@@ -241,8 +241,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 			group = _updateGroup(
 				group, multipartBody.getValueAsInstance("site", Site.class));
-
-			return _toSite(group);
 		}
 
 		PermissionChecker permissionChecker =

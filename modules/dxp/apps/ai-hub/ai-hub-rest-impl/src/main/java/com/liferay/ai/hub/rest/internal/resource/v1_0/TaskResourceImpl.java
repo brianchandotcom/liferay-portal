@@ -61,6 +61,15 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 			_workflowDefinitionManager.getLatestWorkflowDefinition(
 				contextCompany.getCompanyId(), task.getType());
 
+		long groupId = workflowDefinition.getGroupId();
+
+		if (workflowDefinition.isSystem()) {
+			AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
+				contextUser.getUserId());
+
+			groupId = accountEntry.getAccountEntryGroupId();
+		}
+
 		Map<String, Serializable> workflowContext =
 			WorkflowContextUtil.toWorkflowContext(
 				task.getContext(), contextHttpServletRequest,
@@ -70,15 +79,6 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		workflowContext.put(
 			"userToken",
 			contextHttpServletRequest.getHeader("Liferay-AI-Hub-On-Behalf-Of"));
-
-		long groupId = workflowDefinition.getGroupId();
-
-		if (workflowDefinition.isSystem()) {
-			AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
-				contextUser.getUserId());
-
-			groupId = accountEntry.getAccountEntryGroupId();
-		}
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.startWorkflowInstance(

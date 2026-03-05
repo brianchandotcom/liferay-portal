@@ -1670,7 +1670,23 @@ public class ObjectDefinitionLocalServiceImpl
 			dbTableName = "ObjectEntry";
 		}
 
-		_addOldClassNameObjectDefinitionSettings(className, objectDefinition);
+		if (Validator.isNotNull(className) &&
+			!StringUtil.equals(className, objectDefinition.getClassName())) {
+
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				objectDefinition.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME,
+				className);
+
+			for (long classNameId : _getClassNameIds(className)) {
+				_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+					objectDefinition.getUserId(),
+					objectDefinition.getObjectDefinitionId(),
+					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME_ID,
+					String.valueOf(classNameId));
+			}
+		}
 
 		_addOrUpdateObjectDefinitionSettings(
 			objectDefinition, objectDefinitionSettings);
@@ -1753,29 +1769,6 @@ public class ObjectDefinitionLocalServiceImpl
 		_throwObjectDefinitionValidationException(objectDefinition);
 
 		return objectDefinition;
-	}
-
-	private void _addOldClassNameObjectDefinitionSettings(
-			String className, ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		if (Validator.isNotNull(className) &&
-			!StringUtil.equals(className, objectDefinition.getClassName())) {
-
-			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-				objectDefinition.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
-				ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME,
-				className);
-
-			for (long classNameId : _getClassNameIds(className)) {
-				_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-					objectDefinition.getUserId(),
-					objectDefinition.getObjectDefinitionId(),
-					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME_ID,
-					String.valueOf(classNameId));
-			}
-		}
 	}
 
 	private void _addOrUpdateObjectActions(
@@ -2810,8 +2803,6 @@ public class ObjectDefinitionLocalServiceImpl
 			serviceContext.getLanguageId());
 		objectDefinition.setPluralLabelCurrentLanguageId(
 			serviceContext.getLanguageId());
-
-		_addOldClassNameObjectDefinitionSettings(className, objectDefinition);
 
 		_addOrUpdateObjectDefinitionSettings(
 			objectDefinition, objectDefinitionSettings);

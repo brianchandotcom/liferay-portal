@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 
+import java.util.Arrays;
+
 /**
  * @author Tancredi Covioli
  */
@@ -47,6 +49,14 @@ public class CountryResourcePermissionUpgradeProcess extends UpgradeProcess {
 		if (resourceAction == null) {
 			return;
 		}
+
+		_resourceActionLocalService.checkResourceActions(
+			PortletKeys.PORTAL, Arrays.asList(ActionKeys.ADD_COUNTRY), true);
+		_resourceActionLocalService.checkResourceActions(
+			Country.class.getName(),
+			Arrays.asList(
+				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE),
+			true);
 
 		for (ResourcePermission resourcePermission :
 				_resourcePermissionLocalService.getResourcePermissions(

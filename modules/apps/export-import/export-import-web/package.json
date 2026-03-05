@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@clayui/alert": "^3.159.0",
 		"@clayui/button": "^3.159.0",
+		"@clayui/date-picker": "^3.159.0",
 		"@clayui/form": "^3.159.0",
 		"@clayui/icon": "^3.159.0",
 		"@clayui/layout": "^3.159.0",

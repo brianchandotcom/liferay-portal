@@ -91,7 +91,7 @@ export class ViewObjectDefinitionsPage {
 	) {
 		await this.page
 			.getByPlaceholder(placeholder ?? 'Search')
-			.fill(objectDefinitionLabel.replace(/ /g, ''));
+			.fill(objectDefinitionLabel);
 
 		await this.page.keyboard.press('Enter');
 

@@ -127,7 +127,6 @@ public class AssetPublisherDisplayContextTest {
 		);
 
 		long[] classTypeIds = {1L, 2L};
-
 		long[] expectedClassTypeIds = {1L, 2L, 0L, 3L};
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
@@ -177,7 +176,8 @@ public class AssetPublisherDisplayContextTest {
 			Mockito.nullable(LiferayPortletResponse.class), Mockito.anyLong(),
 			Mockito.any(long[].class),
 			Mockito.argThat(
-				actual -> Arrays.equals(actual, expectedClassTypeIds)),
+				actualClassTypeIds -> Arrays.equals(
+					expectedClassTypeIds, actualClassTypeIds)),
 			Mockito.any(long[].class), Mockito.any(String[].class),
 			Mockito.nullable(String.class)
 		);

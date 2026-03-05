@@ -93,8 +93,6 @@ public class OpenAPIResourceImpl {
 
 			add(TaskResourceImpl.class);
 
-			add(TokenResourceImpl.class);
-
 			add(OpenAPIResourceImpl.class);
 		}
 	};

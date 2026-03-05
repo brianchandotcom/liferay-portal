@@ -5,4 +5,7 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %>
+
+<%@ page import="com.liferay.design.library.web.internal.constants.DesignLibraryAdminFDSNames" %><%@
+page import="com.liferay.design.library.web.internal.display.context.ViewDesignLibraryAdminDisplayContext" %>

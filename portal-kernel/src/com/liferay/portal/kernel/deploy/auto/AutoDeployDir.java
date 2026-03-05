@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -103,6 +104,10 @@ public class AutoDeployDir {
 		}
 
 		FileUtil.move(file, new File(dirName, fileName));
+	}
+
+	public static AutoDeployDir getDefault() {
+		return _defaultAutoDeployDir;
 	}
 
 	public AutoDeployDir(String name, File deployDir, long interval) {
@@ -315,6 +320,10 @@ public class AutoDeployDir {
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
 	private static AutoDeployScanner _autoDeployScanner;
+	private static final AutoDeployDir _defaultAutoDeployDir =
+		new AutoDeployDir(
+			DEFAULT_NAME, new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR),
+			PropsValues.AUTO_DEPLOY_INTERVAL);
 	private static final Pattern _versionPattern = Pattern.compile(
 		"-[\\d]+((\\.[\\d]+)+(-.+)*)\\.war$");
 

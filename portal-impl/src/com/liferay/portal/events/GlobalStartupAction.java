@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.BrowserLauncher;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,11 +67,7 @@ public class GlobalStartupAction extends SimpleAction {
 		// Auto deploy
 
 		try {
-			File deployDir = new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
-			long interval = PropsValues.AUTO_DEPLOY_INTERVAL;
-
-			AutoDeployDir autoDeployDir = new AutoDeployDir(
-				AutoDeployDir.DEFAULT_NAME, deployDir, interval);
+			AutoDeployDir autoDeployDir = AutoDeployDir.getDefault();
 
 			if (PropsValues.AUTO_DEPLOY_ENABLED) {
 				if (_log.isInfoEnabled()) {

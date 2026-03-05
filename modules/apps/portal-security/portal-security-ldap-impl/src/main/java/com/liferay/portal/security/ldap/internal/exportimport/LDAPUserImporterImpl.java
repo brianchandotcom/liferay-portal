@@ -663,17 +663,14 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 
 		calendar.setTime(ldapUser.getBirthday());
 
-		int birthdayMonth = calendar.get(Calendar.MONTH);
-		int birthdayDay = calendar.get(Calendar.DAY_OF_MONTH);
-		int birthdayYear = calendar.get(Calendar.YEAR);
-
 		User user = _userLocalService.addUser(
 			ldapUser.getCreatorUserId(), companyId, autoPassword, password,
 			password, ldapUser.isAutoScreenName(), ldapUser.getScreenName(),
 			ldapUser.getEmailAddress(), ldapUser.getLocale(),
 			ldapUser.getFirstName(), ldapUser.getMiddleName(),
-			ldapUser.getLastName(), 0, 0, ldapUser.isMale(), birthdayMonth,
-			birthdayDay, birthdayYear, StringPool.BLANK,
+			ldapUser.getLastName(), 0, 0, ldapUser.isMale(),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), StringPool.BLANK,
 			UserConstants.TYPE_REGULAR, ldapUser.getGroupIds(),
 			ldapUser.getOrganizationIds(), ldapUser.getRoleIds(),
 			ldapUser.getUserGroupIds(), ldapUser.isSendEmail(),

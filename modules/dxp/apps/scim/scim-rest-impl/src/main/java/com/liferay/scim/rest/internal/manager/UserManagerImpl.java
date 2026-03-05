@@ -535,18 +535,18 @@ public class UserManagerImpl implements UserManager {
 
 		calendar.setTime(scimUser.getBirthday());
 
-		int month = calendar.get(Calendar.MONTH);
-		int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-		int year = calendar.get(Calendar.YEAR);
-
 		if (portalUser == null) {
 			portalUser = _addPortalUser(
-				month, dayOfMonth, year,
+				calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR),
 				scimClientOAuth2ApplicationConfiguration, scimUser);
 		}
 		else {
 			portalUser = _updatePortalUser(
-				month, dayOfMonth, year, portalUser, scimUser,
+				calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), portalUser, scimUser,
 				scimClientOAuth2ApplicationConfiguration);
 		}
 

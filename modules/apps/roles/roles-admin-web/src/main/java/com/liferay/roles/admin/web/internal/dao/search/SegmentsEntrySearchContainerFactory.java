@@ -119,9 +119,9 @@ public class SegmentsEntrySearchContainerFactory {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				CompanyConstants.SYSTEM, "LPD-78863")) {
 
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+			BooleanQuery sourceQuery = new BooleanQueryImpl();
 
-			booleanQuery.addTerm(
+			sourceQuery.addTerm(
 				"source",
 				StringUtil.toLowerCase(
 					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND));
@@ -129,7 +129,7 @@ public class SegmentsEntrySearchContainerFactory {
 			searchContext.setBooleanClauses(
 				new BooleanClause[] {
 					BooleanClauseFactoryUtil.create(
-						booleanQuery, BooleanClauseOccur.MUST.getName())
+						sourceQuery, BooleanClauseOccur.MUST.getName())
 				});
 		}
 

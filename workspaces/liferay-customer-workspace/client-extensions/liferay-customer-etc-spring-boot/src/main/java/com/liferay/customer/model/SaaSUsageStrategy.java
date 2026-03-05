@@ -141,26 +141,25 @@ public class SaaSUsageStrategy extends BaseUsageStrategy {
 		_storageCapacityMax += additionalStorageCapacityDocumentLibraryMax;
 
 		if (usageJSONObject != null) {
-			_anonymousPageViewsUsed = usageJSONObject.optBigDecimal(
-				"totalAnonymousPageViewsCount", BigDecimal.ZERO);
+			_anonymousPageViewsUsed = usageJSONObject.optLong(
+				"totalAnonymousPageViewsCount");
 			_extensionsCapacityCPUUsed = usageJSONObject.optBigDecimal(
 				"totalClientExtensionsCapacityCPUCount", BigDecimal.ZERO);
-			_extensionsCapacityRAMUsedGigaBytes = usageJSONObject.optBigDecimal(
+			_extensionsCapacityRAMGBUsed = usageJSONObject.optBigDecimal(
 				"totalClientExtensionsCapacityRAM", BigDecimal.ZERO);
-			_monthlyActiveLoggedInUsersUsed = usageJSONObject.optBigDecimal(
-				"totalMonthlyActiveLoggedInUsersCount", BigDecimal.ZERO);
-			_sitesUsed = usageJSONObject.optBigDecimal(
-				"totalSitesCount", BigDecimal.ZERO);
-			_storageCapacityUsedGigaBytes = usageJSONObject.optBigDecimal(
+			_monthlyActiveLoggedInUsersUsed = usageJSONObject.optLong(
+				"totalMonthlyActiveLoggedInUsersCount");
+			_sitesUsed = usageJSONObject.optInt("totalSitesCount");
+			_storageCapacityGBUsed = usageJSONObject.optBigDecimal(
 				"totalStorageCapacityDocumentLibrary", BigDecimal.ZERO);
 		}
 		else {
-			_anonymousPageViewsUsed = BigDecimal.ZERO;
+			_anonymousPageViewsUsed = 0;
 			_extensionsCapacityCPUUsed = BigDecimal.ZERO;
-			_extensionsCapacityRAMUsedGigaBytes = BigDecimal.ZERO;
-			_monthlyActiveLoggedInUsersUsed = BigDecimal.ZERO;
-			_sitesUsed = BigDecimal.ZERO;
-			_storageCapacityUsedGigaBytes = BigDecimal.ZERO;
+			_extensionsCapacityRAMGBUsed = BigDecimal.ZERO;
+			_monthlyActiveLoggedInUsersUsed = 0;
+			_sitesUsed = 0;
+			_storageCapacityGBUsed = BigDecimal.ZERO;
 		}
 	}
 
@@ -171,31 +170,26 @@ public class SaaSUsageStrategy extends BaseUsageStrategy {
 		jsonObject.put(
 			"anonymousPageViews",
 			createUsageJSONObject(
-				_anonymousPageViewsUsed, _anonymousPageViewsMax,
-				StringPool.BLANK)
+				_anonymousPageViewsUsed, _anonymousPageViewsMax)
 		).put(
 			"clientExtensionsCapacityCPU",
 			createUsageJSONObject(
-				_format(_extensionsCapacityCPUUsed), _extensionsCapacityCPUMax,
-				StringPool.BLANK)
+				_format(_extensionsCapacityCPUUsed), _extensionsCapacityCPUMax)
 		).put(
 			"clientExtensionsCapacityRAM",
 			createUsageJSONObject(
-				_format(_extensionsCapacityRAMUsedGigaBytes),
+				_format(_extensionsCapacityRAMGBUsed),
 				_extensionsCapacityRAMMax, UNIT_GIB)
 		).put(
 			"monthlyActiveLoggedInUsers",
 			createUsageJSONObject(
-				_monthlyActiveLoggedInUsersUsed, _monthlyActiveLoggedInUsersMax,
-				StringPool.BLANK)
+				_monthlyActiveLoggedInUsersUsed, _monthlyActiveLoggedInUsersMax)
 		).put(
-			"sites",
-			createUsageJSONObject(_sitesUsed, _sitesMax, StringPool.BLANK)
+			"sites", createUsageJSONObject(_sitesUsed, _sitesMax)
 		).put(
 			"storageCapacityDocumentLibrary",
 			createUsageJSONObject(
-				_format(_storageCapacityUsedGigaBytes), _storageCapacityMax,
-				UNIT_GIB)
+				_format(_storageCapacityGBUsed), _storageCapacityMax, UNIT_GIB)
 		);
 
 		return jsonObject;
@@ -270,16 +264,16 @@ public class SaaSUsageStrategy extends BaseUsageStrategy {
 	}
 
 	private final long _anonymousPageViewsMax;
-	private final BigDecimal _anonymousPageViewsUsed;
+	private final long _anonymousPageViewsUsed;
 	private int _extensionsCapacityCPUMax;
 	private final BigDecimal _extensionsCapacityCPUUsed;
+	private final BigDecimal _extensionsCapacityRAMGBUsed;
 	private int _extensionsCapacityRAMMax;
-	private final BigDecimal _extensionsCapacityRAMUsedGigaBytes;
 	private final long _monthlyActiveLoggedInUsersMax;
-	private final BigDecimal _monthlyActiveLoggedInUsersUsed;
+	private final long _monthlyActiveLoggedInUsersUsed;
 	private int _sitesMax;
-	private final BigDecimal _sitesUsed;
+	private final int _sitesUsed;
+	private final BigDecimal _storageCapacityGBUsed;
 	private int _storageCapacityMax;
-	private final BigDecimal _storageCapacityUsedGigaBytes;
 
 }

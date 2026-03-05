@@ -7,7 +7,6 @@ package com.liferay.customer.model;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -39,10 +38,8 @@ public class ExperienceUsageStrategy extends BaseUsageStrategy {
 		_databaseCapacityMax = GetterUtil.getInteger(
 			StringUtil.removeSubstring(
 				productProperties.get(machineType + "-database"), UNIT_GIB));
-
 		_extensionsCapacityCPUMax = GetterUtil.getInteger(
 			productProperties.get(machineType + "-extensions-vcpus"));
-
 		_extensionsCapacityRAMMax = GetterUtil.getInteger(
 			productProperties.get(machineType + "-extensions-ram"));
 
@@ -59,7 +56,6 @@ public class ExperienceUsageStrategy extends BaseUsageStrategy {
 			StringUtil.removeSubstring(
 				productProperties.get(machineType + "-traffic-networking"),
 				UNIT_TIB));
-
 		_storageCapacityMax = GetterUtil.getInteger(
 			StringUtil.removeSubstring(
 				productProperties.get(machineType + "-storage"), UNIT_TIB));
@@ -67,31 +63,25 @@ public class ExperienceUsageStrategy extends BaseUsageStrategy {
 		if (usageJSONObject != null) {
 			usageJSONObject = usageJSONObject.getJSONObject("usage");
 
-			_databaseCapacityUsedBytes = usageJSONObject.optBigDecimal(
-				"databaseStorage", BigDecimal.ZERO);
-
+			_databaseCapacityBytesUsed = usageJSONObject.optLong(
+				"databaseStorage");
 			_extensionsCapacityCPUUsed = usageJSONObject.optBigDecimal(
 				"clientExtensionsCPU", BigDecimal.ZERO);
-
-			_extensionsCapacityRAMUsedBytes = usageJSONObject.optBigDecimal(
-				"clientExtensionsRAM", BigDecimal.ZERO);
-
-			_logCapacityUsedBytes = usageJSONObject.optBigDecimal(
-				"logStorage", BigDecimal.ZERO);
-
-			_networkingCapacityUsedBytes = usageJSONObject.optBigDecimal(
-				"networkTraffic", BigDecimal.ZERO);
-
-			_storageCapacityUsedBytes = usageJSONObject.optBigDecimal(
-				"documentLibraryAndBackupStorage", BigDecimal.ZERO);
+			_extensionsCapacityRAMBytesUsed = usageJSONObject.optLong(
+				"clientExtensionsRAM");
+			_logCapacityBytesUsed = usageJSONObject.optLong("logStorage");
+			_networkingCapacityBytesUsed = usageJSONObject.optLong(
+				"networkTraffic");
+			_storageCapacityBytesUsed = usageJSONObject.optLong(
+				"documentLibraryAndBackupStorage");
 		}
 		else {
-			_databaseCapacityUsedBytes = BigDecimal.ZERO;
+			_databaseCapacityBytesUsed = 0;
 			_extensionsCapacityCPUUsed = BigDecimal.ZERO;
-			_extensionsCapacityRAMUsedBytes = BigDecimal.ZERO;
-			_logCapacityUsedBytes = BigDecimal.ZERO;
-			_networkingCapacityUsedBytes = BigDecimal.ZERO;
-			_storageCapacityUsedBytes = BigDecimal.ZERO;
+			_extensionsCapacityRAMBytesUsed = 0;
+			_logCapacityBytesUsed = 0;
+			_networkingCapacityBytesUsed = 0;
+			_storageCapacityBytesUsed = 0;
 		}
 	}
 
@@ -102,40 +92,43 @@ public class ExperienceUsageStrategy extends BaseUsageStrategy {
 		return jsonObject.put(
 			"clientExtensionsCPU",
 			createUsageJSONObject(
-				_extensionsCapacityCPUUsed, _extensionsCapacityCPUMax,
-				StringPool.BLANK)
+				_extensionsCapacityCPUUsed, _extensionsCapacityCPUMax)
 		).put(
 			"clientExtensionsRAM",
 			createUsageJSONObject(
-				_convertToGigaBytes(_extensionsCapacityRAMUsedBytes),
+				_convertToGigaBytes(_extensionsCapacityRAMBytesUsed),
 				_extensionsCapacityRAMMax, UNIT_GIB)
 		).put(
 			"databaseStorage",
 			createUsageJSONObject(
-				_convertToGigaBytes(_databaseCapacityUsedBytes),
+				_convertToGigaBytes(_databaseCapacityBytesUsed),
 				_databaseCapacityMax, UNIT_GIB)
 		).put(
 			"documentLibraryAndBackupStorage",
 			createUsageJSONObject(
-				_convertToGigaBytes(_storageCapacityUsedBytes),
+				_convertToGigaBytes(_storageCapacityBytesUsed),
 				_storageCapacityMax, UNIT_TIB)
 		).put(
 			"logStorage",
 			createUsageJSONObject(
-				_convertToGigaBytes(_logCapacityUsedBytes), _logCapacityMax,
+				_convertToGigaBytes(_logCapacityBytesUsed), _logCapacityMax,
 				_logCapacityUnit)
 		).put(
 			"networkTraffic",
 			createUsageJSONObject(
-				_convertToGigaBytes(_networkingCapacityUsedBytes),
+				_convertToGigaBytes(_networkingCapacityBytesUsed),
 				_networkingCapacityMax, UNIT_TIB)
 		);
 	}
 
-	private BigDecimal _convertToGigaBytes(BigDecimal bytes) {
-		BigDecimal gigaBytes = bytes.divide(_GIB_DIVISOR);
-
-		return gigaBytes.setScale(2, RoundingMode.DOWN);
+	private BigDecimal _convertToGigaBytes(long bytes) {
+		return new BigDecimal(
+			bytes
+		).divide(
+			_GIB_DIVISOR
+		).setScale(
+			2, RoundingMode.DOWN
+		);
 	}
 
 	private static final BigDecimal _GIB_DIVISOR = new BigDecimal(
@@ -143,18 +136,18 @@ public class ExperienceUsageStrategy extends BaseUsageStrategy {
 
 	private static final String _MACHINE_TYPE_HIGH = "high";
 
+	private final long _databaseCapacityBytesUsed;
 	private final int _databaseCapacityMax;
-	private final BigDecimal _databaseCapacityUsedBytes;
 	private final int _extensionsCapacityCPUMax;
 	private final BigDecimal _extensionsCapacityCPUUsed;
+	private final long _extensionsCapacityRAMBytesUsed;
 	private final int _extensionsCapacityRAMMax;
-	private final BigDecimal _extensionsCapacityRAMUsedBytes;
+	private final long _logCapacityBytesUsed;
 	private final long _logCapacityMax;
 	private String _logCapacityUnit = UNIT_GIB;
-	private final BigDecimal _logCapacityUsedBytes;
+	private final long _networkingCapacityBytesUsed;
 	private final int _networkingCapacityMax;
-	private final BigDecimal _networkingCapacityUsedBytes;
+	private final long _storageCapacityBytesUsed;
 	private final int _storageCapacityMax;
-	private final BigDecimal _storageCapacityUsedBytes;
 
 }

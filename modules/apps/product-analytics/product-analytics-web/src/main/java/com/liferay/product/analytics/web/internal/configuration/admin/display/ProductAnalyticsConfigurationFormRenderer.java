@@ -5,24 +5,13 @@
 
 package com.liferay.product.analytics.web.internal.configuration.admin.display;
 
-import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.analytics.web.internal.configuration.ProductAnalyticsConfiguration;
 import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsWebKeys;
 import com.liferay.product.analytics.web.internal.display.context.ProductAnalyticsConfigurationDisplayContext;
-
-import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -53,82 +42,28 @@ public class ProductAnalyticsConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String portletId = PortalUtil.getPortletId(
-			(PortletRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAKARTA_PORTLET_REQUEST));
-
-		ProductAnalyticsConfiguration productAnalyticsConfiguration = null;
-
-		try {
-			if (portletId.equals(
-					ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)) {
-
-				productAnalyticsConfiguration =
-					_configurationProvider.getSystemConfiguration(
-						ProductAnalyticsConfiguration.class);
-			}
-			else if (portletId.equals(
-						ConfigurationAdminPortletKeys.SITE_SETTINGS)) {
-
-				productAnalyticsConfiguration =
-					_configurationProvider.getGroupConfiguration(
-						ProductAnalyticsConfiguration.class,
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId());
-			}
-			else {
-				productAnalyticsConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						ProductAnalyticsConfiguration.class,
-						themeDisplay.getCompanyId());
-			}
-		}
-		catch (ConfigurationException configurationException) {
-			_log.error(configurationException);
-		}
-
-		int consentRenewalPeriod = ParamUtil.getInteger(
-			httpServletRequest, "consentRenewalPeriod", 12);
-
-		int cookiesConfigurationProviderConsentRenewalPeriod =
-			consentRenewalPeriod;
-
-		if (productAnalyticsConfiguration != null) {
-			cookiesConfigurationProviderConsentRenewalPeriod =
-				productAnalyticsConfiguration.consentRenewalPeriod();
-		}
-
 		boolean enabled = ParamUtil.getBoolean(httpServletRequest, "enabled");
 
-		if (!enabled &&
-			(consentRenewalPeriod !=
-				cookiesConfigurationProviderConsentRenewalPeriod)) {
+		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
+			HashMapBuilder.<String, Object>put("enabled", enabled);
 
-			consentRenewalPeriod =
-				cookiesConfigurationProviderConsentRenewalPeriod;
+		if (enabled) {
+			hashMapWrapper.put(
+				"consentRenewalPeriod",
+				ParamUtil.getInteger(
+					httpServletRequest, "consentRenewalPeriod", 12)
+			).put(
+				"lastModified",
+				() -> {
+					Date now = new Date();
+
+					return ParamUtil.getLong(
+						httpServletRequest, "lastModified", now.getTime());
+				}
+			);
 		}
 
-		if ((consentRenewalPeriod < 1) || (consentRenewalPeriod > 12)) {
-			consentRenewalPeriod = 12;
-		}
-
-		return HashMapBuilder.<String, Object>put(
-			"consentRenewalPeriod", consentRenewalPeriod
-		).put(
-			"enabled", enabled
-		).put(
-			"lastModified",
-			() -> {
-				Date now = new Date();
-
-				return ParamUtil.getLong(
-					httpServletRequest, "lastModified", now.getTime());
-			}
-		).build();
+		return hashMapWrapper.build();
 	}
 
 	@Override
@@ -156,12 +91,6 @@ public class ProductAnalyticsConfigurationFormRenderer
 				exception);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductAnalyticsConfigurationFormRenderer.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private LayoutUtilityPageEntryLayoutProvider

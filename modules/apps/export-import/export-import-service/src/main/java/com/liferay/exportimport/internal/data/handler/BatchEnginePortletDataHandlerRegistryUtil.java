@@ -20,13 +20,9 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 	public static BatchEnginePortletDataHandler getByClassName(
 		long companyId, String className) {
 
-		if (!_classNamePortletIdsMap.containsKey(className)) {
-			return null;
-		}
-
 		String portletId = _classNamePortletIdsMap.get(className);
 
-		if (!_isAllowed(companyId, portletId)) {
+		if ((portletId == null) || !_isAllowed(companyId, portletId)) {
 			return null;
 		}
 
@@ -34,16 +30,13 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 	}
 
 	public static String getPortletId(long companyId, String key) {
-		String portletId = null;
+		String portletId = _allCompaniesKeyPortletIdsMap.get(key);
 
-		if (_allCompaniesKeyPortletIdsMap.containsKey(key)) {
-			portletId = _allCompaniesKeyPortletIdsMap.get(key);
-		}
-		else if (_companyIdKeyPortletIdsMap.containsKey(companyId)) {
+		if (portletId == null) {
 			Map<String, String> keyPortletIdsMap =
 				_companyIdKeyPortletIdsMap.get(companyId);
 
-			if (keyPortletIdsMap.containsKey(key)) {
+			if (keyPortletIdsMap != null) {
 				portletId = keyPortletIdsMap.get(key);
 			}
 		}
@@ -56,11 +49,11 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 	}
 
 	public static boolean hasByClassName(String className, long companyId) {
-		if (!_classNamePortletIdsMap.containsKey(className)) {
+		String portletId = _classNamePortletIdsMap.get(className);
+
+		if (portletId == null) {
 			return false;
 		}
-
-		String portletId = _classNamePortletIdsMap.get(className);
 
 		return _isAllowed(companyId, portletId);
 	}
@@ -119,7 +112,10 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 
 		_portletIdBatchEnginePortletDataHandlersMap.remove(portletId);
 
-		_removeEntries(_classNamePortletIdsMap, portletId);
+		Set<Map.Entry<String, String>> entries =
+			_classNamePortletIdsMap.entrySet();
+
+		entries.removeIf(entry -> Objects.equals(entry.getValue(), portletId));
 	}
 
 	protected static void unregisterKey(
@@ -161,13 +157,6 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 		}
 
 		return Objects.equals(companyId, _portletIdCompanyIdMap.get(portletId));
-	}
-
-	private static void _removeEntries(Map<String, String> map, String value) {
-		map.entrySet(
-		).removeIf(
-			entry -> Objects.equals(entry.getValue(), value)
-		);
 	}
 
 	private static final Map<String, String> _allCompaniesKeyPortletIdsMap =

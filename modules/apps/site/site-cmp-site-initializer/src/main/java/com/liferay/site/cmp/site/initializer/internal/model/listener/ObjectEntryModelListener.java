@@ -322,9 +322,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		Contact contact = user.getContact();
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCal.setTime(user.getBirthday());
+		calendar.setTime(user.getBirthday());
 
 		return _userService.updateUser(
 			user.getUserId(), user.getPassword(), null, null,
@@ -333,8 +333,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			user.getGreeting(), user.getComments(), user.getFirstName(),
 			user.getMiddleName(), user.getLastName(),
 			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
-			user.isMale(), birthdayCal.get(Calendar.MONTH),
-			birthdayCal.get(Calendar.DATE), birthdayCal.get(Calendar.YEAR),
+			user.isMale(), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
 			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), user.getJobTitle(),
 			groupIds, user.getOrganizationIds(), null, null,

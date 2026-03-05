@@ -42,6 +42,11 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 			isCookiesPreferenceHandlingExplicitConsentMode(_scope, _scopePK);
 	}
 
+	public String getCookiesPreferenceHandlingIcon() {
+		return _cookiesConfigurationProvider.getCookiesPreferenceHandlingIcon(
+			_scope, _scopePK);
+	}
+
 	public boolean getCookiesPreferenceHandlingStoreConsent() {
 		return _cookiesConfigurationProvider.
 			isCookiesPreferenceHandlingStoreConsent(_scope, _scopePK);

@@ -41,6 +41,9 @@ public interface CookiesConfigurationProvider {
 	public int getCookiesPreferenceHandlingConsentRenewalPeriod(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK);
 
+	public String getCookiesPreferenceHandlingIcon(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK);
+
 	public String getGroupConfigurationURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;

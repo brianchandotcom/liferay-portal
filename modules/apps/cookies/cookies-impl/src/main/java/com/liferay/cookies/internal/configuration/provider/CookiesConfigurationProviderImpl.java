@@ -141,6 +141,15 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	@Override
+	public String getCookiesPreferenceHandlingIcon(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
+
+		return _getScopeConfigurationAttribute(
+			scope, scopePK, this::_getCompanyIcon, this::_getGroupIcon,
+			this::_getSystemIcon);
+	}
+
+	@Override
 	public String getGroupConfigurationURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -379,6 +388,17 @@ public class CookiesConfigurationProviderImpl
 			getCompanyConsentRenewalPeriod(companyId);
 	}
 
+	private String _getCompanyIcon(long companyId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.getCompanyIcon(
+			companyId);
+	}
+
 	private long _getCompanyId(long groupId) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -468,6 +488,17 @@ public class CookiesConfigurationProviderImpl
 			getGroupConsentRenewalPeriod(_getCompanyId(groupId), groupId);
 	}
 
+	private String _getGroupIcon(long groupId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.getGroupIcon(
+			_getCompanyId(groupId), groupId);
+	}
+
 	private <T> T _getScopeConfigurationAttribute(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK,
 		Function<Long, T> companyFunction, Function<Long, T> groupFunction,
@@ -512,6 +543,16 @@ public class CookiesConfigurationProviderImpl
 
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemConsentRenewalPeriod();
+	}
+
+	private String _getSystemIcon() {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.getSystemIcon();
 	}
 
 	private boolean _isCompanyCookiesPreferenceHandlingEnabled(long companyId) {

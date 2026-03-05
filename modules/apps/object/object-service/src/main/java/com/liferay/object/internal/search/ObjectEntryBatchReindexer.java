@@ -48,9 +48,8 @@ public class ObjectEntryBatchReindexer {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(ObjectEntry objectEntry) ->
-				indexableActionableDynamicQuery.addDocument(
-					indexerDocumentBuilder.getDocument(objectEntry)));
+			(ObjectEntry objectEntry) -> indexerDocumentBuilder.getDocument(
+				objectEntry));
 
 		indexableActionableDynamicQuery.performActions();
 	}

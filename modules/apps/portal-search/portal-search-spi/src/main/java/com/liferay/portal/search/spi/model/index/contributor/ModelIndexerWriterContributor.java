@@ -36,8 +36,7 @@ public class ModelIndexerWriterContributor<T extends BaseModel<?>> {
 		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(T t) -> indexableActionableDynamicQuery.addDocument(
-				indexerDocumentBuilder.getDocument(t)));
+			(T t) -> indexerDocumentBuilder.getDocument(t));
 	}
 
 	public IndexableActionableDynamicQuery

@@ -187,8 +187,7 @@ public class CommerceShippingFixedOptionIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceShippingFixedOption commerceShippingFixedOption) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(commerceShippingFixedOption));
+					return getDocument(commerceShippingFixedOption);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -198,6 +197,8 @@ public class CommerceShippingFixedOptionIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

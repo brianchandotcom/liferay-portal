@@ -51,8 +51,7 @@ public class MBThreadModelIndexerWriterContributor
 							" and group ID ", mbThread.getGroupId()));
 				}
 
-				indexableActionableDynamicQuery.addDocument(
-					indexerDocumentBuilder.getDocument(mbThread));
+				return indexerDocumentBuilder.getDocument(mbThread);
 			});
 	}
 

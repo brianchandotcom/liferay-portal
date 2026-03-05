@@ -176,8 +176,7 @@ public class PatcherFixPackIndexer extends BaseIndexer<PatcherFixPack> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(PatcherFixPack patcherFixPack) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(patcherFixPack));
+					return getDocument(patcherFixPack);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -187,6 +186,8 @@ public class PatcherFixPackIndexer extends BaseIndexer<PatcherFixPack> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

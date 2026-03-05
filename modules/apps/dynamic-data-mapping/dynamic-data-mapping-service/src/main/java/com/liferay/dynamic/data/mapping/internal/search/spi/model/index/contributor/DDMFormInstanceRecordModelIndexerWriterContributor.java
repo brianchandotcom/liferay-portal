@@ -72,8 +72,7 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
-				indexableActionableDynamicQuery.addDocument(
-					indexerDocumentBuilder.getDocument(ddmFormInstanceRecord)));
+				indexerDocumentBuilder.getDocument(ddmFormInstanceRecord));
 	}
 
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;

@@ -379,8 +379,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(WikiPage page) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(page));
+					return getDocument(page);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -389,6 +388,8 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

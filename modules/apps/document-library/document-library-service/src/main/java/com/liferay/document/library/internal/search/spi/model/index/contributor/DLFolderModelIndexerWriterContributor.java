@@ -37,8 +37,8 @@ public class DLFolderModelIndexerWriterContributor
 				dynamicQuery.add(property.eq(false));
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(DLFolder dlFolder) -> indexableActionableDynamicQuery.addDocument(
-				indexerDocumentBuilder.getDocument(dlFolder)));
+			(DLFolder dlFolder) -> indexerDocumentBuilder.getDocument(
+				dlFolder));
 	}
 
 }

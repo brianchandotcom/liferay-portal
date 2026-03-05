@@ -39,9 +39,7 @@ public class DDMFormInstanceRecordBatchReindexer {
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
-				indexableActionableDynamicQuery.addDocument(
-					_indexerDocumentBuilder.getDocument(
-						ddmFormInstanceRecord)));
+				_indexerDocumentBuilder.getDocument(ddmFormInstanceRecord));
 
 		indexableActionableDynamicQuery.performActions();
 	}

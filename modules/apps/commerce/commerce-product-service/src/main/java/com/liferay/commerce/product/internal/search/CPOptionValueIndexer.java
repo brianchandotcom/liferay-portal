@@ -153,8 +153,7 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPOptionValue cpOptionValue) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(cpOptionValue));
+					return getDocument(cpOptionValue);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -164,6 +163,8 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

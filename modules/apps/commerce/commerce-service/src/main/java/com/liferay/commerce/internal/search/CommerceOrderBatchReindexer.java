@@ -40,8 +40,7 @@ public class CommerceOrderBatchReindexer {
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceOrder commerceOrder) ->
-				indexableActionableDynamicQuery.addDocument(
-					_indexerDocumentBuilder.getDocument(commerceOrder)));
+				_indexerDocumentBuilder.getDocument(commerceOrder));
 
 		indexableActionableDynamicQuery.performActions();
 	}

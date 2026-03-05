@@ -151,8 +151,7 @@ public class ClientExtensionEntryIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(ClientExtensionEntry clientExtensionEntry) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(clientExtensionEntry));
+					return getDocument(clientExtensionEntry);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -162,6 +161,8 @@ public class ClientExtensionEntryIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

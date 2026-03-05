@@ -261,11 +261,7 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(FaroProject faroProject) -> {
 				try {
-					Document document = getDocument(faroProject);
-
-					if (document != null) {
-						indexableActionableDynamicQuery.addDocument(document);
-					}
+					return getDocument(faroProject);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -275,6 +271,8 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

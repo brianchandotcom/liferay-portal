@@ -249,8 +249,7 @@ public class CommerceInventoryWarehouseIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceInventoryWarehouse commerceInventoryWarehouse) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(commerceInventoryWarehouse));
+					return getDocument(commerceInventoryWarehouse);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -260,6 +259,8 @@ public class CommerceInventoryWarehouseIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

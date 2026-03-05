@@ -1981,11 +1981,10 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 				if (!reindex) {
-					return;
+					return null;
 				}
 
-				indexableActionableDynamicQuery.addDocument(
-					indexer.getDocument(dlFileEntry));
+				return indexer.getDocument(dlFileEntry);
 			});
 
 		indexableActionableDynamicQuery.performActions();

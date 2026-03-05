@@ -85,8 +85,7 @@ public class JournalArticleModelIndexerWriterContributor
 					JournalArticle.class.getName()));
 			indexableActionableDynamicQuery.setPerformActionMethod(
 				(JournalArticle journalArticle) ->
-					indexableActionableDynamicQuery.addDocument(
-						indexerDocumentBuilder.getDocument(journalArticle)));
+					indexerDocumentBuilder.getDocument(journalArticle));
 		}
 		else {
 			indexableActionableDynamicQuery.setAddCriteriaMethod(
@@ -121,12 +120,11 @@ public class JournalArticleModelIndexerWriterContributor
 							articleResource.getResourcePrimKey());
 
 					if (latestIndexableArticle == null) {
-						return;
+						return null;
 					}
 
-					indexableActionableDynamicQuery.addDocument(
-						indexerDocumentBuilder.getDocument(
-							latestIndexableArticle));
+					return indexerDocumentBuilder.getDocument(
+						latestIndexableArticle);
 				});
 		}
 	}

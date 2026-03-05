@@ -4448,14 +4448,13 @@ public class JournalArticleLocalServiceImpl
 				updateJournalArticle(article);
 
 				if (!reindex) {
-					return;
+					return null;
 				}
 
 				indexableActionableDynamicQuery.setCompanyId(
 					article.getCompanyId());
 
-				indexableActionableDynamicQuery.addDocument(
-					indexer.getDocument(article));
+				return indexer.getDocument(article);
 			});
 
 		indexableActionableDynamicQuery.performActions();
@@ -6088,8 +6087,7 @@ public class JournalArticleLocalServiceImpl
 					updatePreviousApprovedArticle(article);
 
 					if (indexer != null) {
-						indexableActionableDynamicQuery.addDocument(
-							indexer.getDocument(article));
+						return indexer.getDocument(article);
 					}
 				}
 				catch (PortalException portalException) {
@@ -6099,6 +6097,8 @@ public class JournalArticleLocalServiceImpl
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

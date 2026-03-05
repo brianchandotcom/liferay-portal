@@ -132,8 +132,7 @@ public class PatcherAccountIndexer extends BaseIndexer<PatcherAccount> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(PatcherAccount patcherAccount) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(patcherAccount));
+					return getDocument(patcherAccount);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -142,6 +141,8 @@ public class PatcherAccountIndexer extends BaseIndexer<PatcherAccount> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

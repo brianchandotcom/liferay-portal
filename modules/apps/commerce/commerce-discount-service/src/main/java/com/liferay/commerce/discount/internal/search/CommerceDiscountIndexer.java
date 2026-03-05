@@ -443,8 +443,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceDiscount commerceDiscount) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(commerceDiscount));
+					return getDocument(commerceDiscount);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -454,6 +453,8 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

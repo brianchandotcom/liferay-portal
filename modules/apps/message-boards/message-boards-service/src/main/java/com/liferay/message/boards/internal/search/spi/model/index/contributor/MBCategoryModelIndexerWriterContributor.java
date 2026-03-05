@@ -56,8 +56,7 @@ public class MBCategoryModelIndexerWriterContributor
 							" and group ID ", mbCategory.getGroupId()));
 				}
 
-				indexableActionableDynamicQuery.addDocument(
-					indexerDocumentBuilder.getDocument(mbCategory));
+				return indexerDocumentBuilder.getDocument(mbCategory);
 			});
 	}
 

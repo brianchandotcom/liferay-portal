@@ -201,8 +201,7 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommercePriceEntry commercePriceEntry) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(commercePriceEntry));
+					return getDocument(commercePriceEntry);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -212,6 +211,8 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

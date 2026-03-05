@@ -352,11 +352,7 @@ public class DDMFormInstanceRecordIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DDMFormInstanceRecord ddmFormInstanceRecord) -> {
 				try {
-					Document document = getDocument(ddmFormInstanceRecord);
-
-					if (document != null) {
-						indexableActionableDynamicQuery.addDocument(document);
-					}
+					return getDocument(ddmFormInstanceRecord);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -366,6 +362,8 @@ public class DDMFormInstanceRecordIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

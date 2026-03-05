@@ -103,11 +103,7 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DDMFormInstance ddmFormInstance) -> {
 				try {
-					Document document = getDocument(ddmFormInstance);
-
-					if (document != null) {
-						indexableActionableDynamicQuery.addDocument(document);
-					}
+					return getDocument(ddmFormInstance);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -117,6 +113,8 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

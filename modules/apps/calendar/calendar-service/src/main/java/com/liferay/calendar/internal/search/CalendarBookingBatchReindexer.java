@@ -50,8 +50,7 @@ public class CalendarBookingBatchReindexer {
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CalendarBooking calendarBooking) ->
-				indexableActionableDynamicQuery.addDocument(
-					_indexerDocumentBuilder.getDocument(calendarBooking)));
+				_indexerDocumentBuilder.getDocument(calendarBooking));
 
 		indexableActionableDynamicQuery.performActions();
 	}

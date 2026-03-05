@@ -82,8 +82,7 @@ public class ObjectEntryModelIndexerWriterContributor
 			(ObjectEntry objectEntry) -> {
 				objectEntry.setObjectDefinition(objectDefinition);
 
-				indexableActionableDynamicQuery.addDocument(
-					indexerDocumentBuilder.getDocument(objectEntry));
+				return indexerDocumentBuilder.getDocument(objectEntry);
 			});
 	}
 

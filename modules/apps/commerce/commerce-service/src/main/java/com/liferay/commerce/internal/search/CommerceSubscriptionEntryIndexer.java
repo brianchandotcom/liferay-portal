@@ -201,8 +201,7 @@ public class CommerceSubscriptionEntryIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceSubscriptionEntry commerceSubscriptionEntry) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(commerceSubscriptionEntry));
+					return getDocument(commerceSubscriptionEntry);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -212,6 +211,8 @@ public class CommerceSubscriptionEntryIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

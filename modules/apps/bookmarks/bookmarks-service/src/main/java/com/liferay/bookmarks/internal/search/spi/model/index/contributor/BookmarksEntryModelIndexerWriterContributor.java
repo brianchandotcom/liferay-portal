@@ -48,12 +48,11 @@ public class BookmarksEntryModelIndexerWriterContributor
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(BookmarksEntry bookmarksEntry) -> {
-				indexableActionableDynamicQuery.addDocument(
-					indexerDocumentBuilder.getDocument(bookmarksEntry));
-
 				_bookmarksFolderBatchReindexer.reindex(
 					bookmarksEntry.getFolderId(),
 					bookmarksEntry.getCompanyId());
+
+				return indexerDocumentBuilder.getDocument(bookmarksEntry);
 			});
 	}
 

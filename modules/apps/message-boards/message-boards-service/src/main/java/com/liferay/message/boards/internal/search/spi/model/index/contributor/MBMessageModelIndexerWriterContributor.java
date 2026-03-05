@@ -71,11 +71,10 @@ public class MBMessageModelIndexerWriterContributor
 				}
 
 				if (mbMessage.isDiscussion() && mbMessage.isRoot()) {
-					return;
+					return null;
 				}
 
-				indexableActionableDynamicQuery.addDocument(
-					indexerDocumentBuilder.getDocument(mbMessage));
+				return indexerDocumentBuilder.getDocument(mbMessage);
 			});
 	}
 

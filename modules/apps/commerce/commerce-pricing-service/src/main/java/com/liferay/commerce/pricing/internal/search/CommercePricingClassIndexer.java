@@ -137,8 +137,7 @@ public class CommercePricingClassIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommercePricingClass commercePricingClass) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(commercePricingClass));
+					return getDocument(commercePricingClass);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -151,6 +150,8 @@ public class CommercePricingClassIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

@@ -39,8 +39,7 @@ public class BookmarksFolderBatchReindexer {
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(BookmarksFolder bookmarksFolder) ->
-				indexableActionableDynamicQuery.addDocument(
-					_indexerDocumentBuilder.getDocument(bookmarksFolder)));
+				_indexerDocumentBuilder.getDocument(bookmarksFolder));
 
 		indexableActionableDynamicQuery.performActions();
 	}

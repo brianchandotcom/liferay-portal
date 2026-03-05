@@ -246,8 +246,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPDisplayLayout cpDisplayLayout) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(cpDisplayLayout));
+					return getDocument(cpDisplayLayout);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -257,6 +256,8 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

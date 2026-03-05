@@ -300,8 +300,7 @@ public class CPAttachmentFileEntryIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPAttachmentFileEntry cpAttachmentFileEntry) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(cpAttachmentFileEntry));
+					return getDocument(cpAttachmentFileEntry);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -311,6 +310,8 @@ public class CPAttachmentFileEntryIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

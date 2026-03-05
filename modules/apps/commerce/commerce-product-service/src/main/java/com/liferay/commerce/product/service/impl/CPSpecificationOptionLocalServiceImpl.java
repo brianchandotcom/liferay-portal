@@ -420,10 +420,8 @@ public class CPSpecificationOptionLocalServiceImpl
 				cpDefinitionSpecificationOptionValue) -> {
 
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						indexer.getDocument(
-							cpDefinitionSpecificationOptionValue.
-								getCPDefinition()));
+					return indexer.getDocument(
+						cpDefinitionSpecificationOptionValue.getCPDefinition());
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -437,6 +435,8 @@ public class CPSpecificationOptionLocalServiceImpl
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

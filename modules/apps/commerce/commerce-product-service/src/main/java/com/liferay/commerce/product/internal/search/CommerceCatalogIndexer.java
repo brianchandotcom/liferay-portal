@@ -161,8 +161,7 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceCatalog commerceCatalog) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(commerceCatalog));
+					return getDocument(commerceCatalog);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -172,6 +171,8 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

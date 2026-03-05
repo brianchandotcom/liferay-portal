@@ -39,9 +39,10 @@ public class UserModelIndexerWriterContributor
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(User user) -> {
 				if (!user.isGuestUser()) {
-					indexableActionableDynamicQuery.addDocument(
-						indexerDocumentBuilder.getDocument(user));
+					return indexerDocumentBuilder.getDocument(user);
 				}
+
+				return null;
 			});
 	}
 

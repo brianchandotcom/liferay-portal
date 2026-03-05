@@ -150,8 +150,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(WikiNode node) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(node));
+					return getDocument(node);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -160,6 +159,8 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

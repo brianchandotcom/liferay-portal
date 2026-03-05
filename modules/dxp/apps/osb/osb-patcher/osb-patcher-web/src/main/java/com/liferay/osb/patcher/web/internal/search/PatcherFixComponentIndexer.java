@@ -122,8 +122,7 @@ public class PatcherFixComponentIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(PatcherFixComponent patcherFixComponent) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(patcherFixComponent));
+					return getDocument(patcherFixComponent);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -133,6 +132,8 @@ public class PatcherFixComponentIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

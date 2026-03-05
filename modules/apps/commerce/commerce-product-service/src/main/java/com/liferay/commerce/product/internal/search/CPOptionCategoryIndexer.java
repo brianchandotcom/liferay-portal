@@ -167,8 +167,7 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPOptionCategory cpOptionCategory) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(cpOptionCategory));
+					return getDocument(cpOptionCategory);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -178,6 +177,8 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

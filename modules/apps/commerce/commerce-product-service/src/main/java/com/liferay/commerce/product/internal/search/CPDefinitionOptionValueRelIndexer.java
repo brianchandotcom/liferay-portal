@@ -199,8 +199,7 @@ public class CPDefinitionOptionValueRelIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPDefinitionOptionValueRel cpDefinitionOptionValueRel) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(cpDefinitionOptionValueRel));
+					return getDocument(cpDefinitionOptionValueRel);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -211,6 +210,8 @@ public class CPDefinitionOptionValueRelIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

@@ -46,8 +46,7 @@ public class CalendarBookingModelIndexerWriterContributor
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CalendarBooking calendarBooking) ->
-				indexableActionableDynamicQuery.addDocument(
-					indexerDocumentBuilder.getDocument(calendarBooking)));
+				indexerDocumentBuilder.getDocument(calendarBooking));
 	}
 
 	@Override

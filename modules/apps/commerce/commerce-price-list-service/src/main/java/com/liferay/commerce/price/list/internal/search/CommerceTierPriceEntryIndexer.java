@@ -183,8 +183,7 @@ public class CommerceTierPriceEntryIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceTierPriceEntry commerceTierPriceEntry) -> {
 				try {
-					indexableActionableDynamicQuery.addDocument(
-						getDocument(commerceTierPriceEntry));
+					return getDocument(commerceTierPriceEntry);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -194,6 +193,8 @@ public class CommerceTierPriceEntryIndexer
 							portalException);
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

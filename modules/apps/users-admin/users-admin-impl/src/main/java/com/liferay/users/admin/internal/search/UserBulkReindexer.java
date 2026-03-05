@@ -75,8 +75,7 @@ public class UserBulkReindexer implements BulkReindexer {
 			(User user) -> {
 				if (!user.isGuestUser()) {
 					try {
-						indexableActionableDynamicQuery.addDocument(
-							indexer.getDocument(user));
+						return indexer.getDocument(user);
 					}
 					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
@@ -86,6 +85,8 @@ public class UserBulkReindexer implements BulkReindexer {
 						}
 					}
 				}
+
+				return null;
 			});
 
 		indexableActionableDynamicQuery.performActions();

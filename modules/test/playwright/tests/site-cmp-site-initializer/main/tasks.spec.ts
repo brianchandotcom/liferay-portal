@@ -255,3 +255,72 @@ test(
 		});
 	}
 );
+
+test(
+	'Kanban View Task creation generates a tag',
+	{tag: ['@LPD-80545']},
+	async ({apiHelpers, page, tasksPage}) => {
+		const cmpProjectApplicationName = 'cmp/projects';
+		const cmpTaskApplicationName = 'cmp/tasks';
+
+		const assetLibrary =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: getRandomString(),
+				settings: {},
+				type: 'Project',
+			});
+
+		const project = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				title: getRandomString(),
+			},
+			cmpProjectApplicationName,
+			assetLibrary.name
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+				title: getRandomString(),
+			},
+			cmpTaskApplicationName,
+			project.scopeKey
+		);
+
+		const taskTitle = getRandomString();
+
+		await test.step('Go to tasks page and switch to kanban view', async () => {
+			await tasksPage.goto();
+
+			await tasksPage.tableViewButton.click();
+
+			await tasksPage.dropdownKanbanViewButton.click();
+		});
+
+		await test.step('Add a new task', async () => {
+			await tasksPage.addTaskKanbanButton.click();
+
+			await tasksPage.titleInput.fill(taskTitle);
+
+			await tasksPage.projectTitleButton.click();
+
+			await page.getByRole('option', {name: project.title}).click();
+
+			await tasksPage.saveButton.click();
+		});
+
+		await test.step('Go to tasks page and select the created task', async () => {
+			await tasksPage.kanbanViewButton.click();
+
+			await tasksPage.dropdownTableViewButton.click();
+
+			await page.getByRole('link', {name: taskTitle}).click();
+		});
+
+		await test.step("Check if the created task's AssetTagName follows the pattern", async () => {
+			await expect(tasksPage.assetTagNameField).toContainText(
+				'L_CMP_TASK_'
+			);
+		});
+	}
+);

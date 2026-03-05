@@ -14,11 +14,19 @@ interface ExecItemActionArgs {
 }
 
 export class TasksPage {
+	readonly addTaskKanbanButton: Locator;
+	readonly assetTagNameField: Locator;
 	readonly assignTaskToDialog: Locator;
 	readonly dataSetFragmentPage: DataSetPage;
 	readonly deleteButton: Locator;
+	readonly dropdownKanbanViewButton: Locator;
+	readonly dropdownTableViewButton: Locator;
+	readonly kanbanViewButton: Locator;
 	readonly page: Page;
+	readonly projectTitleButton: Locator;
 	readonly saveButton: Locator;
+	readonly tableViewButton: Locator;
+	readonly titleInput: Locator;
 	readonly updateDueDateDialog: Locator;
 	readonly updateStateDialog: Locator;
 	readonly updateStateSelector: Locator;
@@ -26,12 +34,36 @@ export class TasksPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.addTaskKanbanButton = page
+			.getByRole('button', {name: 'Add Task'})
+			.first();
+		this.assetTagNameField = page
+			.locator('span')
+			.filter({hasText: 'L_CMP_TASK_'})
+			.first();
+
 		this.assignTaskToDialog = page.getByRole('dialog', {
 			name: 'Assign Tasks to',
 		});
 		this.dataSetFragmentPage = new DataSetPage(page);
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
+		this.dropdownKanbanViewButton = page.getByRole('option', {
+			name: 'Kanban',
+		});
+		this.dropdownTableViewButton = page.getByRole('option', {
+			name: 'Table',
+		});
+		this.kanbanViewButton = page.getByRole('combobox', {
+			name: 'Kanban View Selected',
+		});
+		this.projectTitleButton = page.locator(
+			'#r_cmpProjectToCMPTasks_c_cmpProjectId'
+		);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.tableViewButton = page.getByRole('combobox', {
+			name: 'Table View Selected',
+		});
+		this.titleInput = page.locator('#title');
 		this.updateDueDateDialog = page.getByRole('dialog', {
 			name: 'Update Due Date',
 		});

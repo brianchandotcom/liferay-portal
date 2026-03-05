@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 
 import java.lang.reflect.InvocationTargetException;
@@ -157,10 +155,6 @@ public class IndexableActionableDynamicQuery {
 		_primaryKeyPropertyName = primaryKeyPropertyName;
 	}
 
-	public void setTransactionConfig(TransactionConfig transactionConfig) {
-		_transactionConfig = transactionConfig;
-	}
-
 	protected void actionsCompleted() throws PortalException {
 		IndexWriterHelper indexWriterHelper =
 			_indexWriterHelperProxySnapshot.get();
@@ -230,25 +224,13 @@ public class IndexableActionableDynamicQuery {
 			addOrderCriteria(dynamicQuery);
 
 			try {
-				TransactionConfig transactionConfig = getTransactionConfig();
-
-				if (transactionConfig == null) {
-					return _performActions(dynamicQuery);
-				}
-
-				return TransactionInvokerUtil.invoke(
-					transactionConfig, () -> _performActions(dynamicQuery));
+				return _performActions(dynamicQuery);
 			}
-			catch (Throwable throwable) {
-				if (throwable instanceof PortalException) {
-					throw (PortalException)throwable;
-				}
-
-				if (throwable instanceof SystemException) {
-					throw (SystemException)throwable;
-				}
-
-				throw new SystemException(throwable);
+			catch (PortalException | SystemException exception) {
+				throw exception;
+			}
+			catch (Exception exception) {
+				throw new SystemException(exception);
 			}
 		}
 		finally {
@@ -294,10 +276,6 @@ public class IndexableActionableDynamicQuery {
 
 	protected Class<?> getModelClass() {
 		return _modelClass;
-	}
-
-	protected TransactionConfig getTransactionConfig() {
-		return _transactionConfig;
 	}
 
 	protected void indexInterval() throws PortalException {
@@ -418,6 +396,5 @@ public class IndexableActionableDynamicQuery {
 
 	private String _primaryKeyPropertyName;
 	private long _total;
-	private TransactionConfig _transactionConfig;
 
 }

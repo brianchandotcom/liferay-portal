@@ -10,9 +10,6 @@ import com.liferay.osb.patcher.model.PatcherProductVersion;
 import com.liferay.osb.patcher.service.PatcherAccountLocalService;
 import com.liferay.osb.patcher.util.PatcherProductVersionUtil;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -130,26 +127,10 @@ public class PatcherAccountIndexer extends BaseIndexer<PatcherAccount> {
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(PatcherAccount patcherAccount) -> {
-				try {
-					return getDocument(patcherAccount);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index patcher account " + patcherAccount,
-							portalException);
-					}
-				}
-
-				return null;
-			});
+			this::safeGetDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PatcherAccountIndexer.class);
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

@@ -377,20 +377,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(WikiPage page) -> {
-				try {
-					return getDocument(page);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index wiki page " + page.getPageId(),
-							portalException);
-					}
-				}
-
-				return null;
-			});
+			this::safeGetDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

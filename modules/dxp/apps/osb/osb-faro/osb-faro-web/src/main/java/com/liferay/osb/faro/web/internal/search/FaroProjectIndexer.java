@@ -13,7 +13,6 @@ import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisp
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -259,21 +258,7 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			_faroProjectLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(FaroProject faroProject) -> {
-				try {
-					return getDocument(faroProject);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index faro project " +
-								faroProject.getFaroProjectId(),
-							portalException);
-					}
-				}
-
-				return null;
-			});
+			this::safeGetDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

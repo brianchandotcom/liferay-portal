@@ -1,0 +1,6 @@
+Bundle-Name: Liferay AI Hub Client REST API
+Bundle-SymbolicName: com.liferay.ai.hub.client.rest.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.ai.hub.client.rest.dto.v1_0,\
+	com.liferay.ai.hub.client.rest.resource.v1_0

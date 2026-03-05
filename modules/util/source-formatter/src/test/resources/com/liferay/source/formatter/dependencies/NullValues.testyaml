@@ -1,0 +1,8 @@
+tutorial:
+    -   type1: "NULL"
+    -   type2: "Null"
+    -   type3: "null"
+    -   type4: "~"
+    -   type5: NULL
+    -   type6: null
+    -   type7: ~

@@ -50,6 +50,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testNullValues() throws Exception {
+		test("NullValues.testyaml");
+	}
+
+	@Test
 	public void testSortDefinitions() throws Exception {
 		test("SortDefinitions.testyaml");
 	}

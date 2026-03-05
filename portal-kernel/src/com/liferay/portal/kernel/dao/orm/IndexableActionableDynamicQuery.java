@@ -43,13 +43,8 @@ public class IndexableActionableDynamicQuery {
 
 		_documents.add(document);
 
-		long size = _documents.size();
-
-		if (size >= _interval) {
+		if (_documents.size() >= _interval) {
 			_indexInterval();
-		}
-		else if ((size % _STATUS_INTERVAL) == 0) {
-			_sendStatusMessage(size);
 		}
 	}
 
@@ -332,19 +327,13 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	private void _sendStatusMessage() {
-		_sendStatusMessage(0);
-	}
-
-	private void _sendStatusMessage(long documentIntervalCount) {
 		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			return;
 		}
 
 		ReindexStatusMessageSenderUtil.sendStatusMessage(
-			_modelClass.getName(), _count + documentIntervalCount, _total);
+			_modelClass.getName(), _count, _total);
 	}
-
-	private static final long _STATUS_INTERVAL = 100;
 
 	private static final Snapshot<IndexWriterHelper>
 		_indexWriterHelperProxySnapshot = new Snapshot<>(

@@ -301,8 +301,8 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public WorkflowDefinition saveWorkflowDefinition(
-			String externalReferenceCode, long companyId, long groupId,
-			long userId, String title, String name, String scope, byte[] bytes)
+			byte[] bytes, long companyId, String externalReferenceCode,
+			long groupId, String name, String scope, String title, long userId)
 		throws WorkflowException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -322,8 +322,8 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return saveWorkflowDefinition(
-			externalReferenceCode, companyId, 0, userId, title, name,
-			WorkflowDefinitionConstants.SCOPE_ALL, bytes);
+			bytes, companyId, externalReferenceCode, 0, name,
+			WorkflowDefinitionConstants.SCOPE_ALL, title, userId);
 	}
 
 	@Override

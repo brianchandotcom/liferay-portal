@@ -1,0 +1,35 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jessyca Ferreira
+ */
+public class LPD_80776 {
+
+	public void method(
+		long vocabularyId, String name, String title,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String settings, ServiceContext serviceContext) {
+
+		AssetVocabularyLocalServiceUtil.updateVocabulary(
+			123, name, title, titleMap, descriptionMap, settings,
+			serviceContext);
+		AssetVocabularyLocalServiceUtil.updateVocabulary(vocabularyId, title, titleMap, descriptionMap, settings, serviceContext);
+		AssetVocabularyServiceUtil.updateVocabulary(vocabularyId, title, titleMap, descriptionMap, settings, serviceContext);
+		_assetVocabularyLocalService.updateVocabulary(vocabularyId, title, titleMap, descriptionMap, settings, serviceContext);
+		_assetVocabularyService.updateVocabulary(vocabularyId, title, titleMap, descriptionMap, settings, serviceContext);
+	}
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private AssetVocabularyService _assetVocabularyService;
+
+}

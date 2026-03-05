@@ -147,7 +147,6 @@ public class ObjectEntryModelListenerTest {
 				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
 				DepotRolesConstants.ASSET_LIBRARY_MEMBER),
 			projectObjectEntry.getGroupId(), user1.getUserId());
-
 		_assertUserGroupRoles(
 			1,
 			Collections.singletonList(DepotRolesConstants.ASSET_LIBRARY_MEMBER),

@@ -28,7 +28,8 @@ import ContactSalesPage from './pages/App/InsuficientResources/ContactSales';
 import ContactSalesForm from './pages/App/InsuficientResources/ContactSalesForm';
 import License from './pages/App/License';
 import PaymentMethod from './pages/App/PaymentMethod';
-import OrderSummary from './pages/LiferayProduct/OrderSummary';
+import OrderSummary from './pages/App/PaymentMethod/OrderSummary/OrderSummary';
+import LDPOrderSummary from './pages/LiferayProduct/OrderSummary';
 import ProjectSelection from './pages/LiferayProduct/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
@@ -99,7 +100,7 @@ export const productTypeRoutes = {
 				title: i18n.translate('provisioning'),
 			},
 			{
-				element: OrderSummary,
+				element: LDPOrderSummary,
 				path: 'summary',
 				title: i18n.translate('summary'),
 			},

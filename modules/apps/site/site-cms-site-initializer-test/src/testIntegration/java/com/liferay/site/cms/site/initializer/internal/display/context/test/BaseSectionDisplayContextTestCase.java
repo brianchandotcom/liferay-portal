@@ -375,6 +375,8 @@ public abstract class BaseSectionDisplayContextTestCase
 			return;
 		}
 
+		// Create menu in root folder
+
 		expectedCreationMenuItems = _getLocalizedKeysMap(
 			expectedCreationMenuItems);
 
@@ -402,8 +404,6 @@ public abstract class BaseSectionDisplayContextTestCase
 		_userGroupRoleLocalService.addUserGroupRoles(
 			user3.getUserId(), depotEntry1.getGroupId(),
 			new long[] {role.getRoleId()});
-
-		// Create menu in root folder
 
 		_assertCreationMenu(
 			getCreationMenu(adminUser), expectedCreationMenuItems);

@@ -554,6 +554,20 @@ public class DDMFormDisplayContextTest {
 	}
 
 	@Test
+	public void testGetRedirectURL() throws Exception {
+		String redirectURL = "http://localhost:8080/page";
+
+		_mockDDMFormInstance(_mockDDMFormInstanceSettings(redirectURL));
+
+		DDMFormDisplayContext ddmFormDisplayContext = Mockito.spy(
+			_createDDMFormDisplayContext());
+
+		Assert.assertEquals(
+			redirectURL + "?doAsUserId=1234",
+			ddmFormDisplayContext.getRedirectURL());
+	}
+
+	@Test
 	public void testGetSubmitLabel() throws Exception {
 		_mockDDMFormInstance(Mockito.mock(DDMFormInstanceSettings.class));
 
@@ -763,16 +777,9 @@ public class DDMFormDisplayContextTest {
 
 	@Test
 	public void testIsShowSuccessPageWithRedirectURL() throws Exception {
-		DDMFormInstanceSettings ddmFormInstanceSettings = Mockito.mock(
-			DDMFormInstanceSettings.class);
-
-		Mockito.when(
-			ddmFormInstanceSettings.redirectURL()
-		).thenReturn(
-			"http://localhost:8080/web/forms/shared/-/form/123"
-		);
-
-		_mockDDMFormInstance(ddmFormInstanceSettings);
+		_mockDDMFormInstance(
+			_mockDDMFormInstanceSettings(
+				"http://localhost:8080/web/forms/shared/-/form/123"));
 
 		RenderRequest renderRequest = _mockRenderRequest();
 
@@ -782,61 +789,6 @@ public class DDMFormDisplayContextTest {
 			_createDDMFormDisplayContext(renderRequest);
 
 		Assert.assertFalse(ddmFormDisplayContext.isShowSuccessPage());
-	}
-
-	@Test
-	public void testRedirectURLPreservesParameters() throws Exception {
-		DDMFormDisplayContext ddmFormDisplayContext = Mockito.spy(
-			_createDDMFormDisplayContext());
-
-		String url = "http://localhost:8080/page";
-
-		DDMFormInstanceSettings settings = Mockito.mock(
-			DDMFormInstanceSettings.class);
-
-		Mockito.when(
-			settings.redirectURL()
-		).thenReturn(
-			url
-		);
-
-		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
-
-		Mockito.when(
-			ddmFormInstance.getSettingsModel()
-		).thenReturn(
-			settings
-		);
-
-		Mockito.doReturn(
-			ddmFormInstance
-		).when(
-			ddmFormDisplayContext
-		).getFormInstance();
-
-		ThemeDisplay themeDisplay = _mockThemeDisplay(false);
-
-		Mockito.doReturn(
-			themeDisplay
-		).when(
-			ddmFormDisplayContext
-		).getThemeDisplay();
-
-		try (MockedStatic<PortalUtil> portalUtilMockedStatic =
-				Mockito.mockStatic(PortalUtil.class)) {
-
-			String preservedURL = url + "?doAsUserId=1234";
-
-			portalUtilMockedStatic.when(
-				() -> PortalUtil.addPreservedParameters(
-					Mockito.eq(themeDisplay), Mockito.eq(url))
-			).thenReturn(
-				preservedURL
-			);
-
-			Assert.assertEquals(
-				preservedURL, ddmFormDisplayContext.getRedirectURL());
-		}
 	}
 
 	@Test
@@ -1020,6 +972,21 @@ public class DDMFormDisplayContextTest {
 		);
 
 		return ddmFormInstance;
+	}
+
+	private DDMFormInstanceSettings _mockDDMFormInstanceSettings(
+		String redirectURL) {
+
+		DDMFormInstanceSettings ddmFormInstanceSettings = Mockito.mock(
+			DDMFormInstanceSettings.class);
+
+		Mockito.when(
+			ddmFormInstanceSettings.redirectURL()
+		).thenReturn(
+			redirectURL
+		);
+
+		return ddmFormInstanceSettings;
 	}
 
 	private DDMFormInstanceSettings
@@ -1240,6 +1207,13 @@ public class DDMFormDisplayContextTest {
 		Portal portal = Mockito.mock(Portal.class);
 
 		portalUtil.setPortal(portal);
+
+		Mockito.when(
+			portal.addPreservedParameters(
+				Mockito.any(ThemeDisplay.class), Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArgument(1) + "?doAsUserId=1234"
+		);
 
 		Mockito.when(
 			portal.getHttpServletRequest(Mockito.any(RenderRequest.class))

@@ -378,9 +378,8 @@ public abstract class BaseSectionDisplayContextTestCase
 		expectedCreationMenuItems = _getLocalizedKeysMap(
 			expectedCreationMenuItems);
 
-		setUser(adminUser);
-
-		_assertCreationMenu(getCreationMenu(adminUser), Collections.emptyMap());
+		_assertCreationMenu(
+			getCreationMenu(TestPropsValues.getUser()), Collections.emptyMap());
 
 		DepotEntry depotEntry1 = addDepotEntry(
 			StringUtil.randomString(), TestPropsValues.getUserId());
@@ -402,29 +401,6 @@ public abstract class BaseSectionDisplayContextTestCase
 		_userGroupRoleLocalService.addUserGroupRoles(
 			user3.getUserId(), depotEntry1.getGroupId(),
 			new long[] {role.getRoleId()});
-
-		// Create menu in root folder
-
-		_assertCreationMenu(
-			getCreationMenu(adminUser), expectedCreationMenuItems);
-
-		DepotEntry depotEntry2 = addDepotEntry(
-			StringUtil.randomString(), TestPropsValues.getUserId());
-
-		_assertCreationMenu(
-			getCreationMenu(adminUser), expectedCreationMenuItems);
-
-		setUser(user1);
-
-		_assertCreationMenu(getCreationMenu(user1), Collections.emptyMap());
-
-		setUser(user2);
-
-		_assertCreationMenu(getCreationMenu(user2), Collections.emptyMap());
-
-		setUser(user3);
-
-		_assertCreationMenu(getCreationMenu(user3), expectedCreationMenuItems);
 
 		// Create menu with custom object definitions
 
@@ -528,6 +504,31 @@ public abstract class BaseSectionDisplayContextTestCase
 				getCreationMenu(objectEntryFolder, user3),
 				expectedCreationMenuItems);
 		}
+
+		// Create menu in root folder
+
+		setUser(adminUser);
+
+		_assertCreationMenu(
+			getCreationMenu(adminUser), expectedCreationMenuItems);
+
+		DepotEntry depotEntry2 = addDepotEntry(
+			StringUtil.randomString(), TestPropsValues.getUserId());
+
+		_assertCreationMenu(
+			getCreationMenu(adminUser), expectedCreationMenuItems);
+
+		setUser(user1);
+
+		_assertCreationMenu(getCreationMenu(user1), Collections.emptyMap());
+
+		setUser(user2);
+
+		_assertCreationMenu(getCreationMenu(user2), Collections.emptyMap());
+
+		setUser(user3);
+
+		_assertCreationMenu(getCreationMenu(user3), expectedCreationMenuItems);
 
 		_depotEntryLocalService.deleteDepotEntry(depotEntry1);
 		_depotEntryLocalService.deleteDepotEntry(depotEntry2);

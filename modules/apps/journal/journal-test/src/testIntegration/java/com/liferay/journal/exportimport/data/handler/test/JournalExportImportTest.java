@@ -50,12 +50,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -68,7 +66,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -78,10 +75,8 @@ import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.staging.configuration.StagingConfiguration;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -136,17 +131,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		exportImportJournalArticle(true);
 	}
 
-	@FeatureFlag("LPS-199086")
 	@Test
-	@TestInfo("LPD-6808: AC15-AC16")
 	public void testExportImportJournalArticleWithLayoutURLLayoutDoesNotExistOnImportSide()
 		throws Exception {
-
-		_configurationProvider.saveCompanyConfiguration(
-			StagingConfiguration.class, CompanyThreadLocal.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"publishParentLayoutsByDefault", false
-			).build());
 
 		long groupId = group.getGroupId();
 
@@ -187,17 +174,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		}
 	}
 
-	@FeatureFlag("LPS-199086")
 	@Test
-	@TestInfo("LPD-6808: AC15-AC17")
 	public void testExportImportJournalArticleWithLayoutURLLayoutExistOnImportSide()
 		throws Exception {
-
-		_configurationProvider.saveCompanyConfiguration(
-			StagingConfiguration.class, CompanyThreadLocal.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"publishParentLayoutsByDefault", false
-			).build());
 
 		long groupId = group.getGroupId();
 

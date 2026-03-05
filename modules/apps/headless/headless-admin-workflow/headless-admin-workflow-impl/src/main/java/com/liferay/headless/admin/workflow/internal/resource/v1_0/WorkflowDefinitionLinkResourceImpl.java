@@ -48,7 +48,7 @@ public class WorkflowDefinitionLinkResourceImpl
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.getWorkflowDefinition(
-				externalReferenceCode, contextCompany.getCompanyId());
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		List<com.liferay.portal.kernel.model.WorkflowDefinitionLink>
 			workflowDefinitionLinks =
@@ -111,7 +111,7 @@ public class WorkflowDefinitionLinkResourceImpl
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.getWorkflowDefinition(
-				externalReferenceCode, contextCompany.getCompanyId());
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		return _toWorkflowDefinitionLink(
 			_workflowDefinitionLinkService.addWorkflowDefinitionLink(

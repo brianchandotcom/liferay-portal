@@ -82,16 +82,16 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
-	public WorkflowDefinition getWorkflowDefinition(
-			long companyId, String name, int version)
-		throws PortalException;
-
 	public default WorkflowDefinition getWorkflowDefinition(
-			String externalReferenceCode, long companyId)
+			long companyId, String externalReferenceCode)
 		throws PortalException {
 
 		throw new UnsupportedOperationException();
 	}
+
+	public WorkflowDefinition getWorkflowDefinition(
+			long companyId, String name, int version)
+		throws PortalException;
 
 	public default int getWorkflowDefinitionsCount(long companyId, String name)
 		throws WorkflowException {

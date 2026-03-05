@@ -368,14 +368,11 @@ public abstract class BaseSectionDisplayContextTestCase
 
 	@Test
 	public void testGetCreationMenu() throws Exception {
-		Map<String, String> expectedCreationMenuItems =
-			getExpectedCreationMenuItems();
-
-		if (expectedCreationMenuItems.isEmpty()) {
-			return;
-		}
 
 		// Create menu in root folder
+
+		Map<String, String> expectedCreationMenuItems =
+			getExpectedCreationMenuItems();
 
 		expectedCreationMenuItems = _getLocalizedKeysMap(
 			expectedCreationMenuItems);

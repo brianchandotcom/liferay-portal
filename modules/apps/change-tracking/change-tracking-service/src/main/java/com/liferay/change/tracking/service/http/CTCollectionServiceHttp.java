@@ -44,8 +44,7 @@ public class CTCollectionServiceHttp {
 	public static com.liferay.change.tracking.model.CTCollection
 			addCTCollection(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId, long userId, long ctRemoteId, String name,
-				String description)
+				long ctRemoteId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -54,8 +53,8 @@ public class CTCollectionServiceHttp {
 				_addCTCollectionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId, userId, ctRemoteId,
-				name, description);
+				methodKey, externalReferenceCode, ctRemoteId, name,
+				description);
 
 			Object returnObj = null;
 
@@ -239,8 +238,7 @@ public class CTCollectionServiceHttp {
 
 	public static java.util.List<com.liferay.change.tracking.model.CTCollection>
 		getCTCollections(
-			HttpPrincipal httpPrincipal, long companyId, int[] statuses,
-			int start, int end,
+			HttpPrincipal httpPrincipal, int[] statuses, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.change.tracking.model.CTCollection>
 					orderByComparator) {
@@ -251,7 +249,7 @@ public class CTCollectionServiceHttp {
 				_getCTCollectionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, statuses, start, end, orderByComparator);
+				methodKey, statuses, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -277,8 +275,8 @@ public class CTCollectionServiceHttp {
 
 	public static java.util.List<com.liferay.change.tracking.model.CTCollection>
 		getCTCollections(
-			HttpPrincipal httpPrincipal, long companyId, int[] statuses,
-			String keywords, int start, int end,
+			HttpPrincipal httpPrincipal, int[] statuses, String keywords,
+			int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.change.tracking.model.CTCollection>
 					orderByComparator) {
@@ -289,8 +287,7 @@ public class CTCollectionServiceHttp {
 				_getCTCollectionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, statuses, keywords, start, end,
-				orderByComparator);
+				methodKey, statuses, keywords, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -315,8 +312,7 @@ public class CTCollectionServiceHttp {
 	}
 
 	public static int getCTCollectionsCount(
-		HttpPrincipal httpPrincipal, long companyId, int[] statuses,
-		String keywords) {
+		HttpPrincipal httpPrincipal, int[] statuses, String keywords) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -324,7 +320,7 @@ public class CTCollectionServiceHttp {
 				_getCTCollectionsCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, statuses, keywords);
+				methodKey, statuses, keywords);
 
 			Object returnObj = null;
 
@@ -547,10 +543,7 @@ public class CTCollectionServiceHttp {
 		CTCollectionServiceHttp.class);
 
 	private static final Class<?>[] _addCTCollectionParameterTypes0 =
-		new Class[] {
-			String.class, long.class, long.class, long.class, String.class,
-			String.class
-		};
+		new Class[] {String.class, long.class, String.class, String.class};
 	private static final Class<?>[] _deleteCTAutoResolutionInfoParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteCTCollectionParameterTypes2 =
@@ -561,16 +554,16 @@ public class CTCollectionServiceHttp {
 		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _getCTCollectionsParameterTypes5 =
 		new Class[] {
-			long.class, int[].class, int.class, int.class,
+			int[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCTCollectionsParameterTypes6 =
 		new Class[] {
-			long.class, int[].class, String.class, int.class, int.class,
+			int[].class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCTCollectionsCountParameterTypes7 =
-		new Class[] {long.class, int[].class, String.class};
+		new Class[] {int[].class, String.class};
 	private static final Class<?>[] _moveCTEntriesParameterTypes8 =
 		new Class[] {long.class, long.class, java.util.List.class};
 	private static final Class<?>[] _moveCTEntryParameterTypes9 = new Class[] {

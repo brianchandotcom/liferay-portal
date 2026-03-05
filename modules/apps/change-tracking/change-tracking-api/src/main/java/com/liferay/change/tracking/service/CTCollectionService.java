@@ -45,8 +45,8 @@ public interface CTCollectionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTCollectionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ct collection remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CTCollectionServiceUtil} if injection and service tracking are not available.
 	 */
 	public CTCollection addCTCollection(
-			String externalReferenceCode, long companyId, long userId,
-			long ctRemoteId, String name, String description)
+			String externalReferenceCode, long ctRemoteId, String name,
+			String description)
 		throws PortalException;
 
 	public void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId)
@@ -64,17 +64,16 @@ public interface CTCollectionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTCollection> getCTCollections(
-		long companyId, int[] statuses, int start, int end,
+		int[] statuses, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTCollection> getCTCollections(
-		long companyId, int[] statuses, String keywords, int start, int end,
+		int[] statuses, String keywords, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCTCollectionsCount(
-		long companyId, int[] statuses, String keywords);
+	public int getCTCollectionsCount(int[] statuses, String keywords);
 
 	/**
 	 * Returns the OSGi service identifier.

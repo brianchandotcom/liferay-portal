@@ -85,7 +85,9 @@ public class IndexableActionableDynamicQuery {
 			ReflectionUtil.throwException(throwable);
 		}
 		finally {
-			_count = _total;
+			if (_hasBackgroundTask) {
+				_count = _total;
+			}
 
 			_sendStatusMessage();
 		}
@@ -209,7 +211,9 @@ public class IndexableActionableDynamicQuery {
 
 		indexWriterHelper.updateDocuments(_companyId, _documents, false);
 
-		_count += _documents.size();
+		if (_hasBackgroundTask) {
+			_count += _documents.size();
+		}
 
 		_documents.clear();
 

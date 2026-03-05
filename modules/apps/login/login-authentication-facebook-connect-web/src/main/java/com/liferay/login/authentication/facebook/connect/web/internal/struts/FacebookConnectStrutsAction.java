@@ -435,10 +435,6 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 
 		calendar.setTime(contact.getBirthday());
 
-		int birthdayMonth = calendar.get(Calendar.MONTH);
-		int birthdayDay = calendar.get(Calendar.DAY_OF_MONTH);
-		int birthdayYear = calendar.get(Calendar.YEAR);
-
 		long[] groupIds = null;
 		long[] organizationIds = null;
 		long[] roleIds = null;
@@ -461,11 +457,12 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 			true, null, user.getLanguageId(), user.getTimeZoneId(),
 			user.getGreeting(), user.getComments(), firstName,
 			user.getMiddleName(), lastName, contact.getPrefixListTypeId(),
-			contact.getSuffixListTypeId(), male, birthdayMonth, birthdayDay,
-			birthdayYear, contact.getSmsSn(), contact.getFacebookSn(),
-			contact.getJabberSn(), contact.getSkypeSn(), contact.getTwitterSn(),
-			contact.getJobTitle(), groupIds, organizationIds, roleIds,
-			userGroupRoles, userGroupIds, serviceContext);
+			contact.getSuffixListTypeId(), male, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getSkypeSn(), contact.getTwitterSn(), contact.getJobTitle(),
+			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
+			serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

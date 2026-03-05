@@ -88,10 +88,6 @@ public class UserServiceWhenUpdatingUserTest {
 
 		calendar.setTime(contact.getBirthday());
 
-		int birthdayMonth = calendar.get(Calendar.MONTH);
-		int birthdayDay = calendar.get(Calendar.DATE);
-		int birthdayYear = calendar.get(Calendar.YEAR);
-
 		long[] groupIds = null;
 		long[] organizationIds = null;
 		long[] roleIds = null;
@@ -106,8 +102,9 @@ public class UserServiceWhenUpdatingUserTest {
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			contact.getFirstName(), contact.getMiddleName(),
 			contact.getLastName(), contact.getPrefixListTypeId(),
-			contact.getSuffixListTypeId(), contact.isMale(), birthdayMonth,
-			birthdayDay, birthdayYear, contact.getSmsSn(),
+			contact.getSuffixListTypeId(), contact.isMale(),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE),
+			calendar.get(Calendar.YEAR), contact.getSmsSn(),
 			contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), contact.getJobTitle(),
 			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,

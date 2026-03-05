@@ -90,10 +90,6 @@ public class UserServiceWhenUpdatingUserWithSiteRoleTest {
 
 		calendar.setTime(contact.getBirthday());
 
-		int birthdayMonth = calendar.get(Calendar.MONTH);
-		int birthdayDay = calendar.get(Calendar.DATE);
-		int birthdayYear = calendar.get(Calendar.YEAR);
-
 		return _userService.updateUser(
 			user.getUserId(), user.getPassword(), null, null,
 			user.isPasswordReset(), null, null, user.getScreenName(),
@@ -101,7 +97,8 @@ public class UserServiceWhenUpdatingUserWithSiteRoleTest {
 			user.getGreeting(), user.getComments(), user.getFirstName(),
 			user.getMiddleName(), user.getLastName(),
 			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
-			user.isMale(), birthdayMonth, birthdayDay, birthdayYear,
+			user.isMale(), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
 			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), user.getJobTitle(),
 			null, null, null, userGroupRoles, null, new ServiceContext());

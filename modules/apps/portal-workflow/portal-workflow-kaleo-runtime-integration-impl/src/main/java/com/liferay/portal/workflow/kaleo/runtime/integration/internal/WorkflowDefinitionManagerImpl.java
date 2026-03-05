@@ -158,13 +158,13 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			long companyId, long userId, Boolean active, String scope,
-			int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			Boolean active, long companyId, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator,
+			String scope, int start, long userId)
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(
-			companyId, active, scope, start, end, orderByComparator, false,
+			active, companyId, end, false, orderByComparator, scope, start,
 			userId);
 	}
 
@@ -288,7 +288,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(
-			companyId, null, scope, start, end, orderByComparator, true, 0L);
+			null, companyId, end, true, orderByComparator, scope, start, 0L);
 	}
 
 	@Override
@@ -510,9 +510,9 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private List<WorkflowDefinition> _getLatestWorkflowDefinitions(
-			long companyId, Boolean active, String scope, int start, int end,
+			Boolean active, long companyId, int end, boolean liberal,
 			OrderByComparator<WorkflowDefinition> orderByComparator,
-			boolean liberal, long userId)
+			String scope, int start, long userId)
 		throws WorkflowException {
 
 		try {

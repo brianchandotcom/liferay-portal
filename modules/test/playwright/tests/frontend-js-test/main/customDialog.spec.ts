@@ -33,7 +33,7 @@ test.afterEach(async ({instanceSettingsPage, page}) => {
 });
 
 test(
-	'CanRenderOpenAlertModal',
+	'Can render custom alert modal',
 	{tag: '@LPS-165263'},
 	async ({page}) => {
 		await page.evaluate(() => {
@@ -52,7 +52,7 @@ test(
 );
 
 test(
-	'CanRenderOpenConfirmModal',
+	'Can render custom confirm modal',
 	{tag: '@LPS-165262'},
 	async ({page}) => {
 		await page.evaluate(() => {

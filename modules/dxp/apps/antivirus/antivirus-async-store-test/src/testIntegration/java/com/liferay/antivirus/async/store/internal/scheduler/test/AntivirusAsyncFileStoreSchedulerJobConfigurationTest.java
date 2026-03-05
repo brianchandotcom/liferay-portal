@@ -44,6 +44,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.ByteArrayInputStream;
 
+import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -86,6 +87,8 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 		_configuration = _configurationAdmin.getConfiguration(
 			AntivirusAsyncConfiguration.class.getName(), "?");
 
+		_properties = _configuration.getProperties();
+
 		_configuration.update(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"batchScanCronExpression", "0 0 23 * * ?"
@@ -104,6 +107,8 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 
 	@After
 	public void tearDown() throws Exception {
+		_configuration.update(_properties);
+
 		_antivirusScannerServiceRegistration.unregister();
 	}
 
@@ -256,6 +261,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private Dictionary<String, Object> _properties;
 	private SchedulerJobConfiguration _schedulerJobConfiguration;
 
 	private static class TestMessageListener implements MessageListener {

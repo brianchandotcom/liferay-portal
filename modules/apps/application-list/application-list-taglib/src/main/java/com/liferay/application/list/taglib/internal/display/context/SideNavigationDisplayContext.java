@@ -62,7 +62,10 @@ public class SideNavigationDisplayContext {
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
 
 		return HashMapBuilder.<String, Object>put(
-			"categoryImageUrl", _getPanelCategoryImageUrl()
+			"categoryImageUrl",
+			String.format(
+				"%s/product_icons/%s_sm.svg",
+				_themeDisplay.getPathThemeImages(), panelCategory.getKey())
 		).put(
 			"expandedKeys", _getExpandedKeys()
 		).put(
@@ -70,7 +73,7 @@ public class SideNavigationDisplayContext {
 		).put(
 			"items", _getPropsItems()
 		).put(
-			"label", _getPanelCategoryLabel()
+			"label", panelCategory.getLabel(_themeDisplay.getLocale())
 		).put(
 			"portletId", _portletId
 		).put(
@@ -169,28 +172,6 @@ public class SideNavigationDisplayContext {
 			PanelCategoryKeys.APPLICATIONS_MENU);
 
 		return _panelCategory;
-	}
-
-	private String _getPanelCategoryImageUrl() {
-		PanelCategory panelCategory = _getPanelCategory();
-
-		if (panelCategory == null) {
-			return null;
-		}
-
-		return String.format(
-			"%s/product_icons/%s_sm.svg", _themeDisplay.getPathThemeImages(),
-			panelCategory.getKey());
-	}
-
-	private String _getPanelCategoryLabel() {
-		PanelCategory panelCategory = _getPanelCategory();
-
-		if (panelCategory == null) {
-			return null;
-		}
-
-		return panelCategory.getLabel(_themeDisplay.getLocale());
 	}
 
 	private List<Map<String, Object>> _getPropsItems() throws Exception {

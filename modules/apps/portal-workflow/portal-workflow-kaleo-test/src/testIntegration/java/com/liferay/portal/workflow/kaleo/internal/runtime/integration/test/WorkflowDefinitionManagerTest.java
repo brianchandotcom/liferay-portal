@@ -757,8 +757,8 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 		throws Exception {
 
 		return _workflowDefinitionManager.saveWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			title, StringUtil.randomId(), bytes);
+			bytes, TestPropsValues.getCompanyId(), null, StringUtil.randomId(),
+			title, TestPropsValues.getUserId());
 	}
 
 	private void _testGetWorkflowDefinition(String externalReferenceCode)

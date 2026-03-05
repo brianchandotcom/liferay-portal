@@ -70,9 +70,9 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		else {
 			workflowDefinition =
 				workflowDefinitionManager.saveWorkflowDefinition(
-					null, themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					getTitle(actionRequest, titleMap), name,
-					content.getBytes());
+					content.getBytes(), themeDisplay.getCompanyId(), null, name,
+					getTitle(actionRequest, titleMap),
+					themeDisplay.getUserId());
 		}
 
 		setRedirectAttribute(actionRequest, workflowDefinition);

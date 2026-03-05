@@ -121,15 +121,15 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 				_getContentBytes("workflow-definition-1.json"));
 
 			_workflowDefinitionManager.saveWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(),
-				"UnpublishedGroovyWorkflowDefinition", StringUtil.randomId(),
-				_getContentBytes("workflow-definition-2.json"));
+				_getContentBytes("workflow-definition-2.json"),
+				TestPropsValues.getCompanyId(), null, StringUtil.randomId(),
+				"UnpublishedGroovyWorkflowDefinition",
+				TestPropsValues.getUserId());
 			_workflowDefinitionManager.saveWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(),
-				"UnpublishedJavaWorkflowDefinition", StringUtil.randomId(),
-				_getContentBytes("workflow-definition-3.json"));
+				_getContentBytes("workflow-definition-3.json"),
+				TestPropsValues.getCompanyId(), null, StringUtil.randomId(),
+				"UnpublishedJavaWorkflowDefinition",
+				TestPropsValues.getUserId());
 		}
 
 		Assert.assertFalse(

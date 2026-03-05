@@ -154,7 +154,7 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 					kind="*"
 				},
 			]
-			description="ArgoCD Project for Liferay could native infrastructure."
+			description="ArgoCD project for Liferay could native infrastructure."
 			destinations=[
 				{
 					namespace="elastic-system"
@@ -463,7 +463,7 @@ resource "kubernetes_manifest" "liferay_appproject" {
 					kind="*"
 				},
 			]
-			description="ArgoCD Project for Liferay cloud native applications."
+			description="ArgoCD project for Liferay cloud native applications."
 			destinations=[
 				{
 					namespace="liferay-*"

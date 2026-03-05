@@ -1924,13 +1924,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getObjectDefinitionId(),
 			objectEntryFolder.getGroupId());
 
-		objectEntry.setGroupId(objectEntryFolder.getGroupId());
-		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
-
-		objectEntry = updateObjectEntry(objectEntry);
-
-		_deleteFromLocalizationTable(
-			objectDefinition, objectEntryId);
+		_deleteFromLocalizationTable(objectDefinition, objectEntryId);
 
 		_insertIntoLocalizationTable(
 			new HashMap<>(), objectDefinition, objectEntryId,
@@ -1940,7 +1934,6 @@ public class ObjectEntryLocalServiceImpl
 			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
 				false, objectDefinition, _objectFieldLocalService),
 			objectEntryId, true, values);
-
 		_updateTable(
 			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
 				true, objectDefinition, _objectFieldLocalService),
@@ -1954,6 +1947,11 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getGroupId(), objectDefinition.getClassName(),
 			objectEntryId, serviceContext);
 
+		objectEntry.setGroupId(objectEntryFolder.getGroupId());
+		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
+
+		objectEntry = updateObjectEntry(objectEntry);
+
 		_updateAsset(
 			serviceContext.getUserId(), objectEntry,
 			serviceContext.getAssetCategoryIds(),
@@ -1965,7 +1963,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getCompanyId(), objectEntry.getGroupId(),
 			objectDefinition.getClassName(), objectEntryId, serviceContext);
 
-		return getObjectEntry(objectEntryId);
+		return objectEntry;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

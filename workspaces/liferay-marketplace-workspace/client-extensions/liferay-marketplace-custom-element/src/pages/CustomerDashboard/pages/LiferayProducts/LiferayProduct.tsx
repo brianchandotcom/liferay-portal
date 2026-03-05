@@ -17,9 +17,9 @@ import {
 } from '../../../../enums/Order';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
-import LiferayServicesAlerts from './LiferayServicesAlerts';
+import LiferayProductsAlerts from './LiferayProductsAlerts';
 
-const LiferayService = () => {
+const LiferayProduct = () => {
 	const {orderId} = useParams();
 	const {data, isLoading} = useGetProductByOrderId(orderId as string);
 
@@ -52,7 +52,7 @@ const LiferayService = () => {
 	return (
 		<PageRenderer className="mt-6" isLoading={isLoading}>
 			{!isCompletedOrder && (
-				<LiferayServicesAlerts orderStatusCode={orderStatusCode} />
+				<LiferayProductsAlerts orderStatusCode={orderStatusCode} />
 			)}
 
 			<div className="app-details-body-container">
@@ -159,4 +159,4 @@ const LiferayService = () => {
 	);
 };
 
-export default LiferayService;
+export default LiferayProduct;

@@ -156,7 +156,6 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 			).build(
 				"copy-to"
 			));
-
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				"#", "password-policies", "permissions",

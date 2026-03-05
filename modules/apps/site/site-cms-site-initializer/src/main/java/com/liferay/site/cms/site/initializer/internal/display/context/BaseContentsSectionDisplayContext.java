@@ -72,7 +72,6 @@ public abstract class BaseContentsSectionDisplayContext
 			).build(
 				"copy-to"
 			));
-
 		fdsBulkActionDropdownItems.add(
 			FDSActionDropdownItemBuilder.setHighlighted(
 				true

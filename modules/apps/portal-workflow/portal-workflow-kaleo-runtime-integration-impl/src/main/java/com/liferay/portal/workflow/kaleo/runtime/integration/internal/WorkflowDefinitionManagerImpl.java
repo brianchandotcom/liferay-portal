@@ -153,7 +153,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name)
 		throws WorkflowException {
 
-		return _getLatestWorkflowDefinition(companyId, name, false);
+		return _getLatestWorkflowDefinition(companyId, false, name);
 	}
 
 	@Override
@@ -237,7 +237,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name, int version)
 		throws PortalException {
 
-		return _getWorkflowDefinition(companyId, name, version, false);
+		return _getWorkflowDefinition(companyId, false, name, version);
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getActiveWorkflowDefinitions(
-			companyId, start, end, orderByComparator, true);
+			companyId, end, true, orderByComparator, start);
 	}
 
 	@Override
@@ -268,7 +268,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name)
 		throws WorkflowException {
 
-		return _getLatestWorkflowDefinition(companyId, name, true);
+		return _getLatestWorkflowDefinition(companyId, true, name);
 	}
 
 	@Override
@@ -287,7 +287,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name, int version)
 		throws PortalException {
 
-		return _getWorkflowDefinition(companyId, name, version, true);
+		return _getWorkflowDefinition(companyId, true, name, version);
 	}
 
 	@Override
@@ -297,7 +297,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getWorkflowDefinitions(
-			companyId, name, orderByComparator, true);
+			companyId, true, name, orderByComparator);
 	}
 
 	@Override
@@ -432,9 +432,8 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private List<WorkflowDefinition> _getActiveWorkflowDefinitions(
-			long companyId, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator,
-			boolean liberal)
+			long companyId, int end, boolean liberal,
+			OrderByComparator<WorkflowDefinition> orderByComparator, int start)
 		throws WorkflowException {
 
 		try {
@@ -476,7 +475,7 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private WorkflowDefinition _getLatestWorkflowDefinition(
-			long companyId, String name, boolean liberal)
+			long companyId, boolean liberal, String name)
 		throws WorkflowException {
 
 		try {
@@ -555,7 +554,7 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private WorkflowDefinition _getWorkflowDefinition(
-			long companyId, String name, int version, boolean liberal)
+			long companyId, boolean liberal, String name, int version)
 		throws PortalException {
 
 		try {
@@ -583,9 +582,8 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private List<WorkflowDefinition> _getWorkflowDefinitions(
-			long companyId, String name,
-			OrderByComparator<WorkflowDefinition> orderByComparator,
-			boolean liberal)
+			long companyId, boolean liberal, String name,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		try {

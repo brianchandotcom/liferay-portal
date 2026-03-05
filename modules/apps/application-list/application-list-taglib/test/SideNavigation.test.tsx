@@ -19,12 +19,14 @@ const ITEMS = [
 		id: 'content',
 		items: [
 			{
+				canonicalName: 'assetsCanonicalName',
 				href: 'assetsHref',
 				id: 'assets',
 				label: 'Assets',
 				leadingIcon: 'assetsIcon',
 			},
 			{
+				canonicalName: 'dashboardCanonicalName',
 				href: 'dashboardHref',
 				id: 'dashboard',
 				label: 'Dashboard',
@@ -37,6 +39,7 @@ const ITEMS = [
 		id: 'workflow',
 		items: [
 			{
+				canonicalName: 'metricsCanonicalName',
 				href: 'metricsHref',
 				id: 'metrics',
 				label: 'Metrics',
@@ -50,6 +53,7 @@ const ITEMS = [
 const renderComponent = ({expandedKeys = ['content', 'workflow']} = {}) =>
 	render(
 		<SideNavigation
+			canonicalName="sideNavigationCanonicalName"
 			categoryImageUrl="categoryImageUrl"
 			expandedKeys={expandedKeys}
 			expandedKeysSessionKey="expandedKeysSessionKey"
@@ -64,6 +68,26 @@ const renderComponent = ({expandedKeys = ['content', 'workflow']} = {}) =>
 	);
 
 describe('SideNavigation', () => {
+	it('renders the side navigation with canonical name', () => {
+		const {getByRole, getByTestId} = renderComponent();
+
+		const sideNavigation = getByTestId('sideNavigation');
+
+		expect(sideNavigation).toBeInTheDocument();
+		expect(sideNavigation).toHaveAttribute(
+			'data-canonical-name',
+			'sideNavigationCanonicalName'
+		);
+
+		const assetsItem = getByRole('menuitem', {name: 'Assets'});
+
+		expect(assetsItem.parentElement).toBeInTheDocument();
+		expect(assetsItem.parentElement).toHaveAttribute(
+			'data-canonical-name',
+			'assetsCanonicalName'
+		);
+	});
+
 	it('renders the side navigation header', () => {
 		renderComponent();
 

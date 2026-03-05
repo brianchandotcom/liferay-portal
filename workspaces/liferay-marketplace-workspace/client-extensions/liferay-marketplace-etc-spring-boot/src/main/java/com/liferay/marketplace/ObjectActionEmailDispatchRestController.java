@@ -31,9 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Keven Leone
  */
-@RequestMapping("/object/action/dispatch/email")
+@RequestMapping("/object/action/email/dispatch")
 @RestController
-public class ObjectActionDispatchEmailRestController
+public class ObjectActionEmailDispatchRestController
 	extends BaseRestController {
 
 	@PostMapping
@@ -106,7 +106,7 @@ public class ObjectActionDispatchEmailRestController
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		ObjectActionDispatchEmailRestController.class);
+		ObjectActionEmailDispatchRestController.class);
 
 	@Autowired
 	private MarketplaceService _marketplaceService;

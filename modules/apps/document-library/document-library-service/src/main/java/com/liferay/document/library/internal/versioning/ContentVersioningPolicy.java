@@ -9,6 +9,8 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.versioning.VersioningPolicy;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -64,7 +66,11 @@ public class ContentVersioningPolicy implements VersioningPolicy {
 			return dlFileVersion.getChecksum();
 		}
 
-		try (InputStream inputStream = dlFileVersion.getContentStream(false)) {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					dlFileVersion.getCtCollectionId());
+			InputStream inputStream = dlFileVersion.getContentStream(false)) {
+
 			dlFileVersion.setChecksum(DigesterUtil.digestBase64(inputStream));
 
 			dlFileVersion = _dlFileVersionLocalService.updateDLFileVersion(

@@ -43,18 +43,18 @@ public class IndexableActionableDynamicQuery {
 
 		long size = _documents.size();
 
-		if (size >= getInterval()) {
-			indexInterval();
+		if (size >= _interval) {
+			_indexInterval();
 		}
 		else if ((size % _STATUS_INTERVAL) == 0) {
-			sendStatusMessage(size);
+			_sendStatusMessage(size);
 		}
 	}
 
 	public void performActions() {
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			try {
-				_total = performCount();
+				_total = _performCount();
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
@@ -66,19 +66,17 @@ public class IndexableActionableDynamicQuery {
 				long previousPrimaryKey = -1;
 
 				while (true) {
-					long lastPrimaryKey = doPerformActions(previousPrimaryKey);
+					long lastPrimaryKey = _performActions(previousPrimaryKey);
 
 					if (lastPrimaryKey < 0) {
 						break;
 					}
 
-					intervalCompleted(previousPrimaryKey, lastPrimaryKey);
-
 					previousPrimaryKey = lastPrimaryKey;
 				}
 			}
 			finally {
-				actionsCompleted();
+				_actionsCompleted();
 			}
 		}
 		catch (Exception exception) {
@@ -87,20 +85,8 @@ public class IndexableActionableDynamicQuery {
 		finally {
 			_count = _total;
 
-			sendStatusMessage();
+			_sendStatusMessage();
 		}
-	}
-
-	public long performCount() throws PortalException {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			_modelClass, _classLoader);
-
-		addDefaultCriteria(dynamicQuery);
-
-		addCriteria(dynamicQuery);
-
-		return (Long)executeDynamicQuery(
-			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
 	}
 
 	public void setAddCriteriaMethod(
@@ -155,20 +141,20 @@ public class IndexableActionableDynamicQuery {
 		_primaryKeyPropertyName = primaryKeyPropertyName;
 	}
 
-	protected void actionsCompleted() throws PortalException {
+	private void _actionsCompleted() throws PortalException {
 		IndexWriterHelper indexWriterHelper =
 			_indexWriterHelperProxySnapshot.get();
 
-		indexWriterHelper.commit(getCompanyId());
+		indexWriterHelper.commit(_companyId);
 	}
 
-	protected void addCriteria(DynamicQuery dynamicQuery) {
+	private void _addCriteria(DynamicQuery dynamicQuery) {
 		if (_addCriteriaMethod != null) {
 			_addCriteriaMethod.addCriteria(dynamicQuery);
 		}
 	}
 
-	protected void addDefaultCriteria(DynamicQuery dynamicQuery) {
+	private void _addDefaultCriteria(DynamicQuery dynamicQuery) {
 		if (!PropsValues.DATABASE_PARTITION_ENABLED && (_companyId > 0)) {
 			Property property = PropertyFactoryUtil.forName("companyId");
 
@@ -182,63 +168,7 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
-	protected void addOrderCriteria(DynamicQuery dynamicQuery) {
-		dynamicQuery.addOrder(OrderFactoryUtil.asc(_primaryKeyPropertyName));
-	}
-
-	protected void doPerformActions(List<Object> objects) throws Exception {
-		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-			CTSQLModeThreadLocal.getCTSQLMode();
-
-		if (ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT) {
-			_performActions(objects);
-		}
-		else {
-			try (SafeCloseable safeCloseable =
-					CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
-						CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
-
-				_performActions(objects);
-			}
-		}
-	}
-
-	protected long doPerformActions(long previousPrimaryKey)
-		throws PortalException {
-
-		try {
-			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-				_modelClass, _classLoader);
-
-			Property property = PropertyFactoryUtil.forName(
-				_primaryKeyPropertyName);
-
-			dynamicQuery.add(property.gt(previousPrimaryKey));
-
-			dynamicQuery.setLimit(0, _interval);
-
-			addDefaultCriteria(dynamicQuery);
-
-			addCriteria(dynamicQuery);
-
-			addOrderCriteria(dynamicQuery);
-
-			try {
-				return _performActions(dynamicQuery);
-			}
-			catch (PortalException | SystemException exception) {
-				throw exception;
-			}
-			catch (Exception exception) {
-				throw new SystemException(exception);
-			}
-		}
-		finally {
-			indexInterval();
-		}
-	}
-
-	protected Object executeDynamicQuery(
+	private Object _executeDynamicQuery(
 			Method dynamicQueryMethod, Object... arguments)
 		throws PortalException {
 
@@ -262,23 +192,7 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
-	protected long getCompanyId() {
-		return _companyId;
-	}
-
-	protected Projection getCountProjection() {
-		return ProjectionFactoryUtil.rowCount();
-	}
-
-	protected int getInterval() {
-		return _interval;
-	}
-
-	protected Class<?> getModelClass() {
-		return _modelClass;
-	}
-
-	protected void indexInterval() throws PortalException {
+	private void _indexInterval() throws PortalException {
 		if (_documents.isEmpty()) {
 			return;
 		}
@@ -286,45 +200,23 @@ public class IndexableActionableDynamicQuery {
 		IndexWriterHelper indexWriterHelper =
 			_indexWriterHelperProxySnapshot.get();
 
-		indexWriterHelper.updateDocuments(getCompanyId(), _documents, false);
+		indexWriterHelper.updateDocuments(_companyId, _documents, false);
 
 		_count += _documents.size();
 
 		_documents.clear();
 
-		sendStatusMessage();
+		_sendStatusMessage();
 	}
 
-	/**
-	 * @throws PortalException
-	 */
-	protected void intervalCompleted(long startPrimaryKey, long endPrimaryKey)
-		throws PortalException {
-	}
-
-	protected void performAction(Object object) throws PortalException {
+	private void _performAction(Object object) throws PortalException {
 		if (_performActionMethod != null) {
 			_performActionMethod.performAction(object);
 		}
 	}
 
-	protected void sendStatusMessage() {
-		sendStatusMessage(0);
-	}
-
-	protected void sendStatusMessage(long documentIntervalCount) {
-		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			return;
-		}
-
-		Class<?> modelClass = getModelClass();
-
-		ReindexStatusMessageSenderUtil.sendStatusMessage(
-			modelClass.getName(), _count + documentIntervalCount, _total);
-	}
-
 	private long _performActions(DynamicQuery dynamicQuery) throws Exception {
-		List<Object> objects = (List<Object>)executeDynamicQuery(
+		List<Object> objects = (List<Object>)_executeDynamicQuery(
 			_dynamicQueryMethod, dynamicQuery);
 
 		if (objects.isEmpty()) {
@@ -340,12 +232,65 @@ public class IndexableActionableDynamicQuery {
 			lastPrimaryKey = (Long)baseModel.getPrimaryKeyObj();
 		}
 
-		doPerformActions(objects);
+		_performActions(objects);
 
 		return lastPrimaryKey;
 	}
 
 	private void _performActions(List<Object> objects) throws Exception {
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+			CTSQLModeThreadLocal.getCTSQLMode();
+
+		if (ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT) {
+			_performActionsWithCT(objects);
+		}
+		else {
+			try (SafeCloseable safeCloseable =
+					CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
+						CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
+
+				_performActionsWithCT(objects);
+			}
+		}
+	}
+
+	private long _performActions(long previousPrimaryKey)
+		throws PortalException {
+
+		try {
+			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+				_modelClass, _classLoader);
+
+			Property property = PropertyFactoryUtil.forName(
+				_primaryKeyPropertyName);
+
+			dynamicQuery.add(property.gt(previousPrimaryKey));
+
+			dynamicQuery.setLimit(0, _interval);
+
+			_addDefaultCriteria(dynamicQuery);
+
+			_addCriteria(dynamicQuery);
+
+			dynamicQuery.addOrder(
+				OrderFactoryUtil.asc(_primaryKeyPropertyName));
+
+			try {
+				return _performActions(dynamicQuery);
+			}
+			catch (PortalException | SystemException exception) {
+				throw exception;
+			}
+			catch (Exception exception) {
+				throw new SystemException(exception);
+			}
+		}
+		finally {
+			_indexInterval();
+		}
+	}
+
+	private void _performActionsWithCT(List<Object> objects) throws Exception {
 		long currentCTCollectionId =
 			CTCollectionThreadLocal.getCTCollectionId();
 
@@ -359,7 +304,7 @@ public class IndexableActionableDynamicQuery {
 			}
 
 			if (ctCollectionId == currentCTCollectionId) {
-				performAction(object);
+				_performAction(object);
 			}
 			else {
 				try (SafeCloseable safeCloseable =
@@ -367,10 +312,36 @@ public class IndexableActionableDynamicQuery {
 							setCTCollectionIdWithSafeCloseable(
 								ctCollectionId)) {
 
-					performAction(object);
+					_performAction(object);
 				}
 			}
 		}
+	}
+
+	private long _performCount() throws PortalException {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			_modelClass, _classLoader);
+
+		_addDefaultCriteria(dynamicQuery);
+
+		_addCriteria(dynamicQuery);
+
+		return (Long)_executeDynamicQuery(
+			_dynamicQueryCountMethod, dynamicQuery,
+			ProjectionFactoryUtil.rowCount());
+	}
+
+	private void _sendStatusMessage() {
+		_sendStatusMessage(0);
+	}
+
+	private void _sendStatusMessage(long documentIntervalCount) {
+		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			return;
+		}
+
+		ReindexStatusMessageSenderUtil.sendStatusMessage(
+			_modelClass.getName(), _count + documentIntervalCount, _total);
 	}
 
 	private static final long _STATUS_INTERVAL = 100;

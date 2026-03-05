@@ -29,56 +29,6 @@ const test = mergeTests(
 );
 
 test.fixme(
-	'Can add a blogs entry with image via Blog Images',
-	{tag: '@LRQA-67229'},
-	async ({blogsEditBlogEntryPage, page, site}) => {
-		const blogTitle = getRandomString();
-
-		await test.step('Upload an image via API for cover', async () => {
-			await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
-		});
-
-		await test.step('Create a blog entry with content', async () => {
-			await page.getByPlaceholder('Title *').fill(blogTitle);
-
-			await blogsEditBlogEntryPage.contentEditor.fill(
-				'Blog entry content with image test'
-			);
-		});
-
-		await test.step('Add a cover image', async () => {
-			await page
-				.getByRole('button', {name: 'Select File'})
-				.first()
-				.click();
-
-			const itemSelectorDialog = page.frameLocator(
-				'iframe[title="Select File"]'
-			);
-
-			const blogImagesLink = itemSelectorDialog.getByRole('link', {
-				name: 'Blog Images',
-			});
-
-			if (await blogImagesLink.isVisible({timeout: 3000})) {
-				await blogImagesLink.click();
-			}
-			else {
-				await itemSelectorDialog
-					.getByRole('link', {name: 'Documents and Media'})
-					.click();
-			}
-
-			await page.getByRole('button', {name: 'Cancel'}).click();
-		});
-
-		await test.step('Publish the blog entry', async () => {
-			await blogsEditBlogEntryPage.publishBlogEntry();
-		});
-	}
-);
-
-test.fixme(
 	'Can add a hyperlink to existing text in web content',
 	{tag: '@LPS-110663'},
 	async ({journalEditArticlePage, page, site}) => {

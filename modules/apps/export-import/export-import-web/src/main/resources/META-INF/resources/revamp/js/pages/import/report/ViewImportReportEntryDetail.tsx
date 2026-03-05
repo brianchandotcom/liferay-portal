@@ -8,7 +8,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {openModal} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {escapeHTML, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import formatDate from '../../../utils/formatDate';
@@ -37,7 +37,7 @@ function DetailViewDefinitionCol({
 function openStackTraceModal(stackTraceMessage?: string) {
 	const modalProps = stackTraceMessage
 		? {
-				bodyHTML: `<div class="bg-dark border border-light p-4 rounded"><p class="text-white">${stackTraceMessage}</p></div>`,
+				bodyHTML: `<div class="bg-dark border border-light p-4 rounded"><p class="text-white">${escapeHTML(stackTraceMessage)}</p></div>`,
 				size: 'full-screen' as const,
 				title: Liferay.Language.get('stack-trace'),
 			}

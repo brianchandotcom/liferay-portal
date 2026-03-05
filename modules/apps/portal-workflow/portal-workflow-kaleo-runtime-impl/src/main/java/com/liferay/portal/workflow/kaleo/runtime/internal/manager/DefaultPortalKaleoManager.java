@@ -262,8 +262,9 @@ public class DefaultPortalKaleoManager
 
 		List<WorkflowDefinition> workflowDefinitions =
 			_workflowDefinitionManager.getActiveWorkflowDefinitions(
-				companyId, workflowDefinitionName, 0, 20,
-				workflowComparatorFactory.getDefinitionNameComparator(false));
+				companyId, 20, workflowDefinitionName,
+				workflowComparatorFactory.getDefinitionNameComparator(false),
+				0);
 
 		if (workflowDefinitions.isEmpty()) {
 			if (_log.isWarnEnabled()) {

@@ -42,8 +42,8 @@ public interface WorkflowDefinitionManager {
 		throws WorkflowException;
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
-			long companyId, String name, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			long companyId, int end, String name,
+			OrderByComparator<WorkflowDefinition> orderByComparator, int start)
 		throws WorkflowException;
 
 	public default int getActiveWorkflowDefinitionsCount(long companyId)

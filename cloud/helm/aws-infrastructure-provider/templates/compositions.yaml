@@ -527,6 +527,7 @@ spec:
                         spec:
                             forProvider:
                                 allocatedStorage: {{ $databaseSpec.storageGB }}
+                                applyImmediately: {{ and (eq $dataPlane $targetActiveDataPlane) (ne $restorePhase "none") }}
                                 autoGeneratePassword: true
                                 backupRetentionPeriod: 7
                                 dbName: lportal

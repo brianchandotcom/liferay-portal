@@ -273,8 +273,9 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public List<WorkflowDefinition> liberalGetLatestWorkflowDefinitions(
-			long companyId, String scope, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			long companyId, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator,
+			String scope, int start)
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(

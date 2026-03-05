@@ -39,7 +39,7 @@
 						productImage = cpContentHelper.getDefaultImageFileURL(commerceContext.getAccountEntry().getAccountEntryId(), entry.getCPDefinitionId())
 					/>
 
-					<a class="solution-search-results-card bg-white d-flex flex-column mb-0 text-dark text-decoration-none" href=${cpContentHelper.getFriendlyURL(entry, themeDisplay)}>
+					<a class="bg-white d-flex flex-column mb-0 text-dark text-decoration-none solution-search-results-card" href="${cpContentHelper.getFriendlyURL(entry, themeDisplay)}">
 						<div class="align-items-center d-flex image-container mb-3">
 							<img
 								alt="${entry.getName()}"

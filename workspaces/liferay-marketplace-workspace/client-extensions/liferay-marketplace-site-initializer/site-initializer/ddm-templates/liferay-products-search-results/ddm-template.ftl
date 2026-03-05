@@ -45,7 +45,7 @@
 					productImage = cpContentHelper.getDefaultImageFileURL(-1, productId)!""
 				/>
 
-				<a class="product-card" href=${cpContentHelper.getFriendlyURL(entry, themeDisplay)}>
+				<a class="product-card" href="${cpContentHelper.getFriendlyURL(entry, themeDisplay)}">
 					<div class="card-image-wrapper marketplace-product-card">
 						<img alt="${entry.getName()}" class="card-product-image" draggable="false" loading="lazy" src="${productImage}" />
 					</div>

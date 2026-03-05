@@ -24,10 +24,10 @@ liferay-marketplace-etc-spring-boot-oaua:
     scopes:
         -   Liferay.Headless.Admin.User.everything
     type: oAuthApplicationUserAgent
-liferay-marketplace-etc-spring-boot-object-action-dispatch-email:
-    name: Liferay Marketplace Etc Spring Boot Object Action Dispatch Email
+liferay-marketplace-etc-spring-boot-object-action-email-dispatch:
+    name: Liferay Marketplace Etc Spring Boot Object Action Email Dispatch
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua
-    resourcePath: /object/action/dispatch/email
+    resourcePath: /object/action/email/dispatch
     type: objectAction
 liferay-marketplace-etc-spring-boot-object-action-product-purchase:
     name: Liferay Marketplace Etc Spring Boot Object Action Product Purchase

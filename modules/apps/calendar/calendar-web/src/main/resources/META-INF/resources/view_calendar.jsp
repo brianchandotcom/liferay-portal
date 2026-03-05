@@ -128,7 +128,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 							</div>
 
 							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />otherCalendarList">
-								<input class="calendar-portlet-add-calendars-input" id="<portlet:namespace />addOtherCalendar" placeholder="<liferay-ui:message key="add-other-calendars" />" type="text" />
+								<input aria-label="<liferay-ui:message key="add-other-calendars" />" class="calendar-portlet-add-calendars-input" id="<portlet:namespace />addOtherCalendar" placeholder="<liferay-ui:message key="add-other-calendars" />" type="text" />
 							</div>
 						</c:if>
 					</div>

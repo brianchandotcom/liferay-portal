@@ -1,0 +1,13 @@
+task runGradleTest
+
+allprojects {
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+runGradleTest {
+	dependsOn ":modules:foo-test:testTestBomApplied"
+}

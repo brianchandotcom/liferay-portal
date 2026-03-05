@@ -1,0 +1,3 @@
+Bundle-Name: Foo Test
+Bundle-SymbolicName: foo.test
+Bundle-Version: 1.0.0

@@ -1,0 +1,18 @@
+task testTestBomApplied
+
+dependencies {
+	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge"
+	testModules group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge.connector"
+}
+
+testTestBomApplied {
+	doLast {
+		["testIntegrationCompileClasspath", "testModules"].each {
+			String configurationName ->
+
+			assert configurations[configurationName].incoming.dependencies.findAll {
+				it.name == "release.dxp.bom.test"
+			}.size() == 1 : "Test BOM not applied to configuration ${configurationName}"
+		}
+	}
+}

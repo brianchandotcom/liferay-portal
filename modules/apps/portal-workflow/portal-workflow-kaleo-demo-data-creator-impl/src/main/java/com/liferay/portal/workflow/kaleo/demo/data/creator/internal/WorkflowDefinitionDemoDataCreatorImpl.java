@@ -38,8 +38,9 @@ public class WorkflowDefinitionDemoDataCreatorImpl
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, companyId, userId, "Auto Insurance Application",
-				"Auto Insurance Application", content.getBytes());
+				content.getBytes(), companyId, null,
+				"Auto Insurance Application", "Auto Insurance Application",
+				userId);
 
 		_workflowDefinitions.add(workflowDefinition);
 

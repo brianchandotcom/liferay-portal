@@ -82,9 +82,9 @@ public class RevertKaleoDefinitionVersionMVCActionCommand
 
 			workflowDefinition =
 				workflowDefinitionManager.deployWorkflowDefinition(
-					null, themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					kaleoDefinitionVersion.getTitle(), name,
-					content.getBytes());
+					content.getBytes(), themeDisplay.getCompanyId(), null, name,
+					kaleoDefinitionVersion.getTitle(),
+					themeDisplay.getUserId());
 		}
 		else {
 			workflowDefinition =

@@ -1847,8 +1847,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			String content = readFileToJSON("join-xor-workflow-definition.xml");
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, _adminUser.getCompanyId(), _adminUser.getUserId(),
-				_JOIN_XOR, _JOIN_XOR, content.getBytes());
+				content.getBytes(), _adminUser.getCompanyId(), null, _JOIN_XOR,
+				_JOIN_XOR, _adminUser.getUserId());
 		}
 	}
 
@@ -1881,8 +1881,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			String content = readFileToJSON(fileName);
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, _adminUser.getCompanyId(), _adminUser.getUserId(), name,
-				name, content.getBytes());
+				content.getBytes(), _adminUser.getCompanyId(), null, name, name,
+				_adminUser.getUserId());
 		}
 	}
 
@@ -1900,9 +1900,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 				"single-approver-site-member-workflow-definition.xml");
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, _adminUser.getCompanyId(), _adminUser.getUserId(),
+				content.getBytes(), _adminUser.getCompanyId(), null,
 				_SITE_MEMBER_SINGLE_APPROVER, _SITE_MEMBER_SINGLE_APPROVER,
-				content.getBytes());
+				_adminUser.getUserId());
 		}
 	}
 

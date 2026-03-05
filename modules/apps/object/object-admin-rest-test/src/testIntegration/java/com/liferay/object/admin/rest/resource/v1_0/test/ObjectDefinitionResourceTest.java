@@ -1689,9 +1689,9 @@ public class ObjectDefinitionResourceTest
 
 		WorkflowDefinition workflowDefinition2 =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), content.getBytes());
+				content.getBytes(), TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
 
 		WorkflowDefinitionLink workflowDefinitionLink2 =
 			new WorkflowDefinitionLink() {
@@ -1735,9 +1735,9 @@ public class ObjectDefinitionResourceTest
 
 		WorkflowDefinition workflowDefinition3 =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), content.getBytes());
+				content.getBytes(), TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
 
 		WorkflowDefinitionLink workflowDefinitionLink3 =
 			new WorkflowDefinitionLink() {
@@ -2800,9 +2800,9 @@ public class ObjectDefinitionResourceTest
 
 		WorkflowDefinition workflowDefinition2 =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), content.getBytes());
+				content.getBytes(), TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
 
 		WorkflowDefinitionLink workflowDefinitionLink2 =
 			new WorkflowDefinitionLink() {
@@ -2984,9 +2984,9 @@ public class ObjectDefinitionResourceTest
 
 		WorkflowDefinition workflowDefinition2 =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), content.getBytes());
+				content.getBytes(), TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
 
 		WorkflowDefinitionLink workflowDefinitionLink2 =
 			new WorkflowDefinitionLink() {
@@ -3028,9 +3028,9 @@ public class ObjectDefinitionResourceTest
 
 		WorkflowDefinition workflowDefinition3 =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), content.getBytes());
+				content.getBytes(), TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
 
 		WorkflowDefinitionLink workflowDefinitionLink3 =
 			new WorkflowDefinitionLink() {

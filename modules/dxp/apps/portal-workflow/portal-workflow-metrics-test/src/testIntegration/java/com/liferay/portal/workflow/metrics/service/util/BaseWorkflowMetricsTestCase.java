@@ -273,8 +273,9 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 	protected void updateWorkflowDefinition(byte[] bytes) throws Exception {
 		workflowDefinition = workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowDefinition.getTitle(), workflowDefinition.getName(), bytes);
+			bytes, TestPropsValues.getCompanyId(), null,
+			workflowDefinition.getName(), workflowDefinition.getTitle(),
+			TestPropsValues.getUserId());
 	}
 
 	@Inject(
@@ -290,9 +291,9 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 	private void _deployWorkflowDefinition() throws Exception {
 		workflowDefinition = workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringUtil.randomId(), StringUtil.randomId(),
-			WorkflowDefinitionUtil.getBytes());
+			WorkflowDefinitionUtil.getBytes(), TestPropsValues.getCompanyId(),
+			null, StringUtil.randomId(), StringUtil.randomId(),
+			TestPropsValues.getUserId());
 	}
 
 	private String _getInitialNodeKey(

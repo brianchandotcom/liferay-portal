@@ -179,27 +179,30 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				_group, TestPropsValues.getUserId()));
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringUtil.randomId(), "AI Decision Node Workflow Definition",
-			_getContentBytes("ai-decision-node-workflow-definition.json"));
+			_getContentBytes("ai-decision-node-workflow-definition.json"),
+			TestPropsValues.getCompanyId(), null,
+			"AI Decision Node Workflow Definition", StringUtil.randomId(),
+			TestPropsValues.getUserId());
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringUtil.randomId(),
-			"AI Decision Node With Tool Workflow Definition",
 			_getContentBytes(
-				"ai-decision-node-with-tool-workflow-definition.json"));
+				"ai-decision-node-with-tool-workflow-definition.json"),
+			TestPropsValues.getCompanyId(), null,
+			"AI Decision Node With Tool Workflow Definition",
+			StringUtil.randomId(), TestPropsValues.getUserId());
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringUtil.randomId(), "LLM Node With RAG Workflow Definition",
-			_getContentBytes("llm-node-with-rag-workflow-definition.json"));
+			_getContentBytes("llm-node-with-rag-workflow-definition.json"),
+			TestPropsValues.getCompanyId(), null,
+			"LLM Node With RAG Workflow Definition", StringUtil.randomId(),
+			TestPropsValues.getUserId());
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringUtil.randomId(), "LLM Node With Tool Workflow Definition",
-			_getContentBytes("llm-node-with-tool-workflow-definition.json"));
+			_getContentBytes("llm-node-with-tool-workflow-definition.json"),
+			TestPropsValues.getCompanyId(), null,
+			"LLM Node With Tool Workflow Definition", StringUtil.randomId(),
+			TestPropsValues.getUserId());
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringUtil.randomId(), "Workflow Definition",
-			_getContentBytes("workflow-definition.json"));
+			_getContentBytes("workflow-definition.json"),
+			TestPropsValues.getCompanyId(), null, "Workflow Definition",
+			StringUtil.randomId(), TestPropsValues.getUserId());
 	}
 
 	@AfterClass
@@ -320,9 +323,9 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertEquals(1, workflowInstance.getWorkflowDefinitionVersion());
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringUtil.randomId(), "Workflow Definition",
-			_getContentBytes("workflow-definition.json"));
+			_getContentBytes("workflow-definition.json"),
+			TestPropsValues.getCompanyId(), null, "Workflow Definition",
+			StringUtil.randomId(), TestPropsValues.getUserId());
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

@@ -50,12 +50,12 @@ public class WorkflowEngineConcurrentTest extends BaseWorkflowManagerTestCase {
 	public void testConcurrentExecuteTimerWorkflowInstance() throws Exception {
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
 				FileUtil.getBytes(
 					getResourceInputStream(
-						"multiple-timer-workflow-definition.xml")));
+						"multiple-timer-workflow-definition.xml")),
+				TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
 
 		try (AutoCloseable autoCloseable1 = registryWorkflowHandler(
 				workflowDefinition);

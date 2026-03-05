@@ -34,7 +34,7 @@ public class WorkflowDefinitionManagerUtil {
 			_workflowDefinitionManagerSnapshot.get();
 
 		return workflowDefinitionManager.deployWorkflowDefinition(
-			externalReferenceCode, companyId, userId, title, name, bytes);
+			bytes, companyId, externalReferenceCode, name, title, userId);
 	}
 
 	public static int getActiveWorkflowDefinitionsCount(long companyId)

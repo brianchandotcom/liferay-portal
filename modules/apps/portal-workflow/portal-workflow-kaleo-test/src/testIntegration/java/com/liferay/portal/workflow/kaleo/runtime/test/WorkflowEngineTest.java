@@ -50,11 +50,11 @@ public class WorkflowEngineTest {
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
 				FileUtil.getBytes(
-					_getResourceInputStream("valid-workflow-definition.xml")));
+					_getResourceInputStream("valid-workflow-definition.xml")),
+				TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(

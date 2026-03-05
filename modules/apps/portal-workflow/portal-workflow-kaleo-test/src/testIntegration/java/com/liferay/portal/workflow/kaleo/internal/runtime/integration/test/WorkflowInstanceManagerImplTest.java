@@ -57,8 +57,9 @@ public class WorkflowInstanceManagerImplTest
 			"broken-scripted-assignment-workflow-definition.json");
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowDefinitionName, workflowDefinitionName, content.getBytes());
+			content.getBytes(), TestPropsValues.getCompanyId(), null,
+			workflowDefinitionName, workflowDefinitionName,
+			TestPropsValues.getUserId());
 
 		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
@@ -122,12 +123,11 @@ public class WorkflowInstanceManagerImplTest
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
 				FileUtil.getBytes(
-					getResourceInputStream(
-						"join-xor-workflow-definition.xml")));
+					getResourceInputStream("join-xor-workflow-definition.xml")),
+				TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
 
 		try (ServiceRegistrationHolder serviceRegistrationHolder =
 				registryWorkflowHandler(workflowDefinition.getName())) {
@@ -193,13 +193,13 @@ public class WorkflowInstanceManagerImplTest
 		try (ServiceRegistrationHolder serviceRegistrationHolder =
 				registryWorkflowHandler(
 					_workflowDefinitionManager.deployWorkflowDefinition(
-						null, TestPropsValues.getCompanyId(),
-						TestPropsValues.getUserId(),
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString(),
 						FileUtil.getBytes(
 							getResourceInputStream(
-								"join-xor-workflow-definition.xml"))))) {
+								"join-xor-workflow-definition.xml")),
+						TestPropsValues.getCompanyId(), null,
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString(),
+						TestPropsValues.getUserId()))) {
 
 			Class<?> clazz = getClass();
 

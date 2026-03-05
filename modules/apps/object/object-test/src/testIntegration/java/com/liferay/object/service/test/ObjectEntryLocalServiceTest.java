@@ -8159,9 +8159,9 @@ public class ObjectEntryLocalServiceTest {
 		// time
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), "workflow-definition-1",
-			_getContentBytes("workflow-definition-1.json"));
+			_getContentBytes("workflow-definition-1.json"),
+			TestPropsValues.getCompanyId(), null, "workflow-definition-1",
+			RandomTestUtil.randomString(), TestPropsValues.getUserId());
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			_updateWorkflowDefinitionLink(

@@ -63,12 +63,11 @@ public class GetWorkflowDefinitionInfoMVCResourceCommandTest {
 
 		_workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), StringUtil.randomId(),
-				StringUtil.randomId(),
 				FileUtil.getBytes(
 					GetWorkflowDefinitionInfoMVCResourceCommandTest.class,
-					"dependencies/workflow-definition-1.json"));
+					"dependencies/workflow-definition-1.json"),
+				TestPropsValues.getCompanyId(), null, StringUtil.randomId(),
+				StringUtil.randomId(), TestPropsValues.getUserId());
 	}
 
 	@Test

@@ -81,9 +81,9 @@ public class WorkflowDefinitionResourceTest
 		String content = _workflowDefinition.getContent();
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, _workflowDefinition.getCompanyId(),
-			_workflowDefinition.getUserId(), _workflowDefinition.getTitle(),
-			_workflowDefinition.getName(), content.getBytes());
+			content.getBytes(), _workflowDefinition.getCompanyId(), null,
+			_workflowDefinition.getName(), _workflowDefinition.getTitle(),
+			_workflowDefinition.getUserId());
 	}
 
 	@After

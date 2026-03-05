@@ -115,10 +115,9 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 				TestPropsValues.getUserId());
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), "PublishedWorkflowDefinition",
-				StringUtil.randomId(),
-				_getContentBytes("workflow-definition-1.json"));
+				_getContentBytes("workflow-definition-1.json"),
+				TestPropsValues.getCompanyId(), null, StringUtil.randomId(),
+				"PublishedWorkflowDefinition", TestPropsValues.getUserId());
 
 			_workflowDefinitionManager.saveWorkflowDefinition(
 				_getContentBytes("workflow-definition-2.json"),
@@ -181,10 +180,9 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 
 		_testUpgrade(
 			() -> _workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), StringUtil.randomId(),
-				StringUtil.randomId(),
-				_getContentBytes("workflow-definition-2.json")));
+				_getContentBytes("workflow-definition-2.json"),
+				TestPropsValues.getCompanyId(), null, StringUtil.randomId(),
+				StringUtil.randomId(), TestPropsValues.getUserId()));
 	}
 
 	@Test
@@ -193,10 +191,9 @@ public class ScriptManagementConfigurationUpgradeProcessTest {
 
 		_testUpgrade(
 			() -> _workflowDefinitionManager.deployWorkflowDefinition(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), StringUtil.randomId(),
-				StringUtil.randomId(),
-				_getContentBytes("workflow-definition-3.json")));
+				_getContentBytes("workflow-definition-3.json"),
+				TestPropsValues.getCompanyId(), null, StringUtil.randomId(),
+				StringUtil.randomId(), TestPropsValues.getUserId()));
 	}
 
 	private ObjectAction _addObjectAction(

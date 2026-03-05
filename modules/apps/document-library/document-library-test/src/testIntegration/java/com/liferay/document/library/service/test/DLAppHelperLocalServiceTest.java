@@ -93,9 +93,9 @@ public class DLAppHelperLocalServiceTest {
 		String workflowDefinitionContent = StringUtil.read(inputStream);
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			workflowDefinitionContent.getBytes());
+			workflowDefinitionContent.getBytes(),
+			TestPropsValues.getCompanyId(), null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId());
 
 		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 			TestPropsValues.getGroupId(),

@@ -29,7 +29,7 @@
 						productImage = cpContentHelper.getDefaultImageFileURL(commerceContext.getAccountEntry().getAccountEntryId(), productId)
 					/>
 
-					<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none" href=${cpContentHelper.getFriendlyURL(entry, themeDisplay)}>
+					<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none" href="${cpContentHelper.getFriendlyURL(entry, themeDisplay)}">
 						<div class="align-items-center card-image-title-container d-flex">
 							<div class="image-container mr-2 rounded">
 								<img alt="${entry.getName()}" class="app-search-image" draggable="false" loading="lazy" src="${productImage}" />

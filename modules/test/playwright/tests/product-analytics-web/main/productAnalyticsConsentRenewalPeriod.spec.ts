@@ -10,6 +10,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {productAnalyticsPagesTest} from '../../../fixtures/productAnalyticsPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {clearProductAnalyticsCookies} from './utils/cookies';
 
@@ -216,7 +217,7 @@ test(
 test(
 	'Verify alert only appears if changing the value',
 	{tag: '@LPD-79710'},
-	async ({page}) => {
+	async ({page, productAnalyticsBannerPage}) => {
 		const enabledButton = await page.getByLabel('Enabled');
 
 		await enabledButton.setChecked(true);
@@ -229,17 +230,31 @@ test(
 
 		await page.getByRole('button', {name: 'Update'}).click();
 
-		await consentRenewalPeriodField.fill('11');
+		await page.waitForTimeout(1000);
 
-		await page.getByRole('button', {name: 'Update'}).click();
+		await expect(
+			productAnalyticsBannerPage.bannerLocator
+		).not.toBeVisible();
+
+		await consentRenewalPeriodField.fill('11');
 
 		page.once('dialog', async (dialogWindow) => {
 			await expect(dialogWindow.message()).toContain(
 				'You are about to change the consent renewal period'
 			);
 
-			await dialogWindow.dismiss();
+			await dialogWindow.accept();
 		});
+
+		await page.getByRole('button', {name: 'Update'}).click();
+
+		await reloadUntilVisible({
+			beforeReload: () => page.waitForTimeout(1000),
+			myLocator: productAnalyticsBannerPage.bannerLocator,
+			page,
+		});
+
+		await expect(productAnalyticsBannerPage.bannerLocator).toBeVisible();
 	}
 );
 

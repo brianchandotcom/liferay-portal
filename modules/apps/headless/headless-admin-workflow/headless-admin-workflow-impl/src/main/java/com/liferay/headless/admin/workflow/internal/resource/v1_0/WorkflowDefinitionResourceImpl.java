@@ -201,7 +201,7 @@ public class WorkflowDefinitionResourceImpl
 				this::_toWorkflowDefinition),
 			pagination,
 			_workflowDefinitionManager.getLatestWorkflowDefinitionsCount(
-				contextCompany.getCompanyId(), active));
+				active, contextCompany.getCompanyId()));
 	}
 
 	@Override

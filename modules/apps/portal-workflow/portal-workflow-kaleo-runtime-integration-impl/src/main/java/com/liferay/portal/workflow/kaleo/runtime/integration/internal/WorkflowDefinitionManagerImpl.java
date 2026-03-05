@@ -80,7 +80,7 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
-			int start, int end)
+			int end, int start)
 		throws WorkflowException {
 
 		try {
@@ -169,7 +169,7 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	@Override
-	public int getLatestWorkflowDefinitionsCount(long companyId, Boolean active)
+	public int getLatestWorkflowDefinitionsCount(Boolean active, long companyId)
 		throws WorkflowException {
 
 		try {
@@ -238,16 +238,6 @@ public class WorkflowDefinitionManagerImpl
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
-	}
-
-	@Override
-	public List<WorkflowDefinition> getWorkflowDefinitions(
-			long companyId, String name, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		return _getWorkflowDefinitions(
-			companyId, name, orderByComparator, false);
 	}
 
 	@Override

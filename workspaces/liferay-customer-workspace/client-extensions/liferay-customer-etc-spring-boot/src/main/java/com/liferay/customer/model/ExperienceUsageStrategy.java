@@ -21,7 +21,7 @@ import org.json.JSONObject;
 /**
  * @author Felipe Veloso
  */
-public class ExperienceUsageStrategy implements UsageStrategy {
+public class ExperienceUsageStrategy extends BaseUsageStrategy {
 
 	public ExperienceUsageStrategy(
 		ProductPurchase productPurchase, JSONObject usageJSONObject) {
@@ -101,32 +101,32 @@ public class ExperienceUsageStrategy implements UsageStrategy {
 
 		return jsonObject.put(
 			"clientExtensionsCPU",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_extensionsCapacityCPUUsed, _extensionsCapacityCPUMax,
 				StringPool.BLANK)
 		).put(
 			"clientExtensionsRAM",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_convertToGigaBytes(_extensionsCapacityRAMUsedBytes),
 				_extensionsCapacityRAMMax, UNIT_GIB)
 		).put(
 			"databaseStorage",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_convertToGigaBytes(_databaseCapacityUsedBytes),
 				_databaseCapacityMax, UNIT_GIB)
 		).put(
 			"documentLibraryAndBackupStorage",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_convertToGigaBytes(_storageCapacityUsedBytes),
 				_storageCapacityMax, UNIT_TIB)
 		).put(
 			"logStorage",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_convertToGigaBytes(_logCapacityUsedBytes), _logCapacityMax,
 				_logCapacityUnit)
 		).put(
 			"networkTraffic",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_convertToGigaBytes(_networkingCapacityUsedBytes),
 				_networkingCapacityMax, UNIT_TIB)
 		);

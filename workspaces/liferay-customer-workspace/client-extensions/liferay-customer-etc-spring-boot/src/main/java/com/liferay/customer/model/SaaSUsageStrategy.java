@@ -23,7 +23,7 @@ import org.json.JSONObject;
 /**
  * @author Felipe Veloso
  */
-public class SaaSUsageStrategy implements UsageStrategy {
+public class SaaSUsageStrategy extends BaseUsageStrategy {
 
 	public SaaSUsageStrategy(
 		List<ProductPurchase> productPurchases, JSONObject usageJSONObject) {
@@ -170,31 +170,30 @@ public class SaaSUsageStrategy implements UsageStrategy {
 
 		jsonObject.put(
 			"anonymousPageViews",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_anonymousPageViewsUsed, _anonymousPageViewsMax,
 				StringPool.BLANK)
 		).put(
 			"clientExtensionsCapacityCPU",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_format(_extensionsCapacityCPUUsed), _extensionsCapacityCPUMax,
 				StringPool.BLANK)
 		).put(
 			"clientExtensionsCapacityRAM",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_format(_extensionsCapacityRAMUsedGigaBytes),
 				_extensionsCapacityRAMMax, UNIT_GIB)
 		).put(
 			"monthlyActiveLoggedInUsers",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_monthlyActiveLoggedInUsersUsed, _monthlyActiveLoggedInUsersMax,
 				StringPool.BLANK)
 		).put(
 			"sites",
-			UsageStrategy.createUsageJSONObject(
-				_sitesUsed, _sitesMax, StringPool.BLANK)
+			createUsageJSONObject(_sitesUsed, _sitesMax, StringPool.BLANK)
 		).put(
 			"storageCapacityDocumentLibrary",
-			UsageStrategy.createUsageJSONObject(
+			createUsageJSONObject(
 				_format(_storageCapacityUsedGigaBytes), _storageCapacityMax,
 				UNIT_GIB)
 		);

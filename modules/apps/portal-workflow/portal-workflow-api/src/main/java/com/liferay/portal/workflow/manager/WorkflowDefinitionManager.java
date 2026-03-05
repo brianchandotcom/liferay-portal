@@ -131,8 +131,8 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public default List<WorkflowDefinition> liberalGetWorkflowDefinitions(
-			long companyId, String name, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			long companyId, int end, String name,
+			OrderByComparator<WorkflowDefinition> orderByComparator, int start)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();

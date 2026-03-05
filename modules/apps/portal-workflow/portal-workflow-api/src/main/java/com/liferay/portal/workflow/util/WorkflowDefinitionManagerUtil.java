@@ -113,7 +113,7 @@ public class WorkflowDefinitionManagerUtil {
 			_workflowDefinitionManagerSnapshot.get();
 
 		return workflowDefinitionManager.liberalGetWorkflowDefinitions(
-			companyId, name, start, end, orderByComparator);
+			companyId, end, name, orderByComparator, start);
 	}
 
 	/**

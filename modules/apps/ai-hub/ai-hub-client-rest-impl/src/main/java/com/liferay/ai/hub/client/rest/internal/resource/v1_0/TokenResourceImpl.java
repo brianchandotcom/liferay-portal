@@ -5,9 +5,20 @@
 
 package com.liferay.ai.hub.client.rest.internal.resource.v1_0;
 
+import com.liferay.ai.hub.client.configuration.AIHubConfiguration;
+import com.liferay.ai.hub.client.rest.dto.v1_0.Token;
 import com.liferay.ai.hub.client.rest.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.client.security.JWTTokenUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Http;
+
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -18,4 +29,53 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = TokenResource.class
 )
 public class TokenResourceImpl extends BaseTokenResourceImpl {
+
+	@Override
+	public Token postToken() throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-62272")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		Http.Options options = new Http.Options();
+
+		AIHubConfiguration aiHubConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AIHubConfiguration.class, contextCompany.getCompanyId());
+
+		options.addPart("client_id", aiHubConfiguration.clientId());
+		options.addPart("client_secret", aiHubConfiguration.clientSecret());
+
+		options.addPart("grant_type", "client_credentials");
+		options.setLocation(
+			aiHubConfiguration.serviceURL() + "/o/oauth2/token");
+		options.setMethod(Http.Method.POST);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			_http.URLtoString(options));
+
+		return new Token() {
+			{
+				setAccessToken(() -> jsonObject.getString("access_token"));
+				setScope(() -> jsonObject.getString("scope"));
+				setServiceURL(aiHubConfiguration::serviceURL);
+				setUserToken(
+					() -> JWTTokenUtil.generateToken(
+						TimeUnit.MINUTES.toMillis(1),
+						contextCompany.getVirtualHostname(),
+						contextUser.getUserId()));
+			}
+		};
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
 }

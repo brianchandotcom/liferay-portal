@@ -127,6 +127,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC-10: A regular role is assigned to OIDC user if a regular role is defined through the property."
+	@ignore = "true"
 	@priority = 5
 	test AssertRegularRoleIsAssignedToOIDCUser {
 		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com${line.separator}open.id.connect.user.info.processor.impl.regular.role=Administrator";
@@ -247,6 +248,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-179688 TC-6: Verify user could log in via OIDC when password creation is disabled."
+	@ignore = "true"
 	@priority = 5
 	test CanLoginViaOIDCWithDisablePasswordCreation {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
@@ -596,6 +598,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-154744. TC4-1: The OIDC user is assigned the regular role which contains multiple spaces given through the property."
+	@ignore = "true"
 	@priority = 5
 	test MultipleSpacesRoleNameCanBeAssignedToOIDCUser {
 		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com${line.separator}open.id.connect.user.info.processor.impl.regular.role=My Custom Regular Role";

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
@@ -141,17 +142,32 @@ test(
 
 		await page.getByRole('button', {name: 'Update'}).click();
 
-		await consentRenewalPeriodField.fill('11');
+		await page.waitForTimeout(1000);
 
-		await page.getByRole('button', {name: 'Update'}).click();
+		const cookiesBanner = await page.locator(
+			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
+		);
+
+		await expect(cookiesBanner).not.toBeVisible();
+
+		await consentRenewalPeriodField.fill('11');
 
 		page.once('dialog', async (dialogWindow) => {
 			await expect(dialogWindow.message()).toContain(
 				'You are about to change the consent renewal period'
 			);
 
-			await dialogWindow.dismiss();
+			await dialogWindow.accept();
 		});
+
+		await page.getByRole('button', {name: 'Update'}).click();
+
+		await reloadUntilVisible({
+			myLocator: cookiesBanner,
+			page,
+		});
+
+		await expect(cookiesBanner).toBeVisible();
 	}
 );
 

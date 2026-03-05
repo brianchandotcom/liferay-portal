@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -38,18 +37,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  * @author Shuyang Zhou
  */
 public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
-
-	public static final TransactionConfig REQUIRES_NEW_TRANSACTION_CONFIG;
-
-	static {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setPropagation(Propagation.REQUIRES_NEW);
-		builder.setRollbackForClasses(
-			PortalException.class, SystemException.class);
-
-		REQUIRES_NEW_TRANSACTION_CONFIG = builder.build();
-	}
 
 	public void addDocument(Document document) throws PortalException {
 		if (document == null) {

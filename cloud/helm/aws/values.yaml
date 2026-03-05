@@ -22,12 +22,26 @@ liferay-default:
                 secretKey=""
     customEnv:
         x-liferay-aws:
+            -   name: LIFERAY_DL_PERIOD_STORE_PERIOD_IMPL
+                value: com.liferay.portal.store.s3.S3Store
+            -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME
+                value: org.postgresql.Driver
+            -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD
+                value: ${env.DATABASE_PASSWORD}
+            -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL
+                value: jdbc:postgresql://${env.DATABASE_ENDPOINT}:${env.DATABASE_PORT}/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+            -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME
+                value: ${env.DATABASE_USERNAME}
             -   name: LIFERAY_NETWORK_HOST_ADDRESSES
                 value: https://$(OPENSEARCH_ENDPOINT):443
             -   name: LIFERAY_OPENSEARCH_ENABLED
                 value: "true"
             -   name: LIFERAY_OPENSEARCH_PASSWORD
                 value: $(OPENSEARCH_PASSWORD)
+            -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PORT_PERIOD_ENABLED
+                value: "true"
+            -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PROTOCOL_PERIOD_ENABLED
+                value: "true"
     customEnvFrom:
         x-liferay-aws:
             -   secretRef:
@@ -110,17 +124,6 @@ liferay-default:
         -   com.liferay.portal.search.elasticsearch8.impl
         -   com.liferay.portal.search.learning.to.rank.api
         -   com.liferay.portal.search.learning.to.rank.impl
-    portalProperties: |
-        dl.store.impl=com.liferay.portal.store.s3.S3Store
-        jdbc.default.driverClassName=org.postgresql.Driver
-        jdbc.default.password=${env.DATABASE_PASSWORD}
-        jdbc.default.url=jdbc:postgresql://${env.DATABASE_ENDPOINT}:${env.DATABASE_PORT}/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
-        jdbc.default.username=${env.DATABASE_USERNAME}
-        proxy.forwarded.for.header=X-Forwarded-For
-        proxy.forwarded.host.header=X-Forwarded-Host
-        proxy.forwarded.proto.header=X-Forwarded-Proto
-        web.server.forwarded.port.enabled=true
-        web.server.forwarded.protocol.enabled=true
     resources:
         limits:
             cpu: 4000m

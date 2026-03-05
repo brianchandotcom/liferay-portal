@@ -11,6 +11,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -186,4 +187,14 @@ test('assert that the screen reader reads the event date', async ({
 	);
 
 	await expect(screenReaderElement).toHaveCSS('display', 'block');
+});
+
+test.describe('Accessibility check', () => {
+	test('Check accessibility of calendar list', async ({page}) => {
+		await checkAccessibility({
+			bestPractices: true,
+			page,
+			selectors: ['.calendar-portlet-calendar-list-container'],
+		});
+	});
 });

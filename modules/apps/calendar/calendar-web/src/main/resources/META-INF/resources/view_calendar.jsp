@@ -86,7 +86,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			>
 				<div class="calendar-portlet-mini-calendar" id="<portlet:namespace />miniCalendarContainer"></div>
 
-				<div id="<portlet:namespace />calendarListContainer">
+				<div class="calendar-portlet-calendar-list-container" id="<portlet:namespace />calendarListContainer">
 					<div class="calendar-portlet-list">
 						<c:if test="<%= themeDisplay.isSignedIn() && showUserEvents %>">
 							<div class="calendar-portlet-list-header toggler-header-expanded">

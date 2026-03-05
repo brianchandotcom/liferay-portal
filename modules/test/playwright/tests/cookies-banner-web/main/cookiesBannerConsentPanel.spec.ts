@@ -94,6 +94,39 @@ test(
 );
 
 test(
+	'Floating icon can be selected',
+	{tag: '@LPD-78592'},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
+
+		const controlPanelIcon = page.locator(
+			'label:has(svg.lexicon-icon-control-panel)'
+		);
+
+		await expect(controlPanelIcon).toBeVisible();
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
+		});
+
+		await acceptAllButton.click();
+
+		await expect(acceptAllButton).not.toBeVisible();
+
+		await controlPanelIcon.check();
+
+		await systemSettingsPage.page
+			.getByRole('button', {name: 'Update'})
+			.click();
+
+		await expect(controlPanelIcon).toBeChecked();
+	}
+);
+
+test(
 	'Verify Cookie Banner Consent Panel buttons',
 	{tag: '@LPD-67119'},
 	async ({page}) => {

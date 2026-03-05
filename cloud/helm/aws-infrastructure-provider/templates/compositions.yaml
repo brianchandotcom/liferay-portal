@@ -1351,6 +1351,16 @@ spec:
                             forProvider:
                                 manifest:
                                     apiVersion: v1
+                                    data:
+                                        DATABASE_ENDPOINT: {{ $databaseAddress | b64enc | quote }}
+                                        DATABASE_PASSWORD: {{ $databasePassword | b64enc | quote }}
+                                        DATABASE_PORT: {{ $databasePort | default 5432 | b64enc | quote }}
+                                        DATABASE_USERNAME: {{ $database.resource.spec.forProvider.username | b64enc | quote }}
+                                        OPENSEARCH_ENDPOINT: {{ $searchEndpoint | b64enc | quote }}
+                                        OPENSEARCH_PASSWORD: {{ $searchPassword | b64enc | quote }}
+                                        OPENSEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | b64enc | quote }}
+                                        S3_BUCKET_ID: {{ $storageName | b64enc | quote }}
+                                        S3_BUCKET_REGION: {{ $storage.resource.spec.forProvider.region | b64enc | quote }}
                                     kind: Secret
                                     metadata:
                                         labels:
@@ -1367,16 +1377,6 @@ spec:
                                                 kind: LiferayInfrastructure
                                                 name: {{ .observed.composite.resource.metadata.name }}
                                                 uid: {{ .observed.composite.resource.metadata.uid }}
-                                    stringData:
-                                        DATABASE_ENDPOINT: {{ $databaseAddress | quote }}
-                                        DATABASE_PASSWORD: {{ $databasePassword | quote }}
-                                        DATABASE_PORT: {{ $databasePort | default 5432 | quote }}
-                                        DATABASE_USERNAME: {{ $database.resource.spec.forProvider.username | quote }}
-                                        OPENSEARCH_ENDPOINT: {{ $searchEndpoint | quote }}
-                                        OPENSEARCH_PASSWORD: {{ $searchPassword | quote }}
-                                        OPENSEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | quote }}
-                                        S3_BUCKET_ID: {{ $storageName | quote }}
-                                        S3_BUCKET_REGION: {{ $storage.resource.spec.forProvider.region | quote }}
                                     type: Opaque
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}

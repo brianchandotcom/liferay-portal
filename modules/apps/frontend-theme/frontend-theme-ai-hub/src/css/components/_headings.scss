@@ -1,0 +1,23 @@
+.ai-hub {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin: 0;
+
+		mark {
+			background-clip: text;
+			color: $indigo-d5;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			@include gradient-x($pink-l6, $indigo-d5);
+		}
+	}
+
+	h1 {
+		font-size: 3.5rem;
+		font-weight: 800;
+	}
+}

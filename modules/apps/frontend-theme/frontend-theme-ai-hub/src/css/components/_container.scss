@@ -1,0 +1,43 @@
+.ai-hub-container {
+	padding: 95px 150px !important;
+
+	@include media-breakpoint-down(md) {
+		padding: 95px 50px !important;
+	}
+}
+
+.bg-gradient--blue-white {
+	background-image: linear-gradient(180deg, $indigo-d6 1.25%, $white 30%);
+}
+
+.bg-gradient--dotted {
+	background-size:
+		16px 16px,
+		100% 100%;
+	background-position:
+		top left,
+		center;
+	background-image: radial-gradient(circle, $gray-50 1.5px, transparent 1.5px),
+		linear-gradient(
+			100deg,
+			rgba(238, 244, 255, 0.17) 3.5%,
+			$gray-0 46%,
+			$white 88.5%
+		);
+}
+
+.bg-gradient--dotted-blur {
+	background-size:
+		16px 16px,
+		100% 100%;
+	background-position:
+		top left,
+		center;
+	background-image: radial-gradient(circle, $gray-50 1.5px, transparent 1.5px),
+		linear-gradient(
+			100deg,
+			rgba(216, 216, 216, 0.17) 3.6%,
+			$indigo-d7 46%,
+			rgba(234, 247, 255, 0.46) 88.5%
+		);
+}

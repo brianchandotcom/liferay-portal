@@ -70,9 +70,9 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 					objectEntry.getPropertyValue("workflowDefinitionName")));
 
 		_workflowDefinitionManager.updateActive(
-			workflowDefinition.getCompanyId(), dtoConverterContext.getUserId(),
-			workflowDefinition.getName(), workflowDefinition.getVersion(),
-			false);
+			false, workflowDefinition.getCompanyId(),
+			workflowDefinition.getName(), dtoConverterContext.getUserId(),
+			workflowDefinition.getVersion());
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
 			workflowDefinition.getCompanyId(), workflowDefinition.getName(),
@@ -135,9 +135,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 					objectEntry.getPropertyValue("workflowDefinitionName")));
 
 		_workflowDefinitionManager.updateActive(
-			companyId, dtoConverterContext.getUserId(),
-			workflowDefinition.getName(), workflowDefinition.getVersion(),
-			active);
+			active, companyId, workflowDefinition.getName(),
+			dtoConverterContext.getUserId(), workflowDefinition.getVersion());
 
 		return _toAgentDefinition(companyId, dtoConverterContext, objectEntry);
 	}

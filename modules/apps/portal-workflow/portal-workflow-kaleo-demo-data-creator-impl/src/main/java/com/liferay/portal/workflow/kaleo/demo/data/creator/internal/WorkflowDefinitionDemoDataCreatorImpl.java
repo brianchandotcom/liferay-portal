@@ -60,9 +60,9 @@ public class WorkflowDefinitionDemoDataCreatorImpl
 	public void delete() throws PortalException {
 		for (WorkflowDefinition workflowDefinition : _workflowDefinitions) {
 			_workflowDefinitionManager.updateActive(
-				workflowDefinition.getCompanyId(),
-				workflowDefinition.getUserId(), workflowDefinition.getName(),
-				workflowDefinition.getVersion(), false);
+				false, workflowDefinition.getCompanyId(),
+				workflowDefinition.getName(), workflowDefinition.getUserId(),
+				workflowDefinition.getVersion());
 
 			_workflowDefinitionManager.undeployWorkflowDefinition(
 				workflowDefinition.getCompanyId(), workflowDefinition.getName(),

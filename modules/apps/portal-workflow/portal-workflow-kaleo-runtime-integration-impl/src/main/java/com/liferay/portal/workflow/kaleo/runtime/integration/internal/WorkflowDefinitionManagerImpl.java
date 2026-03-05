@@ -368,8 +368,8 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public WorkflowDefinition updateActive(
-			long companyId, long userId, String name, int version,
-			boolean active)
+			boolean active, long companyId, String name, long userId,
+			int version)
 		throws WorkflowException {
 
 		try {

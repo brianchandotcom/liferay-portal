@@ -209,7 +209,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			workflowDefinitionLink);
 
 		_workflowDefinitionManager.updateActive(
-			user.getCompanyId(), user.getUserId(), name, 1, false);
+			false, user.getCompanyId(), name, user.getUserId(), 1);
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
 			user.getCompanyId(), name, user.getUserId(), 1);

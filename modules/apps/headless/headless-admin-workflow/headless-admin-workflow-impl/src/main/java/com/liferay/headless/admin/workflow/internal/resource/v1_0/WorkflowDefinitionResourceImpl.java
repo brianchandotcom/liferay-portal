@@ -257,8 +257,8 @@ public class WorkflowDefinitionResourceImpl
 
 		return _toWorkflowDefinition(
 			_workflowDefinitionManager.updateActive(
-				contextCompany.getCompanyId(), contextUser.getUserId(), name,
-				GetterUtil.getInteger(version), active));
+				active, contextCompany.getCompanyId(), name,
+				contextUser.getUserId(), GetterUtil.getInteger(version)));
 	}
 
 	@Override

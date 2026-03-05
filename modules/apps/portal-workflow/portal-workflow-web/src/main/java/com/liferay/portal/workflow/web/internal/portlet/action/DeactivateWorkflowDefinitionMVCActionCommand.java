@@ -46,8 +46,8 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.updateActive(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-				version, false);
+				false, themeDisplay.getCompanyId(), name,
+				themeDisplay.getUserId(), version);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

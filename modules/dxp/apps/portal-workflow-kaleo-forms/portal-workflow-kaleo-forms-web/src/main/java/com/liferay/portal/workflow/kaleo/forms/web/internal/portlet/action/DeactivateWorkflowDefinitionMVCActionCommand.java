@@ -59,8 +59,8 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 
 		try {
 			_workflowDefinitionManager.updateActive(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-				version, false);
+				false, themeDisplay.getCompanyId(), name,
+				themeDisplay.getUserId(), version);
 		}
 		catch (Exception exception) {
 			if (isSessionErrorException(exception)) {

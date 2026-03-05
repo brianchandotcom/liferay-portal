@@ -151,7 +151,7 @@ public class WorkflowDefinitionManagerUtil {
 			_workflowDefinitionManagerSnapshot.get();
 
 		return workflowDefinitionManager.updateActive(
-			companyId, userId, name, version, active);
+			active, companyId, name, userId, version);
 	}
 
 	private static final Snapshot<WorkflowDefinitionManager>

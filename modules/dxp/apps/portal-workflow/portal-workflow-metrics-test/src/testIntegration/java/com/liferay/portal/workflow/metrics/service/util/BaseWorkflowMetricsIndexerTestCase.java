@@ -355,9 +355,9 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 				null);
 
 			workflowDefinitionManager.updateActive(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				workflowDefinition.getName(), workflowDefinition.getVersion(),
-				false);
+				false, TestPropsValues.getCompanyId(),
+				workflowDefinition.getName(), TestPropsValues.getUserId(),
+				workflowDefinition.getVersion());
 
 			workflowDefinitionManager.undeployWorkflowDefinition(
 				TestPropsValues.getCompanyId(), workflowDefinition.getName(),

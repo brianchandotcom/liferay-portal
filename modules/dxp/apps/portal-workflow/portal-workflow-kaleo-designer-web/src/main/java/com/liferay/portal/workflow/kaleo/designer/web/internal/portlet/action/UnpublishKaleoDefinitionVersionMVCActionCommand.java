@@ -60,8 +60,8 @@ public class UnpublishKaleoDefinitionVersionMVCActionCommand
 
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.updateActive(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-				version, false);
+				false, themeDisplay.getCompanyId(), name,
+				themeDisplay.getUserId(), version);
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(

@@ -40,7 +40,7 @@ export function useEditor(
 ) {
 	const [state, dispatch] = useReducer(reducer, {}, () => {
 		const index = colors.findIndex(
-			(color) => color.toUpperCase() === value.toUpperCase()
+			(color) => color?.toUpperCase() === value?.toUpperCase()
 		);
 
 		return {

@@ -1,9 +1,9 @@
 apiVersion: v2
 appVersion: latest
 dependencies:
-    -   condition: backup-restore.enabled
-        name: backup-restore
-        repository: file://./charts/backup-restore
+    -   condition: liferay-subchart-backup-restore.enabled
+        name: liferay-subchart-backup-restore
+        repository: file://./charts/liferay-subchart-backup-restore
         version: 0.1.0
 description:
     Liferay is an all-in-one DXP, LCAP, and Commerce platform. This chart provides cloud infrastructure resource definitions to support Liferay cloud native infrastructure.

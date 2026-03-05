@@ -1,4 +1,4 @@
 apiVersion: v2
-name: backup-restore
+name: liferay-subchart-backup-restore
 type: application
 version: 0.1.0

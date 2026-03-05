@@ -1,6 +1,4 @@
 aws: {}
-backup-restore:
-    enabled: true
 crossplaneNamespace: crossplane-system
 eck-operator:
     installCRDs: true
@@ -14,3 +12,5 @@ eck-operator:
 gateway:
     internetFacing: true
     namespace: envoy-gateway-system
+liferay-subchart-backup-restore:
+    enabled: true

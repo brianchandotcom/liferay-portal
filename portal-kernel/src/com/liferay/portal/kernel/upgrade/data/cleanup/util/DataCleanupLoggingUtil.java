@@ -6,7 +6,10 @@
 package com.liferay.portal.kernel.upgrade.data.cleanup.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
@@ -23,9 +26,9 @@ public class DataCleanupLoggingUtil {
 
 		log.info(
 			StringBundler.concat(
-				"Table ", tableName, ", ", String.valueOf(count), " row",
-				(count > 1) ? "s " : " ", readOnly ? "should be " : "",
-				"deleted because ", cause));
+				"Table ", _prependPartitionName(tableName), ", ",
+				String.valueOf(count), " row", (count > 1) ? "s " : " ",
+				readOnly ? "should be " : "", "deleted because ", cause));
 	}
 
 	public static void logDelete(
@@ -38,7 +41,8 @@ public class DataCleanupLoggingUtil {
 		if (log.isInfoEnabled()) {
 			log.info(
 				StringBundler.concat(
-					"Table ", tableName, " was dropped because ", cause));
+					"Table ", _prependPartitionName(tableName),
+					" was dropped because ", cause));
 		}
 	}
 
@@ -51,14 +55,14 @@ public class DataCleanupLoggingUtil {
 
 		log.info(
 			StringBundler.concat(
-				"Table ", originalValue, " was renamed to ", renamedValue,
-				" because ", cause));
+				"Table ", _prependPartitionName(originalValue),
+				" was renamed to ", renamedValue, " because ", cause));
 	}
 
 	public static void logTruncate(Log log, String tableName) {
 		if (log.isInfoEnabled()) {
 			log.info(
-				"Table " + tableName +
+				"Table " + _prependPartitionName(tableName) +
 					", truncated because data is no longer needed");
 		}
 	}
@@ -73,11 +77,28 @@ public class DataCleanupLoggingUtil {
 
 		log.info(
 			StringBundler.concat(
-				"Table ", tableName, ", ", String.valueOf(count), " row",
-				(count > 1) ? "s " : " ", "updated column ", columnName,
+				"Table ", _prependPartitionName(tableName), ", ",
+				String.valueOf(count), " row", (count > 1) ? "s " : " ",
+				"updated column ", columnName,
 				(value != null) ? (" to value " + String.valueOf(value)) :
 					StringPool.BLANK,
 				" because ", cause));
+	}
+
+	private static String _prependPartitionName(String tableName) {
+		if (!PropsValues.DATABASE_PARTITION_ENABLED) {
+			return tableName;
+		}
+
+		long companyId = CompanyThreadLocal.getNonsystemCompanyId();
+
+		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
+			return tableName;
+		}
+
+		return StringBundler.concat(
+			PropsValues.DATABASE_PARTITION_SCHEMA_NAME_PREFIX,
+			String.valueOf(companyId), StringPool.PERIOD, tableName);
 	}
 
 }

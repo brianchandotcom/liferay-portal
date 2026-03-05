@@ -346,15 +346,13 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 			_getContentBytes("workflow-definition-1.json"));
 
 		_workflowDefinitionManager.saveWorkflowDefinition(
-			null, companyId, userId,
-			companyName + "UnpublishedGroovyWorkflowDefinition",
+			_getContentBytes("workflow-definition-2.json"), companyId, null,
 			StringUtil.randomId(),
-			_getContentBytes("workflow-definition-2.json"));
+			companyName + "UnpublishedGroovyWorkflowDefinition", userId);
 		_workflowDefinitionManager.saveWorkflowDefinition(
-			null, companyId, userId,
-			companyName + "UnpublishedJavaWorkflowDefinition",
+			_getContentBytes("workflow-definition-3.json"), companyId, null,
 			StringUtil.randomId(),
-			_getContentBytes("workflow-definition-3.json"));
+			companyName + "UnpublishedJavaWorkflowDefinition", userId);
 	}
 
 	private byte[] _getContentBytes(String fileName) throws Exception {

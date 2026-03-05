@@ -139,7 +139,7 @@ public class WorkflowDefinitionManagerUtil {
 			_workflowDefinitionManagerSnapshot.get();
 
 		return workflowDefinitionManager.saveWorkflowDefinition(
-			externalReferenceCode, companyId, userId, title, name, bytes);
+			bytes, companyId, externalReferenceCode, name, title, userId);
 	}
 
 	public static WorkflowDefinition updateActive(

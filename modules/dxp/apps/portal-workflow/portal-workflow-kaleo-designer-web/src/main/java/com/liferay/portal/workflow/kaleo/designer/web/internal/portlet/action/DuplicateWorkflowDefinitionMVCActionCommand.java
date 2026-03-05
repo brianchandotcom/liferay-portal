@@ -68,8 +68,8 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		}
 		else {
 			workflowDefinitionManager.saveWorkflowDefinition(
-				null, themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(actionRequest, titleMap), name, content.getBytes());
+				content.getBytes(), themeDisplay.getCompanyId(), null, name,
+				getTitle(actionRequest, titleMap), themeDisplay.getUserId());
 		}
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =

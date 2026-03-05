@@ -230,29 +230,33 @@ public class IndexableActionableDynamicQuery {
 			lastPrimaryKey = (Long)baseModel.getPrimaryKeyObj();
 		}
 
-		_performActions(objects);
+		_performActionsInDefaultCTSQLMode(objects);
 
 		return lastPrimaryKey;
 	}
 
-	private void _performActions(List<Object> objects) throws Throwable {
+	private void _performActionsInDefaultCTSQLMode(List<Object> objects)
+		throws Throwable {
+
 		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
 			CTSQLModeThreadLocal.getCTSQLMode();
 
 		if (ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT) {
-			_performActionsWithCT(objects);
+			_performActionsWithCTCollection(objects);
 		}
 		else {
 			try (SafeCloseable safeCloseable =
 					CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
 						CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
 
-				_performActionsWithCT(objects);
+				_performActionsWithCTCollection(objects);
 			}
 		}
 	}
 
-	private void _performActionsWithCT(List<Object> objects) throws Throwable {
+	private void _performActionsWithCTCollection(List<Object> objects)
+		throws Throwable {
+
 		long currentCTCollectionId =
 			CTCollectionThreadLocal.getCTCollectionId();
 

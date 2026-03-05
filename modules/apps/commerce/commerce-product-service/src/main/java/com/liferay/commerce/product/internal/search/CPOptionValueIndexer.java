@@ -9,7 +9,6 @@ import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -151,21 +150,7 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(CPOptionValue cpOptionValue) -> {
-				try {
-					return getDocument(cpOptionValue);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index commerce product option value " +
-								cpOptionValue,
-							portalException);
-					}
-				}
-
-				return null;
-			});
+			this::safeGetDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

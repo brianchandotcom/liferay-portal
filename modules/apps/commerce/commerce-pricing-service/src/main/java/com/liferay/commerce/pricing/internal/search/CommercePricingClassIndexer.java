@@ -8,7 +8,6 @@ package com.liferay.commerce.pricing.internal.search;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -135,24 +134,7 @@ public class CommercePricingClassIndexer
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(CommercePricingClass commercePricingClass) -> {
-				try {
-					return getDocument(commercePricingClass);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						long commercePricingClassId =
-							commercePricingClass.getCommercePricingClassId();
-
-						_log.warn(
-							"Unable to index commerce pricing class " +
-								commercePricingClassId,
-							portalException);
-					}
-				}
-
-				return null;
-			});
+			this::safeGetDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}

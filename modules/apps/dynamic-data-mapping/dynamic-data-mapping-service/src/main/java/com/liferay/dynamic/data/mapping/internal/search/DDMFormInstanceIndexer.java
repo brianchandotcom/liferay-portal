@@ -9,9 +9,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -101,21 +98,7 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(DDMFormInstance ddmFormInstance) -> {
-				try {
-					return getDocument(ddmFormInstance);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index form instance record " +
-								ddmFormInstance.getFormInstanceId(),
-							portalException);
-					}
-				}
-
-				return null;
-			});
+			this::safeGetDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}
@@ -128,8 +111,5 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 
 		indexer.reindex(ddmFormInstance.getFormInstanceRecords());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormInstanceIndexer.class);
 
 }

@@ -8,9 +8,6 @@ package com.liferay.wiki.internal.search;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -148,26 +145,10 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(WikiNode node) -> {
-				try {
-					return getDocument(node);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index wiki node " + node.getNodeId(),
-							portalException);
-					}
-				}
-
-				return null;
-			});
+			this::safeGetDocument);
 
 		indexableActionableDynamicQuery.performActions();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WikiNodeIndexer.class);
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

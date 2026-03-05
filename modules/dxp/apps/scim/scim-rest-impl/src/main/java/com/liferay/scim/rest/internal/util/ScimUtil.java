@@ -672,10 +672,10 @@ public class ScimUtil {
 	}
 
 	private static Date _getBirthday() {
-		Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar(
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
 			1970, Calendar.JANUARY, 1);
 
-		return birthdayCalendar.getTime();
+		return calendar.getTime();
 	}
 
 	private static Date _getBirthday(User user) {

@@ -77,7 +77,7 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 		else {
 			Date birthday = invitedUser.getBirthday();
 
-			Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar(
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				birthday.getTime(), invitedUser.getTimeZone());
 
 			invitedUser = _userService.updateUser(
@@ -94,10 +94,9 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 					user.getMiddleName(), invitedUser.getMiddleName()),
 				user.getLastName(), 0L, 0L,
 				GetterUtil.get(user.getMale(), invitedUser.isMale()),
-				birthdayCalendar.get(Calendar.MONTH),
-				birthdayCalendar.get(Calendar.DAY_OF_MONTH),
-				birthdayCalendar.get(Calendar.YEAR), null, null, null, null,
-				null,
+				calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), null, null, null, null, null,
 				GetterUtil.get(user.getJobTitle(), invitedUser.getJobTitle()),
 				invitedUser.getGroupIds(), invitedUser.getOrganizationIds(),
 				invitedUser.getRoleIds(), null, invitedUser.getUserGroupIds(),

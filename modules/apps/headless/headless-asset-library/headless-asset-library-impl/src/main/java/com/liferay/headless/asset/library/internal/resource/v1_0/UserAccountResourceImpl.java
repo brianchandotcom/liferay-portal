@@ -292,9 +292,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		Contact contact = user.getContact();
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCal.setTime(user.getBirthday());
+		calendar.setTime(user.getBirthday());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), contextHttpServletRequest);
@@ -306,8 +306,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			user.getGreeting(), user.getComments(), user.getFirstName(),
 			user.getMiddleName(), user.getLastName(),
 			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
-			user.isMale(), birthdayCal.get(Calendar.MONTH),
-			birthdayCal.get(Calendar.DATE), birthdayCal.get(Calendar.YEAR),
+			user.isMale(), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
 			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), user.getJobTitle(),
 			_getUserGroupIds(user, assetLibraryId, add),

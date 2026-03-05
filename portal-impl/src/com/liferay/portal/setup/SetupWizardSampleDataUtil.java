@@ -163,13 +163,13 @@ public class SetupWizardSampleDataUtil {
 
 			Contact contact = adminUser.getContact();
 
-			Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+			Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-			birthdayCal.setTime(contact.getBirthday());
+			calendar.setTime(contact.getBirthday());
 
-			int birthdayMonth = birthdayCal.get(Calendar.MONTH);
-			int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
-			int birthdayYear = birthdayCal.get(Calendar.YEAR);
+			int month = calendar.get(Calendar.MONTH);
+			int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+			int year = calendar.get(Calendar.YEAR);
 
 			UserLocalServiceUtil.updateEmailAddress(
 				adminUser.getUserId(), null, emailAddress, emailAddress);
@@ -181,8 +181,8 @@ public class SetupWizardSampleDataUtil {
 				false, null, languageId, adminUser.getTimeZoneId(), greeting,
 				adminUser.getComments(), firstName, adminUser.getMiddleName(),
 				lastName, contact.getPrefixListTypeId(),
-				contact.getSuffixListTypeId(), contact.isMale(), birthdayMonth,
-				birthdayDay, birthdayYear, contact.getSmsSn(),
+				contact.getSuffixListTypeId(), contact.isMale(), month,
+				dayOfMonth, year, contact.getSmsSn(),
 				contact.getFacebookSn(), contact.getJabberSn(),
 				contact.getSkypeSn(), contact.getTwitterSn(),
 				contact.getJobTitle(), null, null, null, null, null,

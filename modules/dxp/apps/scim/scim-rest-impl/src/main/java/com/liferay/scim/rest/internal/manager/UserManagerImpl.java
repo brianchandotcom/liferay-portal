@@ -531,22 +531,22 @@ public class UserManagerImpl implements UserManager {
 		com.liferay.portal.kernel.model.User portalUser = _fetchPortalUser(
 			scimClientOAuth2ApplicationConfiguration, scimUser);
 
-		Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCalendar.setTime(scimUser.getBirthday());
+		calendar.setTime(scimUser.getBirthday());
 
-		int birthdayMonth = birthdayCalendar.get(Calendar.MONTH);
-		int birthdayDay = birthdayCalendar.get(Calendar.DAY_OF_MONTH);
-		int birthdayYear = birthdayCalendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+		int year = calendar.get(Calendar.YEAR);
 
 		if (portalUser == null) {
 			portalUser = _addPortalUser(
-				birthdayMonth, birthdayDay, birthdayYear,
+				month, dayOfMonth, year,
 				scimClientOAuth2ApplicationConfiguration, scimUser);
 		}
 		else {
 			portalUser = _updatePortalUser(
-				birthdayMonth, birthdayDay, birthdayYear, portalUser, scimUser,
+				month, dayOfMonth, year, portalUser, scimUser,
 				scimClientOAuth2ApplicationConfiguration);
 		}
 

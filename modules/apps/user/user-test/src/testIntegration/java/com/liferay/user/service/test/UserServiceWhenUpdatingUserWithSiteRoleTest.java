@@ -86,13 +86,13 @@ public class UserServiceWhenUpdatingUserWithSiteRoleTest {
 
 		Contact contact = user.getContact();
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCal.setTime(contact.getBirthday());
+		calendar.setTime(contact.getBirthday());
 
-		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
-		int birthdayDay = birthdayCal.get(Calendar.DATE);
-		int birthdayYear = birthdayCal.get(Calendar.YEAR);
+		int birthdayMonth = calendar.get(Calendar.MONTH);
+		int birthdayDay = calendar.get(Calendar.DATE);
+		int birthdayYear = calendar.get(Calendar.YEAR);
 
 		return _userService.updateUser(
 			user.getUserId(), user.getPassword(), null, null,

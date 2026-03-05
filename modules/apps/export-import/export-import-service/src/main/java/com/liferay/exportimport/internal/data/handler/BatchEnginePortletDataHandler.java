@@ -315,6 +315,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	public void registerExportImportVulcanBatchEngineTaskItemDelegate(
 		String batchEngineClassName, BundleContext bundleContext,
+		long companyId,
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
 		String taskItemDelegateName) {
@@ -371,12 +372,12 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_updateDeletionSystemEventStagedModelTypes();
 		_updatePortletDataHandlerControls();
 
-		_updateSystemEventExtraDataContributor(bundleContext);
+		_updateSystemEventExtraDataContributor(bundleContext, companyId);
 	}
 
 	public ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 		unregisterExportImportVulcanBatchEngineTaskItemDelegate(
-			BundleContext bundleContext, String key) {
+			BundleContext bundleContext, long companyId, String key) {
 
 		Iterator<Registration> iterator = _registrations.iterator();
 
@@ -393,7 +394,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				_updateDeletionSystemEventStagedModelTypes();
 				_updatePortletDataHandlerControls();
 
-				_updateSystemEventExtraDataContributor(bundleContext);
+				_updateSystemEventExtraDataContributor(
+					bundleContext, companyId);
 
 				return registration.getExportImportDescriptor();
 			}
@@ -1027,7 +1029,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	private void _updateSystemEventExtraDataContributor(
-		BundleContext bundleContext) {
+		BundleContext bundleContext, long companyId) {
 
 		Set<String> sharedClassNames = _getSharedClassNames();
 
@@ -1059,6 +1061,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					SystemEventExtraDataContributor.class,
 					systemEventExtraDataContributor,
 					HashMapDictionaryBuilder.<String, Object>put(
+						"companyId", String.valueOf(companyId)
+					).put(
 						"jakarta.portlet.name", getPortletId()
 					).build());
 			}

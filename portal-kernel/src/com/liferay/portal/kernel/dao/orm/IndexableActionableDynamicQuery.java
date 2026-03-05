@@ -119,10 +119,6 @@ public class IndexableActionableDynamicQuery {
 		_companyId = companyId;
 	}
 
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
 	public void setInterval(int interval) {
 		_interval = interval;
 	}
@@ -159,12 +155,6 @@ public class IndexableActionableDynamicQuery {
 			Property property = PropertyFactoryUtil.forName("companyId");
 
 			dynamicQuery.add(property.eq(_companyId));
-		}
-
-		if (_groupId > 0) {
-			Property property = PropertyFactoryUtil.forName("groupId");
-
-			dynamicQuery.add(property.eq(_groupId));
 		}
 	}
 
@@ -358,7 +348,6 @@ public class IndexableActionableDynamicQuery {
 	private final List<Document> _documents = new ArrayList<>();
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
-	private long _groupId;
 	private int _interval = Indexer.DEFAULT_INTERVAL;
 	private Class<?> _modelClass;
 

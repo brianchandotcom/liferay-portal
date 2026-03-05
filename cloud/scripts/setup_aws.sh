@@ -22,11 +22,38 @@ function main {
 
 	aws sso login
 
-	_setup_aws_eks
+	_setup_aws_eks "${1}"
 
-	_setup_aws_gitops
+	_setup_aws_gitops "${1}"
 
 	_port_forward_argo_cd
+}
+
+function _get_terraform_apply_args {
+	local auto_approve="false"
+	local configuration_json_file="${_SCRIPTS_DIR}/${1}"
+
+	if jq --exit-status '.options.auto_approve' "${configuration_json_file}" > /dev/null
+	then
+		auto_approve=$(jq --raw-output '.options.auto_approve' "${configuration_json_file}")
+	fi
+
+	local apply_args=("-var-file=${_SCRIPTS_DIR}/global_terraform.tfvars")
+
+	if [[ "${auto_approve}" == "true" ]]
+	then
+		apply_args+=("-auto-approve")
+	fi
+
+	if jq --exit-status '.options.parallelism | numbers' "${configuration_json_file}" > /dev/null
+	then
+		local parallelism
+		parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
+
+		apply_args+=("-parallelism=${parallelism}")
+	fi
+
+	echo "${apply_args[@]}"
 }
 
 function _generate_tfvars {
@@ -117,7 +144,7 @@ function _setup_aws_eks {
 
 	echo "Setting up the AWS EKS cluster."
 
-	_terraform_init_and_apply "."
+	_terraform_init_and_apply "." "${1}"
 
 	export KUBE_CONFIG_PATH="${HOME}/.kube/config"
 
@@ -137,9 +164,9 @@ function _setup_aws_gitops {
 
 	echo "Setting up GitOps infrastructure."
 
-	_terraform_init_and_apply "./platform"
+	_terraform_init_and_apply "./platform" "${1}"
 
-	_terraform_init_and_apply "./resources"
+	_terraform_init_and_apply "./resources" "${1}"
 
 	echo "GitOps infrastructure setup complete."
 
@@ -151,7 +178,7 @@ function _terraform_init_and_apply {
 
 	terraform init
 
-	terraform apply "-var-file=${_SCRIPTS_DIR}/global_terraform.tfvars"
+	terraform apply "$(_get_terraform_apply_args "${2}")"
 
 	_popd
 }

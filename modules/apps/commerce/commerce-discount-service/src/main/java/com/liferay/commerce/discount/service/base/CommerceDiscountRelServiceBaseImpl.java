@@ -7,7 +7,6 @@ package com.liferay.commerce.discount.service.base;
 
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
-import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -118,9 +117,6 @@ public abstract class CommerceDiscountRelServiceBaseImpl
 
 	@Reference
 	protected CommerceDiscountRelPersistence commerceDiscountRelPersistence;
-
-	@Reference
-	protected CommerceDiscountRelFinder commerceDiscountRelFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

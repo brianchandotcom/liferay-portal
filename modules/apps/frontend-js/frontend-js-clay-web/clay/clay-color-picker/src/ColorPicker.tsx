@@ -349,4 +349,7 @@ function ColorPicker({
 	);
 }
 
+ColorPicker.Field = Field;
+ColorPicker.Editor = Editor;
+
 export default ColorPicker;

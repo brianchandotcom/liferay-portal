@@ -4,5 +4,8 @@
  */
 
 import ColorPicker from './ColorPicker';
+import useColorPicker from './useColorPicker';
+
+export {useColorPicker};
 
 export default ColorPicker;

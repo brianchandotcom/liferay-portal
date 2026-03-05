@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.info.item.handler;
 
+import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
@@ -39,6 +40,19 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 			InfoItemFormProvider<?> infoItemFormProvider,
 			ObjectDefinition objectDefinition)
 		throws InfoFormException {
+
+		if (exception instanceof AssetCategoryException) {
+			AssetCategoryException assetCategoryException =
+				(AssetCategoryException)exception;
+
+			if (assetCategoryException.getType() ==
+					AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+
+				throw new InfoFormValidationException.RequiredAssetCategory(
+					assetCategoryException.getVocabulary(),
+					assetCategoryException);
+			}
+		}
 
 		if (exception instanceof ModelListenerException) {
 			ModelListenerException modelListenerException =

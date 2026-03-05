@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.util.Dictionary;
 
@@ -33,29 +34,28 @@ public class OAuthClientEntryMatcherFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update OAuthClientEntry set matcherField = ? WHERE " +
+					"oAuthClientEntryId = ?");
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
 				"select authServerWellKnownURI, clientId, companyId, " +
-					"oAuthClientEntryId from OAuthClientEntry");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+					"oAuthClientEntryId from OAuthClientEntry")) {
 
 			while (resultSet.next()) {
-				try (PreparedStatement preparedStatement2 =
-						connection.prepareStatement(
-							"update OAuthClientEntry set matcherField = ? " +
-								"WHERE oAuthClientEntryId = ?")) {
+				preparedStatement.setString(
+					1,
+					_getMatcherField(
+						resultSet.getString("authServerWellKnownURI"),
+						resultSet.getString("clientId"),
+						resultSet.getLong("companyId")));
+				preparedStatement.setLong(
+					2, resultSet.getLong("oAuthClientEntryId"));
 
-					preparedStatement2.setString(
-						1,
-						_getMatcherField(
-							resultSet.getString("authServerWellKnownURI"),
-							resultSet.getString("clientId"),
-							resultSet.getLong("companyId")));
-					preparedStatement2.setLong(
-						2, resultSet.getLong("oAuthClientEntryId"));
-
-					preparedStatement2.execute();
-				}
+				preparedStatement.addBatch();
 			}
+
+			preparedStatement.executeBatch();
 		}
 	}
 

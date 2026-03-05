@@ -57,7 +57,7 @@ public class IndexableActionableDynamicQuery {
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			try {
 				_total = (Long)_dynamicQueryCountMethod.invoke(
-					_baseLocalService, _createCountDynamicQuery(),
+					_baseLocalService, _createDynamicQuery(),
 					ProjectionFactoryUtil.rowCount());
 			}
 			catch (Exception exception) {
@@ -66,32 +66,35 @@ public class IndexableActionableDynamicQuery {
 		}
 
 		try {
-			long previousPrimaryKey = -1;
+			try {
+				long previousPrimaryKey = -1;
 
-			while (true) {
-				long lastPrimaryKey;
+				while (true) {
+					long lastPrimaryKey;
 
-				try {
-					lastPrimaryKey = _performActions(
-						_createActionDynamicQuery(previousPrimaryKey));
+					try {
+						lastPrimaryKey = _performActions(
+							_createPaginatedDynamicQuery(previousPrimaryKey));
+					}
+					finally {
+						_indexInterval();
+					}
+
+					if (lastPrimaryKey < 0) {
+						break;
+					}
+
+					previousPrimaryKey = lastPrimaryKey;
 				}
-				finally {
-					_indexInterval();
-				}
-
-				if (lastPrimaryKey < 0) {
-					break;
-				}
-
-				previousPrimaryKey = lastPrimaryKey;
+			}
+			finally {
+				_actionsCompleted();
 			}
 		}
 		catch (Throwable throwable) {
 			ReflectionUtil.throwException(throwable);
 		}
 		finally {
-			_actionsCompleted();
-
 			_count = _total;
 
 			_sendStatusMessage();
@@ -167,9 +170,19 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
-	private DynamicQuery _createActionDynamicQuery(long previousPrimaryKey) {
+	private DynamicQuery _createDynamicQuery() {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_modelClass, _classLoader);
+
+		_addDefaultCriteria(dynamicQuery);
+
+		_addCriteria(dynamicQuery);
+
+		return dynamicQuery;
+	}
+
+	private DynamicQuery _createPaginatedDynamicQuery(long previousPrimaryKey) {
+		DynamicQuery dynamicQuery = _createDynamicQuery();
 
 		Property property = PropertyFactoryUtil.forName(
 			_primaryKeyPropertyName);
@@ -178,22 +191,7 @@ public class IndexableActionableDynamicQuery {
 
 		dynamicQuery.setLimit(0, _interval);
 
-		_addDefaultCriteria(dynamicQuery);
-
-		_addCriteria(dynamicQuery);
-
 		dynamicQuery.addOrder(OrderFactoryUtil.asc(_primaryKeyPropertyName));
-
-		return dynamicQuery;
-	}
-
-	private DynamicQuery _createCountDynamicQuery() {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			_modelClass, _classLoader);
-
-		_addDefaultCriteria(dynamicQuery);
-
-		_addCriteria(dynamicQuery);
 
 		return dynamicQuery;
 	}

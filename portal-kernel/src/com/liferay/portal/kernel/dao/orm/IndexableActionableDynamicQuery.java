@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -26,6 +27,7 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Andrew Betts
@@ -90,9 +92,9 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	public void setAddCriteriaMethod(
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod) {
+		Consumer<DynamicQuery> addCriteriaConsumer) {
 
-		_addCriteriaMethod = addCriteriaMethod;
+		_addCriteriaConsumer = addCriteriaConsumer;
 	}
 
 	public void setBaseLocalService(BaseLocalService baseLocalService) {
@@ -128,9 +130,9 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	public void setPerformActionMethod(
-		ActionableDynamicQuery.PerformActionMethod<?> performActionMethod) {
+		UnsafeConsumer<?, PortalException> performActionUnsafeConsumer) {
 
-		_performActionMethod = performActionMethod;
+		_performActionUnsafeConsumer = performActionUnsafeConsumer;
 	}
 
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName) {
@@ -145,8 +147,8 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	private void _addCriteria(DynamicQuery dynamicQuery) {
-		if (_addCriteriaMethod != null) {
-			_addCriteriaMethod.addCriteria(dynamicQuery);
+		if (_addCriteriaConsumer != null) {
+			_addCriteriaConsumer.accept(dynamicQuery);
 		}
 	}
 
@@ -200,8 +202,16 @@ public class IndexableActionableDynamicQuery {
 	}
 
 	private void _performAction(Object object) throws PortalException {
-		if (_performActionMethod != null) {
-			_performActionMethod.performAction(object);
+		if (_performActionUnsafeConsumer != null) {
+			try {
+				_performActionUnsafeConsumer.accept(object);
+			}
+			catch (PortalException portalException) {
+				throw portalException;
+			}
+			catch (Throwable throwable) {
+				throw new RuntimeException(throwable);
+			}
 		}
 	}
 
@@ -340,7 +350,7 @@ public class IndexableActionableDynamicQuery {
 		_indexWriterHelperProxySnapshot = new Snapshot<>(
 			IndexableActionableDynamicQuery.class, IndexWriterHelper.class);
 
-	private ActionableDynamicQuery.AddCriteriaMethod _addCriteriaMethod;
+	private Consumer<DynamicQuery> _addCriteriaConsumer;
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;
 	private long _companyId;
@@ -352,7 +362,7 @@ public class IndexableActionableDynamicQuery {
 	private Class<?> _modelClass;
 
 	@SuppressWarnings("rawtypes")
-	private ActionableDynamicQuery.PerformActionMethod _performActionMethod;
+	private UnsafeConsumer _performActionUnsafeConsumer;
 
 	private String _primaryKeyPropertyName;
 	private long _total;

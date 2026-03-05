@@ -180,16 +180,47 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				).put(
 					"export.import.vulcan.batch.engine.task.item.delegate",
 					"true"
+				).build());
+			SafeCloseable safeCloseable7 = _registerServiceWithSafeCloseable(
+				VulcanBatchEngineTaskItemDelegate.class,
+				new TestExportImportVulcanBatchEngineTaskItemDelegate(
+					className3, null, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), portletId2),
+				HashMapDictionaryBuilder.put(
+					"batch.engine.task.item.delegate", "true"
+				).put(
+					"batch.engine.task.item.delegate.class.name", className3
+				).put(
+					"companyId", String.valueOf(TestPropsValues.getCompanyId())
+				).put(
+					"export.import.vulcan.batch.engine.task.item.delegate",
+					"true"
 				).build())) {
 
 			Assert.assertEquals(
 				1, _getRegisteredPortletDataHandlersCount(portletId1));
 			Assert.assertEquals(
 				1, _getRegisteredPortletDataHandlersCount(portletId2));
+
 			Assert.assertNotNull(
-				_getRegisteredSystemEventExtraDataContributor(portletId1));
+				_getRegisteredSystemEventExtraDataContributor(
+					TestPropsValues.getCompanyId(), portletId1));
+			Assert.assertNotNull(
+				_getRegisteredSystemEventExtraDataContributor(
+					TestPropsValues.getCompanyId(), portletId2));
+
+			Assert.assertNotNull(
+				_getRegisteredSystemEventExtraDataContributor(
+					RandomTestUtil.randomLong(), portletId1));
 			Assert.assertNull(
-				_getRegisteredSystemEventExtraDataContributor(portletId2));
+				_getRegisteredSystemEventExtraDataContributor(
+					RandomTestUtil.randomLong(), portletId2));
+
+			safeCloseable7.close();
+
+			Assert.assertNull(
+				_getRegisteredSystemEventExtraDataContributor(
+					TestPropsValues.getCompanyId(), portletId2));
 
 			_assertPortletDataHandler(
 				TestPropsValues.getCompanyId(), portletId1,
@@ -237,7 +268,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					Arrays.equals(
 						new String[] {className1, className2},
 						portletDataHandler.getClassNames()));
-
 			_assertPortletDataHandler(
 				RandomTestUtil.randomLong(), portletId2,
 				portletDataHandler -> StringUtil.contains(
@@ -247,7 +277,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			safeCloseable3.close();
 
 			Assert.assertNotNull(
-				_getRegisteredSystemEventExtraDataContributor(portletId1));
+				_getRegisteredSystemEventExtraDataContributor(
+					TestPropsValues.getCompanyId(), portletId1));
 
 			_assertPortletDataHandler(
 				TestPropsValues.getCompanyId(), portletId1,
@@ -273,7 +304,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			safeCloseable4.close();
 
 			Assert.assertNull(
-				_getRegisteredSystemEventExtraDataContributor(portletId1));
+				_getRegisteredSystemEventExtraDataContributor(
+					TestPropsValues.getCompanyId(), portletId1));
 
 			_assertPortletDataHandler(
 				TestPropsValues.getCompanyId(), portletId1,
@@ -364,7 +396,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				).build())) {
 
 			SystemEventExtraDataContributor systemEventExtraDataContributor =
-				_getRegisteredSystemEventExtraDataContributor(portletId);
+				_getRegisteredSystemEventExtraDataContributor(
+					TestPropsValues.getCompanyId(), portletId);
 
 			Assert.assertNotNull(systemEventExtraDataContributor);
 
@@ -482,7 +515,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 	}
 
 	private SystemEventExtraDataContributor
-			_getRegisteredSystemEventExtraDataContributor(String portletId)
+			_getRegisteredSystemEventExtraDataContributor(
+				long companyId, String portletId)
 		throws InvalidSyntaxException {
 
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -493,7 +527,9 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 		Collection<ServiceReference<SystemEventExtraDataContributor>>
 			serviceReferences = bundleContext.getServiceReferences(
 				SystemEventExtraDataContributor.class,
-				"(jakarta.portlet.name=" + portletId + ")");
+				StringBundler.concat(
+					"(&(jakarta.portlet.name=", portletId, ")(|(companyId=",
+					companyId, ")(companyId=0)))"));
 
 		if (serviceReferences.isEmpty()) {
 			return null;

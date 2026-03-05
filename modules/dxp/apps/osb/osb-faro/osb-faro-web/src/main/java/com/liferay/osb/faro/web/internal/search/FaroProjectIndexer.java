@@ -12,7 +12,6 @@ import com.liferay.osb.faro.service.FaroProjectUsageLocalService;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisplay;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -260,25 +259,23 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			_faroProjectLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<FaroProject>)
-				faroProject -> {
-					try {
-						Document document = getDocument(faroProject);
+			(FaroProject faroProject) -> {
+				try {
+					Document document = getDocument(faroProject);
 
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
-								document);
-						}
+					if (document != null) {
+						indexableActionableDynamicQuery.addDocument(document);
 					}
-					catch (PortalException portalException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index faro project " +
-									faroProject.getFaroProjectId(),
-								portalException);
-						}
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index faro project " +
+								faroProject.getFaroProjectId(),
+							portalException);
 					}
-				});
+				}
+			});
 
 		indexableActionableDynamicQuery.performActions();
 	}

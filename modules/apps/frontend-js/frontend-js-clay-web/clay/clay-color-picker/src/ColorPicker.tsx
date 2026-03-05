@@ -4,15 +4,13 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {ClayInput} from '@clayui/form';
-import {FocusScope, InternalDispatch, sub} from '@clayui/shared';
+import {FocusScope, InternalDispatch} from '@clayui/shared';
 import React, {useRef} from 'react';
-import tinycolor from 'tinycolor2';
 
 import Basic from './Basic';
 import Custom from './Custom';
 import {Editor} from './Editor';
-import Splotch from './Splotch';
+import Field from './Field';
 import useColorPicker from './useColorPicker';
 
 const DEFAULT_COLORS = [
@@ -226,7 +224,6 @@ function ColorPicker({
 		setCustomEditorActive,
 		setInternalActive,
 		setValue,
-		splotchRef,
 		state,
 		valueInputRef,
 	} = useColorPicker({
@@ -244,165 +241,109 @@ function ColorPicker({
 		value,
 	});
 
-	const isHex = tinycolor(internalValue).getFormat() === 'hex';
-
 	const dropdownContainerRef = useRef<HTMLDivElement>(null);
-	const inputRef = useRef<HTMLInputElement>(null);
 	const triggerElementRef = useRef<HTMLDivElement>(null);
+	const splotchRef = useRef<HTMLButtonElement>(null);
 
 	return (
 		<FocusScope arrowKeysUpDown={false}>
 			<div className="clay-color-picker">
-				{title && <label>{title}</label>}
-
-				<ClayInput.Group
-					className="clay-color"
-					ref={triggerElementRef}
+				<Field
+					ariaLabels={ariaLabels}
+					disabled={disabled}
+					name={name}
+					onClickSplotch={onClickSplotch}
+					onHexBlur={onHexBlur}
+					onHexChange={onHexChange}
+					setValue={setValue}
+					showHex={showHex}
 					small={small}
+					splotchRef={splotchRef}
+					splotchTitle={splotchTitle}
+					title={title}
+					triggerElementRef={triggerElementRef}
+					useNative={useNative}
+					value={internalValue}
+					valueInputRef={valueInputRef}
+					{...otherProps}
+				/>
+
+				<ClayDropDown.Menu
+					active={internalActive}
+					alignElementRef={triggerElementRef}
+					className="clay-color-dropdown-menu"
+					containerProps={dropDownContainerProps}
+					deps={[internalActive]}
+					onActiveChange={setInternalActive}
+					ref={dropdownContainerRef}
+					triggerRef={splotchRef}
 				>
-					<ClayInput.GroupItem prepend={showHex} shrink>
-						{name && (
-							<input
-								name={name}
-								onChange={(event) =>
-									useNative
-										? setValue(event.target.value)
-										: null
+					{(!onColorsChange ||
+						(showPredefinedColorsWithCustom &&
+							!customEditorActive)) && (
+						<Basic
+							colors={
+								(showPredefinedColorsWithCustom
+									? predefinedColors
+									: colors) || DEFAULT_COLORS
+							}
+							label={label}
+							onChange={(newVal) => {
+								setValue(newVal);
+
+								setInternalActive(!internalActive);
+
+								if (splotchRef.current) {
+									splotchRef.current.focus();
 								}
-								ref={valueInputRef}
-								style={{
-									height: 0,
-									position: 'absolute',
-									visibility: 'hidden',
-									width: 0,
-								}}
-								tabIndex={-1}
-								type={useNative ? 'color' : 'text'}
-								value={
-									internalValue
-										? `${isHex ? '#' : ''}${internalValue}`
-										: ''
-								}
-							/>
-						)}
-
-						<ClayInput.GroupText>
-							<Splotch
-								aria-label={ariaLabels.selectColor}
-								className="dropdown-toggle"
-								disabled={disabled}
-								onClick={onClickSplotch}
-								ref={splotchRef}
-								title={splotchTitle}
-								value={internalValue}
-							/>
-						</ClayInput.GroupText>
-					</ClayInput.GroupItem>
-
-					<ClayDropDown.Menu
-						active={internalActive}
-						alignElementRef={triggerElementRef}
-						className="clay-color-dropdown-menu"
-						containerProps={dropDownContainerProps}
-						deps={[internalActive]}
-						onActiveChange={setInternalActive}
-						ref={dropdownContainerRef}
-						triggerRef={splotchRef}
-					>
-						{(!onColorsChange ||
-							(showPredefinedColorsWithCustom &&
-								!customEditorActive)) && (
-							<Basic
-								colors={
-									(showPredefinedColorsWithCustom
-										? predefinedColors
-										: colors) || DEFAULT_COLORS
-								}
-								label={label}
-								onChange={(newVal) => {
-									setValue(newVal);
-
-									setInternalActive(!internalActive);
-
-									if (splotchRef.current) {
-										splotchRef.current.focus();
-									}
-								}}
-							/>
-						)}
-
-						{onColorsChange && (
-							<Custom
-								color={color}
-								colors={customColors}
-								editorActive={customEditorActive}
-								label={label}
-								messages={messages}
-								onChange={(color, hex) => {
-									dispatch({
-										hex: internalToHex(color),
-										hue: color.toHsv().h,
-									});
-
-									setValue(hex);
-								}}
-								onColorsChange={(hex, index) => {
-									const newColors = [...customColors];
-
-									newColors[index] = hex;
-
-									onColorsChange(newColors);
-								}}
-								onEditorActiveChange={setCustomEditorActive}
-								onSplotchChange={(splotch) =>
-									dispatch({splotch})
-								}
-								showPalette={showPalette}
-								splotch={state.splotch}
-								spritemap={spritemap}
-							/>
-						)}
-
-						{onColorsChange && customEditorActive && (
-							<Editor
-								color={color}
-								colors={customColors}
-								hex={state.hex}
-								hue={state.hue}
-								internalToHex={internalToHex}
-								onChange={onChangeEditor}
-								onColorChange={onColorChangeEditor}
-								onHexChange={(hex) => dispatch({hex})}
-								onHueChange={(hue) => dispatch({hue})}
-							/>
-						)}
-					</ClayDropDown.Menu>
-
-					{showHex && (
-						<ClayInput.GroupItem
-							append
-							className="input-group-item-focusable"
-						>
-							<ClayInput
-								{...otherProps}
-								aria-label={sub(ariaLabels.selectionIs, [
-									internalValue,
-								])}
-								disabled={disabled}
-								insetBefore
-								onBlur={onHexBlur}
-								onChange={onHexChange}
-								ref={inputRef}
-								type="text"
-								value={internalValue}
-							/>
-
-							<ClayInput.GroupInsetItem before tag="label">
-								{isHex ? '#' : ''}
-							</ClayInput.GroupInsetItem>
-						</ClayInput.GroupItem>
+							}}
+						/>
 					)}
-				</ClayInput.Group>
+
+					{onColorsChange && (
+						<Custom
+							color={color}
+							colors={customColors}
+							editorActive={customEditorActive}
+							label={label}
+							messages={messages}
+							onChange={(color, hex) => {
+								dispatch({
+									hex: internalToHex(color),
+									hue: color.toHsv().h,
+								});
+
+								setValue(hex);
+							}}
+							onColorsChange={(hex, index) => {
+								const newColors = [...customColors];
+
+								newColors[index] = hex;
+
+								onColorsChange(newColors);
+							}}
+							onEditorActiveChange={setCustomEditorActive}
+							onSplotchChange={(splotch) => dispatch({splotch})}
+							showPalette={showPalette}
+							splotch={state.splotch}
+							spritemap={spritemap}
+						/>
+					)}
+
+					{onColorsChange && customEditorActive && (
+						<Editor
+							color={color}
+							colors={customColors}
+							hex={state.hex}
+							hue={state.hue}
+							internalToHex={internalToHex}
+							onChange={onChangeEditor}
+							onColorChange={onColorChangeEditor}
+							onHexChange={(hex) => dispatch({hex})}
+							onHueChange={(hue) => dispatch({hue})}
+						/>
+					)}
+				</ClayDropDown.Menu>
 			</div>
 		</FocusScope>
 	);

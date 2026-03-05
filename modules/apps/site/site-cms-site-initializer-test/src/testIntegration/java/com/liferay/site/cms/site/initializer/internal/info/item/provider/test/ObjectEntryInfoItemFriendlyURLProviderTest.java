@@ -142,11 +142,10 @@ public class ObjectEntryInfoItemFriendlyURLProviderTest {
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
 		try {
+			Group depotEntryGroup = _depotEntry.getGroup();
 			String friendlyURL = infoItemFriendlyURLProvider.getFriendlyURL(
 				objectEntry,
 				LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
-
-			Group depotEntryGroup = _depotEntry.getGroup();
 
 			Assert.assertEquals(
 				StringBundler.concat(

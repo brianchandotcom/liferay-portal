@@ -19,25 +19,29 @@ import java.util.Objects;
 public class AssetLibraryUtil {
 
 	public static AssetLibrary.Type getAssetLibraryType(int depotEntryType) {
-		if (depotEntryType == DepotConstants.TYPE_ASSET_LIBRARY) {
-			return AssetLibrary.Type.ASSET_LIBRARY;
+		switch (depotEntryType) {
+			case DepotConstants.TYPE_ASSET_LIBRARY:
+				return AssetLibrary.Type.ASSET_LIBRARY;
+			case DepotConstants.TYPE_DESIGN_LIBRARY:
+				return AssetLibrary.Type.DESIGN_LIBRARY;
+			case DepotConstants.TYPE_PROJECT:
+				return AssetLibrary.Type.PROJECT;
+			default:
+				return AssetLibrary.Type.SPACE;
 		}
-		else if (depotEntryType == DepotConstants.TYPE_PROJECT) {
-			return AssetLibrary.Type.PROJECT;
-		}
-
-		return AssetLibrary.Type.SPACE;
 	}
 
 	public static int getDepotEntryType(AssetLibrary.Type assetLibraryType) {
-		if (Objects.equals(assetLibraryType, AssetLibrary.Type.ASSET_LIBRARY)) {
-			return DepotConstants.TYPE_ASSET_LIBRARY;
+		switch(assetLibraryType) {
+			case ASSET_LIBRARY:
+				return DepotConstants.TYPE_ASSET_LIBRARY;
+			case DESIGN_LIBRARY:
+				return DepotConstants.TYPE_DESIGN_LIBRARY;
+			case PROJECT:
+				return DepotConstants.TYPE_PROJECT;
+			default:
+				return DepotConstants.TYPE_SPACE;
 		}
-		else if (Objects.equals(assetLibraryType, AssetLibrary.Type.PROJECT)) {
-			return DepotConstants.TYPE_PROJECT;
-		}
-
-		return DepotConstants.TYPE_SPACE;
 	}
 
 	public static int getDepotEntryType(String assetLibraryTypeString) {
@@ -49,6 +53,9 @@ public class AssetLibraryUtil {
 		HashMapBuilder.put(
 			StringUtil.toLowerCase(AssetLibrary.Type.ASSET_LIBRARY.getValue()),
 			getDepotEntryType(AssetLibrary.Type.ASSET_LIBRARY)
+		).put(
+			StringUtil.toLowerCase(AssetLibrary.Type.DESIGN_LIBRARY.getValue()),
+			getDepotEntryType(AssetLibrary.Type.DESIGN_LIBRARY)
 		).put(
 			StringUtil.toLowerCase(AssetLibrary.Type.PROJECT.getValue()),
 			getDepotEntryType(AssetLibrary.Type.PROJECT)

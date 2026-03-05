@@ -254,18 +254,17 @@ const ExperienceModal = ({
 								)}
 							</ClaySelect>
 
-							{Liferay.FeatureFlags['LPD-78863'] &&
-								canUpdateSegments === true && (
-									<Button
-										className="flex-shrink-0 ml-2"
-										disabled={loading}
-										displayType="secondary"
-										onClick={handleNewSegmentClick}
-										type="button"
-									>
-										{Liferay.Language.get('new-segment')}
-									</Button>
-								)}
+							{canUpdateSegments === true && (
+								<Button
+									className="flex-shrink-0 ml-2"
+									disabled={loading}
+									displayType="secondary"
+									onClick={handleNewSegmentClick}
+									type="button"
+								>
+									{Liferay.Language.get('new-segment')}
+								</Button>
+							)}
 						</div>
 					</ClayForm.Group>
 				</ClayForm>

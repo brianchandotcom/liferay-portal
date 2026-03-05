@@ -141,6 +141,7 @@ const BaseActionsInfo = ({
 							)
 						);
 						setScript('');
+						setStatus('');
 					}}
 					onClickCapture={() =>
 						updateActionInfo({

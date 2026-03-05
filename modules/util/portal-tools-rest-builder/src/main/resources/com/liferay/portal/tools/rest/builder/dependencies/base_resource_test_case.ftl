@@ -290,6 +290,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		<#if generateDepotEntry>
+			DepotEntryLocalServiceUtil.deleteDepotEntry(irrelevantDepotEntry);
+			DepotEntryLocalServiceUtil.deleteDepotEntry(testDepotEntry);
+		</#if>
 		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}

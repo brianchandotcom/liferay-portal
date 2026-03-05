@@ -1,0 +1,13 @@
+{
+	"concurrencyPolicy": "Forbid",
+	"cpu": 1,
+	"env": {
+		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
+		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
+	},
+	"id": "liferay-dev-etc-cron",
+	"kind": "CronJob",
+	"memory": 512,
+	"scale": 1,
+	"schedule": "0 0 * * *"
+}

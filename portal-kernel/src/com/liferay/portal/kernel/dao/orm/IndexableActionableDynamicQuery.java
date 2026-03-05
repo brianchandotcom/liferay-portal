@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
+public class IndexableActionableDynamicQuery {
 
 	public void addDocument(Document document) throws PortalException {
 		if (document == null) {
@@ -55,32 +55,30 @@ public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
 		}
 	}
 
-	@Override
-	public AddCriteriaMethod getAddCriteriaMethod() {
+	public ActionableDynamicQuery.AddCriteriaMethod getAddCriteriaMethod() {
 		return _addCriteriaMethod;
 	}
 
-	@Override
-	public AddOrderCriteriaMethod getAddOrderCriteriaMethod() {
+	public ActionableDynamicQuery.AddOrderCriteriaMethod
+		getAddOrderCriteriaMethod() {
+
 		return _addOrderCriteriaMethod;
 	}
 
-	@Override
-	public PerformActionMethod<?> getPerformActionMethod() {
+	public ActionableDynamicQuery.PerformActionMethod<?>
+		getPerformActionMethod() {
+
 		return _performActionMethod;
 	}
 
-	@Override
-	public PerformCountMethod getPerformCountMethod() {
+	public ActionableDynamicQuery.PerformCountMethod getPerformCountMethod() {
 		return _performCountMethod;
 	}
 
-	@Override
 	public boolean isParallel() {
 		return _parallel;
 	}
 
-	@Override
 	public void performActions() {
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			try {
@@ -123,7 +121,6 @@ public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
 		}
 	}
 
-	@Override
 	public long performCount() throws PortalException {
 		if (_performCountMethod != null) {
 			return _performCountMethod.performCount();
@@ -140,19 +137,18 @@ public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
 			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
 	}
 
-	@Override
-	public void setAddCriteriaMethod(AddCriteriaMethod addCriteriaMethod) {
+	public void setAddCriteriaMethod(
+		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod) {
+
 		_addCriteriaMethod = addCriteriaMethod;
 	}
 
-	@Override
 	public void setAddOrderCriteriaMethod(
-		AddOrderCriteriaMethod addOrderCriteriaMethod) {
+		ActionableDynamicQuery.AddOrderCriteriaMethod addOrderCriteriaMethod) {
 
 		_addOrderCriteriaMethod = addOrderCriteriaMethod;
 	}
 
-	@Override
 	public void setBaseLocalService(BaseLocalService baseLocalService) {
 		_baseLocalService = baseLocalService;
 
@@ -169,37 +165,30 @@ public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
 		}
 	}
 
-	@Override
 	public void setClassLoader(ClassLoader classLoader) {
 		_classLoader = classLoader;
 	}
 
-	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
-	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
 
-	@Override
 	public void setGroupIdPropertyName(String groupIdPropertyName) {
 		_groupIdPropertyName = groupIdPropertyName;
 	}
 
-	@Override
 	public void setInterval(int interval) {
 		_interval = interval;
 	}
 
-	@Override
 	public void setModelClass(Class<?> modelClass) {
 		_modelClass = modelClass;
 	}
 
-	@Override
 	public void setParallel(boolean parallel) {
 		if (_parallel == parallel) {
 			return;
@@ -212,24 +201,22 @@ public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
 		}
 	}
 
-	@Override
 	public void setPerformActionMethod(
-		PerformActionMethod<?> performActionMethod) {
+		ActionableDynamicQuery.PerformActionMethod<?> performActionMethod) {
 
 		_performActionMethod = performActionMethod;
 	}
 
-	@Override
-	public void setPerformCountMethod(PerformCountMethod performCountMethod) {
+	public void setPerformCountMethod(
+		ActionableDynamicQuery.PerformCountMethod performCountMethod) {
+
 		_performCountMethod = performCountMethod;
 	}
 
-	@Override
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName) {
 		_primaryKeyPropertyName = primaryKeyPropertyName;
 	}
 
-	@Override
 	public void setTransactionConfig(TransactionConfig transactionConfig) {
 		_transactionConfig = transactionConfig;
 	}
@@ -488,8 +475,9 @@ public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
 		_indexWriterHelperProxySnapshot = new Snapshot<>(
 			IndexableActionableDynamicQuery.class, IndexWriterHelper.class);
 
-	private AddCriteriaMethod _addCriteriaMethod;
-	private AddOrderCriteriaMethod _addOrderCriteriaMethod;
+	private ActionableDynamicQuery.AddCriteriaMethod _addCriteriaMethod;
+	private ActionableDynamicQuery.AddOrderCriteriaMethod
+		_addOrderCriteriaMethod;
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;
 	private long _companyId;
@@ -505,9 +493,9 @@ public class IndexableActionableDynamicQuery implements ActionableDynamicQuery {
 	private boolean _parallel;
 
 	@SuppressWarnings("rawtypes")
-	private PerformActionMethod _performActionMethod;
+	private ActionableDynamicQuery.PerformActionMethod _performActionMethod;
 
-	private PerformCountMethod _performCountMethod;
+	private ActionableDynamicQuery.PerformCountMethod _performCountMethod;
 	private String _primaryKeyPropertyName;
 	private long _total;
 	private TransactionConfig _transactionConfig;

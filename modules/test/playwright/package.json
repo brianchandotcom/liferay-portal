@@ -13,7 +13,7 @@
 		"@liferay/layout-js-components-web": "../../apps/layout/layout-js-components-web/",
 		"@liferay/object-admin-rest-client-js": "../../apps/object/object-admin-rest-client-js",
 		"@liferay/portal-tools-rest-builder-test-client-js": "../../util/portal-tools-rest-builder-test-client-js",
-		"@playwright/test": "1.45.2",
+		"@playwright/test": "1.54.2",
 		"@types/node": "^20.9.0",
 		"@types/yauzl": "^2.10.3",
 		"dotenv": "^16.3.2",

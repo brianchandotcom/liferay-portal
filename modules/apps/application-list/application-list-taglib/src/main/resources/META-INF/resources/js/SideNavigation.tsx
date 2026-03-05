@@ -18,6 +18,7 @@ import {SideNavigationItem} from './types/SideNavigation';
 import {useSideNavigationFilter} from './useSideNavigationFilter';
 
 interface Props {
+	canonicalName: string;
 	categoryImageUrl: string;
 	expandedKeys: Array<React.Key>;
 	expandedKeysSessionKey: string;
@@ -31,6 +32,7 @@ interface Props {
 }
 
 function SideNavigation({
+	canonicalName,
 	categoryImageUrl,
 	expandedKeys: externalExpandedKeys,
 	expandedKeysSessionKey,
@@ -117,6 +119,7 @@ function SideNavigation({
 			aria-label={sub(Liferay.Language.get('x-menu'), label)}
 			closeOnEscape={false}
 			containerRef={containerRef}
+			data-canonical-name={canonicalName}
 			data-qa-id="sideNavigation"
 			defaultOpen={initialVisible}
 			direction="left"
@@ -188,6 +191,7 @@ function SideNavigation({
 
 							return (
 								<ClayVerticalNav.Item
+									data-canonical-name={item.canonicalName}
 									href={item.href}
 									items={item.items}
 									key={item.id}

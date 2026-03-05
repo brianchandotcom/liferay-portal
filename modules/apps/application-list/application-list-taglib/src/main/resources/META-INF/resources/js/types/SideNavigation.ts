@@ -4,6 +4,7 @@
  */
 
 export type SideNavigationItem = {
+	canonicalName?: string;
 	href?: string;
 	id: string;
 	items?: Array<SideNavigationItem>;

@@ -40,14 +40,14 @@ public class BuildDataFactory {
 			jobName.contains("root-cause-analysis-tool") ||
 			jobName.equals("test-poshi-release")) {
 
-			return new PortalTopLevelBuildData(runID, jobName, buildURL);
-		}
-		else if (jobName.contains(
-					"test-portal-testsuite-upstream-controller") ||
-				 jobName.contains("test-portal-upstream-controller")) {
+			if (jobName.contains("test-portal-testsuite-upstream-controller") ||
+				jobName.contains("test-portal-upstream-controller")) {
 
-			return new ControllerPortalTopLevelBuildData(
-				runID, jobName, buildURL);
+				return new ControllerPortalTopLevelBuildData(
+					runID, jobName, buildURL);
+			}
+
+			return new PortalTopLevelBuildData(runID, jobName, buildURL);
 		}
 
 		return new DefaultTopLevelBuildData(runID, jobName, buildURL);

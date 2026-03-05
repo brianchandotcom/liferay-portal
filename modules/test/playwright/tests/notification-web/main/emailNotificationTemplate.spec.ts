@@ -236,6 +236,43 @@ test.describe('Email notification template', () => {
 		await expect(test.info().errors).toHaveLength(0);
 	});
 
+	test('can be edited with empty user groups', async ({
+		apiHelpers,
+		emailNotificationTemplatePage,
+		notificationTemplatesPage,
+		page,
+	}) => {
+		const notificationTemplate =
+			await apiHelpers.notification.postRandomNotificationTemplate(
+				'notification template test ' + getRandomInt()
+			);
+
+		apiHelpers.data.push({
+			id: notificationTemplate.id,
+			type: 'notificationTemplate',
+		});
+
+		await notificationTemplatesPage.goto();
+
+		await notificationTemplatesPage
+			.getFrontEndDatasetItemLocator(notificationTemplate.name)
+			.click();
+
+		await emailNotificationTemplatePage.secondaryRecipientTypeCC.click();
+
+		await page.getByRole('option', {name: 'User Groups'}).click();
+
+		await emailNotificationTemplatePage.saveButton.click();
+
+		await notificationTemplatesPage
+			.getFrontEndDatasetItemLocator(notificationTemplate.name)
+			.click();
+
+		await emailNotificationTemplatePage.saveButton.click();
+
+		await expect(test.info().errors).toHaveLength(0);
+	});
+
 	test('can have rich text source code verifying that the source code is persisted', async ({
 		emailNotificationTemplatePage,
 		notificationTemplatesPage,

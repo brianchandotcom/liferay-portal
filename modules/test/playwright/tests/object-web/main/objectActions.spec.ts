@@ -128,7 +128,9 @@ test.describe('Manage object actions through object actions tab', () => {
 		);
 
 		for (const {objectAction} of objectActionsMock) {
-			await expect(page.getByText(objectAction)).toBeVisible();
+			await expect(
+				page.getByRole('link', {name: objectAction})
+			).toBeVisible();
 		}
 	});
 

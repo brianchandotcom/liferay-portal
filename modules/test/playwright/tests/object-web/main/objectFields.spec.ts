@@ -957,7 +957,9 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			objectFieldLabel,
 		});
 
-		await expect(page.getByText(objectFieldLabel)).toBeVisible();
+		await expect(
+			page.getByRole('link', {name: objectFieldLabel})
+		).toBeVisible();
 
 		await objectFieldsPage.deleteObjectField(true, -1);
 	});

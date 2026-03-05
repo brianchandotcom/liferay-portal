@@ -1228,16 +1228,14 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 			'Success:Relationship was created successfully.'
 		);
 
-		await expect(
-			page.getByText(objectRelationship2.label['en_US'])
-		).toBeVisible();
+		const objectRelationshipLink = page.getByRole('link', {
+			exact: true,
+			name: objectRelationship2.label['en_US'],
+		});
 
-		await page
-			.getByRole('link', {
-				exact: true,
-				name: objectRelationship2.label['en_US'],
-			})
-			.click();
+		await expect(objectRelationshipLink).toBeVisible();
+
+		await objectRelationshipLink.click();
 
 		await expect(
 			page.frameLocator('iframe').getByLabel('ParameterMandatory')

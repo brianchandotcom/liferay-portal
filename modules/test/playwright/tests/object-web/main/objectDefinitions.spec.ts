@@ -215,7 +215,9 @@ test.describe('Manage object definitions through Model Builder', () => {
 			`Success:${objectDefinitionLabel} was created successfully.`
 		);
 
-		await expect(page.getByText(objectDefinitionLabel)).toBeVisible();
+		await expect(
+			page.getByRole('link', {name: objectDefinitionLabel})
+		).toBeVisible();
 
 		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
 

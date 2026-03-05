@@ -6,8 +6,8 @@
 package com.liferay.portal.systemevent;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -37,7 +38,9 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -369,8 +372,30 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	private String _getExtraData(BaseModel<?> baseModel, String extraData)
 		throws Exception {
 
+		List<SystemEventExtraDataContributor> systemEventExtraDataContributors =
+			new ArrayList<>();
+
+		List<SystemEventExtraDataContributor>
+			generalSystemEventExtraDataContributors =
+				_serviceTrackerMap.getService("0");
+
+		if (generalSystemEventExtraDataContributors != null) {
+			systemEventExtraDataContributors.addAll(
+				generalSystemEventExtraDataContributors);
+		}
+
+		List<SystemEventExtraDataContributor>
+			companyIdSystemEventExtraDataContributors =
+				_serviceTrackerMap.getService(
+					String.valueOf(CompanyThreadLocal.getCompanyId()));
+
+		if (companyIdSystemEventExtraDataContributors != null) {
+			systemEventExtraDataContributors.addAll(
+				companyIdSystemEventExtraDataContributors);
+		}
+
 		for (SystemEventExtraDataContributor systemEventExtraDataContributor :
-				_systemEventExtraDataContributors) {
+				systemEventExtraDataContributors) {
 
 			extraData = systemEventExtraDataContributor.contribute(
 				baseModel, extraData);
@@ -388,13 +413,13 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemEventAdvice.class);
 
-	private static final ServiceTrackerList<SystemEventExtraDataContributor>
-		_systemEventExtraDataContributors;
+	private static final ServiceTrackerMap
+		<String, List<SystemEventExtraDataContributor>> _serviceTrackerMap;
 
 	static {
-		_systemEventExtraDataContributors = ServiceTrackerListFactory.open(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			SystemBundleUtil.getBundleContext(),
-			SystemEventExtraDataContributor.class);
+			SystemEventExtraDataContributor.class, "companyId");
 	}
 
 	private final Set<String> _noUUIDClassNames = Collections.newSetFromMap(

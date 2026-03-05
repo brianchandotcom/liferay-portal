@@ -8,8 +8,8 @@ import React from 'react';
 import Loading from '../../../../components/Loading';
 import {OrderStatus} from '../../../../enums/Order';
 import {usePlacedOrder} from '../../../../hooks/data/usePlacedOrder';
-
 import i18n from '../../../../i18n';
+
 import './LDPNextSteps.scss';
 
 const Content = ({

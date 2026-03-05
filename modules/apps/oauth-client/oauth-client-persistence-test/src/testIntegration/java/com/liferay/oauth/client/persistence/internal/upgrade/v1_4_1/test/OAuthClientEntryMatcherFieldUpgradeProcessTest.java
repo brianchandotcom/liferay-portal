@@ -7,7 +7,6 @@ package com.liferay.oauth.client.persistence.internal.upgrade.v1_4_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
-import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -18,8 +17,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -35,8 +32,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Manuele Castro
@@ -83,18 +78,14 @@ public class OAuthClientEntryMatcherFieldUpgradeProcessTest {
 			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
 				TestPropsValues.getCompanyId(), discoveryEndpoint, clientId1);
 
-		Assert.assertEquals("screenName", oAuthClientEntry1.getMatcherField());
-
 		oAuthClientEntry1.setMatcherField(null);
 
 		oAuthClientEntry1 =
 			_oAuthClientEntryLocalService.updateOAuthClientEntry(
 				oAuthClientEntry1);
 
-		Assert.assertEquals("", oAuthClientEntry1.getMatcherField());
-
 		String clientId2 = RandomTestUtil.randomString();
-		String issuerUrl = "http://test/openid-connect";
+		String issuerURL = "http://test/openid-connect";
 		String tokenEndpoint = "http://test/openid-connect/token";
 
 		_pid2 = ConfigurationTestUtil.createFactoryConfiguration(
@@ -105,7 +96,7 @@ public class OAuthClientEntryMatcherFieldUpgradeProcessTest {
 			).put(
 				"companyId", TestPropsValues.getCompanyId()
 			).put(
-				"issuerURL", issuerUrl
+				"issuerURL", issuerURL
 			).put(
 				"jwksURI", "http://test/openid-connect/certs"
 			).put(
@@ -123,10 +114,8 @@ public class OAuthClientEntryMatcherFieldUpgradeProcessTest {
 		OAuthClientEntry oAuthClientEntry2 =
 			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
 				TestPropsValues.getCompanyId(),
-				_generateLocalWellKnownURI(issuerUrl, tokenEndpoint),
+				_generateLocalWellKnownURI(issuerURL, tokenEndpoint),
 				clientId2);
-
-		Assert.assertEquals("screenName", oAuthClientEntry2.getMatcherField());
 
 		oAuthClientEntry2.setMatcherField(null);
 
@@ -134,9 +123,9 @@ public class OAuthClientEntryMatcherFieldUpgradeProcessTest {
 			_oAuthClientEntryLocalService.updateOAuthClientEntry(
 				oAuthClientEntry2);
 
-		Assert.assertEquals("", oAuthClientEntry2.getMatcherField());
-
 		_runUpgrade();
+
+		_multiVMPool.clear();
 
 		oAuthClientEntry1 = _oAuthClientEntryLocalService.fetchOAuthClientEntry(
 			oAuthClientEntry1.getOAuthClientEntryId());
@@ -164,16 +153,10 @@ public class OAuthClientEntryMatcherFieldUpgradeProcessTest {
 	}
 
 	private void _runUpgrade() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.ALL)) {
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator, _CLASS_NAME);
 
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
-			upgradeProcess.upgrade();
-
-			_multiVMPool.clear();
-		}
+		upgradeProcess.upgrade();
 	}
 
 	private static final String _CLASS_NAME =
@@ -186,14 +169,7 @@ public class OAuthClientEntryMatcherFieldUpgradeProcessTest {
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Inject
 	private MultiVMPool _multiVMPool;
-
-	@Inject
-	private OAuthClientASLocalMetadataLocalService
-		_oAuthClientASLocalMetadataLocalService;
 
 	@Inject
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;

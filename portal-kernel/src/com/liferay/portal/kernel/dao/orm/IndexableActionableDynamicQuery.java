@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSend
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.util.PropsValues;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class IndexableActionableDynamicQuery {
 				_total = _performCount();
 			}
 			catch (Exception exception) {
-				throw new RuntimeException(exception);
+				ReflectionUtil.throwException(exception);
 			}
 		}
 
@@ -76,8 +76,8 @@ public class IndexableActionableDynamicQuery {
 				_actionsCompleted();
 			}
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (Throwable throwable) {
+			ReflectionUtil.throwException(throwable);
 		}
 		finally {
 			_count = _total;
@@ -155,30 +155,6 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
-	private Object _executeDynamicQuery(
-			Method dynamicQueryMethod, Object... arguments)
-		throws PortalException {
-
-		try {
-			return dynamicQueryMethod.invoke(_baseLocalService, arguments);
-		}
-		catch (InvocationTargetException invocationTargetException) {
-			Throwable throwable = invocationTargetException.getCause();
-
-			if (throwable instanceof PortalException) {
-				throw (PortalException)throwable;
-			}
-			else if (throwable instanceof SystemException) {
-				throw (SystemException)throwable;
-			}
-
-			throw new SystemException(invocationTargetException);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-	}
-
 	private void _indexInterval() throws PortalException {
 		if (_documents.isEmpty()) {
 			return;
@@ -196,23 +172,15 @@ public class IndexableActionableDynamicQuery {
 		_sendStatusMessage();
 	}
 
-	private void _performAction(Object object) throws PortalException {
+	private void _performAction(Object object) throws Throwable {
 		if (_performActionUnsafeConsumer != null) {
-			try {
-				_performActionUnsafeConsumer.accept(object);
-			}
-			catch (PortalException portalException) {
-				throw portalException;
-			}
-			catch (Throwable throwable) {
-				throw new RuntimeException(throwable);
-			}
+			_performActionUnsafeConsumer.accept(object);
 		}
 	}
 
-	private long _performActions(DynamicQuery dynamicQuery) throws Exception {
-		List<Object> objects = (List<Object>)_executeDynamicQuery(
-			_dynamicQueryMethod, dynamicQuery);
+	private long _performActions(DynamicQuery dynamicQuery) throws Throwable {
+		List<Object> objects = (List<Object>)_dynamicQueryMethod.invoke(
+			_baseLocalService, dynamicQuery);
 
 		if (objects.isEmpty()) {
 			return -1L;
@@ -232,7 +200,7 @@ public class IndexableActionableDynamicQuery {
 		return lastPrimaryKey;
 	}
 
-	private void _performActions(List<Object> objects) throws Exception {
+	private void _performActions(List<Object> objects) throws Throwable {
 		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
 			CTSQLModeThreadLocal.getCTSQLMode();
 
@@ -249,9 +217,7 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
-	private long _performActions(long previousPrimaryKey)
-		throws PortalException {
-
+	private long _performActions(long previousPrimaryKey) throws Throwable {
 		try {
 			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 				_modelClass, _classLoader);
@@ -270,22 +236,14 @@ public class IndexableActionableDynamicQuery {
 			dynamicQuery.addOrder(
 				OrderFactoryUtil.asc(_primaryKeyPropertyName));
 
-			try {
-				return _performActions(dynamicQuery);
-			}
-			catch (PortalException | SystemException exception) {
-				throw exception;
-			}
-			catch (Exception exception) {
-				throw new SystemException(exception);
-			}
+			return _performActions(dynamicQuery);
 		}
 		finally {
 			_indexInterval();
 		}
 	}
 
-	private void _performActionsWithCT(List<Object> objects) throws Exception {
+	private void _performActionsWithCT(List<Object> objects) throws Throwable {
 		long currentCTCollectionId =
 			CTCollectionThreadLocal.getCTCollectionId();
 
@@ -313,7 +271,7 @@ public class IndexableActionableDynamicQuery {
 		}
 	}
 
-	private long _performCount() throws PortalException {
+	private long _performCount() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_modelClass, _classLoader);
 
@@ -321,9 +279,8 @@ public class IndexableActionableDynamicQuery {
 
 		_addCriteria(dynamicQuery);
 
-		return (Long)_executeDynamicQuery(
-			_dynamicQueryCountMethod, dynamicQuery,
-			ProjectionFactoryUtil.rowCount());
+		return (Long)_dynamicQueryCountMethod.invoke(
+			_baseLocalService, dynamicQuery, ProjectionFactoryUtil.rowCount());
 	}
 
 	private void _sendStatusMessage() {

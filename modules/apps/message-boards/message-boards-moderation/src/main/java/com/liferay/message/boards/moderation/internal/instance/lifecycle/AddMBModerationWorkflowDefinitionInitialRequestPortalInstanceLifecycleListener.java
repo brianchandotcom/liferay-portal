@@ -68,15 +68,17 @@ public class
 					"/message-boards-moderation-workflow-definition.xml");
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
+				content.getBytes(), companyId,
 				WorkflowDefinitionConstants.
 					EXTERNAL_REFERENCE_CODE_MESSAGE_BOARDS_USER_STATS_MODERATION,
-				companyId, 0, guestUserId,
+				0,
+				WorkflowDefinitionConstants.
+					NAME_MESSAGE_BOARDS_USER_STATS_MODERATION,
+				MBMessage.class.getName(),
 				_localization.getXml(
 					_getTitleMap(companyId),
 					_language.getLanguageId(company.getLocale()), "title"),
-				WorkflowDefinitionConstants.
-					NAME_MESSAGE_BOARDS_USER_STATS_MODERATION,
-				MBMessage.class.getName(), content.getBytes());
+				guestUserId);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);

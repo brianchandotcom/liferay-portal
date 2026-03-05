@@ -165,13 +165,13 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 		String workflowDefinitionName = PortalUUIDUtil.generate();
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, companyId, workflowDefinition.getGroupId(),
-			dtoConverterContext.getUserId(),
+			content.getBytes(), companyId, null,
+			workflowDefinition.getGroupId(), workflowDefinitionName,
+			WorkflowDefinitionConstants.SCOPE_AI,
 			LanguageUtil.format(
 				locale, "copy-of-x",
 				workflowDefinition.getTitle(locale.getDisplayLanguage())),
-			workflowDefinitionName, WorkflowDefinitionConstants.SCOPE_AI,
-			content.getBytes());
+			dtoConverterContext.getUserId());
 
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
 			dtoConverterContext.getUserId());

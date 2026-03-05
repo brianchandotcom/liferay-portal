@@ -221,15 +221,14 @@ public class WorkflowDefinitionResourceImpl
 
 		return _toWorkflowDefinition(
 			_workflowDefinitionManager.deployWorkflowDefinition(
+				content.getBytes(), contextCompany.getCompanyId(),
 				workflowDefinition.getExternalReferenceCode(),
-				contextCompany.getCompanyId(),
 				_getGroupId(workflowDefinition.getGroupExternalReferenceCode()),
-				contextUser.getUserId(), _getTitle(workflowDefinition),
 				workflowDefinition.getName(),
 				GetterUtil.getString(
 					workflowDefinition.getScope(),
 					WorkflowDefinitionConstants.SCOPE_ALL),
-				content.getBytes()));
+				_getTitle(workflowDefinition), contextUser.getUserId()));
 	}
 
 	@Override

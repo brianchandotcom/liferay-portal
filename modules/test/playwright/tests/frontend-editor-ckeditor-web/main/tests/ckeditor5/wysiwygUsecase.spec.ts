@@ -28,55 +28,6 @@ const test = mergeTests(
 	wikiPagesTest
 );
 
-test(
-	'Can view source code formatted in text view',
-	{tag: '@LRQA-67229'},
-	async ({journalEditArticlePage, page, site}) => {
-		const articleTitle = getRandomString();
-
-		await journalEditArticlePage.goto({
-			siteUrl: site.friendlyUrlPath,
-		});
-
-		await journalEditArticlePage.fillTitle(articleTitle);
-
-		await test.step('Switch to source view and add HTML', async () => {
-			const sourceButton = page
-				.locator('.cke_button__source, [data-cke-tooltip-text="Source"]')
-				.first();
-
-			if (await sourceButton.isVisible({timeout: 5000})) {
-				await sourceButton.click();
-
-				const sourceEditor = page
-					.locator('.cke_source, textarea.ck-source-editing-area')
-					.first();
-
-				if (await sourceEditor.isVisible({timeout: 3000})) {
-					await sourceEditor.fill(
-						'<h2>Heading Two</h2><p>Paragraph with <em>italic</em> text.</p>'
-					);
-
-					await sourceButton.click();
-				}
-			}
-		});
-
-		await test.step('Verify formatted content in text view', async () => {
-			const editable = journalEditArticlePage.contentFrame.locator(
-				'.cke_editable'
-			);
-
-			if (await editable.isVisible({timeout: 3000})) {
-				await expect(editable.locator('h2')).toContainText(
-					'Heading Two'
-				);
-
-				await expect(editable.locator('em')).toContainText('italic');
-			}
-		});
-	}
-);
 
 test.fixme(
 	'DM can format text with editor toolbar',

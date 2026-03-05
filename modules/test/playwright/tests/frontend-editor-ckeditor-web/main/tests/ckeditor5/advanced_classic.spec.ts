@@ -298,6 +298,30 @@ test(
 );
 
 test(
+	'Can view HTML in source mode formatted in wysiwyg view',
+	{tag: '@LRQA-67229'},
+	async ({classicPage}) => {
+		const sourceButton = classicPage.toolbar.container.getByRole('button', {
+			name: 'Source',
+		});
+
+		await sourceButton.click();
+
+		await classicPage.sourceEditable.fill(
+			'<h2>Heading Two</h2><p>Paragraph with <i>italic</i> text.</p>'
+		);
+
+		await sourceButton.click();
+
+		await expect(classicPage.editable.locator('h2')).toContainText(
+			'Heading Two'
+		);
+
+		await expect(classicPage.editable.locator('i')).toContainText('italic');
+	}
+);
+
+test(
 	'Pasting HTML content works',
 	{tag: '@LPD-65963'},
 	async ({classicPage, context}) => {

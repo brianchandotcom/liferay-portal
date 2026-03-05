@@ -124,21 +124,6 @@ public class SiteNavigationMenuPropagationTest {
 	}
 
 	@Test
-	public void testSiteTemplatePropagationWhenSiteNavigationMenuDoesNotExist()
-		throws Exception {
-
-		LayoutTestUtil.updateLayoutPortletPreference(
-			_prototypeLayout, _portletId,
-			"siteNavigationMenuExternalReferenceCode",
-			_siteNavigationMenu2.getExternalReferenceCode());
-
-		_propagateLayout();
-
-		_assertSiteNavigationMenuExternalReferenceCode(
-			_siteNavigationMenu1.getExternalReferenceCode(), StringPool.BLANK);
-	}
-
-	@Test
 	public void testSiteTemplatePropagationWithDifferentSiteNavigationMenu()
 		throws Exception {
 

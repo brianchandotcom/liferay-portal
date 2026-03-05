@@ -291,7 +291,7 @@ test('Can trigger object validation as a client extension', async ({
 		'Liferay Sample Etc Spring Boot Spring Boot Object Validation Rule 1'
 	);
 
-	await page.getByText(objectValidationLabel).click();
+	await page.getByRole('link', {name: objectValidationLabel}).click();
 
 	await objectValidationsPage.activeValitionToggle.check();
 

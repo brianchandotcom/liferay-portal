@@ -112,7 +112,9 @@ test.describe('Object Unique Composite Key Validation', () => {
 			'Composite Key'
 		);
 
-		const newValidationLink = page.getByText(objectValidationLabel);
+		const newValidationLink = page.getByRole('link', {
+			name: objectValidationLabel,
+		});
 
 		await newValidationLink.click();
 
@@ -388,7 +390,9 @@ test.describe('Object Unique Composite Key Validation', () => {
 			'Composite Key'
 		);
 
-		const newValidationLink = page.getByText(objectValidationLabel);
+		const newValidationLink = page.getByRole('link', {
+			name: objectValidationLabel,
+		});
 
 		await expect(newValidationLink).toBeVisible();
 
@@ -465,7 +469,9 @@ test.describe('Object Unique Composite Key Validation', () => {
 			'Composite Key'
 		);
 
-		const newValidationLink = page.getByText(objectValidationLabel);
+		const newValidationLink = page.getByRole('link', {
+			name: objectValidationLabel,
+		});
 
 		await expect(newValidationLink).toBeVisible();
 
@@ -503,7 +509,9 @@ test.describe('Object Unique Composite Key Validation', () => {
 			'Composite Key'
 		);
 
-		const newValidationLink = page.getByText(validationLabel);
+		const newValidationLink = page.getByRole('link', {
+			name: validationLabel,
+		});
 
 		await expect(newValidationLink).toBeVisible();
 

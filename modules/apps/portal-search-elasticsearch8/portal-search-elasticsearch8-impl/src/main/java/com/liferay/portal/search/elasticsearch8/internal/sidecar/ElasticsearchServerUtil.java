@@ -210,7 +210,7 @@ public class ElasticsearchServerUtil {
 			Settings.Builder builder = Settings.builder();
 
 			builder.loadFromSource(
-				System.getProperty("sidecar.settings"), XContentType.YAML);
+				System.getProperty("sidecar.settings"),	XContentType.JSON);
 
 			Settings settings = builder.build();
 

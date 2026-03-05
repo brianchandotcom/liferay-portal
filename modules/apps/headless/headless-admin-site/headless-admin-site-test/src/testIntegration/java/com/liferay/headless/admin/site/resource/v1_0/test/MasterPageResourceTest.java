@@ -405,7 +405,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"externalReferenceCode", "keywords", "name",
-			"taxonomyCategoryItemExternalReferences"
+			"taxonomyCategoryBriefs"
 		};
 	}
 
@@ -429,8 +429,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		masterPage.setKeywords(AssetTestUtil.randomKeywords(serviceContext));
 
 		masterPage.setMarkedAsDefault(Boolean.FALSE);
-		masterPage.setTaxonomyCategoryItemExternalReferences(
-			AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
+		masterPage.setTaxonomyCategoryBriefs(
+			AssetTestUtil.randomTaxonomyCategoryBriefs(
 				testCompany.getGroupId(), serviceContext));
 
 		return masterPage;

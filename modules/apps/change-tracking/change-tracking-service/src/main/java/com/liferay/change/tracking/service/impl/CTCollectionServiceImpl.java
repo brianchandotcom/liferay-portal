@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.UserGroupRoleTable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -55,16 +56,16 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 	@Override
 	public CTCollection addCTCollection(
-			String externalReferenceCode, long companyId, long userId,
-			long ctRemoteId, String name, String description)
+			String externalReferenceCode, long ctRemoteId, String name,
+			String description)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, CTActionKeys.ADD_PUBLICATION);
 
 		return ctCollectionLocalService.addCTCollection(
-			externalReferenceCode, companyId, userId, ctRemoteId, name,
-			description);
+			externalReferenceCode, CompanyThreadLocal.getCompanyId(),
+			getUserId(), ctRemoteId, name, description);
 	}
 
 	@Override
@@ -128,21 +129,23 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 	@Override
 	public List<CTCollection> getCTCollections(
-		long companyId, int[] statuses, int start, int end,
+		int[] statuses, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator) {
 
 		if (statuses == null) {
 			return ctCollectionPersistence.filterFindByCompanyId(
-				companyId, start, end, orderByComparator);
+				CompanyThreadLocal.getCompanyId(), start, end,
+				orderByComparator);
 		}
 
 		return ctCollectionPersistence.filterFindByC_S(
-			companyId, statuses, start, end, orderByComparator);
+			CompanyThreadLocal.getCompanyId(), statuses, start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public List<CTCollection> getCTCollections(
-		long companyId, int[] statuses, String keywords, int start, int end,
+		int[] statuses, String keywords, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator) {
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -150,7 +153,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 		).from(
 			CTCollectionTable.INSTANCE
 		).where(
-			_getPredicate(companyId, statuses, keywords)
+			_getPredicate(statuses, keywords)
 		).orderBy(
 			CTCollectionTable.INSTANCE, orderByComparator
 		).limit(
@@ -161,14 +164,12 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 	}
 
 	@Override
-	public int getCTCollectionsCount(
-		long companyId, int[] statuses, String keywords) {
-
+	public int getCTCollectionsCount(int[] statuses, String keywords) {
 		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
 		).from(
 			CTCollectionTable.INSTANCE
 		).where(
-			_getPredicate(companyId, statuses, keywords)
+			_getPredicate(statuses, keywords)
 		);
 
 		return ctCollectionPersistence.dslQueryCount(dslQuery);
@@ -257,11 +258,9 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			userId, ctCollectionId, name, description);
 	}
 
-	private Predicate _getPredicate(
-		long companyId, int[] statuses, String keywords) {
-
+	private Predicate _getPredicate(int[] statuses, String keywords) {
 		Predicate predicate = CTCollectionTable.INSTANCE.companyId.eq(
-			companyId
+			CompanyThreadLocal.getCompanyId()
 		).and(
 			() -> {
 				if (ArrayUtil.isEmpty(statuses)) {

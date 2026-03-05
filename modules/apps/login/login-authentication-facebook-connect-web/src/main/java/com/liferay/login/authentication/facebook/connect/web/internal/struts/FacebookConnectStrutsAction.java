@@ -431,13 +431,13 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 
 		Contact contact = user.getContact();
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCal.setTime(contact.getBirthday());
+		calendar.setTime(contact.getBirthday());
 
-		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
-		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
-		int birthdayYear = birthdayCal.get(Calendar.YEAR);
+		int birthdayMonth = calendar.get(Calendar.MONTH);
+		int birthdayDay = calendar.get(Calendar.DAY_OF_MONTH);
+		int birthdayYear = calendar.get(Calendar.YEAR);
 
 		long[] groupIds = null;
 		long[] organizationIds = null;

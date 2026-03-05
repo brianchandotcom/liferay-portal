@@ -34,7 +34,7 @@ String lastName = BeanParamUtil.getString(selUser, request, "lastName");
 int prefixListTypeId = BeanParamUtil.getInteger(selContact, request, "prefixListTypeId");
 int suffixListTypeId = BeanParamUtil.getInteger(selContact, request, "suffixListTypeId");
 
-Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
+Calendar calendar = CalendarFactoryUtil.getCalendar();
 
 int birthdayDay = ParamUtil.getInteger(request, "birthdayDay");
 int birthdayMonth = ParamUtil.getInteger(request, "birthdayMonth");
@@ -43,10 +43,10 @@ int birthdayYear = ParamUtil.getInteger(request, "birthdayYear");
 Date birthdayDate = PortalUtil.getDate(birthdayMonth, birthdayDay, birthdayYear);
 
 if (birthdayDate != null) {
-	birthdayCalendar.setTime(birthdayDate);
+	calendar.setTime(birthdayDate);
 }
 else if (selUser != null) {
-	birthdayCalendar.setTime(selContact.getBirthday());
+	calendar.setTime(selContact.getBirthday());
 }
 
 boolean male = BeanParamUtil.getBoolean(selUser, request, "male", true);
@@ -73,9 +73,9 @@ boolean male = BeanParamUtil.getBoolean(selUser, request, "male", true);
 		<aui:input name="prefixListTypeId" type="hidden" value="<%= String.valueOf(prefixListTypeId) %>" />
 		<aui:input name="suffixListTypeId" type="hidden" value="<%= String.valueOf(suffixListTypeId) %>" />
 		<aui:input name="male" type="hidden" value="<%= String.valueOf(male) %>" />
-		<aui:input name="birthdayDay" type="hidden" value="<%= String.valueOf(birthdayCalendar.get(Calendar.DAY_OF_MONTH)) %>" />
-		<aui:input name="birthdayMonth" type="hidden" value="<%= String.valueOf(birthdayCalendar.get(Calendar.MONTH)) %>" />
-		<aui:input name="birthdayYear" type="hidden" value="<%= String.valueOf(birthdayCalendar.get(Calendar.YEAR)) %>" />
+		<aui:input name="birthdayDay" type="hidden" value="<%= String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) %>" />
+		<aui:input name="birthdayMonth" type="hidden" value="<%= String.valueOf(calendar.get(Calendar.MONTH)) %>" />
+		<aui:input name="birthdayYear" type="hidden" value="<%= String.valueOf(calendar.get(Calendar.YEAR)) %>" />
 		<aui:input name="jobTitle" type="hidden" value='<%= BeanParamUtil.getString(selUser, request, "jobTitle") %>' />
 	</aui:form>
 

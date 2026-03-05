@@ -12,11 +12,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 boolean male = ParamUtil.getBoolean(request, "male", true);
 
-Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
+Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-birthdayCalendar.set(Calendar.MONTH, Calendar.JANUARY);
-birthdayCalendar.set(Calendar.DATE, 1);
-birthdayCalendar.set(Calendar.YEAR, 1970);
+calendar.set(Calendar.MONTH, Calendar.JANUARY);
+calendar.set(Calendar.DATE, 1);
+calendar.set(Calendar.YEAR, 1970);
 
 renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 %>
@@ -218,7 +218,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 					>
 						<c:choose>
 							<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_BIRTHDAY) %>">
-								<aui:input name="birthday" value="<%= birthdayCalendar %>" />
+								<aui:input name="birthday" value="<%= calendar %>" />
 							</c:when>
 							<c:otherwise>
 								<aui:input name="birthdayMonth" type="hidden" value="<%= Calendar.JANUARY %>" />

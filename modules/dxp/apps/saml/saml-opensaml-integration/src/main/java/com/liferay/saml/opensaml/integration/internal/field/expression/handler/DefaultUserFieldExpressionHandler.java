@@ -257,9 +257,9 @@ public class DefaultUserFieldExpressionHandler
 		}
 
 		Contact contact = newUser.getContact();
-		Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCalendar.setTime(contact.getBirthday());
+		calendar.setTime(contact.getBirthday());
 
 		Date modifiedDate = newUser.getModifiedDate();
 
@@ -274,10 +274,9 @@ public class DefaultUserFieldExpressionHandler
 			newUser.getComments(), newUser.getFirstName(),
 			newUser.getMiddleName(), newUser.getLastName(),
 			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
-			newUser.getMale(), birthdayCalendar.get(Calendar.MONTH),
-			birthdayCalendar.get(Calendar.DATE),
-			birthdayCalendar.get(Calendar.YEAR), contact.getSmsSn(),
-			contact.getFacebookSn(), contact.getJabberSn(),
+			newUser.getMale(), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
+			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), contact.getJobTitle(),
 			null, null, null, null, null, serviceContext);
 

@@ -659,13 +659,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			}
 		}
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCal.setTime(ldapUser.getBirthday());
+		calendar.setTime(ldapUser.getBirthday());
 
-		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
-		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
-		int birthdayYear = birthdayCal.get(Calendar.YEAR);
+		int birthdayMonth = calendar.get(Calendar.MONTH);
+		int birthdayDay = calendar.get(Calendar.DAY_OF_MONTH);
+		int birthdayYear = calendar.get(Calendar.YEAR);
 
 		User user = _userLocalService.addUser(
 			ldapUser.getCreatorUserId(), companyId, autoPassword, password,

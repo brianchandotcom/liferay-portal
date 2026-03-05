@@ -295,9 +295,9 @@ public class UpdateMembershipsMVCActionCommandTest {
 	private void _updateUser(Set<Long> groupIds, User user) throws Exception {
 		Contact contact = user.getContact();
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCal.setTime(user.getBirthday());
+		calendar.setTime(user.getBirthday());
 
 		_userLocalService.updateUser(
 			user.getUserId(), user.getPassword(), null, null,
@@ -306,8 +306,8 @@ public class UpdateMembershipsMVCActionCommandTest {
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			user.getFirstName(), user.getMiddleName(), user.getLastName(),
 			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
-			user.isFemale(), birthdayCal.get(Calendar.MONTH),
-			birthdayCal.get(Calendar.DATE), birthdayCal.get(Calendar.YEAR),
+			user.isFemale(), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
 			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), user.getJobTitle(),
 			ArrayUtil.toLongArray(groupIds), user.getOrganizationIds(), null,

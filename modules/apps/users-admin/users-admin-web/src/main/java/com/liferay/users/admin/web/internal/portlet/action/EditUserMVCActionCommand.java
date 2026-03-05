@@ -418,16 +418,16 @@ public class EditUserMVCActionCommand
 		boolean male = BeanParamUtil.getBoolean(
 			user, actionRequest, "male", true);
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		birthdayCal.setTime(contact.getBirthday());
+		calendar.setTime(contact.getBirthday());
 
 		int birthdayMonth = ParamUtil.getInteger(
-			actionRequest, "birthdayMonth", birthdayCal.get(Calendar.MONTH));
+			actionRequest, "birthdayMonth", calendar.get(Calendar.MONTH));
 		int birthdayDay = ParamUtil.getInteger(
-			actionRequest, "birthdayDay", birthdayCal.get(Calendar.DATE));
+			actionRequest, "birthdayDay", calendar.get(Calendar.DATE));
 		int birthdayYear = ParamUtil.getInteger(
-			actionRequest, "birthdayYear", birthdayCal.get(Calendar.YEAR));
+			actionRequest, "birthdayYear", calendar.get(Calendar.YEAR));
 
 		String comments = BeanParamUtil.getString(
 			user, actionRequest, "comments");

@@ -223,12 +223,6 @@ export default function SaveButtons({
 				}
 			}
 		);
-
-		const form = document.getElementById(formId);
-
-		if (form) {
-			form.requestSubmit();
-		}
 	};
 
 	const validateRequiredFields = async (formId) => {
@@ -244,9 +238,9 @@ export default function SaveButtons({
 			`${portletNamespace}dataEngineLayoutRenderer`
 		);
 
-		const [, isValid] = await renderer.reactComponentRef.current.validate();
+		const fields = await renderer.reactComponentRef.current.getFields();
 
-		return isValid;
+		return fields.every((field) => field.valid === true);
 	};
 
 	useEffect(() => {

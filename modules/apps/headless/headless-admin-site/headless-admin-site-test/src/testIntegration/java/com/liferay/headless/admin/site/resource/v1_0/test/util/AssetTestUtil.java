@@ -11,7 +11,9 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.ParentTaxonomyCategory;
+import com.liferay.headless.admin.site.client.dto.v1_0.ParentTaxonomyVocabulary;
+import com.liferay.headless.admin.site.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -61,9 +63,8 @@ public class AssetTestUtil {
 		return keywords;
 	}
 
-	public static ItemExternalReference[]
-			randomTaxonomyCategoryItemExternalReferences(
-				long companyGroupId, ServiceContext serviceContext)
+	public static TaxonomyCategoryBrief[] randomTaxonomyCategoryBriefs(
+			long companyGroupId, ServiceContext serviceContext)
 		throws Exception {
 
 		List<AssetCategory> assetCategories = _randomAssetCategories(
@@ -71,18 +72,49 @@ public class AssetTestUtil {
 
 		return TransformUtil.unsafeTransformToArray(
 			assetCategories,
-			assetCategory -> new ItemExternalReference() {
+			assetCategory -> new TaxonomyCategoryBrief() {
 				{
-					setClassName(AssetCategory.class.getName());
-					setExternalReferenceCode(
-						assetCategory.getExternalReferenceCode());
+					setParentTaxonomyCategory(
+						() -> {
+							AssetCategory parentAssetCategory =
+								assetCategory.getParentCategory();
+
+							if (parentAssetCategory == null) {
+								return null;
+							}
+
+							return new ParentTaxonomyCategory() {
+								{
+									setExternalReferenceCode(
+										parentAssetCategory::
+											getExternalReferenceCode);
+								}
+							};
+						});
+					setParentTaxonomyVocabulary(
+						() -> {
+							AssetVocabulary assetVocabulary =
+								AssetVocabularyLocalServiceUtil.
+									getAssetVocabulary(
+										assetCategory.getVocabularyId());
+
+							return new ParentTaxonomyVocabulary() {
+								{
+									setExternalReferenceCode(
+										assetVocabulary::
+											getExternalReferenceCode);
+								}
+							};
+						});
 					setScope(
 						() -> _getScope(
 							serviceContext.getScopeGroupId(),
 							assetCategory.getGroupId()));
+					setTaxonomyCategoryExternalReferenceCode(
+						assetCategory::getExternalReferenceCode);
 				}
 			},
-			ItemExternalReference.class);
+			TaxonomyCategoryBrief.class);
 	}
 
 	private static Scope _getScope(long groupId, long scopeGroupId)

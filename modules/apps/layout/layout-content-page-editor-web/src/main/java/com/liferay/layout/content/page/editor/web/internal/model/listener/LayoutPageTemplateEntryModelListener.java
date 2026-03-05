@@ -112,11 +112,13 @@ public class LayoutPageTemplateEntryModelListener
 		if (!Objects.equals(
 				originalLayoutPageTemplateEntry.getClassNameId(),
 				layoutPageTemplateEntry.getClassNameId()) ||
-			!Objects.equals(
-				LayoutPageTemplateEntryUtil.getClassTypeId(
-					originalLayoutPageTemplateEntry),
-				LayoutPageTemplateEntryUtil.getClassTypeId(
-					layoutPageTemplateEntry))) {
+			(Validator.isNotNull(
+				originalLayoutPageTemplateEntry.getClassTypeKey()) &&
+			 !Objects.equals(
+				 LayoutPageTemplateEntryUtil.getClassTypeId(
+					 originalLayoutPageTemplateEntry),
+				 LayoutPageTemplateEntryUtil.getClassTypeId(
+					 layoutPageTemplateEntry)))) {
 
 			return true;
 		}

@@ -83,37 +83,6 @@ test.fixme(
 	}
 );
 
-test.fixme(
-	'Can display content right to left in Wiki with Arabic locale',
-	async ({page, site, wikiPage}) => {
-		await wikiPage.goto(site.friendlyUrlPath);
-
-		await test.step('Navigate to Main wiki node', async () => {
-			await wikiPage.goToWikiNode('Main');
-		});
-
-		await test.step('Edit the first wiki page', async () => {
-			await wikiPage.goToEditFirstWikiPage();
-		});
-
-		await test.step('Add RTL content', async () => {
-			await wikiPage.addSourceContentToWikiPage(
-				'<p dir="rtl">\u0647\u0630\u0627 \u0627\u0644\u0645\u062D\u062A\u0648\u0649 \u064A\u062C\u0628 \u0623\u0646 \u064A\u0639\u0631\u0636 \u0645\u0646 \u0627\u0644\u064A\u0645\u064A\u0646 \u0625\u0644\u0649 \u0627\u0644\u064A\u0633\u0627\u0631</p>'
-			);
-		});
-
-		await test.step('Publish and verify RTL direction', async () => {
-			await wikiPage.publishPage();
-
-			await wikiPage.goToFirstWikiPage();
-
-			const rtlContent = page.locator('[dir="rtl"]');
-
-			await expect(rtlContent).toBeVisible();
-		});
-	}
-);
-
 test(
 	'Can preview source content in web content editor',
 	{tag: '@LPS-110663'},

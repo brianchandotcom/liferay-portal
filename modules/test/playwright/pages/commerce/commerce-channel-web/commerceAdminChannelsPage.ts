@@ -249,7 +249,9 @@ export class CommerceAdminChannelsPage {
 			await waitForAlert(this.shippingOptionsPanel);
 
 			await expect(
-				this.sidePanelFrameLocator.getByText(shippingOption)
+				this.sidePanelFrameLocator.getByText(shippingOption, {
+					exact: true,
+				})
 			).toBeVisible();
 		}
 	}

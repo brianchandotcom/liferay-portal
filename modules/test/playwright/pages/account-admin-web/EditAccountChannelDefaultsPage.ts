@@ -78,9 +78,15 @@ export class EditAccountChannelDefaultsPage {
 			'defaultBillingCommerceAddresses'
 		);
 		this.billingAddressAllChannelsText =
-			this.defaultBillingAddressesTable.getByText('All Channels');
+			this.defaultBillingAddressesTable.getByRole('cell', {
+				exact: true,
+				name: 'All Channels',
+			});
 		this.billingAddressAllOtherChannelsText =
-			this.defaultBillingAddressesTable.getByText('All Other Channels');
+			this.defaultBillingAddressesTable.getByRole('cell', {
+				exact: true,
+				name: 'All Other Channels',
+			});
 		this.defaultShippingAddressesTable = page.getByTestId(
 			'defaultShippingCommerceAddresses'
 		);
@@ -142,9 +148,15 @@ export class EditAccountChannelDefaultsPage {
 		this.setDefaultShippingAddressFrameBillingAddressDropdownMenu =
 			this.modalContainer.getByLabel('Shipping Address');
 		this.shippingAddressAllChannelsText =
-			this.defaultShippingAddressesTable.getByText('All Channels');
+			this.defaultShippingAddressesTable.getByRole('cell', {
+				exact: true,
+				name: 'All Channels',
+			});
 		this.shippingAddressAllOtherChannelsText =
-			this.defaultShippingAddressesTable.getByText('All Other Channels');
+			this.defaultShippingAddressesTable.getByRole('cell', {
+				exact: true,
+				name: 'All Other Channels',
+			});
 	}
 
 	async addDefaultPaymentTerm(paymentTermId: number) {

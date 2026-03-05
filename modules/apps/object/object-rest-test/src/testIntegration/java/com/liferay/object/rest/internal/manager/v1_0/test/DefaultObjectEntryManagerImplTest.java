@@ -7161,7 +7161,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_testMoveObjectEntry(
 			objectEntry.getPropertyValue("textObjectFieldName"),
-			objectEntry.getId(), objectEntryFolder1.getObjectEntryFolderId());
+			objectEntryFolder1.getObjectEntryFolderId(), objectEntry.getId());
 
 		objectEntry = _defaultObjectEntryManager.expireObjectEntry(
 			dtoConverterContext, objectEntry.getExternalReferenceCode(),
@@ -7177,7 +7177,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_testMoveObjectEntry(
 			objectEntry.getPropertyValue("textObjectFieldName"),
-			objectEntry.getId(), objectEntryFolder2.getObjectEntryFolderId());
+			objectEntryFolder2.getObjectEntryFolderId(), objectEntry.getId());
 		_testMoveObjectEntryDuplicateName(
 			depotEntry.getGroupId(), objectEntryFolder2, objectEntryFolder1);
 		_testMoveObjectEntryReplace(
@@ -11720,8 +11720,8 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _testMoveObjectEntry(
-			Object expectedObjectFieldValue, long objectEntryId,
-			long objectEntryFolderId)
+			Object expectedObjectFieldValue, long objectEntryFolderId,
+			long objectEntryId)
 		throws Exception {
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.moveObjectEntry(

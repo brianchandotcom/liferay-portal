@@ -4,5 +4,6 @@ tutorial:
     -   type3: "null"
     -   type4: "~"
     -   type5: NULL
-    -   type6: null
-    -   type7: ~
+    -   type6: Null
+    -   type7: null
+    -   type8: ~

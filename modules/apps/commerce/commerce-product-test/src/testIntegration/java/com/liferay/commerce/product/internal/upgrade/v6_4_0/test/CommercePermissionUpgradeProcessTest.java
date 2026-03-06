@@ -123,6 +123,13 @@ public class CommercePermissionUpgradeProcessTest {
 				CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY));
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
+				_serviceContext.getCompanyId(), "com.liferay.commerce.tax",
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(_serviceContext.getCompanyId()),
+				_role.getRoleId(),
+				CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
 				_serviceContext.getCompanyId(), CPTaxCategory.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(_serviceContext.getCompanyId()),

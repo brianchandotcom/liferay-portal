@@ -120,7 +120,7 @@ public class CommercePermissionUpgradeProcessTest {
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(_serviceContext.getCompanyId()),
 				_role.getRoleId(),
-				CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORIES));
+				CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY));
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
 				_serviceContext.getCompanyId(), CPTaxCategory.class.getName(),

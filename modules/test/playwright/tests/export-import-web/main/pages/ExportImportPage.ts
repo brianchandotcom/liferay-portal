@@ -48,7 +48,6 @@ export class ExportImportPage {
 	readonly newExportButton: Locator;
 	readonly newImportButton: Locator;
 	readonly page: Page;
-	readonly pagesCheckbox: Locator;
 	readonly portletListContainer: Locator;
 	readonly productMenuPage: ProductMenuPage;
 	readonly rangeDateRangeEndDate: Locator;
@@ -119,9 +118,6 @@ export class ExportImportPage {
 		this.newExportButton = page.getByRole('link', {name: 'Custom Export'});
 		this.newImportButton = page.getByRole('link', {name: 'Import'});
 		this.page = page;
-		this.pagesCheckbox = page.locator(
-			'[id="_com_liferay_exportimport_web_portlet_ImportPortlet_contentLink_com_liferay_layout_admin_web_portlet_GroupPagesPortlet"]'
-		);
 		this.portletListContainer = page
 			.locator(
 				'#_com_liferay_exportimport_web_portlet_ExportPortlet_selectContents .portlet-list'
@@ -340,18 +336,6 @@ export class ExportImportPage {
 
 		if (expectedUploadErrorMessage) {
 			return;
-		}
-
-		if (await this.pagesCheckbox.isVisible()) {
-			await this.pagesCheckbox.click();
-		}
-
-		const utilityPages = this.page
-			.locator('#PagesContent')
-			.getByText('Utility Pages');
-
-		if (await utilityPages.isVisible()) {
-			await utilityPages.click();
 		}
 
 		await this.page

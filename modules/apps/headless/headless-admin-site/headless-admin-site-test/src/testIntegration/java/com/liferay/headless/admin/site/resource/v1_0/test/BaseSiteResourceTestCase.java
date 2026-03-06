@@ -544,6 +544,44 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
+	public void testPutSiteActivate() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Site site = testPutSiteActivate_addSite();
+
+		assertHttpResponseStatusCode(
+			204,
+			siteResource.putSiteActivateHttpResponse(
+				site.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404, siteResource.putSiteActivateHttpResponse("-"));
+	}
+
+	protected Site testPutSiteActivate_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSiteDeactivate() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Site site = testPutSiteDeactivate_addSite();
+
+		assertHttpResponseStatusCode(
+			204,
+			siteResource.putSiteDeactivateHttpResponse(
+				site.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404, siteResource.putSiteDeactivateHttpResponse("-"));
+	}
+
+	protected Site testPutSiteDeactivate_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutSitePermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Site site = testPutSitePermissionsPage_addSite();

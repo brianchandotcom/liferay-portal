@@ -447,7 +447,6 @@ public class DuplicateItemMVCActionCommandTest {
 			fragmentEntryLink.getCompanyId(),
 			fragmentEntryLink.getFragmentEntryScopeERC(),
 			fragmentEntryLink.getGroupId());
-
 		Long groupId2 = ScopeUtil.getItemGroupId(
 			duplicatedFragmentEntryLink.getCompanyId(),
 			duplicatedFragmentEntryLink.getFragmentEntryScopeERC(),

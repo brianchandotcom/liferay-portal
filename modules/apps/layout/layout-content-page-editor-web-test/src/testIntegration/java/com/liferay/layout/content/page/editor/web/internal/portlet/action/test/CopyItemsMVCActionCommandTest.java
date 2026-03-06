@@ -660,7 +660,6 @@ public class CopyItemsMVCActionCommandTest {
 			fragmentEntryLink.getCompanyId(),
 			fragmentEntryLink.getFragmentEntryScopeERC(),
 			fragmentEntryLink.getGroupId());
-
 		Long groupId2 = ScopeUtil.getItemGroupId(
 			copiedFragmentEntryLink.getCompanyId(),
 			copiedFragmentEntryLink.getFragmentEntryScopeERC(),

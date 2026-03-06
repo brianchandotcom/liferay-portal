@@ -168,7 +168,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 			sourceFragmentEntryLink.getCompanyId(),
 			sourceFragmentEntryLink.getFragmentEntryScopeERC(),
 			sourceFragmentEntryLink.getGroupId());
-
 		Long groupId2 = ScopeUtil.getItemGroupId(
 			targetFragmentEntryLink.getCompanyId(),
 			targetFragmentEntryLink.getFragmentEntryScopeERC(),

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -212,17 +211,6 @@ public class AutoDeployDir {
 		}
 	}
 
-	protected static AutoDeploymentContext buildAutoDeploymentContext(
-		File file) {
-
-		AutoDeploymentContext autoDeploymentContext =
-			new AutoDeploymentContext();
-
-		autoDeploymentContext.setFile(file);
-
-		return autoDeploymentContext;
-	}
-
 	protected static void processFile(File file) {
 		String fileName = file.getName();
 
@@ -257,7 +245,9 @@ public class AutoDeployDir {
 
 		try {
 			AutoDeploymentContext autoDeploymentContext =
-				buildAutoDeploymentContext(file);
+				new AutoDeploymentContext();
+
+			autoDeploymentContext.setFile(file);
 
 			deploy(autoDeploymentContext);
 

@@ -60,7 +60,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		_resourceActionLocalService.checkResourceActions(
 			"com.liferay.commerce.tax",
 			Arrays.asList(
-				CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORIES,
+				CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY,
 				CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES),
 			true);
 
@@ -77,7 +77,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 			}
 
 			_addResourcePermission(
-				CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORIES,
+				CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY,
 				"com.liferay.commerce.tax", resourcePermission);
 			_addResourcePermission(
 				CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES,

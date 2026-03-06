@@ -6,7 +6,6 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -72,7 +71,7 @@ public class GlobalStartupAction extends SimpleAction {
 					_log.info("Registering auto deploy directories");
 				}
 
-				AutoDeployUtil.registerDir(AutoDeployDir.getDefault());
+				AutoDeployDir.start();
 			}
 			else {
 				if (_log.isInfoEnabled()) {

@@ -10,7 +10,7 @@ import {assertBodyClass} from './assertBodyClass';
 export async function assertUnderlinedLinksValue(page: Page, enabled: boolean) {
 	await assertBodyClass(page, enabled, /c-prefers-link-underline/);
 
-	const heading = page.getByRole('link', {name: 'Liferay DXP'});
+	const heading = page.getByRole('link', {name: 'Liferay DXP Site'});
 
 	if (enabled) {
 		await expect(heading).toHaveCSS('text-decoration-line', 'underline');

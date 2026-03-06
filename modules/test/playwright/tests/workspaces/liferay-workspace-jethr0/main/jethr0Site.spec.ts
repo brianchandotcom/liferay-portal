@@ -5,8 +5,8 @@
 
 import {expect, test} from '@playwright/test';
 
-test('title is Home - Liferay DXP', async ({page}) => {
+test('title is Home - Liferay DXP Site - Liferay', async ({page}) => {
 	await page.goto('/');
 
-	await expect(page).toHaveTitle('Home - Liferay DXP');
+	await expect(page).toHaveTitle('Home - Liferay DXP Site - Liferay');
 });

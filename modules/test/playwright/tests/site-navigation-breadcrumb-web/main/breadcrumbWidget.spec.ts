@@ -232,7 +232,7 @@ test('Configure Show Guest Site in Breadcrumb widget', async ({
 	await breadcrumbPage.toggleBreadcrumbConfiguration('Show Guest Site');
 
 	await breadcrumbPage.assertBreadcrumbEntries(3, [
-		'Liferay DXP',
+		'Liferay',
 		site.name,
 		layout.nameCurrentValue,
 	]);
@@ -265,7 +265,7 @@ test('Preview pane reloads in Breadcrumb widget configuration', async ({
 
 	await breadcrumbPage.assertBreadcrumbEntries(
 		3,
-		['Liferay DXP', site.name, layout.nameCurrentValue],
+		['Liferay', site.name, layout.nameCurrentValue],
 		configurationIFrame
 	);
 });

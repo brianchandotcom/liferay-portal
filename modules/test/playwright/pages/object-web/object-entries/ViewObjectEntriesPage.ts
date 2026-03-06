@@ -276,7 +276,7 @@ export class ViewObjectEntriesPage {
 			.click();
 
 		await this.selectFileIframe
-			.getByRole('link', {name: 'Liferay DXP'})
+			.getByRole('link', {name: 'Liferay DXP Site'})
 			.click();
 
 		await this.selectFileIframe
@@ -298,7 +298,7 @@ export class ViewObjectEntriesPage {
 			.click();
 
 		await this.selectFileIframeArabic
-			.getByRole('link', {name: 'Liferay DXP'})
+			.getByRole('link', {name: 'Liferay DXP Site'})
 			.click();
 
 		await this.selectFileIframeArabic

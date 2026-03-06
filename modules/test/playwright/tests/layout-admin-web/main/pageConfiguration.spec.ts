@@ -1180,7 +1180,7 @@ test.describe('SEO configuration', () => {
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 		expect(await page.title()).toBe(
-			`${HTMLTitle} - ${site.name} - Liferay DXP`
+			`${HTMLTitle} - ${site.name} - Liferay`
 		);
 
 		// Check SEO HTML title is not shown in view mode
@@ -1188,7 +1188,7 @@ test.describe('SEO configuration', () => {
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 		expect(await page.title()).toBe(
-			`${pageName} - ${site.name} - Liferay DXP (Editing)`
+			`${pageName} - ${site.name} - Liferay (Editing)`
 		);
 	});
 

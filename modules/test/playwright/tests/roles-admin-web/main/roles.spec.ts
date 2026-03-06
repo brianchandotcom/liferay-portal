@@ -1122,7 +1122,7 @@ test(
 		const menuItemName = 'Documents and Media';
 		const permissionName =
 			'Access in Site and Asset Library Administration';
-		const siteName = 'Liferay DXP';
+		const siteName = 'Liferay DXP Site';
 
 		await roleDefinePermissionsPage.searchInput.click();
 		await roleDefinePermissionsPage.searchInput.fill(menuItemName);

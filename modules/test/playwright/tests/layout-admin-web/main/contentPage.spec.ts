@@ -208,9 +208,7 @@ test(
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-		expect(await page.title()).toBe(
-			`${pageName} - ${site.name} - Liferay DXP`
-		);
+		expect(await page.title()).toBe(`${pageName} - ${site.name} - Liferay`);
 
 		// Check the page title in the edit mode
 
@@ -221,7 +219,7 @@ test(
 			.waitFor();
 
 		expect(await page.title()).toBe(
-			`${pageName} - ${site.name} - Liferay DXP (Editing)`
+			`${pageName} - ${site.name} - Liferay (Editing)`
 		);
 
 		// Click back button
@@ -230,9 +228,7 @@ test(
 
 		await page.getByTitle('Edit', {exact: true}).waitFor();
 
-		expect(await page.title()).toBe(
-			`${pageName} - ${site.name} - Liferay DXP`
-		);
+		expect(await page.title()).toBe(`${pageName} - ${site.name} - Liferay`);
 	}
 );
 

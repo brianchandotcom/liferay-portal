@@ -344,7 +344,7 @@ export async function syncCommerce({
 export async function toggleSiteSync({
 	channelName,
 	page,
-	siteName = 'Liferay DXP',
+	siteName = 'Liferay DXP Site',
 	synced = true,
 }: {
 	channelName: string;

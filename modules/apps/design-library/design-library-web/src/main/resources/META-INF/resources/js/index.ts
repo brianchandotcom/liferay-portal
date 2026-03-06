@@ -5,3 +5,4 @@
 
 export {default as DesignLibraryBreadcrumb} from './DesignLibraryBreadcrumb';
 export {default as DesignLibraryAdminFDSPropsTransformer} from './props_transformer/DesignLibraryAdminFDSPropsTransformer';
+export {default as DesignLibraryDashboardFDSPropsTransformer} from './props_transformer/DesignLibraryDashboardFDSPropsTransformer';

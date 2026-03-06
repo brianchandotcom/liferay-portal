@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.feature.flag.web.internal.feature.flag;
+package com.liferay.portal.feature.flag;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -13,13 +14,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Drew Brokke
  */
-@Component(service = FeatureFlagManager.class)
 public class FeatureFlagManagerImpl implements FeatureFlagManager {
 
 	@Override
@@ -57,7 +54,7 @@ public class FeatureFlagManagerImpl implements FeatureFlagManager {
 		return isEnabled(CompanyThreadLocal.getCompanyId(), key);
 	}
 
-	@Reference
+	@BeanReference(type = FeatureFlagsBagProvider.class)
 	private FeatureFlagsBagProvider _featureFlagsBagProvider;
 
 }

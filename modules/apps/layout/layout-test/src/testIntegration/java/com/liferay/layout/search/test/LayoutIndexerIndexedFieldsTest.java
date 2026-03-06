@@ -171,6 +171,10 @@ public class LayoutIndexerIndexedFieldsTest {
 		).put(
 			Field.GROUP_ID, String.valueOf(layout.getGroupId())
 		).put(
+			Field.PRIORITY, "0.0"
+		).put(
+			Field.PRIORITY + "_Number_sortable", "0"
+		).put(
 			Field.SCOPE_GROUP_ID, String.valueOf(layout.getGroupId())
 		).put(
 			Field.STAGING_GROUP, "false"

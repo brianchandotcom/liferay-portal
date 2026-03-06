@@ -58,12 +58,6 @@ public class ExportImportServiceConfigurationUpgradeProcess
 
 			Dictionary<String, Object> stagingProperties =
 				HashMapDictionaryBuilder.<String, Object>put(
-					"publishParentLayoutsByDefault",
-					GetterUtil.getBoolean(
-						exportImportProperties.remove(
-							"publishParentLayoutsByDefault"),
-						true)
-				).put(
 					"stagingDeleteTempLAROnFailure",
 					GetterUtil.getBoolean(
 						exportImportProperties.remove(

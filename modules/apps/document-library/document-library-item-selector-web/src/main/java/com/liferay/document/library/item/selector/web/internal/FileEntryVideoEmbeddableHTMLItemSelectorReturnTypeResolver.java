@@ -64,7 +64,9 @@ public class FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver
 		).put(
 			"url",
 			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPD-11235")) {
+				if (FeatureFlagManagerUtil.isEnabled(
+						themeDisplay.getCompanyId(), "LPD-11235")) {
+
 					return null;
 				}
 

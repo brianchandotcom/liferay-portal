@@ -31,7 +31,7 @@ boolean required = GetterUtil.getBoolean(request.getAttribute("liferay-layout:re
 </liferay-util:buffer>
 
 <c:choose>
-	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+	<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
 		<%= editorLabel %>
 
 		<liferay-editor:editor

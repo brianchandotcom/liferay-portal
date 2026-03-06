@@ -43,7 +43,7 @@ const DLVideoExternalShortcutURLItemSelectorView: React.FC<{
 				value: {
 					html: fields.HTML,
 					title: fields.TITLE || fields.URL,
-					url: Liferay.FeatureFlags['LPD-11235']
+					url: !Liferay.FeatureFlags['LPD-11235']
 						? fields.URL
 						: undefined,
 				},

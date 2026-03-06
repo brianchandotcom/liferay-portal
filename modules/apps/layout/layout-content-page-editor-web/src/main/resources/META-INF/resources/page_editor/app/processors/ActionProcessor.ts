@@ -6,7 +6,7 @@
 import {getAlloyEditorProcessor} from '../js-index';
 import getCKEditorProcessor from './getCKEditorProcessor';
 
-const processor = Liferay.FeatureFlags['LPD-11235']
+const processor = !Liferay.FeatureFlags['LPD-11235']
 	? getCKEditorProcessor
 	: getAlloyEditorProcessor;
 

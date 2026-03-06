@@ -26,7 +26,7 @@ String messageAsLocalizedXML = moneyOrderGroupServiceConfiguration.messageAsLoca
 		<div id="<portlet:namespace />message">
 			<aui:field-wrapper label="message">
 				<c:choose>
-					<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
 						<liferay-ui:input-localized
 							fieldPrefix="settings"
 							fieldPrefixSeparator="--"

@@ -101,7 +101,7 @@ const RichText = ({
 	const {portletNamespace} = useConfig();
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPD-11235']) {
+		if (!Liferay.FeatureFlags['LPD-11235']) {
 			setCKEditor5Config({
 				...ckEditor5Config,
 				language: {
@@ -124,7 +124,7 @@ const RichText = ({
 	}, [currentEditingLocale.localeId]);
 
 	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPD-11235']) {
+		if (Liferay.FeatureFlags['LPD-11235']) {
 			const editor = editorRef.current?.editor;
 
 			if (editor) {
@@ -155,7 +155,7 @@ const RichText = ({
 	 * called with stale data.
 	 */
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPD-11235']) {
+		if (!Liferay.FeatureFlags['LPD-11235']) {
 			setCurrentInternalValue(
 				getEditingValue({
 					defaultLocale,
@@ -201,7 +201,7 @@ const RichText = ({
 			icon: normalizeLocaleId(newEditingLocale.localeId),
 		});
 
-		if (!Liferay.FeatureFlags['LPD-11235']) {
+		if (Liferay.FeatureFlags['LPD-11235']) {
 			setCurrentInternalValue(
 				getEditingValue({
 					defaultLocale,
@@ -286,7 +286,7 @@ const RichText = ({
 	const resetTranslation = useCallback(() => {
 		const data = currentValue[defaultLocale.localeId];
 
-		if (Liferay.FeatureFlags['LPD-11235']) {
+		if (!Liferay.FeatureFlags['LPD-11235']) {
 			setCurrentInternalValue(data ?? '');
 		}
 		else {
@@ -296,7 +296,7 @@ const RichText = ({
 
 	useEffect(() => {
 		const handleRestoreState = () => {
-			if (Liferay.FeatureFlags['LPD-11235']) {
+			if (!Liferay.FeatureFlags['LPD-11235']) {
 				setCurrentInternalValue(value ?? '');
 			}
 			else {
@@ -337,7 +337,7 @@ const RichText = ({
 		>
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
-					{Liferay.FeatureFlags['LPD-11235'] ? (
+					{!Liferay.FeatureFlags['LPD-11235'] ? (
 						<CKEditor5ClassicEditor
 							className="w-100"
 							config={ckEditor5Config}

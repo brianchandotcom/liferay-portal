@@ -518,7 +518,7 @@ public class TranslateDisplayContext {
 	private Map<String, Object> _getInfoFieldEditorConfig(String infoFieldId) {
 		String editorName = "ckeditor";
 
-		if (FeatureFlagManagerUtil.isEnabled(
+		if (!FeatureFlagManagerUtil.isEnabled(
 				_themeDisplay.getCompanyId(), "LPD-11235")) {
 
 			editorName = "ckeditor5_classic";

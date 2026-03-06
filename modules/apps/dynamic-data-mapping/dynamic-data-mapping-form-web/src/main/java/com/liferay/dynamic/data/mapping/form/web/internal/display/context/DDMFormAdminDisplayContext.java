@@ -419,12 +419,19 @@ public class DDMFormAdminDisplayContext {
 					StringUtil.equals(
 						ddmFormFieldType.getName(), "rich_text")) {
 
+					String editorName = "ckeditor5_classic";
+
+					if (FeatureFlagManagerUtil.isEnabled(
+							themeDisplay.getCompanyId(), "LPD-11235")) {
+
+						editorName = "ckeditor_classic";
+					}
+
 					EditorConfiguration editorConfiguration =
 						EditorConfigurationFactoryUtil.getEditorConfiguration(
 							StringPool.BLANK, ddmFormFieldType.getName(),
-							FeatureFlagManagerUtil.isEnabled("LPD-11235") ?
-								"ckeditor5_classic" : "ckeditor_classic",
-							new HashMap<String, Object>(), themeDisplay,
+							editorName, new HashMap<String, Object>(),
+							themeDisplay,
 							RequestBackedPortletURLFactoryUtil.create(
 								httpServletRequest));
 

@@ -27,7 +27,7 @@ export default function CommentForm({
 	return (
 		<form onFocus={onFormFocus}>
 			<InvisibleFieldset disabled={loading}>
-				{Liferay.FeatureFlags['LPD-11235'] ? (
+				{!Liferay.FeatureFlags['LPD-11235'] ? (
 					<CKEditor
 						initialData={textareaContent}
 						onChange={onTextareaChange}

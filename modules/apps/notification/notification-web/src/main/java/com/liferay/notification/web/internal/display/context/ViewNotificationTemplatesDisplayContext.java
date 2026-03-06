@@ -88,7 +88,7 @@ public class ViewNotificationTemplatesDisplayContext {
 
 		String editorName = "ckeditor_classic";
 
-		if (FeatureFlagManagerUtil.isEnabled(
+		if (!FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPD-11235")) {
 
 			editorName = "ckeditor5_classic";

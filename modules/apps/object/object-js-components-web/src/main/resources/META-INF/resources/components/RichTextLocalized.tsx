@@ -85,7 +85,7 @@ export function RichTextLocalized({
 	const defaultLanguage = availableLocales[0];
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPD-11235']) {
+		if (!Liferay.FeatureFlags['LPD-11235']) {
 			const editor = editorRef.current;
 
 			if (editor) {
@@ -117,7 +117,7 @@ export function RichTextLocalized({
 	const handleLocaleChange = (locale: LabelSymbolObject) => {
 		const editor = editorRef.current;
 
-		if (Liferay.FeatureFlags['LPD-11235'] && editor) {
+		if (!Liferay.FeatureFlags['LPD-11235'] && editor) {
 			const currentData = editor.getData();
 			const currentLocaleValue = translations[selectedLocale];
 			const targetLocaleValue = translations[locale.label];
@@ -149,7 +149,7 @@ export function RichTextLocalized({
 		>
 			<div className="lfr-objects__rich-text-localized">
 				<div className="lfr-objects__rich-text-localized-editor">
-					{Liferay.FeatureFlags['LPD-11235'] ? (
+					{!Liferay.FeatureFlags['LPD-11235'] ? (
 						<CKEditor5ClassicEditor
 							className="w-100"
 							config={editorConfig}

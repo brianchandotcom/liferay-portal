@@ -298,7 +298,7 @@ while (manageableCalendarsIterator.hasNext()) {
 				</aui:field-wrapper>
 
 				<c:choose>
-					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+					<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
 						<div data-testid="descriptionContainer">
 							<label for="<portlet:namespace />description"><liferay-ui:message key="description" /></label>
 

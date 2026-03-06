@@ -79,7 +79,7 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 		<aui:input name="subject" value='<%= BeanPropertiesUtil.getString(calendarNotificationTemplate, "subject", NotificationUtil.getDefaultTemplate(notificationType, notificationTemplateType, NotificationField.SUBJECT)) %>' />
 
 		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+			<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
 				<div data-testid="bodyEditorContainer">
 					<label for="<portlet:namespace />body">
 						<liferay-ui:message key="body" />
@@ -206,7 +206,7 @@ String body = BeanPropertiesUtil.getString(calendarNotificationTemplate, "body",
 
 <aui:script>
 	function <portlet:namespace />updateCalendarNotificationTemplate() {
-		if (!Liferay.FeatureFlags['LPD-11235']) {
+		if (Liferay.FeatureFlags['LPD-11235']) {
 			var notificationTemplateContentBody = document.getElementById(
 				'<portlet:namespace />body'
 			);

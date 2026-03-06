@@ -29,7 +29,9 @@ public class BaseFragmentEntryLinkEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11235")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-11235")) {
+
 			EditorConfiguration editorConfiguration =
 				EditorConfigurationFactoryUtil.getEditorConfiguration(
 					StringPool.BLANK, StringPool.BLANK, "ckeditor5_balloon",

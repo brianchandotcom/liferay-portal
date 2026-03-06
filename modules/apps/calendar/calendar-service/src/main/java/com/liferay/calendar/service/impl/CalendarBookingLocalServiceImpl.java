@@ -157,7 +157,7 @@ public class CalendarBookingLocalServiceImpl
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
 			String description = null;
 
-			if (!FeatureFlagManagerUtil.isEnabled(
+			if (FeatureFlagManagerUtil.isEnabled(
 					calendar.getCompanyId(), "LPD-11235") &&
 				!FeatureFlagManagerUtil.isEnabled(
 					calendar.getCompanyId(), "LPD-31212")) {
@@ -1211,7 +1211,7 @@ public class CalendarBookingLocalServiceImpl
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
 			String description = null;
 
-			if (!FeatureFlagManagerUtil.isEnabled(
+			if (FeatureFlagManagerUtil.isEnabled(
 					calendar.getCompanyId(), "LPD-11235") &&
 				!FeatureFlagManagerUtil.isEnabled(
 					calendar.getCompanyId(), "LPD-31212")) {

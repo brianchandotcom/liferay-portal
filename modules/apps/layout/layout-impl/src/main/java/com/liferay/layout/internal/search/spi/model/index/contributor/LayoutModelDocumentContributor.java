@@ -47,6 +47,7 @@ public class LayoutModelDocumentContributor
 		document.addText(
 			Field.DEFAULT_LANGUAGE_ID, layout.getDefaultLanguageId());
 		document.addLocalizedText(Field.NAME, layout.getNameMap());
+		document.addNumberSortable(Field.PRIORITY, layout.getPriority());
 		document.addKeyword(Field.STATUS, _getStatus(layout));
 
 		_addLayoutContentFields(document, layout);

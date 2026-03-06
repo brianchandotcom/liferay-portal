@@ -85,6 +85,8 @@ metadata:
     name: provider-family-aws
 spec:
     package: xpkg.upbound.io/upbound/provider-family-aws:v2.3.0
+    runtimeConfigRef:
+        name: aws-family-config
     skipDependencyResolution: true
 ---
 apiVersion: pkg.crossplane.io/v1

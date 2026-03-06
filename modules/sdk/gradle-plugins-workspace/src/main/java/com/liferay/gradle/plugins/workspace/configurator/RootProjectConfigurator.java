@@ -1889,7 +1889,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		WorkspaceExtension workspaceExtension) {
 
 		Property<String> toVersionProperty =
-			upgradeSourceCodeTask.getToVersionProperty();
+			upgradeSourceCodeTask.getToVersion();
 
 		toVersionProperty.convention(
 			workspaceExtension.getTargetPlatformVersion());

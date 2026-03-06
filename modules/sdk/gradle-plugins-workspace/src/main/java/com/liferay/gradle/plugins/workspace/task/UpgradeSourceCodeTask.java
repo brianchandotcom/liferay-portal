@@ -58,7 +58,7 @@ public class UpgradeSourceCodeTask extends FormatSourceTask {
 		description = "The version of Liferay to target when upgrading the source code.",
 		option = "to-version"
 	)
-	public Property<String> getToVersionProperty() {
+	public Property<String> getToVersion() {
 		return _toVersionProperty;
 	}
 

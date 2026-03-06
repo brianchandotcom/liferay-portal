@@ -64,7 +64,7 @@ public class CPTaxCategoryServiceTest {
 	@Test
 	public void testAddCPTaxCategory() throws Exception {
 		_runTest(
-			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORIES,
+			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY,
 			"com.liferay.commerce.tax", false,
 			() ->
 				_cpTaxCategory = _cpTaxCategoryService.addCPTaxCategory(

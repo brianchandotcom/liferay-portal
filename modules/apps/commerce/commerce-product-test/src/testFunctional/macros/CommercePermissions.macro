@@ -130,7 +130,7 @@ definition {
 				roleTitle = ${roleTitle});
 
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ADD_COMMERCE_PRODUCT_TAX_CATEGORIES",
+				resourceAction = "ADD_COMMERCE_PRODUCT_TAX_CATEGORY",
 				resourceName = "com.liferay.commerce.tax",
 				roleTitle = ${roleTitle});
 

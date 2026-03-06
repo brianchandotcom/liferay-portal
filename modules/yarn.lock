@@ -8733,13 +8733,6 @@ big.js@^5.2.2:
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-billboard.js@^1.8.0:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/billboard.js/-/billboard.js-1.9.2.tgz"
-  integrity sha512-To/LT9vdQLFc3x7KSDJjxIZbXJ9+vHXgSHun3/pZpxGUVaIE9hZmE+w3jcRIw02ZqdnTeHYh9M+Imck4kpGC3w==
-  dependencies:
-    d3 "^5.9.2"
-
 binary-extensions@^1.0.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.13.0.tgz"
@@ -10915,7 +10908,7 @@ d3-zoom@^3.0.0:
     d3-selection "2 - 3"
     d3-transition "2 - 3"
 
-d3@5.9.3, d3@^5.9.2:
+d3@5.9.3:
   version "5.9.3"
   resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.3.tgz"
   integrity sha512-cN3FjT0qg+5/mEdya0c7ApTXvF6+m1jhSgU7J+C7Qzm0g7zzospwURBoOGUab4E6QSxf7l60dLBlkGABZBkYeg==
@@ -21083,6 +21076,15 @@ react-draggable@^4.4.4:
   dependencies:
     clsx "^1.1.1"
     prop-types "^15.6.0"
+
+react-dropzone@11.2.4:
+  version "11.2.4"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-11.2.4.tgz#391a8d2e41a8a974340f83524d306540192e3313"
+  integrity sha512-EGSvK2CxFTuc28WxwuJCICyuYFX8b+sRumwU6Bs6sTbElV2HtQkT0d6C+HEee6XfbjiLIZ+Th9uji27rvo2wGw==
+  dependencies:
+    attr-accept "^2.2.1"
+    file-selector "^0.2.2"
+    prop-types "^15.7.2"
 
 react-dropzone@11.4.2:
   version "11.4.2"

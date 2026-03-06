@@ -117,7 +117,9 @@ export default function DataFilter() {
 								id="fromDate"
 								months={dateUtils.getMonthsLong(locale)}
 								onChange={(value) => setFromDate(value)}
-								placeholder={DATE_FORMAT.toUpperCase()}
+								placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
+								time
+								timezone={Liferay.ThemeDisplay.getTimeZone()}
 								value={fromDate}
 								weekdaysShort={dateUtils.getWeekdaysShort(
 									locale
@@ -144,7 +146,9 @@ export default function DataFilter() {
 								id="toDate"
 								months={dateUtils.getMonthsLong(locale)}
 								onChange={(value) => setToDate(value)}
-								placeholder={DATE_FORMAT.toUpperCase()}
+								placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
+								time
+								timezone={Liferay.ThemeDisplay.getTimeZone()}
 								value={toDate}
 								weekdaysShort={dateUtils.getWeekdaysShort(
 									locale

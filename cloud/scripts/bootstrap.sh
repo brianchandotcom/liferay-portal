@@ -18,7 +18,7 @@ function main {
 
 	local extracted_dir=$(_download_and_extract_files "${provider}")
 
-	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${@}"
+	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${config_file}"
 }
 
 function _check_utils {

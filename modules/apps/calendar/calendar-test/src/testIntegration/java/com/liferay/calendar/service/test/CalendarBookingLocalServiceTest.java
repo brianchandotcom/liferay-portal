@@ -58,6 +58,7 @@ import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -507,7 +508,11 @@ public class CalendarBookingLocalServiceTest {
 		Assert.assertTrue(secondChildCalendarBooking.isDenied());
 	}
 
-	@FeatureFlag("LPD-31212")
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-11235"), @FeatureFlag(value = "LPD-31212")
+		}
+	)
 	@Test
 	public void testAddCalendarBookingWithVideoDescriptionWithCKEditor4()
 		throws Exception {
@@ -525,7 +530,7 @@ public class CalendarBookingLocalServiceTest {
 				"width=\"560\"></iframe></div><p>&nbsp;</p>"));
 	}
 
-	@FeatureFlag("LPD-11235")
+	@FeatureFlag(enable = false, value = "LPD-11235")
 	@Test
 	public void testAddCalendarBookingWithVideoDescriptionWithCKEditor5()
 		throws Exception {

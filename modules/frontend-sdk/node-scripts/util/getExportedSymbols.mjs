@@ -54,13 +54,8 @@ async function loadSymbols(moduleName) {
 	try {
 		module = projectScopeRequire(moduleName);
 	}
-	catch (error) {
-		if (
-			error.code === 'ERR_REQUIRE_ESM' ||
-			error.toString().includes('SyntaxError:')
-		) {
-			module = await parseESMExports(moduleName);
-		}
+	catch (_error) {
+		module = await parseESMExports(moduleName);
 	}
 
 	const symbols = Object.keys(module).reduce((symbols, key) => {

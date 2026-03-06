@@ -141,7 +141,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		htmlTopTag.setPosition("auto");
 
 		try {
-			writer.write("<div class=\"d-flex flex-column\">");
+			writer.write("<div class=\"d-flex flex-column sticky-top\">");
 			writer.write(
 				"<nav aria-label=\"Publication Menu\" class=\"cadmin\">");
 

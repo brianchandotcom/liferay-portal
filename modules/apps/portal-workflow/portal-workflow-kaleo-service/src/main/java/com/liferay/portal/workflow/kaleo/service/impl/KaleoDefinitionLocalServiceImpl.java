@@ -7,8 +7,8 @@ package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -482,10 +482,10 @@ public class KaleoDefinitionLocalServiceImpl
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private KaleoConditionLocalService _kaleoConditionLocalService;

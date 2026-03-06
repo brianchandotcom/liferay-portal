@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {render} from '@liferay/frontend-js-react-web';
+
 import CMSFileUploaderComponent from '../item_selector_file_uploader/CMSFileUploaderComponent';
 import {IItemSelectorModalProps} from './ItemSelectorModal';
-import openItemSelectorModal from './openItemSelectorModal';
 
 interface CMSFile {
 	description: string;
@@ -180,20 +181,27 @@ export default function openCMSFileSelectorModal({
 		});
 	}
 
-	openItemSelectorModal({
-		...finalConfig,
-		allowedExtensions,
-		fdsProps: {
-			...FDS_PROPS,
-			...fdsProps,
-			id: `CMSItemSelectorFDS_${getRandomId()}`,
+	return render(
+
+		// @ts-ignore
+
+		DetachedCMSFilesItemSelectorModal,
+		{
+			...finalConfig,
+			allowedExtensions,
+			fdsProps: {
+				...FDS_PROPS,
+				...fdsProps,
+				id: `CMSItemSelectorFDS_${getRandomId()}`,
+			},
+			filesUploaderComponent: allowDragAndDrop
+				? CMSFileUploaderComponent
+				: undefined,
+			groupId,
+			itemTypeLabel: Liferay.Language.get('files'),
+			maxFileSize,
+			onItemsChange: onSelect,
 		},
-		filesUploaderComponent: allowDragAndDrop
-			? CMSFileUploaderComponent
-			: undefined,
-		groupId,
-		itemTypeLabel: Liferay.Language.get('files'),
-		maxFileSize,
-		onItemsChange: onSelect,
-	});
+		document.createElement('div')
+	);
 }

@@ -5,7 +5,7 @@
 
 import {render} from '@liferay/frontend-js-react-web';
 
-import DetachedCMSFilesItemSelectorModal from './DetachedCMSFilesItemSelectorModal';
+import DetachedItemSelectorModal from './DetachedItemSelectorModal';
 import {TDetachedItemSelectorModal} from './types';
 
 /**
@@ -23,7 +23,7 @@ export default function openItemSelectorModal<T>(
 
 		// @ts-ignore
 
-		DetachedCMSFilesItemSelectorModal,
+		DetachedItemSelectorModal,
 		props,
 		document.createElement('div')
 	);

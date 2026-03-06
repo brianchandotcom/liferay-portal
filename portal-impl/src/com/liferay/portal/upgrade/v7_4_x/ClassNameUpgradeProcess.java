@@ -134,6 +134,25 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private void _deleteDLFileEntryMetadata(
+			long newStructureId, long oldStructureId)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"delete from DLFileEntryMetadata d1 where DDMStructureId ",
+					"= ? and exists (select 1 from DLFileEntryMetadata d2 ",
+					"where d1.ctCollectionId = d2.ctCollectionId and ",
+					"d2.DDMStructureId = ? and d1.fileVersionId = ",
+					"d2.fileVersionId)"))) {
+
+			preparedStatement.setLong(1, oldStructureId);
+			preparedStatement.setLong(2, newStructureId);
+
+			preparedStatement.execute();
+		}
+	}
+
 	private long _getClassNameId(String value) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select classNameId from ClassName_ where value = ?")) {
@@ -256,6 +275,8 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 	private void _updateDDMStructureRelatedTables(
 			long newStructureId, long oldStructureId)
 		throws Exception {
+
+		_deleteDLFileEntryMetadata(newStructureId, oldStructureId);
 
 		_update(
 			"DDMStorageLink", "structureId", newStructureId, oldStructureId);

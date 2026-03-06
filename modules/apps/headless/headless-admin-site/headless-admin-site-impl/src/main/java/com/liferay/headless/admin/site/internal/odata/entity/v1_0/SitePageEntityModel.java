@@ -6,11 +6,14 @@
 package com.liferay.headless.admin.site.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -20,6 +23,11 @@ public class SitePageEntityModel implements EntityModel {
 
 	public SitePageEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+			new ComplexEntityField(
+				"pageSettings",
+				Collections.singletonList(
+					new IntegerEntityField(
+						"priority", locale -> Field.PRIORITY))),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

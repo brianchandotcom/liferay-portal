@@ -71,7 +71,7 @@ test(
 
 			await page
 				.frameLocator('iframe[title="Select Site"]')
-				.getByRole('link', {name: /^Liferay( DXP)?$/})
+				.getByRole('link', {exact: true, name: 'Liferay DXP Site'})
 				.click();
 
 			await waitForPageToBeLoaded(page);

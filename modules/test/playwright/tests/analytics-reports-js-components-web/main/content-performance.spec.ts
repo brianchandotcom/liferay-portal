@@ -136,7 +136,7 @@ test('Displays empty state when Analytics Cloud is not connected', async ({
 
 	await expect(
 		page.getByText(
-			'In order to view asset performance, your Liferay DXP instance has to be connected with Liferay Analytics Cloud.'
+			'In order to view asset performance, your Liferay instance has to be connected with Liferay Analytics Cloud.'
 		)
 	).toBeVisible();
 

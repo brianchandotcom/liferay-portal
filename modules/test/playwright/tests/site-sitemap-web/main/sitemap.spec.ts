@@ -87,9 +87,9 @@ test(
 
 		await page
 			.frameLocator('iframe[title="Select Site"]')
-			.getByRole('link', {name: 'Liferay DXP'})
+			.getByRole('link', {name: 'Liferay DXP Site'})
 			.click();
 
-		await expect(page.getByText('Liferay DXP')).toHaveCount(1);
+		await expect(page.getByText('Liferay DXP Site')).toHaveCount(1);
 	}
 );

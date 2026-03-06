@@ -80,7 +80,7 @@ export class FormFieldsPage {
 			.click();
 
 		await fileSelectorIFrame
-			.getByRole('link', {name: 'Liferay DXP'})
+			.getByRole('link', {name: 'Liferay DXP Site'})
 			.click();
 
 		await fileSelectorIFrame

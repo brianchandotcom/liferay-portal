@@ -561,7 +561,7 @@ test('Admin users can see all site scopes regardless of site membership', async 
 		const scopesArray = scopeInnerText.split('\n');
 
 		expect(scopesArray).toEqual(
-			expect.arrayContaining([site.name, 'Global', 'Liferay DXP'])
+			expect.arrayContaining([site.name, 'Global', 'Liferay DXP Site'])
 		);
 	});
 });

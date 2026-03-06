@@ -355,9 +355,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			}
 		}
 
-		AutoDeployDir autoDeployDir = AutoDeployDir.getDefault();
-
-		autoDeployDir.scanDirectory();
+		AutoDeployDir.scanDirectory();
 
 		ModuleFrameworkUtil.createFramework();
 

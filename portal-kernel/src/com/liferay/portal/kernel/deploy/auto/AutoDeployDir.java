@@ -36,8 +36,6 @@ import java.util.regex.Pattern;
  */
 public class AutoDeployDir {
 
-	public static final String DEFAULT_NAME = "defaultAutoDeployDir";
-
 	public static void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
@@ -106,42 +104,24 @@ public class AutoDeployDir {
 		FileUtil.move(file, new File(dirName, fileName));
 	}
 
-	public static AutoDeployDir getDefault() {
-		return _defaultAutoDeployDir;
-	}
+	public static void scanDirectory() {
+		File deployDir = new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 
-	public AutoDeployDir(String name, File deployDir, long interval) {
-		_name = name;
-		_deployDir = deployDir;
-		_interval = interval;
-
-		if (!_deployDir.exists()) {
+		if (!deployDir.exists()) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Creating missing directory " + _deployDir);
+				_log.info("Creating missing directory " + deployDir);
 			}
 
-			boolean created = _deployDir.mkdirs();
+			boolean created = deployDir.mkdirs();
 
 			if (!created) {
-				_log.error("Directory " + _deployDir + " could not be created");
+				_log.error("Directory " + deployDir + " could not be created");
 			}
+
+			return;
 		}
-	}
 
-	public File getDeployDir() {
-		return _deployDir;
-	}
-
-	public long getInterval() {
-		return _interval;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public void scanDirectory() {
-		File[] files = _deployDir.listFiles();
+		File[] files = deployDir.listFiles();
 
 		if (files == null) {
 			return;
@@ -190,8 +170,8 @@ public class AutoDeployDir {
 		}
 	}
 
-	public void start() {
-		if ((_interval > 0) &&
+	public static void start() {
+		if ((PropsValues.AUTO_DEPLOY_INTERVAL > 0) &&
 			((_autoDeployScanner == null) || !_autoDeployScanner.isAlive())) {
 
 			try {
@@ -199,12 +179,15 @@ public class AutoDeployDir {
 
 				_autoDeployScanner = new AutoDeployScanner(
 					currentThread.getThreadGroup(),
-					AutoDeployScanner.class.getName(), this);
+					AutoDeployScanner.class.getName(),
+					PropsValues.AUTO_DEPLOY_INTERVAL);
 
 				_autoDeployScanner.start();
 
 				if (_log.isInfoEnabled()) {
-					_log.info("Auto deploy scanner started for " + _deployDir);
+					_log.info(
+						"Auto deploy scanner started for " +
+							PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 				}
 			}
 			catch (Exception exception) {
@@ -215,18 +198,22 @@ public class AutoDeployDir {
 		}
 		else {
 			if (_log.isInfoEnabled()) {
-				_log.info("Auto deploy scanning is disabled for " + _deployDir);
+				_log.info(
+					"Auto deploy scanning is disabled for " +
+						PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 			}
 		}
 	}
 
-	public void stop() {
+	public static void stop() {
 		if (_autoDeployScanner != null) {
 			_autoDeployScanner.pause();
 		}
 	}
 
-	protected AutoDeploymentContext buildAutoDeploymentContext(File file) {
+	protected static AutoDeploymentContext buildAutoDeploymentContext(
+		File file) {
+
 		AutoDeploymentContext autoDeploymentContext =
 			new AutoDeploymentContext();
 
@@ -235,7 +222,7 @@ public class AutoDeployDir {
 		return autoDeploymentContext;
 	}
 
-	protected void processFile(File file) {
+	protected static void processFile(File file) {
 		String fileName = file.getName();
 
 		if (!file.canRead()) {
@@ -320,16 +307,9 @@ public class AutoDeployDir {
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
 	private static AutoDeployScanner _autoDeployScanner;
-	private static final AutoDeployDir _defaultAutoDeployDir =
-		new AutoDeployDir(
-			DEFAULT_NAME, new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR),
-			PropsValues.AUTO_DEPLOY_INTERVAL);
+	private static final Map<String, Long> _blacklistFileTimestamps =
+		new HashMap<>();
 	private static final Pattern _versionPattern = Pattern.compile(
 		"-[\\d]+((\\.[\\d]+)+(-.+)*)\\.war$");
-
-	private final Map<String, Long> _blacklistFileTimestamps = new HashMap<>();
-	private final File _deployDir;
-	private final long _interval;
-	private final String _name;
 
 }

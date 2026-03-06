@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {TinyColorInstance, tinycolor} from '@clayui/color-picker';
-
 import convertRGBtoHex from '../../utils/convertRGBtoHex';
-import {Field, Token} from './ColorPicker';
+import getValidHexColor from '../../utils/getValidHexColor';
+import {Field, Token} from './OldColorPicker';
 
 const ERROR_MESSAGES = {
 	mutuallyReferenced: Liferay.Language.get(
@@ -26,7 +25,7 @@ interface Error {
 	error: string;
 }
 
-export function parseColorValue({
+export function oldParseColorValue({
 	editedTokenValues,
 	field,
 	token,
@@ -41,8 +40,6 @@ export function parseColorValue({
 	let tokenLabel: string | undefined = undefined;
 	let pickerColor: string = '';
 
-	const color = tinycolor(value);
-
 	if (token) {
 		if (token.name === field.name) {
 			return {error: ERROR_MESSAGES.selfReferenced};
@@ -54,38 +51,34 @@ export function parseColorValue({
 
 		tokenLabel = token.label;
 	}
-	else if (color.isValid()) {
-		const colorFormat = color.getFormat();
+	else if (value.startsWith('#')) {
+		validValue = getValidHexColor(value);
 
-		if (colorFormat === 'hex' || colorFormat === 'hex8') {
-			validValue = internalToHex(color);
+		if (!validValue) {
+			return {};
 		}
-		else if (color.toString() !== value) {
-			validValue = color.toString();
-		}
-		else {
-			const element = document.createElement('div');
 
-			element.style.background = value;
-			element.style.display = 'none';
-
-			document.body.appendChild(element);
-
-			validValue = element.style.background;
-
-			if (!validValue) {
-				return {};
-			}
-
-			pickerColor = convertRGBtoHex(
-				window.getComputedStyle(element).backgroundColor
-			).replace(/^#/, '');
-
-			element.remove();
-		}
+		pickerColor = validValue.replace('#', '');
 	}
 	else {
-		return {};
+		const element = document.createElement('div');
+
+		element.style.background = value;
+		element.style.display = 'none';
+
+		document.body.appendChild(element);
+
+		validValue = element.style.background;
+
+		if (!validValue) {
+			return {};
+		}
+
+		pickerColor = convertRGBtoHex(
+			window.getComputedStyle(element).backgroundColor
+		).replace(/^#/, '');
+
+		element.parentElement!.removeChild(element);
 	}
 
 	return {
@@ -94,12 +87,4 @@ export function parseColorValue({
 		pickerColor,
 		value: validValue,
 	};
-}
-
-function internalToHex(color: TinyColorInstance) {
-	if (color.getAlpha() < 1) {
-		return color.toHex8().toUpperCase();
-	}
-
-	return color.toHex().toUpperCase();
 }

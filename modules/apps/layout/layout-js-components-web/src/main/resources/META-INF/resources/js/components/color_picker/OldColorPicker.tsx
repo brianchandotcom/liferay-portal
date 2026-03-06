@@ -22,7 +22,7 @@ import {
 	ColorCategoryMap,
 	DropdownColorPicker,
 } from './DropdownColorPicker';
-import {parseColorValue} from './parseColorValue';
+import {oldParseColorValue} from './oldParseColorValue';
 
 import './ColorPicker.scss';
 
@@ -220,7 +220,7 @@ export default function ColorPicker({
 					token.label.toLowerCase() === target.value.toLowerCase()
 			);
 
-			const nextValue = parseColorValue({
+			const nextValue = oldParseColorValue({
 				editedTokenValues,
 				field,
 				token,

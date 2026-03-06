@@ -13,6 +13,7 @@ import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -65,7 +66,7 @@ public class DLValidatorImplTest {
 
 		Mockito.when(
 			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
-				Mockito.anyLong(), Mockito.anyString())
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			15L
 		);
@@ -175,7 +176,7 @@ public class DLValidatorImplTest {
 
 		Mockito.when(
 			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
-				groupId, "image/png")
+				CompanyThreadLocal.getCompanyId(), groupId, "image/png")
 		).thenReturn(
 			10L
 		);

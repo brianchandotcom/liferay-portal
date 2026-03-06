@@ -47,18 +47,22 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 		long companyId = GetterUtil.getLong(
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
-		if (companyId != CompanyConstants.SYSTEM) {
-			_dlSizeLimitConfigurationHelper.updateCompanyConfiguration(
-				companyId, pid, dictionary);
+		if (companyId == CompanyConstants.SYSTEM) {
+			return;
 		}
 
 		long groupId = GetterUtil.getLong(
 			dictionary.get("groupId"), GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-			_dlSizeLimitConfigurationHelper.updateGroupConfiguration(
-				groupId, pid, dictionary);
+		if (groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			_dlSizeLimitConfigurationHelper.updateCompanyConfiguration(
+				companyId, pid, dictionary);
+
+			return;
 		}
+
+		_dlSizeLimitConfigurationHelper.updateGroupConfiguration(
+			companyId, groupId, pid, dictionary);
 	}
 
 	@Reference

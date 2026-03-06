@@ -10,6 +10,7 @@ import com.liferay.document.library.internal.configuration.helper.DLSizeLimitCon
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
@@ -45,18 +46,20 @@ public class DLSizeLimitConfigurationProviderImpl
 
 	@Override
 	public long getGroupFileMaxSize(long groupId) {
-		return _dlSizeLimitConfigurationHelper.getGroupFileMaxSize(groupId);
+		return _dlSizeLimitConfigurationHelper.getGroupFileMaxSize(
+			_getCompanyId(groupId), groupId);
 	}
 
 	@Override
 	public long getGroupMaxSizeToCopy(long groupId) {
-		return _dlSizeLimitConfigurationHelper.getGroupMaxSizeToCopy(groupId);
+		return _dlSizeLimitConfigurationHelper.getGroupMaxSizeToCopy(
+			_getCompanyId(groupId), groupId);
 	}
 
 	@Override
 	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId) {
 		return _dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
-			groupId);
+			_getCompanyId(groupId), groupId);
 	}
 
 	@Override
@@ -126,6 +129,16 @@ public class DLSizeLimitConfigurationProviderImpl
 
 		_configurationProvider.saveSystemConfiguration(
 			DLSizeLimitConfiguration.class, properties);
+	}
+
+	private long _getCompanyId(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group != null) {
+			return group.getCompanyId();
+		}
+
+		return CompanyThreadLocal.getCompanyId();
 	}
 
 	private void _updateMimeTypeSizeLimitProperty(

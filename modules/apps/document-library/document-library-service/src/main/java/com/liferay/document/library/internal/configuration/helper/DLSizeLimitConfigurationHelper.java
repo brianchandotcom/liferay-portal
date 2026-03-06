@@ -10,9 +10,6 @@ import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -26,7 +23,6 @@ import java.util.function.Supplier;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renan Vasconcelos
@@ -76,33 +72,40 @@ public class DLSizeLimitConfigurationHelper {
 		return map.getOrDefault(String.format("%s/*", parts.get(0)), 0L);
 	}
 
-	public long getGroupFileMaxSize(long groupId) {
+	public long getGroupFileMaxSize(long companyId, long groupId) {
 		DLSizeLimitConfiguration dlSizeLimitConfiguration =
-			_getGroupDLSizeLimitConfiguration(groupId);
+			_getGroupDLSizeLimitConfiguration(companyId, groupId);
 
 		return dlSizeLimitConfiguration.fileMaxSize();
 	}
 
-	public long getGroupMaxSizeToCopy(long groupId) {
+	public long getGroupMaxSizeToCopy(long companyId, long groupId) {
 		DLSizeLimitConfiguration dlSizeLimitConfiguration =
-			_getGroupDLSizeLimitConfiguration(groupId);
+			_getGroupDLSizeLimitConfiguration(companyId, groupId);
 
 		return dlSizeLimitConfiguration.maxSizeToCopy();
 	}
 
-	public Map<String, Long> getGroupMimeTypeSizeLimit(long groupId) {
+	public Map<String, Long> getGroupMimeTypeSizeLimit(
+		long companyId, long groupId) {
+
 		return Collections.unmodifiableMap(
 			_groupMimeTypeSizeLimitsMap.computeIfAbsent(
-				groupId, this::_computeGroupMimeTypeSizeLimit));
+				_getGroupKey(companyId, groupId),
+				groupKey -> _computeGroupMimeTypeSizeLimit(
+					companyId, groupId)));
 	}
 
-	public long getGroupMimeTypeSizeLimit(long groupId, String mimeType) {
+	public long getGroupMimeTypeSizeLimit(
+		long companyId, long groupId, String mimeType) {
+
 		if (Validator.isNull(mimeType)) {
 			return 0;
 		}
 
 		Map<String, Long> map = _groupMimeTypeSizeLimitsMap.computeIfAbsent(
-			groupId, this::_computeGroupMimeTypeSizeLimit);
+			_getGroupKey(companyId, groupId),
+			groupKey -> _computeGroupMimeTypeSizeLimit(companyId, groupId));
 
 		long sizeLimit = map.getOrDefault(mimeType, 0L);
 
@@ -137,11 +140,11 @@ public class DLSizeLimitConfigurationHelper {
 
 			_groupMimeTypeSizeLimitsMap.clear();
 		}
-		else if (_groupIds.containsKey(pid)) {
-			long groupId = _groupIds.remove(pid);
+		else if (_groupKeys.containsKey(pid)) {
+			String groupKey = _groupKeys.remove(pid);
 
-			_groupConfigurationBeans.remove(groupId);
-			_groupMimeTypeSizeLimitsMap.remove(groupId);
+			_groupConfigurationBeans.remove(groupKey);
+			_groupMimeTypeSizeLimitsMap.remove(groupKey);
 		}
 	}
 
@@ -157,14 +160,17 @@ public class DLSizeLimitConfigurationHelper {
 	}
 
 	public void updateGroupConfiguration(
-		long groupId, String pid, Dictionary<String, ?> dictionary) {
+		long companyId, long groupId, String pid,
+		Dictionary<String, ?> dictionary) {
+
+		String groupKey = _getGroupKey(companyId, groupId);
 
 		_groupConfigurationBeans.put(
-			groupId,
+			groupKey,
 			ConfigurableUtil.createConfigurable(
 				DLSizeLimitConfiguration.class, dictionary));
-		_groupIds.put(pid, groupId);
-		_groupMimeTypeSizeLimitsMap.remove(groupId);
+		_groupKeys.put(pid, groupKey);
+		_groupMimeTypeSizeLimitsMap.remove(groupKey);
 	}
 
 	@Activate
@@ -181,9 +187,11 @@ public class DLSizeLimitConfigurationHelper {
 			_getCompanyDLSizeLimitConfiguration(companyId));
 	}
 
-	private Map<String, Long> _computeGroupMimeTypeSizeLimit(long groupId) {
+	private Map<String, Long> _computeGroupMimeTypeSizeLimit(
+		long companyId, long groupId) {
+
 		return _computeMimeTypeSizeLimit(
-			_getGroupDLSizeLimitConfiguration(groupId));
+			_getGroupDLSizeLimitConfiguration(companyId, groupId));
 	}
 
 	private Map<String, Long> _computeMimeTypeSizeLimit(
@@ -209,8 +217,8 @@ public class DLSizeLimitConfigurationHelper {
 			() -> _systemDLSizeLimitConfiguration);
 	}
 
-	private DLSizeLimitConfiguration _getDLSizeLimitConfiguration(
-		long key, Map<Long, DLSizeLimitConfiguration> configurationBeans,
+	private <T> DLSizeLimitConfiguration _getDLSizeLimitConfiguration(
+		T key, Map<T, DLSizeLimitConfiguration> configurationBeans,
 		Supplier<DLSizeLimitConfiguration> supplier) {
 
 		if (configurationBeans.containsKey(key)) {
@@ -221,35 +229,25 @@ public class DLSizeLimitConfigurationHelper {
 	}
 
 	private DLSizeLimitConfiguration _getGroupDLSizeLimitConfiguration(
-		long groupId) {
+		long companyId, long groupId) {
 
 		return _getDLSizeLimitConfiguration(
-			groupId, _groupConfigurationBeans,
-			() -> {
-				Group group = _groupLocalService.fetchGroup(groupId);
+			_getGroupKey(companyId, groupId), _groupConfigurationBeans,
+			() -> _getCompanyDLSizeLimitConfiguration(companyId));
+	}
 
-				long companyId = CompanyThreadLocal.getCompanyId();
-
-				if (group != null) {
-					companyId = group.getCompanyId();
-				}
-
-				return _getCompanyDLSizeLimitConfiguration(companyId);
-			});
+	private String _getGroupKey(long companyId, long groupId) {
+		return companyId + "--" + groupId;
 	}
 
 	private final Map<Long, DLSizeLimitConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
 	private volatile Map<Long, Map<String, Long>> _companyMimeTypeSizeLimitsMap;
-	private final Map<Long, DLSizeLimitConfiguration> _groupConfigurationBeans =
-		new ConcurrentHashMap<>();
-	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	private volatile Map<Long, Map<String, Long>> _groupMimeTypeSizeLimitsMap;
+	private final Map<String, DLSizeLimitConfiguration>
+		_groupConfigurationBeans = new ConcurrentHashMap<>();
+	private final Map<String, String> _groupKeys = new ConcurrentHashMap<>();
+	private volatile Map<String, Map<String, Long>> _groupMimeTypeSizeLimitsMap;
 	private volatile DLSizeLimitConfiguration _systemDLSizeLimitConfiguration;
 
 }

@@ -90,17 +90,20 @@ public final class DLValidatorImpl implements DLValidator {
 					_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
 						companyId, mimeType),
 					_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
-						groupId, mimeType))));
+						companyId, groupId, mimeType))));
 	}
 
 	@Override
 	public Map<String, Long> getMimeTypeSizeLimit(long groupId) {
+		long companyId = _getCompanyId(groupId);
+
 		Map<String, Long> mimeTypeSizeLimit = new HashMap<>(
-			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(groupId));
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+				companyId, groupId));
 
 		Map<String, Long> companyMimeTypeSizeLimit =
 			_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
-				_getCompanyId(groupId));
+				companyId);
 
 		companyMimeTypeSizeLimit.forEach(
 			(key, value) -> mimeTypeSizeLimit.merge(
@@ -386,7 +389,8 @@ public final class DLValidatorImpl implements DLValidator {
 			_min(
 				_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
 					companyId),
-				_dlSizeLimitConfigurationHelper.getGroupFileMaxSize(groupId)));
+				_dlSizeLimitConfigurationHelper.getGroupFileMaxSize(
+					companyId, groupId)));
 	}
 
 	private long _min(long a, long b) {

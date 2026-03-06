@@ -1092,7 +1092,7 @@ test(
 							name: 'Started',
 						},
 						numberOfFailedItems: 0,
-						numberOfSuccessfulItems: 0,
+						numberOfSuccessfulItems: 1,
 					},
 					bulkActionTasks,
 					tasks.items[0].id

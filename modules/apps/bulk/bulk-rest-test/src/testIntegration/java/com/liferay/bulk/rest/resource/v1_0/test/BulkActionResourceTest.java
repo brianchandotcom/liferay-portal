@@ -365,7 +365,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		Assert.assertEquals(
 			bulkActionItems.length,
-			GetterUtil.getInteger((String)values.get("numberOfItems")));
+			GetterUtil.getInteger(values.get("numberOfItems")));
 	}
 
 	private BulkAction _testBulkDeleteFilterValidation(BulkAction.Type type)

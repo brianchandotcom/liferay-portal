@@ -140,7 +140,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -183,7 +182,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -205,13 +203,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		_draftLayout = _layout;
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		GroupTestUtil.deleteGroup(irrelevantGroup);
-		GroupTestUtil.deleteGroup(testGroup);
 	}
 
 	@Ignore

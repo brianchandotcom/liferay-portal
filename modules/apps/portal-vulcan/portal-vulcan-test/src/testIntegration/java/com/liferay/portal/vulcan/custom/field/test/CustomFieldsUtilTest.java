@@ -2753,8 +2753,7 @@ public class CustomFieldsUtilTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"The ", ExpandoColumn.class.getName(),
-				" with external reference code ",
-				exportImportReportEntry.getClassExternalReferenceCode(),
+				" with external reference code ", randomName1,
 				" was not found. An empty shell was created."),
 			exportImportReportEntry.getErrorMessage());
 		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());

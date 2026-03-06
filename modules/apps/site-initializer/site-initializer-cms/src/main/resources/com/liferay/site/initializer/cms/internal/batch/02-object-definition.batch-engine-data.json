@@ -448,30 +448,20 @@
 					"type": "String"
 				},
 				{
-					"DBType": "String",
-					"businessType": "Formula",
+					"DBType": "Integer",
+					"businessType": "Integer",
 					"externalReferenceCode": "NUMBER_OF_ITEMS",
-					"indexed": false,
+					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
 						"en_US": "Number of Items"
 					},
 					"name": "numberOfItems",
-					"objectFieldSettings": [
-						{
-							"name": "output",
-							"value": "Integer"
-						},
-						{
-							"name": "script",
-							"value": "numberOfFailedItems + numberOfSuccessfulItems"
-						}
-					],
-					"readOnly": "true",
+					"readOnly": "false",
 					"required": false,
 					"state": false,
 					"system": true,
-					"type": "String"
+					"type": "Integer"
 				},
 				{
 					"DBType": "Integer",

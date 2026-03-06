@@ -60,8 +60,6 @@ public class ResetPermissionObjectBulkSelectionAction
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		values.put("numberOfItems", bulkSelection.getSize());
-
 		String executionStatus = "completed";
 		AtomicInteger numberOfFailedItems = new AtomicInteger(0);
 		AtomicInteger numberOfSuccessfulItems = new AtomicInteger(0);

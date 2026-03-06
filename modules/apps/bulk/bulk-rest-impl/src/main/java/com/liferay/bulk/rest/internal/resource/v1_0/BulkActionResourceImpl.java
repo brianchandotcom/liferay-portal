@@ -150,7 +150,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			return new BulkActionTask();
 		}
 
-		BulkActionTask bulkActionTask = _addBulkActionTask(bulkAction);
+		BulkActionTask bulkActionTask = _addBulkActionTask(
+			bulkAction, bulkSelection.getSize());
 
 		BulkAction.Type type = bulkAction.getType();
 
@@ -238,7 +239,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			filter, pagination, search, sorts[0]);
 	}
 
-	private BulkActionTask _addBulkActionTask(BulkAction bulkAction)
+	private BulkActionTask _addBulkActionTask(
+			BulkAction bulkAction, long numberOfItems)
 		throws Exception {
 
 		if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
@@ -263,6 +265,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"actionName", typeString
 			).put(
 				"executionStatus", BulkSelectionActionStatusConstants.INITIAL
+			).put(
+				"numberOfItems", numberOfItems
 			).put(
 				"type", typeString
 			).build(),

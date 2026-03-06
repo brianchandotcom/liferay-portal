@@ -613,12 +613,18 @@ testSample(
 	}
 );
 
-testSample.fixme(
+testSample(
 	'Custom Element can inject HTML properties',
 	{tag: '@LPS-139377'},
 	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
 		const clientExtensionName = getRandomString();
 		const htmlElementName = `html-${getRandomString()}`;
+
+		const propertyName1 = `prop-${getRandomString()}`;
+		const propertyName2 = `prop-${getRandomString()}`;
+
+		const propertyValue1 = getRandomString();
+		const propertyValue2 = getRandomString();
 
 		await test.step('Create a Custom Element with properties', async () => {
 			await editCustomElementPage.goto();
@@ -629,6 +635,10 @@ testSample.fixme(
 			);
 			await editCustomElementPage.javaScriptURLInput.fill(
 				'https://www.example.com/test.js'
+			);
+
+			await editCustomElementPage.propertiesTextArea.fill(
+				`${propertyName1}=${propertyValue1}\n${propertyName2}=${propertyValue2}`
 			);
 
 			await editCustomElementPage.publish(WaitAction.SUCCESS);
@@ -649,7 +659,8 @@ testSample.fixme(
 
 			const element = page.locator(htmlElementName);
 
-			await expect(element).toBeVisible();
+			await expect(element).toHaveAttribute(propertyName1, propertyValue1);
+			await expect(element).toHaveAttribute(propertyName2, propertyValue2);
 		});
 
 		await test.step('Clean up', async () => {

@@ -70,6 +70,7 @@ public class CPTaxCategoryServiceTest {
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
 				ServiceContextTestUtil.getServiceContext());
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
@@ -143,6 +144,7 @@ public class CPTaxCategoryServiceTest {
 
 			_cpTaxCategoryService.deleteCPTaxCategory(
 				_cpTaxCategory.getCPTaxCategoryId());
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
@@ -179,6 +181,7 @@ public class CPTaxCategoryServiceTest {
 			_cpTaxCategoryService.findCPTaxCategoriesByCompanyId(
 				TestPropsValues.getCompanyId(), _cpTaxCategory.getName(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
@@ -210,6 +213,7 @@ public class CPTaxCategoryServiceTest {
 			_cpTaxCategoryService.getCPTaxCategories(
 				TestPropsValues.getCompanyId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
@@ -240,6 +244,7 @@ public class CPTaxCategoryServiceTest {
 
 			_cpTaxCategoryService.getCPTaxCategoriesCount(
 				TestPropsValues.getCompanyId());
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
@@ -275,6 +280,7 @@ public class CPTaxCategoryServiceTest {
 
 			_cpTaxCategoryService.getCPTaxCategory(
 				_cpTaxCategory.getCPTaxCategoryId());
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
@@ -313,6 +319,7 @@ public class CPTaxCategoryServiceTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				SortFactoryUtil.create(
 					Field.CREATE_DATE, Sort.STRING_TYPE, false));
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
@@ -354,6 +361,7 @@ public class CPTaxCategoryServiceTest {
 				_cpTaxCategory.getCPTaxCategoryId(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap());
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {

@@ -165,7 +165,7 @@ public class AutoDeployDir {
 				 fileName.endsWith(".war") || fileName.endsWith(".xml") ||
 				 fileName.endsWith(".zip"))) {
 
-				processFile(file);
+				_processFile(file);
 			}
 		}
 	}
@@ -211,7 +211,38 @@ public class AutoDeployDir {
 		}
 	}
 
-	protected static void processFile(File file) {
+	private static boolean _isModule(File file) throws AutoDeployException {
+		Manifest manifest = null;
+
+		try (JarFile jarFile = new JarFile(file)) {
+			manifest = jarFile.getManifest();
+		}
+		catch (IOException ioException) {
+			throw new AutoDeployException(ioException);
+		}
+
+		if (manifest == null) {
+			return false;
+		}
+
+		Attributes attributes = manifest.getMainAttributes();
+
+		String bundleSymbolicName = attributes.getValue("Bundle-SymbolicName");
+
+		if (bundleSymbolicName == null) {
+			return false;
+		}
+
+		int index = bundleSymbolicName.indexOf(CharPool.SEMICOLON);
+
+		if (index != -1) {
+			bundleSymbolicName = bundleSymbolicName.substring(0, index);
+		}
+
+		return !bundleSymbolicName.isEmpty();
+	}
+
+	private static void _processFile(File file) {
 		String fileName = file.getName();
 
 		if (!file.canRead()) {
@@ -262,37 +293,6 @@ public class AutoDeployDir {
 		}
 
 		_blacklistFileTimestamps.put(fileName, file.lastModified());
-	}
-
-	private static boolean _isModule(File file) throws AutoDeployException {
-		Manifest manifest = null;
-
-		try (JarFile jarFile = new JarFile(file)) {
-			manifest = jarFile.getManifest();
-		}
-		catch (IOException ioException) {
-			throw new AutoDeployException(ioException);
-		}
-
-		if (manifest == null) {
-			return false;
-		}
-
-		Attributes attributes = manifest.getMainAttributes();
-
-		String bundleSymbolicName = attributes.getValue("Bundle-SymbolicName");
-
-		if (bundleSymbolicName == null) {
-			return false;
-		}
-
-		int index = bundleSymbolicName.indexOf(CharPool.SEMICOLON);
-
-		if (index != -1) {
-			bundleSymbolicName = bundleSymbolicName.substring(0, index);
-		}
-
-		return !bundleSymbolicName.isEmpty();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);

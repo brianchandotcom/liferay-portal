@@ -43,9 +43,9 @@ public class UpgradeSourceCodeTask extends FormatSourceTask {
 		if (!toVersionValues.contains(toVersion)) {
 			throw new GradleException(
 				StringBundler.concat(
-					toVersion, " is an invalid target Liferay version. Run ",
-					"the command blade gw help --task upgradeSourceCode for a ",
-					"list of valid Liferay versions."));
+					toVersion, " is not a valid target Liferay version. Run ",
+					"'blade gw help --task upgradeSourceCode' to see a list ",
+					"of valid Liferay versions."));
 		}
 
 		addSourceFormatterProperty("upgrade.to.release.version", toVersion);

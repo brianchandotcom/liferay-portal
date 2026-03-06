@@ -550,13 +550,13 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		AssertConsoleTextNotPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=${companyId}");
+		AssertConsoleTextNotPresent(value1 = "phase=portalStart, companyId=${companyId}");
 
-		AssertConsoleTextPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=0");
+		AssertConsoleTextPresent(value1 = "phase=portalStart, companyId=0");
 
 		SearchAdministration.executeReindex(executionScope = "liferay.com");
 
-		AssertConsoleTextPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=${companyId}");
+		AssertConsoleTextPresent(value1 = "phase=portalStart, companyId=${companyId}");
 
 		SearchAdministration.executeReindex(executionScope = "All Instances");
 	}

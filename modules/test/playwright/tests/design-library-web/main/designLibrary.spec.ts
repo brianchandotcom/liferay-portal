@@ -5,11 +5,14 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 import {designLibrariesPageTest} from './fixtures/designLibrariesPageTest';
 
 const test = mergeTests(
+	apiHelpersTest,
 	designLibrariesPageTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
@@ -47,4 +50,81 @@ test('Check if Design Library is working correctly', async ({
 			)
 		).toBeVisible();
 	});
+});
+
+test('Can navigate to a Design Library dashboard', async ({
+	apiHelpers,
+	designLibrariesPage,
+	page,
+}) => {
+	const designLibraryName = getRandomString();
+
+	const depot = await apiHelpers.jsonWebServicesDepot.addDepotEntry(
+		designLibraryName,
+		{type: apiHelpers.jsonWebServicesDepot.depotType.DESIGN_LIBRARY}
+	);
+
+	await test.step('Navigate to a Design Library dashboard', async () => {
+		await designLibrariesPage.goto();
+
+		await expect(page.getByTestId('header')).toHaveText('Design Libraries');
+
+		const designLibraryLink = page.getByRole('link', {
+			name: designLibraryName,
+		});
+
+		await designLibraryLink.click();
+	});
+
+	await test.step('Check dashboard elements', async () => {
+		const breadcrumb = page.getByRole('navigation', {name: 'Breadcrumb'});
+
+		await expect(breadcrumb).toBeVisible();
+
+		const links = breadcrumb.getByRole('link');
+
+		expect(await links.count()).toEqual(2);
+
+		expect(links.first()).toHaveText('Design Libraries');
+
+		expect(links.last()).toHaveText(designLibraryName);
+
+		const moreActionsButton = page.getByRole('button', {
+			name: 'More Actions',
+		});
+
+		await moreActionsButton.click();
+
+		await expect(page.getByRole('menu')).toBeVisible();
+
+		await expect(
+			page.getByRole('menu').getByRole('menuitem', {name: 'Settings'})
+		).toBeVisible();
+
+		await expect(
+			page
+				.getByRole('menu')
+				.getByRole('menuitem', {name: 'Connected Sites'})
+		).toBeVisible();
+
+		await expect(
+			page
+				.getByRole('menu')
+				.getByRole('menuitem', {name: 'Manage Members'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menu').getByRole('menuitem', {name: 'Import'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menu').getByRole('menuitem', {name: 'Export'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menu').getByRole('menuitem', {name: 'Delete'})
+		).toBeVisible();
+	});
+
+	await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(depot.depotEntryId);
 });

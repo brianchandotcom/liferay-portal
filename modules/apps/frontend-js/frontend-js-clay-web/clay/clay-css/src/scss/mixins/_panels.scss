@@ -158,6 +158,11 @@
 			)
 		);
 
+		$_hpb: map-get($header, padding-bottom);
+		$_hpl: map-get($header, padding-left);
+		$_hpr: map-get($header, padding-right);
+		$_hpt: map-get($header, padding-top);
+
 		$old-header-c-inner: setter(map-get($map, header-c-inner), ());
 		$header-c-inner: setter(map-get($header, c-inner), ());
 		$header-c-inner: map-merge(
@@ -172,10 +177,10 @@
 							null
 						)
 					),
-				margin-bottom: calc(#{map-get($header, padding-bottom)} * -1),
-				margin-left: calc(#{map-get($header, padding-left)} * -1),
-				margin-right: calc(#{map-get($header, padding-right)} * -1),
-				margin-top: calc(#{map-get($header, padding-top)} * -1),
+				margin-bottom: if($_hpb, calc(#{$_hpb} * -1), null),
+				margin-left: if($_hpl, calc(#{$_hpl} * -1), null),
+				margin-right: if($_hpr, calc(#{$_hpr} * -1), null),
+				margin-top: if($_hpt, calc(#{$_hpt} * -1), null),
 			),
 			$header-c-inner
 		);

@@ -21,7 +21,7 @@
 	$font-size: map-get($map, font-size);
 	$height: map-get($map, height);
 	$padding-x: map-get($map, padding-x);
-	$padding-y: setter(map-get($map, padding-y), 0);
+	$padding-y: setter(map-get($map, padding-y), 0rem);
 
 	$lexicon-icon-height: setter(
 		map-get($map, lexicon-icon-height),

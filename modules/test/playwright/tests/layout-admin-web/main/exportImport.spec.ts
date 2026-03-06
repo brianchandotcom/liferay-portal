@@ -116,6 +116,184 @@ test(
 );
 
 test(
+	'Compare priorities of pages when exporting/importing a site',
+	{tag: '@LPD-80650'},
+	async ({apiHelpers, exportImportPage, site: siteA}) => {
+
+		// Create pages in the Site A
+
+		const page1 = await apiHelpers.headlessAdminSite.createPage(
+			siteA.externalReferenceCode,
+			{
+				name_i18n: {en_US: getRandomString()},
+				type: 'WidgetPage',
+			}
+		);
+		const page2 = await apiHelpers.headlessAdminSite.createPage(
+			siteA.externalReferenceCode,
+			{
+				name_i18n: {en_US: getRandomString()},
+				type: 'WidgetPage',
+			}
+		);
+		const page3 = await apiHelpers.headlessAdminSite.createPage(
+			siteA.externalReferenceCode,
+			{
+				name_i18n: {en_US: getRandomString()},
+				type: 'WidgetPage',
+			}
+		);
+		const page4 = await apiHelpers.headlessAdminSite.createPage(
+			siteA.externalReferenceCode,
+			{
+				name_i18n: {en_US: getRandomString()},
+				type: 'WidgetPage',
+			}
+		);
+
+		// Update pages priority
+
+		page4.pageSettings.priority = 1;
+
+		await apiHelpers.headlessAdminSite.putPage(
+			siteA.externalReferenceCode,
+			page4.externalReferenceCode,
+			page4
+		);
+
+		page3.pageSettings.priority = 2;
+
+		await apiHelpers.headlessAdminSite.putPage(
+			siteA.externalReferenceCode,
+			page3.externalReferenceCode,
+			page3
+		);
+
+		// Get pages in the Site A
+
+		const getPage1 = await apiHelpers.headlessAdminSite.getPage(
+			siteA.externalReferenceCode,
+			page1.externalReferenceCode
+		);
+		const getPage2 = await apiHelpers.headlessAdminSite.getPage(
+			siteA.externalReferenceCode,
+			page2.externalReferenceCode
+		);
+		const getPage3 = await apiHelpers.headlessAdminSite.getPage(
+			siteA.externalReferenceCode,
+			page3.externalReferenceCode
+		);
+		const getPage4 = await apiHelpers.headlessAdminSite.getPage(
+			siteA.externalReferenceCode,
+			page4.externalReferenceCode
+		);
+
+		// Assert page priorities in the site A
+
+		expect(getPage1.pageSettings.priority).toEqual(0);
+		expect(getPage4.pageSettings.priority).toEqual(1);
+		expect(getPage3.pageSettings.priority).toEqual(2);
+		expect(getPage2.pageSettings.priority).toEqual(3);
+
+		// Assert pages can be sorted by priority in the site A
+
+		const getPages = await apiHelpers.headlessAdminSite.getPages(
+			siteA.externalReferenceCode,
+			'sort=pageSettings/priority:asc'
+		);
+
+		expect(getPages.items[0].pageSettings.priority).toEqual(0);
+		expect(getPages.items[1].pageSettings.priority).toEqual(1);
+		expect(getPages.items[2].pageSettings.priority).toEqual(2);
+		expect(getPages.items[3].pageSettings.priority).toEqual(3);
+
+		expect(getPages.items[0].name_i18n['en-US']).toEqual(
+			page1.name_i18n['en-US']
+		);
+		expect(getPages.items[1].name_i18n['en-US']).toEqual(
+			page4.name_i18n['en-US']
+		);
+		expect(getPages.items[2].name_i18n['en-US']).toEqual(
+			page3.name_i18n['en-US']
+		);
+		expect(getPages.items[3].name_i18n['en-US']).toEqual(
+			page2.name_i18n['en-US']
+		);
+
+		// Export a site A
+
+		await exportImportPage.goToExport(siteA.friendlyUrlPath);
+
+		const exportFilePath = await exportImportPage.export();
+
+		// Create a site B
+
+		const siteB = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: siteB.id, type: 'site'});
+
+		// Import the site A into the site B
+
+		await exportImportPage.goToImport(siteB.friendlyUrlPath);
+
+		await exportImportPage.import({filePath: exportFilePath});
+
+		// Get pages in the Site B
+
+		const importedPage1 = await apiHelpers.headlessAdminSite.getPage(
+			siteB.externalReferenceCode,
+			page1.externalReferenceCode
+		);
+		const importedPage2 = await apiHelpers.headlessAdminSite.getPage(
+			siteB.externalReferenceCode,
+			page2.externalReferenceCode
+		);
+		const importedPage3 = await apiHelpers.headlessAdminSite.getPage(
+			siteB.externalReferenceCode,
+			page3.externalReferenceCode
+		);
+		const importedPage4 = await apiHelpers.headlessAdminSite.getPage(
+			siteB.externalReferenceCode,
+			page4.externalReferenceCode
+		);
+
+		// Assert page priorities in the site B
+
+		expect(importedPage1.pageSettings.priority).toEqual(0);
+		expect(importedPage4.pageSettings.priority).toEqual(1);
+		expect(importedPage3.pageSettings.priority).toEqual(2);
+		expect(importedPage2.pageSettings.priority).toEqual(3);
+
+		// Assert pages can be sorted by priority in the site B
+
+		const importedPages = await apiHelpers.headlessAdminSite.getPages(
+			siteB.externalReferenceCode,
+			'sort=pageSettings/priority:asc'
+		);
+
+		expect(importedPages.items[0].pageSettings.priority).toEqual(0);
+		expect(importedPages.items[1].pageSettings.priority).toEqual(1);
+		expect(importedPages.items[2].pageSettings.priority).toEqual(2);
+		expect(importedPages.items[3].pageSettings.priority).toEqual(3);
+
+		expect(importedPages.items[0].name_i18n['en-US']).toEqual(
+			page1.name_i18n['en-US']
+		);
+		expect(importedPages.items[1].name_i18n['en-US']).toEqual(
+			page4.name_i18n['en-US']
+		);
+		expect(importedPages.items[2].name_i18n['en-US']).toEqual(
+			page3.name_i18n['en-US']
+		);
+		expect(importedPages.items[3].name_i18n['en-US']).toEqual(
+			page2.name_i18n['en-US']
+		);
+	}
+);
+
+test(
 	'Compare fragment configurations when exporting/importing a site',
 	{tag: '@LPD-74680'},
 	async ({

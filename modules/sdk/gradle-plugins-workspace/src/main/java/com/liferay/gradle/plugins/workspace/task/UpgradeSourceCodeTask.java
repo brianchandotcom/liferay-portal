@@ -31,12 +31,12 @@ public class UpgradeSourceCodeTask extends FormatSourceTask {
 
 		ObjectFactory objectFactory = project.getObjects();
 
-		toVersionProperty = objectFactory.property(String.class);
+		_toVersionProperty = objectFactory.property(String.class);
 	}
 
 	@Override
 	public void exec() {
-		String toVersion = toVersionProperty.getOrNull();
+		String toVersion = _toVersionProperty.getOrNull();
 
 		List<String> toVersionValues = getToVersionValues();
 
@@ -59,7 +59,7 @@ public class UpgradeSourceCodeTask extends FormatSourceTask {
 		option = "to-version"
 	)
 	public Property<String> getToVersionProperty() {
-		return toVersionProperty;
+		return _toVersionProperty;
 	}
 
 	@OptionValues("to-version")
@@ -75,6 +75,6 @@ public class UpgradeSourceCodeTask extends FormatSourceTask {
 		return toVersionValues;
 	}
 
-	protected final Property<String> toVersionProperty;
+	private final Property<String> _toVersionProperty;
 
 }

@@ -60,7 +60,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_fieldLabel = "Text Embedding Provider",
-			key_value = "Hugging Face Inference API",
+			key_value = "Hugging Face Inference Provider (Beta)",
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 
 		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
@@ -72,7 +72,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_fieldLabel = "Text Embedding Provider",
-			key_value = "Hugging Face Inference API",
+			key_value = "Hugging Face Inference Provider (Beta)",
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 
 		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.search.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config");
@@ -94,7 +94,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldLabel = "Text Embedding Provider",
-			key_value = "Hugging Face Inference API",
+			key_value = "Hugging Face Inference Provider (Beta)",
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
@@ -106,7 +106,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldLabel = "Text Embedding Provider",
-			key_value = "Hugging Face Inference API",
+			key_value = "Hugging Face Inference Provider (Beta)",
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 	}
 
@@ -182,7 +182,7 @@ definition {
 			Select(
 				ariaLabel = "Text Embedding Provider",
 				locator1 = "Select#ANY_ARIA_LABEL",
-				value1 = "Hugging Face Inference Endpoint");
+				value1 = "Hugging Face Inference Endpoint (Beta)");
 
 			AssertElementPresent(
 				key_infoMessage = "Changes to this configuration require a reindex",
@@ -191,7 +191,7 @@ definition {
 			Select(
 				ariaLabel = "Text Embedding Provider",
 				locator1 = "Select#ANY_ARIA_LABEL",
-				value1 = "txtai");
+				value1 = "txtai (Beta)");
 
 			AssertElementPresent(
 				key_infoMessage = "Changes to this configuration require a reindex",
@@ -200,7 +200,7 @@ definition {
 			Select(
 				ariaLabel = "Text Embedding Provider",
 				locator1 = "Select#ANY_ARIA_LABEL",
-				value1 = "Hugging Face Inference API");
+				value1 = "Hugging Face Inference Provider (Beta)");
 
 			AssertElementNotPresent(
 				key_infoMessage = "Changes to this configuration require a reindex",
@@ -612,7 +612,7 @@ definition {
 
 			AssertElementPresent(
 				key_fieldLabel = "Text Embedding Provider",
-				key_value = "Hugging Face Inference API",
+				key_value = "Hugging Face Inference Provider (Beta)",
 				locator1 = "Select#GENERIC_SELECT_VALUE");
 
 			Type(
@@ -819,7 +819,7 @@ definition {
 		Select(
 			ariaLabel = "Text Embedding Provider",
 			locator1 = "Select#ANY_ARIA_LABEL",
-			value1 = "txtai");
+			value1 = "txtai (Beta)");
 
 		PortletEntry.inputText(
 			fieldLabel = "Host Address",

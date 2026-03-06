@@ -39,7 +39,7 @@ public class IndexableActionableDynamicQuery {
 	public void performActions() {
 		if (_performActionUnsafeFunction == null) {
 			throw new IllegalStateException(
-				"performActionUnsafeFunction is null");
+				"Perform action unsafe function is null");
 		}
 
 		_hasBackgroundTask = BackgroundTaskThreadLocal.hasBackgroundTask();
@@ -194,9 +194,8 @@ public class IndexableActionableDynamicQuery {
 
 		dynamicQuery.add(property.gt(previousPrimaryKey));
 
-		dynamicQuery.setLimit(0, _interval);
-
 		dynamicQuery.addOrder(OrderFactoryUtil.asc(_primaryKeyPropertyName));
+		dynamicQuery.setLimit(0, _interval);
 
 		return dynamicQuery;
 	}

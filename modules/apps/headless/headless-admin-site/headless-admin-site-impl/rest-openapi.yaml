@@ -9463,7 +9463,7 @@ paths:
         put:
             description:
                 Activates a site.
-            operationId: postSiteActivate
+            operationId: putSiteActivate
             parameters:
                 -   in: path
                     name: siteExternalReferenceCode
@@ -9488,7 +9488,7 @@ paths:
         put:
             description:
                 Deactivates a site.
-            operationId: postSiteDeactivate
+            operationId: putSiteDeactivate
             parameters:
                 -   in: path
                     name: siteExternalReferenceCode

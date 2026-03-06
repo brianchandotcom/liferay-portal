@@ -82,7 +82,13 @@ public interface SiteResource {
 	public Site putSite(String siteExternalReferenceCode, Site site)
 		throws Exception;
 
+	public void putSiteActivate(String siteExternalReferenceCode)
+		throws Exception;
+
 	public Response putSiteBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void putSiteDeactivate(String siteExternalReferenceCode)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

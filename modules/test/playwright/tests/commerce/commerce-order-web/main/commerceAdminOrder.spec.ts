@@ -797,7 +797,8 @@ test(
 		page,
 		pendingOrdersPage,
 	}) => {
-		test.setTimeout(180000);
+		test.setTimeout(90000);
+
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
 			type: 'business',
@@ -842,7 +843,7 @@ test(
 			await page.goto(`/web/${site.name}`);
 
 			await commerceLayoutsPage
-				.accountSelectorButton(account.name)
+				.accountSelectorButton('Account Selector')
 				.click();
 			await commerceLayoutsPage.createNewOrderButton.click();
 
@@ -855,7 +856,7 @@ test(
 			await page.goto(`/web/${site.name}`);
 
 			await commerceLayoutsPage
-				.accountSelectorButton(account.name)
+				.accountSelectorButton('Account Selector')
 				.click();
 			await commerceLayoutsPage.createNewOrderButton.click();
 
@@ -868,7 +869,7 @@ test(
 			await page.goto(`/web/${site.name}`);
 
 			await commerceLayoutsPage
-				.accountSelectorButton(account.name)
+				.accountSelectorButton('Account Selector')
 				.click();
 			await commerceLayoutsPage.createNewOrderButton.click();
 
@@ -885,7 +886,7 @@ test(
 			await page.goto(`/web/${site.name}`);
 
 			await commerceLayoutsPage
-				.accountSelectorButton(account.name)
+				.accountSelectorButton('Account Selector')
 				.click();
 			await commerceLayoutsPage.createNewOrderButton.click();
 
@@ -906,7 +907,7 @@ test(
 			await page.goto(`/web/${site.name}`);
 
 			await commerceLayoutsPage
-				.accountSelectorButton(account.name)
+				.accountSelectorButton('Account Selector')
 				.click();
 			await commerceLayoutsPage.createNewOrderButton.click();
 			await expect(
@@ -974,22 +975,27 @@ test(
 		});
 
 		await test.step('Verify inactive order type is not assigned to an order created via pending orders', async () => {
-			await page.goto(`/web/${site.name}`);
-
-			await page.goto(`/web/${site.name}/pending-orders`);
+			await page.goto(`/web/${site.name}/pending-orders`, {
+				waitUntil: 'networkidle',
+			});
 
 			await commerceLayoutsPage.addOrderButton.click();
+
+			await expect(page).not.toHaveURL(/pending-orders$/);
 
 			await expect(pendingOrdersPage.orderType).toBeEmpty();
 		});
 
 		await test.step('Verify inactive order type is not assigned to an order created via pending orders', async () => {
 			await commerceAdminOrderTypesPage.addOrderType(apiHelpers, false);
-			await page.goto(`/web/${site.name}`);
 
-			await page.goto(`/web/${site.name}/pending-orders`);
+			await page.goto(`/web/${site.name}/pending-orders`, {
+				waitUntil: 'networkidle',
+			});
 
 			await commerceLayoutsPage.addOrderButton.click();
+
+			await expect(page).not.toHaveURL(/pending-orders$/);
 
 			await expect(pendingOrdersPage.orderType).toBeEmpty();
 		});
@@ -1000,11 +1006,13 @@ test(
 					apiHelpers,
 					true
 				);
-			await page.goto(`/web/${site.name}`);
-
-			await page.goto(`/web/${site.name}/pending-orders`);
+			await page.goto(`/web/${site.name}/pending-orders`, {
+				waitUntil: 'networkidle',
+			});
 
 			await commerceLayoutsPage.addOrderButton.click();
+
+			await expect(page).not.toHaveURL(/pending-orders$/);
 
 			await expect(pendingOrdersPage.orderType).toHaveText(orderTypeName);
 		});
@@ -1017,12 +1025,11 @@ test(
 				);
 
 			await performLogout(page);
-
 			await performLoginViaApi({page, screenName: user.alternateName});
 
-			await page.goto(`/web/${site.name}`);
-
-			await page.goto(`/web/${site.name}/pending-orders`);
+			await page.goto(`/web/${site.name}/pending-orders`, {
+				waitUntil: 'networkidle',
+			});
 
 			await commerceLayoutsPage.addOrderButton.click();
 

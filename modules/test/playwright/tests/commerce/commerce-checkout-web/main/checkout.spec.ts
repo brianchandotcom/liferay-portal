@@ -960,8 +960,21 @@ test(
 				)
 			).toBeVisible();
 
+			await expect(
+				commerceAdminCatalogsPage.modalFieldName
+			).toBeVisible();
+
 			await commerceAdminCatalogsPage.modalFieldName.fill(catalog.name);
+
+			await expect(
+				commerceAdminCatalogsPage.modalSubmitButton
+			).toBeVisible();
+
 			await commerceAdminCatalogsPage.modalSubmitButton.click();
+
+			await expect(
+				commerceAdminCatalogsPage.modalSubmitButton
+			).not.toBeVisible();
 
 			catalog.id = parseInt(
 				await commerceAdminCatalogsPage.catalogId.textContent(),
@@ -1088,6 +1101,8 @@ test(
 			apiHelpers.data.push({id: product1.id, type: 'product'});
 
 			await commerceAdminProductDetailsPage.publishLink.click();
+
+			await waitForAlert(page);
 
 			await expect(page.getByText('Approved')).toBeVisible();
 

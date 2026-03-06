@@ -77,8 +77,9 @@ export class SpecificationFacetsPage {
 		this.searchOptionsAllowEmptySearchesInput = page
 			.frameLocator('#modalIframe')
 			.getByTestId('allowEmptySearches');
-		this.searchOptionsConfigurationEditButton =
-			page.getByTestId('searchOptionsHref');
+		this.searchOptionsConfigurationEditButton = page.getByRole('button', {
+			name: 'Configure additional search',
+		});
 		this.searchOptionsConfigurationSaveButton = page
 			.frameLocator('#modalIframe')
 			.getByTestId('searchOptionsFooter')

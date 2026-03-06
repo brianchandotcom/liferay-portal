@@ -54,6 +54,10 @@ test('LPD-13559 Bulk actions for product relations', async ({
 	await commerceAdminProductDetailsPage.goToProductRelations();
 
 	await expect(
+		commerceAdminProductDetailsProductRelationsPage.table
+	).toBeVisible();
+
+	await expect(
 		(
 			await commerceAdminProductDetailsProductRelationsPage.tableRow(
 				2,
@@ -74,11 +78,13 @@ test('LPD-13559 Bulk actions for product relations', async ({
 
 	await commerceAdminProductDetailsProductRelationsPage.selectItemsInput.check();
 
+	await commerceAdminProductDetailsProductRelationsPage.bulkActionButton.click();
+
 	await expect(
-		commerceAdminProductDetailsProductRelationsPage.deleteBulkButton
+		commerceAdminProductDetailsProductRelationsPage.deleteBulkMenuItem
 	).toBeVisible();
 
-	await commerceAdminProductDetailsProductRelationsPage.deleteBulkButton.click();
+	await commerceAdminProductDetailsProductRelationsPage.deleteBulkMenuItem.click();
 
 	await expect(
 		commerceAdminProductDetailsProductRelationsPage.emptyTableMessage

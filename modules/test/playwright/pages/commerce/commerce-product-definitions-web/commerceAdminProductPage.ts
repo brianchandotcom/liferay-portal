@@ -6,8 +6,9 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
-export class CommerceAdminProductPage {
+export class CommerceAdminProductPage extends CommerceDNDTablePage {
 	readonly addButton: Locator;
 	readonly addVirtualProductFileEntryButton: Locator;
 	readonly addVirtualSkuFileEntryButton: Locator;
@@ -42,6 +43,10 @@ export class CommerceAdminProductPage {
 	readonly virtualSettingsOverrideLink: Locator;
 
 	constructor(page: Page) {
+		super(
+			page,
+			'#_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_fm .fds table'
+		);
 		this.addButton = page
 			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
@@ -194,6 +199,7 @@ export class CommerceAdminProductPage {
 	async gotoProduct(productName: string, checkTabVisibility = true) {
 		await expect(async () => {
 			await this.goto(checkTabVisibility);
+			await this.table.waitFor({state: 'visible'});
 			await this.managementToolbarSearchInput.fill(productName);
 			await this.managementToolbarSearchInput.press('Enter');
 			await this.productsTableRowLink(productName).click();

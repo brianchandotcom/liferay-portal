@@ -44,6 +44,7 @@ export class CommerceAdminProductConfigurationListPage {
 	readonly shippableInput: Locator;
 	readonly shipSeparatelyInput: Locator;
 	readonly taxExemptInput: Locator;
+	readonly textTableCell: (titleName: string) => Locator;
 	readonly weightInput: Locator;
 	readonly widthInput: Locator;
 
@@ -111,6 +112,11 @@ export class CommerceAdminProductConfigurationListPage {
 		this.shippableInput = page.getByTestId('shippableInput');
 		this.shipSeparatelyInput = page.getByTestId('shipSeparatelyInput');
 		this.taxExemptInput = page.getByTestId('taxExemptInput');
+		this.textTableCell = (titleName: string) =>
+			this.page.getByRole('cell', {
+				exact: true,
+				name: titleName,
+			});
 		this.weightInput = page.getByTestId('weightInput');
 		this.widthInput = page.getByTestId('widthInput');
 	}

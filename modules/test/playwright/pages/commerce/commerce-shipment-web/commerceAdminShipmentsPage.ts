@@ -37,7 +37,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly keyShipmentStatus: (orderStatus: string) => Locator;
 	readonly page: Page;
-	readonly productEllipsis: Locator;
+	readonly productEllipsis: (productName: string) => Locator;
 	readonly productsSkuLink: (sku: string) => Locator;
 	readonly shipmentIdLink: (shipmentId: string) => Locator;
 	readonly shipmentsItemSubmitButton: Locator;
@@ -142,10 +142,11 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		this.keyShipmentStatus = (orderStatus: string) =>
 			page.getByText(orderStatus);
 		this.page = page;
-		this.productEllipsis = page.getByRole('button', {
-			exact: true,
-			name: 'Actions',
-		});
+		this.productEllipsis = (productName: string) =>
+			page.getByRole('button', {
+				exact: true,
+				name: `${productName} Actions`,
+			});
 		this.productsSkuLink = (sku: string) =>
 			page.getByRole('link', {exact: true, name: sku});
 		this.shipmentIdLink = (shipmentId: string) =>

@@ -9,7 +9,7 @@ import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/A
 export class CommerceAdminCatalogsPage {
 	readonly addCatalogsButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
-	readonly catalogActionsButton: Locator;
+	readonly catalogActionsButton: (catalogName: string) => Locator;
 	readonly catalogId: Locator;
 	readonly catalogSaveButton: Locator;
 	readonly modalFieldName: Locator;
@@ -24,10 +24,11 @@ export class CommerceAdminCatalogsPage {
 			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.catalogActionsButton = page.getByRole('button', {
-			exact: true,
-			name: 'Actions',
-		});
+		this.catalogActionsButton = (catalogName: string) =>
+			page.getByRole('button', {
+				exact: true,
+				name: `${catalogName} Actions`,
+			});
 		this.catalogId = page.locator('span:has-text("ID")+strong');
 		this.catalogSaveButton = page.getByRole('link', {
 			exact: true,

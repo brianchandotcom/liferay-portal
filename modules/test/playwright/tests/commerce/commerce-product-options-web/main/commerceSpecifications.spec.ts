@@ -60,7 +60,9 @@ test(
 				.nth(1)
 		).toBeVisible();
 
-		await commerceSpecificationsPage.specificationPicklistActionButton.click();
+		await commerceSpecificationsPage
+			.specificationPicklistActionButton(picklist.externalReferenceCode)
+			.click();
 		await commerceSpecificationsPage
 			.specificationPicklistDropdownMenu('Edit')
 			.click();
@@ -69,7 +71,9 @@ test(
 			page.frameLocator('iframe').locator('tbody')
 		).toContainText(listTypeEntry.externalReferenceCode);
 
-		await commerceSpecificationsPage.specificationPicklistItemsActionButton.click();
+		await commerceSpecificationsPage
+			.specificationPicklistItemsActionButton(listTypeEntry.key)
+			.click();
 		await commerceSpecificationsPage
 			.specificationPicklistDropdownMenuItems('Delete')
 			.click();

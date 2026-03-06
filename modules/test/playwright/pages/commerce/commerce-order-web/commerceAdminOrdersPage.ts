@@ -104,7 +104,7 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 			if (itemsTableRow && itemsTableRow.column) {
 				return itemsTableRow.row.getByRole('button', {
 					exact: true,
-					name: 'Actions',
+					name: 'Item Actions',
 				});
 			}
 

@@ -82,7 +82,9 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 			name: 'Edit',
 		});
 		this.orderItemExpandButton = (productName) =>
-			page.getByRole('gridcell', {name: productName}).getByRole('button');
+			page
+				.getByRole('gridcell', {exact: true, name: productName})
+				.getByRole('button');
 		this.orderItemsTable = page.locator(
 			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet .fds table'
 		);
@@ -108,7 +110,7 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 			if (orderItemsTableRow && orderItemsTableRow.column) {
 				return orderItemsTableRow.row.getByRole('button', {
 					exact: true,
-					name: 'Actions',
+					name: `${productName} Actions`,
 				});
 			}
 

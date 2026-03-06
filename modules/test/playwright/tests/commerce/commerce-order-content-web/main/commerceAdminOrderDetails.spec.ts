@@ -1088,7 +1088,7 @@ test('LPD-30856 Can update order status by deleting unshipped items', async ({
 		)
 	).check();
 	await commerceAdminShipmentsPage.shipmentsItemSubmitButton.click();
-	await commerceAdminShipmentsPage.productEllipsis.click();
+	await commerceAdminShipmentsPage.productEllipsis(sku1.sku).click();
 	await commerceAdminShipmentsPage.editProductMenuItem.click();
 	await commerceAdminShipmentsPage.addQuantityInShipment.fill('1');
 	await commerceAdminShipmentsPage.editProductSaveButton.click();

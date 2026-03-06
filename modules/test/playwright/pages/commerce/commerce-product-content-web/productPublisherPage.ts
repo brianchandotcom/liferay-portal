@@ -134,7 +134,7 @@ export class ProductPublisherPage {
 			await this.configurationFilterButton.click();
 		}
 
-		await this.configurationFrame.getByLabel('add-rule').click();
+		await this.configurationFrame.getByLabel('Add Rule').click();
 		await this.tagsInput.fill(tagName);
 		await this.tagsInput.press('Enter');
 		await this.tagsInput.press('Tab');

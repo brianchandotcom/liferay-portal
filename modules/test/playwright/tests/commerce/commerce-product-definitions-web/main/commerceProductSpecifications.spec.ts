@@ -27,7 +27,6 @@ test(
 		apiHelpers,
 		commerceAdminProductDetailsPage,
 		commerceAdminProductPage,
-		page,
 	}) => {
 		const catalog =
 			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
@@ -58,10 +57,14 @@ test(
 		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
 
 		await expect(
-			await page.getByText(specification.title.en_US)
+			commerceAdminProductDetailsPage.textTableCell(
+				specification.title.en_US
+			)
 		).toBeVisible();
 
-		await commerceAdminProductDetailsPage.ellipsisProductSpecification.click();
+		await commerceAdminProductDetailsPage
+			.ellipsisProductSpecification(specification.title.en_US)
+			.click();
 		await (
 			await commerceAdminProductDetailsPage.dropdownProductSpecification(
 				'Edit'
@@ -82,7 +85,11 @@ test(
 
 		await commerceAdminProductDetailsPage.closeEditFrame.click();
 
-		await expect(page.getByText(randomSpecificationValue)).toBeVisible();
+		await expect(
+			commerceAdminProductDetailsPage.textTableCell(
+				randomSpecificationValue
+			)
+		).toBeVisible();
 	}
 );
 
@@ -132,6 +139,7 @@ test(
 			);
 			await commerceAdminProductDetailsPage.editOrDeleteProductSpecification(
 				'Edit',
+				specification.title.en_US,
 				'item1'
 			);
 			await commerceAdminProductDetailsPage.visibleToggle.check();
@@ -159,7 +167,6 @@ test(
 		apiHelpers,
 		commerceAdminProductDetailsPage,
 		commerceAdminProductPage,
-		page,
 	}) => {
 		const catalog =
 			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
@@ -184,7 +191,11 @@ test(
 			'item1'
 		);
 
-		await expect(page.getByText(specification.title.en_US)).toBeVisible();
+		await expect(
+			commerceAdminProductDetailsPage.textTableCell(
+				specification.title.en_US
+			)
+		).toBeVisible();
 
 		await commerceAdminProductDetailsPage.createSpecificationProduct(
 			'Create New Specification',
@@ -192,6 +203,8 @@ test(
 			'item2'
 		);
 
-		await expect(page.getByText('Specification-1')).toBeVisible();
+		await expect(
+			commerceAdminProductDetailsPage.textTableCell('Specification-1')
+		).toBeVisible();
 	}
 );

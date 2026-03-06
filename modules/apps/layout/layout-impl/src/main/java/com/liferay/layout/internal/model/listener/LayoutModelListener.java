@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -91,6 +94,21 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterUpdate(Layout originalLayout, Layout layout) {
+		if ((originalLayout == null) || (layout == null) ||
+			(originalLayout.getPriority() == layout.getPriority())) {
+
+			return;
+		}
+
+		try {
+			Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(
+				Layout.class);
+
+			indexer.reindex(layout);
+		}
+		catch (SearchException searchException) {
+			throw new ModelListenerException(searchException);
+		}
 	}
 
 	@Override

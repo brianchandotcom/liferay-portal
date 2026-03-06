@@ -48,7 +48,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY);
 
 		return cpTaxCategoryLocalService.addCPTaxCategory(
 			externalReferenceCode, nameMap, descriptionMap, serviceContext);

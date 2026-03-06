@@ -92,18 +92,22 @@ public class JSUnitAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
 	public boolean isResultsCached() {
+		if (!isBuildCachingEnabled()) {
+			return false;
+		}
+
 		for (JSUnitModulesTestClass jsUnitModulesTestClass :
 				getJSUnitModulesTestClasses()) {
 
 			TestClassReport cachedTestClassReport =
 				jsUnitModulesTestClass.getCachedTestClassReport();
 
-			if (cachedTestClassReport != null) {
-				return true;
+			if (cachedTestClassReport == null) {
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	protected JSUnitAxisTestClassGroup(

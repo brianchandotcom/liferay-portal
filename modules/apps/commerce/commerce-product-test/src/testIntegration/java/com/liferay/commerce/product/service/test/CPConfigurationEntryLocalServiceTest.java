@@ -501,9 +501,6 @@ public class CPConfigurationEntryLocalServiceTest {
 			Assert.assertNotNull(requiredCPConfigurationEntryException);
 		}
 
-		_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
-			cpConfigurationEntry, true);
-
 		Indexer<CPConfigurationEntry> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CPConfigurationEntry.class);
 
@@ -515,6 +512,11 @@ public class CPConfigurationEntryLocalServiceTest {
 		searchContext.setAttribute(
 			Field.CLASS_NAME_ID, _portal.getClassNameId(CPDefinition.class));
 		searchContext.setCompanyId(_group.getCompanyId());
+
+		Assert.assertEquals(1, indexer.searchCount(searchContext));
+
+		_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+			cpConfigurationEntry, true);
 
 		Assert.assertEquals(0, indexer.searchCount(searchContext));
 	}

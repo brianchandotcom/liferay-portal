@@ -244,7 +244,7 @@ public class CPTaxCategoryDisplayContext {
 	public boolean hasAddCPTaxCategoriesPermission() {
 		return _portletResourcePermission.contains(
 			_themeDisplay.getPermissionChecker(), null,
-			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY);
 	}
 
 	public boolean hasDeleteCPTaxCategoryPermission(CPTaxCategory cpTaxCategory)

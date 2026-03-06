@@ -5,9 +5,7 @@ set -eu
 function main {
 	local expected_generation="{{ "{{" }}inputs.parameters.expected-generation}}"
 
-	local timeout
-
-	timeout=$(( $(date +%s) + {{ .Values.liferayInfrastructure.waitTimeoutSeconds }} ))
+	local timeout=$(( $(date +%s) + {{ .Values.liferayInfrastructure.waitTimeoutSeconds }} ))
 
 	while [ $(date +%s) -lt ${timeout} ]
 	do

@@ -221,6 +221,88 @@ public class ClassNameUpgradeProcessTest {
 				oldStructureId, oldStructureVersionId));
 	}
 
+	@Test
+	public void testUpdateDDMStructureRelatedTables3() throws Exception {
+		long newClassNameId = _getClassNameId(_NEW_CLASS_NAME);
+
+		long newStructureId = _addDDMStructure(newClassNameId);
+
+		_addDLFileEntryMetadata(newStructureId);
+		_addDLFileEntryMetadata(newStructureId);
+
+		long fileVersionId = RandomTestUtil.randomLong();
+
+		_addDLFileEntryMetadata(fileVersionId, newStructureId);
+
+		long newStructureVersionId = _addDDMStructureRelatedTables(
+			newStructureId);
+
+		long oldClassNameId = _addClassName(_OLD_CLASS_NAME);
+
+		long oldStructureId = _addDDMStructure(oldClassNameId);
+
+		_addDLFileEntryMetadata(oldStructureId);
+		_addDLFileEntryMetadata(fileVersionId, oldStructureId);
+
+		long oldStructureVersionId = _addDDMStructureRelatedTables(
+			oldStructureId);
+
+		runUpgrade();
+
+		Assert.assertEquals(
+			newClassNameId, _getDDMStructureClassNameId(newStructureId));
+		Assert.assertEquals(0, _getDDMStructureClassNameId(oldStructureId));
+		Assert.assertEquals(
+			13,
+			_getDDMStructureRelatedTablesCount(
+				newStructureId, newStructureVersionId));
+		Assert.assertEquals(
+			0,
+			_getDDMStructureRelatedTablesCount(
+				oldStructureId, oldStructureVersionId));
+	}
+
+	@Test
+	public void testUpdateDDMStructureRelatedTables4() throws Exception {
+		long newClassNameId = _getClassNameId(_NEW_CLASS_NAME);
+
+		long newStructureId = _addDDMStructure(newClassNameId);
+
+		_addDLFileEntryMetadata(newStructureId);
+
+		long fileVersionId = RandomTestUtil.randomLong();
+
+		_addDLFileEntryMetadata(fileVersionId, newStructureId);
+
+		long newStructureVersionId = _addDDMStructureRelatedTables(
+			newStructureId);
+
+		long oldClassNameId = _addClassName(_OLD_CLASS_NAME);
+
+		long oldStructureId = _addDDMStructure(oldClassNameId);
+
+		_addDLFileEntryMetadata(oldStructureId);
+		_addDLFileEntryMetadata(oldStructureId);
+		_addDLFileEntryMetadata(fileVersionId, oldStructureId);
+
+		long oldStructureVersionId = _addDDMStructureRelatedTables(
+			oldStructureId);
+
+		runUpgrade();
+
+		Assert.assertEquals(0, _getDDMStructureClassNameId(newStructureId));
+		Assert.assertEquals(
+			newClassNameId, _getDDMStructureClassNameId(oldStructureId));
+		Assert.assertEquals(
+			0,
+			_getDDMStructureRelatedTablesCount(
+				newStructureId, newStructureVersionId));
+		Assert.assertEquals(
+			13,
+			_getDDMStructureRelatedTablesCount(
+				oldStructureId, oldStructureVersionId));
+	}
+
 	protected void runUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = new ClassNameUpgradeProcess();
 
@@ -384,6 +466,13 @@ public class ClassNameUpgradeProcessTest {
 	}
 
 	private long _addDLFileEntryMetadata(long structureId) throws Exception {
+		return _addDLFileEntryMetadata(
+			RandomTestUtil.randomLong(), structureId);
+	}
+
+	private long _addDLFileEntryMetadata(long fileVersionId, long structureId)
+		throws Exception {
+
 		long fileEntryMetadataId = RandomTestUtil.nextLong();
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
@@ -398,7 +487,7 @@ public class ClassNameUpgradeProcessTest {
 			preparedStatement.setLong(3, fileEntryMetadataId);
 			preparedStatement.setLong(4, _companyId);
 			preparedStatement.setLong(5, structureId);
-			preparedStatement.setLong(6, RandomTestUtil.randomLong());
+			preparedStatement.setLong(6, fileVersionId);
 			preparedStatement.setString(7, RandomTestUtil.randomString());
 
 			preparedStatement.executeUpdate();

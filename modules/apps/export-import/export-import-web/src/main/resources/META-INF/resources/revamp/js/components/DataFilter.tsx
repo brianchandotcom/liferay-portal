@@ -125,7 +125,7 @@ export default function DataFilter() {
 									locale
 								)}
 								years={{
-									end: new Date().getFullYear() + 10,
+									end: new Date().getFullYear(),
 									start: new Date().getFullYear() - 10,
 								}}
 							/>
@@ -154,7 +154,7 @@ export default function DataFilter() {
 									locale
 								)}
 								years={{
-									end: new Date().getFullYear() + 10,
+									end: new Date().getFullYear(),
 									start: new Date().getFullYear() - 10,
 								}}
 							/>

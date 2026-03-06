@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.tax.category.web.internal.display.context;
 
+import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -100,7 +101,8 @@ public class CPTaxCategoryManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		return _cpTaxCategoryDisplayContext.hasAddCPTaxCategoriesPermission();
+		return _cpTaxCategoryDisplayContext.hasPortletResourcePermission(
+			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY);
 	}
 
 	@Override

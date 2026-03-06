@@ -10,6 +10,7 @@ import com.liferay.commerce.product.tax.category.web.internal.display.context.CP
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import jakarta.portlet.PortletResponse;
 
@@ -32,10 +33,10 @@ public class CPTaxCategoryRowChecker extends EmptyOnClickRowChecker {
 		CPTaxCategory cpTaxCategory = (CPTaxCategory)object;
 
 		try {
-			if (!_cpTaxCategoryDisplayContext.hasDeleteCPTaxCategoryPermission(
-					cpTaxCategory) &&
-				!_cpTaxCategoryDisplayContext.hasEditCPTaxCategoryPermission(
-					cpTaxCategory)) {
+			if (!_cpTaxCategoryDisplayContext.hasModelResourcePermission(
+					cpTaxCategory, ActionKeys.DELETE) &&
+				!_cpTaxCategoryDisplayContext.hasModelResourcePermission(
+					cpTaxCategory, ActionKeys.UPDATE)) {
 
 				return true;
 			}

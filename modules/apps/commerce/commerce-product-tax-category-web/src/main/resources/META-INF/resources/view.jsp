@@ -11,7 +11,7 @@
 CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<c:if test="<%= cpTaxCategoryDisplayContext.hasViewCPTaxCategoriesPermission() %>">
+<c:if test="<%= cpTaxCategoryDisplayContext.hasPortletResourcePermission(CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES) %>">
 	<clay:management-toolbar
 		managementToolbarDisplayContext="<%= new CPTaxCategoryManagementToolbarDisplayContext(cpTaxCategoryDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 		propsTransformer="{CPTaxCategoryManagementToolbarPropsTransformer} from commerce-product-tax-category-web"
@@ -37,7 +37,7 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 					<%
 					String availableActions = StringPool.BLANK;
 
-					if (cpTaxCategoryDisplayContext.hasDeleteCPTaxCategoryPermission(cpTaxCategory)) {
+					if (cpTaxCategoryDisplayContext.hasModelResourcePermission(cpTaxCategory, ActionKeys.DELETE)) {
 						availableActions = "deleteEntries";
 					}
 

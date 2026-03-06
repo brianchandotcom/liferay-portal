@@ -6,7 +6,6 @@
 package com.liferay.commerce.product.tax.category.web.internal.display.context;
 
 import com.liferay.commerce.frontend.model.HeaderActionModel;
-import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPTaxCategory;
@@ -74,7 +73,7 @@ public class CPTaxCategoryDisplayContext {
 			PortalUtil.getHttpServletRequest(_renderRequest);
 
 		return DropdownItemListBuilder.add(
-			() -> hasDeleteCPTaxCategoryPermission(cpTaxCategory),
+			() -> hasModelResourcePermission(cpTaxCategory, ActionKeys.DELETE),
 			dropDownItem -> {
 				dropDownItem.setData(
 					HashMapBuilder.<String, Object>put(
@@ -103,7 +102,7 @@ public class CPTaxCategoryDisplayContext {
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}
 		).add(
-			() -> hasEditCPTaxCategoryPermission(cpTaxCategory),
+			() -> hasModelResourcePermission(cpTaxCategory, ActionKeys.UPDATE),
 			dropDownItem -> {
 				dropDownItem.setHref(
 					PortletURLBuilder.createRenderURL(
@@ -186,7 +185,7 @@ public class CPTaxCategoryDisplayContext {
 	public String getRowURL(CPTaxCategory cpTaxCategory, String currentURL)
 		throws Exception {
 
-		if (hasEditCPTaxCategoryPermission(cpTaxCategory)) {
+		if (hasModelResourcePermission(cpTaxCategory, ActionKeys.UPDATE)) {
 			return PortletURLBuilder.createRenderURL(
 				_renderResponse
 			).setMVCRenderCommandName(
@@ -241,32 +240,17 @@ public class CPTaxCategoryDisplayContext {
 		return _searchContainer;
 	}
 
-	public boolean hasAddCPTaxCategoriesPermission() {
-		return _portletResourcePermission.contains(
-			_themeDisplay.getPermissionChecker(), null,
-			CPActionKeys.ADD_COMMERCE_PRODUCT_TAX_CATEGORY);
-	}
-
-	public boolean hasDeleteCPTaxCategoryPermission(CPTaxCategory cpTaxCategory)
+	public boolean hasModelResourcePermission(
+			CPTaxCategory cpTaxCategory, String actionId)
 		throws Exception {
 
 		return _modelResourcePermission.contains(
-			_themeDisplay.getPermissionChecker(), cpTaxCategory,
-			ActionKeys.DELETE);
+			_themeDisplay.getPermissionChecker(), cpTaxCategory, actionId);
 	}
 
-	public boolean hasEditCPTaxCategoryPermission(CPTaxCategory cpTaxCategory)
-		throws Exception {
-
-		return _modelResourcePermission.contains(
-			_themeDisplay.getPermissionChecker(), cpTaxCategory,
-			ActionKeys.UPDATE);
-	}
-
-	public boolean hasViewCPTaxCategoriesPermission() {
+	public boolean hasPortletResourcePermission(String actionId) {
 		return _portletResourcePermission.contains(
-			_themeDisplay.getPermissionChecker(), null,
-			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
+			_themeDisplay.getPermissionChecker(), null, actionId);
 	}
 
 	protected String getKeywords() {

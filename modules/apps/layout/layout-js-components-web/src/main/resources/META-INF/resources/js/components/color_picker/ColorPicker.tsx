@@ -4,19 +4,18 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayColorPicker from '@clayui/color-picker';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {useId} from 'frontend-js-components-web';
-import React, {KeyboardEvent, useMemo, useRef, useState} from 'react';
+import React, {KeyboardEvent, useMemo, useState} from 'react';
 
 import {
 	useDeleteStyleError,
 	useSetStyleError,
 	useStyleErrors,
 } from '../../contexts/StyleErrorsContext';
+import ColorPickerField from './ColorPickerField';
 import {
 	Color,
 	ColorCategoryMap,
@@ -94,7 +93,6 @@ function ColorPicker({
 	value,
 }: Props) {
 	const colors: ColorCategoryMap = {};
-	const inputId = useId();
 	const deleteStyleError = useDeleteStyleError();
 	const setStyleError = useSetStyleError();
 	const styleErrors = useStyleErrors();
@@ -107,9 +105,7 @@ function ColorPicker({
 		tokenValues[value]?.value || value || defaultTokenValue,
 		{forceProp: clearedValue}
 	);
-	const colorButtonRef = useRef(null);
 	const [customColors, setCustomColors] = useState([value || '']);
-	const inputRef = useRef<HTMLInputElement>(null);
 	const isMounted = useIsMounted();
 
 	const debouncedOnValueSelect = useMemo(() => {
@@ -259,13 +255,13 @@ function ColorPicker({
 		}
 	};
 
-	const onChangeInput = ({target: {value}}: {target: HTMLInputElement}) => {
+	const onChangeInput = (color: string) => {
 		if (error.value) {
 			setError({label: null, value: null});
 			deleteStyleError(field.name, activeItemId);
 		}
 
-		setColor(value);
+		setColor(`#${color}`);
 	};
 
 	const onKeyDownInput = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -302,63 +298,19 @@ function ColorPicker({
 						value={color || defaultTokenValue}
 					/>
 				) : (
-					<ClayInput.Group>
-						<ClayInput.GroupItem
-							prepend
-							ref={colorButtonRef}
-							shrink
-						>
-							<ClayColorPicker
-								active={activeColorPicker}
-								colors={customColors}
-								dropDownContainerProps={{
-									className: 'cadmin',
-								}}
-								onActiveChange={setActiveColorPicker}
-								onChange={(color: String) => {
-									debouncedOnValueSelect(
-										field.name,
-										`#${color}`
-									);
-									setColor(`#${color}`);
-
-									if (error.value) {
-										setError({
-											label: null,
-											value: null,
-										});
-										deleteStyleError(field.name);
-									}
-								}}
-								onColorsChange={setCustomColors}
-								showHex={false}
-								showPalette={false}
-								value={
-									error.value ? '' : color?.replace('#', '')
-								}
-							/>
-						</ClayInput.GroupItem>
-
-						<ClayInput.GroupItem append>
-							<ClayInput
-								aria-invalid={Boolean(error.label)}
-								aria-label={Liferay.Language.get('color')}
-								className="layout__color-picker__input"
-								id={inputId}
-								onBlur={onBlurInput}
-								onChange={onChangeInput}
-								onKeyDown={onKeyDownInput}
-								ref={inputRef}
-								sizing="sm"
-								value={
-									error.value ||
-									(color?.startsWith('#')
-										? color.toUpperCase()
-										: color)
-								}
-							/>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
+					<ColorPickerField
+						active={activeColorPicker}
+						colors={customColors}
+						onActiveChange={setActiveColorPicker}
+						onBlurInput={onBlurInput}
+						onChange={onChangeInput}
+						onColorChangeEditor={(color: string) => {
+							debouncedOnValueSelect(field.name, color);
+						}}
+						onColorsChange={setCustomColors}
+						onKeyDown={onKeyDownInput}
+						value={error.value || normalizeHexColor(color)}
+					/>
 				)}
 
 				{tokenLabel ? (
@@ -458,6 +410,12 @@ function ColorPicker({
 			) : null}
 		</ClayForm.Group>
 	);
+}
+
+function normalizeHexColor(color: string) {
+	return color?.startsWith('#')
+		? color.replace('#', '').toUpperCase()
+		: color;
 }
 
 export default function ColorPickerWrapper(props: Props) {

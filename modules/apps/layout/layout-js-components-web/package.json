@@ -15,6 +15,7 @@
 		"@clayui/loading-indicator": "^3.159.0",
 		"@clayui/modal": "^3.159.0",
 		"@clayui/panel": "^3.159.0",
+		"@clayui/shared": "^3.159.0",
 		"@clayui/toolbar": "^3.159.0",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/marketplace-js-components-web": "*",

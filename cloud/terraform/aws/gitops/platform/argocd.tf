@@ -14,12 +14,11 @@ resource "helm_release" "argocd" {
 				applicationSet={
 					resources={
 						limits={
-							cpu="800m"
-							memory="2Gi"
+							memory="768Mi"
 						}
 						requests={
-							cpu="500m"
-							memory="1Gi"
+							cpu="15m"
+							memory="128Mi"
 						}
 					}
 				}
@@ -64,37 +63,56 @@ resource "helm_release" "argocd" {
 				controller={
 					resources={
 						limits={
-							cpu="2000m"
-							memory="2Gi"
+							memory="8Gi"
 						}
 						requests={
-							cpu="500m"
-							memory="1Gi"
+							cpu="125m"
+							memory="1.5Gi"
+						}
+					}
+				}
+				dex={
+					resources={
+						limits={
+							memory="768Mi"
+						}
+						requests={
+							cpu="15m"
+							memory="128Mi"
 						}
 					}
 				}
 				installCRDs=true
+				notifications={
+					resources={
+						limits={
+							memory="256Mi"
+						}
+						requests={
+							cpu="15m"
+							memory="128Mi"
+						}
+					}
+				}
 				redis={
 					resources={
 						limits={
-							cpu="200m"
-							memory="512Mi"
+							memory="256Mi"
 						}
 						requests={
-							cpu="100m"
-							memory="256Mi"
+							cpu="15m"
+							memory="128Mi"
 						}
 					}
 				}
 				repoServer={
 					resources={
 						limits={
-							cpu="1000m"
-							memory="1Gi"
+							memory="1.5Gi"
 						}
 						requests={
-							cpu="100m"
-							memory="256Mi"
+							cpu="15m"
+							memory="128Mi"
 						}
 					}
 				}
@@ -109,12 +127,11 @@ resource "helm_release" "argocd" {
 					}
 					resources={
 						limits={
-							cpu="500m"
-							memory="1Gi"
+							memory="768Mi"
 						}
 						requests={
-							cpu="100m"
-							memory="256Mi"
+							cpu="15m"
+							memory="128Mi"
 						}
 					}
 					service={

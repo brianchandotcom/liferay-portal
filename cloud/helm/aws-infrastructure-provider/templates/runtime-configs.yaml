@@ -5,6 +5,42 @@ kind: DeploymentRuntimeConfig
 metadata:
     annotations:
         argocd.argoproj.io/sync-wave: "-90"
+    name: aws-family-config
+spec:
+    deploymentTemplate:
+        spec:
+            selector:
+                matchLabels:
+                    pkg.crossplane.io/provider: provider-family-aws
+            template:
+                metadata:
+                    annotations:
+                        instrumentation.opentelemetry.io/inject-dotnet: "false"
+                        instrumentation.opentelemetry.io/inject-java: "false"
+                        instrumentation.opentelemetry.io/inject-nodejs: "false"
+                        instrumentation.opentelemetry.io/inject-python: "false"
+                        sidecar.opentelemetry.io/inject: "false"
+                    labels:
+                        pkg.crossplane.io/provider: provider-family-aws
+                spec:
+                    containers:
+                        -   name: package-runtime
+                            resources:
+                                limits:
+                                    memory: 2Gi
+                                requests:
+                                    cpu: 15m
+                                    memory: 768Mi
+                    serviceAccountName: provider-family-aws
+    serviceAccountTemplate:
+        metadata:
+            name: provider-family-aws
+---
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-90"
     name: kubernetes-config
 spec:
     deploymentTemplate:
@@ -27,9 +63,10 @@ spec:
                         -   name: package-runtime
                             resources:
                                 limits:
-                                    memory: 512Mi
+                                    memory: 1Gi
                                 requests:
-                                    memory: 128Mi
+                                    cpu: 15m
+                                    memory: 256Mi
                     serviceAccountName: provider-kubernetes
     serviceAccountTemplate:
         metadata:
@@ -64,9 +101,10 @@ spec:
                         -   name: package-runtime
                             resources:
                                 limits:
-                                    memory: 512Mi
+                                    memory: 2Gi
                                 requests:
-                                    memory: 128Mi
+                                    cpu: 22m
+                                    memory: 768Mi
                     serviceAccountName: provider-aws-backup
     serviceAccountTemplate:
         metadata:
@@ -101,9 +139,10 @@ spec:
                         -   name: package-runtime
                             resources:
                                 limits:
-                                    memory: 1.5Gi
+                                    memory: 2Gi
                                 requests:
-                                    memory: 256Mi
+                                    cpu: 49m
+                                    memory: 768Mi
                     serviceAccountName: provider-aws-ec2
     serviceAccountTemplate:
         metadata:
@@ -138,9 +177,10 @@ spec:
                         -   name: package-runtime
                             resources:
                                 limits:
-                                    memory: 512Mi
+                                    memory: 2Gi
                                 requests:
-                                    memory: 128Mi
+                                    cpu: 35m
+                                    memory: 768Mi
                     serviceAccountName: provider-aws-iam
     serviceAccountTemplate:
         metadata:
@@ -175,9 +215,10 @@ spec:
                         -   name: package-runtime
                             resources:
                                 limits:
-                                    memory: 768Mi
+                                    memory: 1Gi
                                 requests:
-                                    memory: 128Mi
+                                    cpu: 15m
+                                    memory: 768Mi
                     serviceAccountName: provider-aws-opensearch
     serviceAccountTemplate:
         metadata:
@@ -212,9 +253,10 @@ spec:
                         -   name: package-runtime
                             resources:
                                 limits:
-                                    memory: 1.5Gi
+                                    memory: 2Gi
                                 requests:
-                                    memory: 256Mi
+                                    cpu: 22m
+                                    memory: 768Mi
                     serviceAccountName: provider-aws-rds
     serviceAccountTemplate:
         metadata:
@@ -249,9 +291,10 @@ spec:
                         -   name: package-runtime
                             resources:
                                 limits:
-                                    memory: 512Mi
+                                    memory: 2Gi
                                 requests:
-                                    memory: 128Mi
+                                    cpu: 150m
+                                    memory: 768Mi
                     serviceAccountName: provider-aws-s3
     serviceAccountTemplate:
         metadata:

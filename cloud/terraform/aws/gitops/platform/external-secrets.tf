@@ -10,35 +10,32 @@ resource "helm_release" "external_secrets" {
 				certController={
 					resources={
 						limits={
-							cpu="20m"
-							memory="64Mi"
+							memory="512Mi"
 						}
 						requests={
-							cpu="10m"
-							memory="32Mi"
+							cpu="15m"
+							memory="128Mi"
 						}
 					}
 				}
 				installCRDs=true
 				resources={
 					limits={
-						cpu="100m"
-						memory="128Mi"
+						memory="512Mi"
 					}
 					requests={
-						cpu="50m"
-						memory="64Mi"
+						cpu="15m"
+						memory="128Mi"
 					}
 				}
 				webhook={
 					resources={
 						limits={
-							cpu="20m"
-							memory="64Mi"
+							memory="256Mi"
 						}
 						requests={
-							cpu="10m"
-							memory="32Mi"
+							cpu="15m"
+							memory="128Mi"
 						}
 					}
 				}

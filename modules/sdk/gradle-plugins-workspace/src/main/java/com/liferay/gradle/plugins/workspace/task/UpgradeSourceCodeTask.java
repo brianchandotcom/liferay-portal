@@ -38,6 +38,14 @@ public class UpgradeSourceCodeTask extends FormatSourceTask {
 	public void exec() {
 		String toVersion = _toVersionProperty.getOrNull();
 
+		if (toVersion == null) {
+			throw new GradleException(
+				StringBundler.concat(
+					"Unable to determine target Liferay version. Please use ",
+					"the '--to-version' option to set it, or set the ",
+					"'liferay.workspace.target.platform.version' property."));
+		}
+
 		List<String> toVersionValues = getToVersionValues();
 
 		if (!toVersionValues.contains(toVersion)) {

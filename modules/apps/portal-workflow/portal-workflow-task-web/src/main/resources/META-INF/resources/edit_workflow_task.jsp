@@ -36,7 +36,7 @@ if (assetRenderer != null) {
 	assetRendererFactory = assetRenderer.getAssetRendererFactory();
 
 	if (assetRendererFactory != null) {
-		assetEntry = assetRendererFactory.getAssetEntry(workflowHandler.getClassName(), classPK);
+		assetEntry = assetRendererFactory.getAssetEntry(workflowHandler.getClassName(), assetRenderer.getClassPK());
 	}
 
 	String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();

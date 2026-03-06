@@ -63,7 +63,7 @@ public class ContactsCenterPortletTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testProcessActionUpdateEntry() throws Exception {
+	public void testProcessAction() throws Exception {
 		Group group = _groupLocalService.getGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
 
@@ -140,6 +140,26 @@ public class ContactsCenterPortletTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setScopeGroupId(group.getGroupId());
+
+		if (user != null) {
+			themeDisplay.setSignedIn(true);
+		}
+
+		themeDisplay.setSiteGroupId(group.getGroupId());
+
+		if (user != null) {
+			themeDisplay.setUser(user);
+		}
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
 		mockLiferayPortletActionRequest.setParameter(
 			ActionRequest.ACTION_NAME, "updateEntry");
 		mockLiferayPortletActionRequest.setParameter(
@@ -152,22 +172,6 @@ public class ContactsCenterPortletTest {
 			"fullName", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.setParameter(
 			"redirect", RandomTestUtil.randomString());
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
-
-		if (user != null) {
-			themeDisplay.setSignedIn(true);
-			themeDisplay.setUser(user);
-		}
-
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return mockLiferayPortletActionRequest;
 	}

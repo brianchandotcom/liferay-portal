@@ -52,6 +52,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 				'assign-default-workflow-action-started-for-one-asset'
 			),
 		},
+		success: {
+			all: Liferay.Language.get(
+				'all-items-were-successfully-assigned-to-default-workflow'
+			),
+			plural: Liferay.Language.get(
+				'x-assets-were-successfully-assigned-to-default-workflow'
+			),
+			singular: Liferay.Language.get(
+				'x-was-successfully-assigned-to-default-workflow'
+			),
+		},
 	},
 	[BULK_ACTION_ASSIGN_TO]: {
 		info: {
@@ -65,6 +76,15 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 				'assign-to-action-started-for-one-asset'
 			),
 		},
+		success: {
+			all: Liferay.Language.get(
+				'all-items-were-successfully-assigned-to-x'
+			),
+			plural: Liferay.Language.get(
+				'x-assets-were-successfully-assigned-to-x'
+			),
+			singular: Liferay.Language.get('x-was-successfully-assigned-to-x'),
+		},
 	},
 	[BULK_ACTION_CATEGORIES]: {
 		info: {
@@ -76,6 +96,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			),
 			singular: Liferay.Language.get(
 				'categories-update-action-started-for-one-asset'
+			),
+		},
+		success: {
+			all: Liferay.Language.get(
+				'categories-were-successfully-updated-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'categories-were-successfully-updated-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'categories-were-successfully-updated-for-one-asset'
 			),
 		},
 	},
@@ -107,6 +138,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 				'default-permissions-update-action-started-for-one-asset'
 			),
 		},
+		success: {
+			all: Liferay.Language.get(
+				'default-permissions-were-successfully-updated-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'default-permissions-were-successfully-updated-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'default-permissions-were-successfully-updated-for-one-asset'
+			),
+		},
 	},
 	[BULK_ACTION_DELETE]: {
 		info: {
@@ -115,6 +157,11 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			singular: Liferay.Language.get(
 				'delete-action-started-for-one-asset'
 			),
+		},
+		success: {
+			all: Liferay.Language.get('all-items-were-successfully-deleted'),
+			plural: Liferay.Language.get('x-assets-were-successfully-deleted'),
+			singular: Liferay.Language.get('x-was-successfully-deleted'),
 		},
 	},
 	[BULK_ACTION_DELETE_ASSET_VERSION]: {
@@ -128,6 +175,15 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			singular: Liferay.Language.get(
 				'delete-asset-version-action-started-for-one-version'
 			),
+		},
+		success: {
+			all: Liferay.Language.get(
+				'all-asset-versions-were-successfully-deleted'
+			),
+			plural: Liferay.Language.get(
+				'x-asset-versions-were-successfully-deleted'
+			),
+			singular: Liferay.Language.get('x-was-successfully-deleted'),
 		},
 	},
 	[BULK_ACTION_DOWNLOAD]: {
@@ -153,6 +209,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 				'due-date-update-action-started-for-one-task'
 			),
 		},
+		success: {
+			all: Liferay.Language.get(
+				'due-date-was-successfully-updated-for-all-tasks'
+			),
+			plural: Liferay.Language.get(
+				'due-date-was-successfully-updated-for-x-tasks'
+			),
+			singular: Liferay.Language.get(
+				'due-date-was-successfully-updated-for-one-task'
+			),
+		},
 	},
 	[BULK_ACTION_EXPIRE]: {
 		info: {
@@ -162,12 +229,24 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 				'expire-action-started-for-one-asset'
 			),
 		},
+		success: {
+			all: Liferay.Language.get('all-items-were-successfully-expired'),
+			plural: Liferay.Language.get('x-assets-were-successfully-expired'),
+			singular: Liferay.Language.get('x-was-successfully-expired'),
+		},
 	},
 	[BULK_ACTION_MOVE]: {
 		info: {
 			all: Liferay.Language.get('move-action-started-for-all-assets'),
 			plural: Liferay.Language.get('move-action-started-for-x-assets'),
 			singular: Liferay.Language.get('move-action-started-for-one-asset'),
+		},
+		success: {
+			all: Liferay.Language.get('all-items-were-successfully-moved-to-x'),
+			plural: Liferay.Language.get(
+				'x-assets-were-successfully-moved-to-x'
+			),
+			singular: Liferay.Language.get('x-was-successfully-moved-to-x'),
 		},
 	},
 	[BULK_ACTION_PERMISSIONS]: {
@@ -180,6 +259,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			),
 			singular: Liferay.Language.get(
 				'permissions-update-action-started-for-one-asset'
+			),
+		},
+		success: {
+			all: Liferay.Language.get(
+				'permissions-were-successfully-updated-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'permissions-were-successfully-updated-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'permissions-were-successfully-updated-for-one-asset'
 			),
 		},
 	},
@@ -195,6 +285,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 				'reset-permissions-action-started-for-one-asset'
 			),
 		},
+		success: {
+			all: Liferay.Language.get(
+				'all-items-were-successfully-reset-to-default-permissions'
+			),
+			plural: Liferay.Language.get(
+				'x-assets-were-successfully-reset-to-default-permissions'
+			),
+			singular: Liferay.Language.get(
+				'x-was-successfully-reset-to-default-permissions'
+			),
+		},
 	},
 	[BULK_ACTION_STATUS]: {
 		info: {
@@ -208,6 +309,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 				'state-update-action-started-for-one-task'
 			),
 		},
+		success: {
+			all: Liferay.Language.get(
+				'state-was-successfully-updated-for-all-tasks'
+			),
+			plural: Liferay.Language.get(
+				'state-was-successfully-updated-for-x-tasks'
+			),
+			singular: Liferay.Language.get(
+				'state-was-successfully-updated-for-one-task'
+			),
+		},
 	},
 	[BULK_ACTION_TAGS]: {
 		info: {
@@ -219,6 +331,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			),
 			singular: Liferay.Language.get(
 				'tags-update-action-started-for-one-asset'
+			),
+		},
+		success: {
+			all: Liferay.Language.get(
+				'tags-were-successfully-updated-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'tags-were-successfully-updated-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'tags-were-successfully-updated-for-one-asset'
 			),
 		},
 	},

@@ -7,11 +7,10 @@ package com.liferay.document.library.internal.configuration.helper;
 
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +19,6 @@ import java.util.function.Supplier;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Galluzzi
@@ -46,19 +44,27 @@ public class DLFileEntryConfigurationHelper {
 	}
 
 	public Set<Long> getGroupIds() {
-		return _groupConfigurationBeans.keySet();
+		Set<Long> groupIds = new HashSet<>();
+
+		for (String groupKey : _groupKeys.values()) {
+			groupIds.add(GetterUtil.getLong(groupKey.split("--")[1]));
+		}
+
+		return groupIds;
 	}
 
-	public int getGroupMaxNumberOfPages(long groupId) {
+	public int getGroupMaxNumberOfPages(long companyId, long groupId) {
 		DLFileEntryConfiguration dlFileEntryConfiguration =
-			_getGroupDLFileEntryConfiguration(groupId);
+			_getGroupDLFileEntryConfiguration(companyId, groupId);
 
 		return dlFileEntryConfiguration.maxNumberOfPages();
 	}
 
-	public long getGroupPreviewableProcessorMaxSize(long groupId) {
+	public long getGroupPreviewableProcessorMaxSize(
+		long companyId, long groupId) {
+
 		DLFileEntryConfiguration dlFileEntryConfiguration =
-			_getGroupDLFileEntryConfiguration(groupId);
+			_getGroupDLFileEntryConfiguration(companyId, groupId);
 
 		return dlFileEntryConfiguration.previewableProcessorMaxSize();
 	}
@@ -78,12 +84,12 @@ public class DLFileEntryConfigurationHelper {
 			_companyConfigurationBeans.remove(companyId);
 
 			_groupConfigurationBeans.clear();
-			_groupIds.clear();
+			_groupKeys.clear();
 		}
-		else if (_groupIds.containsKey(pid)) {
-			long groupId = _groupIds.remove(pid);
+		else if (_groupKeys.containsKey(pid)) {
+			String groupKey = _groupKeys.remove(pid);
 
-			_groupConfigurationBeans.remove(groupId);
+			_groupConfigurationBeans.remove(groupKey);
 		}
 	}
 
@@ -98,13 +104,16 @@ public class DLFileEntryConfigurationHelper {
 	}
 
 	public void updateGroupConfiguration(
-		long groupId, String pid, Dictionary<String, ?> dictionary) {
+		long companyId, long groupId, String pid,
+		Dictionary<String, ?> dictionary) {
+
+		String groupKey = _getGroupKey(companyId, groupId);
 
 		_groupConfigurationBeans.put(
-			groupId,
+			groupKey,
 			ConfigurableUtil.createConfigurable(
 				DLFileEntryConfiguration.class, dictionary));
-		_groupIds.put(pid, groupId);
+		_groupKeys.put(pid, groupKey);
 	}
 
 	@Activate
@@ -122,8 +131,8 @@ public class DLFileEntryConfigurationHelper {
 			() -> _systemDLFileEntryConfiguration);
 	}
 
-	private DLFileEntryConfiguration _getDLFileEntryConfiguration(
-		long key, Map<Long, DLFileEntryConfiguration> configurationBeans,
+	private <T> DLFileEntryConfiguration _getDLFileEntryConfiguration(
+		T key, Map<T, DLFileEntryConfiguration> configurationBeans,
 		Supplier<DLFileEntryConfiguration> supplier) {
 
 		if (configurationBeans.containsKey(key)) {
@@ -134,33 +143,23 @@ public class DLFileEntryConfigurationHelper {
 	}
 
 	private DLFileEntryConfiguration _getGroupDLFileEntryConfiguration(
-		long groupId) {
+		long companyId, long groupId) {
 
 		return _getDLFileEntryConfiguration(
-			groupId, _groupConfigurationBeans,
-			() -> {
-				Group group = _groupLocalService.fetchGroup(groupId);
+			_getGroupKey(companyId, groupId), _groupConfigurationBeans,
+			() -> _getCompanyDLFileEntryConfiguration(companyId));
+	}
 
-				long companyId = CompanyThreadLocal.getCompanyId();
-
-				if (group != null) {
-					companyId = group.getCompanyId();
-				}
-
-				return _getCompanyDLFileEntryConfiguration(companyId);
-			});
+	private String _getGroupKey(long companyId, long groupId) {
+		return companyId + "--" + groupId;
 	}
 
 	private final Map<Long, DLFileEntryConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
-	private final Map<Long, DLFileEntryConfiguration> _groupConfigurationBeans =
-		new ConcurrentHashMap<>();
-	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
+	private final Map<String, DLFileEntryConfiguration>
+		_groupConfigurationBeans = new ConcurrentHashMap<>();
+	private final Map<String, String> _groupKeys = new ConcurrentHashMap<>();
 	private volatile DLFileEntryConfiguration _systemDLFileEntryConfiguration;
 
 }

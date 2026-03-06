@@ -82,7 +82,7 @@ public class JavaFeatureFlagManagerUtilCheck extends BaseFileCheck {
 				continue;
 			}
 
-			for (int j = i + 1; j < (lines.length - 1); j++) {
+			for (int j = i + 1; j <= (lines.length - 1); j++) {
 				trimmedLine =
 					trimmedLine + StringUtil.trimLeading(lines[j].substring(1));
 			}

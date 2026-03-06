@@ -373,13 +373,13 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
+				<action-key>ADD_COMMERCE_PRODUCT_TAX_CATEGORY</action-key>
 				<action-key>VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
+				<action-key>ADD_COMMERCE_PRODUCT_TAX_CATEGORY</action-key>
 				<action-key>VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 			</guest-unsupported>
 		</permissions>

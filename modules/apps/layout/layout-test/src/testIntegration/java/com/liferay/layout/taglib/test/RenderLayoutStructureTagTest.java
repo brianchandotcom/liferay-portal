@@ -816,7 +816,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	@TestInfo("LPD-80845")
-	public void testEscapeFormPlModeParameter() throws Exception {
+	public void testEscapeFormPortalLayoutModeParameter() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				ListUtil.fromArray(

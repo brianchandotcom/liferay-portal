@@ -217,6 +217,8 @@ public class SitePageResourceImpl
 				).put(
 					"privateLayout",
 					String.valueOf(portletDataContext.isPrivateLayout())
+				).put(
+					"sort", "pageSettings/priority:asc"
 				).build();
 			}
 

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
@@ -271,11 +270,9 @@ public class SegmentsEntryLocalServiceTest {
 
 		_segmentsExperienceLocalService.addSegmentsExperience(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			segmentsEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry.getGroupId(), _group.getGroupId()),
-			0, RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomInt(), false, new UnicodeProperties(true),
+			segmentsEntry.getExternalReferenceCode(), null, 0,
+			RandomTestUtil.randomLocaleStringMap(), RandomTestUtil.randomInt(),
+			false, new UnicodeProperties(true),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_segmentsEntryLocalService.deleteSegmentsEntry(

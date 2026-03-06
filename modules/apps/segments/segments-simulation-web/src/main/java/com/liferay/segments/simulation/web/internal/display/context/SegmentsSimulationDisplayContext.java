@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -187,8 +186,8 @@ public class SegmentsSimulationDisplayContext {
 					curSegmentsExperience.getSegmentsEntryERC(),
 					segmentsExperience.getSegmentsEntryERC()) &&
 				 Objects.equals(
-						 curSegmentsExperience.getSegmentsEntryScopeERC(),
-						 segmentsExperience.getSegmentsEntryScopeERC())) ||
+					 curSegmentsExperience.getSegmentsEntryScopeERC(),
+					 segmentsExperience.getSegmentsEntryScopeERC())) ||
 				curSegmentsExperience.hasDefaultSegmentsEntry()) {
 
 				if (curSegmentsExperience.getSegmentsExperienceId() ==

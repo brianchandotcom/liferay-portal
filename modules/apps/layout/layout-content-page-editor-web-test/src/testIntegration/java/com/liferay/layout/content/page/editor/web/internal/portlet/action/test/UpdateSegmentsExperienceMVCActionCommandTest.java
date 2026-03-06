@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -108,7 +107,8 @@ public class UpdateSegmentsExperienceMVCActionCommandTest {
 
 		JSONObject responseJSONObject = _updateSegmentsExperience(
 			segmentsExperience.getSegmentsExperienceId(), newName,
-			segmentsEntry2.getExternalReferenceCode(), companyGroup.getExternalReferenceCode());
+			segmentsEntry2.getExternalReferenceCode(),
+			companyGroup.getExternalReferenceCode());
 
 		JSONObject segmentsExperienceJSONObject = _jsonFactory.createJSONObject(
 			responseJSONObject.getString("segmentsExperience"));

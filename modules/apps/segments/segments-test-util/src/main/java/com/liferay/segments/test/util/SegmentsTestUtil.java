@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
@@ -114,10 +113,7 @@ public class SegmentsTestUtil {
 		SegmentsEntry segmentsEntry = addSegmentsEntry(groupId);
 
 		return addSegmentsExperience(
-			groupId, segmentsEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry.getGroupId(), groupId),
-			plid);
+			groupId, segmentsEntry.getExternalReferenceCode(), null, plid);
 	}
 
 	public static SegmentsExperience addSegmentsExperience(
@@ -128,10 +124,8 @@ public class SegmentsTestUtil {
 			serviceContext.getScopeGroupId());
 
 		return addSegmentsExperience(
-			segmentsEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry.getGroupId(), serviceContext.getScopeGroupId()),
-			plid, serviceContext);
+			segmentsEntry.getExternalReferenceCode(), null, plid,
+			serviceContext);
 	}
 
 	public static SegmentsExperience addSegmentsExperience(

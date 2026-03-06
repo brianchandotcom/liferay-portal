@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
@@ -229,15 +228,11 @@ public class SegmentsExperienceSelectorDisplayContextTest {
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), _layout.getPlid());
 
-		Long groupId = ScopeUtil.getItemGroupId(
-			expectedSegmentsExperience.getCompanyId(),
-			expectedSegmentsExperience.getSegmentsEntryScopeERC(),
-			expectedSegmentsExperience.getGroupId());
-
 		SegmentsEntry expectedSegmentsEntry =
 			_segmentsEntryLocalService.
 				fetchSegmentsEntryByExternalReferenceCode(
-					expectedSegmentsExperience.getSegmentsEntryERC(), groupId);
+					expectedSegmentsExperience.getSegmentsEntryERC(),
+					_group.getGroupId());
 
 		Assert.assertNotNull(expectedSegmentsEntry);
 

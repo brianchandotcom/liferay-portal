@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -385,10 +384,7 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			segmentsEntryName, RandomTestUtil.randomString());
 
 		return SegmentsTestUtil.addSegmentsExperience(
-			segmentsEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry.getGroupId(), _group.getGroupId()),
-			_layout.getPlid(),
+			segmentsEntry.getExternalReferenceCode(), null, _layout.getPlid(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

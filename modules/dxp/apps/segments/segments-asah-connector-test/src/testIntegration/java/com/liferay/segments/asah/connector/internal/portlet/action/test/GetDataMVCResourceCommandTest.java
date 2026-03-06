@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -128,9 +127,7 @@ public class GetDataMVCResourceCommandTest {
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				segmentsEntry.getExternalReferenceCode(),
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					segmentsEntry.getGroupId(), _group.getGroupId()),
+				segmentsEntry.getExternalReferenceCode(), null,
 				layout.getPlid(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

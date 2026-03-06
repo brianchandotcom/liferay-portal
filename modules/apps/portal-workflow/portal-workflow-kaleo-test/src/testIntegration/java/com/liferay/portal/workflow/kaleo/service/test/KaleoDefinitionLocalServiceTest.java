@@ -130,14 +130,15 @@ public class KaleoDefinitionLocalServiceTest
 	}
 
 	private void _testUpdateKaleoDefinitionWithScope() throws Exception {
+
+		// group id as 0
+
 		AccountEntry accountEntry = _addAccountEntry();
 
 		serviceContext.setScopeGroupId(accountEntry.getAccountEntryGroupId());
 
 		KaleoDefinition kaleoDefinition = addKaleoDefinition(
 			WorkflowDefinitionConstants.SCOPE_AI);
-
-		// group id as 0
 
 		serviceContext.setScopeGroupId(0);
 

@@ -17,6 +17,7 @@ export class EditCustomElementPage extends EditClientExtensionsPage {
 	readonly htmlElementNameInput: Locator;
 	readonly instanceableCheckbox: Locator;
 	readonly javaScriptURLInput: Locator;
+	readonly propertiesTextArea: Locator;
 	readonly useESModulesCheckbox: Locator;
 
 	constructor(page: Page) {
@@ -46,6 +47,9 @@ export class EditCustomElementPage extends EditClientExtensionsPage {
 		);
 		this.javaScriptURLInput = page.locator(
 			`[name=_${this.portletName}_urls]`
+		);
+		this.propertiesTextArea = page.locator(
+			`[name=_${this.portletName}_properties]`
 		);
 		this.useESModulesCheckbox = page.locator(
 			`[name=_${this.portletName}_useESM]`

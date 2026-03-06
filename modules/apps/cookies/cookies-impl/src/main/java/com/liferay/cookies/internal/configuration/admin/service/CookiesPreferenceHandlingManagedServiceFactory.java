@@ -8,10 +8,7 @@ package com.liferay.cookies.internal.configuration.admin.service;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Dictionary;
@@ -25,7 +22,6 @@ import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
@@ -75,34 +71,38 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 		return cookiesPreferenceHandlingConfiguration.storeConsent();
 	}
 
-	public int getGroupConsentRenewalPeriod(long companyId) {
+	public int getGroupConsentRenewalPeriod(long companyId, long groupId) {
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
-				_getGroupCookiesPreferenceHandlingConfiguration(companyId);
+				_getGroupCookiesPreferenceHandlingConfiguration(
+					companyId, groupId);
 
 		return cookiesPreferenceHandlingConfiguration.consentRenewalPeriod();
 	}
 
-	public boolean getGroupEnabled(long companyId) {
+	public boolean getGroupEnabled(long companyId, long groupId) {
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
-				_getGroupCookiesPreferenceHandlingConfiguration(companyId);
+				_getGroupCookiesPreferenceHandlingConfiguration(
+					companyId, groupId);
 
 		return cookiesPreferenceHandlingConfiguration.enabled();
 	}
 
-	public boolean getGroupExplicitConsentMode(long companyId) {
+	public boolean getGroupExplicitConsentMode(long companyId, long groupId) {
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
-				_getGroupCookiesPreferenceHandlingConfiguration(companyId);
+				_getGroupCookiesPreferenceHandlingConfiguration(
+					companyId, groupId);
 
 		return cookiesPreferenceHandlingConfiguration.explicitConsentMode();
 	}
 
-	public boolean getGroupStoreConsent(long companyId) {
+	public boolean getGroupStoreConsent(long companyId, long groupId) {
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
-				_getGroupCookiesPreferenceHandlingConfiguration(companyId);
+				_getGroupCookiesPreferenceHandlingConfiguration(
+					companyId, groupId);
 
 		return cookiesPreferenceHandlingConfiguration.storeConsent();
 	}
@@ -140,7 +140,14 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 		long companyId = GetterUtil.getLong(
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
-		if (companyId != CompanyConstants.SYSTEM) {
+		if (companyId == CompanyConstants.SYSTEM) {
+			return;
+		}
+
+		long groupId = GetterUtil.getLong(
+			dictionary.get("groupId"), GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		if (groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 			_companyConfigurationBeans.put(
 				companyId,
 				ConfigurableUtil.createConfigurable(
@@ -150,16 +157,13 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 			return;
 		}
 
-		long groupId = GetterUtil.getLong(
-			dictionary.get("groupId"), GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		String groupKey = _getGroupKey(companyId, groupId);
 
-		if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-			_groupConfigurationBeans.put(
-				groupId,
-				ConfigurableUtil.createConfigurable(
-					CookiesPreferenceHandlingConfiguration.class, dictionary));
-			_groupIds.put(pid, groupId);
-		}
+		_groupConfigurationBeans.put(
+			groupKey,
+			ConfigurableUtil.createConfigurable(
+				CookiesPreferenceHandlingConfiguration.class, dictionary));
+		_groupKeys.put(pid, groupKey);
 	}
 
 	@Activate
@@ -178,11 +182,10 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 			() -> _systemCookiesPreferenceHandlingConfiguration);
 	}
 
-	private CookiesPreferenceHandlingConfiguration
+	private <T> CookiesPreferenceHandlingConfiguration
 		_getCookiesPreferenceHandlingConfiguration(
-			long key,
-			Map<Long, CookiesPreferenceHandlingConfiguration>
-				configurationBeans,
+			T key,
+			Map<T, CookiesPreferenceHandlingConfiguration> configurationBeans,
 			Supplier<CookiesPreferenceHandlingConfiguration> supplier) {
 
 		if (configurationBeans.containsKey(key)) {
@@ -193,22 +196,16 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 	}
 
 	private CookiesPreferenceHandlingConfiguration
-		_getGroupCookiesPreferenceHandlingConfiguration(long groupId) {
+		_getGroupCookiesPreferenceHandlingConfiguration(
+			long companyId, long groupId) {
 
 		return _getCookiesPreferenceHandlingConfiguration(
-			groupId, _groupConfigurationBeans,
-			() -> {
-				Group group = _groupLocalService.fetchGroup(groupId);
+			_getGroupKey(companyId, groupId), _groupConfigurationBeans,
+			() -> _getCompanyCookiesPreferenceHandlingConfiguration(companyId));
+	}
 
-				long companyId = CompanyThreadLocal.getCompanyId();
-
-				if (group != null) {
-					companyId = group.getCompanyId();
-				}
-
-				return _getCompanyCookiesPreferenceHandlingConfiguration(
-					companyId);
-			});
+	private String _getGroupKey(long companyId, long groupId) {
+		return companyId + "--" + groupId;
 	}
 
 	private void _unmapPid(String pid) {
@@ -218,25 +215,21 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 			_companyConfigurationBeans.remove(companyId);
 
 			_groupConfigurationBeans.clear();
-			_groupIds.clear();
+			_groupKeys.clear();
 		}
-		else if (_groupIds.containsKey(pid)) {
-			long groupId = _groupIds.remove(pid);
+		else if (_groupKeys.containsKey(pid)) {
+			String groupKey = _groupKeys.remove(pid);
 
-			_groupConfigurationBeans.remove(groupId);
+			_groupConfigurationBeans.remove(groupKey);
 		}
 	}
 
 	private final Map<Long, CookiesPreferenceHandlingConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
-	private final Map<Long, CookiesPreferenceHandlingConfiguration>
+	private final Map<String, CookiesPreferenceHandlingConfiguration>
 		_groupConfigurationBeans = new ConcurrentHashMap<>();
-	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
+	private final Map<String, String> _groupKeys = new ConcurrentHashMap<>();
 	private volatile CookiesPreferenceHandlingConfiguration
 		_systemCookiesPreferenceHandlingConfiguration;
 

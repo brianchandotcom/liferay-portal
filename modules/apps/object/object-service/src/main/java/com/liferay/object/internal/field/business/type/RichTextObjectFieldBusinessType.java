@@ -117,7 +117,7 @@ public class RichTextObjectFieldBusinessType
 			return value;
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled(
+		if (FeatureFlagManagerUtil.isEnabled(
 				objectField.getCompanyId(), "LPD-11235") &&
 			!FeatureFlagManagerUtil.isEnabled(
 				objectField.getCompanyId(), "LPD-31212")) {

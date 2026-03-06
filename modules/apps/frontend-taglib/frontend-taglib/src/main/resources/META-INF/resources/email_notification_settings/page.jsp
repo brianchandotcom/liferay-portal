@@ -43,7 +43,7 @@ String fieldPrefixSeparator = (String)request.getAttribute("liferay-frontend:ema
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(emailBody) && Validator.isXml(emailBody) %>">
 				<c:choose>
-					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+					<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
 						<liferay-editor:input-localized
 							defaultLanguageId="<%= themeDisplay.getLanguageId() %>"
 							fieldPrefix="<%= fieldPrefix %>"
@@ -68,7 +68,7 @@ String fieldPrefixSeparator = (String)request.getAttribute("liferay-frontend:ema
 			<c:otherwise>
 				<liferay-editor:editor
 					contents="<%= emailBody %>"
-					editorName='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") ? "ckeditor5_classic" : PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.email_notification_settings.jsp") %>'
+					editorName='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") ? "ckeditor5_classic" : PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.email_notification_settings.jsp") %>'
 					name="<%= emailParam %>"
 				/>
 

@@ -11,7 +11,7 @@ const errorMessageText = document.getElementById(errorMessageTextId);
 const wrapper = document.getElementById(`${fragmentElementId}-wrapper`);
 
 if (layoutMode === 'edit') {
-	if (Liferay.FeatureFlags['LPD-11235']) {
+	if (!Liferay.FeatureFlags['LPD-11235']) {
 		initEditorWhenReady(() => {
 			wrapper
 				.querySelector(editorClass)
@@ -21,7 +21,7 @@ if (layoutMode === 'edit') {
 }
 else {
 	const editorPromise = new Promise((resolve) => {
-		if (Liferay.FeatureFlags['LPD-11235']) {
+		if (!Liferay.FeatureFlags['LPD-11235']) {
 			initEditorWhenReady((editor) => {
 				resolve(editor);
 			});
@@ -52,7 +52,7 @@ else {
 				errorMessageText.dataset.requiredError;
 
 			editorPromise.then((editor) => {
-				if (Liferay.FeatureFlags['LPD-11235']) {
+				if (!Liferay.FeatureFlags['LPD-11235']) {
 					editor.editing.view.focus();
 
 					editor.ui.view.editable.element.setAttribute(
@@ -72,7 +72,7 @@ else {
 
 	if (input.readOnly || input.attributes?.disabled) {
 		editorPromise.then((editor) => {
-			if (Liferay.FeatureFlags['LPD-11235']) {
+			if (!Liferay.FeatureFlags['LPD-11235']) {
 				editor.enableReadOnlyMode('read-only');
 			}
 			else {
@@ -197,7 +197,7 @@ else {
 						}
 					};
 
-					if (Liferay.FeatureFlags['LPD-11235']) {
+					if (!Liferay.FeatureFlags['LPD-11235']) {
 						editor.model.document.on(
 							'change:data',
 							(event, source) => {
@@ -225,7 +225,7 @@ else {
 							let iframe = null;
 							let label = null;
 
-							if (Liferay.FeatureFlags['LPD-11235']) {
+							if (!Liferay.FeatureFlags['LPD-11235']) {
 								editorElement =
 									wrapper.querySelector(editorClass);
 
@@ -252,7 +252,7 @@ else {
 							);
 
 							if (languageId === defaultLanguageId) {
-								if (Liferay.FeatureFlags['LPD-11235']) {
+								if (!Liferay.FeatureFlags['LPD-11235']) {
 									editor.disableReadOnlyMode('read-only');
 								}
 								else {
@@ -267,7 +267,7 @@ else {
 										'rich-text-input--disabled'
 									);
 
-									if (!Liferay.FeatureFlags['LPD-11235']) {
+									if (Liferay.FeatureFlags['LPD-11235']) {
 										iframe.setAttribute('tabindex', '0');
 
 										iframe.contentDocument.body.removeAttribute(
@@ -277,7 +277,7 @@ else {
 								}
 							}
 							else {
-								if (Liferay.FeatureFlags['LPD-11235']) {
+								if (!Liferay.FeatureFlags['LPD-11235']) {
 									editor.enableReadOnlyMode('read-only');
 								}
 								else {
@@ -293,7 +293,7 @@ else {
 										'rich-text-input--disabled'
 									);
 
-									if (!Liferay.FeatureFlags['LPD-11235']) {
+									if (Liferay.FeatureFlags['LPD-11235']) {
 										iframe.setAttribute('tabindex', '-1');
 
 										iframe.contentDocument.body.setAttribute(
@@ -315,7 +315,7 @@ else {
 				editorPromise.then((editor) => {
 					changeLanguageDirection(editor, defaultLanguageId);
 
-					if (Liferay.FeatureFlags['LPD-11235']) {
+					if (!Liferay.FeatureFlags['LPD-11235']) {
 						const hiddenInput = document.createElement('input');
 
 						hiddenInput.type = 'hidden';
@@ -354,7 +354,7 @@ else {
 }
 
 function changeLanguageDirection(editor, languageId, onChange) {
-	if (Liferay.FeatureFlags['LPD-11235']) {
+	if (!Liferay.FeatureFlags['LPD-11235']) {
 		const root = editor.editing.view.document.getRoot();
 
 		editor.editing.view.change((element) => {

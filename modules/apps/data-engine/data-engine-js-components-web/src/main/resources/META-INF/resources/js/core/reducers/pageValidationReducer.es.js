@@ -42,7 +42,7 @@ export default function pageValidationReducer(state, action) {
 						firstInvalidFieldLabel = field.label;
 
 						if (field.type === 'rich_text') {
-							if (Liferay.FeatureFlags['LPD-11235']) {
+							if (!Liferay.FeatureFlags['LPD-11235']) {
 								const fieldWrapper = document.querySelector(
 									`[data-field-name='${field.name}']`
 								);

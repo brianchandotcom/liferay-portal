@@ -357,7 +357,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 								<label for="<portlet:namespace />descriptionMapAsXML" id="<portlet:namespace />Aria"><liferay-ui:message key="description" /></label>
 
 								<c:choose>
-									<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+									<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
 										<liferay-editor:input-localized
 											autofillFromDefault="<%= true %>"
 											availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"

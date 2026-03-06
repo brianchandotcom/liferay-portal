@@ -11,7 +11,7 @@ import {getEditableLinkValue} from '../utils/getEditableLinkValue';
 import getCKEditorProcessor from './getCKEditorProcessor';
 import {getLinkableEditableEditorWrapper} from './getLinkableEditableEditorWrapper';
 
-const processor = Liferay.FeatureFlags['LPD-11235']
+const processor = !Liferay.FeatureFlags['LPD-11235']
 	? getCKEditorProcessor
 	: getAlloyEditorProcessor;
 

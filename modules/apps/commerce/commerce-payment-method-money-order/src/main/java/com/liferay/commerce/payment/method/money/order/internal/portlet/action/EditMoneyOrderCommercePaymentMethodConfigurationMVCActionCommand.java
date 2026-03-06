@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -81,7 +82,11 @@ public class EditMoneyOrderCommercePaymentMethodConfigurationMVCActionCommand
 
 		modifiableSettings.setValue("showMessagePage", showMessagePage);
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11235")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(
+					_portal.getHttpServletRequest(actionRequest)),
+				"LPD-11235")) {
+
 			UnicodeProperties unicodeProperties =
 				PropertiesParamUtil.getProperties(
 					actionRequest, "settings--messageAsLocalizedXML_");
@@ -122,5 +127,8 @@ public class EditMoneyOrderCommercePaymentMethodConfigurationMVCActionCommand
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private Portal _portal;
 
 }

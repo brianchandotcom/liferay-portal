@@ -221,7 +221,7 @@ const TranslateFieldEditor = ({
 				<ClayForm.Group>
 					<label className="control-label">{label}</label>
 
-					{Liferay.FeatureFlags['LPD-11235'] ? (
+					{!Liferay.FeatureFlags['LPD-11235'] ? (
 						<CKEditor5ClassicEditor
 							config={{
 								...editorConfiguration.editorConfig,

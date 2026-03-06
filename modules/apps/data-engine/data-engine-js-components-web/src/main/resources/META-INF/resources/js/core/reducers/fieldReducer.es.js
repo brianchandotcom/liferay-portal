@@ -57,7 +57,7 @@ export function updateNestedFieldNames(parentFieldName, nestedFields) {
 		return {
 			...nestedField,
 			...(nestedField.editorConfig &&
-				!Liferay.FeatureFlags['LPD-11235'] && {
+				Liferay.FeatureFlags['LPD-11235'] && {
 					editorConfig: updateEditorConfigFilebrowsersURL(
 						nestedField.editorConfig,
 						newNestedFieldName,
@@ -275,7 +275,7 @@ export default function fieldReducer(state, action) {
 									return {
 										...currentField,
 										...(currentField.editorConfig &&
-											!Liferay.FeatureFlags[
+											Liferay.FeatureFlags[
 												'LPD-11235'
 											] && {
 												editorConfig:

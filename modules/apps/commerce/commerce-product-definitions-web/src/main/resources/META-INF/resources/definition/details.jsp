@@ -100,7 +100,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 					<div class="entry-content form-group">
 						<c:choose>
-							<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
+							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11235") %>'>
 								<liferay-ui:input-localized
 									defaultLanguageId="<%= defaultLanguageId %>"
 									name="descriptionMapAsXML"

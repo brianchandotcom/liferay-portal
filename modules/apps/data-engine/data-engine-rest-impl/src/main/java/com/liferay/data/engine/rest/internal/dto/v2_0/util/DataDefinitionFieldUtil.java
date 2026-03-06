@@ -95,12 +95,18 @@ public class DataDefinitionFieldUtil {
 			}
 		}
 
+		String editorName = "ckeditor5_classic";
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-11235")) {
+
+			editorName = "ckeditor_classic";
+		}
+
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				StringPool.BLANK, ddmFormFieldType,
-				FeatureFlagManagerUtil.isEnabled("LPD-11235") ?
-					"ckeditor5_classic" : "ckeditor_classic",
-				new HashMap<>(), themeDisplay,
+				StringPool.BLANK, ddmFormFieldType, editorName, new HashMap<>(),
+				themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 
 		Map<String, Object> data = editorConfiguration.getData();

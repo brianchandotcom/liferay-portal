@@ -101,11 +101,17 @@ public class RichTextDDMFormFieldTemplateContextContributor
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String editorName = "ckeditor5_classic";
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-11235")) {
+
+			editorName = "ckeditor_classic";
+		}
+
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				themeDisplay.getPpid(), ddmFormFieldType,
-				FeatureFlagManagerUtil.isEnabled("LPD-11235") ?
-					"ckeditor5_classic" : "ckeditor_classic",
+				themeDisplay.getPpid(), ddmFormFieldType, editorName,
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true
 				).put(

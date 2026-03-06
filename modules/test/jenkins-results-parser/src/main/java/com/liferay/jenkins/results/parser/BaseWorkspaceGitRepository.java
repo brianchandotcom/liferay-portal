@@ -287,6 +287,11 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
+	public void setCommitFileIsSHA(boolean commitFileIsSHA) {
+		_commitFileIsSHA = commitFileIsSHA;
+	}
+
+	@Override
 	public void setGitHubURL(String gitHubURL) {
 		if (gitHubURL == null) {
 			throw new RuntimeException("GitHub URL is null");
@@ -942,6 +947,27 @@ public abstract class BaseWorkspaceGitRepository
 		}
 	}
 
+	private void _fetchCommitFileSHA() {
+		if (!_commitFileIsSHA) {
+			return;
+		}
+
+		String senderBranchSHA = getSenderBranchSHA();
+
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(
+				true, getDirectory(), 1000 * 60 * 15,
+				"git fetch -f --depth=1 upstream " + senderBranchSHA,
+				"git reset --hard " + senderBranchSHA);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to fetch " + senderBranchSHA +
+					" from git-commit file for " + getDirectoryName(),
+				exception);
+		}
+	}
+
 	private String _getBaseBranchHeadSHA() {
 		return getString("base_branch_head_sha");
 	}
@@ -1150,6 +1176,8 @@ public abstract class BaseWorkspaceGitRepository
 			!dotGitFolder.exists()) {
 
 			_downloadGitRepository();
+
+			_fetchCommitFileSHA();
 		}
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
@@ -1241,6 +1269,7 @@ public abstract class BaseWorkspaceGitRepository
 	};
 
 	private String _branchName;
+	private boolean _commitFileIsSHA;
 	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private LocalGitBranch _localGitBranch;
 	private List<String> _patchSHAs;

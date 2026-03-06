@@ -11,8 +11,32 @@
 long designLibraryId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
 %>
 
+<%
+DesignLibraryDashboardDisplayContext designLibraryDashboardDisplayContext = new DesignLibraryDashboardDisplayContext(request);
+%>
+
+
+<style>
+.design-library-breadcrumb {
+	background: var(--white);
+	padding: var(--spacer-3) var(--spacer-4);
+
+	.breadcrumb {
+		padding: var(--spacer-1) 0;
+	}
+
+	.breadcrumb-item {
+		font-size: var(--font-size-lg);
+	}
+}
+</style>
+
 <div>
 	<div>
+		<react:component
+			module="{DesignLibraryBreadcrumb} from design-library-web"
+			props='<%= designLibraryDashboardDisplayContext.getHeaderProps(designLibraryId) %>'
+		/>
 	</div>
 
 	<div class="design-library-dashboard-fds">

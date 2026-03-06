@@ -325,13 +325,13 @@ public class LayoutTestUtil {
 
 		Layout layout = addTypePortletLayout(groupId, privateLayout);
 
+		layout.setType(LayoutConstants.TYPE_LINK_TO_LAYOUT);
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		typeSettingsUnicodeProperties.setProperty(
 			"linkToLayoutId", String.valueOf(linkToLayoutId));
-
-		layout.setType(LayoutConstants.TYPE_LINK_TO_LAYOUT);
 
 		return LayoutLocalServiceUtil.updateLayout(layout);
 	}
@@ -349,12 +349,12 @@ public class LayoutTestUtil {
 
 		Layout layout = addTypePortletLayout(groupId, privateLayout);
 
+		layout.setType(LayoutConstants.TYPE_URL);
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		typeSettingsUnicodeProperties.setProperty("url", url);
-
-		layout.setType(LayoutConstants.TYPE_URL);
 
 		return LayoutLocalServiceUtil.updateLayout(layout);
 	}

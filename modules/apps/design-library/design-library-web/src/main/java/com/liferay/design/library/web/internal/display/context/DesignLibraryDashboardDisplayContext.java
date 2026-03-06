@@ -26,6 +26,29 @@ public class DesignLibraryDashboardDisplayContext {
 		_httpServletRequest = httpServletRequest;
 	}
 
+	public String getAPIURL() {
+		return "http://localhost:8080/o/search/v1.0/search"
+			+ "?page=1"
+			+ "&pageSize=20"
+			+ "&emptySearch=true"
+			+ "&filter=cmsRoot eq true and cmsSection eq 'files' and status in (0, 2, 3, 1, 7)"
+			+ "&nestedFields=embedded,embeddedTaxonomyCategory,file.metadata,file.previewURL,file.thumbnailURL,numberOfObjectEntries,numberOfObjectEntryFolders,systemProperties.objectDefinitionBrief";
+	}
+
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			LanguageUtil.get(
+				_httpServletRequest,
+				"click-new-to-create-or-import-your-design-resource")
+		).put(
+			"image", "/states/resources_empty_state.svg"
+		).put(
+			"title",
+			LanguageUtil.get(_httpServletRequest, "no-design-resources-yet")
+		).build();
+	}
+
 	public Map<String, Object> getHeaderProps(long designLibraryEntryId) {
 		return HashMapBuilder.<String, Object>put(
 			"actionItems", () -> {

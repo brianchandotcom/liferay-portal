@@ -11,16 +11,29 @@ type DepotEntry = {
 	depotEntryId: string;
 };
 
+enum DepotType {
+	ANY = -1,
+	ASSET_LIBRARY = 0,
+	DESIGN_LIBRARY = 3,
+	PROJECT = 2,
+	SPACE = 1,
+}
+
 export class JSONWebServicesDepotApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
+	readonly depotType: typeof DepotType;
 
 	constructor(apiHelpers: ApiHelpers) {
 		this.apiHelpers = apiHelpers;
 		this.basePath = '/api/jsonws/depot.depotentry';
+		this.depotType = DepotType;
 	}
 
-	async addDepotEntry(depotName: string): Promise<DepotEntry> {
+	async addDepotEntry(
+		depotName: string,
+		options: {type: DepotType} = {type: 0}
+	): Promise<DepotEntry> {
 		const urlSearchParams = new URLSearchParams();
 
 		urlSearchParams.append('nameMap', JSON.stringify({en_US: depotName}));
@@ -28,7 +41,7 @@ export class JSONWebServicesDepotApiHelper {
 			'descriptionMap',
 			JSON.stringify({en_US: getRandomString()})
 		);
-		urlSearchParams.append('type', '0');
+		urlSearchParams.append('type', String(options.type));
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-depot-entry`,

@@ -543,22 +543,13 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			return;
 		}
 
-		try {
-			CloudBucketUtil.syncGCPFiles(
-				_ARCHIVE_BASE_DIR_PATH + "/data",
-				_getBuildProperty("archive.ci.build.data.cloud.bucket.path"));
-
-			CloudBucketUtil.syncGCPFiles(
-				_ARCHIVE_BASE_DIR_PATH + "/reports",
-				_getGCPBucketBasePath() + "/reports");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
 		StringBuilder sb = new StringBuilder();
 
 		for (String reportName : reportNames) {
+			if (!reportName.startsWith("Flaky Test")) {
+				_initializeReportFiles();
+			}
+
 			try {
 				if (reportName.equals(Report.AWS_BUILD_COMPARISON.toString())) {
 					_generateAWSBuildComparisonReport(reportName);
@@ -771,6 +762,27 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 
 		return filePaths;
+	}
+
+	private void _initializeReportFiles() {
+		if (_reportFilesInitialized) {
+			return;
+		}
+
+		try {
+			CloudBucketUtil.syncGCPFiles(
+				_ARCHIVE_BASE_DIR_PATH + "/data",
+				_getBuildProperty("archive.ci.build.data.cloud.bucket.path"));
+
+			CloudBucketUtil.syncGCPFiles(
+				_ARCHIVE_BASE_DIR_PATH + "/reports",
+				_getGCPBucketBasePath() + "/reports");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		_reportFilesInitialized = true;
 	}
 
 	private boolean _isGCPReportFileStale(String path, long ageMinutes) {
@@ -1033,6 +1045,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_CURRENT_DATE_STRING = zonedDateTime.format(_dateTimeFormatter);
 	}
 
+	private boolean _reportFilesInitialized;
 	private Workspace _workspace;
 
 }

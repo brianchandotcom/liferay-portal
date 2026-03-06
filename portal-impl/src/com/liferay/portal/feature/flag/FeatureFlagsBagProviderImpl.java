@@ -3,13 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.feature.flag.web.internal.feature.flag;
+package com.liferay.portal.feature.flag;
 
-import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
-import com.liferay.feature.flag.web.internal.model.DependencyAwareFeatureFlag;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
-import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
-import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -18,7 +13,13 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.feature.flag.manager.FeatureFlagPreferencesManager;
+import com.liferay.portal.feature.flag.model.DependencyAwareFeatureFlag;
+import com.liferay.portal.feature.flag.model.FeatureFlagImpl;
+import com.liferay.portal.feature.flag.model.LanguageAwareFeatureFlag;
+import com.liferay.portal.feature.flag.model.PreferenceAwareFeatureFlag;
+import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
@@ -27,9 +28,9 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -57,23 +58,53 @@ import java.util.function.Predicate;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
-@Component(service = FeatureFlagsBagProvider.class)
 public class FeatureFlagsBagProviderImpl
 	implements FeatureFlagsBagProvider, IdentifiableOSGiService {
+
+	public void afterPropertiesSet() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			IdentifiableOSGiService.class, this, null);
+
+		_initSystemFeatureFlags(false);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, FeatureFlagListener.class, null,
+			(serviceReference, emitter) -> {
+				List<String> keys = _getFeatureFlagKeys(serviceReference);
+
+				if (keys == null) {
+					_log.error(
+						"No feature flag keys specified for " +
+							serviceReference);
+
+					return;
+				}
+
+				for (String key : keys) {
+					emitter.emit(key);
+				}
+			},
+			new FeatureFlagListenerEagerServiceTrackerCustomizer(
+				bundleContext));
+	}
 
 	@Override
 	public void clearCache() {
 		_featureFlagsBags.clear();
 
 		_initSystemFeatureFlags(true);
+	}
+
+	public void destroy() {
+		_serviceTrackerMap.close();
+
+		_serviceRegistration.unregister();
 	}
 
 	@Override
@@ -112,7 +143,7 @@ public class FeatureFlagsBagProviderImpl
 
 		_setEnabled(companyId, key, enabled);
 
-		if (!_clusterExecutor.isEnabled()) {
+		if (!ClusterExecutorUtil.isEnabled()) {
 			return;
 		}
 
@@ -125,42 +156,7 @@ public class FeatureFlagsBagProviderImpl
 
 		clusterRequest.setFireAndForget(true);
 
-		_clusterExecutor.execute(clusterRequest);
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			IdentifiableOSGiService.class, this, null);
-
-		_initSystemFeatureFlags(false);
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, FeatureFlagListener.class, null,
-			(serviceReference, emitter) -> {
-				List<String> keys = _getFeatureFlagKeys(serviceReference);
-
-				if (keys == null) {
-					_log.error(
-						"No feature flag keys specified for " +
-							serviceReference);
-
-					return;
-				}
-
-				for (String key : keys) {
-					emitter.emit(key);
-				}
-			},
-			new FeatureFlagListenerEagerServiceTrackerCustomizer(
-				bundleContext));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-
-		_serviceRegistration.unregister();
+		ClusterExecutorUtil.execute(clusterRequest);
 	}
 
 	private static void _setEnabled(
@@ -405,13 +401,10 @@ public class FeatureFlagsBagProviderImpl
 		FeatureFlagsBagProviderImpl.class, "_setEnabled", long.class,
 		String.class, boolean.class, String.class);
 
-	@Reference
-	private ClusterExecutor _clusterExecutor;
-
-	@Reference
+	@BeanReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;
 
-	@Reference
+	@BeanReference(type = FeatureFlagPreferencesManager.class)
 	private FeatureFlagPreferencesManager _featureFlagPreferencesManager;
 
 	private final Properties _featureFlagProperties = PropsUtil.getProperties(
@@ -421,11 +414,8 @@ public class FeatureFlagsBagProviderImpl
 	private final Map<Long, FeatureFlagsBag> _featureFlagsBags =
 		new ConcurrentHashMap<>();
 
-	@Reference
+	@BeanReference(type = Language.class)
 	private Language _language;
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 	private ServiceTrackerMap<String, List<FeatureFlagListener>>

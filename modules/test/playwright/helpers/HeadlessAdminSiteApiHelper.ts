@@ -32,4 +32,24 @@ export class HeadlessAdminSiteApiHelper {
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/site-pages/${pageExternalReferenceCode}`
 		);
 	}
+
+	async getPages(
+		siteExternalReferenceCode: string,
+		queryString: string
+	): Promise<any> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/site-pages?${queryString}`
+		);
+	}
+
+	async putPage(
+		siteExternalReferenceCode: string,
+		pageExternalReferenceCode: string,
+		page: any
+	): Promise<any> {
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/site-pages/${pageExternalReferenceCode}`,
+			{data: page, failOnStatusCode: true}
+		);
+	}
 }

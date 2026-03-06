@@ -14,9 +14,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.util.LayoutsTree;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -37,7 +34,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -48,7 +44,6 @@ import com.liferay.portal.kernel.util.SessionTreeJSClicks;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.staging.configuration.StagingConfiguration;
 import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 
 import jakarta.portlet.RenderRequest;
@@ -62,7 +57,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -96,28 +90,8 @@ public class LayoutsTreeDisplayContext {
 		return _action;
 	}
 
-	public String getChildPageHelpMessage() throws ConfigurationException {
-		String childPageHelpMessage = "child-page-export-process-warning";
-
-		if (Objects.equals(getAction(), Constants.PUBLISH)) {
-			childPageHelpMessage = "child-page-publish-process-warning";
-
-			StagingConfiguration stagingConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					StagingConfiguration.class, _themeDisplay.getCompanyId());
-
-			if (!stagingConfiguration.publishParentLayoutsByDefault()) {
-				childPageHelpMessage = null;
-			}
-		}
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-35443")) {
-
-			childPageHelpMessage = "child-page-process-warning-new-procedure";
-		}
-
-		return childPageHelpMessage;
+	public String getChildPageHelpMessage() {
+		return "child-page-export-process-warning";
 	}
 
 	public String getLayoutsCountMessageKey() throws PortalException {

@@ -14,7 +14,7 @@ import {waitForAlert} from '../../../../../utils/waitForAlert';
 
 const test = mergeTests(
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 		'LPD-36105': {enabled: true},
 	}),
 	instanceSettingsPagesTest,

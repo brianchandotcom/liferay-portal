@@ -12,7 +12,7 @@ import {basicClassicPageTest} from '../../../../frontend-editor-ckeditor-sample-
 export const test = mergeTests(
 	basicClassicPageTest,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest()

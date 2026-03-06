@@ -82,12 +82,17 @@ const assetPublisherDeprecationTest = mergeTests(
 	})
 );
 
-const ckeditor4Test = mergeTests(baseTest);
+const ckeditor4Test = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	})
+);
 
 const ckeditor5Test = mergeTests(
 	baseTest,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 	})
 );
 

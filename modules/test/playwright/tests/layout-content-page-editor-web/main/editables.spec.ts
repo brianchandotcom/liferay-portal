@@ -22,7 +22,7 @@ import getPageDefinition from './utils/getPageDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -34,7 +34,7 @@ const test = mergeTests(
 const testWithCKEditor4 = mergeTests(
 	test,
 	featureFlagsTest({
-		'LPD-11235': {enabled: false},
+		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
 	})
 );

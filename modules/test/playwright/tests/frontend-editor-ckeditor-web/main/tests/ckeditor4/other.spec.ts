@@ -5,9 +5,15 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 
-export const test = mergeTests(loginTest());
+export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
+	loginTest()
+);
 
 test(
 	'JavaScript files do not have BOM characters inside',

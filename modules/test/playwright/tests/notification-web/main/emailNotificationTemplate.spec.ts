@@ -22,13 +22,16 @@ export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
 	loginTest(),
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	}),
 	notificationPagesTest
 );
 
 const ckEditor5Test = mergeTests(
 	test,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 	})
 );
 

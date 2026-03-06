@@ -12,7 +12,7 @@ import {balloonPageTest} from '../../../../frontend-editor-ckeditor-sample-web/f
 export const test = mergeTests(
 	balloonPageTest,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest()

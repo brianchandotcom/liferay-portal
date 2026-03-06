@@ -12,7 +12,7 @@ import {reactPlusCETClassicPageTest} from '../../../../frontend-editor-ckeditor-
 export const test = mergeTests(
 	reactPlusCETClassicPageTest,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest()

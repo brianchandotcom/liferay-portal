@@ -14,7 +14,7 @@ import {deleteItems} from './utils/deleteItems';
 
 const test = mergeTests(
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 	}),
 	formsPagesTest,
 	loginTest()
@@ -23,7 +23,7 @@ const test = mergeTests(
 const xssDisabledTest = mergeTests(
 	test,
 	featureFlagsTest({
-		'LPD-11235': {enabled: true},
+		'LPD-11235': {enabled: false},
 		'LPD-31212': {enabled: false},
 	})
 );

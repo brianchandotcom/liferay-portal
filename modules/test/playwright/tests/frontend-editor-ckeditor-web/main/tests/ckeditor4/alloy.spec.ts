@@ -12,6 +12,7 @@ import {alloyPageTest} from '../../../../frontend-editor-ckeditor-sample-web/fix
 export const test = mergeTests(
 	alloyPageTest,
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest()

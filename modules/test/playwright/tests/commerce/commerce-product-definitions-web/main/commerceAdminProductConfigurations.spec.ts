@@ -30,7 +30,6 @@ test('LPD-41420 Verify configuration list eligibility management is available', 
 	applicationsMenuPage,
 	commerceAdminProductConfigurationListPage,
 	commerceAdminProductConfigurationListsPage,
-	page,
 }) => {
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
@@ -84,10 +83,20 @@ test('LPD-41420 Verify configuration list eligibility management is available', 
 		commerceAdminProductConfigurationListsPage.table
 	).toBeVisible();
 	await expect(
-		await page.getByText(productConfigurationList.name)
+		(
+			await commerceAdminProductConfigurationListsPage.tableRow(
+				1,
+				productConfigurationList.name
+			)
+		).row
 	).toBeVisible();
 
-	await page.getByText(productConfigurationList.name).click();
+	await (
+		await commerceAdminProductConfigurationListsPage.tableRowLink({
+			colIndex: 1,
+			rowValue: productConfigurationList.name,
+		})
+	).click();
 
 	await expect(
 		commerceAdminProductConfigurationListPage.eligibilitiesTab
@@ -96,17 +105,27 @@ test('LPD-41420 Verify configuration list eligibility management is available', 
 	await commerceAdminProductConfigurationListPage.eligibilitiesTab.click();
 
 	await expect(
-		await commerceAdminProductConfigurationListPage.accountElgibilityTitle
+		commerceAdminProductConfigurationListPage.accountElgibilityTitle
 	).toBeVisible();
-	await expect(await page.getByText(accountGroup.name)).toBeVisible();
 	await expect(
-		await commerceAdminProductConfigurationListPage.channelElgibilityTitle
+		commerceAdminProductConfigurationListPage.textTableCell(
+			accountGroup.name
+		)
 	).toBeVisible();
-	await expect(await page.getByText(channel.name)).toBeVisible();
 	await expect(
-		await commerceAdminProductConfigurationListPage.orderTypeElgibilityTitle
+		commerceAdminProductConfigurationListPage.channelElgibilityTitle
 	).toBeVisible();
-	await expect(await page.getByText(orderType.name['en_US'])).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.textTableCell(channel.name)
+	).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.orderTypeElgibilityTitle
+	).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.textTableCell(
+			orderType.name['en_US']
+		)
+	).toBeVisible();
 });
 
 test('LPD-41420 Verify configuration list eligibility management save button clears out fields when All option is selected', async ({
@@ -114,7 +133,6 @@ test('LPD-41420 Verify configuration list eligibility management save button cle
 	applicationsMenuPage,
 	commerceAdminProductConfigurationListPage,
 	commerceAdminProductConfigurationListsPage,
-	page,
 }) => {
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
@@ -168,10 +186,20 @@ test('LPD-41420 Verify configuration list eligibility management save button cle
 		commerceAdminProductConfigurationListsPage.table
 	).toBeVisible();
 	await expect(
-		await page.getByText(productConfigurationList.name)
+		(
+			await commerceAdminProductConfigurationListsPage.tableRow(
+				1,
+				productConfigurationList.name
+			)
+		).row
 	).toBeVisible();
 
-	await page.getByText(productConfigurationList.name).click();
+	await (
+		await commerceAdminProductConfigurationListsPage.tableRowLink({
+			colIndex: 1,
+			rowValue: productConfigurationList.name,
+		})
+	).click();
 
 	await expect(
 		commerceAdminProductConfigurationListPage.eligibilitiesTab
@@ -180,50 +208,71 @@ test('LPD-41420 Verify configuration list eligibility management save button cle
 	await commerceAdminProductConfigurationListPage.eligibilitiesTab.click();
 
 	await expect(
-		await commerceAdminProductConfigurationListPage.accountElgibilityTitle
+		commerceAdminProductConfigurationListPage.accountElgibilityTitle
 	).toBeVisible();
-	await expect(await page.getByText(accountGroup.name)).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.textTableCell(
+			accountGroup.name
+		)
+	).toBeVisible();
 
 	await commerceAdminProductConfigurationListPage.allAccountsLabel.check();
 
 	await expect(
-		await commerceAdminProductConfigurationListPage.allAccountsLabel
+		commerceAdminProductConfigurationListPage.allAccountsLabel
 	).toBeChecked();
 
-	await commerceAdminProductConfigurationListPage.saveButton.click;
+	await commerceAdminProductConfigurationListPage.saveButton.click();
+
 	await commerceAdminProductConfigurationListPage.eligibilitiesTab.click();
 
-	await expect(await page.getByText(accountGroup.name)).toBeHidden();
 	await expect(
-		await commerceAdminProductConfigurationListPage.channelElgibilityTitle
+		commerceAdminProductConfigurationListPage.textTableCell(
+			accountGroup.name
+		)
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationListPage.channelElgibilityTitle
 	).toBeVisible();
-	await expect(await page.getByText(channel.name)).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.textTableCell(channel.name)
+	).toBeVisible();
 
 	await commerceAdminProductConfigurationListPage.allChannelsLabel.check();
 
 	await expect(
-		await commerceAdminProductConfigurationListPage.allChannelsLabel
+		commerceAdminProductConfigurationListPage.allChannelsLabel
 	).toBeChecked();
 
 	await commerceAdminProductConfigurationListPage.saveButton.click();
 	await commerceAdminProductConfigurationListPage.eligibilitiesTab.click();
 
-	await expect(await page.getByText(channel.name)).toBeHidden();
 	await expect(
-		await commerceAdminProductConfigurationListPage.orderTypeElgibilityTitle
+		commerceAdminProductConfigurationListPage.textTableCell(channel.name)
+	).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationListPage.orderTypeElgibilityTitle
 	).toBeVisible();
-	await expect(await page.getByText(orderType.name['en_US'])).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.textTableCell(
+			orderType.name['en_US']
+		)
+	).toBeVisible();
 
 	await commerceAdminProductConfigurationListPage.allOrderTypesLabel.check();
 
 	await expect(
-		await commerceAdminProductConfigurationListPage.allOrderTypesLabel
+		commerceAdminProductConfigurationListPage.allOrderTypesLabel
 	).toBeChecked();
 
 	await commerceAdminProductConfigurationListPage.saveButton.click();
 	await commerceAdminProductConfigurationListPage.eligibilitiesTab.click();
 
-	await expect(await page.getByText(orderType.name['en_US'])).toBeHidden();
+	await expect(
+		commerceAdminProductConfigurationListPage.textTableCell(
+			orderType.name['en_US']
+		)
+	).toBeHidden();
 });
 
 test('LPD-42555 Verify configuration list table appears', async ({
@@ -1275,15 +1324,14 @@ test(
 		);
 
 		await expect(
-			await commerceAdminProductDetailsPage.productConfigurationLink
+			commerceAdminProductDetailsPage.productConfigurationLink
 		).toBeVisible();
 
 		await commerceAdminProductDetailsPage.goToProductConfiguration();
 
-		const minStockQuantity =
-			await commerceAdminProductDetailsConfigurationPage.minStockQuantityInput.inputValue();
-
-		await expect(minStockQuantity).toEqual('0.0');
+		await expect(
+			commerceAdminProductDetailsConfigurationPage.minStockQuantityInput
+		).toHaveValue('0.0');
 
 		await expect(page.locator('.workflow-status-draft')).toBeVisible();
 

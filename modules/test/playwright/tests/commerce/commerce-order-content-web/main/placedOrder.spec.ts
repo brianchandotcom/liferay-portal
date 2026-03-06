@@ -763,7 +763,7 @@ test('LPD-26643 Reorder from placed orders details page', async ({
 
 	await checkoutPage.goToOrderDetailsButton.click();
 
-	await expect(page.getByText('U-joint')).toBeVisible();
+	await expect(page.getByRole('link', {name: 'U-joint'})).toBeVisible();
 
 	try {
 		await commerceAdminOrderDetailsPage.reorderButton.click();
@@ -772,7 +772,7 @@ test('LPD-26643 Reorder from placed orders details page', async ({
 
 		await commerceAdminOrderDetailsPage.checkoutButton.click();
 
-		await expect(page.getByText('U-joint')).toBeVisible();
+		await expect(page.getByRole('link', {name: 'U-joint'})).toBeVisible();
 
 		await checkoutPage.chooseShippingAddress({index: 1});
 

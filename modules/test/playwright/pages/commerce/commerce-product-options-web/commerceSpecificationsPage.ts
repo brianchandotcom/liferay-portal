@@ -20,8 +20,12 @@ export class CommerceSpecificationsPage {
 	readonly saveButton: Locator;
 	readonly sidePanelSpecificationPicklistItemsFrame: FrameLocator;
 	readonly specificationNameLink: (specificationName: string) => Locator;
-	readonly specificationPicklistActionButton: Locator;
-	readonly specificationPicklistItemsActionButton: Locator;
+	readonly specificationPicklistActionButton: (
+		specificationName: string
+	) => Locator;
+	readonly specificationPicklistItemsActionButton: (
+		specificationPickListName: string
+	) => Locator;
 	readonly specificationPicklistDropdownMenuItems: (
 		action: string
 	) => Locator;
@@ -59,14 +63,17 @@ export class CommerceSpecificationsPage {
 			page.frameLocator('iframe');
 		this.specificationNameLink = (specificationName) =>
 			page.getByRole('link', {exact: true, name: specificationName});
-		this.specificationPicklistActionButton = page.getByRole('button', {
-			exact: true,
-			name: 'Actions',
-		});
-		this.specificationPicklistItemsActionButton =
+		this.specificationPicklistActionButton = (specificationName: string) =>
+			page.getByRole('button', {
+				exact: true,
+				name: `${specificationName} Actions`,
+			});
+		this.specificationPicklistItemsActionButton = (
+			specificationPickListName: string
+		) =>
 			this.sidePanelSpecificationPicklistItemsFrame.getByRole('button', {
 				exact: true,
-				name: 'Actions',
+				name: `${specificationPickListName} Actions`,
 			});
 		this.specificationPicklistDropdownMenu = (action) =>
 			page.getByRole('menuitem', {exact: true, name: action});

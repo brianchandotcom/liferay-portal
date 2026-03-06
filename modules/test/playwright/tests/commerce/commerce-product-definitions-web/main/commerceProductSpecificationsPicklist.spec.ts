@@ -71,7 +71,9 @@ test(
 			);
 
 			await expect(
-				page.getByText(specification.title.en_US)
+				commerceAdminProductDetailsPage.textTableCell(
+					specification.title.en_US
+				)
 			).toBeVisible();
 
 			await apiHelpers.listTypeAdmin.postListTypeEntry({
@@ -83,6 +85,7 @@ test(
 
 			await commerceAdminProductDetailsPage.editOrDeleteProductSpecification(
 				'Edit',
+				specification.title.en_US,
 				'item2'
 			);
 
@@ -261,7 +264,7 @@ test(
 
 			const selectSpecificationValueIframe = page
 				.frameLocator('iframe')
-				.nth(2)
+				.nth(1)
 				.locator('select[name="listTypeEntriesSelect"]');
 
 			await expect(selectSpecificationValueIframe).toHaveAttribute(
@@ -282,7 +285,7 @@ test(
 
 			const inputSpecificationValueIframe = page
 				.frameLocator('iframe')
-				.nth(2)
+				.nth(1)
 				.getByRole('textbox')
 				.nth(1);
 

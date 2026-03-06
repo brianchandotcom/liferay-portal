@@ -195,7 +195,7 @@ test(
 
 		await commerceAdminInventoryPage.changeLogLink.click();
 
-		await expect(await page.getByText('1000')).toBeVisible();
+		await expect(page.getByText('Set to 1000')).toBeVisible();
 	}
 );
 

@@ -47,7 +47,7 @@ export class CommerceAdminInventoryPage extends CommerceDNDTablePage {
 			if (itemsTableRow && itemsTableRow.column) {
 				return itemsTableRow.row.getByRole('button', {
 					exact: true,
-					name: 'Actions',
+					name: `${sku} Actions`,
 				});
 			}
 

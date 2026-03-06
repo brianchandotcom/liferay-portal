@@ -50,9 +50,10 @@ export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDND
 		productName: string
 	) => Promise<Locator>;
 	readonly addUpSellProductMenuButton: Locator;
+	readonly bulkActionButton: Locator;
 	readonly commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
 	readonly creationMenuNewButton: Locator;
-	readonly deleteBulkButton: Locator;
+	readonly deleteBulkMenuItem: Locator;
 	readonly page: Page;
 	readonly productRelationsLink: Locator;
 	readonly selectItemsInput: Locator;
@@ -101,15 +102,15 @@ export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDND
 				name: 'Add New Product to ' + productName,
 			});
 		};
+		this.bulkActionButton = page
+			.getByTestId('selectionToolbar')
+			.getByRole('button', {name: 'Actions'});
 		this.commerceAdminProductDetailsPage =
 			new CommerceAdminProductDetailsPage(page);
 		this.creationMenuNewButton = page
 			.getByTestId('managementToolbar')
 			.getByRole('button', {name: 'New'});
-		this.deleteBulkButton = page
-			.locator('nav')
-			.locator('.bulk-actions')
-			.getByRole('button');
+		this.deleteBulkMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.page = page;
 		this.productRelationsLink = page.getByRole('link', {
 			exact: true,

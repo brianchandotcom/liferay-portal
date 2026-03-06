@@ -26,8 +26,6 @@ test(
 	'Can sort specifications by specification group and label priority',
 	{tag: '@LPD-13560'},
 	async ({apiHelpers, page, site, specificationFacetsPage}) => {
-		test.setTimeout(180000);
-
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			title: getRandomString(),
@@ -295,8 +293,6 @@ test(
 	'Only visible specifications are listed in facet widget',
 	{tag: '@LPD-48103'},
 	async ({apiHelpers, page, site, specificationFacetsPage}) => {
-		test.setTimeout(180000);
-
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			title: getRandomString(),

@@ -528,6 +528,11 @@
 			)
 		);
 
+		$_pb: map-get($map, padding-bottom);
+		$_pl: map-get($map, padding-left);
+		$_pr: map-get($map, padding-right);
+		$_pt: map-get($map, padding-top);
+
 		$c-inner: setter(map-get($map, c-inner), ());
 		$c-inner: map-merge(
 			(
@@ -541,10 +546,10 @@
 							true
 						)
 					),
-				margin-bottom: calc(#{map-get($map, padding-bottom)} * -1),
-				margin-left: calc(#{map-get($map, padding-left)} * -1),
-				margin-right: calc(#{map-get($map, padding-right)} * -1),
-				margin-top: calc(#{map-get($map, padding-top)} * -1),
+				margin-bottom: if($_pb, calc(#{$_pb} * -1), null),
+				margin-left: if($_pl, calc(#{$_pl} * -1), null),
+				margin-right: if($_pr, calc(#{$_pr} * -1), null),
+				margin-top: if($_pt, calc(#{$_pt} * -1), null),
 			),
 			$c-inner
 		);

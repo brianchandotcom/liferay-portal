@@ -69,6 +69,8 @@ public class RenderFragmentEntryDisplayContext {
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
 
+		fragmentEntryLink.setGroupId(themeDisplay.getScopeGroupId());
+
 		String fragmentEntryERC = null;
 		String fragmentEntryScopeERC = null;
 
@@ -78,7 +80,6 @@ public class RenderFragmentEntryDisplayContext {
 				fragmentEntry.getGroupId(), themeDisplay.getScopeGroupId());
 		}
 
-		fragmentEntryLink.setGroupId(themeDisplay.getScopeGroupId());
 		fragmentEntryLink.setFragmentEntryERC(fragmentEntryERC);
 		fragmentEntryLink.setFragmentEntryScopeERC(fragmentEntryScopeERC);
 

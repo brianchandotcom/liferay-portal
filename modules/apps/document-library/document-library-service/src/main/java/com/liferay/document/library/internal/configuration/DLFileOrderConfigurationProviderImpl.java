@@ -7,6 +7,9 @@ package com.liferay.document.library.internal.configuration;
 
 import com.liferay.document.library.configuration.DLFileOrderConfigurationProvider;
 import com.liferay.document.library.internal.configuration.admin.service.DLFileOrderManagedServiceFactory;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Component;
@@ -47,7 +50,8 @@ public class DLFileOrderConfigurationProviderImpl
 				(DLFileOrderManagedServiceFactory)_managedServiceFactory;
 		}
 
-		return _dlFileOrderManagedServiceFactory.getGroupOrderByColumn(groupId);
+		return _dlFileOrderManagedServiceFactory.getGroupOrderByColumn(
+			_getCompanyId(groupId), groupId);
 	}
 
 	@Override
@@ -57,7 +61,8 @@ public class DLFileOrderConfigurationProviderImpl
 				(DLFileOrderManagedServiceFactory)_managedServiceFactory;
 		}
 
-		return _dlFileOrderManagedServiceFactory.getGroupSortBy(groupId);
+		return _dlFileOrderManagedServiceFactory.getGroupSortBy(
+			_getCompanyId(groupId), groupId);
 	}
 
 	@Override
@@ -80,7 +85,20 @@ public class DLFileOrderConfigurationProviderImpl
 		return _dlFileOrderManagedServiceFactory.getSystemSortBy();
 	}
 
+	private long _getCompanyId(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group != null) {
+			return group.getCompanyId();
+		}
+
+		return CompanyThreadLocal.getCompanyId();
+	}
+
 	private DLFileOrderManagedServiceFactory _dlFileOrderManagedServiceFactory;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.document.library.internal.configuration.admin.service.DLFileOrderManagedServiceFactory)"

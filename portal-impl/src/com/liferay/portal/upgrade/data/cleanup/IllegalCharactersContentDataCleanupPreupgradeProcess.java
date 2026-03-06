@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUti
 
 import java.sql.PreparedStatement;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Luis Ortiz
  */
@@ -31,85 +28,78 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
-		Map<String, String> tableAndColumnNames = new HashMap<>();
+		_cleanUp("content", dbInspector, "JournalArticle");
+		_cleanUp("data_", dbInspector, "DDMContent");
+		_cleanUp("xml", dbInspector, "DDMContent");
+	}
 
-		if (dbInspector.hasColumn("DDMContent", "data_")) {
+	private void _cleanUp(
+			String columnName, DBInspector dbInspector, String tableName)
+		throws Exception {
+
+		if (dbInspector.hasColumn(tableName, columnName)) {
+			_cleanUpIllegalCharacters(columnName, dbInspector, tableName);
 			_cleanUpIllegalUnicodeStringNullCharacterSequence(
-				"data_", dbInspector, "DDMContent");
-			tableAndColumnNames.put("DDMContent", "data_");
-		}
-
-		if (dbInspector.hasColumn("DDMContent", "xml")) {
-			tableAndColumnNames.put("DDMContent", "xml");
-		}
-
-		if (dbInspector.hasColumn("JournalArticle", "content")) {
-			_cleanUpIllegalUnicodeStringNullCharacterSequence(
-				"content", dbInspector, "JournalArticle");
-			tableAndColumnNames.put("JournalArticle", "content");
-		}
-
-		for (Map.Entry<String, String> entry : tableAndColumnNames.entrySet()) {
-			for (int charCode : _ILLEGAL_CHARACTER_CODES) {
-				_cleanUpIllegalCharacter(
-					charCode, entry.getValue(), dbInspector, entry.getKey());
-			}
+				columnName, dbInspector, tableName);
 		}
 	}
 
-	private void _cleanUpIllegalCharacter(
-			int charCode, String columnName, DBInspector dbInspector,
-			String tableName)
+	private void _cleanUpIllegalCharacters(
+			String columnName, DBInspector dbInspector, String tableName)
 		throws Exception {
 
 		DB db = DBManagerUtil.getDB();
 
-		if ((charCode == 0) &&
-			((db.getDBType() == DBType.DB2) ||
-			 (db.getDBType() == DBType.POSTGRESQL))) {
+		for (int charCode : _ILLEGAL_CHARACTER_CODES) {
+			if ((charCode == 0) &&
+				((db.getDBType() == DBType.DB2) ||
+				 (db.getDBType() == DBType.POSTGRESQL))) {
 
-			return;
-		}
+				continue;
+			}
 
-		String charSentence = "CHAR(" + charCode + ")";
+			String charSentence = "CHAR(" + charCode + ")";
 
-		if ((db.getDBType() == DBType.DB2) ||
-			(db.getDBType() == DBType.ORACLE) ||
-			(db.getDBType() == DBType.POSTGRESQL)) {
+			if ((db.getDBType() == DBType.DB2) ||
+				(db.getDBType() == DBType.ORACLE) ||
+				(db.getDBType() == DBType.POSTGRESQL)) {
 
-			charSentence = "CHR(" + charCode + ")";
-		}
+				charSentence = "CHR(" + charCode + ")";
+			}
 
-		String preColumnModificator = "";
+			String preColumnModificator = "";
 
-		if ((db.getDBType() == DBType.MARIADB) ||
-			(db.getDBType() == DBType.MYSQL)) {
+			if ((db.getDBType() == DBType.MARIADB) ||
+				(db.getDBType() == DBType.MYSQL)) {
 
-			preColumnModificator = "BINARY ";
-		}
+				preColumnModificator = "BINARY ";
+			}
 
-		String postColumnModificator = "";
+			String postColumnModificator = "";
 
-		if (db.getDBType() == DBType.SQLSERVER) {
-			postColumnModificator = " COLLATE Latin1_General_100_BIN2";
-		}
+			if (db.getDBType() == DBType.SQLSERVER) {
+				postColumnModificator = " COLLATE Latin1_General_100_BIN2";
+			}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(
-					StringBundler.concat(
-						"update ", tableName, " set ", columnName,
-						" = replace(", preColumnModificator, columnName,
-						postColumnModificator, ", ", charSentence,
-						", '') where INSTR(", preColumnModificator, columnName,
-						postColumnModificator, ", ", charSentence, ") > 0")))) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						SQLTransformer.transform(
+							StringBundler.concat(
+								"update ", tableName, " set ", columnName,
+								" = replace(", preColumnModificator, columnName,
+								postColumnModificator, ", ", charSentence,
+								", '') where INSTR(", preColumnModificator,
+								columnName, postColumnModificator, ", ",
+								charSentence, ") > 0")))) {
 
-			int count = preparedStatement.executeUpdate();
+				int count = preparedStatement.executeUpdate();
 
-			DataCleanupLoggingUtil.logUpdate(
-				_log, count, dbInspector.normalizeName(tableName),
-				dbInspector.normalizeName(columnName), null,
-				"it had invalid character " +
-					String.format("0x%02X", charCode));
+				DataCleanupLoggingUtil.logUpdate(
+					_log, count, dbInspector.normalizeName(tableName),
+					dbInspector.normalizeName(columnName), null,
+					"it had invalid character " +
+						String.format("0x%02X", charCode));
+			}
 		}
 	}
 

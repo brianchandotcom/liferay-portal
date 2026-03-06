@@ -294,6 +294,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			DepotEntryLocalServiceUtil.deleteDepotEntry(irrelevantDepotEntry);
 			DepotEntryLocalServiceUtil.deleteDepotEntry(testDepotEntry);
 		</#if>
+
 		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}

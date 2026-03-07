@@ -204,7 +204,8 @@ public class DLSizeLimitManagedServiceFactoryTest {
 
 		return ReflectionTestUtil.invoke(
 			_getDLSizeLimitConfigurationHelper(), "getGroupMimeTypeSizeLimit",
-			new Class<?>[] {long.class, String.class}, groupId, mimeType);
+			new Class<?>[] {long.class, long.class, String.class},
+			TestPropsValues.getCompanyId(), groupId, mimeType);
 	}
 
 	private long _getGroupMimeTypeSizeLimit(String mimeType) throws Exception {
@@ -223,6 +224,7 @@ public class DLSizeLimitManagedServiceFactoryTest {
 					RandomTestUtil.randomString();
 
 		try {
+			properties.put("companyId", TestPropsValues.getCompanyId());
 			properties.put("groupId", TestPropsValues.getGroupId());
 
 			_managedServiceFactory.updated(pid, properties);

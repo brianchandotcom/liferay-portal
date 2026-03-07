@@ -413,6 +413,7 @@ public class DLFileEntryConfigurationProviderTest {
 		Dictionary<String, Object> properties = _createDictionary(
 			maxNumberOfPages, previewableProcessorMaxSize);
 
+		properties.put("companyId", TestPropsValues.getCompanyId());
 		properties.put("groupId", TestPropsValues.getGroupId());
 
 		_withConfiguration(properties, unsafeRunnable);

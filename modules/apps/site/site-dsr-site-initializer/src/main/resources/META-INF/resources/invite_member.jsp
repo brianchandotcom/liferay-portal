@@ -7,7 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL name="/dsr/invite_member" var="inviteMemberURL" />
+<portlet:actionURL name="/digital_sales_room/invite_member" var="inviteMemberURL" />
 
 <liferay-frontend:edit-form
 	action="<%= inviteMemberURL %>"

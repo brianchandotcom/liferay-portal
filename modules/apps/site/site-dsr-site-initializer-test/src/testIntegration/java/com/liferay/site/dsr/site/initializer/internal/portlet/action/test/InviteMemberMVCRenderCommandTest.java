@@ -247,7 +247,7 @@ public class InviteMemberMVCRenderCommandTest {
 	private GroupLocalService _groupLocalService;
 
 	@Inject(
-		filter = "mvc.command.name=/dsr/invite_member",
+		filter = "mvc.command.name=/digital_sales_room/invite_member",
 		type = MVCRenderCommand.class
 	)
 	private MVCRenderCommand _mvcRenderCommand;

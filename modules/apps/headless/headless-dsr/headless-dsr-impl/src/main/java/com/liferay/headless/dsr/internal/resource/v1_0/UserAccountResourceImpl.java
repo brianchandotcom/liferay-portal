@@ -280,7 +280,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 									group.getGroupId(), LoginPortletKeys.LOGIN),
 								PortletRequest.RENDER_PHASE)
 						).setMVCRenderCommandName(
-							"/dsr/invite_member"
+							"/digital_sales_room/invite_member"
 						).setParameter(
 							"ticketKey", ticket.getKey()
 						).setPortletMode(

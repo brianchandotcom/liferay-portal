@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"jakarta.portlet.name=" + DSRPortletKeys.DSR_INVITE_MEMBER,
-		"mvc.command.name=/dsr/invite_member",
+		"mvc.command.name=/digital_sales_room/invite_member",
 		"portlet.add.default.resource.check.whitelist.mvc.action=true"
 	},
 	service = MVCRenderCommand.class

@@ -182,7 +182,7 @@ public class InviteMemberMVCActionCommandTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
-	@Inject(filter = "mvc.command.name=/dsr/invite_member")
+	@Inject(filter = "mvc.command.name=/digital_sales_room/invite_member")
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject

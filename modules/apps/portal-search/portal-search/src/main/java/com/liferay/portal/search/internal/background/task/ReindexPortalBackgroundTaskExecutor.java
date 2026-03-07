@@ -11,6 +11,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -21,7 +22,9 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.ConcurrentReindexManager;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.internal.SearchEngineInitializer;
 
@@ -121,7 +124,8 @@ public class ReindexPortalBackgroundTaskExecutor
 			SearchEngineInitializer searchEngineInitializer =
 				new SearchEngineInitializer(
 					companyId, _concurrentReindexManagerSnapshot.get(),
-					executionMode, executorService, indexers,
+					executionMode, executorService, _indexNameBuilder, indexers,
+					_jsonFactory, _searchEngineAdapter,
 					_syncReindexManagerSnapshot.get());
 
 			searchEngineInitializer.reindex();
@@ -154,6 +158,15 @@ public class ReindexPortalBackgroundTaskExecutor
 		_syncReindexManagerSnapshot = new Snapshot<>(
 			ReindexPortalBackgroundTaskExecutor.class, SyncReindexManager.class,
 			null, true);
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;

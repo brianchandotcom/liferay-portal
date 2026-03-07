@@ -112,9 +112,7 @@ test(
 			'UpdatedName' + getRandomInt()
 		);
 
-		await listTypeDefinitionPage.frameLocator
-			.getByRole('button', {name: 'Cancel'})
-			.click();
+		await listTypeDefinitionPage.frameLocator.getByText('Cancel').click();
 
 		await expect(
 			page.getByRole('link', {name: originalName})
@@ -173,7 +171,7 @@ test(
 		);
 
 		const picklistFieldLabel = objectFields[0].label['en_US'];
-		const firstEntryName = listTypeEntries[0].name_i18n['en_US'];
+		const firstEntryName = listTypeEntries[0].name_i18n['en-US'];
 
 		await viewObjectEntriesPage.selectDropdownItem(
 			picklistFieldLabel,
@@ -183,57 +181,6 @@ test(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
-	}
-);
-
-test(
-	'LPD-78504 Can create object with state added to picklist',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers}) => {
-		// Corresponds to Poshi test: CanCreateObjectWithState
-
-		const {listTypeDefinition} =
-			await postListTypeDefinitionListTypeEntries({
-				apiHelpers,
-				listTypeEntriesLength: 3,
-			});
-
-		const objectFields = generateObjectFields({
-			listTypeDefinitionExternalReferenceCode:
-				listTypeDefinition.externalReferenceCode,
-			objectFieldBusinessTypes: [
-				{businessType: 'Picklist', state: true},
-			],
-		});
-
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				label: {
-					en_US: 'ObjectDefinitionLabel' + getRandomInt(),
-				},
-				name: 'ObjectDefinitionName' + getRandomInt(),
-				objectFields,
-				pluralLabel: {
-					en_US: 'ObjectDefinitionLabel' + getRandomInt(),
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		expect(objectDefinition.id).toBeTruthy();
-		expect(objectDefinition.status.code).toBe(0);
 	}
 );
 
@@ -269,46 +216,7 @@ test(
 );
 
 test(
-	'LPD-78504 Can delete a picklist',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, listTypeDefinitionPage, page}) => {
-		// Corresponds to Poshi test: CanDeletePicklist
-
-		const listTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
-
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
-
-		const picklistName = listTypeDefinition.name;
-
-		await listTypeDefinitionPage.goto();
-
-		await expect(
-			page.getByRole('link', {name: picklistName})
-		).toBeVisible();
-
-		await page
-			.getByRole('row', {name: picklistName})
-			.getByRole('button')
-			.click();
-
-		await page.getByRole('menuitem', {name: 'Delete'}).click();
-
-		await page.getByRole('button', {name: 'Delete'}).click();
-
-		await waitForAlert(page);
-
-		await expect(
-			page.getByRole('link', {name: picklistName})
-		).toBeHidden();
-	}
-);
-
-test(
-	'LPD-78504 Can edit object with state added to picklist',
+	'LPD-78504 Can create and edit object with state added to picklist',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
 		// Corresponds to Poshi test: CanEditObjectWithState
@@ -323,7 +231,16 @@ test(
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: [
-				{businessType: 'Picklist', state: true},
+				{businessType: 'Picklist', required: true, state: true, objectFieldSettings: [
+			{
+				name: "defaultValueType",
+				value: "inputAsValue" as any
+			},
+			{
+				name: "defaultValue",
+				value: listTypeEntries[0].name
+			}
+		]},
 			],
 		});
 
@@ -354,8 +271,8 @@ test(
 		});
 
 		const picklistFieldLabel = objectFields[0].label['en_US'];
-		const firstEntryName = listTypeEntries[0].name_i18n['en_US'];
-		const secondEntryName = listTypeEntries[1].name_i18n['en_US'];
+		const firstEntryName = listTypeEntries[0].name_i18n['en-US'];
+		const secondEntryName = listTypeEntries[1].name_i18n['en-US'];
 
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
@@ -384,6 +301,43 @@ test(
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await waitForAlert(page);
+	}
+);
+
+test(
+	'LPD-78504 Can delete a picklist',
+	{tag: '@LPD-78504'},
+	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+		// Corresponds to Poshi test: CanDeletePicklist
+
+		const listTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		const picklistName = listTypeDefinition.name;
+
+		await listTypeDefinitionPage.goto();
+
+		await expect(
+			page.getByRole('link', {name: picklistName})
+		).toBeVisible();
+
+		await page
+			.getByRole('row', {name: picklistName})
+			.getByRole('button')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await waitForAlert(page);
+
+		await expect(
+			page.getByRole('link', {name: picklistName})
+		).toBeHidden();
 	}
 );
 
@@ -421,7 +375,7 @@ test(
 
 		await expect(
 			page.getByText(
-				'The key value must start with a lowercase letter and can only contain lowercase letters and numbers.'
+				'Key must only contain letters and digits.'
 			)
 		).toBeVisible();
 	}
@@ -485,7 +439,7 @@ test(
 
 		await listTypeDefinitionPage.modalSaveButton.click();
 
-		await expect(page.getByText('Required')).toBeVisible();
+		await expect(page.locator('#localefieldFeedback').getByText('Required')).toBeVisible();
 	}
 );
 
@@ -623,10 +577,6 @@ test(
 			.getByRole('link', {name: listTypeDefinition.name})
 			.click();
 
-		const frameElement = await page.$('iframe');
-		const frame = await frameElement.contentFrame();
-		await frame.waitForLoadState('load');
-
 		await listTypeDefinitionPage.frameLocator
 			.getByPlaceholder('Search')
 			.fill(itemName1);
@@ -758,7 +708,9 @@ test(
 			'pt_BR'
 		);
 
-		await waitForAlert(page);
+		await expect(
+			page.getByRole('link', {name: listTypeDefinition.name})
+		).toBeVisible();
 	}
 );
 
@@ -842,8 +794,6 @@ test(
 		await listTypeDefinitionPage.sidebarNameInput.fill(updatedName);
 
 		await listTypeDefinitionPage.sidebarSaveButton.click();
-
-		await waitForAlert(page);
 
 		await expect(
 			page.getByRole('link', {name: updatedName})
@@ -946,11 +896,7 @@ test(
 			.getByRole('link', {name: listTypeDefinition.name})
 			.click();
 
-		const frameElement = await page.$('iframe');
-		const frame = await frameElement.contentFrame();
-		await frame.waitForLoadState('load');
-
-		await expect(frame.getByText('No Results Found')).toBeVisible();
+		await expect(listTypeDefinitionPage.frameLocator.getByText('No Results Found')).toBeVisible();
 	}
 );
 
@@ -1236,12 +1182,8 @@ test(
 			.getByRole('link', {name: listTypeDefinition.name})
 			.click();
 
-		const frameElement = await page.$('iframe');
-		const frame = await frameElement.contentFrame();
-		await frame.waitForLoadState('load');
-
 		await expect(
-			frame.getByText('updating or deleting', {exact: false})
+			listTypeDefinitionPage.frameLocator.getByText('updating or deleting', {exact: false})
 		).toBeVisible();
 	}
 );

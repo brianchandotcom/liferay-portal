@@ -38,11 +38,11 @@ public class ObjectActionEmailDispatchRestController
 
 	@PostMapping
 	public void post(@RequestBody String json) throws Exception {
-		JSONObject jsonObject = new JSONObject(json);
-
 		if (_log.isInfoEnabled()) {
-			_log.info("POST " + jsonObject);
+			_log.info("POST email dispatch " + json);
 		}
+
+		JSONObject jsonObject = new JSONObject(json);
 
 		if (!jsonObject.has("modelDTOProduct")) {
 			return;

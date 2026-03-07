@@ -43,11 +43,13 @@ public class ObjectActionEmailDispatchRestController
 		String objectActionTriggerKey = jsonObject.getString(
 			"objectActionTriggerKey");
 
-		if (Objects.equals(_getModelName(jsonObject), "product") &&
-			Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
+		if (!Objects.equals(_getModelName(jsonObject), "product") ||
+			!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
 
-			_onAfterAddProductNotification(jsonObject);
+			return;
 		}
+
+		_onAfterAddProductNotification(jsonObject);		
 	}
 
 	private String _getModelName(JSONObject jsonObject) {

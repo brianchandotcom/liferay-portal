@@ -34,6 +34,7 @@ test(
 	'LPD-78504 Can cancel the creation of a picklist',
 	{tag: '@LPD-78504'},
 	async ({listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanCancelCreatePicklist
 
 		await listTypeDefinitionPage.goto();
@@ -46,9 +47,7 @@ test(
 
 		await page.getByRole('button', {name: 'Cancel'}).click();
 
-		await expect(
-			page.getByRole('link', {name: picklistName})
-		).toBeHidden();
+		await expect(page.getByRole('link', {name: picklistName})).toBeHidden();
 	}
 );
 
@@ -56,6 +55,7 @@ test(
 	'LPD-78504 Can cancel the creation of a picklist item',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanCancelCreatePicklistItem
 
 		const listTypeDefinition =
@@ -68,9 +68,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage.addPicklistItemButton.click();
 
@@ -92,6 +90,7 @@ test(
 	'LPD-78504 Can cancel the update of a picklist',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanCancelUpdatePicklist
 
 		const listTypeDefinition =
@@ -124,6 +123,7 @@ test(
 	'LPD-78504 Can create object entry with picklist',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+
 		// Corresponds to Poshi test: CanCreateObjectEntryWithPicklist
 
 		const {listTypeDefinition, listTypeEntries} =
@@ -188,6 +188,7 @@ test(
 	'LPD-78504 Can create picklist item',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanCreatePicklistItem
 
 		const listTypeDefinition =
@@ -219,6 +220,7 @@ test(
 	'LPD-78504 Can create and edit object with state added to picklist',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
+
 		// Corresponds to Poshi test: CanEditObjectWithState
 
 		const {listTypeDefinition, listTypeEntries} =
@@ -231,16 +233,21 @@ test(
 			listTypeDefinitionExternalReferenceCode:
 				listTypeDefinition.externalReferenceCode,
 			objectFieldBusinessTypes: [
-				{businessType: 'Picklist', required: true, state: true, objectFieldSettings: [
-			{
-				name: "defaultValueType",
-				value: "inputAsValue" as any
-			},
-			{
-				name: "defaultValue",
-				value: listTypeEntries[0].name
-			}
-		]},
+				{
+					businessType: 'Picklist',
+					required: true,
+					state: true,
+					objectFieldSettings: [
+						{
+							name: 'defaultValueType',
+							value: 'inputAsValue' as any,
+						},
+						{
+							name: 'defaultValue',
+							value: listTypeEntries[0].name,
+						},
+					],
+				},
 			],
 		});
 
@@ -308,6 +315,7 @@ test(
 	'LPD-78504 Can delete a picklist',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanDeletePicklist
 
 		const listTypeDefinition =
@@ -335,9 +343,7 @@ test(
 
 		await waitForAlert(page);
 
-		await expect(
-			page.getByRole('link', {name: picklistName})
-		).toBeHidden();
+		await expect(page.getByRole('link', {name: picklistName})).toBeHidden();
 	}
 );
 
@@ -345,6 +351,7 @@ test(
 	'LPD-78504 Cannot add special character for picklist item key field',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CannotAddSpecialCharacterForPicklistItemKeyField
 
 		const listTypeDefinition =
@@ -357,9 +364,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage.addPicklistItemButton.click();
 
@@ -374,9 +379,7 @@ test(
 		await listTypeDefinitionPage.modalSaveButton.click();
 
 		await expect(
-			page.getByText(
-				'Key must only contain letters and digits.'
-			)
+			page.getByText('Key must only contain letters and digits.')
 		).toBeVisible();
 	}
 );
@@ -385,6 +388,7 @@ test(
 	'LPD-78504 Cannot leave picklist item key field empty',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CannotLeavePicklistItemKeyFieldEmpty
 
 		const listTypeDefinition =
@@ -397,9 +401,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage.addPicklistItemButton.click();
 
@@ -419,6 +421,7 @@ test(
 	'LPD-78504 Cannot leave picklist item name field empty',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CannotLeavePicklistItemNameFieldEmpty
 
 		const listTypeDefinition =
@@ -431,15 +434,15 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage.addPicklistItemButton.click();
 
 		await listTypeDefinitionPage.modalSaveButton.click();
 
-		await expect(page.locator('#localefieldFeedback').getByText('Required')).toBeVisible();
+		await expect(
+			page.locator('#localefieldFeedback').getByText('Required')
+		).toBeVisible();
 	}
 );
 
@@ -447,6 +450,7 @@ test(
 	'LPD-78504 Cannot leave picklist name field empty',
 	{tag: '@LPD-78504'},
 	async ({listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CannotLeavePicklistNameFieldEmpty
 
 		await listTypeDefinitionPage.goto();
@@ -463,6 +467,7 @@ test(
 	'LPD-78504 Cannot update picklist item key',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CannotUpdatePicklistItemKey
 
 		const listTypeDefinition =
@@ -484,9 +489,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage
 			.getPicklistItemLinkLocator(itemName)
@@ -504,6 +507,7 @@ test(
 	'LPD-78504 Can search for a picklist',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanSearchPicklist
 
 		const listTypeDefinition1 =
@@ -524,9 +528,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByPlaceholder('Search')
-			.fill(listTypeDefinition1.name);
+		await page.getByPlaceholder('Search').fill(listTypeDefinition1.name);
 
 		await page.keyboard.press('Enter');
 
@@ -544,6 +546,7 @@ test(
 	'LPD-78504 Can search for a picklist item',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanSearchPicklistItem
 
 		const listTypeDefinition =
@@ -573,9 +576,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage.frameLocator
 			.getByPlaceholder('Search')
@@ -597,6 +598,7 @@ test(
 	'LPD-78504 Can set different picklist item name language',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanSetDifferentPicklistItemNameLanguage
 
 		const listTypeDefinition =
@@ -632,6 +634,7 @@ test(
 	'LPD-78504 Can set different picklist item name language when updating',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanSetDifferentPicklistItemNameLanguageWhenUpdating
 
 		const listTypeDefinition =
@@ -691,6 +694,7 @@ test(
 	'LPD-78504 Can set different picklist name language',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanSetDifferentPicklistNameLanguage
 
 		const listTypeDefinition =
@@ -718,6 +722,7 @@ test(
 	'LPD-78504 Can update picklist item name',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanUpdatePicklistItemName
 
 		const listTypeDefinition =
@@ -739,9 +744,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage
 			.getPicklistItemLinkLocator(itemName)
@@ -771,6 +774,7 @@ test(
 	'LPD-78504 Can update picklist name',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanUpdatePicklistName
 
 		const listTypeDefinition =
@@ -795,9 +799,7 @@ test(
 
 		await listTypeDefinitionPage.sidebarSaveButton.click();
 
-		await expect(
-			page.getByRole('link', {name: updatedName})
-		).toBeVisible();
+		await expect(page.getByRole('link', {name: updatedName})).toBeVisible();
 	}
 );
 
@@ -805,6 +807,7 @@ test(
 	'LPD-78504 Can view a picklist',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanViewPicklist
 
 		const listTypeDefinition =
@@ -827,6 +830,7 @@ test(
 	'LPD-78504 Can view a picklist item',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: CanViewPicklistItem
 
 		const listTypeDefinition =
@@ -848,9 +852,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await expect(
 			listTypeDefinitionPage.getPicklistItemLinkLocator(itemName)
@@ -862,6 +864,7 @@ test(
 	'LPD-78504 Empty state message displayed when no picklist exists',
 	{tag: '@LPD-78504'},
 	async ({listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: EmptyStateMessageDisplayedWhenNoPicklist
 
 		await listTypeDefinitionPage.goto();
@@ -880,6 +883,7 @@ test(
 	'LPD-78504 Empty state message displayed when no picklist item exists',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: EmptyStateMessageDisplayedWhenNoPicklistItem
 
 		const listTypeDefinition =
@@ -892,11 +896,11 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
-		await expect(listTypeDefinitionPage.frameLocator.getByText('No Results Found')).toBeVisible();
+		await expect(
+			listTypeDefinitionPage.frameLocator.getByText('No Results Found')
+		).toBeVisible();
 	}
 );
 
@@ -904,6 +908,7 @@ test(
 	'LPD-78504 Key field is autofilled when name field is filled',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: KeyFieldIsAutofilled
 
 		const listTypeDefinition =
@@ -916,9 +921,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage.addPicklistItemButton.click();
 
@@ -944,6 +947,7 @@ test(
 		page,
 		viewObjectEntriesPage,
 	}) => {
+
 		// Corresponds to Poshi test: ViewTranslatedPicklistItemNameOnObjectView
 
 		try {
@@ -972,9 +976,7 @@ test(
 				'pt_BR'
 			);
 
-			await expect(
-				listTypeDefinitionPage.basicInfoHeading
-			).toBeVisible();
+			await expect(listTypeDefinitionPage.basicInfoHeading).toBeVisible();
 
 			const objectFields = generateObjectFields({
 				listTypeDefinitionExternalReferenceCode:
@@ -1031,10 +1033,7 @@ test(
 				languageId: 'pt_BR',
 			});
 
-			await viewObjectEntriesPage.goto(
-				objectDefinition.className,
-				'pt'
-			);
+			await viewObjectEntriesPage.goto(objectDefinition.className, 'pt');
 
 			await expect(
 				page.getByText(itemName + ' translated')
@@ -1060,6 +1059,7 @@ test(
 		page,
 		viewObjectEntriesPage,
 	}) => {
+
 		// Corresponds to Poshi test: ViewUpdatedPicklistItemNameOnObjectPortlet
 
 		const listTypeDefinition =
@@ -1136,9 +1136,7 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await listTypeDefinitionPage
 			.getPicklistItemLinkLocator(itemName)
@@ -1166,6 +1164,7 @@ test(
 	'LPD-78504 Warn message displayed on picklist item screen for updating or deleting',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, listTypeDefinitionPage, page}) => {
+
 		// Corresponds to Poshi test: WarnMessageDisplayedOnPickListItemScreen
 
 		const listTypeDefinition =
@@ -1178,12 +1177,13 @@ test(
 
 		await listTypeDefinitionPage.goto();
 
-		await page
-			.getByRole('link', {name: listTypeDefinition.name})
-			.click();
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
 
 		await expect(
-			listTypeDefinitionPage.frameLocator.getByText('updating or deleting', {exact: false})
+			listTypeDefinitionPage.frameLocator.getByText(
+				'updating or deleting',
+				{exact: false}
+			)
 		).toBeVisible();
 	}
 );

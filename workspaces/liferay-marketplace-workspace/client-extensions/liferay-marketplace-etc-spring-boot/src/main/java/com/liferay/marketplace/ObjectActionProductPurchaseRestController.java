@@ -60,7 +60,7 @@ public class ObjectActionProductPurchaseRestController
 
 		int paymentStatus = commerceOrderJSONObject.getInt("paymentStatus");
 
-		_sendNotificationEmail(order);
+		_postNotificationQueueEntry(order);
 
 		if ((paymentStatus !=
 				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED) &&
@@ -125,7 +125,7 @@ public class ObjectActionProductPurchaseRestController
 		}
 	}
 
-	private void _sendNotificationEmail(Order order) throws Exception {
+	private void _postNotificationQueueEntry(Order order) throws Exception {
 		OrderItem[] orderItems = order.getOrderItems();
 
 		OrderItem orderItem = orderItems[0];

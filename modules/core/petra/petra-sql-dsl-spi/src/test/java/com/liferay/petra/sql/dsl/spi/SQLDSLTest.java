@@ -565,6 +565,20 @@ public class SQLDSLTest {
 					MainExampleTable.INSTANCE.mainExampleIdColumn,
 					ReferenceExampleTable.INSTANCE.referenceExampleIdColumn)));
 		Assert.assertEquals(
+			"REPLACE(MainExample.name, ?, ?)",
+			String.valueOf(
+				DSLFunctionFactoryUtil.replace(
+					MainExampleTable.INSTANCE.nameColumn, " LFR_ORGANIZATION",
+					"")));
+		Assert.assertEquals(
+			"REPLACE(MainExample.name, ReferenceExample.name, " +
+				"ReferenceExample.name)",
+			String.valueOf(
+				DSLFunctionFactoryUtil.replace(
+					MainExampleTable.INSTANCE.nameColumn,
+					ReferenceExampleTable.INSTANCE.nameColumn,
+					ReferenceExampleTable.INSTANCE.nameColumn)));
+		Assert.assertEquals(
 			"MainExample.mainExampleId - ?",
 			String.valueOf(
 				DSLFunctionFactoryUtil.subtract(

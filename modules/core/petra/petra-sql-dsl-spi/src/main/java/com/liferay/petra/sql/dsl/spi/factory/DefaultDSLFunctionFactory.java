@@ -163,6 +163,23 @@ public class DefaultDSLFunctionFactory implements DSLFunctionFactory {
 	}
 
 	@Override
+	public Expression<String> replace(
+		Expression<String> expression1, Expression<String> expression2,
+		Expression<String> expression3) {
+
+		return new DSLFunction<>(
+			DSLFunctionType.REPLACE, expression1, expression2, expression3);
+	}
+
+	@Override
+	public Expression<String> replace(
+		Expression<String> expression, String target, String replacement) {
+
+		return replace(
+			expression, new Scalar<>(target), new Scalar<>(replacement));
+	}
+
+	@Override
 	public <N extends Number> Expression<N> subtract(
 		Expression<N> expression1, Expression<N> expression2) {
 

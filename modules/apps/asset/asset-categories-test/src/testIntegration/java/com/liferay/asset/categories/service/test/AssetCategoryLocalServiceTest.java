@@ -855,7 +855,6 @@ public class AssetCategoryLocalServiceTest {
 			Assert.assertNotEquals(
 				previousParentAssetCategoryId,
 				assetCategory.getParentCategoryId());
-
 			Assert.assertEquals(
 				previousVocabularyId, assetCategory.getVocabularyId());
 

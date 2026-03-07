@@ -520,7 +520,7 @@ public class AssetCategoryLocalServiceImpl
 					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 			}
 
-			if (emptyParentCategory || (assetVocabulary != null)) {
+			if ((assetVocabulary != null) || emptyParentCategory) {
 				parentAssetCategory =
 					assetCategoryLocalService.updateAssetCategory(
 						parentAssetCategory);

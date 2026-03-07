@@ -54,19 +54,21 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 
 		_db = DBManagerUtil.getDB();
 
-		_dbInspector = new DBInspector(_connection);
-
 		_db.alterTableAddColumn(
 			_connection, "JournalArticle", "content", "TEXT null");
+
+		_dbInspector = new DBInspector(_connection);
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		try {
-			_db.alterTableDropColumn(_connection, "JournalArticle", "content");
-			_db.runSQL("delete from JournalArticle where id_ = " + _journalId);
 			_db.runSQL(
 				"delete from DDMContent where contentId = " + _contentId);
+
+			_db.alterTableDropColumn(_connection, "JournalArticle", "content");
+
+			_db.runSQL("delete from JournalArticle where id_ = " + _journalId);
 		}
 		finally {
 			DataAccess.cleanUp(_connection);
@@ -75,9 +77,9 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		String cleanContent = RandomTestUtil.randomString() + "\\n";
+		String sanitizedContent = RandomTestUtil.randomString() + "\\n";
 
-		String content = cleanContent + "\\u0000";
+		String content = sanitizedContent + "\\u0000";
 
 		_contentId = RandomTestUtil.nextLong();
 
@@ -143,7 +145,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(cleanContent, resultSet.getString(1));
+				Assert.assertEquals(sanitizedContent, resultSet.getString(1));
 			}
 		}
 
@@ -155,7 +157,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(cleanContent, resultSet.getString(1));
+				Assert.assertEquals(sanitizedContent, resultSet.getString(1));
 			}
 		}
 	}
@@ -176,11 +178,11 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 				continue;
 			}
 
-			String cleanContent =
+			String sanitizedContent =
 				RandomTestUtil.randomString() +
 					"äëïöüÄËÏÖÜàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ";
 
-			String content = cleanContent + (char)charCode;
+			String content = sanitizedContent + (char)charCode;
 
 			_contentId = RandomTestUtil.nextLong();
 
@@ -256,7 +258,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					Assert.assertTrue(resultSet.next());
 
-					Assert.assertEquals(cleanContent, resultSet.getString(1));
+					Assert.assertEquals(sanitizedContent, resultSet.getString(1));
 				}
 			}
 
@@ -269,7 +271,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					Assert.assertTrue(resultSet.next());
 
-					Assert.assertEquals(cleanContent, resultSet.getString(1));
+					Assert.assertEquals(sanitizedContent, resultSet.getString(1));
 				}
 			}
 		}

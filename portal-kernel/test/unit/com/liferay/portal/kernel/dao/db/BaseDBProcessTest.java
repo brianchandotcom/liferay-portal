@@ -23,21 +23,16 @@ import org.mockito.Mockito;
 public class BaseDBProcessTest {
 
 	@Test
-	public void testGetFixedThreadPoolSizeMultiThread() throws Exception {
-		_testGetFixedThreadPoolSize(4, 100);
-	}
-
-	@Test
-	public void testGetFixedThreadPoolSizeSingleThread() throws Exception {
+	public void testGetFixedThreadPoolSize() throws Exception {
 		_testGetFixedThreadPoolSize(1, 1);
+		_testGetFixedThreadPoolSize(4, 100);
 	}
 
 	private void _testGetFixedThreadPoolSize(
 			int expectedFixedThreadPoolSize, int maximumPoolSize)
 		throws Exception {
 
-		int realProcessors = Runtime.getRuntime(
-		).availableProcessors();
+		Runtime runtime = Runtime.getRuntime();
 
 		try (MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic =
 				Mockito.mockStatic(PortalInstancePool.class);
@@ -47,7 +42,7 @@ public class BaseDBProcessTest {
 			portalInstancePoolMockedStatic.when(
 				PortalInstancePool::getCompanyIds
 			).thenReturn(
-				new long[realProcessors + 2]
+				new long[runtime.availableProcessors() + 2]
 			);
 
 			propsUtilMockedStatic.when(

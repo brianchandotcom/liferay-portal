@@ -11729,11 +11729,11 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntryFolderId, false);
 
 		Assert.assertEquals(
+			objectEntryFolderId, (long)objectEntry.getObjectEntryFolderId());
+		Assert.assertEquals(
 			String.valueOf(expectedObjectFieldValue),
 			String.valueOf(
 				objectEntry.getPropertyValue("textObjectFieldName")));
-		Assert.assertEquals(
-			objectEntryFolderId, (long)objectEntry.getObjectEntryFolderId());
 	}
 
 	private void _testMoveObjectEntryDuplicateName(
@@ -11755,12 +11755,12 @@ public class DefaultObjectEntryManagerImplTest
 			destinationObjectEntryFolder.getObjectEntryFolderId(), false);
 
 		Assert.assertEquals(
-			objectEntry1.getPropertyValue("textObjectFieldName") + " (Copy)",
-			objectEntry2.getPropertyValue("textObjectFieldName"));
-		Assert.assertEquals(
 			String.valueOf(
 				destinationObjectEntryFolder.getObjectEntryFolderId()),
 			String.valueOf(objectEntry2.getObjectEntryFolderId()));
+		Assert.assertEquals(
+			objectEntry1.getPropertyValue("textObjectFieldName") + " (Copy)",
+			objectEntry2.getPropertyValue("textObjectFieldName"));
 	}
 
 	private void _testMoveObjectEntryGroup(

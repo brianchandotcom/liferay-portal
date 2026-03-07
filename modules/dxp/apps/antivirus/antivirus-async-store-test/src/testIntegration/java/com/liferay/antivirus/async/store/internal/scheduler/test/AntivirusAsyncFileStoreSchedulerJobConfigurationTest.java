@@ -107,9 +107,9 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_configuration.update(_properties);
-
 		_antivirusScannerServiceRegistration.unregister();
+
+		_configuration.update(_properties);
 	}
 
 	@Test(expected = Test.None.class)

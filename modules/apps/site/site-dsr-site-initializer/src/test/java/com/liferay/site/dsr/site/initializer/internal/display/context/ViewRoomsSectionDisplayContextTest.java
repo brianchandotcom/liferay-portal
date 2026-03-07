@@ -103,7 +103,7 @@ public class ViewRoomsSectionDisplayContextTest {
 		Mockito.when(
 			_group.getDisplayURL(Mockito.any(), Mockito.anyBoolean())
 		).thenReturn(
-			"groupDisplayURL"
+			_GROUP_DISPLAY_URL
 		);
 
 		Mockito.when(
@@ -188,7 +188,7 @@ public class ViewRoomsSectionDisplayContextTest {
 						JSONUtil.put(
 							"description", "siteTemplateDescription"
 						).put(
-							"friendlyURL", "groupDisplayURL"
+							"friendlyURL", _GROUP_DISPLAY_URL
 						).put(
 							"name", "siteTemplateName"
 						).put(
@@ -336,6 +336,8 @@ public class ViewRoomsSectionDisplayContextTest {
 
 		return mockHttpServletRequest;
 	}
+
+	private static final String _GROUP_DISPLAY_URL = "groupDisplayURL";
 
 	private final Group _group = Mockito.mock(Group.class);
 	private final MockedStatic<LanguageUtil> _languageUtilMockedStatic =

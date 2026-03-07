@@ -100,7 +100,7 @@ public class SearchEngineInitializerTest {
 				executionMode,
 				_portalExecutorManager.getPortalExecutor(
 					SearchEngineInitializer.class.getName()),
-				indexers, _syncReindexManager);
+				null, indexers, null, null, _syncReindexManager);
 
 		searchEngineInitializer.reindex();
 	}

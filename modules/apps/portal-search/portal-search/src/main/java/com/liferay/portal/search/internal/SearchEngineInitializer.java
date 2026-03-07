@@ -8,6 +8,8 @@ package com.liferay.portal.search.internal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -16,9 +18,15 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
+import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.index.ConcurrentReindexManager;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.index.SyncReindexManager;
 
 import java.util.ArrayList;
@@ -42,13 +50,18 @@ public class SearchEngineInitializer implements Runnable {
 	public SearchEngineInitializer(
 		long companyId, ConcurrentReindexManager concurrentReindexManager,
 		String executionMode, ExecutorService executorService,
-		List<Indexer<?>> indexers, SyncReindexManager syncReindexManager) {
+		IndexNameBuilder indexNameBuilder, List<Indexer<?>> indexers,
+		JSONFactory jsonFactory, SearchEngineAdapter searchEngineAdapter,
+		SyncReindexManager syncReindexManager) {
 
 		_companyId = companyId;
 		_concurrentReindexManager = concurrentReindexManager;
 		_executionMode = executionMode;
 		_executorService = executorService;
+		_indexNameBuilder = indexNameBuilder;
 		_indexers = indexers;
+		_jsonFactory = jsonFactory;
+		_searchEngineAdapter = searchEngineAdapter;
 		_syncReindexManager = syncReindexManager;
 	}
 
@@ -92,6 +105,45 @@ public class SearchEngineInitializer implements Runnable {
 					" entities completed in ",
 					stopWatch.getTime() / Time.SECOND, " seconds"));
 		}
+	}
+
+	private SafeCloseable _configureIndexForBulkLoad(boolean fullMode)
+		throws Exception {
+
+		if (!fullMode) {
+			return () -> {
+			};
+		}
+
+		String indexName = _indexNameBuilder.getIndexName(_companyId);
+
+		GetIndexIndexResponse getIndexIndexResponse =
+			_searchEngineAdapter.execute(new GetIndexIndexRequest(indexName));
+
+		Map<String, String> settingsMap = getIndexIndexResponse.getSettings();
+
+		JSONObject indexSettingsJSONObject = _jsonFactory.createJSONObject(
+			settingsMap.get(indexName)
+		).getJSONObject(
+			"index"
+		);
+
+		String originalNumberOfReplicas = indexSettingsJSONObject.getString(
+			"number_of_replicas");
+		String originalRefreshInterval = GetterUtil.getString(
+			indexSettingsJSONObject.get("refresh_interval"), "1s");
+
+		_updateIndexSettings(
+			indexName,
+			"{\"index\":{\"number_of_replicas\":\"0\"," +
+				"\"refresh_interval\":\"-1\"}}");
+
+		return () -> _updateIndexSettings(
+			indexName,
+			StringBundler.concat(
+				"{\"index\":{\"number_of_replicas\":\"",
+				originalNumberOfReplicas, "\",\"refresh_interval\":\"",
+				originalRefreshInterval, "\"}}"));
 	}
 
 	private boolean _isExecuteConcurrentReindex() {
@@ -172,59 +224,65 @@ public class SearchEngineInitializer implements Runnable {
 			Map<String, Object> sharedReindexCacheMap =
 				new ConcurrentHashMap<>();
 
-			if (_indexers.size() == 1) {
-				Indexer<?> indexer = _indexers.get(0);
+			try (SafeCloseable safeCloseable = _configureIndexForBulkLoad(
+					fullMode)) {
 
-				indexerClassNames.add(indexer.getClassName());
+				if (_indexers.size() == 1) {
+					Indexer<?> indexer = _indexers.get(0);
 
-				try (SafeCloseable safeCloseable1 =
-						ReindexCacheThreadLocal.openReindexMode(
-							finalFullMode, sharedReindexCacheMap);
-					SafeCloseable safeCloseable2 = SearchContext.openBatchMode(
-						false)) {
-
-					reindex(indexer);
-				}
-			}
-			else {
-				long backgroundTaskId =
-					BackgroundTaskThreadLocal.getBackgroundTaskId();
-				List<FutureTask<Void>> futureTasks = new ArrayList<>();
-
-				for (Indexer<?> indexer : _indexers) {
 					indexerClassNames.add(indexer.getClassName());
 
-					FutureTask<Void> futureTask = new FutureTask<>(
-						new Callable<Void>() {
+					try (SafeCloseable safeCloseable1 =
+							ReindexCacheThreadLocal.openReindexMode(
+								finalFullMode, sharedReindexCacheMap);
+						SafeCloseable safeCloseable2 =
+							SearchContext.openBatchMode(false)) {
 
-							@Override
-							public Void call() throws Exception {
-								try (SafeCloseable safeCloseable1 =
-										BackgroundTaskThreadLocal.
-											setBackgroundTaskIdWithSafeCloseable(
-												backgroundTaskId);
-									SafeCloseable safeCloseable2 =
-										ReindexCacheThreadLocal.openReindexMode(
-											finalFullMode,
-											sharedReindexCacheMap);
-									SafeCloseable safeCloseable3 =
-										SearchContext.openBatchMode(false)) {
-
-									reindex(indexer);
-
-									return null;
-								}
-							}
-
-						});
-
-					_executorService.submit(futureTask);
-
-					futureTasks.add(futureTask);
+						reindex(indexer);
+					}
 				}
+				else {
+					long backgroundTaskId =
+						BackgroundTaskThreadLocal.getBackgroundTaskId();
+					List<FutureTask<Void>> futureTasks = new ArrayList<>();
 
-				for (FutureTask<Void> futureTask : futureTasks) {
-					futureTask.get();
+					for (Indexer<?> indexer : _indexers) {
+						indexerClassNames.add(indexer.getClassName());
+
+						FutureTask<Void> futureTask = new FutureTask<>(
+							new Callable<Void>() {
+
+								@Override
+								public Void call() throws Exception {
+									try (SafeCloseable safeCloseable1 =
+											BackgroundTaskThreadLocal.
+												setBackgroundTaskIdWithSafeCloseable(
+													backgroundTaskId);
+										SafeCloseable safeCloseable2 =
+											ReindexCacheThreadLocal.
+												openReindexMode(
+													finalFullMode,
+													sharedReindexCacheMap);
+										SafeCloseable safeCloseable3 =
+											SearchContext.openBatchMode(
+												false)) {
+
+										reindex(indexer);
+
+										return null;
+									}
+								}
+
+							});
+
+						_executorService.submit(futureTask);
+
+						futureTasks.add(futureTask);
+					}
+
+					for (FutureTask<Void> futureTask : futureTasks) {
+						futureTask.get();
+					}
 				}
 			}
 
@@ -258,6 +316,27 @@ public class SearchEngineInitializer implements Runnable {
 		_finished = true;
 	}
 
+	private void _updateIndexSettings(String indexName, String settings) {
+		try {
+			UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest =
+				new UpdateIndexSettingsIndexRequest(indexName);
+
+			updateIndexSettingsIndexRequest.setSettings(settings);
+
+			_searchEngineAdapter.execute(updateIndexSettingsIndexRequest);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Updated index settings for ", indexName, " with ",
+						settings));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineInitializer.class);
 
@@ -267,6 +346,9 @@ public class SearchEngineInitializer implements Runnable {
 	private final ExecutorService _executorService;
 	private boolean _finished;
 	private final List<Indexer<?>> _indexers;
+	private final IndexNameBuilder _indexNameBuilder;
+	private final JSONFactory _jsonFactory;
+	private final SearchEngineAdapter _searchEngineAdapter;
 	private final SyncReindexManager _syncReindexManager;
 
 }

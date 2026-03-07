@@ -1938,8 +1938,8 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryId, serviceContext);
 
 		return _updateObjectEntry(
-			true, objectEntryFolderId, objectEntryId, false, serviceContext,
-			userId, values);
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext,
+			true, false);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1978,8 +1978,8 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		return _updateObjectEntry(
-			false, objectEntryFolderId, objectEntryId, true, serviceContext,
-			userId, values);
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext,
+			false, true);
 	}
 
 	@Override
@@ -2189,8 +2189,8 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		return _updateObjectEntry(
-			false, objectEntryFolderId, objectEntryId, false, serviceContext,
-			userId, values);
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext,
+			false, false);
 	}
 
 	@Override
@@ -6621,9 +6621,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private ObjectEntry _updateObjectEntry(
-			boolean move, long objectEntryFolderId, long objectEntryId,
-			boolean partialUpdate, ServiceContext serviceContext, long userId,
-			Map<String, Serializable> values)
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext,
+			boolean move, boolean partialUpdate)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);

@@ -66,7 +66,7 @@ resource "helm_release" "argocd" {
 							memory="8Gi"
 						}
 						requests={
-							cpu="125m"
+							cpu="109m"
 							memory="1.5Gi"
 						}
 					}

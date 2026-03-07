@@ -29,7 +29,7 @@ spec:
                                 limits:
                                     memory: 2Gi
                                 requests:
-                                    cpu: 15m
+                                    cpu: 23m
                                     memory: 768Mi
                     serviceAccountName: provider-family-aws
     serviceAccountTemplate:
@@ -103,7 +103,7 @@ spec:
                                 limits:
                                     memory: 2Gi
                                 requests:
-                                    cpu: 22m
+                                    cpu: 23m
                                     memory: 768Mi
                     serviceAccountName: provider-aws-backup
     serviceAccountTemplate:
@@ -217,7 +217,7 @@ spec:
                                 limits:
                                     memory: 1Gi
                                 requests:
-                                    cpu: 15m
+                                    cpu: 23m
                                     memory: 768Mi
                     serviceAccountName: provider-aws-opensearch
     serviceAccountTemplate:
@@ -255,7 +255,7 @@ spec:
                                 limits:
                                     memory: 2Gi
                                 requests:
-                                    cpu: 22m
+                                    cpu: 49m
                                     memory: 768Mi
                     serviceAccountName: provider-aws-rds
     serviceAccountTemplate:
@@ -293,7 +293,7 @@ spec:
                                 limits:
                                     memory: 2Gi
                                 requests:
-                                    cpu: 150m
+                                    cpu: 126m
                                     memory: 768Mi
                     serviceAccountName: provider-aws-s3
     serviceAccountTemplate:

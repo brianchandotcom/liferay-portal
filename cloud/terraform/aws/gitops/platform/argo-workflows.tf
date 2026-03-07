@@ -27,7 +27,7 @@ resource "helm_release" "argo_workflows" {
 							memory="256Mi"
 						}
 						requests={
-							cpu="20m"
+							cpu="15m"
 							memory="128Mi"
 						}
 					}

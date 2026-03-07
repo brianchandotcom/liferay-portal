@@ -5,6 +5,7 @@
 
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -47,19 +48,19 @@ public class InviteMemberDisplayContextTest {
 		Mockito.when(
 			_group.getDisplayURL(Mockito.any(), Mockito.anyBoolean())
 		).thenReturn(
-			"groupDisplayURL"
+			_GROUP_DISPLAY_URL
 		);
 
 		Mockito.when(
 			_group.getDisplayURL(_themeDisplay)
 		).thenReturn(
-			"groupDisplayURL"
+			_GROUP_DISPLAY_URL
 		);
 
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getPortalURL(_themeDisplay)
 		).thenReturn(
-			"portalURL"
+			_PORTAL_URL
 		);
 
 		_portletURLFactoryUtilMockedStatic.when(
@@ -110,7 +111,7 @@ public class InviteMemberDisplayContextTest {
 				_themeDisplay, RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			"portalURL", inviteMemberDisplayContext.getBackURL());
+			_PORTAL_URL, inviteMemberDisplayContext.getBackURL());
 	}
 
 	@Test
@@ -136,7 +137,9 @@ public class InviteMemberDisplayContextTest {
 				_themeDisplay, RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			"http//localhost/test?param_redirect=groupDisplayURL/onboarding",
+			StringBundler.concat(
+				"http//localhost/test?param_redirect=", _GROUP_DISPLAY_URL,
+				"/onboarding"),
 			inviteMemberDisplayContext.getRedirect());
 	}
 
@@ -176,6 +179,10 @@ public class InviteMemberDisplayContextTest {
 
 		return mockHttpServletRequest;
 	}
+
+	private static final String _GROUP_DISPLAY_URL = "groupDisplayURL";
+
+	private static final String _PORTAL_URL = "portalURL";
 
 	private final Group _group = Mockito.mock(Group.class);
 	private final MockedStatic<PortalUtil> _portalUtilMockedStatic =

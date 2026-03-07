@@ -40,24 +40,18 @@ public class ObjectActionEmailDispatchRestController
 	public void post(@RequestBody String json) throws Exception {
 		JSONObject jsonObject = new JSONObject(json);
 
+		if (!jsonObject.has("modelDTOProduct")) {
+			return;
+		}
+
 		String objectActionTriggerKey = jsonObject.getString(
 			"objectActionTriggerKey");
 
-		if (!Objects.equals(_getModelName(jsonObject), "product") ||
-			!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
-
+		if (!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
 			return;
 		}
 
 		_onAfterAddProductNotification(jsonObject);		
-	}
-
-	private String _getModelName(JSONObject jsonObject) {
-		if (jsonObject.has("modelDTOProduct")) {
-			return "product";
-		}
-
-		return null;
 	}
 
 	private void _onAfterAddProductNotification(JSONObject jsonObject)

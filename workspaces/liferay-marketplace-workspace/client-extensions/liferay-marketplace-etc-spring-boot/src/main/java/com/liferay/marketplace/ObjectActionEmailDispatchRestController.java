@@ -40,6 +40,10 @@ public class ObjectActionEmailDispatchRestController
 	public void post(@RequestBody String json) throws Exception {
 		JSONObject jsonObject = new JSONObject(json);
 
+		if (_log.isInfoEnabled()) {
+			_log.info("POST " + jsonObject);
+		}
+
 		if (!jsonObject.has("modelDTOProduct")) {
 			return;
 		}
@@ -49,16 +53,6 @@ public class ObjectActionEmailDispatchRestController
 
 		if (!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
 			return;
-		}
-
-		_onAfterAddProductNotification(jsonObject);		
-	}
-
-	private void _onAfterAddProductNotification(JSONObject jsonObject)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("On after add product notification " + jsonObject);
 		}
 
 		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(

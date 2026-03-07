@@ -42,6 +42,9 @@ public class DSLFunctionType {
 	public static final DSLFunctionType MULTIPLICATION = new DSLFunctionType(
 		" * ");
 
+	public static final DSLFunctionType REPLACE = new DSLFunctionType(
+		"REPLACE(", ")");
+
 	public static final DSLFunctionType SUBTRACTION = new DSLFunctionType(
 		" - ");
 

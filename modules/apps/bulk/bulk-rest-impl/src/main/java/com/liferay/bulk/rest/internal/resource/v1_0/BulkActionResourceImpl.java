@@ -149,9 +149,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			return new BulkActionTask();
 		}
 
-		BulkAction.Type type = bulkAction.getType();
-
 		BulkActionTask bulkActionTask = _addBulkActionTask(bulkAction);
+
+		BulkAction.Type type = bulkAction.getType();
 
 		_bulkSelectionRunner.run(
 			contextUser, bulkSelection, _getBulkSelectionAction(type),

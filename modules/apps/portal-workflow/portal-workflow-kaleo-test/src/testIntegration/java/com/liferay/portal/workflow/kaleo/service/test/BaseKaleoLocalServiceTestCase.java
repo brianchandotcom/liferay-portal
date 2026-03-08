@@ -100,12 +100,12 @@ public abstract class BaseKaleoLocalServiceTestCase {
 
 		return addKaleoDefinition(
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), scope, StringUtil.randomString());
+			StringUtil.randomString(), StringUtil.randomString(), scope);
 	}
 
 	protected KaleoDefinition addKaleoDefinition(
-			String description, String externalReferenceCode, String name,
-			String scope, String title)
+			String externalReferenceCode, String name, String description,
+			String title, String scope)
 		throws IOException, PortalException {
 
 		KaleoDefinition kaleoDefinition =

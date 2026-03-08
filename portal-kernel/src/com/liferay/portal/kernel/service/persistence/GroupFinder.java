@@ -67,6 +67,9 @@ public interface GroupFinder {
 			long liveGroupId, String typeSettings, boolean site,
 			int remoteStagingGroupCount);
 
+	public java.util.Map<Long, long[]> findByC_C_S_A_UserInheritedGroupIds(
+		long companyId);
+
 	public java.util.List<com.liferay.portal.kernel.model.Group>
 		findByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,

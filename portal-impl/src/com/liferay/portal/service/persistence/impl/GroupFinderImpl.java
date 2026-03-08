@@ -64,6 +64,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -878,6 +879,95 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
+	public Map<Long, long[]> findByC_C_S_A_UserInheritedGroupIds(
+		long companyId) {
+
+		long[] groupOrganizationClassNameIds =
+			_getGroupOrganizationClassNameIds();
+
+		long groupClassNameId = groupOrganizationClassNameIds[0];
+		long organizationClassNameId = groupOrganizationClassNameIds[1];
+
+		Predicate activeSitePredicate = _getActiveSitePredicate(companyId);
+
+		Map<Long, Set<Long>> groupIdSetsMap = new HashMap<>();
+
+		// Branch 1: Direct user group membership
+
+		_addBulkUserGroupIds(
+			groupIdSetsMap,
+			_getJoinStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					Users_GroupsTable.INSTANCE.userId,
+					GroupTable.INSTANCE.groupId
+				).from(
+					GroupTable.INSTANCE
+				),
+				LinkedHashMapBuilder.<String, Object>put(
+					"usersGroups", Boolean.TRUE
+				).build()),
+			activeSitePredicate.and(
+				_getClassNameIdPredicate(groupOrganizationClassNameIds)));
+
+		// Branch 2: Groups for user's organizations (via classPK)
+
+		_addBulkUserGroupIds(
+			groupIdSetsMap,
+			_getJoinStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					Users_OrgsTable.INSTANCE.userId, GroupTable.INSTANCE.groupId
+				).from(
+					GroupTable.INSTANCE
+				),
+				LinkedHashMapBuilder.<String, Object>put(
+					"groupOrg", Boolean.TRUE
+				).build()),
+			activeSitePredicate.and(
+				GroupTable.INSTANCE.classNameId.eq(organizationClassNameId)));
+
+		// Branch 3: Groups related to user's organizations
+
+		_addBulkUserGroupIds(
+			groupIdSetsMap,
+			_getJoinStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					Users_OrgsTable.INSTANCE.userId, GroupTable.INSTANCE.groupId
+				).from(
+					GroupTable.INSTANCE
+				),
+				LinkedHashMapBuilder.<String, Object>put(
+					"groupsOrgs", Boolean.TRUE
+				).build()),
+			activeSitePredicate.and(
+				GroupTable.INSTANCE.classNameId.eq(groupClassNameId)));
+
+		// Branch 4: Groups related to user's user groups
+
+		_addBulkUserGroupIds(
+			groupIdSetsMap,
+			_getJoinStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					Users_UserGroupsTable.INSTANCE.userId,
+					GroupTable.INSTANCE.groupId
+				).from(
+					GroupTable.INSTANCE
+				),
+				LinkedHashMapBuilder.<String, Object>put(
+					"groupsUserGroups", Boolean.TRUE
+				).build()),
+			activeSitePredicate.and(
+				_getClassNameIdPredicate(groupOrganizationClassNameIds)));
+
+		Map<Long, long[]> result = new HashMap<>();
+
+		for (Map.Entry<Long, Set<Long>> entry : groupIdSetsMap.entrySet()) {
+			result.put(entry.getKey(), ArrayUtil.toLongArray(entry.getValue()));
+		}
+
+		return result;
+	}
+
 	protected int countByGroupId(
 			Session session, long groupId, Map<String, Object> params)
 		throws Exception {
@@ -1214,6 +1304,21 @@ public class GroupFinderImpl
 		}
 	}
 
+	private void _addBulkUserGroupIds(
+		Map<Long, Set<Long>> groupIdSetsMap, JoinStep joinStep,
+		Predicate predicate) {
+
+		for (Object[] values :
+				groupPersistence.<List<Object[]>>dslQuery(
+					joinStep.where(predicate), false)) {
+
+			Set<Long> groupIds = groupIdSetsMap.computeIfAbsent(
+				(Long)values[0], key -> new HashSet<>());
+
+			groupIds.add((Long)values[1]);
+		}
+	}
+
 	private DSLQuery _buildGroupDSLQuery(
 		long companyId, long parentGroupId, String[] names,
 		String[] descriptions, Map<String, Object> params, boolean andOperator,
@@ -1431,6 +1536,20 @@ public class GroupFinderImpl
 		).withParentheses();
 	}
 
+	private Predicate _getActiveSitePredicate(long companyId) {
+		return GroupTable.INSTANCE.companyId.eq(
+			companyId
+		).and(
+			GroupTable.INSTANCE.parentGroupId.eq(0L)
+		).and(
+			GroupTable.INSTANCE.liveGroupId.eq(0L)
+		).and(
+			GroupTable.INSTANCE.active.eq(true)
+		).and(
+			GroupTable.INSTANCE.site.eq(true)
+		);
+	}
+
 	private Predicate _getBasePredicate(
 		long companyId, long parentGroupId, String[] names,
 		String[] descriptions, boolean andOperator) {
@@ -1460,6 +1579,21 @@ public class GroupFinderImpl
 		}
 
 		return predicate;
+	}
+
+	private Predicate _getClassNameIdPredicate(long[] classNameIds) {
+		Predicate predicate = null;
+
+		for (long classNameId : classNameIds) {
+			predicate = Predicate.or(
+				predicate, GroupTable.INSTANCE.classNameId.eq(classNameId));
+		}
+
+		if (predicate != null) {
+			return predicate.withParentheses();
+		}
+
+		return null;
 	}
 
 	private String _getCondition(String join) {

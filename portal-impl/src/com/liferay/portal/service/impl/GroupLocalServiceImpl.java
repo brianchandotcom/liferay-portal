@@ -2392,6 +2392,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return userGroupGroups;
 	}
 
+	@Override
+	public Map<Long, long[]> getUserInheritedSiteGroupIds(long companyId) {
+		return groupFinder.findByC_C_S_A_UserInheritedGroupIds(companyId);
+	}
+
 	/**
 	 * Returns the range of all groups associated with the user's organization
 	 * groups, including the ancestors of the organization groups, unless portal

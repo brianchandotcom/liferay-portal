@@ -1344,6 +1344,12 @@ public class GroupLocalServiceUtil {
 		return getService().getUserGroupsCount(userId);
 	}
 
+	public static java.util.Map<Long, long[]> getUserInheritedSiteGroupIds(
+		long companyId) {
+
+		return getService().getUserInheritedSiteGroupIds(companyId);
+	}
+
 	/**
 	 * Returns the groups associated with the user groups.
 	 *

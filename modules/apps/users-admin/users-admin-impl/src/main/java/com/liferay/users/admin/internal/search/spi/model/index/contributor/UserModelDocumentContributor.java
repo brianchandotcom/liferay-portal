@@ -201,16 +201,34 @@ public class UserModelDocumentContributor
 	private long[] _getActiveTransitiveGroupIds(User user)
 		throws PortalException {
 
-		return ArrayUtil.toLongArray(
-			TransformUtil.transform(
-				groupLocalService.getUserGroups(user, true),
-				group -> {
-					if (group.isActive() && group.isSite()) {
-						return group.getGroupId();
-					}
+		Map<Long, long[]> activeTransitiveGroupIdsMap =
+			ReindexCacheThreadLocal.getGlobalReindexCache(
+				() -> -1,
+				UserModelDocumentContributor.class.getName() +
+					"#_getActiveTransitiveGroupIds",
+				count -> groupLocalService.getUserInheritedSiteGroupIds(
+					user.getCompanyId()));
 
-					return null;
-				}));
+		if (activeTransitiveGroupIdsMap == null) {
+			return ArrayUtil.toLongArray(
+				TransformUtil.transform(
+					groupLocalService.getUserGroups(user, true),
+					group -> {
+						if (group.isActive() && group.isSite()) {
+							return group.getGroupId();
+						}
+
+						return null;
+					}));
+		}
+
+		long[] groupIds = activeTransitiveGroupIdsMap.get(user.getUserId());
+
+		if (groupIds == null) {
+			return new long[0];
+		}
+
+		return groupIds;
 	}
 
 	private AddressData _getAddressData(User user) {

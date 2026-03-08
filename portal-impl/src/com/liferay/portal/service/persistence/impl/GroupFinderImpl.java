@@ -970,49 +970,6 @@ public class GroupFinderImpl
 		return 0;
 	}
 
-	protected List<Long> countByC_PG_N_D(
-			Session session, long companyId, long parentGroupId,
-			String parentGroupIdComparator, String[] names,
-			String[] descriptions, Map<String, Object> params,
-			boolean andOperator)
-		throws Exception {
-
-		String sql = CustomSQLUtil.get(COUNT_BY_C_PG_N_D);
-
-		if (parentGroupIdComparator.equals(StringPool.EQUAL)) {
-			sql = StringUtil.replace(
-				sql, "[$PARENT_GROUP_ID_COMPARATOR$]", StringPool.EQUAL);
-		}
-		else {
-			sql = StringUtil.replace(
-				sql, "[$PARENT_GROUP_ID_COMPARATOR$]", StringPool.NOT_EQUAL);
-		}
-
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "LOWER(Group_.name)", StringPool.LIKE, false, names);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "LOWER(Group_.description)", StringPool.LIKE, true,
-			descriptions);
-
-		sql = replaceJoinAndWhere(sql, params);
-		sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-
-		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-		sqlQuery.addScalar("groupId", Type.LONG);
-
-		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-		setJoin(queryPos, params);
-
-		queryPos.add(companyId);
-		queryPos.add(parentGroupId);
-		queryPos.add(names, 2);
-		queryPos.add(descriptions, 2);
-
-		return sqlQuery.list(true);
-	}
-
 	protected String getJoin(Map<String, Object> params) {
 		if ((params == null) || params.isEmpty()) {
 			return StringPool.BLANK;

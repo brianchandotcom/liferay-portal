@@ -166,11 +166,10 @@ public class GroupFinderImplTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"select distinct group_.groupid as groupid from group_ where ",
-				"(group_.companyid = ?) and (group_.parentgroupid = ?) and ",
-				"(group_.livegroupid = 0) and (group_.groupkey != 'control ",
-				"panel') and (lower(group_.name) like ? or ? is null) and ",
-				"(lower(group_.description) like ? or ? is null)"),
+				"select distinct group_.groupid from group_ where group_.",
+				"companyid = ? and group_.parentgroupid = ? and group_.",
+				"livegroupid = ? and group_.groupkey != ? and (lower(",
+				"group_.name) like ?) and (lower(group_.description) like ?)"),
 			_capturedSQL);
 	}
 
@@ -182,12 +181,11 @@ public class GroupFinderImplTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"select distinct group_.groupid as groupid from group_ where ",
-				"((group_.classnameid = ?) or (group_.classnameid = ?)) and ",
-				"(group_.companyid = ?) and (group_.parentgroupid = ?) and ",
-				"(group_.livegroupid = 0) and (group_.groupkey != 'control ",
-				"panel') and (lower(group_.name) like ? or ? is null) and ",
-				"(lower(group_.description) like ? or ? is null)"),
+				"select distinct group_.groupid from group_ where group_.",
+				"companyid = ? and group_.parentgroupid = ? and group_.",
+				"livegroupid = ? and group_.groupkey != ? and (lower(",
+				"group_.name) like ?) and (lower(group_.description) like ?) ",
+				"and (group_.classnameid = ? or group_.classnameid = ?)"),
 			_capturedSQL);
 	}
 
@@ -199,13 +197,12 @@ public class GroupFinderImplTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"select distinct group_.groupid as groupid from group_ where ",
-				"(group_.companyid = ?) and (group_.parentgroupid = ?) and ",
-				"(group_.livegroupid = 0) and (group_.groupkey != 'control ",
-				"panel') and ((lower(group_.name) like ? and ? is not null) ",
-				"or (lower(group_.name) like ? and ? is not null)) or ",
-				"((lower(group_.description) like ? and ? is not null) or ",
-				"(lower(group_.description) like ? and ? is not null))"),
+				"select distinct group_.groupid from group_ where group_.",
+				"companyid = ? and group_.parentgroupid = ? and group_.",
+				"livegroupid = ? and group_.groupkey != ? and ((lower(",
+				"group_.name) like ? or lower(group_.name) like ?) or ",
+				"(lower(group_.description) like ? or lower(group_.",
+				"description) like ?))"),
 			_capturedSQL);
 	}
 
@@ -218,11 +215,10 @@ public class GroupFinderImplTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"select distinct group_.groupid as groupid from group_ where ",
-				"(group_.companyid = ?) and (group_.parentgroupid != ?) and ",
-				"(group_.livegroupid = 0) and (group_.groupkey != 'control ",
-				"panel') and (lower(group_.name) like ? or ? is null) and ",
-				"(lower(group_.description) like ? or ? is null)"),
+				"select distinct group_.groupid from group_ where group_.",
+				"companyid = ? and group_.parentgroupid != ? and group_.",
+				"livegroupid = ? and group_.groupkey != ? and (lower(",
+				"group_.name) like ?) and (lower(group_.description) like ?)"),
 			_capturedSQL);
 	}
 

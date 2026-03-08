@@ -1490,6 +1490,13 @@ public class GroupLocalServiceWrapper
 		return _groupLocalService.getUserGroupsCount(userId);
 	}
 
+	@Override
+	public java.util.Map<Long, long[]> getUserInheritedSiteGroupIds(
+		long companyId) {
+
+		return _groupLocalService.getUserInheritedSiteGroupIds(companyId);
+	}
+
 	/**
 	 * Returns the groups associated with the user groups.
 	 *

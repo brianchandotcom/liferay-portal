@@ -69,6 +69,10 @@ html#{$cadmin-selector} {
 			border-bottom: $control-menu-level-1-light-border;
 			color: $control-menu-level-1-light-color;
 
+			@media (max-resolution: 1dppx) {
+				border-bottom-color: $control-menu-level-1-light-border-color;
+			}
+
 			.control-menu-nav-link {
 				color: $control-menu-level-1-light-link-color;
 

@@ -33,3 +33,9 @@
 .card-page-item-asset {
 	min-width: 193px;
 }
+
+.navigation-bar-light {
+	@media (max-resolution: 1dppx) {
+		border-color: $secondary-l2;
+	}
+}

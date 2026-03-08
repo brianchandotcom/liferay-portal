@@ -54,6 +54,10 @@ html#{$cadmin-selector} {
 			background-color: $product-menu-body-bg;
 			border-right: 0.05rem solid $secondary-l0;
 
+			@media (max-resolution: 1dppx) {
+				border-right-color: $secondary-l2;
+			}
+
 			a {
 				color: $product-menu-nav-link-color;
 			}

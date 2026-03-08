@@ -48,6 +48,10 @@ $management-bar-light: map-deep-merge(
 .management-bar.management-bar-light {
 	border-bottom-width: 0.05rem;
 	border-color: $secondary-l0;
+
+	@media (max-resolution: 1dppx) {
+		border-color: $secondary-l2;
+	}
 }
 
 $nav-divider-color: $secondary-l1;

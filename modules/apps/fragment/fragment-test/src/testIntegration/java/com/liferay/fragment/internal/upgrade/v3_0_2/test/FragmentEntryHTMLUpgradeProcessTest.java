@@ -91,7 +91,7 @@ public class FragmentEntryHTMLUpgradeProcessTest {
 		Assert.assertEquals(versionHtml, updatedFragmentEntry.getHtml());
 	}
 
-	private void _addFragmentEntry(String filePath) throws Exception {
+	private void _addFragmentEntry(String fileName) throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
 				null, _group.getGroupId(), "Fragment Collection",
@@ -100,7 +100,7 @@ public class FragmentEntryHTMLUpgradeProcessTest {
 		_fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			null, _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
-			"FragmentEntry Name", null, _read(filePath), null, false, null,
+			"FragmentEntry Name", null, _read(fileName), null, false, null,
 			null, 0, false, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
@@ -110,12 +110,12 @@ public class FragmentEntryHTMLUpgradeProcessTest {
 			_fragmentEntry.getFragmentEntryId());
 	}
 
-	private String _read(String filePath) throws Exception {
+	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(
 			clazz.getClassLoader(),
-			"com/liferay/fragment/dependencies/upgrade" + filePath);
+			"com/liferay/fragment/dependencies/upgrade" + fileName);
 	}
 
 	private void _runTemplateUpgrade() throws Exception {

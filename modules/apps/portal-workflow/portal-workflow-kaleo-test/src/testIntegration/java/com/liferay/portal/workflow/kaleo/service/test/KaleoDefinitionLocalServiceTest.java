@@ -99,7 +99,7 @@ public class KaleoDefinitionLocalServiceTest
 
 		AssertUtils.assertFailure(
 			KaleoDefinitionGroupIdException.class,
-			"Invalid groupId 0 for scope ai",
+			"Invalid group ID 0 for scope AI",
 			() -> addKaleoDefinition(WorkflowDefinitionConstants.SCOPE_AI));
 
 		// group id as account entry group id
@@ -117,7 +117,8 @@ public class KaleoDefinitionLocalServiceTest
 
 		AssertUtils.assertFailure(
 			KaleoDefinitionGroupIdException.class,
-			"Invalid groupId " + TestPropsValues.getGroupId() + " for scope ai",
+			"Invalid group ID " + TestPropsValues.getGroupId() +
+				" for scope AI",
 			() -> addKaleoDefinition(WorkflowDefinitionConstants.SCOPE_AI));
 	}
 
@@ -144,7 +145,7 @@ public class KaleoDefinitionLocalServiceTest
 
 		AssertUtils.assertFailure(
 			KaleoDefinitionGroupIdException.class,
-			"Invalid groupId 0 for scope ai",
+			"Invalid group ID 0 for scope AI",
 			() -> updateKaleoDefinition(kaleoDefinition));
 
 		// group id as account entry group id
@@ -160,7 +161,8 @@ public class KaleoDefinitionLocalServiceTest
 
 		AssertUtils.assertFailure(
 			KaleoDefinitionGroupIdException.class,
-			"Invalid groupId " + TestPropsValues.getGroupId() + " for scope ai",
+			"Invalid group ID " + TestPropsValues.getGroupId() +
+				" for scope AI",
 			() -> updateKaleoDefinition(kaleoDefinition));
 	}
 

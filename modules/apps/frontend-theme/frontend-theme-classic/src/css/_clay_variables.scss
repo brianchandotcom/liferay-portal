@@ -8,10 +8,32 @@ $c-unset: $clay-unset !default;
 
 $clay-unset-placeholder: clay-unset-placeholder !default;
 
+$custom-checkbox-indicator-border-radius: 0.25rem;
+
 $enable-c-inner: true !default;
 $enable-lexicon-flat-colors: true !default;
 $enable-scaling-components: true !default;
 $scaling-breakpoint-down: sm !default;
+
+$sticker-sm-border-radius: 0.25rem;
+
+$sticker-sizes: () !default;
+$sticker-sizes: map-deep-merge(
+	(
+		sticker-xs: (
+			border-radius: $sticker-sm-border-radius,
+		),
+	),
+	$sticker-sizes
+);
+
+$sticker-sm: () !default;
+$sticker-sm: map-deep-merge(
+	(
+		border-radius: $sticker-sm-border-radius,
+	),
+	$sticker-sm
+);
 
 $enable-caret: false !default;
 $enable-deprecation-messages: true !default;
@@ -203,53 +225,6 @@ $rounded-0-border-radius: 0 !default;
 $rounded-border-radius: var(--border-radius, $border-radius) !default;
 $rounded-circle-border-radius: var(--border-radius-circle, 5000px) !default;
 $rounded-pill: var(--rounded-pill, 50rem) !default;
-
-$custom-checkbox-indicator-border-radius: 0.25rem;
-
-$label-border-radius: 0.25rem;
-
-$nav-divider-color: $secondary-l1;
-
-$sticker-sm-border-radius: 0.25rem;
-
-$label-font-size: 0.75rem;
-$label-text-transform: capitalize;
-
-$btn-sizes: () !default;
-$btn-sizes: map-deep-merge(
-	(
-		btn-xs: (
-			border-radius: 0.25rem,
-		),
-	),
-	$btn-sizes
-);
-
-$label-lg: () !default;
-$label-lg: map-deep-merge(
-	(
-		border-radius: $border-radius-lg,
-	),
-	$label-lg
-);
-
-$sticker-sizes: () !default;
-$sticker-sizes: map-deep-merge(
-	(
-		sticker-xs: (
-			border-radius: $sticker-sm-border-radius,
-		),
-	),
-	$sticker-sizes
-);
-
-$sticker-sm: () !default;
-$sticker-sm: map-deep-merge(
-	(
-		border-radius: $sticker-sm-border-radius,
-	),
-	$sticker-sm
-);
 
 $box-shadow: var(--box-shadow, 0 0.5rem 1rem rgba($black, 0.15)) !default;
 
@@ -477,6 +452,8 @@ $kbd-font-size: $code-font-size !default;
 $kbd-padding-x: 0.4rem !default;
 $kbd-padding-y: 0.2rem !default;
 
+$nav-divider-color: $secondary-l1;
+
 $nested-kbd-font-weight: $font-weight-bold !default;
 
 $pre-color: $gray-900 !default;
@@ -496,7 +473,19 @@ $c-button-base: map-merge(
 
 // Buttons + Forms
 
+$label-border-radius: 0.25rem;
+$label-font-size: 0.75rem;
+
+$label-lg: () !default;
+$label-lg: map-deep-merge(
+	(
+		border-radius: $border-radius-lg,
+	),
+	$label-lg
+);
+
 $label-margin-bottom: 0.5rem !default;
+$label-text-transform: capitalize;
 
 $input-btn-font-family: null !default;
 $input-btn-font-size: $font-size-base !default;
@@ -628,6 +617,16 @@ $btn-secondary: map-deep-merge(
 		hover-color: var(--btn-secondary-hover-color, $gray-900),
 	),
 	$btn-secondary
+);
+
+$btn-sizes: () !default;
+$btn-sizes: map-deep-merge(
+	(
+		btn-xs: (
+			border-radius: 0.25rem,
+		),
+	),
+	$btn-sizes
 );
 
 $btn-outline-secondary: () !default;

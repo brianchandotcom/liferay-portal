@@ -464,7 +464,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		if (groupId == 0) {
 			throw new KaleoDefinitionGroupIdException(
-				"Invalid groupId 0 for scope ai");
+				"Invalid group ID 0 for scope AI");
 		}
 
 		Group group = _groupLocalService.getGroup(groupId);
@@ -474,7 +474,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		if (accountEntry == null) {
 			throw new KaleoDefinitionGroupIdException(
-				"Invalid groupId " + groupId + " for scope ai");
+				"Invalid group ID " + groupId + " for scope AI");
 		}
 	}
 

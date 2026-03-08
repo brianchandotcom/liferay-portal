@@ -7,10 +7,12 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRoleTable;
 import com.liferay.portal.kernel.model.Users_GroupsTable;
 import com.liferay.portal.kernel.model.Users_OrgsTable;
+import com.liferay.portal.kernel.model.Users_RolesTable;
 import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -82,9 +85,6 @@ public class GroupFinderImpl
 	public static final String COUNT_BY_GROUP_ID =
 		GroupFinder.class.getName() + ".countByGroupId";
 
-	public static final String COUNT_BY_C_PG_N_D =
-		GroupFinder.class.getName() + ".countByC_PG_N_D";
-
 	public static final String FIND_BY_ACTIVE_GROUPS =
 		GroupFinder.class.getName() + ".findByActiveGroups";
 
@@ -108,9 +108,6 @@ public class GroupFinderImpl
 
 	public static final String FIND_BY_L_TS_S_RSGC =
 		GroupFinder.class.getName() + ".findByL_TS_S_RSGC";
-
-	public static final String FIND_BY_C_PG_N_D =
-		GroupFinder.class.getName() + ".findByC_PG_N_D";
 
 	public static final FinderPath FINDER_PATH_FIND_BY_C_A = new FinderPath(
 		GroupPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -767,12 +764,6 @@ public class GroupFinderImpl
 		boolean andOperator, int start, int end,
 		OrderByComparator<Group> orderByComparator) {
 
-		String parentGroupIdComparator = StringPool.EQUAL;
-
-		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
-			parentGroupIdComparator = StringPool.NOT_EQUAL;
-		}
-
 		names = CustomSQLUtil.keywords(names);
 		descriptions = CustomSQLUtil.keywords(descriptions);
 
@@ -813,110 +804,58 @@ public class GroupFinderImpl
 			orderByComparator = new GroupNameComparator(true);
 		}
 
-		String sql = null;
-		String sqlKey = null;
+		DSLQuery dslQuery = _buildGroupDSLQuery(
+			companyId, parentGroupId, names, descriptions, params1, andOperator,
+			true);
 
-		if (_isCacheableSQL(classNameIds)) {
-			sqlKey = _buildSQLCacheKey(
-				orderByComparator, params1, params2, params3, params4);
-
-			sql = _findByC_C_PG_N_DSQLCache.get(sqlKey);
-		}
-
-		if (sql == null) {
-			String findByC_PG_N_D_SQL = CustomSQLUtil.get(FIND_BY_C_PG_N_D);
-
-			findByC_PG_N_D_SQL = replaceOrderBy(
-				findByC_PG_N_D_SQL, orderByComparator);
-
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params1));
-
-			if (doUnion) {
-				if (params2.containsKey("classNameIds")) {
-					sb.append(") UNION (");
-					sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params2));
-				}
-
-				if (params3.containsKey("classNameIds")) {
-					sb.append(") UNION (");
-					sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params3));
-				}
-
-				if (params4.containsKey("classNameIds")) {
-					sb.append(") UNION (");
-					sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params4));
-				}
+		if (doUnion) {
+			if (params2.containsKey("classNameIds")) {
+				dslQuery = dslQuery.union(
+					_buildGroupDSLQuery(
+						companyId, parentGroupId, names, descriptions, params2,
+						andOperator, true));
 			}
 
-			sb.append(") ORDER BY ");
-			sb.append(orderByComparator.toString());
+			if (params3.containsKey("classNameIds")) {
+				dslQuery = dslQuery.union(
+					_buildGroupDSLQuery(
+						companyId, parentGroupId, names, descriptions, params3,
+						andOperator, true));
+			}
 
-			sql = sb.toString();
-
-			if (sqlKey != null) {
-				_findByC_C_PG_N_DSQLCache.put(sqlKey, sql);
+			if (params4.containsKey("classNameIds")) {
+				dslQuery = dslQuery.union(
+					_buildGroupDSLQuery(
+						companyId, parentGroupId, names, descriptions, params4,
+						andOperator, true));
 			}
 		}
 
-		if (parentGroupIdComparator.equals(StringPool.EQUAL)) {
-			sql = StringUtil.replace(
-				sql, "[$PARENT_GROUP_ID_COMPARATOR$]", StringPool.EQUAL);
+		DSLQuery finalQuery;
+
+		if (orderByComparator != null) {
+			GroupTable tempGroupTable = GroupTable.INSTANCE.as("tempGroup");
+
+			finalQuery = DSLQueryFactoryUtil.select(
+				tempGroupTable.groupId
+			).from(
+				dslQuery.as("tempGroup")
+			).orderBy(
+				_getOrderByExpressions(orderByComparator, tempGroupTable)
+			);
 		}
 		else {
-			sql = StringUtil.replace(
-				sql, "[$PARENT_GROUP_ID_COMPARATOR$]", StringPool.NOT_EQUAL);
+			finalQuery = dslQuery;
 		}
-
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "LOWER(Group_.name)", StringPool.LIKE, false, names);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "LOWER(Group_.description)", StringPool.LIKE, true,
-			descriptions);
-		sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(finalQuery);
 
 			sqlQuery.addScalar("groupId", Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			setJoin(queryPos, params1);
-
-			queryPos.add(companyId);
-			queryPos.add(parentGroupId);
-			queryPos.add(names, 2);
-			queryPos.add(descriptions, 2);
-
-			if (doUnion) {
-				setJoin(queryPos, params2);
-
-				queryPos.add(companyId);
-				queryPos.add(parentGroupId);
-				queryPos.add(names, 2);
-				queryPos.add(descriptions, 2);
-
-				setJoin(queryPos, params3);
-
-				queryPos.add(companyId);
-				queryPos.add(parentGroupId);
-				queryPos.add(names, 2);
-				queryPos.add(descriptions, 2);
-
-				setJoin(queryPos, params4);
-
-				queryPos.add(companyId);
-				queryPos.add(parentGroupId);
-				queryPos.add(names, 2);
-				queryPos.add(descriptions, 2);
-			}
 
 			List<Long> groupIds = (List<Long>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
@@ -1369,6 +1308,129 @@ public class GroupFinderImpl
 		return sb.toString();
 	}
 
+	private Predicate _getActionIdPredicate(
+		String actionId, Map<String, Object> params) {
+
+		Long userId = _getUserId(params);
+
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		Role adminRole = RoleLocalServiceUtil.fetchRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		if (RoleLocalServiceUtil.hasUserRole(userId, adminRole.getRoleId())) {
+			return null;
+		}
+
+		ResourceAction resourceAction =
+			ResourceActionLocalServiceUtil.fetchResourceAction(
+				Group.class.getName(), actionId);
+
+		if (resourceAction == null) {
+			return GroupTable.INSTANCE.groupId.eq(0L);
+		}
+
+		Role siteAdminRole = RoleLocalServiceUtil.fetchRole(
+			companyId, RoleConstants.SITE_ADMINISTRATOR);
+
+		Role siteOwnerRole = RoleLocalServiceUtil.fetchRole(
+			companyId, RoleConstants.SITE_OWNER);
+
+		// Groups where user has site admin or site owner role
+
+		Predicate siteRolePredicate = GroupTable.INSTANCE.groupId.in(
+			DSLQueryFactoryUtil.select(
+				UserGroupRoleTable.INSTANCE.groupId
+			).from(
+				UserGroupRoleTable.INSTANCE
+			).innerJoinON(
+				Users_GroupsTable.INSTANCE,
+				Users_GroupsTable.INSTANCE.groupId.eq(
+					UserGroupRoleTable.INSTANCE.groupId
+				).and(
+					Users_GroupsTable.INSTANCE.userId.eq(userId)
+				)
+			).where(
+				UserGroupRoleTable.INSTANCE.userId.eq(
+					userId
+				).and(
+					UserGroupRoleTable.INSTANCE.roleId.eq(
+						siteAdminRole.getRoleId()
+					).or(
+						UserGroupRoleTable.INSTANCE.roleId.eq(
+							siteOwnerRole.getRoleId())
+					).withParentheses()
+				)
+			));
+
+		// Groups where user has a site role with matching resource permission
+
+		Predicate siteRolePermissionPredicate = GroupTable.INSTANCE.groupId.in(
+			DSLQueryFactoryUtil.select(
+				Users_GroupsTable.INSTANCE.groupId
+			).from(
+				Users_GroupsTable.INSTANCE
+			).innerJoinON(
+				UserGroupRoleTable.INSTANCE,
+				UserGroupRoleTable.INSTANCE.userId.eq(
+					Users_GroupsTable.INSTANCE.userId
+				).and(
+					UserGroupRoleTable.INSTANCE.groupId.eq(
+						Users_GroupsTable.INSTANCE.groupId)
+				)
+			).innerJoinON(
+				ResourcePermissionTable.INSTANCE,
+				ResourcePermissionTable.INSTANCE.roleId.eq(
+					UserGroupRoleTable.INSTANCE.roleId)
+			).where(
+				Users_GroupsTable.INSTANCE.userId.eq(
+					userId
+				).and(
+					DSLFunctionFactoryUtil.bitAnd(
+						ResourcePermissionTable.INSTANCE.actionIds,
+						resourceAction.getBitwiseValue()
+					).neq(
+						0L
+					)
+				)
+			));
+
+		// Groups where user has a global role with matching resource permission
+
+		Predicate globalRolePermissionPredicate =
+			GroupTable.INSTANCE.groupId.in(
+				DSLQueryFactoryUtil.select(
+					Users_GroupsTable.INSTANCE.groupId
+				).from(
+					Users_GroupsTable.INSTANCE
+				).innerJoinON(
+					Users_RolesTable.INSTANCE,
+					Users_RolesTable.INSTANCE.userId.eq(
+						Users_GroupsTable.INSTANCE.userId)
+				).innerJoinON(
+					ResourcePermissionTable.INSTANCE,
+					ResourcePermissionTable.INSTANCE.roleId.eq(
+						Users_RolesTable.INSTANCE.roleId)
+				).where(
+					Users_GroupsTable.INSTANCE.userId.eq(
+						userId
+					).and(
+						DSLFunctionFactoryUtil.bitAnd(
+							ResourcePermissionTable.INSTANCE.actionIds,
+							resourceAction.getBitwiseValue()
+						).neq(
+							0L
+						)
+					)
+				));
+
+		return siteRolePredicate.or(
+			siteRolePermissionPredicate
+		).or(
+			globalRolePermissionPredicate
+		).withParentheses();
+	}
+
 	private Predicate _getBasePredicate(
 		long companyId, long parentGroupId, String[] names,
 		String[] descriptions, boolean andOperator) {
@@ -1615,6 +1677,62 @@ public class GroupFinderImpl
 		).withParentheses();
 	}
 
+	private OrderByExpression[] _getOrderByExpressions(
+		OrderByComparator<Group> orderByComparator, GroupTable groupTable) {
+
+		if (orderByComparator == null) {
+			return new OrderByExpression[0];
+		}
+
+		String[] orderByFields = orderByComparator.getOrderByFields();
+
+		OrderByExpression[] orderByExpressions =
+			new OrderByExpression[orderByFields.length];
+
+		for (int i = 0; i < orderByFields.length; i++) {
+			Expression<?> expression = _getOrderByFieldExpression(
+				orderByFields[i], groupTable);
+
+			if (orderByComparator.isAscending(orderByFields[i])) {
+				orderByExpressions[i] = expression.ascending();
+			}
+			else {
+				orderByExpressions[i] = expression.descending();
+			}
+		}
+
+		return orderByExpressions;
+	}
+
+	private Expression<?> _getOrderByFieldExpression(
+		String field, GroupTable groupTable) {
+
+		if (field.equals("groupName")) {
+			return DSLFunctionFactoryUtil.replace(
+				groupTable.name, GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX,
+				"");
+		}
+		else if (field.equals("name")) {
+			return groupTable.name;
+		}
+		else if (field.equals("groupId")) {
+			return groupTable.groupId;
+		}
+		else if (field.equals("groupType") || field.equals("type")) {
+			return groupTable.type;
+		}
+		else if (field.equals("groupFriendlyURL") ||
+				 field.equals("friendlyURL")) {
+
+			return groupTable.friendlyURL;
+		}
+		else if (field.equals("description")) {
+			return groupTable.description;
+		}
+
+		return groupTable.groupId;
+	}
+
 	private Predicate _getParamsPredicate(Map<String, Object> params) {
 		if ((params == null) || params.isEmpty()) {
 			return null;
@@ -1633,7 +1751,10 @@ public class GroupFinderImpl
 
 			Predicate paramPredicate = null;
 
-			if (key.equals("active")) {
+			if (key.equals("actionId")) {
+				paramPredicate = _getActionIdPredicate((String)value, params);
+			}
+			else if (key.equals("active")) {
 				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
 					0L
 				).and(
@@ -1893,32 +2014,6 @@ public class GroupFinderImpl
 		return _whereMap;
 	}
 
-	private boolean _isCacheableSQL(long[] classNameIds) {
-		if (classNameIds == null) {
-			return true;
-		}
-
-		if (classNameIds.length > 2) {
-			return false;
-		}
-
-		long[] groupOrganizationClassNameIds =
-			_getGroupOrganizationClassNameIds();
-
-		long groupClassNameId = groupOrganizationClassNameIds[0];
-		long organizationClassNameId = groupOrganizationClassNameIds[1];
-
-		for (long classNameId : classNameIds) {
-			if ((classNameId != groupClassNameId) &&
-				(classNameId != organizationClassNameId)) {
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private void _populateUnionParams(
 		long userId, long[] classNameIds, Map<String, Object> params1,
 		Map<String, Object> params2, Map<String, Object> params3,
@@ -1981,8 +2076,6 @@ public class GroupFinderImpl
 	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<>();
 	private final Map<String, String> _findByCompanyIdSQLCache =
-		new ConcurrentHashMap<>();
-	private final Map<String, String> _findByC_C_PG_N_DSQLCache =
 		new ConcurrentHashMap<>();
 	private volatile long[] _groupOrganizationClassNameIds;
 	private volatile Map<String, String> _joinMap;

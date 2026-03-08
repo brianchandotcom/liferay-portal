@@ -5,6 +5,12 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -18,9 +24,19 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.model.Groups_OrgsTable;
+import com.liferay.portal.kernel.model.Groups_RolesTable;
+import com.liferay.portal.kernel.model.Groups_UserGroupsTable;
+import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.UserGroupRoleTable;
+import com.liferay.portal.kernel.model.Users_GroupsTable;
+import com.liferay.portal.kernel.model.Users_OrgsTable;
+import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -261,12 +277,6 @@ public class GroupFinderImpl
 		String[] descriptions, LinkedHashMap<String, Object> params,
 		boolean andOperator) {
 
-		String parentGroupIdComparator = StringPool.EQUAL;
-
-		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
-			parentGroupIdComparator = StringPool.NOT_EQUAL;
-		}
-
 		names = CustomSQLUtil.keywords(names);
 		descriptions = CustomSQLUtil.keywords(descriptions);
 
@@ -298,43 +308,43 @@ public class GroupFinderImpl
 			params1.put("classNameIds", classNameIds);
 		}
 
+		DSLQuery dslQuery = _buildGroupDSLQuery(
+			companyId, parentGroupId, names, descriptions, params1, andOperator,
+			false);
+
+		if (doUnion) {
+			if (params2.containsKey("classNameIds")) {
+				dslQuery = dslQuery.union(
+					_buildGroupDSLQuery(
+						companyId, parentGroupId, names, descriptions, params2,
+						andOperator, false));
+			}
+
+			if (params3.containsKey("classNameIds")) {
+				dslQuery = dslQuery.union(
+					_buildGroupDSLQuery(
+						companyId, parentGroupId, names, descriptions, params3,
+						andOperator, false));
+			}
+
+			if (params4.containsKey("classNameIds")) {
+				dslQuery = dslQuery.union(
+					_buildGroupDSLQuery(
+						companyId, parentGroupId, names, descriptions, params4,
+						andOperator, false));
+			}
+		}
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Set<Long> groupIds = new HashSet<>();
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(dslQuery);
 
-			groupIds.addAll(
-				countByC_PG_N_D(
-					session, companyId, parentGroupId, parentGroupIdComparator,
-					names, descriptions, params1, andOperator));
+			sqlQuery.addScalar("groupId", Type.LONG);
 
-			if (doUnion) {
-				if (params2.containsKey("classNameIds")) {
-					groupIds.addAll(
-						countByC_PG_N_D(
-							session, companyId, parentGroupId,
-							parentGroupIdComparator, names, descriptions,
-							params2, andOperator));
-				}
-
-				if (params3.containsKey("classNameIds")) {
-					groupIds.addAll(
-						countByC_PG_N_D(
-							session, companyId, parentGroupId,
-							parentGroupIdComparator, names, descriptions,
-							params3, andOperator));
-				}
-
-				if (params4.containsKey("classNameIds")) {
-					groupIds.addAll(
-						countByC_PG_N_D(
-							session, companyId, parentGroupId,
-							parentGroupIdComparator, names, descriptions,
-							params4, andOperator));
-				}
-			}
+			Set<Long> groupIds = new HashSet<>(sqlQuery.list(true));
 
 			return groupIds.size();
 		}
@@ -1308,6 +1318,35 @@ public class GroupFinderImpl
 		}
 	}
 
+	private DSLQuery _buildGroupDSLQuery(
+		long companyId, long parentGroupId, String[] names,
+		String[] descriptions, Map<String, Object> params, boolean andOperator,
+		boolean includeOrderByColumns) {
+
+		FromStep fromStep;
+
+		if (includeOrderByColumns) {
+			fromStep = DSLQueryFactoryUtil.selectDistinct(
+				GroupTable.INSTANCE.groupId, GroupTable.INSTANCE.name,
+				GroupTable.INSTANCE.type, GroupTable.INSTANCE.friendlyURL);
+		}
+		else {
+			fromStep = DSLQueryFactoryUtil.selectDistinct(
+				GroupTable.INSTANCE.groupId);
+		}
+
+		JoinStep joinStep = fromStep.from(GroupTable.INSTANCE);
+
+		joinStep = _getJoinStep(joinStep, params);
+
+		Predicate predicate = _getBasePredicate(
+			companyId, parentGroupId, names, descriptions, andOperator);
+
+		predicate = Predicate.and(predicate, _getParamsPredicate(params));
+
+		return joinStep.where(predicate);
+	}
+
 	@SafeVarargs
 	private final String _buildSQLCacheKey(
 		OrderByComparator<Group> orderByComparator,
@@ -1371,6 +1410,37 @@ public class GroupFinderImpl
 		}
 
 		return sb.toString();
+	}
+
+	private Predicate _getBasePredicate(
+		long companyId, long parentGroupId, String[] names,
+		String[] descriptions, boolean andOperator) {
+
+		Predicate predicate = GroupTable.INSTANCE.companyId.eq(companyId);
+
+		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
+			predicate = predicate.and(
+				GroupTable.INSTANCE.parentGroupId.neq(parentGroupId));
+		}
+		else {
+			predicate = predicate.and(
+				GroupTable.INSTANCE.parentGroupId.eq(parentGroupId));
+		}
+
+		predicate = predicate.and(
+			GroupTable.INSTANCE.liveGroupId.eq(0L)
+		).and(
+			GroupTable.INSTANCE.groupKey.neq("Control Panel")
+		);
+
+		Predicate keywordsPredicate = _getKeywordsPredicate(
+			names, descriptions, andOperator);
+
+		if (keywordsPredicate != null) {
+			predicate = predicate.and(keywordsPredicate);
+		}
+
+		return predicate;
 	}
 
 	private String _getCondition(String join) {
@@ -1443,6 +1513,362 @@ public class GroupFinderImpl
 		_joinMap = joinMap;
 
 		return _joinMap;
+	}
+
+	private JoinStep _getJoinStep(
+		JoinStep joinStep, Map<String, Object> params) {
+
+		if ((params == null) || params.isEmpty()) {
+			return joinStep;
+		}
+
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			if (Validator.isNull(entry.getValue())) {
+				continue;
+			}
+
+			String key = entry.getKey();
+
+			if (key.equals("groupOrg")) {
+				joinStep = joinStep.innerJoinON(
+					Users_OrgsTable.INSTANCE,
+					Users_OrgsTable.INSTANCE.organizationId.eq(
+						GroupTable.INSTANCE.classPK));
+			}
+			else if (key.equals("groupsOrgs")) {
+				joinStep = joinStep.innerJoinON(
+					Groups_OrgsTable.INSTANCE,
+					Groups_OrgsTable.INSTANCE.groupId.eq(
+						GroupTable.INSTANCE.groupId)
+				).innerJoinON(
+					Users_OrgsTable.INSTANCE,
+					Users_OrgsTable.INSTANCE.organizationId.eq(
+						Groups_OrgsTable.INSTANCE.organizationId)
+				);
+			}
+			else if (key.equals("groupsRoles")) {
+				joinStep = joinStep.innerJoinON(
+					Groups_RolesTable.INSTANCE,
+					Groups_RolesTable.INSTANCE.groupId.eq(
+						GroupTable.INSTANCE.groupId));
+			}
+			else if (key.equals("groupsUserGroups")) {
+				joinStep = joinStep.innerJoinON(
+					Groups_UserGroupsTable.INSTANCE,
+					Groups_UserGroupsTable.INSTANCE.groupId.eq(
+						GroupTable.INSTANCE.groupId)
+				).innerJoinON(
+					Users_UserGroupsTable.INSTANCE,
+					Users_UserGroupsTable.INSTANCE.userGroupId.eq(
+						Groups_UserGroupsTable.INSTANCE.userGroupId)
+				);
+			}
+			else if (key.equals("layout") || key.equals("pageCount")) {
+				joinStep = joinStep.innerJoinON(
+					LayoutTable.INSTANCE,
+					LayoutTable.INSTANCE.groupId.eq(
+						GroupTable.INSTANCE.groupId));
+			}
+			else if (key.equals("rolePermissions")) {
+				joinStep = joinStep.innerJoinON(
+					ResourcePermissionTable.INSTANCE,
+					ResourcePermissionTable.INSTANCE.primKeyId.eq(
+						GroupTable.INSTANCE.groupId));
+			}
+			else if (key.equals("userGroupRole")) {
+				joinStep = joinStep.innerJoinON(
+					UserGroupRoleTable.INSTANCE,
+					UserGroupRoleTable.INSTANCE.groupId.eq(
+						GroupTable.INSTANCE.groupId));
+			}
+			else if (key.equals("usersGroups")) {
+				joinStep = joinStep.innerJoinON(
+					Users_GroupsTable.INSTANCE,
+					Users_GroupsTable.INSTANCE.groupId.eq(
+						GroupTable.INSTANCE.groupId));
+			}
+		}
+
+		return joinStep;
+	}
+
+	private Predicate _getKeywordsPredicate(
+		String[] names, String[] descriptions, boolean andOperator) {
+
+		Predicate namePredicate = null;
+
+		for (String name : names) {
+			if (Validator.isNull(name)) {
+				continue;
+			}
+
+			Predicate likePredicate = DSLFunctionFactoryUtil.lower(
+				GroupTable.INSTANCE.name
+			).like(
+				StringUtil.toLowerCase(name)
+			);
+
+			if (namePredicate == null) {
+				namePredicate = likePredicate;
+			}
+			else {
+				namePredicate = namePredicate.or(likePredicate);
+			}
+		}
+
+		Predicate descriptionPredicate = null;
+
+		for (String description : descriptions) {
+			if (Validator.isNull(description)) {
+				continue;
+			}
+
+			Predicate likePredicate = DSLFunctionFactoryUtil.lower(
+				GroupTable.INSTANCE.description
+			).like(
+				StringUtil.toLowerCase(description)
+			);
+
+			if (descriptionPredicate == null) {
+				descriptionPredicate = likePredicate;
+			}
+			else {
+				descriptionPredicate = descriptionPredicate.or(likePredicate);
+			}
+		}
+
+		if ((namePredicate == null) && (descriptionPredicate == null)) {
+			return null;
+		}
+
+		if (namePredicate != null) {
+			namePredicate = namePredicate.withParentheses();
+		}
+
+		if (descriptionPredicate != null) {
+			descriptionPredicate = descriptionPredicate.withParentheses();
+		}
+
+		if (andOperator) {
+			return Predicate.and(namePredicate, descriptionPredicate);
+		}
+
+		return Predicate.or(
+			namePredicate, descriptionPredicate
+		).withParentheses();
+	}
+
+	private Predicate _getParamsPredicate(Map<String, Object> params) {
+		if ((params == null) || params.isEmpty()) {
+			return null;
+		}
+
+		Predicate predicate = null;
+
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			if (Validator.isNull(entry.getValue())) {
+				continue;
+			}
+
+			String key = entry.getKey();
+
+			Object value = entry.getValue();
+
+			Predicate paramPredicate = null;
+
+			if (key.equals("active")) {
+				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
+					0L
+				).and(
+					GroupTable.INSTANCE.active.eq((Boolean)value)
+				).withParentheses();
+			}
+			else if (key.equals("classNameIds")) {
+				if (value instanceof Long) {
+					paramPredicate = GroupTable.INSTANCE.classNameId.eq(
+						(Long)value);
+				}
+				else {
+					long[] classNameIds = (long[])value;
+
+					Predicate classNamePredicate = null;
+
+					for (long classNameId : classNameIds) {
+						classNamePredicate = Predicate.or(
+							classNamePredicate,
+							GroupTable.INSTANCE.classNameId.eq(classNameId));
+					}
+
+					if (classNamePredicate != null) {
+						paramPredicate = classNamePredicate.withParentheses();
+					}
+				}
+			}
+			else if (key.equals("creatorUserId")) {
+				paramPredicate = GroupTable.INSTANCE.creatorUserId.eq(
+					(Long)value
+				).and(
+					GroupTable.INSTANCE.liveGroupId.eq(0L)
+				).withParentheses();
+			}
+			else if (key.equals("excludedGroupIds")) {
+				List<Long> excludedGroupIds = (List<Long>)value;
+
+				if (!excludedGroupIds.isEmpty()) {
+					Predicate excludePredicate = null;
+
+					for (long excludedGroupId : excludedGroupIds) {
+						excludePredicate = Predicate.and(
+							excludePredicate,
+							GroupTable.INSTANCE.groupId.neq(excludedGroupId));
+					}
+
+					if (excludePredicate != null) {
+						paramPredicate = excludePredicate.withParentheses();
+					}
+				}
+			}
+			else if (key.equals("groupOrg")) {
+				paramPredicate = Users_OrgsTable.INSTANCE.userId.eq(
+					(Long)value);
+			}
+			else if (key.equals("groupsOrgs")) {
+				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
+					0L
+				).and(
+					Users_OrgsTable.INSTANCE.userId.eq((Long)value)
+				).withParentheses();
+			}
+			else if (key.equals("groupsRoles")) {
+				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
+					0L
+				).and(
+					Groups_RolesTable.INSTANCE.roleId.eq((Long)value)
+				).withParentheses();
+			}
+			else if (key.equals("groupsTree")) {
+				List<Group> groupsTree = (List<Group>)value;
+
+				if (!groupsTree.isEmpty()) {
+					Predicate treePredicate = null;
+
+					for (Group group : groupsTree) {
+						treePredicate = Predicate.or(
+							treePredicate,
+							GroupTable.INSTANCE.treePath.like(
+								StringBundler.concat(
+									StringPool.PERCENT, StringPool.SLASH,
+									group.getGroupId(), StringPool.SLASH,
+									StringPool.PERCENT)));
+					}
+
+					if (treePredicate != null) {
+						paramPredicate = treePredicate.withParentheses();
+					}
+				}
+			}
+			else if (key.equals("groupsUserGroups")) {
+				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
+					0L
+				).and(
+					Users_UserGroupsTable.INSTANCE.userId.eq((Long)value)
+				).withParentheses();
+			}
+			else if (key.equals("layout")) {
+				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
+					0L
+				).and(
+					LayoutTable.INSTANCE.privateLayout.eq((Boolean)value)
+				).withParentheses();
+			}
+			else if (key.equals("manualMembership")) {
+				paramPredicate = GroupTable.INSTANCE.manualMembership.eq(
+					(Boolean)value);
+			}
+			else if (key.equals("membershipRestriction")) {
+				paramPredicate = GroupTable.INSTANCE.membershipRestriction.eq(
+					(Integer)value);
+			}
+			else if (key.equals("pageCount")) {
+				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(0L);
+			}
+			else if (key.equals("rolePermissions")) {
+				RolePermissions rolePermissions = (RolePermissions)value;
+
+				ResourceAction resourceAction =
+					ResourceActionLocalServiceUtil.fetchResourceAction(
+						rolePermissions.getName(),
+						rolePermissions.getActionId());
+
+				if (resourceAction != null) {
+					paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
+						0L
+					).and(
+						ResourcePermissionTable.INSTANCE.name.eq(
+							rolePermissions.getName())
+					).and(
+						ResourcePermissionTable.INSTANCE.scope.eq(
+							rolePermissions.getScope())
+					).and(
+						ResourcePermissionTable.INSTANCE.roleId.eq(
+							rolePermissions.getRoleId())
+					).and(
+						DSLFunctionFactoryUtil.bitAnd(
+							ResourcePermissionTable.INSTANCE.actionIds,
+							resourceAction.getBitwiseValue()
+						).neq(
+							0L
+						)
+					).withParentheses();
+				}
+			}
+			else if (key.equals("site")) {
+				paramPredicate = GroupTable.INSTANCE.site.eq((Boolean)value);
+			}
+			else if (key.equals("type")) {
+				paramPredicate = GroupTable.INSTANCE.type.eq((Integer)value);
+			}
+			else if (key.equals("types")) {
+				List<Integer> types = (List<Integer>)value;
+
+				if (!types.isEmpty()) {
+					Predicate typesPredicate = null;
+
+					for (Integer type : types) {
+						typesPredicate = Predicate.or(
+							typesPredicate, GroupTable.INSTANCE.type.eq(type));
+					}
+
+					if (typesPredicate != null) {
+						paramPredicate = typesPredicate.withParentheses();
+					}
+				}
+			}
+			else if (key.equals("userGroupRole")) {
+				List<Long> values = (List<Long>)value;
+
+				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
+					0L
+				).and(
+					UserGroupRoleTable.INSTANCE.userId.eq(values.get(0))
+				).and(
+					UserGroupRoleTable.INSTANCE.roleId.eq(values.get(1))
+				).withParentheses();
+			}
+			else if (key.equals("usersGroups")) {
+				paramPredicate = GroupTable.INSTANCE.liveGroupId.eq(
+					0L
+				).and(
+					Users_GroupsTable.INSTANCE.userId.eq((Long)value)
+				).withParentheses();
+			}
+
+			if (paramPredicate != null) {
+				predicate = Predicate.and(predicate, paramPredicate);
+			}
+		}
+
+		return predicate;
 	}
 
 	private Long _getUserId(Map<String, Object> params) {

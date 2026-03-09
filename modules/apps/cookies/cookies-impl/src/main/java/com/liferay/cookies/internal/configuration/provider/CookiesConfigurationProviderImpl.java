@@ -141,6 +141,17 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	@Override
+	public int getCookiesPreferenceHandlingDissentRenewalPeriod(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
+
+		return _getScopeConfigurationAttribute(
+			scope, scopePK,
+			this::_getCompanyCookiesPreferenceHandlingDissentRenewalPeriod,
+			this::_getGroupCookiesPreferenceHandlingDissentRenewalPeriod,
+			this::_getSystemCookiesPreferenceHandlingDissentRenewalPeriod);
+	}
+
+	@Override
 	public String getCookiesPreferenceHandlingFloatingIcon(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
 
@@ -388,6 +399,19 @@ public class CookiesConfigurationProviderImpl
 			getCompanyConsentRenewalPeriod(companyId);
 	}
 
+	private int _getCompanyCookiesPreferenceHandlingDissentRenewalPeriod(
+		long companyId) {
+
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getCompanyDissentRenewalPeriod(companyId);
+	}
+
 	private String _getCompanyFloatingIcon(long companyId) {
 		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
 			_cookiesPreferenceHandlingManagedServiceFactory =
@@ -488,6 +512,19 @@ public class CookiesConfigurationProviderImpl
 			getGroupConsentRenewalPeriod(_getCompanyId(groupId), groupId);
 	}
 
+	private int _getGroupCookiesPreferenceHandlingDissentRenewalPeriod(
+		long groupId) {
+
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getGroupDissentRenewalPeriod(_getCompanyId(groupId), groupId);
+	}
+
 	private String _getGroupFloatingIcon(long groupId) {
 		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
 			_cookiesPreferenceHandlingManagedServiceFactory =
@@ -543,6 +580,17 @@ public class CookiesConfigurationProviderImpl
 
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemConsentRenewalPeriod();
+	}
+
+	private int _getSystemCookiesPreferenceHandlingDissentRenewalPeriod() {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getSystemDissentRenewalPeriod();
 	}
 
 	private String _getSystemFloatingIcon() {

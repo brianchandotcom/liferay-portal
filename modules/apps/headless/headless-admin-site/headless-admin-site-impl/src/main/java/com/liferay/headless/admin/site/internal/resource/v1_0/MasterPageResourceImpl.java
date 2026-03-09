@@ -455,10 +455,10 @@ public class MasterPageResourceImpl
 		throws Exception {
 
 		return ServiceContextUtil.createServiceContext(
-			masterPage.getTaxonomyCategoryBriefs(),
 			contextCompany.getCompanyId(), masterPage.getDateCreated(), groupId,
 			contextHttpServletRequest, masterPage.getKeywords(),
-			masterPage.getDateModified(), contextUser.getUserId(),
+			masterPage.getDateModified(),
+			masterPage.getTaxonomyCategoryBriefs(), contextUser.getUserId(),
 			masterPage.getUuid());
 	}
 

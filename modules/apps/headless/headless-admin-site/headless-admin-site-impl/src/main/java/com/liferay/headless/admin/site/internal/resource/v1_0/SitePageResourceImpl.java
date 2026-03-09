@@ -681,9 +681,9 @@ public class SitePageResourceImpl
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			sitePage.getTaxonomyCategoryBriefs(), contextCompany.getCompanyId(),
-			sitePage.getDateCreated(), groupId, contextHttpServletRequest,
-			sitePage.getKeywords(), sitePage.getDateModified(),
+			contextCompany.getCompanyId(), sitePage.getDateCreated(), groupId,
+			contextHttpServletRequest, sitePage.getKeywords(),
+			sitePage.getDateModified(), sitePage.getTaxonomyCategoryBriefs(),
 			contextUser.getUserId(), sitePage.getUuid());
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {

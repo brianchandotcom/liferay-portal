@@ -9,7 +9,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {differenceInDays, format, isBefore, subMonths} from 'date-fns';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useLocation, useOutletContext, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
@@ -35,43 +35,18 @@ import './Licenses.scss';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
-const PAGE_SIZES = [
-	{label: 5},
-	{label: 10},
-	{label: 20},
-	{label: 30},
-	{label: 50},
-];
-
 const isLicenseExpired = (expirationDate: string) =>
 	!isBefore(new Date(), new Date(expirationDate));
 
-const LiferayServiceLicenses = () => {
+const LiferayProductLicenses = () => {
 	const [modalData, setModalData] = useState<LicenseKey>();
-	const [page, setPage] = useState(1);
-	const [pageSize, setPageSize] = useState(5);
 	const {myUserAccount} = useMarketplaceContext();
 	const {orderId} = useParams();
 	const deactivateLicenseModal = useModal();
 	const licenseKeyModal = useModal();
-	const outletContext = useOutletContext<OutletContext['data']>();
 	const location = useLocation();
+	const outletContext = useOutletContext<OutletContext['data']>();
 	const searchParams = new URLSearchParams(location.search);
-
-	const placedOrder = outletContext?.placedOrder;
-	const product = outletContext?.product;
-
-	useEffect(() => {
-		breadcrumbStore.send({
-			replacements: {[orderId as string]: product?.name || ''},
-			type: 'setReplacements',
-		});
-	}, [orderId, product?.name]);
-
-	const keyType =
-		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.DXP
-			? 'On-Premise'
-			: 'Cloud';
 
 	const {
 		data: licenseKeysResponse,
@@ -90,6 +65,21 @@ const LiferayServiceLicenses = () => {
 			}
 		}
 	);
+
+	const placedOrder = outletContext?.placedOrder;
+	const product = outletContext?.product;
+
+	useEffect(() => {
+		breadcrumbStore.send({
+			replacements: {[orderId as string]: product?.name || ''},
+			type: 'setReplacements',
+		});
+	}, [orderId, product?.name]);
+
+	const keyType =
+		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.DXP
+			? 'On-Premise'
+			: 'Cloud';
 
 	const isNewActivationKey = (licenseKey: LicenseKey) => {
 		if (!licenseKey?.createDate) {
@@ -122,43 +112,6 @@ const LiferayServiceLicenses = () => {
 		setModal: setModalData,
 	});
 
-	const buttonsInfo = useMemo(
-		() => ({
-			first: (
-				<ClayButton
-					className="ml-4"
-					displayType="unstyled"
-					onClick={licenseKeyModal.onClose}
-				>
-					{i18n.translate('cancel')}
-				</ClayButton>
-			),
-			last: (
-				<ClayButton
-					className="ml-4 mr-1"
-					disabled={isLicenseExpired(
-						modalData?.expirationDate as string
-					)}
-					displayType="primary"
-					onClick={() => {
-						onDownload(modalData as LicenseKey);
-					}}
-					title={
-						isLicenseExpired(modalData?.expirationDate as string)
-							? i18n.translate(
-									'this-key-is-expired-and-cannot-be-downloaded'
-								)
-							: ''
-					}
-				>
-					<ClayIcon symbol="download" />
-					{i18n.translate('download-key')}
-				</ClayButton>
-			),
-		}),
-		[licenseKeyModal, modalData, onDownload]
-	);
-
 	if (isLoading) {
 		return <ClayLoadingIndicator />;
 	}
@@ -186,8 +139,9 @@ const LiferayServiceLicenses = () => {
 							const expired =
 								!row.expirationDate ||
 								isLicenseExpired(row.expirationDate);
-							const renewalAvailable = isRenewalAvailable(row);
+
 							const licenseKey = row.id;
+							const renewalAvailable = isRenewalAvailable(row);
 
 							return (
 								<ClayTooltipProvider>
@@ -196,8 +150,8 @@ const LiferayServiceLicenses = () => {
 											className="mr-3 renew-link"
 											disabled={!renewalAvailable}
 											displayType="unstyled"
-											onClick={async () => {
-												await provisioningOAuth2.licenseKeysRenew(
+											onClick={() => {
+												provisioningOAuth2.licenseKeysRenew(
 													licenseKey
 												);
 											}}
@@ -245,7 +199,9 @@ const LiferayServiceLicenses = () => {
 									/>
 								),
 								title: (
-									<TitleSubtitleHeader title="Activation Key" />
+									<TitleSubtitleHeader
+										title={i18n.translate('activation-key')}
+									/>
 								),
 							},
 							{
@@ -256,7 +212,11 @@ const LiferayServiceLicenses = () => {
 										title={ipAddresses || '-'}
 									/>
 								),
-								title: <TitleSubtitleHeader title="Domain" />,
+								title: (
+									<TitleSubtitleHeader
+										title={i18n.translate('domain')}
+									/>
+								),
 							},
 							{
 								bodyClass: 'border-0 cursor-pointer',
@@ -312,11 +272,17 @@ const LiferayServiceLicenses = () => {
 												isActive ? 'active' : 'expired'
 											}
 										>
-											{isActive ? 'Active' : 'Expired'}
+											{i18n.translate(
+												isActive ? 'active' : 'expired'
+											)}
 										</StatusCell>
 									);
 								},
-								title: <TitleSubtitleHeader title="Status" />,
+								title: (
+									<TitleSubtitleHeader
+										title={i18n.translate('status')}
+									/>
+								),
 							},
 						]}
 						hasHover={false}
@@ -324,15 +290,6 @@ const LiferayServiceLicenses = () => {
 						hasPagination
 						kebabClassName="border-0"
 						onClickRow={onViewLicenseKey}
-						paginationProps={{
-							activeDelta: pageSize,
-							activePage: page,
-							deltas: PAGE_SIZES,
-							onDeltaChange: (pageSize: number) =>
-								setPageSize(pageSize),
-							onPageChange: (page: number) => setPage(page),
-							totalItems: rows.length,
-						}}
 						rows={rows}
 					/>
 				) : (
@@ -341,8 +298,39 @@ const LiferayServiceLicenses = () => {
 
 				{licenseKeyModal.open && (
 					<Modal
-						first={buttonsInfo.first}
-						last={buttonsInfo.last}
+						first={
+							<ClayButton
+								className="ml-4"
+								displayType="unstyled"
+								onClick={licenseKeyModal.onClose}
+							>
+								{i18n.translate('cancel')}
+							</ClayButton>
+						}
+						last={
+							<ClayButton
+								className="ml-4 mr-1"
+								disabled={isLicenseExpired(
+									modalData?.expirationDate as string
+								)}
+								displayType="primary"
+								onClick={() => {
+									onDownload(modalData as LicenseKey);
+								}}
+								title={
+									isLicenseExpired(
+										modalData?.expirationDate as string
+									)
+										? i18n.translate(
+												'this-key-is-expired-and-cannot-be-downloaded'
+											)
+										: ''
+								}
+							>
+								<ClayIcon symbol="download" />
+								{i18n.translate('download-key')}
+							</ClayButton>
+						}
 						observer={licenseKeyModal.observer}
 						size="lg"
 						visible={true}
@@ -364,4 +352,4 @@ const LiferayServiceLicenses = () => {
 	);
 };
 
-export default LiferayServiceLicenses;
+export default LiferayProductLicenses;

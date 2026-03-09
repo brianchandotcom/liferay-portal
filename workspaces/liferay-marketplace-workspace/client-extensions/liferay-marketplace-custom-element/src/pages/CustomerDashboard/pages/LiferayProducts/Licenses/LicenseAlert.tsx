@@ -9,7 +9,7 @@ import Icon from '@clayui/icon';
 import classNames from 'classnames';
 import {useState} from 'react';
 
-export type ActivationKeyAlertProps = {
+export type LiferayProductLicenseAlertProps = {
 	children?: string;
 	className?: string;
 	onClose?: () => void;
@@ -17,13 +17,13 @@ export type ActivationKeyAlertProps = {
 	title: string;
 };
 
-export default function ActivationKeyAlert({
+export default function LiferayProductLicenseAlert({
 	children,
 	className,
 	onClose,
 	symbol,
 	title,
-}: ActivationKeyAlertProps) {
+}: LiferayProductLicenseAlertProps) {
 	const [visible, setVisible] = useState(true);
 
 	if (!visible) {

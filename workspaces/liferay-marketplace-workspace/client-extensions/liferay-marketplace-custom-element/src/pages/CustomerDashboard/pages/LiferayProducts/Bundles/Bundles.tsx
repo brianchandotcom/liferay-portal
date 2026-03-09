@@ -7,12 +7,10 @@ import Download from '../../Apps/App/Download/Download';
 
 import './Bundles.scss';
 
-const LiferayServiceBundles = () => {
-	return (
-		<div className="bundles mb-9 mt-4">
-			<Download showSearchBar={false} title="bundle-name" />
-		</div>
-	);
-};
+const LiferayProductsBundles = () => (
+	<div className="bundles mb-9 mt-4">
+		<Download showSearchBar={false} title="bundle-name" />
+	</div>
+);
 
-export default LiferayServiceBundles;
+export default LiferayProductsBundles;

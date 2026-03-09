@@ -6,12 +6,9 @@
 package com.liferay.object.rest.internal.upgrade.registry;
 
 import com.liferay.object.rest.internal.upgrade.v1_0_0.SAPEntryAllowedServiceSignaturesUpgradeProcess;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -28,11 +25,5 @@ public class ObjectRESTImplUpgradeStepRegistrator
 			"0.0.1", "1.0.0",
 			new SAPEntryAllowedServiceSignaturesUpgradeProcess());
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
 
 }

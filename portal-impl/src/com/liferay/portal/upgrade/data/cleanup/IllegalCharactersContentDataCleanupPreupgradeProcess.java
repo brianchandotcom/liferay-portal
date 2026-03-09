@@ -132,7 +132,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 			DataCleanupLoggingUtil.logUpdate(
 				_log, count, dbInspector.normalizeName(tableName),
 				dbInspector.normalizeName(columnName), null,
-				"it had invalid '\\u0000' character sequence");
+				"it had invalid character sequence \"\\u0000\"");
 		}
 	}
 

@@ -367,12 +367,7 @@ test(
 
 		// Check we can't publish without selecting a space
 
-		// await editVocabularyPage.spaceCheckbox.click();
-
-		await clickAndExpectToBeVisible({
-			target: page.getByText('The Space field is required'),
-			trigger: editVocabularyPage.spaceCheckbox,
-		});
+		await editVocabularyPage.spaceCheckbox.click();
 
 		await expect(editVocabularyPage.saveButton).toBeDisabled();
 

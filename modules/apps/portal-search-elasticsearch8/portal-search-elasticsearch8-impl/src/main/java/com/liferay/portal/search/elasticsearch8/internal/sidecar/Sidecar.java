@@ -352,6 +352,8 @@ public class Sidecar {
 			"HOSTNAME", "localhost"
 		).put(
 			"LIBFFI_TMPDIR", _sidecarHomePath.toString()
+		).put(
+			"sidecar.settings", _getSettings()
 		).build();
 	}
 
@@ -391,7 +393,6 @@ public class Sidecar {
 				"logger.deprecation.level=error\n",
 				ResourceUtil.getResourceAsString(
 					Sidecar.class, "dependencies/log4j2.properties")));
-		arguments.add("-Dsidecar.settings=" + _getSettings());
 		arguments.add("--enable-native-access=ALL-UNNAMED");
 		arguments.add(
 			"--enable-native-access=org.elasticsearch.nativeaccess," +

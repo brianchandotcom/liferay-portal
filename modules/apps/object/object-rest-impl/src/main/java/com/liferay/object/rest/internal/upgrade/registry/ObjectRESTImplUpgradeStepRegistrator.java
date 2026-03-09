@@ -6,7 +6,6 @@
 package com.liferay.object.rest.internal.upgrade.registry;
 
 import com.liferay.object.rest.internal.upgrade.v1_0_0.SAPEntryAllowedServiceSignaturesUpgradeProcess;
-import com.liferay.object.rest.internal.upgrade.v1_0_1.VulcanCompanyConfigurationUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -28,11 +27,6 @@ public class ObjectRESTImplUpgradeStepRegistrator
 		registry.register(
 			"0.0.1", "1.0.0",
 			new SAPEntryAllowedServiceSignaturesUpgradeProcess());
-
-		registry.register(
-			"1.0.0", "1.0.1",
-			new VulcanCompanyConfigurationUpgradeProcess(
-				_companyLocalService, _configurationAdmin));
 	}
 
 	@Reference

@@ -130,6 +130,7 @@ export default function ColorPickerField({
 										color.toHexString().toUpperCase()
 									);
 								}}
+								onHexBlur={externalOnColorChangeEditor}
 								onHexChange={(hex: string) => dispatch({hex})}
 								onHueChange={(hue: number) => dispatch({hue})}
 							/>

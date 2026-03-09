@@ -7,12 +7,12 @@ import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {IFDSState} from '@liferay/frontend-data-set-web';
+import {getFDSAtom} from '@liferay/frontend-data-set-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {getFDSAtom} from '@liferay/frontend-data-set-web';
-
-const ADVANCED_FDS_ATOM_KEY = 'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-advanced';
+const ADVANCED_FDS_ATOM_KEY =
+	'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-advanced';
 
 /**
  * This fragment highlights sync with FDS from isolated context, if there is

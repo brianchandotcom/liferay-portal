@@ -63,6 +63,7 @@ import {readConfigFromURL} from './utils/configInURL';
 import EVENTS from './utils/eventsDefinitions';
 import {activateFilter} from './utils/filters/activateFilter';
 import {deactivateFilter} from './utils/filters/deactivateFilter';
+import {getFDSAtom} from './utils/getFDSAtom';
 import getRandomId from './utils/getRandomId';
 
 // @ts-ignore
@@ -92,7 +93,6 @@ import {
 	TSort,
 	VisibleFieldNames,
 } from './utils/types';
-import {getFDSAtom} from './utils/getFDSAtom';
 import useConfigInURL, {useUpdateConfig} from './utils/useConfigInURL';
 import ViewsContext, {ISnapshot} from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';
@@ -649,7 +649,7 @@ const FrontendDataSetContent = ({
 		const unfrozenGlobalFDSState: IFDSState = deepClone(globalFDSState);
 
 		const activeFilters: Array<IBaseFilterState> =
-			unfrozenGlobalFDSState.filters?.filter((filter) => filter.active) ||
+			unfrozenGlobalFDSState.filters.filter((filter) => filter.active) ||
 			[];
 
 		const activeFiltersOdataStrings = activeFilters.map((filter) => {
@@ -725,7 +725,7 @@ const FrontendDataSetContent = ({
 		const globalFDSStateSearchQuery = globalFDSState.search.query;
 		const urlSearchQuery = configInURL?.q;
 
-		const shouldUpdateFilters = globalFDSState.filters?.some(
+		const shouldUpdateFilters = globalFDSState.filters.some(
 			(filter: IBaseFilterState) => {
 				if (filter.preloadedData || filter.selectedData) {
 					const preloadedData = JSON.stringify(filter.preloadedData);
@@ -1436,7 +1436,7 @@ const FrontendDataSetContent = ({
 	const fdsRef = useRef(null);
 
 	const hasSearch = !!globalFDSState.search.query;
-	const hasActiveFilters = globalFDSState.filters?.some(
+	const hasActiveFilters = globalFDSState.filters.some(
 		(filter) => filter.active
 	);
 

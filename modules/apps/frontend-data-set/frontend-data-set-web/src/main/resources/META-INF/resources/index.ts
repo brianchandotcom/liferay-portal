@@ -19,8 +19,6 @@ export {default as LabelRenderer} from './cell_renderers/LabelRenderer';
 
 export {default as StatusRenderer} from './cell_renderers/StatusRenderer';
 
-export {getFDSAtom} from './utils/getFDSAtom';
-
 export {getInternalCellRenderer as getFDSInternalCellRenderer} from './cell_renderers/getInternalCellRenderer';
 
 export {
@@ -44,6 +42,8 @@ export {default as findAction} from './utils/actionItems/findAction';
 export {replaceTokens} from './utils/actionItems/formatActionURL';
 
 export {default as FDS_EVENT} from './utils/eventsDefinitions';
+
+export {getFDSAtom} from './utils/getFDSAtom';
 
 export {
 	DisplayType,

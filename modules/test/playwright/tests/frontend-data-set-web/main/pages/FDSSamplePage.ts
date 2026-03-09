@@ -40,7 +40,6 @@ export class FDSSamplePage {
 	readonly filterMenuSearchInput: Locator;
 	readonly filterShowResultsOrAddButton: Locator;
 	readonly infoPanel: Locator;
-	readonly itemActionButton: Locator;
 	readonly itemActionsButtons: Locator;
 	readonly list: {
 		container: Locator;
@@ -57,6 +56,7 @@ export class FDSSamplePage {
 	readonly paginator: {
 		itemsPerPageSelector: Locator;
 	};
+	readonly resubmitButton: Locator;
 	readonly sidePanel: Locator;
 	readonly sidePanelFrame: FrameLocator;
 	readonly selectAllCheckbox: Locator;
@@ -174,6 +174,8 @@ export class FDSSamplePage {
 			}),
 		};
 
+		this.resubmitButton = page.getByRole('button', {name: 'Resubmit'});
+
 		this.selectAllCheckbox = page.getByText('Select All');
 
 		const selectionToolbarContainer = page.getByTestId('selectionToolbar');
@@ -224,6 +226,14 @@ export class FDSSamplePage {
 		});
 
 		this.visualizationModeSelector = page.getByLabel(/View Selected/);
+	}
+
+	async assignTaskToMe() {
+		const assignToMeButton = this.page
+			.locator('.fds-role-tasks')
+			.getByLabel('Assign to Me');
+
+		await assignToMeButton.click();
 	}
 
 	async changeItemsPerPage({delta}: {delta: string}) {
@@ -285,11 +295,11 @@ export class FDSSamplePage {
 	}
 
 	async clickItemAction(action: string, item: number = 0) {
+		await this.itemActionsButtons.nth(item).click();
+
 		const dropdownId = await this.itemActionsButtons
 			.nth(item)
 			.getAttribute('aria-controls');
-
-		await this.itemActionsButtons.nth(item).click();
 
 		await this.page
 			.locator(`#${dropdownId}`)
@@ -303,6 +313,18 @@ export class FDSSamplePage {
 				name: action,
 			})
 			.click();
+	}
+
+	async fillAndSaveWorkflowModal({comment, name}: {comment: string, name: string}) {
+		const workflowModal = this.page.getByRole('dialog', {name});
+
+		await workflowModal.isVisible();
+
+		await this.page.getByRole('textbox', {name: 'Comment'}).fill(comment);
+
+		await workflowModal.getByRole('button', {name: 'Save'}).click();
+
+		await workflowModal.isHidden();
 	}
 
 	async getDropdownId(itemActionButton: Locator) {
@@ -390,7 +412,15 @@ export class FDSSamplePage {
 		await expect(navLink).toHaveClass(/active/);
 	}
 
-	async setupFDSSampleWidget({fragmentKeys = [], locale = 'en', site}) {
+	async setupFDSSampleWidget({
+		fragmentKeys = [],
+		locale = 'en',
+		site
+	}: {
+		fragmentKeys?: Array<string>,
+		locale?: string,
+		site: Site
+	}) {
 		const layout = await this.apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([
 				...fragmentKeys.map((fragmentKey) =>

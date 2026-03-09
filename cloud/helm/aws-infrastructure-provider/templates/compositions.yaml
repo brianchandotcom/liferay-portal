@@ -541,7 +541,7 @@ spec:
                                         dataPlane: {{ $dataPlane }}
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                deleteProtection: {{ $databaseSpec.deleteProtection }}
+                                deletionProtection: {{ $databaseSpec.deletionProtection }}
                                 engine: {{ $databaseSpec.engine | quote }}
                                 engineVersion: {{ $databaseSpec.engineVersion | quote }}
                                 iamDatabaseAuthenticationEnabled: true

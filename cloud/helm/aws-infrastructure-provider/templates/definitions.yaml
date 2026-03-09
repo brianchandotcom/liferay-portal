@@ -64,7 +64,7 @@ spec:
                                         databaseInsightsMode:
                                             default: standard
                                             type: string
-                                        deleteProtection:
+                                        deletionProtection:
                                             default: true
                                             type: boolean
                                         engine:

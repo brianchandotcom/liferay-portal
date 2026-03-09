@@ -10,9 +10,9 @@ import {IFDSState} from '@liferay/frontend-data-set-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {getAtom} from '../utils/getAtom';
+import {getAtom} from '@liferay/frontend-data-set-web';
 
-const ADVANCED_FDS_ATOM_KEY = 'advancedFDSAtom';
+const ADVANCED_FDS_ATOM_KEY = 'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-advanced';
 
 /**
  * This fragment highlights sync with FDS from isolated context, if there is

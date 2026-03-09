@@ -92,6 +92,7 @@ import {
 	TSort,
 	VisibleFieldNames,
 } from './utils/types';
+import {getAtom} from './utils/getAtom';
 import useConfigInURL, {useUpdateConfig} from './utils/useConfigInURL';
 import ViewsContext, {ISnapshot} from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';
@@ -99,31 +100,6 @@ import viewsReducer, {EViewsActionTypes} from './views/viewsReducer';
 
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
-
-const getAtom = ({
-	atom,
-	id,
-}: {
-	atom: Atom<IFDSState> | undefined;
-	id: string;
-}): Atom<IFDSState> | Selector<IFDSState> => {
-	if (atom) {
-		return atom;
-	}
-
-	const key = `${id}_fdsState`;
-
-	const fallbackAtom: Atom<IFDSState> | null =
-		State.__unsafe__.getAtomOrSelectorKey(key) as Atom<IFDSState> | null;
-
-	return (
-		fallbackAtom ||
-		State.atom<IFDSState>(key, {
-			filters: [],
-			search: {query: ''},
-		})
-	);
-};
 
 const FrontendDataSetContent = ({
 	actionParameterName,
@@ -390,7 +366,7 @@ const FrontendDataSetContent = ({
 		id,
 	});
 
-	const memoizedAtom = useMemo(() => getAtom({atom, id}), [atom, id]);
+	const memoizedAtom = useMemo(() => getAtom({key: id}), [id]);
 
 	const [additionalAPIURLParameters, setAdditionalAPIURLParameters] =
 		useState(initialAdditionalAPIURLParameters);
@@ -673,7 +649,7 @@ const FrontendDataSetContent = ({
 		const unfrozenGlobalFDSState: IFDSState = deepClone(globalFDSState);
 
 		const activeFilters: Array<IBaseFilterState> =
-			unfrozenGlobalFDSState.filters.filter((filter) => filter.active) ||
+			unfrozenGlobalFDSState.filters?.filter((filter) => filter.active) ||
 			[];
 
 		const activeFiltersOdataStrings = activeFilters.map((filter) => {
@@ -749,7 +725,7 @@ const FrontendDataSetContent = ({
 		const globalFDSStateSearchQuery = globalFDSState.search.query;
 		const urlSearchQuery = configInURL?.q;
 
-		const shouldUpdateFilters = globalFDSState.filters.some(
+		const shouldUpdateFilters = globalFDSState.filters?.some(
 			(filter: IBaseFilterState) => {
 				if (filter.preloadedData || filter.selectedData) {
 					const preloadedData = JSON.stringify(filter.preloadedData);
@@ -1460,7 +1436,7 @@ const FrontendDataSetContent = ({
 	const fdsRef = useRef(null);
 
 	const hasSearch = !!globalFDSState.search.query;
-	const hasActiveFilters = globalFDSState.filters.some(
+	const hasActiveFilters = globalFDSState.filters?.some(
 		(filter) => filter.active
 	);
 

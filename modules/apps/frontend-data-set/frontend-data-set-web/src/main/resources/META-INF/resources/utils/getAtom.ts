@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IFDSState} from '@liferay/frontend-data-set-web';
+import {IFDSState} from './types';
 import {Atom, Selector, State} from '@liferay/frontend-js-state-web';
 
 const getAtom = ({
@@ -11,12 +11,14 @@ const getAtom = ({
 }: {
 	key: string;
 }): Atom<IFDSState> | Selector<IFDSState> => {
+	const fdsStateKey = `${key}_fdsState`;
+
 	const fallbackAtom: Atom<IFDSState> | null =
-		State.__unsafe__.getAtomOrSelectorKey(key) as Atom<IFDSState> | null;
+		State.__unsafe__.getAtomOrSelectorKey(fdsStateKey) as Atom<IFDSState> | null;
 
 	return (
 		fallbackAtom ||
-		State.atom<IFDSState>(key, {
+		State.atom<IFDSState>(fdsStateKey, {
 			filters: [],
 			search: {query: ''},
 		})

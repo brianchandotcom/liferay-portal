@@ -20,9 +20,7 @@ public class DockerReleaseTopLevelBuild
 
 		sb.append("https://github.com/");
 		sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
-		sb.append("/liferay-docker");
-
-		sb.append("/pull/");
+		sb.append("/liferay-docker/pull/");
 		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
 
 		_pullRequest = PullRequestFactory.newPullRequest(sb.toString());

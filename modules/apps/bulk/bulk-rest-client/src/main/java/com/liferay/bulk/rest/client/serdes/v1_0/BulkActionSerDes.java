@@ -5,24 +5,24 @@
 
 package com.liferay.bulk.rest.client.serdes.v1_0;
 
-import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AssignToObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
-import com.liferay.bulk.rest.client.dto.v1_0.CopyBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.DeleteAssetVersionBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectEntryBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.DueDateBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.MoveBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.PermissionBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.StatusBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.UpdateValuesBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.CopyObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectAssetVersionBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectEntryBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DueDateObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.EditObjectCategoriesBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.EditObjectTagsBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.ExpireObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.MoveObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.PermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.StatusObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.UpdateObjectValuesBulkSelectionAction;
 import com.liferay.bulk.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -62,82 +62,92 @@ public class BulkActionSerDes {
 		if (type != null) {
 			String typeString = type.toString();
 
-			if (typeString.equals("AssignStructureDefaultWorkflowBulkAction")) {
-				return AssignStructureDefaultWorkflowBulkActionSerDes.toJSON(
-					(AssignStructureDefaultWorkflowBulkAction)bulkAction);
+			if (typeString.equals(
+					"AssignStructureDefaultWorkflowBulkSelectionAction")) {
+
+				return AssignStructureDefaultWorkflowBulkSelectionActionSerDes.
+					toJSON(
+						(AssignStructureDefaultWorkflowBulkSelectionAction)
+							bulkAction);
 			}
 
-			if (typeString.equals("AssignToBulkAction")) {
-				return AssignToBulkActionSerDes.toJSON(
-					(AssignToBulkAction)bulkAction);
+			if (typeString.equals("AssignToObjectBulkSelectionAction")) {
+				return AssignToObjectBulkSelectionActionSerDes.toJSON(
+					(AssignToObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("CopyBulkAction")) {
-				return CopyBulkActionSerDes.toJSON((CopyBulkAction)bulkAction);
+			if (typeString.equals("CopyObjectBulkSelectionAction")) {
+				return CopyObjectBulkSelectionActionSerDes.toJSON(
+					(CopyObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("DefaultPermissionBulkAction")) {
-				return DefaultPermissionBulkActionSerDes.toJSON(
-					(DefaultPermissionBulkAction)bulkAction);
+			if (typeString.equals(
+					"DefaultPermissionObjectBulkSelectionAction")) {
+
+				return DefaultPermissionObjectBulkSelectionActionSerDes.toJSON(
+					(DefaultPermissionObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("DeleteAssetVersionBulkAction")) {
-				return DeleteAssetVersionBulkActionSerDes.toJSON(
-					(DeleteAssetVersionBulkAction)bulkAction);
+			if (typeString.equals(
+					"DeleteObjectAssetVersionBulkSelectionAction")) {
+
+				return DeleteObjectAssetVersionBulkSelectionActionSerDes.toJSON(
+					(DeleteObjectAssetVersionBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("DeleteBulkAction")) {
-				return DeleteBulkActionSerDes.toJSON(
-					(DeleteBulkAction)bulkAction);
+			if (typeString.equals("DeleteObjectBulkSelectionAction")) {
+				return DeleteObjectBulkSelectionActionSerDes.toJSON(
+					(DeleteObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("DeleteObjectEntryBulkAction")) {
-				return DeleteObjectEntryBulkActionSerDes.toJSON(
-					(DeleteObjectEntryBulkAction)bulkAction);
+			if (typeString.equals("DeleteObjectEntryBulkSelectionAction")) {
+				return DeleteObjectEntryBulkSelectionActionSerDes.toJSON(
+					(DeleteObjectEntryBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("DueDateBulkAction")) {
-				return DueDateBulkActionSerDes.toJSON(
-					(DueDateBulkAction)bulkAction);
+			if (typeString.equals("DueDateObjectBulkSelectionAction")) {
+				return DueDateObjectBulkSelectionActionSerDes.toJSON(
+					(DueDateObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("ExpireBulkAction")) {
-				return ExpireBulkActionSerDes.toJSON(
-					(ExpireBulkAction)bulkAction);
+			if (typeString.equals("EditObjectCategoriesBulkSelectionAction")) {
+				return EditObjectCategoriesBulkSelectionActionSerDes.toJSON(
+					(EditObjectCategoriesBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("KeywordBulkAction")) {
-				return KeywordBulkActionSerDes.toJSON(
-					(KeywordBulkAction)bulkAction);
+			if (typeString.equals("EditObjectTagsBulkSelectionAction")) {
+				return EditObjectTagsBulkSelectionActionSerDes.toJSON(
+					(EditObjectTagsBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("MoveBulkAction")) {
-				return MoveBulkActionSerDes.toJSON((MoveBulkAction)bulkAction);
+			if (typeString.equals("ExpireObjectBulkSelectionAction")) {
+				return ExpireObjectBulkSelectionActionSerDes.toJSON(
+					(ExpireObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("PermissionBulkAction")) {
-				return PermissionBulkActionSerDes.toJSON(
-					(PermissionBulkAction)bulkAction);
+			if (typeString.equals("MoveObjectBulkSelectionAction")) {
+				return MoveObjectBulkSelectionActionSerDes.toJSON(
+					(MoveObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("ResetPermissionBulkAction")) {
-				return ResetPermissionBulkActionSerDes.toJSON(
-					(ResetPermissionBulkAction)bulkAction);
+			if (typeString.equals("PermissionObjectBulkSelectionAction")) {
+				return PermissionObjectBulkSelectionActionSerDes.toJSON(
+					(PermissionObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("StatusBulkAction")) {
-				return StatusBulkActionSerDes.toJSON(
-					(StatusBulkAction)bulkAction);
+			if (typeString.equals("ResetPermissionObjectBulkSelectionAction")) {
+				return ResetPermissionObjectBulkSelectionActionSerDes.toJSON(
+					(ResetPermissionObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("TaxonomyCategoryBulkAction")) {
-				return TaxonomyCategoryBulkActionSerDes.toJSON(
-					(TaxonomyCategoryBulkAction)bulkAction);
+			if (typeString.equals("StatusObjectBulkSelectionAction")) {
+				return StatusObjectBulkSelectionActionSerDes.toJSON(
+					(StatusObjectBulkSelectionAction)bulkAction);
 			}
 
-			if (typeString.equals("UpdateValuesBulkAction")) {
-				return UpdateValuesBulkActionSerDes.toJSON(
-					(UpdateValuesBulkAction)bulkAction);
+			if (typeString.equals("UpdateObjectValuesBulkSelectionAction")) {
+				return UpdateObjectValuesBulkSelectionActionSerDes.toJSON(
+					(UpdateObjectValuesBulkSelectionAction)bulkAction);
 			}
 
 			throw new IllegalArgumentException("Unknown type " + typeString);
@@ -226,69 +236,82 @@ public class BulkActionSerDes {
 				String typeString = type.toString();
 
 				if (typeString.equals(
-						"AssignStructureDefaultWorkflowBulkAction")) {
+						"AssignStructureDefaultWorkflowBulkSelectionAction")) {
 
-					return AssignStructureDefaultWorkflowBulkAction.toDTO(json);
+					return AssignStructureDefaultWorkflowBulkSelectionAction.
+						toDTO(json);
 				}
 
-				if (typeString.equals("AssignToBulkAction")) {
-					return AssignToBulkAction.toDTO(json);
+				if (typeString.equals("AssignToObjectBulkSelectionAction")) {
+					return AssignToObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("CopyBulkAction")) {
-					return CopyBulkAction.toDTO(json);
+				if (typeString.equals("CopyObjectBulkSelectionAction")) {
+					return CopyObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("DefaultPermissionBulkAction")) {
-					return DefaultPermissionBulkAction.toDTO(json);
+				if (typeString.equals(
+						"DefaultPermissionObjectBulkSelectionAction")) {
+
+					return DefaultPermissionObjectBulkSelectionAction.toDTO(
+						json);
 				}
 
-				if (typeString.equals("DeleteAssetVersionBulkAction")) {
-					return DeleteAssetVersionBulkAction.toDTO(json);
+				if (typeString.equals(
+						"DeleteObjectAssetVersionBulkSelectionAction")) {
+
+					return DeleteObjectAssetVersionBulkSelectionAction.toDTO(
+						json);
 				}
 
-				if (typeString.equals("DeleteBulkAction")) {
-					return DeleteBulkAction.toDTO(json);
+				if (typeString.equals("DeleteObjectBulkSelectionAction")) {
+					return DeleteObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("DeleteObjectEntryBulkAction")) {
-					return DeleteObjectEntryBulkAction.toDTO(json);
+				if (typeString.equals("DeleteObjectEntryBulkSelectionAction")) {
+					return DeleteObjectEntryBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("DueDateBulkAction")) {
-					return DueDateBulkAction.toDTO(json);
+				if (typeString.equals("DueDateObjectBulkSelectionAction")) {
+					return DueDateObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("ExpireBulkAction")) {
-					return ExpireBulkAction.toDTO(json);
+				if (typeString.equals(
+						"EditObjectCategoriesBulkSelectionAction")) {
+
+					return EditObjectCategoriesBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("KeywordBulkAction")) {
-					return KeywordBulkAction.toDTO(json);
+				if (typeString.equals("EditObjectTagsBulkSelectionAction")) {
+					return EditObjectTagsBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("MoveBulkAction")) {
-					return MoveBulkAction.toDTO(json);
+				if (typeString.equals("ExpireObjectBulkSelectionAction")) {
+					return ExpireObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("PermissionBulkAction")) {
-					return PermissionBulkAction.toDTO(json);
+				if (typeString.equals("MoveObjectBulkSelectionAction")) {
+					return MoveObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("ResetPermissionBulkAction")) {
-					return ResetPermissionBulkAction.toDTO(json);
+				if (typeString.equals("PermissionObjectBulkSelectionAction")) {
+					return PermissionObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("StatusBulkAction")) {
-					return StatusBulkAction.toDTO(json);
+				if (typeString.equals(
+						"ResetPermissionObjectBulkSelectionAction")) {
+
+					return ResetPermissionObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("TaxonomyCategoryBulkAction")) {
-					return TaxonomyCategoryBulkAction.toDTO(json);
+				if (typeString.equals("StatusObjectBulkSelectionAction")) {
+					return StatusObjectBulkSelectionAction.toDTO(json);
 				}
 
-				if (typeString.equals("UpdateValuesBulkAction")) {
-					return UpdateValuesBulkAction.toDTO(json);
+				if (typeString.equals(
+						"UpdateObjectValuesBulkSelectionAction")) {
+
+					return UpdateObjectValuesBulkSelectionAction.toDTO(json);
 				}
 
 				throw new IllegalArgumentException(

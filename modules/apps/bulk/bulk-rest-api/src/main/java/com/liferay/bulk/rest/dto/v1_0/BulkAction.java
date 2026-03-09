@@ -45,59 +45,68 @@ import java.util.function.Supplier;
 @JsonSubTypes(
 	{
 		@JsonSubTypes.Type(
-			name = "AssignStructureDefaultWorkflowBulkAction",
-			value = AssignStructureDefaultWorkflowBulkAction.class
+			name = "AssignStructureDefaultWorkflowBulkSelectionAction",
+			value = AssignStructureDefaultWorkflowBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "AssignToBulkAction", value = AssignToBulkAction.class
+			name = "AssignToObjectBulkSelectionAction",
+			value = AssignToObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "CopyBulkAction", value = CopyBulkAction.class
+			name = "CopyObjectBulkSelectionAction",
+			value = CopyObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "DefaultPermissionBulkAction",
-			value = DefaultPermissionBulkAction.class
+			name = "DefaultPermissionObjectBulkSelectionAction",
+			value = DefaultPermissionObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "DeleteAssetVersionBulkAction",
-			value = DeleteAssetVersionBulkAction.class
+			name = "DeleteObjectAssetVersionBulkSelectionAction",
+			value = DeleteObjectAssetVersionBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "DeleteBulkAction", value = DeleteBulkAction.class
+			name = "DeleteObjectBulkSelectionAction",
+			value = DeleteObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "DeleteObjectEntryBulkAction",
-			value = DeleteObjectEntryBulkAction.class
+			name = "DeleteObjectEntryBulkSelectionAction",
+			value = DeleteObjectEntryBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "DueDateBulkAction", value = DueDateBulkAction.class
+			name = "DueDateObjectBulkSelectionAction",
+			value = DueDateObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "ExpireBulkAction", value = ExpireBulkAction.class
+			name = "EditObjectCategoriesBulkSelectionAction",
+			value = EditObjectCategoriesBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "KeywordBulkAction", value = KeywordBulkAction.class
+			name = "EditObjectTagsBulkSelectionAction",
+			value = EditObjectTagsBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "MoveBulkAction", value = MoveBulkAction.class
+			name = "ExpireObjectBulkSelectionAction",
+			value = ExpireObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "PermissionBulkAction", value = PermissionBulkAction.class
+			name = "MoveObjectBulkSelectionAction",
+			value = MoveObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "ResetPermissionBulkAction",
-			value = ResetPermissionBulkAction.class
+			name = "PermissionObjectBulkSelectionAction",
+			value = PermissionObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "StatusBulkAction", value = StatusBulkAction.class
+			name = "ResetPermissionObjectBulkSelectionAction",
+			value = ResetPermissionObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "TaxonomyCategoryBulkAction",
-			value = TaxonomyCategoryBulkAction.class
+			name = "StatusObjectBulkSelectionAction",
+			value = StatusObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
-			name = "UpdateValuesBulkAction",
-			value = UpdateValuesBulkAction.class
+			name = "UpdateObjectValuesBulkSelectionAction",
+			value = UpdateObjectValuesBulkSelectionAction.class
 		)
 	}
 )
@@ -344,23 +353,33 @@ public abstract class BulkAction implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION(
-			"AssignStructureDefaultWorkflowBulkAction"),
-		ASSIGN_TO_BULK_ACTION("AssignToBulkAction"),
-		COPY_BULK_ACTION("CopyBulkAction"),
-		DEFAULT_PERMISSION_BULK_ACTION("DefaultPermissionBulkAction"),
-		DELETE_ASSET_VERSION_BULK_ACTION("DeleteAssetVersionBulkAction"),
-		DELETE_BULK_ACTION("DeleteBulkAction"),
-		DELETE_OBJECT_ENTRY_BULK_ACTION("DeleteObjectEntryBulkAction"),
-		DUE_DATE_BULK_ACTION("DueDateBulkAction"),
-		EXPIRE_BULK_ACTION("ExpireBulkAction"),
-		KEYWORD_BULK_ACTION("KeywordBulkAction"),
-		MOVE_BULK_ACTION("MoveBulkAction"),
-		PERMISSION_BULK_ACTION("PermissionBulkAction"),
-		RESET_PERMISSION_BULK_ACTION("ResetPermissionBulkAction"),
-		STATUS_BULK_ACTION("StatusBulkAction"),
-		TAXONOMY_CATEGORY_BULK_ACTION("TaxonomyCategoryBulkAction"),
-		UPDATE_VALUES_BULK_ACTION("UpdateValuesBulkAction");
+		ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_SELECTION_ACTION(
+			"AssignStructureDefaultWorkflowBulkSelectionAction"),
+		ASSIGN_TO_OBJECT_BULK_SELECTION_ACTION(
+			"AssignToObjectBulkSelectionAction"),
+		COPY_OBJECT_BULK_SELECTION_ACTION("CopyObjectBulkSelectionAction"),
+		DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION(
+			"DefaultPermissionObjectBulkSelectionAction"),
+		DELETE_OBJECT_ASSET_VERSION_BULK_SELECTION_ACTION(
+			"DeleteObjectAssetVersionBulkSelectionAction"),
+		DELETE_OBJECT_BULK_SELECTION_ACTION("DeleteObjectBulkSelectionAction"),
+		DELETE_OBJECT_ENTRY_BULK_SELECTION_ACTION(
+			"DeleteObjectEntryBulkSelectionAction"),
+		DUE_DATE_OBJECT_BULK_SELECTION_ACTION(
+			"DueDateObjectBulkSelectionAction"),
+		EXPIRE_OBJECT_BULK_SELECTION_ACTION("ExpireObjectBulkSelectionAction"),
+		EDIT_OBJECT_TAGS_BULK_SELECTION_ACTION(
+			"EditObjectTagsBulkSelectionAction"),
+		MOVE_OBJECT_BULK_SELECTION_ACTION("MoveObjectBulkSelectionAction"),
+		PERMISSION_OBJECT_BULK_SELECTION_ACTION(
+			"PermissionObjectBulkSelectionAction"),
+		RESET_PERMISSION_OBJECT_BULK_SELECTION_ACTION(
+			"ResetPermissionObjectBulkSelectionAction"),
+		STATUS_OBJECT_BULK_SELECTION_ACTION("StatusObjectBulkSelectionAction"),
+		EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION(
+			"EditObjectCategoriesBulkSelectionAction"),
+		UPDATE_OBJECT_VALUES_BULK_SELECTION_ACTION(
+			"UpdateObjectValuesBulkSelectionAction");
 
 		@JsonCreator
 		public static Type create(String value) {

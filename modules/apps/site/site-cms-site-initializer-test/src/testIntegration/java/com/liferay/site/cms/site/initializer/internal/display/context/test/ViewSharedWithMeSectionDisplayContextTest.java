@@ -162,6 +162,11 @@ public class ViewSharedWithMeSectionDisplayContextTest
 	}
 
 	@Override
+	@Test
+	public void testGetCreationMenu() throws Exception {
+	}
+
+	@Override
 	protected CreationMenu getCreationMenu(ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 

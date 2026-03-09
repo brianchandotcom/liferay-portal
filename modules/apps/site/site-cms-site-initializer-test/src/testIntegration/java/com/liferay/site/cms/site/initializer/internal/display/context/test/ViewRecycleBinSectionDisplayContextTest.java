@@ -176,6 +176,11 @@ public class ViewRecycleBinSectionDisplayContextTest
 		_userLocalService.deleteUser(user2);
 	}
 
+	@Override
+	@Test
+	public void testGetCreationMenu() throws Exception {
+	}
+
 	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
 		List<FDSActionDropdownItem> fdsActionDropdownItems =

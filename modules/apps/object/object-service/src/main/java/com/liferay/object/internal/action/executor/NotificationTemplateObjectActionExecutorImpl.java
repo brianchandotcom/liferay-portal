@@ -11,6 +11,7 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
+import com.liferay.object.action.executor.BaseObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
@@ -36,10 +37,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectActionExecutor.class)
 public class NotificationTemplateObjectActionExecutorImpl
-	implements ObjectActionExecutor {
+	extends BaseObjectActionExecutor {
 
 	@Override
-	public void execute(
+	public void doExecute(
 			long companyId, long objectActionId,
 			UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)

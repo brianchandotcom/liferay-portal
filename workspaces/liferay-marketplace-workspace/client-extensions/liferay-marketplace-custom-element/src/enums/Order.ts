@@ -36,8 +36,8 @@ export enum OrderTypes {
 	DXP_APP = 'DXP_APP',
 	LOW_CODE_CONFIGURATION = 'LOW_CODE_CONFIGURATION',
 	OTHER = 'OTHER',
-	SOLUTIONS7 = 'SOLUTIONS7',
 	SOLUTIONS30 = 'SOLUTIONS30',
+	SOLUTIONS7 = 'SOLUTIONS7',
 	SSA_SAAS = 'SSA_SAAS',
 }
 
@@ -65,18 +65,18 @@ export const orderTypeLabel = {
 	[OrderTypes.CLOUD_APP]: 'Cloud',
 	[OrderTypes.CMP]: 'Content Marketing Platform',
 	[OrderTypes.COMPOSITE_APP]: 'Composite App',
-	[OrderTypes.DXP]: 'DXP Free',
 	[OrderTypes.DXP_APP]: 'DXP',
+	[OrderTypes.DXP]: 'DXP Free',
 	[OrderTypes.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
 	[OrderTypes.OTHER]: 'Other',
-	[OrderTypes.SSA_SAAS]: 'SSA SaaS',
 	[OrderTypes.SOLUTIONS7]: 'Solutions 7',
 	[OrderTypes.SOLUTIONS30]: 'Solutions 30',
+	[OrderTypes.SSA_SAAS]: 'SSA SaaS',
 } as const;
 
 export const orderWorkflowDisplayType = {
-	[OrderWorkflowStatusCode.COMPLETED]: 'success',
 	[OrderWorkflowStatusCode.CANCELLED]: 'warning',
+	[OrderWorkflowStatusCode.COMPLETED]: 'success',
 	[OrderWorkflowStatusCode.IN_PROGRESS]: 'info',
 	[OrderWorkflowStatusCode.ON_HOLD]: 'secondary',
 	[OrderWorkflowStatusCode.PENDING]: 'warning',
@@ -87,9 +87,9 @@ export const orderWorkflowStatusCodeLabels = {
 	[OrderWorkflowStatusCode.CANCELLED]: 'Cancelled',
 	[OrderWorkflowStatusCode.COMPLETED]: 'Completed',
 	[OrderWorkflowStatusCode.IN_PROGRESS]: 'In Progress',
-	[OrderWorkflowStatusCode.PENDING_PAYMENT]: 'Pending Payment',
 	[OrderWorkflowStatusCode.ON_HOLD]: 'On Hold',
 	[OrderWorkflowStatusCode.PENDING]: 'Pending',
+	[OrderWorkflowStatusCode.PENDING_PAYMENT]: 'Pending Payment',
 	[OrderWorkflowStatusCode.PROCESSING]: 'Processing',
 } as const;
 

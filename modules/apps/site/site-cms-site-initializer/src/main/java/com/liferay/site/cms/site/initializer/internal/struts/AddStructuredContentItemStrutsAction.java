@@ -71,26 +71,28 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 				objectDefinition.getCompanyId(),
 				objectDefinition.getStorageType());
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
 				false, null, null, null, null,
 				themeDisplay.getSiteDefaultLocale(), null,
 				themeDisplay.getUser());
 
-		objectEntry.setObjectEntryFolderExternalReferenceCode(
-			() -> ParamUtil.getString(
-				httpServletRequest, "objectEntryFolderExternalReferenceCode"));
-		objectEntry.setStatus(
-			() -> new Status() {
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			defaultDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
 				{
-					setCode(() -> WorkflowConstants.STATUS_DRAFT);
+					setObjectEntryFolderExternalReferenceCode(
+						() -> ParamUtil.getString(
+							httpServletRequest,
+							"objectEntryFolderExternalReferenceCode"));
+					setStatus(
+						() -> new Status() {
+							{
+								setCode(() -> WorkflowConstants.STATUS_DRAFT);
+							}
+						});
 				}
-			});
-
-		objectEntry = objectEntryManager.addObjectEntry(
-			defaultDTOConverterContext, objectDefinition, objectEntry,
+			},
 			String.valueOf(ParamUtil.getLong(httpServletRequest, "groupId")));
 
 		httpServletResponse.sendRedirect(

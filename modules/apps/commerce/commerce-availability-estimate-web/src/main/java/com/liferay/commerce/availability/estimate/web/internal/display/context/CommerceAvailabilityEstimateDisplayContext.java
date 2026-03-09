@@ -148,12 +148,12 @@ public class CommerceAvailabilityEstimateDisplayContext {
 	}
 
 	public boolean hasViewCommerceAvailabilityEstimatesPermission() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletResourcePermission portletResourcePermission =
 			_commerceAvailabilityEstimateModelResourcePermission.
 				getPortletResourcePermission();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		return portletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), null,

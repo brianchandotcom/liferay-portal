@@ -481,7 +481,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 					portletDataContext.addReferenceElement(
 						stagedModel, entityElement, layout,
-						PortletDataContext.REFERENCE_TYPE_STRONG, true);
+						PortletDataContext.REFERENCE_TYPE_LAZY, true);
 
 					continue;
 				}
@@ -561,7 +561,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 				portletDataContext.addReferenceElement(
 					stagedModel, entityElement, layout,
-					PortletDataContext.REFERENCE_TYPE_STRONG, true);
+					PortletDataContext.REFERENCE_TYPE_LAZY, true);
 			}
 			catch (Exception exception) {
 				if (((exception instanceof NoSuchLayoutException) &&

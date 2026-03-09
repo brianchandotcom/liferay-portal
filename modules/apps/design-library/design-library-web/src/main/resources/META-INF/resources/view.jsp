@@ -9,11 +9,9 @@
 
 <%
 ViewDesignLibraryAdminDisplayContext viewDesignLibraryAdminDisplayContext = new ViewDesignLibraryAdminDisplayContext(request);
-
-String designLibraryEntryName = "A Design Library";
 %>
 
-<div>
+<div class="design-library-fds-wrapper">
 	<frontend-data-set:headless-display
 		apiURL="<%= viewDesignLibraryAdminDisplayContext.getAPIURL() %>"
 		emptyState="<%= viewDesignLibraryAdminDisplayContext.getEmptyState() %>"
@@ -23,13 +21,4 @@ String designLibraryEntryName = "A Design Library";
 		selectedItemsKey="id"
 		selectionType="multiple"
 	/>
-</div>
-
-<div>
-	<portlet:renderURL var="designLibraryURL">
-		<portlet:param name="mvcRenderCommandName" value="/design_library/view_design_library_dashboard" />
-		<portlet:param name="designLibraryEntryId" value="1234567890" />
-	</portlet:renderURL>
-
-	<a href="<%= designLibraryURL %>"><%= designLibraryEntryName %></a>
 </div>

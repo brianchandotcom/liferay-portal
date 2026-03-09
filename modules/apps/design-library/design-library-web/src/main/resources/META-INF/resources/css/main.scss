@@ -1,0 +1,14 @@
+@import 'atlas-variables';
+
+.design-library-breadcrumb {
+	.breadcrumb-item {
+		font-size: var(--font-size-lg);
+	}
+}
+
+.design-library-fds-wrapper {
+	.design-library-fds-sticker-books {
+		background-color: $teal-l3;
+		color: $teal;
+	}
+}

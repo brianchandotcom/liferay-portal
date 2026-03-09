@@ -35,8 +35,9 @@ export default function DesignLibraryBreadcrumb({
 	title = 'placeholder',
 }: DesignLibraryBreadcrumbProps) {
 	return (
-		<div className="autofit-row autofit-row-center design-library-breadcrumb">
+		<div className="autofit-row autofit-row-center bg-white design-library-breadcrumb px-4 py-3">
 			<ClayBreadcrumb
+				className="px-0 py-1"
 				items={[
 					{
 						href: `${window.origin}/group/control_panel/manage?p_p_id=${portletRoot}`,

@@ -787,29 +787,30 @@ public class LayoutReferencesExportImportContentProcessor
 				continue;
 			}
 
-			String groupUuid = content.substring(groupUuidPos + 1, endIndex);
+			String groupReference = content.substring(
+				groupUuidPos + 1, endIndex);
 
 			Group groupFriendlyUrlGroup =
 				_groupLocalService.fetchGroupByUuidAndCompanyId(
-					groupUuid, portletDataContext.getCompanyId());
+					groupReference, portletDataContext.getCompanyId());
 
 			if (groupFriendlyUrlGroup == null) {
 				groupFriendlyUrlGroup =
 					_groupLocalService.fetchFriendlyURLGroup(
-						portletDataContext.getCompanyId(), groupUuid);
+						portletDataContext.getCompanyId(), groupReference);
 			}
 
 			if ((groupFriendlyUrlGroup == null) ||
-				groupUuid.contains(_TEMPLATE_NAME_PREFIX)) {
+				groupReference.contains(_TEMPLATE_NAME_PREFIX)) {
 
 				content = StringUtil.replaceFirst(
 					content, _DATA_HANDLER_GROUP_FRIENDLY_URL,
 					group.getFriendlyURL(), groupFriendlyUrlPos);
 				content = StringUtil.replaceFirst(
-					content, StringPool.AT + groupUuid + StringPool.AT,
+					content, StringPool.AT + groupReference + StringPool.AT,
 					StringPool.BLANK, groupFriendlyUrlPos);
 
-				if (groupUuid.contains(_TEMPLATE_NAME_PREFIX)) {
+				if (groupReference.contains(_TEMPLATE_NAME_PREFIX)) {
 					content = _replaceTemplateLinkToLayout(
 						content, portletDataContext.isPrivateLayout());
 				}
@@ -840,7 +841,7 @@ public class LayoutReferencesExportImportContentProcessor
 								portletDataContext.getExportImportProcessId()),
 							StringBundler.concat(
 								"Warning: The referenced Layout group ",
-								"reference ('", groupUuid,
+								"reference ('", groupReference,
 								"') was not found. Defaulting to the current '",
 								group.getGroupKey(), "' group"),
 							StringPool.BLANK, modelClass.getName());
@@ -853,7 +854,7 @@ public class LayoutReferencesExportImportContentProcessor
 				content, _DATA_HANDLER_GROUP_FRIENDLY_URL, StringPool.BLANK,
 				groupFriendlyUrlPos);
 			content = StringUtil.replaceFirst(
-				content, StringPool.AT + groupUuid + StringPool.AT,
+				content, StringPool.AT + groupReference + StringPool.AT,
 				groupFriendlyUrlGroup.getFriendlyURL(), groupFriendlyUrlPos);
 		}
 

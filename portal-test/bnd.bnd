@@ -18,6 +18,7 @@ Export-Package:\
 	com.liferay.portal.test.mail,\
 	com.liferay.portal.test.randomizerbumpers,\
 	com.liferay.portal.test.rule,\
+	com.liferay.portal.test.security.permission,\
 	com.liferay.portlet.asset.service.persistence.test,\
 	com.liferay.portlet.passwordpoliciesadmin.util.test,\
 	com.liferay.portlet.test,\

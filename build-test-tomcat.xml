@@ -30,12 +30,14 @@
 			<isset property="test.base.dir.name" />
 			<then>
 				<antcall inheritAll="false" target="run-tomcat">
+					<param name="functional.test.type" value="${functional.test.type}" />
 					<param name="test.base.dir.name" value="${test.base.dir.name}" />
 					<param name="test.class" value="${test.class}" />
 				</antcall>
 			</then>
 			<else>
 				<antcall inheritAll="false" target="run-tomcat">
+					<param name="functional.test.type" value="${functional.test.type}" />
 					<param name="test.class" value="${test.class}" />
 				</antcall>
 			</else>
@@ -48,6 +50,7 @@
 		<lstopwatch action="start" name="run.tomcat" />
 
 		<antcall target="run-simple-server">
+			<param name="functional.test.type" value="${functional.test.type}" />
 			<param name="startup.testing.cold" value="${startup.testing.cold}" />
 		</antcall>
 

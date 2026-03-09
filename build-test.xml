@@ -13488,6 +13488,14 @@ feature.flag.LPD-11342=true</echo>
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 analytics.cloud.domain.allowed=*</echo>
 
+		<if>
+			<equals arg1="${functional.test.type}" arg2="poshi" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+feature.flag.LPD-36105=true</echo>
+			</then>
+		</if>
+
 		<apply-portal-ext-properties />
 	</target>
 
@@ -16775,7 +16783,9 @@ sendBlacklist=[]
 
 				<antcall target="prepare-portal-properties" />
 
-				<antcall target="prepare-portal-ext-properties" />
+				<antcall target="prepare-portal-ext-properties">
+					<param name="functional.test.type" value="${functional.test.type}" />
+				</antcall>
 
 				<antcall target="prepare-portlet-ext-properties" />
 

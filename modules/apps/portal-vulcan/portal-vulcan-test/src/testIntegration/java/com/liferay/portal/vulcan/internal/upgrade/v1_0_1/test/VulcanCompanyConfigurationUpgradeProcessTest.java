@@ -3,15 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.rest.internal.upgrade.v1_0_1.test;
+package com.liferay.portal.vulcan.internal.upgrade.v1_0_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.field.util.ObjectFieldUtil;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
-import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -22,7 +16,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -30,9 +23,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -58,18 +49,7 @@ public class VulcanCompanyConfigurationUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeConfigurationCompanyIds() throws Exception {
-		List<ObjectField> objectFields = Collections.singletonList(
-			ObjectFieldUtil.createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-				RandomTestUtil.randomString(), "textField", false));
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(), objectFields,
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		String path = objectDefinition.getRESTContextPath();
+		String path = RandomTestUtil.randomString();
 
 		String factoryPid =
 			"com.liferay.portal.vulcan.internal.configuration." +
@@ -129,14 +109,11 @@ public class VulcanCompanyConfigurationUpgradeProcessTest {
 	}
 
 	@Inject(
-		filter = "(&(component.name=com.liferay.object.rest.internal.upgrade.registry.ObjectRESTImplUpgradeStepRegistrator))"
+		filter = "(&(component.name=com.liferay.portal.vulcan.internal.upgrade.registry.VulcanImplUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private SAPEntryLocalService _sapEntryLocalService;
 
 }

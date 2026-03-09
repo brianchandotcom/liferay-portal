@@ -9,11 +9,15 @@ import {countriesManagementPageTest} from '../../../fixtures/CountriesManagement
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -23,8 +27,786 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginTest(),
+	pageViewModePagesTest,
 	usersAndOrganizationsPagesTest
+);
+
+test(
+	'Add organizations',
+	{tag: '@LPD-81993'},
+	async ({editOrganizationPage, page, usersAndOrganizationsPage}) => {
+		const organizationNames = [
+			`Organization${getRandomInt()}`,
+			`Organization${getRandomInt()}`,
+		];
+
+		try {
+			for (const orgName of organizationNames) {
+				await usersAndOrganizationsPage.goToOrganizations();
+
+				await usersAndOrganizationsPage.addOrganizationButton.click();
+
+				await editOrganizationPage.addOrganization(orgName);
+
+				await expect(editOrganizationPage.backButton).toBeVisible();
+
+				await usersAndOrganizationsPage.goToOrganizations();
+
+				await usersAndOrganizationsPage.organizationsTable.search(
+					orgName
+				);
+
+				await expect(
+					usersAndOrganizationsPage.organizationsTable.cell(orgName)
+				).toBeVisible();
+				await expect(
+					usersAndOrganizationsPage.organizationsTable.cell(
+						'Organization'
+					)
+				).toBeVisible();
+			}
+		}
+		finally {
+			page.on('dialog', (dialog) => dialog.accept());
+
+			for (const orgName of organizationNames) {
+				await usersAndOrganizationsPage.goToOrganizations();
+
+				await usersAndOrganizationsPage.organizationsTable.search(
+					orgName
+				);
+
+				await expect(async () => {
+					await (
+						await usersAndOrganizationsPage.organizationsTable.rowActions(
+							orgName
+						)
+					).click();
+
+					await expect(
+						usersAndOrganizationsPage.deleteOrganizationMenuItem
+					).toBeVisible({timeout: 500});
+				}).toPass({timeout: 5000});
+
+				await usersAndOrganizationsPage.deleteOrganizationMenuItem.click();
+
+				await waitForAlert(page);
+			}
+		}
+	}
+);
+
+test(
+	'Add suborganization',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		editOrganizationPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		const parentOrganization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+
+		const suborgName = `Suborganization${getRandomInt()}`;
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			parentOrganization.name
+		);
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				parentOrganization.name
+			)
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					parentOrganization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.addOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.addOrganizationMenuItem.click();
+
+		try {
+			await editOrganizationPage.addOrganization(suborgName);
+
+			await expect(editOrganizationPage.nameInput).toHaveValue(
+				suborgName
+			);
+
+			await usersAndOrganizationsPage.goToOrganizations();
+
+			await usersAndOrganizationsPage.organizationsTable
+				.valueLink(parentOrganization.name)
+				.click();
+
+			await expect(
+				usersAndOrganizationsPage.organizationsBreadcrumbLink(
+					parentOrganization.name
+				)
+			).toBeVisible();
+
+			await expect(
+				usersAndOrganizationsPage.organizationsTable.cell(suborgName)
+			).toBeVisible();
+
+			await expect(async () => {
+				await (
+					await usersAndOrganizationsPage.organizationsTable.rowActions(
+						suborgName
+					)
+				).click();
+
+				await expect(
+					usersAndOrganizationsPage.editOrganizationMenuItem
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
+
+			await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+			await expect(editOrganizationPage.headerTitle).toHaveText(
+				`Edit ${suborgName}`
+			);
+			await expect(editOrganizationPage.nameInput).toHaveValue(
+				suborgName
+			);
+		}
+		finally {
+			page.on('dialog', (dialog) => dialog.accept());
+
+			await usersAndOrganizationsPage.goToOrganizations();
+
+			await usersAndOrganizationsPage.organizationsTable
+				.valueLink(parentOrganization.name)
+				.click();
+
+			await expect(async () => {
+				await (
+					await usersAndOrganizationsPage.organizationsTable.rowActions(
+						suborgName
+					)
+				).click();
+
+				await expect(
+					usersAndOrganizationsPage.deleteOrganizationMenuItem
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
+
+			await usersAndOrganizationsPage.deleteOrganizationMenuItem.click();
+
+			await waitForAlert(page);
+		}
+	}
+);
+
+test(
+	'Cannot delete an organization with suborganization',
+	{tag: '@LPD-81993'},
+	async ({apiHelpers, page, usersAndOrganizationsPage}) => {
+		const parentOrganization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+
+		const suborganization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Suborganization${getRandomInt()}`,
+				parentOrganization: {
+					externalReferenceCode:
+						parentOrganization.externalReferenceCode,
+				},
+			});
+
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					parentOrganization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deleteOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.deleteOrganizationMenuItem.click();
+
+		await expect(usersAndOrganizationsPage.errorMessage).toContainText(
+			'You cannot delete organizations that have suborganizations or users.'
+		);
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable
+			.valueLink(parentOrganization.name)
+			.click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					suborganization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.removeOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.removeOrganizationMenuItem.click();
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					parentOrganization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deleteOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.deleteOrganizationMenuItem.click();
+
+		await waitForAlert(page);
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			parentOrganization.name
+		);
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTableEmptyMessage
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can view listed users and suborganizations not mixed',
+	{tag: ['@LPD-81993', '@LPS-198960']},
+	async ({apiHelpers, usersAndOrganizationsPage}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+
+		const suborganizations = [];
+
+		for (let count = 1; count <= 4; count++) {
+			const suborganization =
+				await apiHelpers.headlessAdminUser.postOrganization({
+					name: `${String.fromCharCode(64 + count)} Suborganization${getRandomInt()}`,
+					parentOrganization: {
+						externalReferenceCode:
+							organization.externalReferenceCode,
+					},
+				});
+
+			suborganizations.push(suborganization);
+		}
+
+		const users = [];
+
+		for (let count = 1; count <= 2; count++) {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+				organization.id,
+				user.emailAddress
+			);
+
+			users.push(user);
+		}
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable
+			.valueLink(organization.name)
+			.click();
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTableDivider
+		).toBeVisible();
+		await expect(usersAndOrganizationsPage.usersTableDivider).toBeVisible();
+
+		for (const suborganization of suborganizations) {
+			await expect(
+				usersAndOrganizationsPage.organizationsTableDivider.locator(
+					`~ tr:has-text("${suborganization.name}")`
+				)
+			).toBeVisible();
+		}
+
+		for (const user of users) {
+			await expect(
+				usersAndOrganizationsPage.usersTableDivider.locator(
+					`~ tr:has-text("${user.givenName} ${user.familyName}")`
+				)
+			).toBeVisible();
+		}
+	}
+);
+
+test(
+	'Can search and order organizations by name and tags',
+	{tag: '@LPD-81993'},
+	async ({apiHelpers, editOrganizationPage, usersAndOrganizationsPage}) => {
+		const tag1 = `alpha${getRandomInt()}`;
+		const tag2 = `bravo${getRandomInt()}`;
+
+		const organization1 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `AOrganization${getRandomInt()}`,
+			});
+
+		const organization2 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `ZOrganization${getRandomInt()}`,
+			});
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization1.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.addTag(tag1);
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization2.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.addTag(tag2);
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization1.name
+		);
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization1.name
+			)
+		).toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization2.name
+			)
+		).toHaveCount(0);
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization2.name
+		);
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization2.name
+			)
+		).toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization1.name
+			)
+		).toHaveCount(0);
+
+		await usersAndOrganizationsPage.organizationsTable.search(tag1);
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization1.name
+			)
+		).toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization2.name
+			)
+		).toHaveCount(0);
+
+		await usersAndOrganizationsPage.organizationsTable.search(tag2);
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization2.name
+			)
+		).toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization1.name
+			)
+		).toHaveCount(0);
+
+		await usersAndOrganizationsPage.organizationsTable.search('');
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization1.name
+			)
+		).toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				organization2.name
+			)
+		).toBeVisible();
+
+		await expect(async () => {
+			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
+			await usersAndOrganizationsPage.organizationsTable
+				.orderMenuItem('Name')
+				.click({timeout: 500});
+		}).toPass();
+
+		await expect(async () => {
+			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
+			await usersAndOrganizationsPage.organizationsTable
+				.orderMenuItem('Ascending')
+				.click({timeout: 500});
+
+			await expect(
+				usersAndOrganizationsPage.organizationsTable.cell(
+					organization1.name
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.optionalColumnRow(1, 1)
+		).toContainText(organization1.name);
+
+		await expect(async () => {
+			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
+			await usersAndOrganizationsPage.organizationsTable
+				.orderMenuItem('Descending')
+				.click({timeout: 500});
+
+			await expect(
+				usersAndOrganizationsPage.organizationsTable.cell(
+					organization2.name
+				)
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.optionalColumnRow(1, 1)
+		).toContainText(organization2.name);
+
+		await expect(async () => {
+			await usersAndOrganizationsPage.organizationsTable.orderButton.click();
+			await usersAndOrganizationsPage.organizationsTable
+				.orderMenuItem('Ascending')
+				.click({timeout: 500});
+		}).toPass({timeout: 5000});
+	}
+);
+
+test(
+	'Edit organization site and delete organization site',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		editOrganizationPage,
+		page,
+		sitesAdminPage,
+		usersAndOrganizationsPage,
+	}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.organizationSiteLink.click();
+		await editOrganizationPage.createSiteToggle.click();
+		await editOrganizationPage.organizationSiteSaveButton.click();
+
+		await waitForAlert(page);
+
+		await sitesAdminPage.goto();
+		await sitesAdminPage.searchSite(organization.name);
+
+		await expect(
+			sitesAdminPage.sitesTable.valueLink(organization.name)
+		).toBeVisible();
+		await expect(sitesAdminPage.sitesTable.cell('Private')).toBeVisible();
+
+		const newOrganizationName = `Organization${getRandomInt()}`;
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.nameInput.fill(newOrganizationName);
+		await editOrganizationPage.countrySelect.selectOption('United States');
+		await editOrganizationPage.regionSelect.selectOption('California');
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(editOrganizationPage.nameInput).toHaveValue(
+			newOrganizationName
+		);
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			newOrganizationName
+		);
+
+		await expect(
+			usersAndOrganizationsPage.organizationsTable.cell(
+				newOrganizationName
+			)
+		).toBeVisible();
+
+		await sitesAdminPage.goto();
+		await sitesAdminPage.searchSite(organization.name);
+
+		await expect(sitesAdminPage.noSitesMessage).toBeVisible();
+
+		await sitesAdminPage.searchSite(newOrganizationName);
+
+		await expect(
+			sitesAdminPage.sitesTable.valueLink(newOrganizationName)
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await sitesAdminPage.sitesTable.rowActions(
+					newOrganizationName,
+					1,
+					false
+				)
+			).click();
+
+			await expect(sitesAdminPage.deleteSiteMenuItem).toBeVisible({
+				timeout: 500,
+			});
+		}).toPass({timeout: 5000});
+
+		await sitesAdminPage.deleteSiteMenuItem.click();
+		await sitesAdminPage.deleteModalButton.click();
+
+		await waitForAlert(page);
+
+		await expect(sitesAdminPage.noSitesMessage).toBeVisible();
+	}
+);
+
+test(
+	'Assign user to organization with site',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		editOrganizationPage,
+		page,
+		sitesAdminPage,
+		userPersonalSitePage,
+		usersAndOrganizationsPage,
+	}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.organizationSiteLink.click();
+		await editOrganizationPage.createSiteToggle.click();
+		await editOrganizationPage.organizationSiteSaveButton.click();
+
+		await waitForAlert(page);
+
+		await sitesAdminPage.goto();
+		await sitesAdminPage.searchSite(organization.name);
+
+		await expect(
+			sitesAdminPage.sitesTable.valueLink(organization.name)
+		).toBeVisible();
+
+		await userPersonalSitePage.goToMyDashboard();
+
+		await expect(userPersonalSitePage.mySitesLink).toBeVisible();
+
+		await expect(page.getByText(organization.name)).not.toBeVisible();
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			'test@liferay.com'
+		);
+
+		try {
+			await userPersonalSitePage.goToMyDashboard();
+
+			await expect(userPersonalSitePage.mySitesLink).toBeVisible();
+
+			await expect(page.getByText(organization.name)).toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessAdminUser.deleteOrganizationUserAccountAssociation(
+				organization.id,
+				'test@liferay.com'
+			);
+		}
+	}
+);
+
+test(
+	'Can add organization user after first using invalid email',
+	{tag: ['@LPD-81993', '@LPS-140712', '@LPS-141217']},
+	async ({apiHelpers, page, usersAndOrganizationsPage}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(usersAndOrganizationsPage.addUserMenuItem).toBeVisible(
+				{timeout: 500}
+			);
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.addUserMenuItem.click();
+
+		const userScreenName = `usersn${getRandomInt()}`;
+		const userEmailAddress = `${userScreenName}@liferay.com`;
+		const userFirstName = `userfn${getRandomInt()}`;
+		const userLastName = `userln${getRandomInt()}`;
+
+		await usersAndOrganizationsPage.screenNameInput.fill(userScreenName);
+		await usersAndOrganizationsPage.emailAddressInput.fill(
+			'postmaster@liferay.com'
+		);
+		await usersAndOrganizationsPage.firstNameInput.fill(userFirstName);
+		await usersAndOrganizationsPage.lastNameInput.fill(userLastName);
+		await usersAndOrganizationsPage.saveUserButton.click();
+
+		await expect(usersAndOrganizationsPage.errorMessage).toContainText(
+			'Please enter a valid email address.'
+		);
+
+		await usersAndOrganizationsPage.emailAddressInput.fill(
+			userEmailAddress
+		);
+		await usersAndOrganizationsPage.saveUserButton.click();
+
+		await waitForAlert(page, 'Success:The user was created successfully.');
+
+		try {
+			await usersAndOrganizationsPage.goToOrganizations();
+
+			await usersAndOrganizationsPage.organizationsTable
+				.valueLink(organization.name)
+				.click();
+
+			await expect(
+				usersAndOrganizationsPage.organizationsTable.cell(
+					`${userFirstName} ${userLastName}`
+				)
+			).toBeVisible();
+		}
+		finally {
+			const userAccount =
+				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+					userEmailAddress
+				);
+
+			if (userAccount?.id) {
+				await apiHelpers.headlessAdminUser.deleteUserAccount(
+					userAccount.id
+				);
+			}
+		}
+	}
 );
 
 test(
@@ -469,5 +1251,352 @@ test(
 
 			await waitForAlert(page);
 		}
+	}
+);
+
+test(
+	'View organization site via sites directory',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		editOrganizationPage,
+		page,
+		site,
+		usersAndOrganizationsPage,
+		widgetPagePage,
+	}) => {
+		const organization1 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+		const organization2 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+
+		const sitesDirectoryLayout =
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: `SitesDirectoryPage${getRandomInt()}`,
+			});
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${sitesDirectoryLayout.friendlyURL}`
+		);
+
+		await widgetPagePage.addPortlet('Sites Directory');
+
+		await expect(
+			page.getByText(organization1.name, {exact: true})
+		).not.toBeVisible();
+		await expect(
+			page.getByText(organization2.name, {exact: true})
+		).not.toBeVisible();
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization1.name
+		);
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization1.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.organizationSiteLink.click();
+		await editOrganizationPage.createSiteToggle.click();
+		await editOrganizationPage.organizationSiteSaveButton.click();
+
+		await waitForAlert(page);
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const organizationSite =
+			await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+				companyId,
+				`${organization1.name} LFR_ORGANIZATION`
+			);
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: organizationSite.groupId,
+			title: 'Test Page',
+		});
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${sitesDirectoryLayout.friendlyURL}`
+		);
+
+		await expect(
+			page.getByText(organization1.name, {exact: true})
+		).toBeVisible();
+		await expect(
+			page.getByText(organization2.name, {exact: true})
+		).not.toBeVisible();
+
+		await page.getByText(organization1.name, {exact: true}).click();
+
+		await widgetPagePage.addPortlet('Breadcrumb');
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${sitesDirectoryLayout.friendlyURL}`
+		);
+
+		await page.getByText(organization1.name, {exact: true}).click();
+
+		await expect(
+			page.locator('.breadcrumb').getByText(organization1.name)
+		).toBeVisible();
+		await expect(
+			page.locator('.breadcrumb').getByText('Test Page')
+		).toBeVisible();
+	}
+);
+
+test(
+	'User without permissions cannot add organization via URL',
+	{tag: ['@LPD-81993', '@LPS-75084']},
+	async ({apiHelpers, page}) => {
+		await apiHelpers.headlessAdminUser.postOrganization({
+			name: `Organization${getRandomInt()}`,
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await performUserSwitch(page, user.alternateName);
+
+		await page.goto(
+			'/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcRenderCommandName=%2Fusers_admin%2Fedit_organization&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_type=organization'
+		);
+
+		await expect(page.locator('.alert-danger').first()).toContainText(
+			'You do not have the required permissions.'
+		);
+
+		await page.goto(
+			'/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcPath=%2Fedit_organization.jsp&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_type=organization'
+		);
+
+		await expect(page.locator('.alert-danger').first()).toContainText(
+			'You do not have the required permissions.'
+		);
+
+		await page.goto(
+			'/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_screenNavigationCategoryKey=organizations&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_usersListView=flat-organizations'
+		);
+
+		await expect(page.locator('.alert-info').first()).toContainText(
+			'You do not belong to an organization and are not allowed to view other organizations.'
+		);
+	}
+);
+
+test(
+	'Can manage organization contact information and security questions',
+	{tag: '@LPD-81993'},
+	async ({
+		apiHelpers,
+		editOrganizationPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: `Organization${getRandomInt()}`,
+			});
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization.name
+		);
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.contactLink.click();
+
+		await editOrganizationPage.addAddressButton.click();
+
+		await editOrganizationPage.addAddressTypeSelect.selectOption('Billing');
+		await editOrganizationPage.addAddressStreet1Input.fill(
+			'1400 Montefino Ave'
+		);
+		await editOrganizationPage.addAddressCityInput.fill('Diamond Bar');
+		await editOrganizationPage.addAddressCountrySelect.selectOption(
+			'United States'
+		);
+		await editOrganizationPage.addAddressRegionSelect.selectOption(
+			'California'
+		);
+		await editOrganizationPage.addAddressPostalCodeInput.fill('91765');
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(page.getByText('Billing')).toBeVisible();
+		await expect(page.getByText('1400 Montefino Ave')).toBeVisible();
+		await expect(
+			page.getByText('Diamond Bar, California 91765')
+		).toBeVisible();
+		await expect(page.getByText('United States')).toBeVisible();
+
+		await editOrganizationPage.contactInformationLink.click();
+
+		await editOrganizationPage.addPhoneNumberButton.click();
+		await editOrganizationPage.addPhoneNumberInput.fill('1-877-543-3729');
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(page.getByText('1-877-543-3729')).toBeVisible();
+
+		await editOrganizationPage.addEmailAddressButton.click();
+		await editOrganizationPage.addEmailAddressInput.fill(
+			'testuser@liferay.com'
+		);
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(page.getByText('testuser@liferay.com')).toBeVisible();
+
+		await editOrganizationPage.addWebsiteButton.click();
+		await editOrganizationPage.addWebsiteUrlInput.fill(
+			'https://www.liferay.com'
+		);
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(page.getByText('https://www.liferay.com')).toBeVisible();
+
+		await editOrganizationPage.openingHoursLink.click();
+
+		await editOrganizationPage.addOpeningHoursButton.click();
+		await editOrganizationPage.mondayOpenSelect.selectOption('08:00');
+		await editOrganizationPage.mondayCloseSelect.selectOption('18:00');
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(page.getByText('Monday')).toBeVisible();
+		await expect(page.getByText('08:00')).toBeVisible();
+		await expect(page.getByText('18:00')).toBeVisible();
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization.name
+		);
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		const comment = getRandomString();
+
+		await editOrganizationPage.commentsInput.fill(comment);
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await page.reload();
+
+		await expect(editOrganizationPage.commentsInput).toHaveValue(comment);
+
+		await editOrganizationPage.securityQuestionsLink.click();
+
+		const securityQuestion = getRandomString();
+
+		await editOrganizationPage.securityQuestionsInput.click();
+		await page.keyboard.type(securityQuestion);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: editOrganizationPage.securityQuestionsLocaleItem('ja-JP'),
+			trigger: editOrganizationPage.securityQuestionsLocaleButton,
+		});
+
+		await editOrganizationPage.securityQuestionsInput.click();
+		await page.keyboard.type('Nihongo');
+
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsTable.search(
+			organization.name
+		);
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.editOrganizationMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await usersAndOrganizationsPage.editOrganizationMenuItem.click();
+
+		await editOrganizationPage.securityQuestionsLink.click();
+
+		await expect(editOrganizationPage.securityQuestionsInput).toHaveValue(
+			securityQuestion
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: editOrganizationPage.securityQuestionsLocaleItem('ja-JP'),
+			trigger: editOrganizationPage.securityQuestionsLocaleButton,
+		});
+
+		await expect(editOrganizationPage.securityQuestionsInput).toHaveValue(
+			'Nihongo'
+		);
 	}
 );

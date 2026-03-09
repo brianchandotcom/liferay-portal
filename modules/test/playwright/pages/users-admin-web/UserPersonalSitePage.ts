@@ -14,6 +14,7 @@ export class UserPersonalSitePage {
 	readonly languageSelectorOptionsMenu: Locator;
 	readonly myDashboardMenuItem: Locator;
 	readonly myProfileMenuItem: Locator;
+	readonly mySitesLink: Locator;
 	readonly page: Page;
 	readonly removeMenuItem: Locator;
 	readonly searchBar: Locator;
@@ -32,6 +33,7 @@ export class UserPersonalSitePage {
 		this.myProfileMenuItem = page.getByRole('menuitem', {
 			name: 'MY Profile',
 		});
+		this.mySitesLink = page.getByRole('link', {name: 'My Sites'});
 		this.page = page;
 		this.searchBar = page
 			.getByRole('tabpanel')

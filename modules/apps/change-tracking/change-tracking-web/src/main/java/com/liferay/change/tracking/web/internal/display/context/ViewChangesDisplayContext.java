@@ -21,7 +21,6 @@ import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
-import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTModelDisplayRendererAdapter;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
@@ -479,6 +478,7 @@ public class ViewChangesDisplayContext {
 		}
 		else {
 			Map.Entry<Long, List<Long>> entry = null;
+			boolean foundSelectedEntry = false;
 			int[] modelKeyCounterHolder = {1};
 
 			Map<Long, List<Long>> rootPKsMap = _getRootPKsMap(ctClosure);
@@ -489,10 +489,12 @@ public class ViewChangesDisplayContext {
 			while ((entry = queue.poll()) != null) {
 				long classNameId = entry.getKey();
 
-				Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
-					classNameId, key -> new HashSet<>());
+				if (!foundSelectedEntry) {
+					Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
+						classNameId, key -> new HashSet<>());
 
-				classPKs.addAll(entry.getValue());
+					classPKs.addAll(entry.getValue());
+				}
 
 				for (long classPK : entry.getValue()) {
 					ModelInfoKey modelInfoKey = new ModelInfoKey(
@@ -502,7 +504,34 @@ public class ViewChangesDisplayContext {
 						modelInfoMap.put(
 							modelInfoKey,
 							new ModelInfo(modelKeyCounterHolder[0]++));
+
+						Map<Long, List<Long>> childPKsMap =
+							ctClosure.getChildPKsMap(classNameId, classPK);
+
+						if (!childPKsMap.isEmpty()) {
+							queue.addAll(childPKsMap.entrySet());
+						}
 					}
+
+					if ((classNameId == _modelClassNameId) &&
+						(classPK == _modelClassPK)) {
+
+						foundSelectedEntry = true;
+					}
+				}
+			}
+
+			if (foundSelectedEntry) {
+				Map<Long, List<Long>> childPKsMap = ctClosure.getChildPKsMap(
+					_modelClassNameId, _modelClassPK);
+
+				for (Map.Entry<Long, List<Long>> childPKEntry :
+						childPKsMap.entrySet()) {
+
+					Set<Long> classPKs = classNameIdClassPKsMap.computeIfAbsent(
+						childPKEntry.getKey(), key -> new HashSet<>());
+
+					classPKs.addAll(childPKEntry.getValue());
 				}
 			}
 		}
@@ -1446,13 +1475,7 @@ public class ViewChangesDisplayContext {
 			return _rootPKsMap;
 		}
 
-		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
-			_rootPKsMap = CTClosureUtil.getFamilyPKsMap(
-				ctClosure, _modelClassNameId, _modelClassPK);
-		}
-		else {
-			_rootPKsMap = ctClosure.getRootPKsMap();
-		}
+		_rootPKsMap = ctClosure.getRootPKsMap();
 
 		return _rootPKsMap;
 	}

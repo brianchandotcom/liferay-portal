@@ -738,10 +738,11 @@ public class PageTemplateResourceImpl
 		}
 
 		return ServiceContextUtil.createServiceContext(
-			pageTemplate.getTaxonomyCategoryBriefs(),
 			contextCompany.getCompanyId(), pageTemplate.getDateCreated(),
 			groupId, contextHttpServletRequest, pageTemplate.getKeywords(),
-			pageTemplate.getDateModified(), contextUser.getUserId(), uuid);
+			pageTemplate.getDateModified(),
+			pageTemplate.getTaxonomyCategoryBriefs(), contextUser.getUserId(),
+			uuid);
 	}
 
 	private UnicodeProperties

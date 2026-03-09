@@ -2,6 +2,7 @@ liferay-marketplace-custom-element:
     properties:
         cloudConsoleURL: https://console.marketplace.liferay.sh
         featureFlags: LPD-24546
+        featurePreview: new-product-section
         useSiteTaxonomyVocabularyQuery: true
     urls:
         -   http://localhost:5173/@vite/client

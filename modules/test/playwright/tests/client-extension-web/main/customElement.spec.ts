@@ -679,6 +679,7 @@ testSample(
 	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
 		const clientExtensionName = getRandomString();
 		const htmlElementName = `html-${getRandomString()}`;
+		const jsResourceName = `res-${getRandomString()}.js`;
 
 		await test.step('Create a non-ES module Custom Element', async () => {
 			await editCustomElementPage.goto();
@@ -688,7 +689,7 @@ testSample(
 				htmlElementName
 			);
 			await editCustomElementPage.javaScriptURLInput.fill(
-				'https://www.example.com/test.js'
+				`https://www.example.com/${jsResourceName}`
 			);
 
 			await editCustomElementPage.publish(WaitAction.SUCCESS);
@@ -708,7 +709,7 @@ testSample(
 			await page.goto(`/web/guest${layout.friendlyURL}`);
 
 			await expect(
-				page.locator('script[src*="test.js"]:not(type)')
+				page.locator(`script[src*="${jsResourceName}"]:not(type)`)
 			).toBeAttached();
 		});
 
@@ -728,6 +729,7 @@ testSample(
 	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
 		const clientExtensionName = getRandomString();
 		const htmlElementName = `html-${getRandomString()}`;
+		const jsResourceName = `res-${getRandomString()}.js`;
 
 		await test.step('Create an ES module Custom Element', async () => {
 			await editCustomElementPage.goto();
@@ -737,7 +739,7 @@ testSample(
 				htmlElementName
 			);
 			await editCustomElementPage.javaScriptURLInput.fill(
-				'https://www.example.com/counter.js'
+				`https://www.example.com/${jsResourceName}`
 			);
 			await editCustomElementPage.useESModulesCheckbox.check();
 
@@ -758,7 +760,7 @@ testSample(
 			await page.goto(`/web/guest${layout.friendlyURL}`);
 
 			await expect(
-				page.locator('script[type="module"][src*="counter.js"]')
+				page.locator(`script[type="module"][src*="${jsResourceName}"]`)
 			).toBeAttached();
 		});
 

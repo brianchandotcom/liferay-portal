@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -343,9 +344,9 @@ public class ElasticsearchSearchEngine
 			setAutoCreateIndex(false);
 
 			if (StartupHelperUtil.isDBNew()) {
-				for (long companyId : _getIndexedCompanyIds()) {
-					removeCompany(companyId);
-				}
+				_companyLocalService.forEachCompanyId(
+					companyId -> removeCompany(companyId),
+					ArrayUtil.toLongArray(_getIndexedCompanyIds()));
 			}
 
 			_putTimestampPipeline();

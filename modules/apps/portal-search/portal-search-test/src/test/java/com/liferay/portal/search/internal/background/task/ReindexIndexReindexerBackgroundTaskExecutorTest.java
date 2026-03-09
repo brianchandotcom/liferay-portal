@@ -5,8 +5,10 @@
 
 package com.liferay.portal.search.internal.background.task;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
@@ -59,6 +61,27 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 		ReflectionTestUtil.setFieldValue(
 			_reindexIndexReindexerBackgroundTaskExecutor,
 			"_reindexStatusMessageSender", _reindexStatusMessageSender);
+		ReflectionTestUtil.setFieldValue(
+			_reindexIndexReindexerBackgroundTaskExecutor,
+			"_companyLocalService", _companyLocalService);
+
+		Mockito.doAnswer(
+			invocation -> {
+				UnsafeConsumer<Long, Exception> unsafeConsumer =
+					invocation.getArgument(0);
+				long[] companyIds = invocation.getArgument(1);
+
+				for (long currentCompanyId : companyIds) {
+					unsafeConsumer.accept(currentCompanyId);
+				}
+
+				return null;
+			}
+		).when(
+			_companyLocalService
+		).forEachCompanyId(
+			Mockito.any(), Mockito.any(long[].class)
+		);
 	}
 
 	@Test
@@ -114,19 +137,21 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 			IndexReindexer indexReindexer)
 		throws Exception {
 
-		for (long companyId : _COMPANY_IDS) {
-			Mockito.verify(
+		_companyLocalService.forEachCompanyId(
+			companyId -> Mockito.verify(
 				indexReindexer
 			).reindex(
 				companyId, _EXECUTION_MODE
-			);
-		}
+			),
+			_COMPANY_IDS);
 	}
 
 	private static final long[] _COMPANY_IDS = {11111L, 22222L};
 
 	private static final String _EXECUTION_MODE = "full";
 
+	private final CompanyLocalService _companyLocalService = Mockito.mock(
+		CompanyLocalService.class);
 	private final IndexReindexer _indexReindexer1 = Mockito.mock(
 		IndexReindexer.class);
 	private final IndexReindexer _indexReindexer2 = Mockito.mock(

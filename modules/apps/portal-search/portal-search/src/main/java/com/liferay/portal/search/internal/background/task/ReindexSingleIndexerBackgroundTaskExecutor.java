@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.index.SyncReindexManager;
 
 import java.util.Collections;
@@ -77,72 +78,75 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 
 		boolean systemIndexer = _isSystemIndexer(indexer);
 
-		for (long companyId : companyIds) {
-			if (((companyId == CompanyConstants.SYSTEM) && !systemIndexer) ||
-				((companyId != CompanyConstants.SYSTEM) && systemIndexer)) {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				if (((companyId == CompanyConstants.SYSTEM) &&
+					 !systemIndexer) ||
+					((companyId != CompanyConstants.SYSTEM) && systemIndexer)) {
 
-				continue;
-			}
-
-			reindexStatusMessageSender.sendStatusMessage(
-				ReindexBackgroundTaskConstants.SINGLE_START, companyId,
-				companyIds);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Start reindexing company ", companyId,
-						" for class name ", className, " with execution mode ",
-						executionMode));
-			}
-
-			try (SafeCloseable safeCloseable =
-					ReindexCacheThreadLocal.openReindexMode()) {
-
-				searchEngine.initialize(companyId);
-
-				Date date = null;
-
-				if (_isExecuteSyncReindex(executionMode)) {
-					date = new Date();
-
-					Thread.sleep(1000);
-				}
-				else {
-					IndexWriterHelper indexWriterHelper =
-						_indexWriterHelperSnapshot.get();
-
-					indexWriterHelper.deleteEntityDocuments(
-						companyId, className, true);
+					return;
 				}
 
-				indexer.reindex(new String[] {String.valueOf(companyId)});
-
-				if (_isExecuteSyncReindex(executionMode)) {
-					SyncReindexManager syncReindexManager =
-						_syncReindexManagerSnapshot.get();
-
-					syncReindexManager.deleteStaleDocuments(
-						companyId, date, Collections.singleton(className));
-				}
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
-			finally {
 				reindexStatusMessageSender.sendStatusMessage(
-					ReindexBackgroundTaskConstants.SINGLE_END, companyId,
+					ReindexBackgroundTaskConstants.SINGLE_START, companyId,
 					companyIds);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Finished reindexing company ", companyId,
+							"Start reindexing company ", companyId,
 							" for class name ", className,
 							" with execution mode ", executionMode));
 				}
-			}
-		}
+
+				try (SafeCloseable safeCloseable =
+						ReindexCacheThreadLocal.openReindexMode()) {
+
+					searchEngine.initialize(companyId);
+
+					Date date = null;
+
+					if (_isExecuteSyncReindex(executionMode)) {
+						date = new Date();
+
+						Thread.sleep(1000);
+					}
+					else {
+						IndexWriterHelper indexWriterHelper =
+							_indexWriterHelperSnapshot.get();
+
+						indexWriterHelper.deleteEntityDocuments(
+							companyId, className, true);
+					}
+
+					indexer.reindex(new String[] {String.valueOf(companyId)});
+
+					if (_isExecuteSyncReindex(executionMode)) {
+						SyncReindexManager syncReindexManager =
+							_syncReindexManagerSnapshot.get();
+
+						syncReindexManager.deleteStaleDocuments(
+							companyId, date, Collections.singleton(className));
+					}
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+				finally {
+					reindexStatusMessageSender.sendStatusMessage(
+						ReindexBackgroundTaskConstants.SINGLE_END, companyId,
+						companyIds);
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Finished reindexing company ", companyId,
+								" for class name ", className,
+								" with execution mode ", executionMode));
+					}
+				}
+			},
+			companyIds);
 	}
 
 	@Reference
@@ -189,5 +193,8 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		_syncReindexManagerSnapshot = new Snapshot<>(
 			ReindexSingleIndexerBackgroundTaskExecutor.class,
 			SyncReindexManager.class, null, true);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 }

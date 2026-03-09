@@ -14,7 +14,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;
@@ -50,9 +52,10 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 
 		_loadCompanyIds();
 
-		for (long companyId : _companyIds) {
-			_registerPortalInstanceRegisteredSyncCallable(companyId);
-		}
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> _registerPortalInstanceRegisteredSyncCallable(
+				companyId),
+			ArrayUtil.toLongArray(_companyIds));
 	}
 
 	protected abstract void doPortalInstanceRegistered(long companyId)
@@ -123,9 +126,9 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 
 		serializer.writeInt(companyIds.size());
 
-		for (long companyId : companyIds) {
-			serializer.writeLong(companyId);
-		}
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> serializer.writeLong(companyId),
+			ArrayUtil.toLongArray(companyIds));
 
 		try (OutputStream outputStream = new FileOutputStream(_dataFile)) {
 			serializer.writeTo(outputStream);

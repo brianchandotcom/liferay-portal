@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -138,13 +139,16 @@ public class IndexWriterHelperImplTest {
 	private void _assertReindexedCounts(
 		Map<Long, Long> originalCounts, String className) {
 
-		for (long companyId : _getCompanyIds()) {
-			Long newCount = Long.valueOf(_getCount(companyId, className));
-			Long originalCount = originalCounts.get(companyId);
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				Long newCount = Long.valueOf(_getCount(companyId, className));
+				Long originalCount = originalCounts.get(companyId);
 
-			Assert.assertEquals(
-				className + " companyId=" + companyId, originalCount, newCount);
-		}
+				Assert.assertEquals(
+					className + " companyId=" + companyId, originalCount,
+					newCount);
+			},
+			_getCompanyIds());
 	}
 
 	private long[] _getCompanyIds() {
@@ -195,28 +199,32 @@ public class IndexWriterHelperImplTest {
 		Map<Long, Long> originalCounts, String className,
 		boolean systemIndexer) {
 
-		for (long companyId : _getCompanyIds()) {
-			long count = _getCount(companyId, className);
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				long count = _getCount(companyId, className);
 
-			if (systemIndexer) {
-				if (companyId == CompanyConstants.SYSTEM) {
-					_assertCountGreaterThanZero(className, companyId, count);
+				if (systemIndexer) {
+					if (companyId == CompanyConstants.SYSTEM) {
+						_assertCountGreaterThanZero(
+							className, companyId, count);
+					}
+					else {
+						_assertCountEqualsZero(className, companyId, count);
+					}
 				}
 				else {
-					_assertCountEqualsZero(className, companyId, count);
+					if (companyId == CompanyConstants.SYSTEM) {
+						_assertCountEqualsZero(className, companyId, count);
+					}
+					else {
+						_assertCountGreaterThanZero(
+							className, companyId, count);
+					}
 				}
-			}
-			else {
-				if (companyId == CompanyConstants.SYSTEM) {
-					_assertCountEqualsZero(className, companyId, count);
-				}
-				else {
-					_assertCountGreaterThanZero(className, companyId, count);
-				}
-			}
 
-			originalCounts.put(companyId, count);
-		}
+				originalCounts.put(companyId, count);
+			},
+			_getCompanyIds());
 	}
 
 	private void _reindex(String className) throws Exception {

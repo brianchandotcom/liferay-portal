@@ -249,10 +249,10 @@ public class ServiceContextUtil {
 						scope.getExternalReferenceCode());
 				}
 
+				String parentTaxonomyCategoryExternalReferenceCode = null;
+
 				ParentTaxonomyVocabulary parentTaxonomyVocabulary =
 					taxonomyCategoryBrief.getParentTaxonomyVocabulary();
-
-				String parentTaxonomyCategoryExternalReferenceCode = null;
 
 				ParentTaxonomyCategory parentTaxonomyCategory =
 					taxonomyCategoryBrief.getParentTaxonomyCategory();

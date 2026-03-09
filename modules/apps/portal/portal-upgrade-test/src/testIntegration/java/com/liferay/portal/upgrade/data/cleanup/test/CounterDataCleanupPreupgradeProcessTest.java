@@ -135,6 +135,36 @@ public class CounterDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeCustomCounterWithoutDotsInName() throws Exception {
+		String counterName = _TABLE_NAME;
+
+		_test(
+			(UnsafeRunnable<Exception>)() -> {
+				runSQL(
+					"delete from Counter where name = '" + counterName + "'");
+				runSQL("drop table " + _TABLE_NAME);
+			},
+			(UnsafeRunnable<Exception>)() -> {
+				runSQL(
+					StringBundler.concat(
+						"create table ", _TABLE_NAME,
+						" (mvccVersion LONG default 0 not null, testId LONG ",
+						"not null primary key)"));
+				runSQL(
+					"insert into Counter (name, currentId) values ('" +
+						counterName + "', 100 )");
+
+				runSQL(
+					StringBundler.concat(
+						"insert into ", _TABLE_NAME, " (mvccVersion, testId) ",
+						"values (0, ", 1000, ")"));
+			},
+			(UnsafeConsumer<List<String>, Exception>)
+				messages -> Assert.assertTrue(
+					messages.toString(), messages.isEmpty()));
+	}
+
+	@Test
 	public void testUpgradeCustomTableDoesNotAffectKernelCounter()
 		throws Exception {
 

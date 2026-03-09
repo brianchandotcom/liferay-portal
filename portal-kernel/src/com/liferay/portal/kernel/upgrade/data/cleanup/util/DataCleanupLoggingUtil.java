@@ -5,9 +5,9 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -23,7 +23,7 @@ public class DataCleanupLoggingUtil {
 
 		log.info(
 			StringBundler.concat(
-				"Table ", tableName, ", ", String.valueOf(count), " row",
+				"Table ", tableName, ", ", count, " row",
 				(count > 1) ? "s " : " ", readOnly ? "should be " : "",
 				"deleted because ", cause));
 	}
@@ -73,7 +73,7 @@ public class DataCleanupLoggingUtil {
 
 		log.info(
 			StringBundler.concat(
-				"Table ", tableName, ", ", String.valueOf(count), " row",
+				"Table ", tableName, ", ", count, " row",
 				(count > 1) ? "s " : " ", "updated column ", columnName,
 				(value != null) ? (" to value " + String.valueOf(value)) :
 					StringPool.BLANK,

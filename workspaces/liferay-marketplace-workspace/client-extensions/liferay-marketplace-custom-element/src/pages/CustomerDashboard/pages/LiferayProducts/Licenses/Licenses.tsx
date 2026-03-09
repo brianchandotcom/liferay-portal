@@ -158,7 +158,7 @@ const LiferayProductLicenses = () => {
 											title={
 												!renewalAvailable
 													? i18n.translate(
-															'you-can-renew-your-activation-key-starting-3-months-before-it-expires'
+															'renewal-will-be-available-3-months-before-your-activation-key-expires'
 														)
 													: undefined
 											}

@@ -12,6 +12,12 @@ runGradleTest {
 	dependsOn eclipseClasspath
 
 	doLast {
-		assert configurations.targetPlatformBoms.dependencies[0].name.equals("release.dxp.bom.third.party")
+		String[] dependencyNames = configurations.targetPlatformBoms.dependencies.collect {
+			it.name
+		}
+
+		assert dependencyNames.contains("release.dxp.bom")
+		assert dependencyNames.contains("release.dxp.bom.compile.only")
+		assert dependencyNames.contains("release.dxp.bom.third.party")
 	}
 }

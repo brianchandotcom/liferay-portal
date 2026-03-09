@@ -62,6 +62,7 @@ import {config as contentDashboardWebConfig} from './tests/content-dashboard-web
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/main/config';
 import {config as dataCleanupConfig} from './tests/data-cleanup/main/config';
 import {config as depotWebConfig} from './tests/depot-web/main/config';
+import {config as designLibraryWebConfig} from './tests/design-library-web/main/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/main/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/main/config';
 import {config as dynamicDataMappingFormWebConfig} from './tests/dynamic-data-mapping-form-web/main/config';
@@ -261,6 +262,7 @@ export default defineConfig({
 		cookiesBannerWebConfig,
 		customerConfig,
 		depotWebConfig,
+		designLibraryWebConfig,
 		dispatchWebConfig,
 		documentLibraryWebConfig,
 		dynamicDataMappingFormWebConfig,

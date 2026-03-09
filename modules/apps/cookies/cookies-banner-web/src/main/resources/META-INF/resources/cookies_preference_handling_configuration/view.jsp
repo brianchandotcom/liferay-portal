@@ -174,11 +174,23 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 				return;
 			}
 
+			var dissentRenewalPeriod = document.getElementById(
+				'<portlet:namespace />dissentRenewalPeriod'
+			);
+
+			if (!dissentRenewalPeriod.value || isNaN(dissentRenewalPeriod.value)) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+				return;
+			}
+
 			var enabled = document.getElementById('<portlet:namespace />enabled');
 
 			if (
-				consentRenewalPeriod.value !==
-					'<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>' &&
+				(consentRenewalPeriod.value !==
+					'<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>' ||
+					dissentRenewalPeriod.value !==
+						'<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriod() %>') &&
 				enabled.checked &&
 				<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>
 			) {

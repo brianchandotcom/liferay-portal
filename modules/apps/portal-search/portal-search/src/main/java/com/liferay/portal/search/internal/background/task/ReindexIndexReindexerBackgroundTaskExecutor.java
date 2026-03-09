@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
@@ -85,8 +86,8 @@ public class ReindexIndexReindexerBackgroundTaskExecutor
 
 		List<Future<?>> futures = new ArrayList<>();
 
-		for (long companyId : companyIds) {
-			futures.add(
+		_companyLocalService.forEachCompanyId(
+			companyId -> futures.add(
 				executorService.submit(
 					() -> {
 						try (SafeCloseable safeCloseable =
@@ -125,8 +126,8 @@ public class ReindexIndexReindexerBackgroundTaskExecutor
 						}
 
 						return null;
-					}));
-		}
+					})),
+			companyIds);
 
 		for (Future<?> future : futures) {
 			future.get();
@@ -135,6 +136,9 @@ public class ReindexIndexReindexerBackgroundTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexIndexReindexerBackgroundTaskExecutor.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private IndexReindexerRegistry _indexReindexerRegistry;

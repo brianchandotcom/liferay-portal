@@ -6,6 +6,7 @@
 package com.liferay.portal.search.test.util.background.task;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -42,6 +44,24 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 	@Before
 	public void setUp() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
+
+		Mockito.doAnswer(
+			invocation -> {
+				UnsafeConsumer<Long, Exception> unsafeConsumer =
+					invocation.getArgument(0);
+				long[] companyIds = invocation.getArgument(1);
+
+				for (long currentCompanyId : companyIds) {
+					unsafeConsumer.accept(currentCompanyId);
+				}
+
+				return null;
+			}
+		).when(
+			_companyLocalService
+		).forEachCompanyId(
+			Mockito.any(), Mockito.any(long[].class)
+		);
 
 		setUpBackgroundTask(companyId);
 
@@ -104,14 +124,23 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 		_serviceRegistration = bundleContext.registerService(
 			IndexWriterHelper.class, _indexWriterHelper, null);
 
-		return new ReindexSingleIndexerBackgroundTaskExecutor() {
-			{
-				indexerRegistry = _indexerRegistry;
-				reindexStatusMessageSender = _reindexStatusMessageSender;
-				searchEngineHelper = _searchEngineHelper;
-				systemIndexers = _systemIndexers;
-			}
-		};
+		ReindexSingleIndexerBackgroundTaskExecutor
+			reindexSingleIndexerBackgroundTaskExecutor =
+				new ReindexSingleIndexerBackgroundTaskExecutor() {
+					{
+						indexerRegistry = _indexerRegistry;
+						reindexStatusMessageSender =
+							_reindexStatusMessageSender;
+						searchEngineHelper = _searchEngineHelper;
+						systemIndexers = _systemIndexers;
+					}
+				};
+
+		ReflectionTestUtil.setFieldValue(
+			reindexSingleIndexerBackgroundTaskExecutor, "_companyLocalService",
+			_companyLocalService);
+
+		return reindexSingleIndexerBackgroundTaskExecutor;
 	}
 
 	protected abstract SearchEngineFixture getSearchEngineFixture();
@@ -141,6 +170,8 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 	private final BackgroundTask _backgroundTask = Mockito.mock(
 		BackgroundTask.class);
 	private long _companyId;
+	private final CompanyLocalService _companyLocalService = Mockito.mock(
+		CompanyLocalService.class);
 	private final Indexer<Object> _indexer = Mockito.mock(Indexer.class);
 	private final IndexerRegistry _indexerRegistry = Mockito.mock(
 		IndexerRegistry.class);

@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextM
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -129,11 +128,12 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 		SearchContext searchContext = new SearchContext();
 
-		for (Company company : _companyLocalService.getCompanies()) {
-			searchContext.setCompanyId(company.getCompanyId());
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				searchContext.setCompanyId(companyId);
 
-			indexWriter.commit(searchContext);
-		}
+				indexWriter.commit(searchContext);
+			});
 	}
 
 	@Override

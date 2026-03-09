@@ -5491,6 +5491,14 @@
 	},
 	{
 		"classNames": [
+			"MailMessage"
+		],
+		"from": "addFileAttachment(File paramName, String paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-61575"
+	},
+	{
+		"classNames": [
 			"JournalArticleLocalService",
 			"JournalArticleLocalServiceUtil",
 			"JournalArticleService",

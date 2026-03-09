@@ -5,9 +5,10 @@
 
 package com.liferay.portal.vulcan.internal.upgrade.registry;
 
-import com.liferay.portal.vulcan.internal.upgrade.v1_0_1.VulcanCompanyConfigurationUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.vulcan.internal.upgrade.v1_0_1.VulcanCompanyConfigurationUpgradeProcess;
+
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

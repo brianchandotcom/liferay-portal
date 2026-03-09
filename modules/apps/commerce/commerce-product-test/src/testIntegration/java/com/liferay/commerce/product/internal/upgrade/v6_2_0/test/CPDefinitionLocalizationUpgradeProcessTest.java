@@ -8,6 +8,7 @@ package com.liferay.commerce.product.internal.upgrade.v6_2_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
@@ -26,6 +27,9 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -57,12 +61,24 @@ public class CPDefinitionLocalizationUpgradeProcessTest {
 			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
 			false);
 
+		Map<Locale, String> nameMap = cpDefinition.getNameMap();
+
+		nameMap.put(
+			LocaleUtil.fromLanguageId("es_ES"), RandomTestUtil.randomString());
+
+		cpDefinition.setNameMap(nameMap);
+
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
+
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update CPDefinitionLocalization set cProductId = null")) {
+					"update CPDefinitionLocalization set cProductId = null " +
+						"where cpDefinitionId = ?")) {
 
+			preparedStatement.setLong(1, cpDefinition.getCPDefinitionId());
 			preparedStatement.executeUpdate();
 		}
 
@@ -70,7 +86,10 @@ public class CPDefinitionLocalizationUpgradeProcessTest {
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select cProductId from CPDefinitionLocalization")) {
+				"select cProductId from CPDefinitionLocalization where " +
+					"cpDefinitionId = ?")) {
+
+			preparedStatement.setLong(1, cpDefinition.getCPDefinitionId());
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -97,6 +116,9 @@ public class CPDefinitionLocalizationUpgradeProcessTest {
 
 	@Inject
 	private static CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Inject
+	private static CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.product.internal.upgrade.registry.CommerceProductServiceUpgradeStepRegistrator))"

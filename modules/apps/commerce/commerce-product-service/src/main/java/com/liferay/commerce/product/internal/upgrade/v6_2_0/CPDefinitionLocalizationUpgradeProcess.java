@@ -20,7 +20,7 @@ public class CPDefinitionLocalizationUpgradeProcess extends UpgradeProcess {
 		runSQL(
 			StringBundler.concat(
 				"update CPDefinitionLocalization set CProductId = (select ",
-				"CProductId from CPDefinition where ",
+				"MAX(CProductId) from CPDefinition where ",
 				"CPDefinition.CPDefinitionId = ",
 				"CPDefinitionLocalization.CPDefinitionId)"));
 	}

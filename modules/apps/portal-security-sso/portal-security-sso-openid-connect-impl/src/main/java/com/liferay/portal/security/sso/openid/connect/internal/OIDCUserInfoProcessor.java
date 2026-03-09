@@ -798,7 +798,7 @@ public class OIDCUserInfoProcessor {
 
 		if (Validator.isNull(screenName) && matcherField.equals("screenName")) {
 			throw new OpenIdConnectServiceException.UserMappingException(
-				"Screen Name is null");
+				"Screen name is null");
 		}
 
 		if (Validator.isNull(firstName)) {

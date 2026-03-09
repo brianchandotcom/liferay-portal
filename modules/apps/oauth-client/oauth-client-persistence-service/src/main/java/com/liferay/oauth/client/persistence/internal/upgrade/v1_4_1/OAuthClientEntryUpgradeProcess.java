@@ -67,9 +67,11 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 		};
 	}
 
-	private String _getFilter(
+	private String _getMatcherField(
 			String authServerWellKnownURI, String clientId, long companyId)
 		throws Exception {
+
+		String filterString = null;
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select issuer from OAuthClientASLocalMetadata where " +
@@ -81,24 +83,22 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				return StringBundler.concat(
+				filterString = StringBundler.concat(
 					"(&(companyId=", companyId, ")(issuerURL=",
 					resultSet.getString("issuer"), ")(openIdConnectClientId=",
 					clientId, "))");
 			}
 		}
 
-		return StringBundler.concat(
-			"(&(companyId=", companyId, ")(discoveryEndpoint=",
-			authServerWellKnownURI, ")(openIdConnectClientId=", clientId, "))");
-	}
-
-	private String _getMatcherField(
-			String authServerWellKnownURI, String clientId, long companyId)
-		throws Exception {
+		if (filterString == null) {
+			filterString = StringBundler.concat(
+				"(&(companyId=", companyId, ")(discoveryEndpoint=",
+				authServerWellKnownURI, ")(openIdConnectClientId=", clientId,
+				"))");
+		}
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			_getFilter(authServerWellKnownURI, clientId, companyId));
+			filterString);
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			return "email";

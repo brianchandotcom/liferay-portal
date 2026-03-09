@@ -93,74 +93,74 @@ export interface IBulkActionTaskStarterDTO<T extends keyof IBulkActionType> {
 }
 
 export interface IBulkActionType {
-	AssignStructureDefaultWorkflowBulkAction: {
+	AssignStructureDefaultWorkflowBulkSelectionAction: {
 		workflow?: string;
 	};
-	AssignToBulkAction: {
+	AssignToObjectBulkSelectionAction: {
 		className: string;
 		externalReferenceCode: string;
 		name: string;
 	};
-	CopyBulkAction: {
+	CopyObjectBulkSelectionAction: {
 		objectEntryFolderId: number;
 	};
-	DefaultPermissionBulkAction: {
+	DefaultPermissionObjectBulkSelectionAction: {
 		defaultPermissions: string;
 		depotGroupId?: number;
 		roleKey?: string;
 		treePath?: string;
 	};
-	DeleteAssetVersionBulkAction: {
+	DeleteObjectAssetVersionBulkSelectionAction: {
 		versions?: number[];
 	};
-	DeleteBulkAction: {
+	DeleteObjectBulkSelectionAction: {
 		className?: string;
 	};
 	DownloadBulkAction: {};
-	DueDateBulkAction: {
+	DueDateObjectBulkSelectionAction: {
 		dueDate?: string;
 	};
-	ExpireBulkAction: {};
-	KeywordBulkAction: {
-		append?: boolean;
-		keywordsToAdd?: string[];
-		keywordsToRemove?: string[];
-	};
-	MoveBulkAction: {
-		objectEntryFolderId: number;
-	};
-	PermissionBulkAction: {
-		configuration: string;
-		roleKey?: string;
-	};
-	ResetPermissionBulkAction: {};
-	StatusBulkAction: {
-		status?: string;
-	};
-	TaxonomyCategoryBulkAction: {
+	EditObjectCategoriesBulkSelectionAction: {
 		append?: boolean;
 		taxonomyCategoryIdsToAdd?: number[];
 		taxonomyCategoryIdsToRemove?: number[];
 	};
+	EditObjectTagsBulkSelectionAction: {
+		append?: boolean;
+		keywordsToAdd?: string[];
+		keywordsToRemove?: string[];
+	};
+	ExpireObjectBulkSelectionAction: {};
+	MoveObjectBulkSelectionAction: {
+		objectEntryFolderId: number;
+	};
+	PermissionObjectBulkSelectionAction: {
+		configuration: string;
+		roleKey?: string;
+	};
+	ResetPermissionObjectBulkSelectionAction: {};
+	StatusObjectBulkSelectionAction: {
+		status?: string;
+	};
 }
 
 export interface IBulkActionTaskType {
-	AssignStructureDefaultWorkflowBulkAction: string;
-	AssignToBulkAction: string;
-	CopyBulkAction: string;
-	DefaultPermissionBulkAction: string;
-	DeleteAssetVersionBulkAction: string;
-	DeleteBulkAction: string;
+	AssignStructureDefaultWorkflowBulkSelectionAction: string;
+	AssignToObjectBulkSelectionAction: string;
+	CopyObjectBulkSelectionAction: string;
+	DefaultPermissionObjectBulkSelectionAction: string;
+	DeleteObjectAssetVersionBulkSelectionAction: string;
+	DeleteObjectBulkSelectionAction: string;
 	DeleteTaskBulkAction: string;
 	DownloadBulkAction: string;
-	DueDateBulkAction: string;
-	ExpireBulkAction: string;
-	KeywordBulkAction: string;
-	MoveBulkAction: string;
-	PermissionBulkAction: string;
-	ResetPermissionBulkAction: string;
-	StatusBulkAction: string;
-	TaxonomyCategoryBulkAction: string;
+	DueDateObjectBulkSelectionAction: string;
+	EditObjectCategoriesBulkSelectionAction: string;
+	EditObjectTagsBulkSelectionAction: string;
+	ExpireObjectBulkSelectionAction: string;
+	MoveObjectBulkSelectionAction: string;
+	PermissionObjectBulkSelectionAction: string;
+	ResetPermissionObjectBulkSelectionAction: string;
+	StatusObjectBulkSelectionAction: string;
 }
 
 export type TBulkActionTaskDTO = {

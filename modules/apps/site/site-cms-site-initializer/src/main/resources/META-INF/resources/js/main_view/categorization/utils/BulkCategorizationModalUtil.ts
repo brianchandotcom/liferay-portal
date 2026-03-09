@@ -15,10 +15,10 @@ import {EntryCategorizationDTO} from '../../info_panel/services/ObjectEntryServi
 
 export function getModalDescription(
 	selectedData: IBulkActionFDSData,
-	type: string = 'TaxonomyCategoryBulkAction'
+	type: string = 'EditObjectCategoriesBulkSelectionAction'
 ) {
 	if (selectedData.selectAll) {
-		return type === 'TaxonomyCategoryBulkAction'
+		return type === 'EditObjectCategoriesBulkSelectionAction'
 			? Liferay.Language.get(
 					'you-are-editing-the-common-categories-for-all-the-items.-select-edit-or-replace-current-categories'
 				)
@@ -30,7 +30,7 @@ export function getModalDescription(
 	const size = selectedData?.items?.length || 0;
 
 	if (size === 1) {
-		return type === 'TaxonomyCategoryBulkAction'
+		return type === 'EditObjectCategoriesBulkSelectionAction'
 			? Liferay.Language.get(
 					'you-are-editing-the-categories-for-the-selected-item'
 				)
@@ -40,7 +40,7 @@ export function getModalDescription(
 	}
 
 	return sub(
-		type === 'TaxonomyCategoryBulkAction'
+		type === 'EditObjectCategoriesBulkSelectionAction'
 			? Liferay.Language.get(
 					'you-are-editing-the-common-categories-for-x-items.-select-edit-or-replace-current-categories'
 				)

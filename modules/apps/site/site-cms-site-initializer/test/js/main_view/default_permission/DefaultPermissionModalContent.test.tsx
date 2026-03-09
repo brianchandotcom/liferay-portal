@@ -464,7 +464,7 @@ describe('DefaultPermissionModalContent', () => {
 				selectedData: {
 					selectAll: true,
 				},
-				type: 'DefaultPermissionBulkAction',
+				type: 'DefaultPermissionObjectBulkSelectionAction',
 			});
 		});
 	});

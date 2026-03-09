@@ -33,7 +33,7 @@ import deleteAssetEntriesBulkAction, {
 	executeBulkDeleteAction,
 } from './actions/deleteAssetEntriesBulkAction';
 import deleteItemAction from './actions/deleteItemAction';
-import executeResetPermissionBulkAction from './actions/executeResetPermissionBulkAction';
+import executeResetPermissionObjectBulkSelectionAction from './actions/executeResetPermissionObjectBulkSelectionAction';
 import expireEntriesBulkAction from './actions/expireEntriesBulkAction';
 import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
@@ -586,7 +586,7 @@ export default function AssetsFDSPropsTransformer({
 			else if (action?.data?.id === 'reset-to-default-permissions') {
 				openResetAssetPermissionModal({
 					loadData: () => {
-						executeResetPermissionBulkAction({
+						executeResetPermissionObjectBulkSelectionAction({
 							apiURL: otherProps.apiURL,
 							selectedData,
 						});

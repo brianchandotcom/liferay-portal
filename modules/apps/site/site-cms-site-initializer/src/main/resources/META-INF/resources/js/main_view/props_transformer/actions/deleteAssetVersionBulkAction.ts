@@ -128,7 +128,7 @@ export default function deleteAssetVersionBulkAction({
 					? Liferay.Language.get('ok')
 					: Liferay.Language.get('delete'),
 				onClick: async ({processClose}) => {
-					const type = 'DeleteAssetVersionBulkAction';
+					const type = 'DeleteObjectAssetVersionBulkSelectionAction';
 
 					if (isNotDeletableVersion) {
 						processClose();

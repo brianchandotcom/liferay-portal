@@ -156,7 +156,7 @@ public class TemplatesAspect {
 				optionalThreadContext.setTransactionOuter();
 
 				optionalThreadContext.addTransactionAttribute(
-					"Script", dDMTemplateShim.getScript());
+					"Script", (String)parameters[8]);
 			}
 			else if (_INSTRUMENTATION_LEVEL_DEBUG.equals(
 						TemplatesPluginProperties.instrumentationLevel())) {

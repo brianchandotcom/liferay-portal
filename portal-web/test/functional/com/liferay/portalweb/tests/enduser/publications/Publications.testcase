@@ -1858,8 +1858,8 @@ definition {
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Parents");
 
 		PublicationsChangeDetails.viewChangeDetailsInParents(
-			changeParentsCategory = "Dynamic Data Mapping Template",
-			changeParentsTitle = "Basic Web Content");
+			changeParentsCategory = "Site",
+			changeParentsTitle = "Guest");
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Children");
 

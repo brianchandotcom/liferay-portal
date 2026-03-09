@@ -14,6 +14,7 @@ export class WebContentDisplayPage {
 
 	readonly app: Locator;
 	readonly configurationFrame: FrameLocator;
+	readonly configurationFrameChangeButton: Locator;
 	readonly configurationFrameSelectButton: Locator;
 	readonly configurationOption: Locator;
 	readonly scopeTab: Locator;
@@ -41,6 +42,10 @@ export class WebContentDisplayPage {
 
 		this.app = page.getByTestId('app-loaded');
 
+		this.configurationFrameChangeButton = this.configurationFrame.getByRole(
+			'button',
+			{name: 'Change'}
+		);
 		this.configurationFrameSelectButton = this.configurationFrame.getByRole(
 			'button',
 			{
@@ -171,6 +176,10 @@ export class WebContentDisplayPage {
 			await this.selectWebContentInConfigurationFrame
 				.getByText(webContentName)
 				.click();
+
+			// Wait for the Item Selector's nested iframe to resolve the selection
+
+			await this.configurationFrameChangeButton.waitFor();
 		}
 		else {
 			await this.webContentDisplayOptionsContent.click();

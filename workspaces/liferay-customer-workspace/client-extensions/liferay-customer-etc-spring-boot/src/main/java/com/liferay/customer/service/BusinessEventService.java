@@ -28,10 +28,21 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author Felipe Veloso
  */
 @Component
-public class OverdueBusinessEventService extends BaseService {
+public class BusinessEventService extends BaseService {
 
-	@Scheduled(cron = "${liferay.customer.overdue.business.event.cron}")
+	@Scheduled(cron = "${liferay.customer.business.event.cron}")
 	public void scheduled() {
+		_updateOverdueBusinessEvents();
+
+		_businessEventNotificationService.sendNotifications();
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-customer-etc-spring-boot-oahs");
+	}
+
+	private void _updateOverdueBusinessEvents() {
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -96,13 +107,11 @@ public class OverdueBusinessEventService extends BaseService {
 		}
 	}
 
-	private String _getAuthorization() {
-		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-customer-etc-spring-boot-oahs");
-	}
-
 	private static final Log _log = LogFactory.getLog(
-		OverdueBusinessEventService.class);
+		BusinessEventService.class);
+
+	@Autowired
+	private BusinessEventNotificationService _businessEventNotificationService;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

@@ -61,7 +61,7 @@ const getStarterDTO = (
 		items: [{id: 1}, {id: 2}] as unknown as ISearchAssetObjectEntry[],
 		selectAll: false,
 	},
-	type: 'DeleteBulkAction',
+	type: 'DeleteObjectBulkSelectionAction',
 	...overrides,
 });
 
@@ -169,9 +169,10 @@ describe('BulkActionTaskStarter', () => {
 			starter.onCreateSuccess(mockResponse as any);
 
 			expect(getBulkActionTaskMessage).toHaveBeenCalledWith(
-				'DeleteBulkAction',
+				'DeleteObjectBulkSelectionAction',
 				'info',
-				expect.any(Object)
+				expect.any(Object),
+				undefined
 			);
 		});
 

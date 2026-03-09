@@ -95,10 +95,14 @@ describe('Bulk Actions Monitor Utils', () => {
 	describe('composeCreateTaskDTO', () => {
 		it('includes keyValues in the final DTO', () => {
 			const keyValues = {destinationFolderId: 12345};
-			const result = composeCreateTaskDTO('MoveBulkAction', keyValues, {
-				items: [],
-				selectAll: false,
-			});
+			const result = composeCreateTaskDTO(
+				'MoveObjectBulkSelectionAction',
+				keyValues,
+				{
+					items: [],
+					selectAll: false,
+				}
+			);
 
 			expect(result).toEqual({
 				bulkActionItems: [],
@@ -106,7 +110,7 @@ describe('Bulk Actions Monitor Utils', () => {
 				selectionScope: {
 					selectAll: false,
 				},
-				type: 'MoveBulkAction',
+				type: 'MoveObjectBulkSelectionAction',
 			});
 		});
 
@@ -123,7 +127,7 @@ describe('Bulk Actions Monitor Utils', () => {
 			] as unknown as ISearchAssetObjectEntry[];
 
 			const result = composeCreateTaskDTO(
-				'DeleteBulkAction',
+				'DeleteObjectBulkSelectionAction',
 				{},
 
 				{items, selectAll: false}
@@ -152,7 +156,7 @@ describe('Bulk Actions Monitor Utils', () => {
 			] as unknown as ISearchAssetObjectEntry[];
 
 			const result = composeCreateTaskDTO(
-				'DeleteBulkAction',
+				'DeleteObjectBulkSelectionAction',
 				{},
 
 				{items, selectAll: false}
@@ -182,7 +186,7 @@ describe('Bulk Actions Monitor Utils', () => {
 			] as unknown as ISearchAssetObjectEntry[];
 
 			const result = composeCreateTaskDTO(
-				'DeleteBulkAction',
+				'DeleteObjectBulkSelectionAction',
 				{},
 
 				{items, selectAll: false}
@@ -200,7 +204,7 @@ describe('Bulk Actions Monitor Utils', () => {
 
 		it('sets selectAll to true when specified', () => {
 			const result = composeCreateTaskDTO(
-				'DeleteBulkAction',
+				'DeleteObjectBulkSelectionAction',
 				{},
 				{items: [], selectAll: true}
 			);
@@ -210,7 +214,7 @@ describe('Bulk Actions Monitor Utils', () => {
 				selectionScope: {
 					selectAll: true,
 				},
-				type: 'DeleteBulkAction',
+				type: 'DeleteObjectBulkSelectionAction',
 			});
 		});
 	});

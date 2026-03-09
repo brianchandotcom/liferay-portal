@@ -62,8 +62,8 @@ export default function BulkEditStateModalContent({
 			},
 			overrideDefaultErrorToast: true,
 			selectedData,
-			type: 'StatusBulkAction',
-		} as IBulkActionTaskStarterDTO<'StatusBulkAction'>);
+			type: 'StatusObjectBulkSelectionAction',
+		} as IBulkActionTaskStarterDTO<'StatusObjectBulkSelectionAction'>);
 	}, [
 		apiURL,
 		closeModal,

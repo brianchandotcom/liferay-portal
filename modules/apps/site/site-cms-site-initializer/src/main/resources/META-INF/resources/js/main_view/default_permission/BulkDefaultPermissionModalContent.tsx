@@ -165,7 +165,7 @@ export default function BulkDefaultPermissionModalContent({
 								};
 							}),
 						},
-			type: 'DefaultPermissionBulkAction',
+			type: 'DefaultPermissionObjectBulkSelectionAction',
 		});
 	}, [
 		apiURL,

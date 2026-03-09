@@ -95,8 +95,8 @@ export default function EditAssetTagsModalContent({
 			},
 			overrideDefaultErrorToast: true,
 			selectedData,
-			type: 'KeywordBulkAction',
-		} as IBulkActionTaskStarterDTO<'KeywordBulkAction'>);
+			type: 'EditObjectTagsBulkSelectionAction',
+		} as IBulkActionTaskStarterDTO<'EditObjectTagsBulkSelectionAction'>);
 	}, [
 		apiURL,
 		categorizationDTO,

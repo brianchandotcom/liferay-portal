@@ -6,9 +6,9 @@
 import {Route, Routes} from 'react-router-dom';
 
 import withProviders from '../../hoc/withProviders';
+import App from '../PublisherDashboard/pages/Apps/App';
 import CustomerDashboardOutlet from './CustomerDashboardOutlet';
 import Apps from './pages/Apps';
-import App from './pages/Apps/App/App';
 import AppOutlet from './pages/Apps/App/AppOutlet';
 import Provisioning from './pages/Apps/App/CloudProvisioning';
 import CloudProvisioningOutlet from './pages/Apps/App/CloudProvisioning/pages/CloudProvisioningOutlet';
@@ -20,6 +20,8 @@ import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
 import Support from './pages/Apps/App/Support/Support';
 import Connections from './pages/Connections';
+import LiferayProductsBundles from './pages/LiferayProducts/Bundles/Bundles';
+import LiferayProductsLicenses from './pages/LiferayProducts/Licenses/Licenses';
 import LiferayProduct from './pages/LiferayProducts/LiferayProduct';
 import LiferayProductsOutlet from './pages/LiferayProducts/LiferayProductsOutlet';
 import LiferayProductsListView from './pages/LiferayProducts/index';
@@ -57,6 +59,16 @@ const CustomerDashboardRouter = () => {
 					path="products/:orderId"
 				>
 					<Route element={<LiferayProduct />} index />
+
+					<Route
+						element={<LiferayProductsLicenses />}
+						path="activation-keys"
+					/>
+
+					<Route
+						element={<LiferayProductsBundles />}
+						path="bundles"
+					/>
 				</Route>
 
 				<Route element={<Solutions />} path="solutions" />

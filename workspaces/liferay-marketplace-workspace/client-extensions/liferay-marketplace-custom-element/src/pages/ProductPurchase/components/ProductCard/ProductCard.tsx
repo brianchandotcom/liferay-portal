@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import './ProductCard.scss';
-
 import {ReactNode} from 'react';
 
-import {
-	getThumbnailByProductAttachment,
-	getValueFromDeliverySpecifications,
-} from '../../../../utils/util';
+import {normalizeURLProtocol} from '../../../../utils/string';
+import {getValueFromDeliverySpecifications} from '../../../../utils/util';
+
+import './ProductCard.scss';
 
 type ProductCardProps = {
 	ExtendBanner: React.ReactNode;
@@ -18,14 +16,6 @@ type ProductCardProps = {
 	creatorAccountName?: string;
 	product: DeliveryProduct;
 	showExtendBanner?: boolean;
-};
-
-const getIconUrl = (product?: ProductCardProps['product']) => {
-	const iconURL = product
-		? getThumbnailByProductAttachment(product.images)?.split('/o/')
-		: '';
-
-	return iconURL ? `/o/${iconURL[1]}` : '';
 };
 
 type ProductCardPropsRevamp = {
@@ -89,7 +79,7 @@ const ProductCard = ({
 					alt="App Icon"
 					className="object-fit-cover rounded"
 					height="64px"
-					src={getIconUrl(product)}
+					src={normalizeURLProtocol(product.urlImage)}
 					width="64px"
 				/>
 

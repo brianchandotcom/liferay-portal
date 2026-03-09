@@ -14,6 +14,10 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 		});
 	}
 
+	async deactivateLicenseKey(licenseKey: number) {
+		await this.post(`/license-keys/${licenseKey}/deactivate`);
+	}
+
 	async downloadLicenseKey(id: number) {
 		const response = await this.get<Response>(
 			`/license-keys/${id}/download`,
@@ -25,8 +29,14 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 		await downloadFile('license.xml', response);
 	}
 
-	async deactivateLicenseKey(licenseKey: number) {
-		await this.post(`/license-keys/${licenseKey}/deactivate`);
+	async licenseKeysRenew(licenseKey: number) {
+		await this.post(`/license-keys/${licenseKey}/renew`);
+	}
+
+	async getOrderDXPLicenseKeys(orderId: string) {
+		return this.get<LicenseKey[]>(`/order-dxp-license-keys/${orderId}`, {
+			earlyReturn: true,
+		});
 	}
 
 	async getOrderLicenseKeys(

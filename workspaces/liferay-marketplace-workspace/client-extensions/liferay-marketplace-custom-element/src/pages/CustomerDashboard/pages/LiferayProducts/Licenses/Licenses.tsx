@@ -27,10 +27,9 @@ import {LicenseKey} from '../../../../../services/oauth/types';
 import LicenseDetailsModalHeader from '../../../components/LicenseDetailsModalHeader';
 import LicenceKeyModalContent from '../../../components/LicenseModalContent';
 import TitleSubtitleHeader from '../../../components/TitleSubtitleHeader';
+import useLicenseActions from '../../Apps/App/Licenses/useLicensesActions';
 import ActivationKeyAlert from './LicenseAlert';
 import LicenseTitleHeader from './LicenseTitleHeader';
-
-import useLicenseActions from '../../Apps/App/Licenses/useLicensesActions';
 
 import './Licenses.scss';
 

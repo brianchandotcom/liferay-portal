@@ -10,7 +10,7 @@ import './Bundles.scss';
 const LiferayServiceBundles = () => {
 	return (
 		<div className="bundles mb-9 mt-4">
-			<Download title="bundle-name" showSearchBar={false} />
+			<Download showSearchBar={false} title="bundle-name" />
 		</div>
 	);
 };

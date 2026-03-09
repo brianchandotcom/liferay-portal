@@ -4,13 +4,12 @@
  */
 
 import classNames from 'classnames';
-
-import './index.scss';
-
 import {format, isBefore} from 'date-fns';
 
 import i18n from '../../../../i18n';
 import {LicenseKey} from '../../../../services/oauth/types';
+
+import './index.scss';
 
 type LicenseKeyModalProps = {
 	Header: React.ReactNode;

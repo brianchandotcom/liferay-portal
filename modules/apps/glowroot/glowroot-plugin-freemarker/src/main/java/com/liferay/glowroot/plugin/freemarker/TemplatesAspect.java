@@ -138,11 +138,13 @@ public class TemplatesAspect {
 
 			sb.append(", Site Group ID ");
 			sb.append(themeDisplayShim.getSiteGroupId());
-			sb.append(", and Template ID ");
 
 			DDMTemplateShim dDMTemplateShim = (DDMTemplateShim)parameters[1];
 
-			sb.append(dDMTemplateShim.getTemplateId());
+			if (dDMTemplateShim != null) {
+				sb.append(", and Template ID ");
+				sb.append(dDMTemplateShim.getTemplateId());
+			}
 
 			sb.append(")");
 

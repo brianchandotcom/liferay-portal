@@ -2,7 +2,10 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="CompanyIterationCheck" files=".*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-tuning-rankings-api/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-tuning-synonyms-api/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-tuning-web/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-tuning-web-api/.*" />
 		<suppress checks="ComponentExposureCheck" files="portal-search-tuning-rankings-web/src/main/java/com/liferay/portal/search/tuning/rankings/web/internal/util/RankingResultUtil\.java" />
 	</checkstyle>
 </suppressions>

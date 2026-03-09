@@ -5,7 +5,7 @@ module "vpc" {
 		{
 			destination_range="0.0.0.0/0"
 			name="${var.deployment_name}-egress-internet"
-			next_hop_internet="true"
+			next_hop_internet=true
 			tags=["egress-inet",],
 		},
 	]
@@ -25,7 +25,7 @@ module "vpc" {
 	source="git::https://github.com/terraform-google-modules/terraform-google-network.git?ref=6d5eaa89ce07578e9d87c6fb3e2b77ba7a925550"
 	subnets=[
 		{
-			subnet_flow_logs="true"
+			subnet_flow_logs=true
 			subnet_flow_logs_interval="INTERVAL_10_MIN"
 			subnet_flow_logs_metadata="INCLUDE_ALL_METADATA"
 			subnet_flow_logs_sampling=0.5

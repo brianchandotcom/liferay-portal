@@ -1038,6 +1038,17 @@ public abstract class BaseWorkspaceGitRepository
 
 		String jobVariant = System.getenv("JOB_VARIANT");
 
+		if (directoryName.contains("liferay-plugins")) {
+			if (!_snapshot ||
+				(!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
+				 jobVariant.startsWith("plugins-compile"))) {
+
+				return true;
+			}
+
+			return false;
+		}
+
 		if (directoryName.contains("liferay-portal")) {
 			if (!_snapshot) {
 				return true;
@@ -1051,6 +1062,7 @@ public abstract class BaseWorkspaceGitRepository
 				jobName.equals("test-portal-source-format") ||
 				jobName.contains("validation") ||
 				jobVariant.contains("modules-unit") ||
+				jobVariant.contains("plugins-compile") ||
 				jobVariant.contains("rest-builder") ||
 				jobVariant.contains("service-builder")) {
 

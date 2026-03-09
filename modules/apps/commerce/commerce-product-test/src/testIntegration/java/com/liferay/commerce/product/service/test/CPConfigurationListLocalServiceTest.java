@@ -34,7 +34,6 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -68,14 +67,6 @@ public class CPConfigurationListLocalServiceTest {
 			RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), "USD", "en_US", _serviceContext);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		for (CPConfigurationList cpConfigurationList : _cpConfigurationsLists) {
-			_cpConfigurationListLocalService.deleteCPConfigurationList(
-				cpConfigurationList);
-		}
 	}
 
 	@Test
@@ -213,6 +204,7 @@ public class CPConfigurationListLocalServiceTest {
 	@Inject
 	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
+	@DeleteAfterTestRun
 	private final List<CPConfigurationList> _cpConfigurationsLists =
 		new ArrayList<>();
 

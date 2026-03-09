@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.rest.internal.upgrade.v1_0_1;
+package com.liferay.portal.vulcan.internal.upgrade.v1_0_1;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -32,11 +32,11 @@ public class VulcanCompanyConfigurationUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompany(
-			company -> _upgradeAllObjectDefinitionConfiguration(
+			company -> _upgradeVulcanCompanyConfigurations(
 				company.getCompanyId()));
 	}
 
-	private void _upgradeAllObjectDefinitionConfiguration(long companyId)
+	private void _upgradeVulcanCompanyConfigurations(long companyId)
 		throws Exception {
 
 		String factoryPid =

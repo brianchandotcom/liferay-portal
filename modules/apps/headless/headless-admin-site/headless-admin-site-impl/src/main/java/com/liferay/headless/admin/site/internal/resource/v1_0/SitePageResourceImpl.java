@@ -518,8 +518,7 @@ public class SitePageResourceImpl
 				_infoItemServiceRegistry, sitePage.getPageSpecifications(),
 				privateLayout,
 				_getParentLayoutId(
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
-					sitePage.getParentSitePageExternalReferenceCode(),
+					groupId, sitePage.getParentSitePageExternalReferenceCode(),
 					privateLayout, serviceContext),
 				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
 				SitePageTypeUtil.toInternalType(sitePage.getType()),
@@ -542,8 +541,7 @@ public class SitePageResourceImpl
 			layout = LayoutUtil.addLayout(
 				sitePage.getExternalReferenceCode(), groupId, privateLayout,
 				_getParentLayoutId(
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
-					sitePage.getParentSitePageExternalReferenceCode(),
+					groupId, sitePage.getParentSitePageExternalReferenceCode(),
 					privateLayout, serviceContext),
 				nameMap, SitePageTypeUtil.toInternalType(sitePage.getType()),
 				typeSettingsUnicodeProperties,
@@ -559,8 +557,7 @@ public class SitePageResourceImpl
 				_cetManager, sitePage.getExternalReferenceCode(),
 				_infoItemServiceRegistry, groupId, privateLayout,
 				_getParentLayoutId(
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
-					sitePage.getParentSitePageExternalReferenceCode(),
+					groupId, sitePage.getParentSitePageExternalReferenceCode(),
 					privateLayout, serviceContext),
 				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
 				typeSettingsUnicodeProperties,
@@ -631,14 +628,9 @@ public class SitePageResourceImpl
 	}
 
 	private long _getParentLayoutId(
-			long defaultParentLayoutId, long groupId,
-			String parentSitePageExternalReferenceCode, boolean privateLayout,
-			ServiceContext serviceContext)
+			long groupId, String parentSitePageExternalReferenceCode,
+			boolean privateLayout, ServiceContext serviceContext)
 		throws Exception {
-
-		if (parentSitePageExternalReferenceCode == null) {
-			return defaultParentLayoutId;
-		}
 
 		if (Validator.isNull(parentSitePageExternalReferenceCode)) {
 			return LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
@@ -1042,7 +1034,7 @@ public class SitePageResourceImpl
 		serviceContext.setAttribute(
 			"parentLayoutId",
 			_getParentLayoutId(
-				layout.getParentLayoutId(), layout.getGroupId(),
+				layout.getGroupId(),
 				sitePage.getParentSitePageExternalReferenceCode(),
 				layout.isPrivateLayout(), serviceContext));
 

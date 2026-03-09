@@ -39,7 +39,7 @@ async function verifyFixedTaxRate(
 	await expect(
 		(
 			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
-		).getByText(name)
+		).getByRole('cell', {exact: true, name})
 	).toBeVisible();
 	await expect(
 		(
@@ -69,21 +69,20 @@ async function verifyByAddressTaxRate(
 	await (
 		await commerceAdminChannelDetailsPage.taxRateSettingsTab(tableName)
 	).click();
+
+	const sidePanelFrame =
+		await commerceAdminChannelDetailsPage.sidePanelFrame(tableName);
+
 	await expect(
-		(
-			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
-		).getByText(country)
+		sidePanelFrame.getByRole('cell', {exact: true, name: country})
 	).toBeVisible();
 
 	await expect(
-		(
-			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
-		).getByText(name)
+		sidePanelFrame.getByRole('cell', {exact: true, name})
 	).toBeVisible();
+
 	await expect(
-		(
-			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
-		).getByText(region)
+		sidePanelFrame.getByRole('cell', {exact: true, name: region})
 	).toBeVisible();
 	await expect(
 		(
@@ -93,11 +92,7 @@ async function verifyByAddressTaxRate(
 			)
 		).locator('.cell-rate')
 	).toHaveText(taxAmount);
-	await expect(
-		(
-			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
-		).getByText(zip)
-	).toBeVisible();
+	await expect(sidePanelFrame.getByText(zip)).toBeVisible();
 }
 
 test('LPD-31663 Activate Fixed Tax Engine and Add Tax Rate', async ({

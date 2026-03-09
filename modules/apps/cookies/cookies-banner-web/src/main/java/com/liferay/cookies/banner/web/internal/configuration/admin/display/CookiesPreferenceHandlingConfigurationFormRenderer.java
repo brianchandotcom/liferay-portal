@@ -51,48 +51,44 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
-		boolean enabled = ParamUtil.getBoolean(httpServletRequest, "enabled");
-
-		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
-			HashMapBuilder.<String, Object>put("enabled", enabled);
-
-		if (enabled) {
-			hashMapWrapper.put(
-				"consentRenewalPeriod",
-				ParamUtil.getInteger(
-					httpServletRequest, "consentRenewalPeriod", 12)
-			).put(
-				"explicitConsentMode",
-				ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
-			).put(
-				"modifiedDate",
-				() -> {
-					long modifiedDate = ParamUtil.getLong(
-						httpServletRequest, "modifiedDate");
-
-					if (modifiedDate <= 0) {
-						return null;
-					}
-
-					return modifiedDate;
-				}
-			).put(
-				"storeConsent",
-				() -> {
-					if (FeatureFlagManagerUtil.isEnabled(
-							_portal.getCompanyId(httpServletRequest),
-							"LPD-75032")) {
-
-						return ParamUtil.getBoolean(
-							httpServletRequest, "storeConsent");
-					}
-
-					return null;
-				}
-			);
+		if (!ParamUtil.getBoolean(httpServletRequest, "enabled")) {
+			return Map.of("enabled", false);
 		}
 
-		return hashMapWrapper.build();
+		return HashMapBuilder.<String, Object>put(
+			"consentRenewalPeriod",
+			ParamUtil.getInteger(httpServletRequest, "consentRenewalPeriod", 12)
+		).put(
+			"enabled", true
+		).put(
+			"explicitConsentMode",
+			ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
+		).put(
+			"modifiedDate",
+			() -> {
+				long modifiedDate = ParamUtil.getLong(
+					httpServletRequest, "modifiedDate");
+
+				if (modifiedDate <= 0) {
+					return null;
+				}
+
+				return modifiedDate;
+			}
+		).put(
+			"storeConsent",
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled(
+						_portal.getCompanyId(httpServletRequest),
+						"LPD-75032")) {
+
+					return ParamUtil.getBoolean(
+						httpServletRequest, "storeConsent");
+				}
+
+				return null;
+			}
+		).build();
 	}
 
 	@Override

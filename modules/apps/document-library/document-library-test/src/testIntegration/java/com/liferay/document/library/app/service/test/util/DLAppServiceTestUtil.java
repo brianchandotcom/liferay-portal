@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portal.test.security.permission.DoAsUserThread;
 
 import java.util.Date;
 import java.util.Dictionary;

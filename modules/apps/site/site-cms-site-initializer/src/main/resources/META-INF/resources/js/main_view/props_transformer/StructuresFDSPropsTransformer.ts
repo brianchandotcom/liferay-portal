@@ -9,7 +9,7 @@ import {IBulkActionFDSData} from '../../common/types/BulkActionTask';
 import {ObjectDefinition} from '../../common/types/ObjectDefinition';
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import {StructureWorkflowItem} from '../modal/AssignDefaultWorkflowModalContent';
-import assignStructureDefaultWorkflowBulkAction from './actions/AssignStructureDefaultWorkflowBulkAction';
+import assignStructureDefaultWorkflowBulkAction from './actions/AssignStructureDefaultWorkflowBulkSelectionAction';
 import defaultWorkflowStructureAction from './actions/defaultWorkflowStructureAction';
 import deleteStructureAction from './actions/deleteStructureAction';
 import importStructureAction from './actions/importStructureAction';

@@ -73,8 +73,8 @@ export default function BulkEditAssigneeModalContent({
 			},
 			overrideDefaultErrorToast: true,
 			selectedData,
-			type: 'AssignToBulkAction',
-		} as IBulkActionTaskStarterDTO<'AssignToBulkAction'>);
+			type: 'AssignToObjectBulkSelectionAction',
+		} as IBulkActionTaskStarterDTO<'AssignToObjectBulkSelectionAction'>);
 	};
 
 	return (

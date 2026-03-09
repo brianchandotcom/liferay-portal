@@ -129,7 +129,7 @@ export default function BulkPermissionModalContent({
 					setLoading(false);
 				},
 				selectedData,
-				type: 'PermissionBulkAction',
+				type: 'PermissionObjectBulkSelectionAction',
 			});
 		},
 		[

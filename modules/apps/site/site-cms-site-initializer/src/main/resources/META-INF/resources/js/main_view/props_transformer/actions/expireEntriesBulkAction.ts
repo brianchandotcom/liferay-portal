@@ -19,6 +19,6 @@ export default function expireEntriesBulkAction({
 		apiURL,
 		dataSetId,
 		selectedData,
-		type: 'ExpireBulkAction',
+		type: 'ExpireObjectBulkSelectionAction',
 	});
 }

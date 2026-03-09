@@ -745,7 +745,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 				onCreateError: expect.any(Function),
 				onCreateSuccess: expect.any(Function),
 				selectedData: props.selectedData,
-				type: 'DefaultPermissionBulkAction',
+				type: 'DefaultPermissionObjectBulkSelectionAction',
 			});
 		});
 	});

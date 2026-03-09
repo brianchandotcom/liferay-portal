@@ -110,7 +110,7 @@ export default function SpacesBulkPermissionModalContent({
 					};
 				}),
 			},
-			type: 'PermissionBulkAction',
+			type: 'PermissionObjectBulkSelectionAction',
 		});
 	}, [apiURL, closeModal, currentValues, selectedData]);
 

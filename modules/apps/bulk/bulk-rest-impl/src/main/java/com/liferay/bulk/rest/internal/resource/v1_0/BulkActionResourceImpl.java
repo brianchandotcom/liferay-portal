@@ -5,22 +5,22 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.AssignStructureDefaultWorkflowBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.AssignToBulkAction;
+import com.liferay.bulk.rest.dto.v1_0.AssignStructureDefaultWorkflowBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.AssignToObjectBulkSelectionAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionTask;
-import com.liferay.bulk.rest.dto.v1_0.CopyBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.DeleteAssetVersionBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.DeleteBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.DueDateBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.KeywordBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
+import com.liferay.bulk.rest.dto.v1_0.CopyObjectBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.DeleteObjectAssetVersionBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.DeleteObjectBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.DueDateObjectBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.EditObjectCategoriesBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.EditObjectTagsBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.PermissionObjectBulkSelectionAction;
 import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
-import com.liferay.bulk.rest.dto.v1_0.StatusBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.UpdateValuesBulkAction;
+import com.liferay.bulk.rest.dto.v1_0.StatusObjectBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.UpdateObjectValuesBulkSelectionAction;
 import com.liferay.bulk.rest.internal.odata.entity.v1_0.BulkActionEntityModel;
 import com.liferay.bulk.rest.internal.selection.v1_0.BulkActionBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.BulkActionResource;
@@ -133,7 +133,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-17564") &&
-			!BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
+			!BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_SELECTION_ACTION.equals(
 				bulkAction.getType())) {
 
 			throw new UnsupportedOperationException();
@@ -172,7 +172,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-17564") ||
 			!Objects.equals(
-				bulkAction.getType(), BulkAction.Type.DELETE_BULK_ACTION)) {
+				bulkAction.getType(),
+				BulkAction.Type.DELETE_OBJECT_BULK_SELECTION_ACTION)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -244,7 +245,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			BulkAction bulkAction, long numberOfItems)
 		throws Exception {
 
-		if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
+		if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_SELECTION_ACTION.equals(
 				bulkAction.getType())) {
 
 			return new BulkActionTask();
@@ -420,12 +421,15 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private BulkSelectionAction<Object> _getBulkSelectionAction(
 		BulkAction.Type type) {
 
-		if (BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION.
-				equals(type)) {
+		if (BulkAction.Type.
+				ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_SELECTION_ACTION.equals(
+					type)) {
 
 			return _assignStructureDefaultWorkflowBulkSelectionAction;
 		}
-		else if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.ASSIGN_TO_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			BulkSelectionAction<Object> assignToObjectBulkSelectionAction =
 				_assignToObjectBulkSelectionActionSnapshot.get();
 
@@ -435,45 +439,71 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return assignToObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.COPY_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.COPY_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return _copyObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.
+					DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
+						type)) {
+
 			return _defaultPermissionObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.DELETE_ASSET_VERSION_BULK_ACTION.equals(
-					type)) {
+		else if (BulkAction.Type.
+					DELETE_OBJECT_ASSET_VERSION_BULK_SELECTION_ACTION.equals(
+						type)) {
 
 			return _deleteObjectAssetVersionBulkSelectionAction;
 		}
-		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.DELETE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return _deleteObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_SELECTION_ACTION.
+					equals(type)) {
+
 			return _deleteObjectEntryBulkSelectionAction;
 		}
-		else if (BulkAction.Type.DUE_DATE_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.DUE_DATE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return _dueDateObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.EXPIRE_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.EXPIRE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return _expireObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.KEYWORD_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.EDIT_OBJECT_TAGS_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return _editObjectTagsBulkSelectionAction;
 		}
-		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return _permissionObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.RESET_PERMISSION_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.RESET_PERMISSION_OBJECT_BULK_SELECTION_ACTION.
+					equals(type)) {
+
 			return _resetPermissionObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.STATUS_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.STATUS_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return _statusObjectBulkSelectionAction;
 		}
-		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION.
+					equals(type)) {
+
 			return _editObjectCategoriesBulkSelectionAction;
 		}
-		else if (BulkAction.Type.UPDATE_VALUES_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.UPDATE_OBJECT_VALUES_BULK_SELECTION_ACTION.
+					equals(type)) {
+
 			return _updateObjectValuesBulkSelectionAction;
 		}
 
@@ -497,21 +527,25 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			HashMapBuilder.<String, Serializable>put(
 				"bulkActionTaskId", bulkActionTask.getId());
 
-		if (BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION.
-				equals(type)) {
+		if (BulkAction.Type.
+				ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_SELECTION_ACTION.equals(
+					type)) {
 
-			AssignStructureDefaultWorkflowBulkAction
+			AssignStructureDefaultWorkflowBulkSelectionAction
 				assignStructureDefaultWorkflowBulkAction =
-					(AssignStructureDefaultWorkflowBulkAction)bulkAction;
+					(AssignStructureDefaultWorkflowBulkSelectionAction)
+						bulkAction;
 
 			return hashMapWrapper.put(
 				"workflow",
 				assignStructureDefaultWorkflowBulkAction::getWorkflow
 			).build();
 		}
-		else if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
-			AssignToBulkAction assignToBulkAction =
-				(AssignToBulkAction)bulkAction;
+		else if (BulkAction.Type.ASSIGN_TO_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			AssignToObjectBulkSelectionAction assignToBulkAction =
+				(AssignToObjectBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"externalReferenceCode",
@@ -522,54 +556,77 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"type", assignToBulkAction::getClassName
 			).build();
 		}
-		else if (BulkAction.Type.COPY_BULK_ACTION.equals(type)) {
-			CopyBulkAction copyBulkAction = (CopyBulkAction)bulkAction;
+		else if (BulkAction.Type.COPY_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			CopyObjectBulkSelectionAction copyBulkAction =
+				(CopyObjectBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"objectEntryFolderId", copyBulkAction.getObjectEntryFolderId()
 			).build();
 		}
-		else if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
-			DefaultPermissionBulkAction defaultPermissionBulkAction =
-				(DefaultPermissionBulkAction)bulkAction;
+		else if (BulkAction.Type.
+					DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
+						type)) {
+
+			DefaultPermissionObjectBulkSelectionAction
+				defaultPermissionObjectBulkSelectionAction =
+					(DefaultPermissionObjectBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"defaultPermissions",
-				defaultPermissionBulkAction::getDefaultPermissions
+				defaultPermissionObjectBulkSelectionAction::
+					getDefaultPermissions
 			).put(
-				"roleKey", defaultPermissionBulkAction.getRoleKey()
+				"roleKey",
+				defaultPermissionObjectBulkSelectionAction.getRoleKey()
 			).build();
 		}
-		else if (BulkAction.Type.DELETE_ASSET_VERSION_BULK_ACTION.equals(
-					type)) {
+		else if (BulkAction.Type.
+					DELETE_OBJECT_ASSET_VERSION_BULK_SELECTION_ACTION.equals(
+						type)) {
 
-			DeleteAssetVersionBulkAction deleteAssetVersionBulkAction =
-				(DeleteAssetVersionBulkAction)bulkAction;
+			DeleteObjectAssetVersionBulkSelectionAction
+				deleteAssetVersionBulkAction =
+					(DeleteObjectAssetVersionBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"toRemoveVersions", deleteAssetVersionBulkAction.getVersions()
 			).build();
 		}
-		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.DELETE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return hashMapWrapper.build();
 		}
-		else if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_SELECTION_ACTION.
+					equals(type)) {
+
 			return hashMapWrapper.put(
 				"objectDefinitionId", _getObjectDefinitionId(bulkAction, filter)
 			).build();
 		}
-		else if (BulkAction.Type.DUE_DATE_BULK_ACTION.equals(type)) {
-			DueDateBulkAction dueDateBulkAction = (DueDateBulkAction)bulkAction;
+		else if (BulkAction.Type.DUE_DATE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			DueDateObjectBulkSelectionAction dueDateBulkAction =
+				(DueDateObjectBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"dueDate", dueDateBulkAction.getDueDate()
 			).build();
 		}
-		else if (BulkAction.Type.EXPIRE_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.EXPIRE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
 			return hashMapWrapper.build();
 		}
-		else if (BulkAction.Type.KEYWORD_BULK_ACTION.equals(type)) {
-			KeywordBulkAction keywordBulkAction = (KeywordBulkAction)bulkAction;
+		else if (BulkAction.Type.EDIT_OBJECT_TAGS_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			EditObjectTagsBulkSelectionAction keywordBulkAction =
+				(EditObjectTagsBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"append", GetterUtil.getBoolean(keywordBulkAction.getAppend())
@@ -579,9 +636,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"toRemoveTagNames", keywordBulkAction.getKeywordsToRemove()
 			).build();
 		}
-		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
-			PermissionBulkAction permissionBulkAction =
-				(PermissionBulkAction)bulkAction;
+		else if (BulkAction.Type.PERMISSION_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			PermissionObjectBulkSelectionAction permissionBulkAction =
+				(PermissionObjectBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"permissions",
@@ -594,19 +653,26 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"roleKey", permissionBulkAction.getRoleKey()
 			).build();
 		}
-		else if (BulkAction.Type.RESET_PERMISSION_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.RESET_PERMISSION_OBJECT_BULK_SELECTION_ACTION.
+					equals(type)) {
+
 			return hashMapWrapper.build();
 		}
-		else if (BulkAction.Type.STATUS_BULK_ACTION.equals(type)) {
-			StatusBulkAction statusBulkAction = (StatusBulkAction)bulkAction;
+		else if (BulkAction.Type.STATUS_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			StatusObjectBulkSelectionAction statusBulkAction =
+				(StatusObjectBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"status", statusBulkAction.getStatus()
 			).build();
 		}
-		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
-			TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
-				(TaxonomyCategoryBulkAction)bulkAction;
+		else if (BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION.
+					equals(type)) {
+
+			EditObjectCategoriesBulkSelectionAction taxonomyCategoryBulkAction =
+				(EditObjectCategoriesBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"append",
@@ -619,9 +685,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToRemove()
 			).build();
 		}
-		else if (BulkAction.Type.UPDATE_VALUES_BULK_ACTION.equals(type)) {
-			UpdateValuesBulkAction updateValuesBulkAction =
-				(UpdateValuesBulkAction)bulkAction;
+		else if (BulkAction.Type.UPDATE_OBJECT_VALUES_BULK_SELECTION_ACTION.
+					equals(type)) {
+
+			UpdateObjectValuesBulkSelectionAction updateValuesBulkAction =
+				(UpdateObjectValuesBulkSelectionAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"values", (Serializable)updateValuesBulkAction.getValues()
@@ -807,8 +875,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private String _getTypeString(BulkAction bulkAction) throws Exception {
 		BulkAction.Type type = bulkAction.getType();
 
-		if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
-			DeleteBulkAction deleteBulkAction = (DeleteBulkAction)bulkAction;
+		if (BulkAction.Type.DELETE_OBJECT_BULK_SELECTION_ACTION.equals(type)) {
+			DeleteObjectBulkSelectionAction deleteBulkAction =
+				(DeleteObjectBulkSelectionAction)bulkAction;
 
 			if (!Validator.isBlank(deleteBulkAction.getClassName())) {
 				ObjectDefinition objectDefinition =

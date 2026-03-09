@@ -5,7 +5,7 @@
 
 import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 
-export default function executeResetPermissionBulkAction({
+export default function executeResetPermissionObjectBulkSelectionAction({
 	apiURL,
 	selectedData,
 }: {
@@ -16,7 +16,7 @@ export default function executeResetPermissionBulkAction({
 		triggerAssetBulkAction({
 			apiURL,
 			selectedData,
-			type: 'ResetPermissionBulkAction',
+			type: 'ResetPermissionObjectBulkSelectionAction',
 		});
 	}
 	catch (error) {

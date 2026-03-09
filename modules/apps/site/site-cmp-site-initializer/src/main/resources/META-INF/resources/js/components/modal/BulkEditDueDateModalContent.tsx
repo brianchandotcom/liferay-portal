@@ -63,8 +63,8 @@ export default function BulkEditDueDateModalContent({
 			},
 			overrideDefaultErrorToast: true,
 			selectedData,
-			type: 'DueDateBulkAction',
-		} as IBulkActionTaskStarterDTO<'DueDateBulkAction'>);
+			type: 'DueDateObjectBulkSelectionAction',
+		} as IBulkActionTaskStarterDTO<'DueDateObjectBulkSelectionAction'>);
 	}, [
 		apiURL,
 		closeModal,

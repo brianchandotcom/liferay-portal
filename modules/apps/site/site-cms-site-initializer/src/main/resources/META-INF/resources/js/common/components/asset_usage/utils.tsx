@@ -44,7 +44,7 @@ const fetchUsageAssetData = async ({
 			selectionScope: {
 				selectAll,
 			},
-			type: 'DeleteBulkAction',
+			type: 'DeleteObjectBulkSelectionAction',
 		}
 	);
 

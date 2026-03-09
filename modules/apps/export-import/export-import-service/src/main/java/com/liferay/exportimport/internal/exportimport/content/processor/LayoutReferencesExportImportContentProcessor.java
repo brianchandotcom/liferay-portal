@@ -85,140 +85,6 @@ public class LayoutReferencesExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
-		return replaceExportLayoutReferences(
-			portletDataContext, stagedModel, content);
-	}
-
-	@Override
-	public String replaceImportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			String content)
-		throws Exception {
-
-		return replaceImportLayoutReferences(
-			portletDataContext, stagedModel, content);
-	}
-
-	@Override
-	public void validateContentReferences(long groupId, String content)
-		throws PortalException {
-
-		validateLayoutReferences(groupId, content);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
-			ExportImportServiceConfiguration.class, properties);
-	}
-
-	protected String replaceExportHostname(
-			Group group, String url, StringBundler urlSB)
-		throws PortalException {
-
-		if (!HttpComponentsUtil.hasProtocol(url)) {
-			return url;
-		}
-
-		boolean secure = HttpComponentsUtil.isSecure(url);
-
-		int serverPort = _portal.getPortalServerPort(secure);
-
-		if (serverPort == -1) {
-			return url;
-		}
-
-		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-
-		NavigableMap<String, String> publicLayoutSetVirtualHostnames =
-			publicLayoutSet.getVirtualHostnames();
-
-		String portalURL = StringPool.BLANK;
-
-		if (!publicLayoutSetVirtualHostnames.isEmpty()) {
-			portalURL = _portal.getPortalURL(
-				publicLayoutSetVirtualHostnames.firstKey(), serverPort, secure);
-
-			if (url.startsWith(portalURL)) {
-				if (secure) {
-					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
-				}
-				else {
-					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
-				}
-
-				return url.substring(portalURL.length());
-			}
-		}
-
-		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-
-		NavigableMap<String, String> privateLayoutSetVirtualHostnames =
-			privateLayoutSet.getVirtualHostnames();
-
-		if (!privateLayoutSetVirtualHostnames.isEmpty()) {
-			portalURL = _portal.getPortalURL(
-				privateLayoutSetVirtualHostnames.firstKey(), serverPort,
-				secure);
-
-			if (url.startsWith(portalURL)) {
-				if (secure) {
-					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
-				}
-				else {
-					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
-				}
-
-				return url.substring(portalURL.length());
-			}
-		}
-
-		Company company = _companyLocalService.getCompany(group.getCompanyId());
-
-		String companyVirtualHostname = company.getVirtualHostname();
-
-		if (Validator.isNotNull(companyVirtualHostname)) {
-			portalURL = _getPortalURL(
-				url,
-				_portal.getPortalURL(
-					companyVirtualHostname, serverPort, secure));
-
-			if (url.startsWith(portalURL)) {
-				if (_isDefaultGroup(group)) {
-					if (secure) {
-						urlSB.append(
-							_DATA_HANDLER_COMPANY_SECURE_DEFAULT_GROUP_URL);
-					}
-					else {
-						urlSB.append(_DATA_HANDLER_COMPANY_DEFAULT_GROUP_URL);
-					}
-				}
-				else if (secure) {
-					urlSB.append(_DATA_HANDLER_COMPANY_SECURE_URL);
-				}
-				else {
-					urlSB.append(_DATA_HANDLER_COMPANY_URL);
-				}
-
-				return url.substring(portalURL.length());
-			}
-		}
-
-		portalURL = _portal.getPortalURL("localhost", serverPort, secure);
-
-		if (url.startsWith(portalURL)) {
-			return url.substring(portalURL.length());
-		}
-
-		return url;
-	}
-
-	protected String replaceExportLayoutReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			String content)
-		throws Exception {
-
 		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
 
@@ -616,7 +482,8 @@ public class LayoutReferencesExportImportContentProcessor
 		return sb.toString();
 	}
 
-	protected String replaceImportLayoutReferences(
+	@Override
+	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content)
 		throws Exception {
@@ -895,6 +762,121 @@ public class LayoutReferencesExportImportContentProcessor
 			virtualHostPublicLayoutFriendlyURLReplacement);
 
 		return content;
+	}
+
+	@Override
+	public void validateContentReferences(long groupId, String content)
+		throws PortalException {
+
+		validateLayoutReferences(groupId, content);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ExportImportServiceConfiguration.class, properties);
+	}
+
+	protected String replaceExportHostname(
+			Group group, String url, StringBundler urlSB)
+		throws PortalException {
+
+		if (!HttpComponentsUtil.hasProtocol(url)) {
+			return url;
+		}
+
+		boolean secure = HttpComponentsUtil.isSecure(url);
+
+		int serverPort = _portal.getPortalServerPort(secure);
+
+		if (serverPort == -1) {
+			return url;
+		}
+
+		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
+
+		NavigableMap<String, String> publicLayoutSetVirtualHostnames =
+			publicLayoutSet.getVirtualHostnames();
+
+		String portalURL = StringPool.BLANK;
+
+		if (!publicLayoutSetVirtualHostnames.isEmpty()) {
+			portalURL = _portal.getPortalURL(
+				publicLayoutSetVirtualHostnames.firstKey(), serverPort, secure);
+
+			if (url.startsWith(portalURL)) {
+				if (secure) {
+					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
+				}
+				else {
+					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
+				}
+
+				return url.substring(portalURL.length());
+			}
+		}
+
+		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
+
+		NavigableMap<String, String> privateLayoutSetVirtualHostnames =
+			privateLayoutSet.getVirtualHostnames();
+
+		if (!privateLayoutSetVirtualHostnames.isEmpty()) {
+			portalURL = _portal.getPortalURL(
+				privateLayoutSetVirtualHostnames.firstKey(), serverPort,
+				secure);
+
+			if (url.startsWith(portalURL)) {
+				if (secure) {
+					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
+				}
+				else {
+					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
+				}
+
+				return url.substring(portalURL.length());
+			}
+		}
+
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		String companyVirtualHostname = company.getVirtualHostname();
+
+		if (Validator.isNotNull(companyVirtualHostname)) {
+			portalURL = _getPortalURL(
+				url,
+				_portal.getPortalURL(
+					companyVirtualHostname, serverPort, secure));
+
+			if (url.startsWith(portalURL)) {
+				if (_isDefaultGroup(group)) {
+					if (secure) {
+						urlSB.append(
+							_DATA_HANDLER_COMPANY_SECURE_DEFAULT_GROUP_URL);
+					}
+					else {
+						urlSB.append(_DATA_HANDLER_COMPANY_DEFAULT_GROUP_URL);
+					}
+				}
+				else if (secure) {
+					urlSB.append(_DATA_HANDLER_COMPANY_SECURE_URL);
+				}
+				else {
+					urlSB.append(_DATA_HANDLER_COMPANY_URL);
+				}
+
+				return url.substring(portalURL.length());
+			}
+		}
+
+		portalURL = _portal.getPortalURL("localhost", serverPort, secure);
+
+		if (url.startsWith(portalURL)) {
+			return url.substring(portalURL.length());
+		}
+
+		return url;
 	}
 
 	protected void validateLayoutReferences(long groupId, String content)

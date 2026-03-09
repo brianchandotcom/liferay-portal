@@ -5,8 +5,8 @@
 
 package com.liferay.osgi.util.configuration;
 
-import com.liferay.portal.kernel.io.Deserializer;
-import com.liferay.portal.kernel.io.Serializer;
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;

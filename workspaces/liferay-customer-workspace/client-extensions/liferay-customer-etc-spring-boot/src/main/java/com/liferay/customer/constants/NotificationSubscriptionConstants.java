@@ -11,7 +11,7 @@ package com.liferay.customer.constants;
 public class NotificationSubscriptionConstants {
 
 	public static final String FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT =
-		"r_accountEntryToBusinessEvents_accountEntry";
+		"r_accountEntryToBusinessEvents_accountEntryERC";
 
 	public static final String FIELD_ACTIVE = "active";
 

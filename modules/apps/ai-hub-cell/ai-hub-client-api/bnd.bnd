@@ -1,6 +1,0 @@
-Bundle-Name: Liferay AI Hub Client API
-Bundle-SymbolicName: com.liferay.ai.hub.client.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.ai.hub.client.configuration,\
-	com.liferay.ai.hub.client.security

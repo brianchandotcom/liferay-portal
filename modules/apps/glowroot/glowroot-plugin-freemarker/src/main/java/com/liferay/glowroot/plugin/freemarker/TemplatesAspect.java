@@ -142,7 +142,7 @@ public class TemplatesAspect {
 			DDMTemplateShim dDMTemplateShim = (DDMTemplateShim)parameters[1];
 
 			if (dDMTemplateShim != null) {
-				sb.append(", and Template ID ");
+				sb.append(", and DDM Template ID ");
 				sb.append(dDMTemplateShim.getTemplateId());
 			}
 

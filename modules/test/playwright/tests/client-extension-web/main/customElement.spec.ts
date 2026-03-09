@@ -674,13 +674,13 @@ testSample(
 );
 
 testSample(
-	'Custom Element renders correctly when placed on widget page',
+	'Custom Element renders correctly when placed on a page (non ES module)',
 	{tag: '@LPS-159013'},
 	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
 		const clientExtensionName = getRandomString();
 		const htmlElementName = `html-${getRandomString()}`;
 
-		await test.step('Create a Custom Element with ES modules', async () => {
+		await test.step('Create a non-ES module Custom Element', async () => {
 			await editCustomElementPage.goto();
 
 			await editCustomElementPage.nameInput.fill(clientExtensionName);
@@ -690,7 +690,6 @@ testSample(
 			await editCustomElementPage.javaScriptURLInput.fill(
 				'https://www.example.com/test.js'
 			);
-			await editCustomElementPage.useESModulesCheckbox.check();
 
 			await editCustomElementPage.publish(WaitAction.SUCCESS);
 		});
@@ -709,7 +708,7 @@ testSample(
 			await page.goto(`/web/guest${layout.friendlyURL}`);
 
 			await expect(
-				page.locator('script[type="module"][src*="test.js"]')
+				page.locator('script[src*="test.js"]:not(type)')
 			).toBeAttached();
 		});
 
@@ -723,50 +722,8 @@ testSample(
 	}
 );
 
-test(
-	'UI label is present for non-OSGi client extensions',
-	{tag: '@LPS-154725'},
-	async ({clientExtensionsPage, editCustomElementPage}) => {
-		const clientExtensionName = getRandomString();
-
-		await test.step('Create a Custom Element', async () => {
-			await editCustomElementPage.goto();
-
-			await editCustomElementPage.nameInput.fill(clientExtensionName);
-			await editCustomElementPage.htmlElementNameInput.fill(
-				`html-${getRandomString()}`
-			);
-			await editCustomElementPage.javaScriptURLInput.fill(
-				'https://www.example.com/test.js'
-			);
-
-			await editCustomElementPage.publish(WaitAction.SUCCESS);
-		});
-
-		await test.step('Verify UI label is present', async () => {
-			await clientExtensionsPage.goto();
-
-			await clientExtensionsPage.search(clientExtensionName);
-
-			const row = clientExtensionsPage.getRowByText(clientExtensionName);
-
-			await expect(row).toBeVisible();
-
-			await expect(
-				row.locator('td').nth(Column.TYPE)
-			).toContainText('Custom Element');
-		});
-
-		await test.step('Clean up', async () => {
-			await clientExtensionsPage.deleteClientExtension(
-				clientExtensionName
-			);
-		});
-	}
-);
-
 testSample(
-	'Custom Element renders as ES module type',
+	'Custom Element renders correctly when placed on a page (ES module type)',
 	{tag: '@LPS-139377'},
 	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
 		const clientExtensionName = getRandomString();
@@ -814,6 +771,50 @@ testSample(
 		});
 	}
 );
+
+
+test(
+	'UI label is present for non-OSGi client extensions',
+	{tag: '@LPS-154725'},
+	async ({clientExtensionsPage, editCustomElementPage}) => {
+		const clientExtensionName = getRandomString();
+
+		await test.step('Create a Custom Element', async () => {
+			await editCustomElementPage.goto();
+
+			await editCustomElementPage.nameInput.fill(clientExtensionName);
+			await editCustomElementPage.htmlElementNameInput.fill(
+				`html-${getRandomString()}`
+			);
+			await editCustomElementPage.javaScriptURLInput.fill(
+				'https://www.example.com/test.js'
+			);
+
+			await editCustomElementPage.publish(WaitAction.SUCCESS);
+		});
+
+		await test.step('Verify UI label is present', async () => {
+			await clientExtensionsPage.goto();
+
+			await clientExtensionsPage.search(clientExtensionName);
+
+			const row = clientExtensionsPage.getRowByText(clientExtensionName);
+
+			await expect(row).toBeVisible();
+
+			await expect(
+				row.locator('td').nth(Column.TYPE)
+			).toContainText('Custom Element');
+		});
+
+		await test.step('Clean up', async () => {
+			await clientExtensionsPage.deleteClientExtension(
+				clientExtensionName
+			);
+		});
+	}
+);
+
 
 test.skip(
 	'Can be displayed with DB partitioning',

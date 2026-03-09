@@ -358,7 +358,7 @@ public abstract class BaseTokenResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.client.rest.dto.v1_0.Token.class)) {
+					com.liferay.ai.hub.cell.rest.dto.v1_0.Token.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -1015,7 +1015,7 @@ public abstract class BaseTokenResourceTestCase {
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.client.rest.resource.v1_0.TokenResource
+	private com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource
 		_tokenResource;
 
 }

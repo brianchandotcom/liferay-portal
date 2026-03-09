@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.client.rest.resource.v1_0;
+package com.liferay.ai.hub.cell.rest.resource.v1_0;
 
-import com.liferay.ai.hub.client.rest.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.dto.v1_0.Token;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;

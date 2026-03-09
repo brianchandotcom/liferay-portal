@@ -124,8 +124,8 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 						"Table ", _dbInspector.normalizeName("DDMContent"),
 						", 1 row updated column ",
 						_dbInspector.normalizeName("data_"),
-						" because it had invalid '\\u0000' character ",
-						"sequence")));
+						" because it had invalid character sequence ",
+						"\"\\u0000\"")));
 			Assert.assertTrue(
 				messages.toString(),
 				messages.contains(
@@ -133,8 +133,8 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 						"Table ", _dbInspector.normalizeName("JournalArticle"),
 						", 1 row updated column ",
 						_dbInspector.normalizeName("content"),
-						" because it had invalid '\\u0000' character ",
-						"sequence")));
+						" because it had invalid character sequence ",
+						"\"\\u0000\"")));
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(

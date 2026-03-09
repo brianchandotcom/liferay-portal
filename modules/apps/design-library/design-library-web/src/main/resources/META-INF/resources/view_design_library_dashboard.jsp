@@ -15,28 +15,6 @@ long designLibraryId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_
 DesignLibraryDashboardDisplayContext designLibraryDashboardDisplayContext = new DesignLibraryDashboardDisplayContext(request);
 %>
 
-
-<style>
-.design-library-breadcrumb {
-	background: var(--white);
-	padding: var(--spacer-3) var(--spacer-4);
-
-	.breadcrumb {
-		padding: var(--spacer-1) 0;
-	}
-
-	.breadcrumb-item {
-		font-size: var(--font-size-lg);
-	}
-}
-
-.design-library-dashboard-fds {
-	.management-bar-wrapper, .data-set-content-wrapper:not(:has(.c-empty-state)) {
-		background: var(--white);
-	}
-}
-</style>
-
 <div>
 	<div>
 		<react:component
@@ -45,7 +23,7 @@ DesignLibraryDashboardDisplayContext designLibraryDashboardDisplayContext = new 
 		/>
 	</div>
 
-	<div class="design-library-dashboard-fds">
+	<div class="design-library-fds-wrapper">
 		<frontend-data-set:headless-display
 			apiURL="<%= designLibraryDashboardDisplayContext.getAPIURL() %>"
 			emptyState="<%= designLibraryDashboardDisplayContext.getEmptyState() %>"

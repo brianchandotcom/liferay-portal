@@ -818,7 +818,7 @@ definition {
 	macro viewNoPortletsPresentCP(portlet = null, panel = null, category = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		Navigator.gotoNavTab(navTab = ${panel});
+		ApplicationsMenu.gotoPanel(panel = ${panel});
 
 		AssertElementNotPresent(
 			key_category = ${category},

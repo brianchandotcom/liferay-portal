@@ -22,11 +22,20 @@ public class FDSSampleFDSNames {
 	public static final String CUSTOM_INTERNAL_VIEW =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-customInternalView";
 
+	public static final String DYNAMIC_ACTIONS =
+		FDSSamplePortletKeys.FDS_SAMPLE + "-dynamicActions";
+
 	public static final String EMPTY =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-empty";
 
 	public static final String MINIMUM =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-minimum";
+
+	public static final String MY_ROLE_TASKS =
+		FDSSamplePortletKeys.FDS_SAMPLE + "-myRoleTasks";
+	
+	public static final String MY_USER_TASKS =
+		FDSSamplePortletKeys.FDS_SAMPLE + "-myUserTasks";
 
 	public static final String REACT =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-react";

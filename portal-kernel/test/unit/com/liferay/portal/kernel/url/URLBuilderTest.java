@@ -5,10 +5,10 @@
 
 package com.liferay.portal.kernel.url;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import org.junit.Assert;
 import org.junit.Before;

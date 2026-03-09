@@ -5,8 +5,8 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.portal.kernel.io.Deserializer;
-import com.liferay.portal.kernel.io.Serializer;
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
 
 import java.io.Serializable;
 

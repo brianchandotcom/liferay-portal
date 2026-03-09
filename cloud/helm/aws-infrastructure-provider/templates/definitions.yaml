@@ -59,25 +59,18 @@ spec:
                                 database:
                                     properties:
                                         autoMinorVersionUpgrade:
-                                            default: true
                                             type: boolean
                                         databaseInsightsMode:
-                                            default: standard
                                             type: string
                                         deletionProtection:
-                                            default: true
                                             type: boolean
                                         engine:
-                                            default: postgres
                                             type: string
                                         engineVersion:
-                                            default: "16.11"
                                             type: string
                                         instanceClass:
-                                            default: db.t3.medium
                                             type: string
                                         multiAz:
-                                            default: false
                                             type: boolean
                                         region:
                                             type: string
@@ -85,10 +78,8 @@ spec:
                                             nullable: true
                                             type: string
                                         storageGB:
-                                            default: 20
                                             type: integer
                                         username:
-                                            default: liferay_database_admin
                                             type: string
                                     type: object
                                 deletionProtection:

@@ -6,9 +6,13 @@ backup:
             schedule: cron(0 5 * * ? *)
             startWindow: 60
 database:
+    autoMinorVersionUpgrade: true
+    databaseInsightsMode: standard
+    deletionProtection: true
     engine: postgres
     engineVersion: "16.11"
     instanceClass: db.t3.medium
+    multiAz: false
     storageGB: 20
     username: liferay_database_admin
 deletionProtection: false

@@ -501,6 +501,8 @@ function isAtom(value: unknown): value is Atom<any> {
 	return Object.hasOwnProperty.call(value, ATOM);
 }
 
+window.Liferay.State = State;
+
 /**
  * Boilerplate to satisfy TypeScript and prevent: "TS2669: Augmentations
  * for the global scope can only be directly nested in external modules or

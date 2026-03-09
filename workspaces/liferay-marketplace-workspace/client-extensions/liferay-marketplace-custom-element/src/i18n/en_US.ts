@@ -18,6 +18,8 @@ export default {
 	'account-selection': 'Account Selection',
 	'account-type': 'Account Type',
 	'accounts': 'Accounts',
+	'activation-key': 'Activation Key',
+	'activation-keys': 'Activation Keys',
 	'activation-status': 'Activation Status',
 	'active': 'Active',
 	'add-currency': 'Add Currency',
@@ -105,6 +107,8 @@ export default {
 	'blank-site': 'Blank Site',
 	'browse-catalog': 'Browse Catalog',
 	'build': 'Build',
+	'bundle-name': 'Bundle Name',
+	'bundles': 'Bundles',
 	'business': 'Business',
 	'business-account': 'Business Account',
 	'business-address': 'Business Address',
@@ -221,6 +225,7 @@ export default {
 	'developer-licenses-are-limited-to-5-unique-addresses-and-should-not-be-used-for-full-scale-production-deployments':
 		'Developer licenses are limited to 5 unique addresses and should not be used for full-scale production deployments.',
 	'do-not-close-this-window': 'DO NOT CLOSE THIS WINDOW',
+	'domain': 'Domain',
 	'done': 'Done',
 	'download': 'Download',
 	'download-app': 'Download App',
@@ -434,6 +439,7 @@ export default {
 	'net-price': 'Net Price',
 	'never-expires': 'Never Expires',
 	'new-account': 'New Account',
+	'new-activation-key': 'New Activation Key',
 	'new-address': 'New Address',
 	'new-app': 'New App',
 	'new-potential-expiration-date': 'New Potential Expiration Date',
@@ -570,6 +576,7 @@ export default {
 	'remove-all-roles': 'Remove all roles',
 	'remove-user': 'Remove User',
 	'removed-user-from-account': 'Removed user from account',
+	'renew': 'Renew',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',
 	'request-account': 'Request Account',
@@ -724,6 +731,7 @@ export default {
 	'times-already-extended': 'Times Already Extended',
 	'timezone': 'Timezone',
 	'title': 'Title',
+	'to-be-renewed': 'To be renewed',
 	'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace':
 		'To join an existing business account, please contact your administrator, who can add you. Once added, you will automatically become part of that account and will be able to manage it and make purchases on Markeplace.',
 	'total': 'Total',
@@ -825,6 +833,8 @@ export default {
 		'You can paste links directly from YouTube.',
 	'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material':
 		'You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material.',
+	'you-can-renew-your-activation-key-starting-3-months-before-it-expires':
+		'You can renew your activation key starting 3 months before it expires.',
 	'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb':
 		'You can upload one or many ZIP files. Max total size is 500MB.',
 	'you-can-view-your-app-in-cloud-console-or-go-back-to-my-apps':

@@ -29,33 +29,6 @@ function main {
 	_port_forward_argo_cd
 }
 
-function _get_terraform_apply_args {
-	local auto_approve="false"
-
-	local configuration_json_file="${_SCRIPTS_DIR}/${1}"
-
-	if jq --exit-status '.options.auto_approve' "${configuration_json_file}" > /dev/null
-	then
-		auto_approve=$(jq --raw-output '.options.auto_approve' "${configuration_json_file}")
-	fi
-
-	local apply_args=("-var-file=${_SCRIPTS_DIR}/global_terraform.tfvars")
-
-	if [[ "${auto_approve}" == "true" ]]
-	then
-		apply_args+=("-auto-approve")
-	fi
-
-	if jq --exit-status '.options.parallelism | numbers' "${configuration_json_file}" > /dev/null
-	then
-		local parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
-
-		apply_args+=("-parallelism=${parallelism}")
-	fi
-
-	echo "${apply_args[@]}"
-}
-
 function _generate_tfvars {
 	local configuration_json_file="${1}"
 
@@ -100,6 +73,33 @@ function _generate_tfvars {
 	fi
 
 	echo "${tfvars_file} was generated successfully."
+}
+
+function _get_terraform_apply_args {
+	local auto_approve="false"
+
+	local configuration_json_file="${_SCRIPTS_DIR}/${1}"
+
+	if jq --exit-status '.options.auto_approve' "${configuration_json_file}" > /dev/null
+	then
+		auto_approve=$(jq --raw-output '.options.auto_approve' "${configuration_json_file}")
+	fi
+
+	local apply_args=("-var-file=${_SCRIPTS_DIR}/global_terraform.tfvars")
+
+	if [[ "${auto_approve}" == "true" ]]
+	then
+		apply_args+=("-auto-approve")
+	fi
+
+	if jq --exit-status '.options.parallelism | numbers' "${configuration_json_file}" > /dev/null
+	then
+		local parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
+
+		apply_args+=("-parallelism=${parallelism}")
+	fi
+
+	echo "${apply_args[@]}"
 }
 
 function _popd {

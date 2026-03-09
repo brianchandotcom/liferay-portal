@@ -85,7 +85,6 @@ import {config as frontendJsBootstrapSupportWebConfig} from './tests/frontend-js
 import {config as frontendJsComponentsWebConfig} from './tests/frontend-js-components-web/main/config';
 import {config as frontendJsItemSelectorWebConfig} from './tests/frontend-js-item-selector-web/main/config';
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/main/config';
-import {config as frontendJsTestConfig} from './tests/frontend-js-test/main/config';
 import {config as frontendJsWebConfig} from './tests/frontend-js-web/main/config';
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/main/config';
 import {config as frontendTaglibConfig} from './tests/frontend-taglib/main/config';
@@ -288,7 +287,6 @@ export default defineConfig({
 		frontendJsComponentsWebConfig,
 		frontendJsItemSelectorWebConfig,
 		frontendJsSpaWebConfig,
-		frontendJsTestConfig,
 		frontendJsWebConfig,
 		frontendTaglibClayConfig,
 		frontendTaglibConfig,

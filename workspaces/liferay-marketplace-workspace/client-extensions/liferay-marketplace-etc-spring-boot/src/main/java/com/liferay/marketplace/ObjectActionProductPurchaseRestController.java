@@ -9,16 +9,21 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.constants.MarketplaceConstants;
-import com.liferay.marketplace.model.ProductPurchaseNotificationTemplate;
 import com.liferay.marketplace.model.SalesforceOpportunity;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.SalesforceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.net.URL;
 
 import java.util.Map;
 import java.util.Objects;
@@ -41,6 +46,167 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ObjectActionProductPurchaseRestController
 	extends BaseRestController {
+
+	public Map<String, String> getInvoiceOrderSubmitTemplate(
+			Order order, Product product,
+			Map<String, String> productSpecificationsMap)
+		throws Exception {
+
+		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
+			account = order.getAccount();
+
+		BillingAddress billingAddress = order.getBillingAddress();
+
+		return HashMapBuilder.put(
+			"[%ACCOUNT_ID%]", String.valueOf(account.getId())
+		).put(
+			"[%ACCOUNT_NAME%]", account.getName()
+		).put(
+			"[%BILLING_ADDRESS_FORMATTED%]",
+			String.join(
+				", ", billingAddress.getStreet1(), billingAddress.getCity(),
+				billingAddress.getRegionISOCode(),
+				billingAddress.getCountryISOCode())
+		).put(
+			"[%BILLING_ADDRESS_NAME%]", billingAddress.getName()
+		).put(
+			"[%BILLING_ADDRESS_PHONE%]", billingAddress.getPhoneNumber()
+		).put(
+			"[%CATALOG_NAME%]",
+			() -> {
+				Catalog catalog = product.getCatalog();
+
+				return catalog.getName();
+			}
+		).put(
+			"[%EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
+		).put(
+			"[%EXCHANGE_RATE%]", _getExchangeRate(order)
+		).put(
+			"[%LICENSE_TYPE%]", productSpecificationsMap.get("license-type")
+		).put(
+			"[%ORDER_DATE%]", MarketplaceUtil.format(order.getCreateDate())
+		).put(
+			"[%ORDER_ID%]", String.valueOf(order.getId())
+		).put(
+			"[%ORDER_PAYMENT_METHOD%]",
+			MarketplaceConstants.getOrderPaymentMethodLabel(
+				order.getPaymentMethod())
+		).put(
+			"[%ORDER_STATUS%]",
+			MarketplaceConstants.getOrderStatusLabel(order.getOrderStatus())
+		).put(
+			"[%PAYMENT_TERM_DESCRIPTION%]", order.getPaymentTermDescription()
+		).put(
+			"[%PRODUCT_NAME%]",
+			product.getName(
+			).get(
+				"en_US"
+			)
+		).put(
+			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+		).put(
+			"[%PRODUCT_TYPE%]",
+			productSpecificationsMap.get(
+				"type"
+			).replace(
+				"-", " "
+			)
+		).put(
+			"[%SUBSCRIPTION_EXPIRATION_DATE%]",
+			() -> {
+				OrderItem[] orderItems = order.getOrderItems();
+
+				OrderItem orderItem = orderItems[0];
+
+				return MarketplaceUtil.format(
+					MarketplaceUtil.getOrderPurchaseEndDate(
+						productSpecificationsMap.get("license-type"),
+						MarketplaceUtil.getSkuOptionValue(
+							"license-usage-type", orderItem.getOptions())));
+			}
+		).put(
+			"[%SUBSCRIPTION_STARTING_DATE%]",
+			MarketplaceUtil.format(order.getCreateDate())
+		).put(
+			"[%SUBSCRIPTION_TYPE%]",
+			productSpecificationsMap.get("license-type")
+		).put(
+			"[%SUBTOTAL_FORMATTED%]", order.getSubtotalFormatted()
+		).put(
+			"[%TAX_AMOUNT_FORMATTED%]", order.getTaxAmountFormatted()
+		).put(
+			"[%TAX_ID%]", account.getTaxId()
+		).put(
+			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
+		).build();
+	}
+
+	public Map<String, String> getOrderConfirmationTemplate(
+			Order order, Product product,
+			Map<String, String> productSpecificationsMap)
+		throws Exception {
+
+		Catalog catalog = product.getCatalog();
+
+		return new HashMapBuilder<>().put(
+			"[%CATALOG_NAME%]", catalog.getName()
+		).put(
+			"[%CREATOR_EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
+		).put(
+			"[%CTA_TEXT%]", "Go to Dashboard"
+		).put(
+			"[%DESCRIPTION%]",
+			_getOrderConfirmationDescription(order, productSpecificationsMap)
+		).put(
+			"[%ORDER_ID%]", String.valueOf(order.getId())
+		).put(
+			"[%PRODUCT_NAME%]",
+			product.getName(
+			).get(
+				"en_US"
+			)
+		).put(
+			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+		).put(
+			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
+		).build();
+	}
+
+	public Map<String, String> getPaymentApprovedTemplate(
+			Order order, Product product,
+			Map<String, String> productSpecificationsMap)
+		throws Exception {
+
+		return HashMapBuilder.put(
+			"[%CATALOG_NAME%]",
+			() -> {
+				Catalog catalog = product.getCatalog();
+
+				return catalog.getName();
+			}
+		).put(
+			"[%CREATOR_EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
+		).put(
+			"[%ORDER_ID%]", String.valueOf(order.getId())
+		).put(
+			"[%PRODUCT_NAME%]",
+			product.getName(
+			).get(
+				"en_US"
+			)
+		).put(
+			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+		).put(
+			"[%SUBTOTAL_FORMATTED%]", order.getSubtotalFormatted()
+		).put(
+			"[%TAX_AMOUNT_FORMATTED%]", order.getTaxAmountFormatted()
+		).put(
+			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
+		).putAll(
+			_getPaymentApprovedDescriptionMap(productSpecificationsMap)
+		).build();
+	}
 
 	@PostMapping("/object/action/product/purchase")
 	public void post(@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
@@ -125,6 +291,101 @@ public class ObjectActionProductPurchaseRestController
 		}
 	}
 
+	private String _getExchangeRate(Order order) {
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		JSONObject orderMetadataJSONObject = new JSONObject(
+			customFields.getOrDefault("order-metadata", "{}"));
+
+		if (!Objects.equals(order.getCurrencyCode(), "USD") ||
+			!orderMetadataJSONObject.has("exchangeRate")) {
+
+			return "Not applicable";
+		}
+
+		double exchangeRate = orderMetadataJSONObject.getDouble("exchangeRate");
+
+		return "1 USD = " + String.format("%.5f", exchangeRate) + " EUR";
+	}
+
+	private String _getOrderConfirmationDescription(
+		Order order, Map<String, String> productSpecificationsMap) {
+
+		String solutionType = productSpecificationsMap.get("solution-type");
+
+		if (Objects.equals(
+				order.getOrderTypeExternalReferenceCode(), "DXP_APP")) {
+
+			String priceModel = productSpecificationsMap.get("price-model");
+
+			if (Objects.equals(priceModel, "Free")) {
+				return StringBundler.concat(
+					"<p>Your app is ready for download.</p> <p>To find your ",
+					"app download, find your Order ID and choose Manage, then ",
+					"Download LPKG.</p>");
+			}
+
+			return StringBundler.concat(
+				"<p>Your app is ready for download.</p>",
+				"<p>To access your download, find your Order ID and select ",
+				"Manage, then <b>Download LPKG.</b> Please note that a ",
+				"<b>valid license is also required to activate</b> and use ",
+				"the application.</p>");
+		}
+		else if (Objects.equals(solutionType, "liferay-data-platform")) {
+			return StringBundler.concat(
+				"<p>Your workspace is being created now!</p>",
+				"<p>Click the button below to go to your dashboard and check",
+				"the status of your environment. You can start using it as ",
+				"soon as it is ready.</p>");
+		}
+
+		return "";
+	}
+
+	private Map<String, String> _getPaymentApprovedDescriptionMap(
+		Map<String, String> productSpecificationsMap) {
+
+		String solutionType = productSpecificationsMap.get("solution-type");
+
+		if (Objects.equals(solutionType, "liferay-data-platform")) {
+			return HashMapBuilder.put(
+				"CTA_TEXT", "Launch LDP"
+			).put(
+				"DESCRIPTION",
+				StringBundler.concat(
+					"<p>You’re all set \uD83D\uDE80 You <b>can start using ",
+					"all the premium features </b> of your Liferay Data ",
+					"Platform right away. Click the button below to access ",
+					"your LDP and enjoy the full experience.</p>")
+			).build();
+		}
+
+		return HashMapBuilder.put(
+			"CTA_TEXT", "Go to Dashboard"
+		).put(
+			"DESCRIPTION",
+			StringBundler.concat(
+				"<p>You’re all set \uD83C\uDF89 Your purchase has been ",
+				"successfully processed and your app is now available in your ",
+				"account.</p> <p>You can manage your subscription, access ",
+				"features, and configure your app anytime from your ",
+				"dashboard. Click the button below to get started.</p>")
+		).build();
+	}
+
+	private String _getProductThumbnail(Product product) throws Exception {
+		return new URL(
+			StringBundler.concat(
+				lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+				product.getThumbnail())
+		).toString(
+		).replaceAll(
+			"(?<=accounts/)-?\\d+(?=/images)", "-1"
+		);
+	}
+
 	private void _postNotificationQueueEntry(Order order) throws Exception {
 		OrderItem[] orderItems = order.getOrderItems();
 
@@ -141,12 +402,6 @@ public class ObjectActionProductPurchaseRestController
 			_marketplaceService.getProductSpecificationsMap(
 				product.getProductId());
 
-		ProductPurchaseNotificationTemplate
-			productPurchaseNotificationTemplate =
-				new ProductPurchaseNotificationTemplate(
-					lxcDXPServerProtocol + "://" + lxcDXPMainDomain, order,
-					product, productSpecificationsMap);
-
 		if ((Objects.equals(
 				order.getPaymentMethod(),
 				MarketplaceConstants.ORDER_PAYMENT_METHOD_MONEY_ORDER) &&
@@ -160,8 +415,8 @@ public class ObjectActionProductPurchaseRestController
 
 			_marketplaceService.postNotificationQueueEntry(
 				null, "MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
-				productPurchaseNotificationTemplate.
-					getInvoiceOrderSubmitTemplate());
+				getInvoiceOrderSubmitTemplate(
+					order, product, productSpecificationsMap));
 		}
 
 		if (Objects.equals(
@@ -173,8 +428,8 @@ public class ObjectActionProductPurchaseRestController
 			_marketplaceService.postNotificationQueueEntry(
 				order.getCreatorEmailAddress(),
 				"MARKETPLACE-ORDER-CONFIRMATION",
-				productPurchaseNotificationTemplate.
-					getOrderConfirmationTemplate());
+				getOrderConfirmationTemplate(
+					order, product, productSpecificationsMap));
 		}
 
 		if (Objects.equals(
@@ -185,8 +440,8 @@ public class ObjectActionProductPurchaseRestController
 
 			_marketplaceService.postNotificationQueueEntry(
 				order.getCreatorEmailAddress(), "MARKETPLACE-PAYMENT-APPROVED",
-				productPurchaseNotificationTemplate.
-					getPaymentApprovedTemplate());
+				getPaymentApprovedTemplate(
+					order, product, productSpecificationsMap));
 		}
 	}
 

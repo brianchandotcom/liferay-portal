@@ -101,10 +101,10 @@ definition {
 	test AssertSearchTuningDisabled {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		Navigator.gotoNavTab(navTab = "Control Panel");
+		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
 		AssertElementNotPresent(
-			key_panel = "Search Tuning",
+			key_portlet = "Search Tuning",
 			locator1 = "ApplicationsMenu#PORTLET");
 	}
 

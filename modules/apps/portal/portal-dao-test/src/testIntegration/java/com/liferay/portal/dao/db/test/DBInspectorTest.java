@@ -72,6 +72,16 @@ public class DBInspectorTest {
 	}
 
 	@Test
+	public void testHasColumnIsNullSafeColumnNameParameter() throws Exception {
+		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, null));
+	}
+
+	@Test
+	public void testHasColumnIsNullSafeTableNameParameter() throws Exception {
+		Assert.assertFalse(_dbInspector.hasColumn(null, _COLUMN_NAME));
+	}
+
+	@Test
 	public void testHasColumnLowerCase() throws Exception {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
@@ -126,6 +136,30 @@ public class DBInspectorTest {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "typeInteger", "INTEGER null"));
+	}
+
+	@Test
+	public void testHasColumnTypeIsNullSafeColumnNameParameter()
+		throws Exception {
+
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(_TABLE_NAME, null, "STRING null"));
+	}
+
+	@Test
+	public void testHasColumnTypeIsNullSafeColumnTypeParameter()
+		throws Exception {
+
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(_TABLE_NAME, _COLUMN_NAME, null));
+	}
+
+	@Test
+	public void testHasColumnTypeIsNullSafeTableNameParameter()
+		throws Exception {
+
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(null, _COLUMN_NAME, "STRING null"));
 	}
 
 	@Test
@@ -195,6 +229,16 @@ public class DBInspectorTest {
 	}
 
 	@Test
+	public void testHasIndexIsNullSafeIndexNameParameter() throws Exception {
+		Assert.assertFalse(_dbInspector.hasIndex(_TABLE_NAME, null));
+	}
+
+	@Test
+	public void testHasIndexIsNullSafeTableNameParameter() throws Exception {
+		Assert.assertFalse(_dbInspector.hasIndex(null, "IX_40A51197"));
+	}
+
+	@Test
 	public void testHasNotNullColumnTypeNotNull() throws Exception {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
@@ -223,8 +267,18 @@ public class DBInspectorTest {
 	}
 
 	@Test
+	public void testHasRowsIsNullSafe() {
+		Assert.assertFalse(_dbInspector.hasRows(null));
+	}
+
+	@Test
 	public void testHasTable() throws Exception {
 		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME));
+	}
+
+	@Test
+	public void testHasTableIsNullSafe() throws Exception {
+		Assert.assertFalse(_dbInspector.hasTable(null));
 	}
 
 	@Test
@@ -253,6 +307,11 @@ public class DBInspectorTest {
 	}
 
 	@Test
+	public void testHasViewIsNullSafe() throws Exception {
+		Assert.assertFalse(_dbInspector.hasView(null));
+	}
+
+	@Test
 	public void testIsNotNullColumnNullable() throws Exception {
 		Assert.assertTrue(_dbInspector.isNullable(_TABLE_NAME, "nilColumn"));
 	}
@@ -261,6 +320,31 @@ public class DBInspectorTest {
 	public void testIsNullableColumnNullable() throws Exception {
 		Assert.assertFalse(
 			_dbInspector.isNullable(_TABLE_NAME, "notNilColumn"));
+	}
+
+	@Test
+	public void testIsNullableIsNullSafeColumnNameParameter() throws Exception {
+		Assert.assertFalse(_dbInspector.isNullable(_TABLE_NAME, null));
+	}
+
+	@Test
+	public void testIsNullableIsNullSafeTableNameParameter() throws Exception {
+		Assert.assertFalse(_dbInspector.isNullable(null, _COLUMN_NAME));
+	}
+
+	@Test
+	public void testIsNumericIsNullSafeColumnNameParameter() throws Exception {
+		Assert.assertFalse(_dbInspector.isNumeric(_TABLE_NAME, null));
+	}
+
+	@Test
+	public void testIsNumericIsNullSafeTableNameParameter() throws Exception {
+		Assert.assertFalse(_dbInspector.isNumeric(null, _COLUMN_NAME));
+	}
+
+	@Test
+	public void testIsObjectTableIsNullSafe() {
+		Assert.assertFalse(_dbInspector.isObjectTable(null));
 	}
 
 	@Test

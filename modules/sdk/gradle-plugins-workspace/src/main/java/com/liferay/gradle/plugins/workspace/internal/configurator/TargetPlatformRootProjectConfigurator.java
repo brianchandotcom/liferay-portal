@@ -12,6 +12,7 @@ import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExten
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.VersionUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -20,6 +21,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
@@ -52,71 +54,42 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		String normalizedTargetPlatformVersion =
 			VersionUtil.normalizeTargetPlatformVersion(targetPlatformVersion);
 
+		String product = "portal";
+
+		if (VersionUtil.isDXPVersion(normalizedTargetPlatformVersion)) {
+			product = "dxp";
+		}
+
 		_addDependenciesTargetPlatformBoms(
-			project, normalizedTargetPlatformVersion);
+			project, product, normalizedTargetPlatformVersion);
 		_addDependenciesTargetPlatformDistro(
-			project, normalizedTargetPlatformVersion);
+			project, product, normalizedTargetPlatformVersion);
 	}
 
 	private TargetPlatformRootProjectConfigurator() {
 	}
 
 	private void _addDependenciesTargetPlatformBoms(
-		Project project, String targetPlatformVersion) {
+		Project project, String productName, String version) {
 
-		String bomArtifactId = null;
-		String bomCompileOnlyArtifactId = null;
-		String bomTestArtifactId = null;
-		String bomThirdPartyArtifactId = null;
-
-		if (VersionUtil.isDXPVersion(targetPlatformVersion)) {
-			bomArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
-			bomCompileOnlyArtifactId =
-				_ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY;
-			bomTestArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM_TEST;
-			bomThirdPartyArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM_THIRD_PARTY;
-		}
-		else {
-			bomArtifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM;
-			bomCompileOnlyArtifactId =
-				_ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY;
-			bomTestArtifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM_TEST;
-			bomThirdPartyArtifactId =
-				_ARTIFACT_ID_RELEASE_PORTAL_BOM_THIRD_PARTY;
-		}
-
-		GradleUtil.addDependency(
-			project,
-			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_LIFERAY_PORTAL, bomArtifactId, targetPlatformVersion);
-
-		GradleUtil.addDependency(
-			project,
-			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId,
-			targetPlatformVersion);
+		_applyToTargetPlatform(project, productName, "bom", version);
+		_applyToTargetPlatform(
+			project, productName, "bom.compile.only", version);
 
 		if (GradleUtil.toBoolean(
 				GradleUtil.getProperty(
 					project,
 					WorkspacePlugin.PROPERTY_PREFIX + "use.test.boms"))) {
 
-			GradleUtil.addDependency(
-				project,
-				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-				_GROUP_ID_LIFERAY_PORTAL, bomTestArtifactId,
-				targetPlatformVersion);
+			_applyToTargetPlatform(project, productName, "bom.test", version);
 		}
 
-		GradleUtil.addDependency(
-			project,
-			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_LIFERAY_PORTAL, bomThirdPartyArtifactId,
-			targetPlatformVersion);
+		_applyToTargetPlatform(
+			project, productName, "bom.third.party", version);
 	}
 
 	private void _addDependenciesTargetPlatformDistro(
-		final Project project, final String targetPlatformVersion) {
+		final Project project, final String productName, final String version) {
 
 		Configuration configuration = GradleUtil.getConfiguration(
 			project,
@@ -127,21 +100,36 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					String artifactId = _ARTIFACT_ID_RELEASE_PORTAL_DISTRO;
-
-					if (VersionUtil.isDXPVersion(targetPlatformVersion)) {
-						artifactId = _ARTIFACT_ID_RELEASE_DXP_DISTRO;
-					}
-
 					GradleUtil.addDependency(
 						project,
 						TargetPlatformPlugin.
 							TARGET_PLATFORM_DISTRO_CONFIGURATION_NAME,
-						_GROUP_ID_LIFERAY_PORTAL, artifactId,
-						targetPlatformVersion);
+						_GROUP_ID_LIFERAY_PORTAL,
+						StringUtil.concat("release.", productName, ".distro"),
+						version);
 				}
 
 			});
+	}
+
+	private void _applyToTargetPlatform(
+		Project project, String product, String name, String version) {
+
+		String artifactName = StringUtil.concat("release.", product, ".", name);
+
+		Logger logger = project.getLogger();
+
+		if (logger.isInfoEnabled()) {
+			logger.info(
+				StringUtil.concat(
+					"Applying artifact ", artifactName, " version ", version,
+					" to target platform for project ", project.getPath()));
+		}
+
+		GradleUtil.addDependency(
+			project,
+			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
+			_GROUP_ID_LIFERAY_PORTAL, artifactName, version);
 	}
 
 	private void _configureTargetPlatform(Project project) {
@@ -160,36 +148,6 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 			});
 	}
-
-	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM =
-		"release.dxp.bom";
-
-	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY =
-		"release.dxp.bom.compile.only";
-
-	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_TEST =
-		"release.dxp.bom.test";
-
-	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_THIRD_PARTY =
-		"release.dxp.bom.third.party";
-
-	private static final String _ARTIFACT_ID_RELEASE_DXP_DISTRO =
-		"release.dxp.distro";
-
-	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM =
-		"release.portal.bom";
-
-	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY =
-		"release.portal.bom.compile.only";
-
-	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_TEST =
-		"release.portal.bom.test";
-
-	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_THIRD_PARTY =
-		"release.portal.bom.third.party";
-
-	private static final String _ARTIFACT_ID_RELEASE_PORTAL_DISTRO =
-		"release.portal.distro";
 
 	private static final String _GROUP_ID_LIFERAY_PORTAL = "com.liferay.portal";
 

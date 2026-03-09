@@ -123,7 +123,13 @@ export class GlobalMenuPage {
 
 	async goTo(categoryName: Categories) {
 		await expect(async () => {
-			await this.globalMenuButton.click();
+			const isOpen =
+				(await this.globalMenuButton.getAttribute('aria-expanded')) ===
+				'true';
+
+			if (!isOpen) {
+				await this.globalMenuButton.click();
+			}
 
 			const menuItem = this.page.getByRole('menuitem', {
 				name: categoryName,

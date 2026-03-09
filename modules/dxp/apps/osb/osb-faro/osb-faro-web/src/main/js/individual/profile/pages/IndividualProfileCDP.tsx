@@ -3,6 +3,7 @@ import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import IndividualAttributesCDP from '../components/IndividualAttributesCDP';
+import IndividualDetailsCDP from '../components/IndividualAllAttributesCDP';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -146,21 +147,39 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 	const authorized = currentUser.isAdmin();
 
 	return (
-		<IndividualAttributesCDP
-			contactId={individual.get('id')}
-			propertiesData={individual.get('properties')}
-			showEmptyState={
-				isNil(dataSourceData?.total) || dataSourceData?.total === 0
-			}
-		>
-			<ProfileCDPEmptyState
-				authorized={authorized}
-				dataSourceData={dataSourceData}
-				dataSourceLoading={dataSourceLoading}
+		<>
+			<IndividualAttributesCDP
+				contactId={individual.get('id')}
+				propertiesData={individual.get('properties')}
+				showEmptyState={
+					isNil(dataSourceData?.total) || dataSourceData?.total === 0
+				}
+			>
+				<ProfileCDPEmptyState
+					authorized={authorized}
+					dataSourceData={dataSourceData}
+					dataSourceLoading={dataSourceLoading}
+					groupId={groupId}
+					pageDisplay={false}
+				/>
+			</IndividualAttributesCDP>
+
+			<IndividualDetailsCDP
 				groupId={groupId}
-				pageDisplay={false}
-			/>
-		</IndividualAttributesCDP>
+				individualId={individual.get('id')}
+				showEmptyState={
+					isNil(dataSourceData?.total) || dataSourceData?.total === 0
+				}
+			>
+				<ProfileCDPEmptyState
+					authorized={authorized}
+					dataSourceData={dataSourceData}
+					dataSourceLoading={dataSourceLoading}
+					groupId={groupId}
+					pageDisplay={false}
+				/>
+			</IndividualDetailsCDP>
+		</>
 	);
 };
 

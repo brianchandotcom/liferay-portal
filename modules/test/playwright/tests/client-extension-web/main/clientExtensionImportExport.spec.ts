@@ -49,14 +49,13 @@ test(
 
 			const downloadPromise = page.waitForEvent('download');
 
-			await page
-				.getByRole('menuitem', {name: 'Export as JSON'})
-				.click();
+			await page.getByRole('menuitem', {name: 'Export as JSON'}).click();
 
 			const download = await downloadPromise;
 
 			expect(download.suggestedFilename()).toMatch(
-				/client-extension-entry\.[0-9a-f-]+\.json/g);
+				/client-extension-entry\.[0-9a-f-]+\.json/g
+			);
 		});
 
 		await test.step('Clean up', async () => {
@@ -100,9 +99,7 @@ test(
 
 			const downloadPromise = page.waitForEvent('download');
 
-			await page
-				.getByRole('menuitem', {name: 'Export as JSON'})
-				.click();
+			await page.getByRole('menuitem', {name: 'Export as JSON'}).click();
 
 			const download = await downloadPromise;
 
@@ -130,7 +127,11 @@ test(
 				'.alert-success .close, .alert-dismissible .close'
 			);
 
-			if (await existingAlert.isVisible({timeout: 1000}).catch(() => false)) {
+			if (
+				await existingAlert
+					.isVisible({timeout: 1000})
+					.catch(() => false)
+			) {
 				await existingAlert.click();
 				await existingAlert.waitFor({state: 'hidden'});
 			}
@@ -146,7 +147,9 @@ test(
 			await page.getByRole('button', {name: 'Import'}).click();
 
 			await expect(
-				page.getByText(/imported successfully|request completed successfully/i)
+				page.getByText(
+					/imported successfully|request completed successfully/i
+				)
 			).toBeVisible();
 		});
 
@@ -197,9 +200,7 @@ test(
 
 			const downloadPromise = page.waitForEvent('download');
 
-			await page
-				.getByRole('menuitem', {name: 'Export as JSON'})
-				.click();
+			await page.getByRole('menuitem', {name: 'Export as JSON'}).click();
 
 			const download = await downloadPromise;
 
@@ -221,9 +222,7 @@ test(
 		await test.step('Clear the file field', async () => {
 			await page.getByRole('button', {name: 'Clear'}).click();
 
-			await expect(
-				page.locator('input[type="file"]')
-			).toHaveValue('');
+			await expect(page.locator('input[type="file"]')).toHaveValue('');
 		});
 
 		await test.step('Clean up', async () => {
@@ -248,14 +247,20 @@ test(
 
 		const fileInput = page.locator('input[type="file"]');
 
-		const invalidFilePath = path.join(__dirname, '..', '..', '..', 'package.json');
+		const invalidFilePath = path.join(
+			__dirname,
+			'..',
+			'..',
+			'..',
+			'package.json'
+		);
 
 		await fileInput.setInputFiles(invalidFilePath);
 
 		await page.getByRole('button', {name: 'Import'}).click();
 
-		await expect(
-			page.getByText(/error|invalid|failed/i)
-		).toBeVisible({timeout: 10000});
+		await expect(page.getByText(/error|invalid|failed/i)).toBeVisible({
+			timeout: 10000,
+		});
 	}
 );

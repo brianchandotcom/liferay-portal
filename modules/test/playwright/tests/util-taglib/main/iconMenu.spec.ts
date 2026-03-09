@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {samplePageTest} from '../../frontend-taglib/main/fixtures/samplePageTest';
 import {TabName} from '../../frontend-taglib/main/pages/SamplePage';
-import {apiHelpersTest} from "../../../fixtures/apiHelpersTest";
 
 export const test = mergeTests(
 	featureFlagsTest({

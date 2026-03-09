@@ -560,7 +560,13 @@ test(
 testSample(
 	'Custom Element can be instanceable',
 	{tag: '@LPS-139377'},
-	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
+	async ({
+		clientExtensionsPage,
+		editCustomElementPage,
+		layout,
+		page,
+		pageEditorPage,
+	}) => {
 		const clientExtensionName = getRandomString();
 		const htmlElementName = `html-${getRandomString()}`;
 
@@ -580,9 +586,7 @@ testSample(
 		});
 
 		await test.step('Add the widget to two grid columns', async () => {
-			await page.goto(
-				`/web/guest${layout.friendlyURL}?p_l_mode=edit`
-			);
+			await page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
 
 			await pageEditorPage.addWidget(
 				'Client Extensions',
@@ -616,7 +620,13 @@ testSample(
 testSample(
 	'Custom Element can inject HTML properties',
 	{tag: '@LPS-139377'},
-	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
+	async ({
+		clientExtensionsPage,
+		editCustomElementPage,
+		layout,
+		page,
+		pageEditorPage,
+	}) => {
 		const clientExtensionName = getRandomString();
 		const htmlElementName = `html-${getRandomString()}`;
 
@@ -645,9 +655,7 @@ testSample(
 		});
 
 		await test.step('Add widget to page and verify HTML property', async () => {
-			await page.goto(
-				`/web/guest${layout.friendlyURL}?p_l_mode=edit`
-			);
+			await page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
 
 			await pageEditorPage.addWidget(
 				'Client Extensions',
@@ -659,8 +667,14 @@ testSample(
 
 			const element = page.locator(htmlElementName);
 
-			await expect(element).toHaveAttribute(propertyName1, propertyValue1);
-			await expect(element).toHaveAttribute(propertyName2, propertyValue2);
+			await expect(element).toHaveAttribute(
+				propertyName1,
+				propertyValue1
+			);
+			await expect(element).toHaveAttribute(
+				propertyName2,
+				propertyValue2
+			);
 		});
 
 		await test.step('Clean up', async () => {
@@ -676,7 +690,13 @@ testSample(
 testSample(
 	'Custom Element renders correctly when placed on a page (non ES module)',
 	{tag: '@LPS-159013'},
-	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
+	async ({
+		clientExtensionsPage,
+		editCustomElementPage,
+		layout,
+		page,
+		pageEditorPage,
+	}) => {
 		const clientExtensionName = getRandomString();
 		const htmlElementName = `html-${getRandomString()}`;
 		const jsResourceName = `res-${getRandomString()}.js`;
@@ -696,9 +716,7 @@ testSample(
 		});
 
 		await test.step('Add widget to page and verify script type', async () => {
-			await page.goto(
-				`/web/guest${layout.friendlyURL}?p_l_mode=edit`
-			);
+			await page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
 
 			await pageEditorPage.addWidget(
 				'Client Extensions',
@@ -726,7 +744,13 @@ testSample(
 testSample(
 	'Custom Element renders correctly when placed on a page (ES module type)',
 	{tag: '@LPS-139377'},
-	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
+	async ({
+		clientExtensionsPage,
+		editCustomElementPage,
+		layout,
+		page,
+		pageEditorPage,
+	}) => {
 		const clientExtensionName = getRandomString();
 		const htmlElementName = `html-${getRandomString()}`;
 		const jsResourceName = `res-${getRandomString()}.js`;
@@ -747,9 +771,7 @@ testSample(
 		});
 
 		await test.step('Add to page and verify type="module" script', async () => {
-			await page.goto(
-				`/web/guest${layout.friendlyURL}?p_l_mode=edit`
-			);
+			await page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
 
 			await pageEditorPage.addWidget(
 				'Client Extensions',
@@ -773,7 +795,6 @@ testSample(
 		});
 	}
 );
-
 
 test(
 	'UI label is present for non-OSGi client extensions',
@@ -804,9 +825,9 @@ test(
 
 			await expect(row).toBeVisible();
 
-			await expect(
-				row.locator('td').nth(Column.TYPE)
-			).toContainText('Custom Element');
+			await expect(row.locator('td').nth(Column.TYPE)).toContainText(
+				'Custom Element'
+			);
 		});
 
 		await test.step('Clean up', async () => {

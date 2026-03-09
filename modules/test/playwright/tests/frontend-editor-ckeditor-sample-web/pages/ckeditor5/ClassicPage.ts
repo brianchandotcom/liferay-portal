@@ -23,7 +23,9 @@ export class ClassicPage implements CKEditorSamplePageTab {
 			'iframe[title="Select Item"]'
 		);
 
-		this.sourceEditable = page.locator('.ck-source-editing-area > textarea');
+		this.sourceEditable = page.locator(
+			'.ck-source-editing-area > textarea'
+		);
 
 		const toolbarContainer = page.getByLabel('Editor toolbar');
 

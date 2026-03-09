@@ -32,30 +32,26 @@ test.afterEach(async ({instanceSettingsPage, page}) => {
 	await instanceSettingsPage.saveAndWaitForAlert();
 });
 
-test(
-	'Can render custom alert modal',
-	{tag: '@LPS-165263'},
-	async ({page}) => {
-		await page.evaluate(() => {
-			// @ts-ignore
+test('Can render custom alert modal', {tag: '@LPS-165263'}, async ({page}) => {
+	await page.evaluate(() => {
 
-			Liferay.Util.openAlertModal({
-				message: 'Test Alert Modal',
-				onConfirm: () => {},
-			});
+		// @ts-ignore
+
+		Liferay.Util.openAlertModal({
+			message: 'Test Alert Modal',
+			onConfirm: () => {},
 		});
+	});
 
-		await expect(page.locator('.modal-body')).toHaveText(
-			'Test Alert Modal'
-		);
-	}
-);
+	await expect(page.locator('.modal-body')).toHaveText('Test Alert Modal');
+});
 
 test(
 	'Can render custom confirm modal',
 	{tag: '@LPS-165262'},
 	async ({page}) => {
 		await page.evaluate(() => {
+
 			// @ts-ignore
 
 			Liferay.Util.openConfirmModal({

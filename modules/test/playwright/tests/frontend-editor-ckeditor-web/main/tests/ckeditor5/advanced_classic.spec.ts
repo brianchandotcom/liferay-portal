@@ -7,8 +7,8 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import getRandomString from '../../../../../utils/getRandomString';
 import {advancedClassicPageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditor5/classicPageTest';
-import getRandomString from "../../../../../utils/getRandomString";
 
 export const test = mergeTests(
 	advancedClassicPageTest,
@@ -165,13 +165,11 @@ test(
 
 			const urlInput = page.getByLabel('Link URL');
 
-			if (await urlInput.isVisible({timeout: 3000})) {
-				await urlInput.fill('https://www.liferay.com');
+			await expect(urlInput).toBeVisible({timeout: 3000});
 
-			await page
-				.getByLabel('Insert', { exact: true })
-				.click();
-			}
+			await urlInput.fill('https://www.liferay.com');
+
+			await page.getByLabel('Insert', {exact: true}).click();
 		});
 
 		await expect(

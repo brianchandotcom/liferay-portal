@@ -10,29 +10,26 @@ import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 
 const test = mergeTests(loginTest(), systemSettingsPageTest);
 
-test(
-	'AUI modules can be enabled to preload',
-	async ({systemSettingsPage}) => {
-		await systemSettingsPage.goToSystemSetting('Third Party', 'AUI');
+test('AUI modules can be enabled to preload', async ({systemSettingsPage}) => {
+	await systemSettingsPage.goToSystemSetting('Third Party', 'AUI');
 
-		const checkbox = systemSettingsPage.page.getByLabel(
-			'Preload Widely Used AUI'
-		);
+	const checkbox = systemSettingsPage.page.getByLabel(
+		'Preload Widely Used AUI'
+	);
 
-		await expect(checkbox).not.toBeChecked();
+	await expect(checkbox).not.toBeChecked();
 
-		await checkbox.check();
+	await checkbox.check();
+
+	await systemSettingsPage.saveAndWaitForAlert();
+
+	await systemSettingsPage.goToSystemSetting('Third Party', 'AUI');
+
+	await expect(checkbox).toBeChecked();
+
+	await test.step('Clean up', async () => {
+		await checkbox.uncheck();
 
 		await systemSettingsPage.saveAndWaitForAlert();
-
-		await systemSettingsPage.goToSystemSetting('Third Party', 'AUI');
-
-		await expect(checkbox).toBeChecked();
-
-		await test.step('Clean up', async () => {
-			await checkbox.uncheck();
-
-			await systemSettingsPage.saveAndWaitForAlert();
-		});
-	}
-);
+	});
+});

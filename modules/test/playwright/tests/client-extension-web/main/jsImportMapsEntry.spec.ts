@@ -98,9 +98,7 @@ test(
 
 		await clientExtensionsPage.goto();
 
-		await expect(
-			clientExtensionsPage.getRowByText(name)
-		).not.toBeVisible();
+		await expect(clientExtensionsPage.getRowByText(name)).not.toBeVisible();
 	}
 );
 
@@ -125,9 +123,7 @@ test(
 
 			await clientExtensionsPage.search(name);
 
-			await expect(
-				clientExtensionsPage.getRowByText(name)
-			).toBeVisible();
+			await expect(clientExtensionsPage.getRowByText(name)).toBeVisible();
 		});
 
 		await test.step('Clean up', async () => {

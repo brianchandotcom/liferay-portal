@@ -8,14 +8,16 @@ import {Locator, Page} from '@playwright/test';
 import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
 export class EditIFramePage extends EditClientExtensionsPage {
+	readonly friendlyURLMappingInput: Locator;
 	readonly urlInput: Locator;
 
 	constructor(page: Page) {
 		super(page, 'iframe');
 
-		this.urlInput = page.locator(
-			`[name=_${this.portletName}_url]`
+		this.friendlyURLMappingInput = page.locator(
+			`[name=_${this.portletName}_friendlyURLMapping]`
 		);
+		this.urlInput = page.locator(`[name=_${this.portletName}_url]`);
 	}
 
 	async fillRequiredFields() {

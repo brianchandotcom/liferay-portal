@@ -8,24 +8,21 @@ import {TabName} from './pages/ClaySamplePage';
 
 const test = claySamplePageTest;
 
-test(
-	'Clay Sample portlet can render each tab UI',
-	async ({claySamplePage}) => {
-		const tabs = [
-			TabName.BADGES,
-			TabName.DROPDOWNS,
-			TabName.LABELS,
-			TabName.LINKS,
-			TabName.NAVIGATION_BARS,
-			TabName.PAGINATION_BARS,
-			TabName.PROGRESS_BARS,
-			TabName.STICKERS,
-		];
+test('Clay Sample portlet can render each tab UI', async ({claySamplePage}) => {
+	const tabs = [
+		TabName.BADGES,
+		TabName.DROPDOWNS,
+		TabName.LABELS,
+		TabName.LINKS,
+		TabName.NAVIGATION_BARS,
+		TabName.PAGINATION_BARS,
+		TabName.PROGRESS_BARS,
+		TabName.STICKERS,
+	];
 
-		for (const tab of tabs) {
-			await test.step(`Verify ${tab} tab renders`, async () => {
-				await claySamplePage.selectTab(tab);
-			});
-		}
+	for (const tab of tabs) {
+		await test.step(`Verify ${tab} tab renders`, async () => {
+			await claySamplePage.selectTab(tab);
+		});
 	}
-);
+});

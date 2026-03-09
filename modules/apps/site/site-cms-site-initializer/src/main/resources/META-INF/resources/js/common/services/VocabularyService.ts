@@ -34,7 +34,11 @@ async function getCommonCategories(
 ) {
 	return await ApiHelper.post<any>(
 		`/o/bulk/v1.0/sites/${groupId}/taxonomy-vocabularies/common`,
-		composeCreateTaskDTO('TaxonomyCategoryBulkAction', {}, selectedData)
+		composeCreateTaskDTO(
+			'EditObjectCategoriesBulkSelectionAction',
+			{},
+			selectedData
+		)
 	);
 }
 

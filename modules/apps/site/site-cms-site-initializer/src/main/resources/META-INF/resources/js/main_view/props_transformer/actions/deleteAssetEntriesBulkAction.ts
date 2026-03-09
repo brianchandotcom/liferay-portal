@@ -33,7 +33,7 @@ export function executeBulkDeleteAction(
 			processClose?.();
 		},
 		selectedData,
-		type: 'DeleteBulkAction',
+		type: 'DeleteObjectBulkSelectionAction',
 	});
 }
 

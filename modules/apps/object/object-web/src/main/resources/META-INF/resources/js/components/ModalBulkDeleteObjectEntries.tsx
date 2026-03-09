@@ -157,7 +157,7 @@ export default function ModalBulkDeleteObjectEntries({
 					selectionScope: {
 						selectAll: isSelectAll,
 					},
-					type: 'DeleteObjectEntryBulkAction',
+					type: 'DeleteObjectEntryBulkSelectionAction',
 				},
 				getBulkActionUrl()
 			).then(() => {

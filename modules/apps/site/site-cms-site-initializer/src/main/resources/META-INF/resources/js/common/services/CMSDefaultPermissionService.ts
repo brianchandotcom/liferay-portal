@@ -32,7 +32,7 @@ async function batchUpdateObjectEntry({
 	permissions,
 	selectAll,
 	treePath,
-	type = 'DefaultPermissionBulkAction',
+	type = 'DefaultPermissionObjectBulkSelectionAction',
 }: {
 	bulkActionItems?: Array<{
 		classExternalReferenceCode: string;

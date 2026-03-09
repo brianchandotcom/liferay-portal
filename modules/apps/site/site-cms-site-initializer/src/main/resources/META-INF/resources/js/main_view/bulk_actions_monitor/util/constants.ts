@@ -10,22 +10,25 @@ import React from 'react';
 import {IBulkActionTaskType} from '../../../common/types/BulkActionTask';
 
 export const BULK_ACTION_ASSIGN_DEFAULT_WORKFLOW =
-	'AssignStructureDefaultWorkflowBulkAction';
-export const BULK_ACTION_ASSIGN_TO = 'AssignToBulkAction';
-export const BULK_ACTION_CATEGORIES = 'TaxonomyCategoryBulkAction';
-export const BULK_ACTION_COPY = 'CopyBulkAction';
-export const BULK_ACTION_DEFAULT_PERMISSIONS = 'DefaultPermissionBulkAction';
-export const BULK_ACTION_DELETE = 'DeleteBulkAction';
-export const BULK_ACTION_DELETE_ASSET_VERSION = 'DeleteAssetVersionBulkAction';
+	'AssignStructureDefaultWorkflowBulkSelectionAction';
+export const BULK_ACTION_ASSIGN_TO = 'AssignToObjectBulkSelectionAction';
+export const BULK_ACTION_CATEGORIES = 'EditObjectCategoriesBulkSelectionAction';
+export const BULK_ACTION_COPY = 'CopyObjectBulkSelectionAction';
+export const BULK_ACTION_DEFAULT_PERMISSIONS =
+	'DefaultPermissionObjectBulkSelectionAction';
+export const BULK_ACTION_DELETE = 'DeleteObjectBulkSelectionAction';
+export const BULK_ACTION_DELETE_ASSET_VERSION =
+	'DeleteObjectAssetVersionBulkSelectionAction';
 export const BULK_ACTION_DELETE_TASK = 'DeleteTaskBulkAction';
 export const BULK_ACTION_DOWNLOAD = 'DownloadBulkAction';
-export const BULK_ACTION_DUE_DATE = 'DueDateBulkAction';
-export const BULK_ACTION_EXPIRE = 'ExpireBulkAction';
-export const BULK_ACTION_MOVE = 'MoveBulkAction';
-export const BULK_ACTION_PERMISSIONS = 'PermissionBulkAction';
-export const BULK_ACTION_RESET_PERMISSIONS = 'ResetPermissionBulkAction';
-export const BULK_ACTION_STATUS = 'StatusBulkAction';
-export const BULK_ACTION_TAGS = 'KeywordBulkAction';
+export const BULK_ACTION_DUE_DATE = 'DueDateObjectBulkSelectionAction';
+export const BULK_ACTION_EXPIRE = 'ExpireObjectBulkSelectionAction';
+export const BULK_ACTION_MOVE = 'MoveObjectBulkSelectionAction';
+export const BULK_ACTION_PERMISSIONS = 'PermissionObjectBulkSelectionAction';
+export const BULK_ACTION_RESET_PERMISSIONS =
+	'ResetPermissionObjectBulkSelectionAction';
+export const BULK_ACTION_STATUS = 'StatusObjectBulkSelectionAction';
+export const BULK_ACTION_TAGS = 'EditObjectTagsBulkSelectionAction';
 
 export const INTERVAL_TASK_POLLING_MS = 5000;
 

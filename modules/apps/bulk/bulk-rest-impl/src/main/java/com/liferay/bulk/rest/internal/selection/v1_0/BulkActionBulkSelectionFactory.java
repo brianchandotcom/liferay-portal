@@ -7,8 +7,8 @@ package com.liferay.bulk.rest.internal.selection.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionItem;
-import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.DeleteAssetVersionBulkAction;
+import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.dto.v1_0.DeleteObjectAssetVersionBulkSelectionAction;
 import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
@@ -358,25 +358,31 @@ public class BulkActionBulkSelectionFactory {
 	}
 
 	private String[] _getRowIds() throws PortalException {
-		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
-				_bulkAction.getType())) {
+		if (BulkAction.Type.DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION.
+				equals(_bulkAction.getType())) {
 
-			DefaultPermissionBulkAction defaultPermissionBulkAction =
-				(DefaultPermissionBulkAction)_bulkAction;
+			DefaultPermissionObjectBulkSelectionAction
+				defaultPermissionObjectBulkSelectionAction =
+					(DefaultPermissionObjectBulkSelectionAction)_bulkAction;
 
 			String filterString = StringBundler.concat(
 				"(className eq '", ObjectEntryFolder.class.getName(),
 				"') and ");
 
-			if (Validator.isNull(defaultPermissionBulkAction.getTreePath())) {
+			if (Validator.isNull(
+					defaultPermissionObjectBulkSelectionAction.getTreePath())) {
+
 				filterString = StringBundler.concat(
 					filterString, "(depotGroupId eq ",
-					defaultPermissionBulkAction.getDepotGroupId(), ")");
+					defaultPermissionObjectBulkSelectionAction.
+						getDepotGroupId(),
+					")");
 			}
 			else {
 				filterString = StringBundler.concat(
 					filterString, "(startswith(treePath, '",
-					defaultPermissionBulkAction.getTreePath(), "'))");
+					defaultPermissionObjectBulkSelectionAction.getTreePath(),
+					"'))");
 			}
 
 			ObjectDefinition objectDefinition =
@@ -397,11 +403,13 @@ public class BulkActionBulkSelectionFactory {
 						primaryKey,
 				String.class);
 		}
-		else if (BulkAction.Type.DELETE_ASSET_VERSION_BULK_ACTION.equals(
-					_bulkAction.getType())) {
+		else if (BulkAction.Type.
+					DELETE_OBJECT_ASSET_VERSION_BULK_SELECTION_ACTION.equals(
+						_bulkAction.getType())) {
 
-			DeleteAssetVersionBulkAction deleteAssetVersionBulkAction =
-				(DeleteAssetVersionBulkAction)_bulkAction;
+			DeleteObjectAssetVersionBulkSelectionAction
+				deleteAssetVersionBulkAction =
+					(DeleteObjectAssetVersionBulkSelectionAction)_bulkAction;
 
 			if (!Objects.equals(
 					deleteAssetVersionBulkAction.getClassName(),
@@ -498,8 +506,8 @@ public class BulkActionBulkSelectionFactory {
 			return new String[0];
 		}
 
-		if (!BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
-				_bulkAction.getType())) {
+		if (!BulkAction.Type.DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION.
+				equals(_bulkAction.getType())) {
 
 			return TransformUtil.transform(
 				bulkActionItems,
@@ -638,22 +646,25 @@ public class BulkActionBulkSelectionFactory {
 			selectAll = GetterUtil.getBoolean(selectionScope.getSelectAll());
 		}
 
-		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(
-				_bulkAction.getType())) {
+		if (BulkAction.Type.DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION.
+				equals(_bulkAction.getType())) {
 
 			if (selectAll &&
 				ArrayUtil.isEmpty(_bulkAction.getBulkActionItems())) {
 
-				DefaultPermissionBulkAction defaultPermissionBulkAction =
-					(DefaultPermissionBulkAction)_bulkAction;
+				DefaultPermissionObjectBulkSelectionAction
+					defaultPermissionObjectBulkSelectionAction =
+						(DefaultPermissionObjectBulkSelectionAction)_bulkAction;
 
 				long depotGroupId = GetterUtil.getLong(
-					defaultPermissionBulkAction.getDepotGroupId());
+					defaultPermissionObjectBulkSelectionAction.
+						getDepotGroupId());
 
 				if ((depotGroupId == 0) &&
 					Validator.isNull(
 						GetterUtil.getString(
-							defaultPermissionBulkAction.getTreePath()))) {
+							defaultPermissionObjectBulkSelectionAction.
+								getTreePath()))) {
 
 					throw new ValidationException();
 				}

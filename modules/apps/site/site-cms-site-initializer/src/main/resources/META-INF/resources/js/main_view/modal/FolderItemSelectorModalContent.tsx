@@ -148,7 +148,7 @@ function executeBulkCopyAction({
 		},
 		onCreateSuccess: onClose,
 		selectedData,
-		type: 'CopyBulkAction',
+		type: 'CopyObjectBulkSelectionAction',
 	});
 }
 

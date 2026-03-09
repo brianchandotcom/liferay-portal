@@ -85,7 +85,7 @@ export default function DefaultPermissionModalContent({
 						selectedData: {
 							selectAll: true,
 						},
-						type: 'DefaultPermissionBulkAction',
+						type: 'DefaultPermissionObjectBulkSelectionAction',
 					});
 				}
 				else {

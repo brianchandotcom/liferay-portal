@@ -11,20 +11,20 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AssignToObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
-import com.liferay.bulk.rest.client.dto.v1_0.CopyBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.PermissionBulkAction;
-import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.CopyObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.EditObjectCategoriesBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.EditObjectTagsBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.ExpireObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.PermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.SelectionScope;
-import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkAction;
 import com.liferay.bulk.rest.client.pagination.Page;
 import com.liferay.bulk.rest.client.pagination.Pagination;
 import com.liferay.bulk.rest.client.problem.Problem;
@@ -371,7 +371,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private BulkAction _testBulkDeleteFilterValidation(BulkAction.Type type)
 		throws Exception {
 
-		BulkAction bulkAction = new DeleteBulkAction();
+		BulkAction bulkAction = new DeleteObjectBulkSelectionAction();
 
 		SelectionScope selectionScope = new SelectionScope();
 
@@ -408,9 +408,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			DepotEntry depotEntry, String expectedDeletionType)
 		throws Exception {
 
-		BulkAction bulkAction = new DeleteBulkAction();
+		BulkAction bulkAction = new DeleteObjectBulkSelectionAction();
 
-		bulkAction.setType(BulkAction.Type.DELETE_BULK_ACTION);
+		bulkAction.setType(BulkAction.Type.DELETE_OBJECT_BULK_SELECTION_ACTION);
 
 		ObjectEntryFolder contentObjectEntryFolder =
 			_objectEntryFolderLocalService.
@@ -628,13 +628,14 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private void _testPostBulkActionWithTypeAssignStructureDefaultWorkflow()
 		throws Exception {
 
-		AssignStructureDefaultWorkflowBulkAction bulkAction =
-			new AssignStructureDefaultWorkflowBulkAction();
+		AssignStructureDefaultWorkflowBulkSelectionAction bulkAction =
+			new AssignStructureDefaultWorkflowBulkSelectionAction();
 
 		bulkAction.setBulkActionItems(
 			_toBulkActionItems(null, _cmsBulkActionTaskObjectDefinition));
 		bulkAction.setType(
-			BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION);
+			BulkAction.Type.
+				ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_SELECTION_ACTION);
 		bulkAction.setWorkflow("Single Approver");
 
 		_postBulkAction(bulkAction);
@@ -676,11 +677,13 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				bundle.stop();
 			}
 
-			AssignToBulkAction assignToBulkAction = new AssignToBulkAction();
+			AssignToObjectBulkSelectionAction assignToBulkAction =
+				new AssignToObjectBulkSelectionAction();
 
 			assignToBulkAction.setBulkActionItems(
 				new BulkActionItem[] {new BulkActionItem()});
-			assignToBulkAction.setType(BulkAction.Type.ASSIGN_TO_BULK_ACTION);
+			assignToBulkAction.setType(
+				BulkAction.Type.ASSIGN_TO_OBJECT_BULK_SELECTION_ACTION);
 
 			assertHttpResponseStatusCode(
 				400,
@@ -696,9 +699,11 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	}
 
 	private void _testPostBulkActionWithTypeCopy() throws Exception {
-		CopyBulkAction copyBulkAction = new CopyBulkAction();
+		CopyObjectBulkSelectionAction copyBulkAction =
+			new CopyObjectBulkSelectionAction();
 
-		copyBulkAction.setType(BulkAction.Type.COPY_BULK_ACTION);
+		copyBulkAction.setType(
+			BulkAction.Type.COPY_OBJECT_BULK_SELECTION_ACTION);
 
 		ObjectEntryFolder sourceObjectEntryFolder =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(
@@ -847,25 +852,27 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private void _testPostBulkActionWithTypeDefaultPermission()
 		throws Exception {
 
-		DefaultPermissionBulkAction defaultPermissionBulkAction =
-			new DefaultPermissionBulkAction();
+		DefaultPermissionObjectBulkSelectionAction
+			defaultPermissionObjectBulkSelectionAction =
+				new DefaultPermissionObjectBulkSelectionAction();
 
-		defaultPermissionBulkAction.setDefaultPermissions(
+		defaultPermissionObjectBulkSelectionAction.setDefaultPermissions(
 			"{\"test1\": \"test1\"}");
 
 		SelectionScope selectionScope = new SelectionScope();
 
 		selectionScope.setSelectAll(true);
 
-		defaultPermissionBulkAction.setSelectionScope(selectionScope);
+		defaultPermissionObjectBulkSelectionAction.setSelectionScope(
+			selectionScope);
 
-		defaultPermissionBulkAction.setType(
-			BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION);
+		defaultPermissionObjectBulkSelectionAction.setType(
+			BulkAction.Type.DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION);
 
 		try {
 			bulkActionResource.postBulkAction(
 				null, null, null, null, null, null, null, null,
-				defaultPermissionBulkAction);
+				defaultPermissionObjectBulkSelectionAction);
 
 			Assert.fail();
 		}
@@ -920,11 +927,12 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			jsonObject.has(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS));
 
-		defaultPermissionBulkAction.setDepotGroupId(_depotEntry2.getGroupId());
+		defaultPermissionObjectBulkSelectionAction.setDepotGroupId(
+			_depotEntry2.getGroupId());
 
 		BulkActionTask bulkActionTask = bulkActionResource.postBulkAction(
 			null, null, null, null, null, null, null, null,
-			defaultPermissionBulkAction);
+			defaultPermissionObjectBulkSelectionAction);
 
 		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
 
@@ -963,14 +971,14 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS));
 		Assert.assertTrue(jsonObject.has("test1"));
 
-		defaultPermissionBulkAction.setDefaultPermissions(
+		defaultPermissionObjectBulkSelectionAction.setDefaultPermissions(
 			"{\"test2\": \"test2\"}");
-		defaultPermissionBulkAction.setTreePath(
+		defaultPermissionObjectBulkSelectionAction.setTreePath(
 			objectEntryFolder3.getTreePath());
 
 		bulkActionTask = bulkActionResource.postBulkAction(
 			null, null, null, null, null, null, null, null,
-			defaultPermissionBulkAction);
+			defaultPermissionObjectBulkSelectionAction);
 
 		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
 
@@ -992,21 +1000,22 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertFalse(jsonObject.has("test1"));
 		Assert.assertTrue(jsonObject.has("test2"));
 
-		defaultPermissionBulkAction.setBulkActionItems(
+		defaultPermissionObjectBulkSelectionAction.setBulkActionItems(
 			new BulkActionItem[] {
 				_toBulkActionItem(objectEntryFolder2),
 				_toBulkActionItem(objectEntryFolder4)
 			});
-		defaultPermissionBulkAction.setDefaultPermissions(
+		defaultPermissionObjectBulkSelectionAction.setDefaultPermissions(
 			"{\"test3\": \"test3\"}");
 
 		selectionScope.setSelectAll(false);
 
-		defaultPermissionBulkAction.setSelectionScope(selectionScope);
+		defaultPermissionObjectBulkSelectionAction.setSelectionScope(
+			selectionScope);
 
 		bulkActionTask = bulkActionResource.postBulkAction(
 			null, null, null, null, null, null, null, null,
-			defaultPermissionBulkAction);
+			defaultPermissionObjectBulkSelectionAction);
 
 		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
 
@@ -1026,8 +1035,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private void _testPostBulkActionWithTypeDefaultPermissionSingleRole()
 		throws Exception {
 
-		DefaultPermissionBulkAction defaultPermissionBulkAction =
-			new DefaultPermissionBulkAction();
+		DefaultPermissionObjectBulkSelectionAction
+			defaultPermissionObjectBulkSelectionAction =
+				new DefaultPermissionObjectBulkSelectionAction();
 
 		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -1080,19 +1090,20 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				role2.getName(), JSONUtil.putAll(ActionKeys.VIEW)
 			));
 
-		defaultPermissionBulkAction.setDefaultPermissions(
+		defaultPermissionObjectBulkSelectionAction.setDefaultPermissions(
 			defaultPermissionsJSONObject.toString());
 
-		defaultPermissionBulkAction.setDepotGroupId(_depotEntry2.getGroupId());
-		defaultPermissionBulkAction.setBulkActionItems(
+		defaultPermissionObjectBulkSelectionAction.setDepotGroupId(
+			_depotEntry2.getGroupId());
+		defaultPermissionObjectBulkSelectionAction.setBulkActionItems(
 			new BulkActionItem[] {
 				_toBulkActionItem(objectEntryFolder2),
 				_toBulkActionItem(objectEntryFolder3)
 			});
-		defaultPermissionBulkAction.setType(
-			BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION);
+		defaultPermissionObjectBulkSelectionAction.setType(
+			BulkAction.Type.DEFAULT_PERMISSION_OBJECT_BULK_SELECTION_ACTION);
 
-		_postBulkAction(defaultPermissionBulkAction);
+		_postBulkAction(defaultPermissionObjectBulkSelectionAction);
 
 		JSONObject singleRoleDefaultPermissionsJSONObject = JSONUtil.put(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
@@ -1103,12 +1114,12 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				role2.getName(), JSONUtil.putAll(ActionKeys.ADD_ENTRY)
 			));
 
-		defaultPermissionBulkAction.setDefaultPermissions(
+		defaultPermissionObjectBulkSelectionAction.setDefaultPermissions(
 			singleRoleDefaultPermissionsJSONObject.toString());
 
-		defaultPermissionBulkAction.setRoleKey(role1.getName());
+		defaultPermissionObjectBulkSelectionAction.setRoleKey(role1.getName());
 
-		_postBulkAction(defaultPermissionBulkAction);
+		_postBulkAction(defaultPermissionObjectBulkSelectionAction);
 
 		JSONObject jsonObject = _getDefaultPermissionsJSONObject(
 			objectDefinition, objectEntryFolder2);
@@ -1158,7 +1169,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 	private void _testPostBulkActionWithTypeDelete() throws Exception {
 		BulkAction bulkAction = _testBulkDeleteFilterValidation(
-			BulkAction.Type.DELETE_BULK_ACTION);
+			BulkAction.Type.DELETE_OBJECT_BULK_SELECTION_ACTION);
 
 		SelectionScope selectionScope = bulkAction.getSelectionScope();
 
@@ -1185,7 +1196,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		throws Exception {
 
 		BulkAction bulkAction = _testBulkDeleteFilterValidation(
-			BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION);
+			BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_SELECTION_ACTION);
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -1245,9 +1256,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	}
 
 	private void _testPostBulkActionWithTypeExpire() throws Exception {
-		BulkAction bulkAction = new ExpireBulkAction();
+		BulkAction bulkAction = new ExpireObjectBulkSelectionAction();
 
-		bulkAction.setType(BulkAction.Type.EXPIRE_BULK_ACTION);
+		bulkAction.setType(BulkAction.Type.EXPIRE_OBJECT_BULK_SELECTION_ACTION);
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
@@ -1278,7 +1289,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	}
 
 	private void _testPostBulkActionWithTypeKeyword() throws Exception {
-		KeywordBulkAction keywordBulkAction = new KeywordBulkAction();
+		EditObjectTagsBulkSelectionAction keywordBulkAction =
+			new EditObjectTagsBulkSelectionAction();
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
@@ -1294,7 +1306,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		keywordBulkAction.setKeywordsToAdd(keywords);
 
-		keywordBulkAction.setType(BulkAction.Type.KEYWORD_BULK_ACTION);
+		keywordBulkAction.setType(
+			BulkAction.Type.EDIT_OBJECT_TAGS_BULK_SELECTION_ACTION);
 
 		_postBulkAction(keywordBulkAction);
 
@@ -1307,7 +1320,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	}
 
 	private void _testPostBulkActionWithTypePermission() throws Exception {
-		PermissionBulkAction permissionBulkAction = new PermissionBulkAction();
+		PermissionObjectBulkSelectionAction permissionBulkAction =
+			new PermissionObjectBulkSelectionAction();
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -1399,7 +1413,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				JSONUtil.put(role.getName(), JSONUtil.putAll(ActionKeys.VIEW))
 			).toString());
 
-		permissionBulkAction.setType(BulkAction.Type.PERMISSION_BULK_ACTION);
+		permissionBulkAction.setType(
+			BulkAction.Type.PERMISSION_OBJECT_BULK_SELECTION_ACTION);
 
 		_postBulkAction(permissionBulkAction);
 
@@ -1425,7 +1440,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private void _testPostBulkActionWithTypePermissionSingleRole()
 		throws Exception {
 
-		PermissionBulkAction permissionBulkAction = new PermissionBulkAction();
+		PermissionObjectBulkSelectionAction permissionBulkAction =
+			new PermissionObjectBulkSelectionAction();
 
 		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -1510,7 +1526,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			).toString());
 
 		permissionBulkAction.setRoleKey(role1.getName());
-		permissionBulkAction.setType(BulkAction.Type.PERMISSION_BULK_ACTION);
+		permissionBulkAction.setType(
+			BulkAction.Type.PERMISSION_OBJECT_BULK_SELECTION_ACTION);
 
 		_postBulkAction(permissionBulkAction);
 
@@ -1678,20 +1695,22 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			_cmsAdministratorRole.getRoleId(),
 			new String[] {ActionKeys.DELETE});
 
-		ResetPermissionBulkAction resetPermissionBulkAction =
-			new ResetPermissionBulkAction();
+		ResetPermissionObjectBulkSelectionAction
+			resetPermissionObjectBulkSelectionAction =
+				new ResetPermissionObjectBulkSelectionAction();
 
-		resetPermissionBulkAction.setBulkActionItems(
+		resetPermissionObjectBulkSelectionAction.setBulkActionItems(
 			new BulkActionItem[] {
 				_toBulkActionItem(
 					objectEntry2.getModelClassName(), objectEntry2),
 				_toBulkActionItem(objectEntryFolder3)
 			});
 
-		resetPermissionBulkAction.setType(
-			ResetPermissionBulkAction.Type.RESET_PERMISSION_BULK_ACTION);
+		resetPermissionObjectBulkSelectionAction.setType(
+			ResetPermissionObjectBulkSelectionAction.Type.
+				RESET_PERMISSION_OBJECT_BULK_SELECTION_ACTION);
 
-		_postBulkAction(resetPermissionBulkAction);
+		_postBulkAction(resetPermissionObjectBulkSelectionAction);
 
 		ResourcePermission resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -1796,14 +1815,14 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			String.valueOf(objectEntryFolder4.getObjectEntryFolderId()),
 			_cmsAdministratorRole.getRoleId(), new String[] {ActionKeys.VIEW});
 
-		resetPermissionBulkAction.setBulkActionItems(
+		resetPermissionObjectBulkSelectionAction.setBulkActionItems(
 			new BulkActionItem[] {
 				_toBulkActionItem(
 					objectEntry3.getModelClassName(), objectEntry3),
 				_toBulkActionItem(objectEntryFolder4)
 			});
 
-		_postBulkAction(resetPermissionBulkAction);
+		_postBulkAction(resetPermissionObjectBulkSelectionAction);
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -1833,8 +1852,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private void _testPostBulkActionWithTypeTaxonomyCategory()
 		throws Exception {
 
-		TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
-			new TaxonomyCategoryBulkAction();
+		EditObjectCategoriesBulkSelectionAction taxonomyCategoryBulkAction =
+			new EditObjectCategoriesBulkSelectionAction();
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
@@ -1869,7 +1888,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			taxonomyCategoryIds);
 
 		taxonomyCategoryBulkAction.setType(
-			BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION);
+			BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION);
 
 		_postBulkAction(taxonomyCategoryBulkAction);
 

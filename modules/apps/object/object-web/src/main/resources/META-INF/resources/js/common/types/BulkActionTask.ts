@@ -40,29 +40,29 @@ export interface IBulkActionTaskPage {
 }
 
 export interface IBulkActionTaskType {
-	DefaultPermissionBulkAction: {
+	DefaultPermissionObjectBulkSelectionAction: {
 		defaultPermissions: string;
 		depotGroupId?: number;
 		roleKey?: string;
 		treePath?: string;
 	};
-	DeleteBulkAction: {};
-	DeleteObjectEntryBulkAction: {};
+	DeleteObjectBulkSelectionAction: {};
+	DeleteObjectEntryBulkSelectionAction: {};
 	DownloadBulkAction: {};
-	KeywordBulkAction: {
+	EditObjectCategoriesBulkSelectionAction: {
+		taxonomyCategoryIds: number[];
+	};
+	EditObjectTagsBulkSelectionAction: {
 		keywords: string[];
 	};
-	MoveBulkAction: {
+	MoveObjectBulkSelectionAction: {
 		objectEntryFolderId: number;
 	};
-	PermissionBulkAction: {
+	PermissionObjectBulkSelectionAction: {
 		configuration: string;
 		roleKey?: string;
 	};
-	ResetPermissionBulkAction: {};
-	TaxonomyCategoryBulkAction: {
-		taxonomyCategoryIds: number[];
-	};
+	ResetPermissionObjectBulkSelectionAction: {};
 }
 
 export type TBulkActionTaskDTO = {

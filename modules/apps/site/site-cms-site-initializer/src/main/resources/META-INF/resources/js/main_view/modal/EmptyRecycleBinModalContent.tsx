@@ -23,7 +23,7 @@ export default function EmptyRecycleBinModalContent({
 		triggerAssetBulkAction({
 			apiURL: `/o/bulk/v1.0/bulk-action?filter=${encodeURIComponent(CMS_EMPTY_RECYCLE_BIN_FILTER)}&nestedFields=embedded`,
 			selectedData: {selectAll: true},
-			type: 'DeleteBulkAction',
+			type: 'DeleteObjectBulkSelectionAction',
 		});
 
 		closeModal();

@@ -100,8 +100,8 @@ export default function EditAssetCategoriesModalContent({
 			},
 			overrideDefaultErrorToast: true,
 			selectedData,
-			type: 'TaxonomyCategoryBulkAction',
-		} as IBulkActionTaskStarterDTO<'TaxonomyCategoryBulkAction'>);
+			type: 'EditObjectCategoriesBulkSelectionAction',
+		} as IBulkActionTaskStarterDTO<'EditObjectCategoriesBulkSelectionAction'>);
 	}, [
 		apiURL,
 		categorizationDTO,
@@ -218,7 +218,7 @@ export default function EditAssetCategoriesModalContent({
 				<p>
 					{getModalDescription(
 						selectedData,
-						'TaxonomyCategoryBulkAction'
+						'EditObjectCategoriesBulkSelectionAction'
 					)}
 				</p>
 

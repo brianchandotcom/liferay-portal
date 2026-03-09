@@ -55,7 +55,11 @@ async function createTag({
 async function getCommonTags(selectedData: IBulkActionFDSData) {
 	return await ApiHelper.post<any>(
 		`/o/bulk/v1.0/keywords/common`,
-		composeCreateTaskDTO('KeywordBulkAction', {}, selectedData)
+		composeCreateTaskDTO(
+			'EditObjectTagsBulkSelectionAction',
+			{},
+			selectedData
+		)
 	);
 }
 

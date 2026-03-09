@@ -45,17 +45,6 @@ public class QuickAccessEntry {
 		_bodySB = bodySB;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #setBody(StringBundler)}
-	 */
-	@Deprecated
-	public void setBody(com.liferay.portal.kernel.util.StringBundler bodySB) {
-		for (int i = 0; i < bodySB.index(); i++) {
-			_bodySB.append(bodySB.stringAt(0));
-		}
-	}
-
 	public void setData(String data) {
 		_data = data;
 	}

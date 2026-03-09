@@ -6,9 +6,9 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.document.library.kernel.processor.RawMetadataProcessor;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

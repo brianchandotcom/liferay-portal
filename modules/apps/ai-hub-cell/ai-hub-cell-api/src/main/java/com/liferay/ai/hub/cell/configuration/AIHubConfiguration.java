@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.client.configuration;
+package com.liferay.ai.hub.cell.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -18,7 +18,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.ai.hub.client.configuration.AIHubConfiguration",
+	id = "com.liferay.ai.hub.cell.configuration.AIHubConfiguration",
 	localization = "content/Language", name = "ai-hub-configuration-name"
 )
 public interface AIHubConfiguration {

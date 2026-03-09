@@ -102,7 +102,7 @@ public class LayoutSEOEntryUpgradeProcessTest
 		_updateOpenGraphImageFileEntryId(
 			layoutSEOEntry1.getCtCollectionId(),
 			layoutSEOEntry1.getLayoutSEOEntryId(),
-			dlFileEntry1.getFileEntryId());
+			dlFileEntry1.getFileEntryId(), null);
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
@@ -115,7 +115,7 @@ public class LayoutSEOEntryUpgradeProcessTest
 		_updateOpenGraphImageFileEntryId(
 			layoutSEOEntry2.getCtCollectionId(),
 			layoutSEOEntry2.getLayoutSEOEntryId(),
-			dlFileEntry2.getFileEntryId());
+			dlFileEntry2.getFileEntryId(), null);
 
 		runUpgrade();
 
@@ -158,7 +158,11 @@ public class LayoutSEOEntryUpgradeProcessTest
 
 		_updateOpenGraphImageFileEntryId(
 			layoutSEOEntry.getCtCollectionId(),
-			layoutSEOEntry.getLayoutSEOEntryId(), dlFileEntry.getFileEntryId());
+			layoutSEOEntry.getLayoutSEOEntryId(), dlFileEntry.getFileEntryId(),
+			dlFileEntry.getExternalReferenceCode());
+
+		_entityCache.clearCache();
+		_multiVMPool.clear();
 
 		return _layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 			layoutSEOEntry.getLayoutSEOEntryId());
@@ -202,9 +206,24 @@ public class LayoutSEOEntryUpgradeProcessTest
 	}
 
 	@Override
-	protected CTModel<?> updateCTModel(CTModel<?> ctModel) {
-		return _layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			(LayoutSEOEntry)ctModel);
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		LayoutSEOEntry layoutSEOEntry = (LayoutSEOEntry)ctModel;
+
+		layoutSEOEntry = _layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			layoutSEOEntry);
+
+		DLFileEntry dlFileEntry = _addFileEntry(_group.getGroupId());
+
+		_updateOpenGraphImageFileEntryId(
+			layoutSEOEntry.getCtCollectionId(),
+			layoutSEOEntry.getLayoutSEOEntryId(), dlFileEntry.getFileEntryId(),
+			dlFileEntry.getExternalReferenceCode());
+
+		_entityCache.clearCache();
+		_multiVMPool.clear();
+
+		return _layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+			layoutSEOEntry.getLayoutSEOEntryId());
 	}
 
 	private DLFileEntry _addFileEntry(long groupId) throws Exception {
@@ -241,19 +260,20 @@ public class LayoutSEOEntryUpgradeProcessTest
 
 	private void _updateOpenGraphImageFileEntryId(
 			long ctCollectionId, long layoutSEOEntryId,
-			long openGraphImageFileEntryId)
+			long openGraphImageFileEntryId, String openGraphImageFileEntryERC)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				StringBundler.concat(
 					"update LayoutSEOEntry set openGraphImageFileEntryERC = ",
-					"null, openGraphImageFileEntrySERC = null, ",
+					"?, openGraphImageFileEntrySERC = null, ",
 					"openGraphImageFileEntryId = ? where ctCollectionId = ? ",
 					"and layoutSEOEntryId = ?"))) {
 
-			preparedStatement.setLong(1, openGraphImageFileEntryId);
-			preparedStatement.setLong(2, ctCollectionId);
-			preparedStatement.setLong(3, layoutSEOEntryId);
+			preparedStatement.setString(1, openGraphImageFileEntryERC);
+			preparedStatement.setLong(2, openGraphImageFileEntryId);
+			preparedStatement.setLong(3, ctCollectionId);
+			preparedStatement.setLong(4, layoutSEOEntryId);
 
 			preparedStatement.executeUpdate();
 		}

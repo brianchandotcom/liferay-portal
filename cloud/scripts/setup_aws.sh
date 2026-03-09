@@ -31,6 +31,7 @@ function main {
 
 function _get_terraform_apply_args {
 	local auto_approve="false"
+
 	local configuration_json_file="${_SCRIPTS_DIR}/${1}"
 
 	if jq --exit-status '.options.auto_approve' "${configuration_json_file}" > /dev/null
@@ -47,8 +48,7 @@ function _get_terraform_apply_args {
 
 	if jq --exit-status '.options.parallelism | numbers' "${configuration_json_file}" > /dev/null
 	then
-		local parallelism
-		parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
+		local parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
 
 		apply_args+=("-parallelism=${parallelism}")
 	fi

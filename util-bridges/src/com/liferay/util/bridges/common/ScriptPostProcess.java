@@ -68,17 +68,6 @@ public class ScriptPostProcess {
 		_sb = sb;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #setInitalPage(StringBundler)}
-	 */
-	@Deprecated
-	public void setInitalPage(com.liferay.portal.kernel.util.StringBundler sb) {
-		for (int i = 0; i < sb.index(); i++) {
-			_sb.append(sb.stringAt(0));
-		}
-	}
-
 	protected void doProcessPage(
 		String startTag, String endTag, String ref, PortletURL actionURL,
 		String actionParameterName) {

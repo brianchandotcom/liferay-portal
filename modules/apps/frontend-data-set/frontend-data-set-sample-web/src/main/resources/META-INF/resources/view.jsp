@@ -48,6 +48,12 @@ String navigation = ParamUtil.getString(request, "navigation", "advanced");
 						});
 					add(
 						navigationItem -> {
+							navigationItem.setActive(navigation.equals("dynamic-actions"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "dynamic-actions");
+							navigationItem.setLabel("Dynamic Actions");
+						});
+					add(
+						navigationItem -> {
 							navigationItem.setActive(navigation.equals("empty"));
 							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "empty");
 							navigationItem.setLabel("Empty");
@@ -87,6 +93,9 @@ String navigation = ParamUtil.getString(request, "navigation", "advanced");
 		</c:when>
 		<c:when test='<%= navigation.equals("custom-internal-view") %>'>
 			<liferay-util:include page="/partials/custom_internal_view.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("dynamic-actions") %>'>
+			<liferay-util:include page="/partials/dynamic_actions.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= navigation.equals("empty") %>'>
 			<liferay-util:include page="/partials/empty.jsp" servletContext="<%= application %>" />

@@ -1792,20 +1792,13 @@ public abstract class BaseTopLevelBuild
 	protected Element getReevaluationDetailsElement(
 		TopLevelBuildReport upstreamTopLevelBuildReport) {
 
-		Element growURLElement = Dom4JUtil.getNewAnchorElement(
-			"https://grow.liferay.com/share" +
-				"/CI+liferay-continuous-integration+GitHub+Commands#" +
-					"General-Commands",
-			"reevaluation");
-
 		String buildID = JenkinsResultsParserUtil.getBuildID(getBuildURL());
 
 		Element preElement = Dom4JUtil.getNewElement(
 			"pre", null, "ci:reevaluate:" + buildID);
 
 		return Dom4JUtil.getNewElement(
-			"p", null, "This pull is eligible for ", growURLElement,
-			". When this ",
+			"p", null, "This pull is eligible for reevaluation. When this ",
 			Dom4JUtil.getNewAnchorElement(
 				String.valueOf(upstreamTopLevelBuildReport.getBuildURL()),
 				"upstream build"),

@@ -156,16 +156,12 @@ public class LayoutSEOEntryUpgradeProcessTest
 
 		DLFileEntry dlFileEntry = _addFileEntry(_group.getGroupId());
 
-		layoutSEOEntry.setOpenGraphImageFileEntryERC(
-			dlFileEntry.getExternalReferenceCode());
-
-		layoutSEOEntry.setOpenGraphImageFileEntryScopeERC(null);
-
 		_updateOpenGraphImageFileEntryId(
 			layoutSEOEntry.getCtCollectionId(),
 			layoutSEOEntry.getLayoutSEOEntryId(), dlFileEntry.getFileEntryId());
 
-		return layoutSEOEntry;
+		return _layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+			layoutSEOEntry.getLayoutSEOEntryId());
 	}
 
 	@Override

@@ -7,6 +7,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -99,8 +99,8 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				throw new VerifyException(
 					StringBundler.concat(
 						advancedFileSystemStore ? "Advanced file" : "File",
-						" system store directory structure ",
-						rootDirPath.toString(), " is invalid"));
+						" system store directory structure ", rootDirPath,
+						" is invalid"));
 			}
 		}
 		catch (IOException ioException) {
@@ -108,16 +108,15 @@ public class PreupgradeVerifyStoreFileSystemStructure
 				StringBundler.concat(
 					"Unable to verify ",
 					advancedFileSystemStore ? "advanced" : "",
-					" system store directory structure ",
-					rootDirPath.toString()),
+					" system store directory structure ", rootDirPath),
 				ioException);
 		}
 
 		if (!companyIds.isEmpty()) {
 			throw new VerifyException(
 				StringBundler.concat(
-					"Missing directories in ", rootDirPath.toString(),
-					" for companies: ", companyIds.toString()));
+					"Missing directories in ", rootDirPath, " for companies: ",
+					companyIds));
 		}
 	}
 
@@ -222,7 +221,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 
 					_log.error(
 						StringBundler.concat(
-							"File ", fileNamePath.toString(),
+							"File ", fileNamePath,
 							" name has more than 2 characters and no ",
 							"extension in advanced file system structure"));
 
@@ -274,7 +273,7 @@ public class PreupgradeVerifyStoreFileSystemStructure
 		if (fileName.contains(StringPool.PERIOD)) {
 			_log.error(
 				StringBundler.concat(
-					"Unexpected file name directory ", fileNamePath.toString(),
+					"Unexpected file name directory ", fileNamePath,
 					" with extension in file system structure"));
 
 			return false;

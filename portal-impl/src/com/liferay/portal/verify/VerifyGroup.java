@@ -5,6 +5,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
 
@@ -118,7 +118,7 @@ public class VerifyGroup extends VerifyProcess {
 			runSQL(
 				StringBundler.concat(
 					"update Group_ set site = [$TRUE$] where classNameId = ",
-					String.valueOf(organizationClassNameId),
+					organizationClassNameId,
 					" and site = [$FALSE$] and exists (select 1 from Layout ",
 					"where Layout.groupId = Group_.groupId)"));
 		}

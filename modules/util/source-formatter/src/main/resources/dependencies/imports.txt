@@ -2349,6 +2349,7 @@ com.liferay.site.util.SitemapURLProvider=com.liferay.site.provider.SitemapURLPro
 com.liferay.site.util.SitemapURLProviderHelper=com.liferay.site.provider.helper.SitemapURLProviderHelper
 com.liferay.staging.internal.model.adapter.builder.StagedAssetLinkModelAdapterBuilder=com.liferay.asset.link.internal.model.adapter.builder.StagedAssetLinkModelAdapterBuilder
 com.liferay.subscription.model.SubscriptionConstants=com.liferay.subscription.constants.SubscriptionConstants
+com.liferay.trash.kernel.exception.RestoreEntryException=com.liferay.trash.exception.RestoreEntryException
 com.liferay.trash.kernel.model.TrashEntry=com.liferay.trash.model.TrashEntry
 com.liferay.trash.kernel.model.TrashVersion=com.liferay.trash.model.TrashVersion
 com.liferay.trash.kernel.service.TrashEntryLocalService=com.liferay.trash.service.TrashEntryLocalService

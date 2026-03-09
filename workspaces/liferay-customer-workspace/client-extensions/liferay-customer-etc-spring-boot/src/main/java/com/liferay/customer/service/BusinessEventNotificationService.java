@@ -7,6 +7,7 @@ package com.liferay.customer.service;
 
 import com.liferay.customer.constants.NotificationSubscriptionConstants;
 import com.liferay.customer.constants.NotificationTemplateConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -32,9 +32,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class BusinessEventNotificationService extends BaseNotificationService {
 
-	@Scheduled(
-		cron = "${liferay.customer.notification.subscription.business.event.cron:-}"
-	)
 	public void sendNotifications() {
 		try {
 			sendNotifications(_lastSuccessfulRunZonedDateTime);
@@ -73,11 +70,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				UriComponentsBuilder.fromPath(
 					"/o/c/businessevents"
 				).queryParam(
-					"filter", "dateModified ge " + fromDate
-				).queryParam(
-					"nestedFields",
-					NotificationSubscriptionConstants.
-						FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT
+					"filter", "dateModified gt " + fromDate
 				).build(
 				).toUri()));
 
@@ -101,21 +94,40 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 			JSONObject businessEventJSONObject =
 				businessEventsJSONArray.getJSONObject(i);
 
-			JSONObject accountEntryJSONObject =
-				businessEventJSONObject.getJSONObject(
+			String accountExternalReferenceCode =
+				businessEventJSONObject.getString(
 					NotificationSubscriptionConstants.
 						FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT);
 
-			String externalReferenceCode = accountEntryJSONObject.getString(
-				"externalReferenceCode");
+			JSONObject koroneikiAccountJSONObject = null;
 
-			if (Validator.isNull(externalReferenceCode)) {
+			try {
+				koroneikiAccountJSONObject = _getKoroneikiAccountJSONObject(
+					accountExternalReferenceCode);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+
 				continue;
 			}
 
-			String subscriptionFilter =
-				"type eq 'businessEvent' and contains(filter, '" +
-					escapeFilterValue(externalReferenceCode) + "')";
+			String regionFilter = StringPool.BLANK;
+
+			try {
+				regionFilter = _getRegionFilter(koroneikiAccountJSONObject);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+			}
+
+			String subscriptionFilter = StringBundler.concat(
+				"type eq 'businessEvent' and (contains(filter, '",
+				escapeFilterValue(accountExternalReferenceCode), "')",
+				regionFilter, ") and active eq true");
 
 			JSONArray subscriptionsJSONArray =
 				_notificationSubscriptionService.
@@ -131,7 +143,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 
 			try {
 				businessEventVersions = _getBusinessEventVersions(
-					zonedDateTime, fromDate, businessEventId);
+					fromDate, businessEventId);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -148,7 +160,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				"BUSINESSEVENT_ACTIVITY_HISTORY_PAGE_LINK",
 				String.format(
 					"%s/project/#/%s/business-events/%s/activity-history",
-					portalURL, externalReferenceCode, businessEventId)
+					portalURL, accountExternalReferenceCode, businessEventId)
 			).put(
 				"BUSINESSEVENT_EVENTTYPE",
 				businessEventJSONObject.getJSONObject(
@@ -168,7 +180,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 			).put(
 				"BUSINESSEVENT_VERSIONS", businessEventVersions
 			).put(
-				"PROJECT_NAME", accountEntryJSONObject.optString("name")
+				"PROJECT_NAME", koroneikiAccountJSONObject.optString("name")
 			);
 
 			sendNotifications(
@@ -186,13 +198,13 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 	}
 
 	private String _getBusinessEventVersions(
-			ZonedDateTime zonedDateTime, String fromDate, long businessEventId)
+			String fromDate, long businessEventId)
 		throws Exception {
 
 		String filter = String.format(
 			NotificationSubscriptionConstants.
 				FIELD_BUSINESS_EVENT_TO_BUSINESS_EVENT_VERSION +
-					" eq '%s' and dateModified ge %s",
+					" eq '%s' and dateModified gt %s",
 			businessEventId, fromDate);
 
 		JSONObject jsonObject = new JSONObject(
@@ -214,7 +226,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		sb.append("<h4>Recent Updates:</h4>");
 		sb.append("<ul>");
@@ -222,13 +234,6 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 		for (int i = 0; i < businessEventVersionsJSONArray.length(); i++) {
 			JSONObject businessEventVersionJSONObject =
 				businessEventVersionsJSONArray.getJSONObject(i);
-
-			ZonedDateTime curZonedDateTime = ZonedDateTime.parse(
-				businessEventVersionJSONObject.getString("dateModified"));
-
-			if (curZonedDateTime.isBefore(zonedDateTime)) {
-				continue;
-			}
 
 			sb.append("<li><strong>");
 			sb.append(
@@ -257,6 +262,84 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 		sb.append("</ul>");
 
 		return sb.toString();
+	}
+
+	private JSONObject _getKoroneikiAccountJSONObject(
+			String externalReferenceCode)
+		throws Exception {
+
+		JSONObject koroneikiAccountJSONObject = new JSONObject(
+			get(
+				getAuthorization(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/koroneikiaccounts/by-external-reference-code/" +
+						externalReferenceCode
+				).build(
+				).toUri()));
+
+		if (koroneikiAccountJSONObject.isEmpty()) {
+			throw new Exception(
+				"No koroneiki account found for external reference code " +
+					externalReferenceCode);
+		}
+
+		return koroneikiAccountJSONObject;
+	}
+
+	private String _getRegionFilter(JSONObject koroneikiAccountJSONObject)
+		throws Exception {
+
+		String region = koroneikiAccountJSONObject.getString("region");
+
+		region = region.toUpperCase(
+		).replace(
+			" ", StringPool.UNDERLINE
+		);
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(" or contains(filter, '");
+		sb.append(region);
+		sb.append(":RSM')");
+
+		boolean hasTAMServiceSubscription = _hasTAMServiceSubscription(
+			koroneikiAccountJSONObject.getString("accountKey"));
+
+		if (hasTAMServiceSubscription) {
+			sb.append(" or contains(filter, '");
+			sb.append(region);
+			sb.append(":CX_LEAD')");
+		}
+
+		return sb.toString();
+	}
+
+	private boolean _hasTAMServiceSubscription(
+			String accountExternalReferenceCode)
+		throws Exception {
+
+		JSONObject accountSubscriptionsJSONObject = new JSONObject(
+			get(
+				getAuthorization(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/accountsubscriptions"
+				).queryParam(
+					"filter",
+					StringBundler.concat(
+						"accountKey eq '", accountExternalReferenceCode,
+						"' and contains(name, 'Technical Account Management ",
+						"Services')")
+				).build(
+				).toUri()));
+
+		JSONArray accountSubscriptionsJSONArray =
+			accountSubscriptionsJSONObject.getJSONArray("items");
+
+		if (accountSubscriptionsJSONArray.length() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final DateTimeFormatter _DATE_TIME_FORMATTER =

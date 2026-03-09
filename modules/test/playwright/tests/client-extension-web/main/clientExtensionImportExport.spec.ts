@@ -55,7 +55,8 @@ test(
 
 			const download = await downloadPromise;
 
-			expect(download.suggestedFilename()).toContain('.json');
+			expect(download.suggestedFilename()).toMatch(
+				/client-extension-entry\.[0-9a-f-]+\.json/g);
 		});
 
 		await test.step('Clean up', async () => {
@@ -68,7 +69,7 @@ test(
 	}
 );
 
-test.fixme(
+test(
 	'Can import a Client Extension from JSON',
 	{tag: '@LPS-182184'},
 	async ({clientExtensionsPage, editCustomElementPage, page}) => {

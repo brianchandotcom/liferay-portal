@@ -6,6 +6,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
 import java.sql.Connection;
@@ -137,13 +137,9 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 			if (!viewNames.isEmpty()) {
 				throw new VerifyException(
 					StringBundler.concat(
-						"Missing views detected: ",
-						new TreeSet<>(
-							viewNames
-						).toString(),
+						"Missing views detected: ", new TreeSet<>(viewNames),
 						" in company ",
-						String.valueOf(
-							CompanyThreadLocal.getNonsystemCompanyId())));
+						CompanyThreadLocal.getNonsystemCompanyId()));
 			}
 		}
 

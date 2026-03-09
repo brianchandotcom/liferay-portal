@@ -5,9 +5,9 @@
 
 package com.liferay.portal.upgrade.v6_1_1;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,9 +46,8 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 						runSQL(
 							StringBundler.concat(
 								"update LayoutSet set logoId = 0 where ",
-								"groupId = ", String.valueOf(groupId),
-								"and layoutSetId = ",
-								String.valueOf(layoutSetId)));
+								"groupId = ", groupId, "and layoutSetId = ",
+								layoutSetId));
 					}
 				}
 			}

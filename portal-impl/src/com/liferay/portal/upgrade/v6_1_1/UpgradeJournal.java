@@ -5,13 +5,13 @@
 
 package com.liferay.portal.upgrade.v6_1_1;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
@@ -118,8 +118,8 @@ public class UpgradeJournal extends UpgradeProcess {
 		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
-					"Journal article ", String.valueOf(id),
-					" has invalid content due to: ", exception.getMessage()));
+					"Journal article ", id, " has invalid content due to: ",
+					exception.getMessage()));
 		}
 
 		return content;

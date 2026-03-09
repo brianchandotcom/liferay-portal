@@ -6,8 +6,8 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

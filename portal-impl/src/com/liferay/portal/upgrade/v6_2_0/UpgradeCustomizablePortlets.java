@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -14,7 +15,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.PortalPreferencesImpl;
 

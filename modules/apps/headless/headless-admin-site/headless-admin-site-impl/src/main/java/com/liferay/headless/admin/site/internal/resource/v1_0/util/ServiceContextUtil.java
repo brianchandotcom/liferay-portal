@@ -44,6 +44,29 @@ import java.util.Objects;
 public class ServiceContextUtil {
 
 	public static ServiceContext createServiceContext(
+			long companyId, Date createDate, long groupId,
+			HttpServletRequest httpServletRequest, String[] keywords,
+			Date modifiedDate, TaxonomyCategoryBrief[] taxonomyCategoryBriefs,
+			long userId, String uuid)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, httpServletRequest, null
+		).build();
+
+		serviceContext.setAssetCategoryIds(
+			_getAssetCategoryIds(groupId, taxonomyCategoryBriefs, userId));
+		serviceContext.setAssetTagNames(keywords);
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setCreateDate(createDate);
+		serviceContext.setModifiedDate(modifiedDate);
+		serviceContext.setUserId(userId);
+		serviceContext.setUuid(uuid);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext createServiceContext(
 		long groupId, HttpServletRequest httpServletRequest, long userId) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
@@ -62,29 +85,6 @@ public class ServiceContextUtil {
 		ServiceContext serviceContext = createServiceContext(
 			groupId, httpServletRequest, userId);
 
-		serviceContext.setUuid(uuid);
-
-		return serviceContext;
-	}
-
-	public static ServiceContext createServiceContext(
-			TaxonomyCategoryBrief[] taxonomyCategoryBriefs, long companyId,
-			Date createDate, long groupId,
-			HttpServletRequest httpServletRequest, String[] keywords,
-			Date modifiedDate, long userId, String uuid)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, httpServletRequest, null
-		).build();
-
-		serviceContext.setAssetCategoryIds(
-			_getAssetCategoryIds(groupId, taxonomyCategoryBriefs, userId));
-		serviceContext.setAssetTagNames(keywords);
-		serviceContext.setCompanyId(companyId);
-		serviceContext.setCreateDate(createDate);
-		serviceContext.setModifiedDate(modifiedDate);
-		serviceContext.setUserId(userId);
 		serviceContext.setUuid(uuid);
 
 		return serviceContext;

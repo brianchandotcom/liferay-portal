@@ -22,6 +22,11 @@ import HeadlessCommerceDeliveryCatalog from '../../../../../../services/rest/Hea
 import {getProductCategoriesByVocabularyName} from '../../../../../../utils/productUtils';
 import DownloadTable from './DownloadTable';
 
+export type DownloadProps = {
+	showSearchBar?: boolean;
+	title?: string;
+};
+
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
 const downloadAlerts = {
@@ -68,7 +73,7 @@ const DisplayAlert = ({
 	);
 };
 
-const Download = () => {
+const Download = ({showSearchBar = true, title}: DownloadProps) => {
 	const outletContext = useOutletContext<OutletContext['data']>();
 
 	const [search, setSearch] = useState('');
@@ -153,32 +158,38 @@ const Download = () => {
 				}
 			/>
 
-			<ClayForm.Group className="align-items-center bg-light d-flex justify-content-center mb-0 mb-4 p-3 rounded-lg w-100">
-				<ClayInput.Group stacked>
-					<ClayInput.GroupItem prepend>
-						<ClayInput
-							className="bg-white border-0"
-							onChange={({target}) => setSearch(target.value)}
-							placeholder="Search"
-							type="text"
-							value={search}
-						/>
-					</ClayInput.GroupItem>
-
-					<ClayInput.GroupItem prepend shrink>
-						<ClayInput.GroupText className="bg-white border-0">
-							<ButtonWithIcon
-								aria-label="Search"
-								className="border-0"
-								displayType="unstyled"
-								symbol="search"
+			{showSearchBar && (
+				<ClayForm.Group className="align-items-center bg-light d-flex justify-content-center mb-0 mb-4 p-3 rounded-lg w-100">
+					<ClayInput.Group stacked>
+						<ClayInput.GroupItem prepend>
+							<ClayInput
+								className="bg-white border-0"
+								onChange={({target}) => setSearch(target.value)}
+								placeholder="Search"
+								type="text"
+								value={search}
 							/>
-						</ClayInput.GroupText>
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
-			</ClayForm.Group>
+						</ClayInput.GroupItem>
 
-			<DownloadTable loading={isLoading} virtualItems={virtualItems} />
+						<ClayInput.GroupItem prepend shrink>
+							<ClayInput.GroupText className="bg-white border-0">
+								<ButtonWithIcon
+									aria-label="Search"
+									className="border-0"
+									displayType="unstyled"
+									symbol="search"
+								/>
+							</ClayInput.GroupText>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
+			)}
+
+			<DownloadTable
+				loading={isLoading}
+				title={title}
+				virtualItems={virtualItems}
+			/>
 		</>
 	);
 };

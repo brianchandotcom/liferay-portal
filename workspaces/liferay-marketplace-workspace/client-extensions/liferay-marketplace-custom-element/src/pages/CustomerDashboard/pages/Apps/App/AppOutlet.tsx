@@ -31,6 +31,7 @@ type BaseOutletProps = {
 	actionButtons?: ReactNode | ((data: ProductAndOrderPayload) => ReactNode);
 	backTitle: string;
 	backURL?: string;
+	description?: string;
 	routes:
 		| NavbarProps['routes']
 		| ((data: ProductAndOrderPayload) => NavbarProps['routes']);
@@ -41,6 +42,7 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 	actionButtons,
 	backTitle,
 	backURL = '..',
+	description,
 	routes,
 	showActions = true,
 }) => {
@@ -60,22 +62,30 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 			<BackLink path={backURL}>{backTitle}</BackLink>
 
 			<div className="d-flex justify-content-between">
-				<OrderDetailsHeader
-					className="d-flex flex-row justify-content-between pb-3 pt-5"
-					hasOrderDetails
-					image={placedOrderItems[0]?.thumbnail}
-					name={placedOrderItems[0]?.name}
-					order={data?.placedOrder}
-					productOwner={productCreatorAccountName}
-				/>
+				<div className="d-flex flex-column">
+					<div className="d-flex justify-content-between">
+						<OrderDetailsHeader
+							className="d-flex flex-row justify-content-between pb-3 pt-5"
+							hasOrderDetails
+							image={placedOrderItems[0]?.thumbnail}
+							name={placedOrderItems[0]?.name}
+							order={data?.placedOrder}
+							productOwner={productCreatorAccountName}
+						/>
 
-				{actionButtons && (
-					<div id="solution-action-buttons">
-						{typeof actionButtons === 'function'
-							? actionButtons(data as ProductAndOrderPayload)
-							: actionButtons}
+						{actionButtons && (
+							<div id="solution-action-buttons">
+								{typeof actionButtons === 'function'
+									? actionButtons(
+											data as ProductAndOrderPayload
+										)
+									: actionButtons}
+							</div>
+						)}
 					</div>
-				)}
+
+					<p className="app-details-description">{description}</p>
+				</div>
 
 				{showActions && (
 					<DropDown

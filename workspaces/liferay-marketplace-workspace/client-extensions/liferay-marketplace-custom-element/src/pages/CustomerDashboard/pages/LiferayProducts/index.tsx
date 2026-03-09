@@ -18,13 +18,24 @@ import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
 const searchParams = new URLSearchParams({
 	filter: SearchBuilder.in('orderTypeExternalReferenceCode', [
 		OrderTypes.ADDONS,
+		OrderTypes.CMP,
 		OrderTypes.DXP,
 	]),
 	nestedFields: 'placedOrderItems',
 	sort: 'createDate:desc',
 });
 
-const LiferayServicesListView = () => {
+const getViewDetailsPath = (orderId: string, orderType: string) => {
+	let path = orderId;
+
+	if ([OrderTypes.CMP, OrderTypes.DXP].includes(orderType as OrderTypes)) {
+		path = `${orderId}/activation-keys`;
+	}
+
+	return path;
+};
+
+const LiferayProductsListView = () => {
 	const {selectedAccount} = useCustomerDashboardOutletContext();
 
 	const navigate = useNavigate();
@@ -54,7 +65,9 @@ const LiferayServicesListView = () => {
 							{
 								name: i18n.translate('view-details'),
 								onClick: (row: PlacedOrder) =>
-									navigate(`${row.id}`),
+									navigate(
+										`${getViewDetailsPath(String(row.id), row.orderTypeExternalReferenceCode)}`
+									),
 							},
 						],
 						columns: [
@@ -129,7 +142,8 @@ const LiferayServicesListView = () => {
 								},
 							},
 						],
-						navigateTo: (item) => `${item.id}`,
+						navigateTo: (item) =>
+							`${getViewDetailsPath(String(item.id), item.orderTypeExternalReferenceCode)}`,
 					}}
 				/>
 			</div>
@@ -137,4 +151,4 @@ const LiferayServicesListView = () => {
 	);
 };
 
-export default LiferayServicesListView;
+export default LiferayProductsListView;

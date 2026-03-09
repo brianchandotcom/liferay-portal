@@ -1,0 +1,78 @@
+.bundles {
+	.date-cell {
+		color: #282934;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 16px;
+	}
+
+	.status-cell {
+		&-icon {
+			&.active {
+				color: #4aab3b;
+			}
+
+			&.expired {
+				color: #da1414;
+			}
+		}
+
+		span {
+			color: #6c6c75;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 16px;
+		}
+	}
+}
+
+.bundles-actions {
+	gap: 12px;
+	white-space: nowrap;
+}
+
+.bundles-actions .renew-link {
+	color: #959da5;
+	font-weight: 600;
+	padding: 0;
+}
+
+.bundles-download-btn {
+	background: transparent;
+	border: 1px solid #2b3a4b;
+	border-radius: 6px !important;
+	color: #2b3a4b;
+	font-size: 14px;
+	line-height: 16px !important;
+	padding: 8px 12px;
+}
+
+.bundles-download-btn:hover {
+	background: rgba(43, 58, 75, 0.04);
+	border-color: #2b3a4b;
+	color: #2b3a4b;
+}
+
+.bundles-download-btn:disabled {
+	background: transparent;
+	opacity: 0.5;
+}
+
+.bundle-name {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px;
+	vertical-align: middle;
+}
+
+.bundles-table-actions {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.deactivate-bundles-key:hover {
+	background-color: #fbe3e3;
+	color: #da1414;
+}

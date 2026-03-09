@@ -1,0 +1,138 @@
+.close-license-alert-icon {
+	color: #0e7835;
+}
+
+.deactivate-license-key {
+	&:hover {
+		background-color: #fbe3e3;
+		color: #da1414;
+	}
+}
+
+.license-actions {
+	gap: 12px;
+	white-space: nowrap;
+
+	.renew-link {
+		color: #959da5;
+		font-weight: 600;
+		padding: 0;
+	}
+}
+
+.license-alert {
+	&.alert .alert-indicator .lexicon-icon {
+		height: 24px !important;
+		width: 24px !important;
+	}
+
+	&-card {
+		background-color: #d1eedc80;
+		border-radius: 8px;
+		box-shadow: 0 0;
+		color: #0e7835;
+		gap: 8px;
+		padding: 16px;
+	}
+
+	&-content {
+		font-size: 11px;
+		font-weight: 600;
+		line-height: 20px;
+
+		.icon {
+			font-size: 24px;
+		}
+
+		.new-license {
+			color: #4aab3b;
+		}
+
+		.renewable {
+			color: #9d4c00;
+		}
+	}
+
+	&-subtitle {
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 24px;
+		margin: 0;
+	}
+
+	&-title {
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 20px;
+		margin: 0;
+		margin-bottom: 6px;
+	}
+}
+
+.license-download-btn {
+	background: transparent;
+	border: 1px solid #2b3a4b;
+	border-radius: 6px;
+	color: #2b3a4b;
+	font-size: 14px;
+	padding: 8px 12px;
+
+	&:disabled {
+		background: transparent;
+		opacity: 0.5;
+	}
+
+	&:hover {
+		background: rgba(43, 58, 75, 0.04);
+		border-color: #2b3a4b;
+		color: #2b3a4b;
+	}
+}
+
+.license-table-actions {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.licenses {
+	.date-cell {
+		color: #282934;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 16px;
+	}
+
+	.status-cell {
+		&-icon {
+			&.active {
+				color: #4aab3b;
+			}
+
+			&.expired {
+				color: #da1414;
+			}
+		}
+
+		span {
+			color: #6c6c75;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 16px;
+		}
+	}
+}
+
+.new-license-button {
+	align-items: center;
+	border-radius: 8px;
+	border-width: 1px;
+	display: inline-flex;
+	font-size: 16px !important;
+	font-weight: 600;
+	justify-content: center;
+	padding: 8px 16px;
+	white-space: nowrap;
+	width: fit-content;
+}

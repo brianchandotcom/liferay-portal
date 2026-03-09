@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.client.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.client.rest.dto.v1_0.Token;
-import com.liferay.ai.hub.client.rest.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.cell.rest.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;

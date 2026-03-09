@@ -97,14 +97,11 @@ export default {
 	'back-to-my-solutions': 'Back to My Solutions',
 	'back-to-solutions': 'Back to Solutions',
 	'back-to-the-list': 'Back to the list',
-	'backend-client-extensions-delivered-as-deployed-services-only-available-to-saas-and-paas-clients':
-		'Backend client extensions delivered as deployed services (only available to SaaS and PaaS clients).',
 	'batch': 'Batch',
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
 	'billing-address': 'Billing Address',
 	'billing-email': 'Billing Email',
-	'blank-site': 'Blank Site',
 	'browse-catalog': 'Browse Catalog',
 	'build': 'Build',
 	'bundle-name': 'Bundle Name',
@@ -202,8 +199,6 @@ export default {
 		'Define company profile information for your solution. This will inform users about this version’s updates on the storefront.',
 	'define-contact-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront':
 		'Define contact information for your solution. This will inform users about this version’s updates on the storefront.',
-	'define-the-licensing-approach-for-your-app-this-will-impact-the-license-renewal-experience':
-		'Define the licensing approach for your app. This will impact the license renewal experience.',
 	'define-the-solution-profile': 'Define the solution profile',
 	'define-the-support-and-help-references-users-can-access-these-resources-pre-and-post-purchase-to-find-out-more-information-about-your-app-or-solution':
 		'Define the support and help references. Users can access these resources pre and post purchase to find out more information about your app or solution.',
@@ -411,7 +406,7 @@ export default {
 	'manage-users': 'Manage Users',
 	'manage-your-current-trials': 'Manage your current trials',
 	'manage-your-products-purchased-from-the-marketplace':
-		'Manage your Products purchased from the Marketplace.',
+		'Manage your products purchased from the Marketplace.',
 	'manage-your-teams-trial': "Manage your team's trial",
 	'mark-as-paid': 'Mark as Paid',
 	'marked-as-paid': 'Marked as paid.',
@@ -437,7 +432,6 @@ export default {
 	'my-solutions': 'My Solutions',
 	'name': 'Name',
 	'net-price': 'Net Price',
-	'never-expires': 'Never Expires',
 	'new-account': 'New Account',
 	'new-activation-key': 'New Activation Key',
 	'new-address': 'New Address',
@@ -572,11 +566,11 @@ export default {
 	'recent-trials': 'Recent Trials',
 	'reject-request': 'Reject Request',
 	'remove': 'Remove',
-	'remove-a-version': 'Remove a Version',
 	'remove-all-roles': 'Remove all roles',
 	'remove-user': 'Remove User',
-	'removed-user-from-account': 'Removed user from account',
 	'renew': 'Renew',
+	'renewal-will-be-available-3-months-before-your-activation-key-expires':
+		'Renewal will be available 3 months before your activation key expires.',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',
 	'request-account': 'Request Account',
@@ -731,7 +725,7 @@ export default {
 	'times-already-extended': 'Times Already Extended',
 	'timezone': 'Timezone',
 	'title': 'Title',
-	'to-be-renewed': 'To be renewed',
+	'to-be-renewed': 'To be Renewed',
 	'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace':
 		'To join an existing business account, please contact your administrator, who can add you. Once added, you will automatically become part of that account and will be able to manage it and make purchases on Markeplace.',
 	'total': 'Total',
@@ -833,8 +827,6 @@ export default {
 		'You can paste links directly from YouTube.',
 	'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material':
 		'You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material.',
-	'you-can-renew-your-activation-key-starting-3-months-before-it-expires':
-		'You can renew your activation key starting 3 months before it expires.',
 	'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb':
 		'You can upload one or many ZIP files. Max total size is 500MB.',
 	'you-can-view-your-app-in-cloud-console-or-go-back-to-my-apps':

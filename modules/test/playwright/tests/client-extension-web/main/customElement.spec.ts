@@ -816,22 +816,3 @@ test(
 		});
 	}
 );
-
-
-test.skip(
-	'Can be displayed with DB partitioning',
-	{tag: '@LPS-153716'},
-	async ({page: _page}) => {
-		// Requires DB partitioning environment configuration which is not
-		// available in standard Playwright execution.
-	}
-);
-
-test.skip(
-	'Custom Element can be created in non-root context',
-	{tag: '@LPS-158083'},
-	async ({page: _page}) => {
-		// Requires non-root portal context configuration which is not
-		// available in standard Playwright execution.
-	}
-);

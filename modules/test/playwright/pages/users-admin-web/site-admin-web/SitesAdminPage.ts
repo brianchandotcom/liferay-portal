@@ -10,7 +10,10 @@ import {DataTablePage} from '../../account-admin-web/DataTablePage';
 
 export class SitesAdminPage {
 	readonly componentTitle: Locator;
+	readonly deleteModalButton: Locator;
+	readonly deleteSiteMenuItem: Locator;
 	readonly infoPanelButton: Locator;
+	readonly noSitesMessage: Locator;
 	readonly page: Page;
 	readonly searchSiteButton: Locator;
 	readonly searchSiteInput: Locator;
@@ -18,7 +21,12 @@ export class SitesAdminPage {
 
 	constructor(page: Page) {
 		this.componentTitle = page.locator('.component-title');
+		this.deleteModalButton = page
+			.locator('.modal-footer')
+			.getByRole('button', {name: 'Delete'});
+		this.deleteSiteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.infoPanelButton = page.getByTitle('Toggle Info Panel');
+		this.noSitesMessage = page.getByText('No sites were found.');
 		this.page = page;
 		this.searchSiteButton = this.page.getByLabel('Search for', {
 			exact: true,

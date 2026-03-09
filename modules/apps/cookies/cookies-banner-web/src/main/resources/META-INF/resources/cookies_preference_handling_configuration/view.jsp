@@ -64,6 +64,14 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-sm-12 form-group">
+		<div class="form-group__inner">
+			<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' label="cookie-dissent-renewal-period" max="12" min="0" name='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriod() %>" />
+		</div>
+	</div>
+</div>
+
 <aui:input name="modifiedDate" type="hidden" />
 
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-75032") %>'>

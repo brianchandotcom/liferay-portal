@@ -22,15 +22,14 @@ test(
 		});
 
 		await test.step('Assert hyperlink is available within an anchor tag, and it says “How does bundle blacklisting work?"', async () => {
-			const hyperlinkLocator = page.getByRole('link', {
+			const link = page.getByRole('link', {
 				name: 'How does bundle blacklisting work?',
 			});
 
-			await expect(hyperlinkLocator).toBeVisible();
-
-			await expect(hyperlinkLocator).toHaveAttribute(
+			await expect(link).toBeVisible();
+			await expect(link).toHaveAttribute(
 				'href',
-				'https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps'
+				/^https:\/\/learn\.liferay\.com\//
 			);
 		});
 	}

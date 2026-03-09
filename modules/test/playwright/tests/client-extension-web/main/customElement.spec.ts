@@ -673,7 +673,7 @@ testSample(
 	}
 );
 
-testSample.fixme(
+testSample(
 	'Custom Element renders correctly when placed on widget page',
 	{tag: '@LPS-159013'},
 	async ({clientExtensionsPage, editCustomElementPage, layout, page, pageEditorPage}) => {
@@ -830,29 +830,5 @@ test.skip(
 	async ({page: _page}) => {
 		// Requires non-root portal context configuration which is not
 		// available in standard Playwright execution.
-	}
-);
-
-test.skip(
-	'Can cancel update existing client extension',
-	{tag: '@LPS-189916'},
-	async ({page: _page}) => {
-		// Blocked upstream by LPS-189916.
-	}
-);
-
-test.skip(
-	'Can close update existing client extension',
-	{tag: '@LPS-189916'},
-	async ({page: _page}) => {
-		// Blocked upstream by LPS-189916.
-	}
-);
-
-test.skip(
-	'Can update existing client extension',
-	{tag: '@LPS-189916'},
-	async ({page: _page}) => {
-		// Blocked upstream by LPS-189916.
 	}
 );

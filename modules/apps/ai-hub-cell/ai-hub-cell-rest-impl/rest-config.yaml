@@ -1,0 +1,13 @@
+apiDir: ../ai-hub-cell-rest-api/src/main/java
+apiPackagePath: com.liferay.ai.hub.cell.rest
+application:
+    baseURI: /ai-hub-cell
+    className: AIHubCellRESTApplication
+    name: Liferay.AI.Hub.Cell.REST
+author: Feliphe Marinho
+clientDir: ../ai-hub-cell-rest-client/src/main/java
+compatibilityVersion: 13
+forcePredictableOperationId: true
+generateGraphQL: false
+javaEEPackage: jakarta
+testDir: ../ai-hub-cell-rest-test/src/testIntegration/java

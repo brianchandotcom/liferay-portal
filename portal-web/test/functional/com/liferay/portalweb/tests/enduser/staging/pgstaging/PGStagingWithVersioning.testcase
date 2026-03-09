@@ -230,12 +230,12 @@ definition {
 				value1 = "Switch to Advanced Publish Process");
 
 			MouseOver(
-				key_tooltipInfo = "Child pages cannot be published independently of their parent pages by default. You are able to configure this in System Settings. This process will automatically publish the parent pages even if they are not selected.",
+				key_tooltipInfo = "All pages that want to be included in the export must be selected. Child pages will be exported independently of their parent pages.",
 				locator1 = "Staging#STAGING_TOOLTIP");
 
 			AssertTextPresent(
 				locator1 = "Staging#FLOATING_TOOLTIP_CONTENT",
-				value1 = "Child pages cannot be published independently of their parent pages by default. You are able to configure this in System Settings. This process will automatically publish the parent pages even if they are not selected.");
+				value1 = "All pages that want to be included in the export must be selected. Child pages will be exported independently of their parent pages.");
 
 			Staging.viewVariationTooltipMessage(
 				pageName = "Staging Test Page",

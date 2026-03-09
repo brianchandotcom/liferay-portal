@@ -92,7 +92,7 @@ import {
 	TSort,
 	VisibleFieldNames,
 } from './utils/types';
-import {getAtom} from './utils/getAtom';
+import {getFDSAtom} from './utils/getFDSAtom';
 import useConfigInURL, {useUpdateConfig} from './utils/useConfigInURL';
 import ViewsContext, {ISnapshot} from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';
@@ -366,7 +366,7 @@ const FrontendDataSetContent = ({
 		id,
 	});
 
-	const memoizedAtom = useMemo(() => getAtom({key: id}), [id]);
+	const memoizedAtom = useMemo(() => getFDSAtom({key: id}), [id]);
 
 	const [additionalAPIURLParameters, setAdditionalAPIURLParameters] =
 		useState(initialAdditionalAPIURLParameters);

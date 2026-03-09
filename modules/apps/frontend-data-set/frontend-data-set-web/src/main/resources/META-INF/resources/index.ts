@@ -19,7 +19,7 @@ export {default as LabelRenderer} from './cell_renderers/LabelRenderer';
 
 export {default as StatusRenderer} from './cell_renderers/StatusRenderer';
 
-export {getAtom} from './utils/getAtom';
+export {getFDSAtom} from './utils/getFDSAtom';
 
 export {getInternalCellRenderer as getFDSInternalCellRenderer} from './cell_renderers/getInternalCellRenderer';
 

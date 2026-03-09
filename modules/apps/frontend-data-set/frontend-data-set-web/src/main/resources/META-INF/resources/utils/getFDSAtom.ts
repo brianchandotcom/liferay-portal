@@ -6,7 +6,7 @@
 import {IFDSState} from './types';
 import {Atom, Selector, State} from '@liferay/frontend-js-state-web';
 
-const getAtom = ({
+const getFDSAtom = ({
 	key,
 }: {
 	key: string;
@@ -25,4 +25,4 @@ const getAtom = ({
 	);
 };
 
-export {getAtom};
+export {getFDSAtom};

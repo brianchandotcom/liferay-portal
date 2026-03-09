@@ -10,7 +10,9 @@ import com.liferay.exportimport.configuration.ExportImportServiceConfigurationWh
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
+import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -91,7 +95,8 @@ public class LayoutReferencesExportImportContentProcessor
 			String content)
 		throws Exception {
 
-		return replaceImportLayoutReferences(portletDataContext, content);
+		return replaceImportLayoutReferences(
+			portletDataContext, stagedModel, content);
 	}
 
 	@Override
@@ -612,7 +617,8 @@ public class LayoutReferencesExportImportContentProcessor
 	}
 
 	protected String replaceImportLayoutReferences(
-			PortletDataContext portletDataContext, String content)
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content)
 		throws Exception {
 
 		String companyDefaultGroupPortalURL = StringPool.BLANK;
@@ -806,6 +812,38 @@ public class LayoutReferencesExportImportContentProcessor
 				if (groupUuid.contains(_TEMPLATE_NAME_PREFIX)) {
 					content = _replaceTemplateLinkToLayout(
 						content, portletDataContext.isPrivateLayout());
+				}
+				else {
+					String externalReferenceCode = null;
+
+					if (stagedModel instanceof ExternalReferenceCodeModel) {
+						ExternalReferenceCodeModel externalReferenceCodeModel =
+							(ExternalReferenceCodeModel)stagedModel;
+
+						externalReferenceCode =
+							externalReferenceCodeModel.
+								getExternalReferenceCode();
+					}
+
+					Class<?> modelClass = stagedModel.getModelClass();
+
+					_exportImportReportEntryLocalService.
+						getOrAddErrorExportImportReportEntry(
+							group.getGroupId(),
+							portletDataContext.getCompanyId(),
+							externalReferenceCode,
+							ExportImportClassedModelUtil.getClassNameId(
+								stagedModel),
+							ExportImportClassedModelUtil.getClassPK(
+								stagedModel),
+							GetterUtil.getLong(
+								portletDataContext.getExportImportProcessId()),
+							StringBundler.concat(
+								"Warning: The referenced Layout group ",
+								"reference ('", groupUuid,
+								"') was not found. Defaulting to the current '",
+								group.getGroupKey(), "' group"),
+							StringPool.BLANK, modelClass.getName());
 				}
 
 				continue;
@@ -1336,6 +1374,10 @@ public class LayoutReferencesExportImportContentProcessor
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	private volatile ExportImportServiceConfiguration
 		_exportImportServiceConfiguration;

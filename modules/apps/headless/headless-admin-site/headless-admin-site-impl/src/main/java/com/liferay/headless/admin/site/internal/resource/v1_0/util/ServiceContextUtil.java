@@ -68,10 +68,10 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-			TaxonomyCategoryBrief[] taxonomyCategoryBriefs, long companyId,
-			Date createDate, long groupId,
-			HttpServletRequest httpServletRequest, String[] keywords,
-			Date modifiedDate, long userId, String uuid)
+		long companyId, Date createDate, long groupId,
+		HttpServletRequest httpServletRequest, String[] keywords,
+		Date modifiedDate, TaxonomyCategoryBrief[] taxonomyCategoryBriefs,
+		long userId, String uuid)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(

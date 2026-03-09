@@ -5,16 +5,13 @@
 
 package com.liferay.object.rest.internal.upgrade.v1_0_1;
 
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Dictionary;
-import java.util.List;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -25,72 +22,62 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class VulcanCompanyConfigurationUpgradeProcess extends UpgradeProcess {
 
 	public VulcanCompanyConfigurationUpgradeProcess(
-		ConfigurationAdmin configurationAdmin,
-		ObjectDefinitionLocalService objectDefinitionLocalService) {
+		CompanyLocalService companyLocalService,
+		ConfigurationAdmin configurationAdmin) {
 
+		_companyLocalService = companyLocalService;
 		_configurationAdmin = configurationAdmin;
-		_objectDefinitionLocalService = objectDefinitionLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<ObjectDefinition> objectDefinitions =
-			_objectDefinitionLocalService.getObjectDefinitions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			_upgradeObjectDefinitionConfiguration(objectDefinition);
-		}
+		_companyLocalService.forEachCompany(
+			company -> _upgradeAllObjectDefinitionConfiguration(
+				company.getCompanyId()));
 	}
 
-	private void _upgradeObjectDefinitionConfiguration(
-			ObjectDefinition objectDefinition)
+	private void _upgradeAllObjectDefinitionConfiguration(long companyId)
 		throws Exception {
-
-		if (objectDefinition.isUnmodifiableSystemObject()) {
-			return;
-		}
 
 		String factoryPid =
 			"com.liferay.portal.vulcan.internal.configuration." +
 				"VulcanCompanyConfiguration";
 
-		String path = objectDefinition.getRESTContextPath();
-
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			StringBundler.concat(
 				"(&(",
 				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-				"=", objectDefinition.getCompanyId(), ")(path=", path,
-				")(service.factoryPid=", factoryPid, "))"));
+				"=", companyId, ")(path=*)(service.factoryPid=", factoryPid,
+				"))"));
 
-		if ((configurations == null) || (configurations.length != 1)) {
+		if (configurations == null) {
 			return;
 		}
 
-		Configuration configuration = configurations[0];
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> dictionary =
+				configuration.getProperties();
 
-		Dictionary<String, Object> dictionary = configuration.getProperties();
+			if ((dictionary == null) || dictionary.isEmpty()) {
+				continue;
+			}
 
-		if ((dictionary == null) || dictionary.isEmpty()) {
-			return;
+			Object value = dictionary.get(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
+
+			if ((value == null) || (value instanceof Long)) {
+				continue;
+			}
+
+			dictionary.put(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				GetterUtil.getLong(value));
+
+			configuration.update(dictionary);
 		}
-
-		Object value = dictionary.get(
-			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
-
-		if ((value == null) || (value instanceof Long)) {
-			return;
-		}
-
-		dictionary.put(
-			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-			GetterUtil.getLong(value));
-
-		configuration.update(dictionary);
 	}
 
+	private final CompanyLocalService _companyLocalService;
 	private final ConfigurationAdmin _configurationAdmin;
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

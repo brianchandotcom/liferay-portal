@@ -3,7 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro cleanWorkflowIndex(workflowIndexName = null) {
 		var companyId = JSONCompany.getCompanyId();
-		var portalHostname = PropsUtil.get("portal.hostname");
+		var portalHostname = "localhost";
 
 		var cleanCurl = '''
 			http://${portalHostname}:9200/liferay-${companyId}-${workflowIndexName}/_delete_by_query?pretty \
@@ -22,7 +22,7 @@ definition {
 	@summary = "Default summary"
 	macro getNumberOfSuccessfulWriteRequests(indexName = null) {
 		var companyId = JSONCompany.getCompanyId();
-		var portalHostname = PropsUtil.get("portal.hostname");
+		var portalHostname = "localhost";
 
 		var curl = "http://${portalHostname}:9202/liferay-${companyId}-${indexName}/_ccr/stats?pretty";
 
@@ -49,11 +49,7 @@ definition {
 
 		FormFields.enableCheckbox(fieldName = "ccrEnabled");
 
-		var elasticsearchHostname = PropsUtil.get("selenium.remote.driver.url");
-
-		var elasticsearchHostname = Regex.removeHTTP(url = ${elasticsearchHostname});
-
-		var elasticsearchHostname = StringUtil.regexReplaceFirst(${elasticsearchHostname}, "_chrome(.*?):[0-9]{4,}.*", "$1");
+		var elasticsearchHostname = "localhost";
 
 		if (${portalCluster} == "true") {
 			FormFields.editRepeatableTextMultiline(

@@ -157,6 +157,7 @@ const FrontendDataSetContent = ({
 	nestedItemsReferenceKey,
 	onActionDropdownItemClick,
 	onBulkActionItemClick,
+	onItemsPropSearch,
 	onSelectedItemsChange,
 	overrideEmptyResultView,
 	pagination,
@@ -1041,18 +1042,47 @@ const FrontendDataSetContent = ({
 	]);
 
 	useEffect(() => {
-		if (itemsProp) {
-
-			// Assuming default pagination values if data comes from items instead of apiURL
-
-			updateDataSetItems({
-				items: itemsProp,
-				lastPage: 1,
-				page: 1,
-				totalCount: itemsProp.length,
-			});
+		if (apiURL || !itemsProp) {
+			return;
 		}
-	}, [itemsProp, updateDataSetItems]);
+
+		const searchQuery = globalFDSState.search.query || '';
+
+		const filteredItems =
+			searchQuery && onItemsPropSearch
+				? itemsProp.filter((item) =>
+						onItemsPropSearch(item, searchQuery)
+					)
+				: itemsProp;
+
+		const shouldPaginate =
+			(activeView.showPagination ?? showPagination) && !!pagination;
+
+		const start = (pageNumber - 1) * paginationDelta;
+		const end = start + paginationDelta;
+
+		updateDataSetItems({
+			items: shouldPaginate
+				? filteredItems.slice(start, end)
+				: filteredItems,
+			lastPage: shouldPaginate
+				? Math.ceil(filteredItems.length / paginationDelta) || 1
+				: 1,
+			page: pageNumber,
+			totalCount: filteredItems.length,
+		});
+	}, [
+		activeView.showPagination,
+		apiURL,
+		globalFDSState.search.query,
+		itemsProp,
+		onItemsPropSearch,
+		pageNumber,
+		pagination,
+		paginationDelta,
+		showPagination,
+		updateDataSetItems,
+	]);
 
 	function deselectItems(value: any) {
 		const values = Array.isArray(value) ? value : [value];

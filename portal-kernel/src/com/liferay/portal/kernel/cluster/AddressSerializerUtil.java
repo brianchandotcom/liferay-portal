@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.io.Deserializer;
-import com.liferay.portal.kernel.io.Serializer;
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
 import com.liferay.portal.kernel.util.Base64;
 
 import java.nio.ByteBuffer;

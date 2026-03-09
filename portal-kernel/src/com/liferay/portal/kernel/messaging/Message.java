@@ -5,9 +5,9 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.Deserializer;
-import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.TransientValue;

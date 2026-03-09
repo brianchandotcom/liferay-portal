@@ -75,6 +75,10 @@ public class DBInspector {
 	public boolean hasColumn(String tableName, String columnName)
 		throws Exception {
 
+		if ((columnName == null) || (tableName == null)) {
+			return false;
+		}
+
 		try (ResultSet resultSet = _getColumnsResultSet(
 				tableName, columnName)) {
 
@@ -90,6 +94,12 @@ public class DBInspector {
 	public boolean hasColumnType(
 			String tableName, String columnName, String columnType)
 		throws Exception {
+
+		if ((columnName == null) || (columnType == null) ||
+			(tableName == null)) {
+
+			return false;
+		}
 
 		try (ResultSet resultSet = _getColumnsResultSet(
 				tableName, columnName)) {
@@ -169,6 +179,10 @@ public class DBInspector {
 	public boolean hasIndex(String tableName, String indexName)
 		throws Exception {
 
+		if ((indexName == null) || (tableName == null)) {
+			return false;
+		}
+
 		DB db = DBManagerUtil.getDB();
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
@@ -192,6 +206,10 @@ public class DBInspector {
 	}
 
 	public boolean hasRows(String tableName) {
+		if (tableName == null) {
+			return false;
+		}
+
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select count(*) from " + tableName);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -236,6 +254,10 @@ public class DBInspector {
 	public boolean isNullable(String tableName, String columnName)
 		throws SQLException {
 
+		if ((columnName == null) || (tableName == null)) {
+			return false;
+		}
+
 		try (ResultSet resultSet = _getColumnsResultSet(
 				tableName, columnName)) {
 
@@ -258,6 +280,10 @@ public class DBInspector {
 
 	public boolean isNumeric(String tableName, String columnName)
 		throws Exception {
+
+		if ((columnName == null) || (tableName == null)) {
+			return false;
+		}
 
 		try (ResultSet resultSet = _getColumnsResultSet(
 				tableName, columnName)) {
@@ -283,6 +309,10 @@ public class DBInspector {
 	}
 
 	public boolean isObjectTable(List<Long> companyIds, String tableName) {
+		if (tableName == null) {
+			return false;
+		}
+
 		String lowerCaseTableName = StringUtil.toLowerCase(tableName);
 
 		for (long companyId : companyIds) {
@@ -428,6 +458,10 @@ public class DBInspector {
 
 	private boolean _hasElement(String elementName, String elementType)
 		throws Exception {
+
+		if (elementName == null) {
+			return false;
+		}
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 

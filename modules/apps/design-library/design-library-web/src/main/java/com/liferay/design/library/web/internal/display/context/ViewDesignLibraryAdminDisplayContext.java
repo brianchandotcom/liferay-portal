@@ -36,7 +36,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 				_httpServletRequest,
 				"click-new-to-create-your-first-design-library")
 		).put(
-			"image", "/states/cms_empty_state.svg"
+			"image", "/states/design_library_empty_state.svg"
 		).put(
 			"title",
 			LanguageUtil.get(_httpServletRequest, "no-design-libraries-yet")

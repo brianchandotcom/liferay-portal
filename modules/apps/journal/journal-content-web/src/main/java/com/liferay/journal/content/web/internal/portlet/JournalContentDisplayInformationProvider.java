@@ -36,7 +36,9 @@ public class JournalContentDisplayInformationProvider
 	}
 
 	@Override
-	public String getClassPK(PortletPreferences portletPreferences) {
+	public String getClassPK(
+		PortletPreferences portletPreferences, long scopeGroupId) {
+
 		String articleExternalReferenceCode = portletPreferences.getValue(
 			"articleExternalReferenceCode", StringPool.BLANK);
 
@@ -44,30 +46,37 @@ public class JournalContentDisplayInformationProvider
 			return StringPool.BLANK;
 		}
 
-		String groupExternalReferenceCode = portletPreferences.getValue(
-			"groupExternalReferenceCode", null);
-
-		if (Validator.isNull(groupExternalReferenceCode)) {
-			return StringPool.BLANK;
-		}
-
-		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-			groupExternalReferenceCode, CompanyThreadLocal.getCompanyId());
-
-		if (group == null) {
-			return StringPool.BLANK;
-		}
-
 		JournalArticle article =
 			_journalArticleLocalService.
 				fetchLatestArticleByExternalReferenceCode(
-					group.getGroupId(), articleExternalReferenceCode);
+					_getGroupId(portletPreferences, scopeGroupId),
+					articleExternalReferenceCode);
 
 		if (article == null) {
 			return StringPool.BLANK;
 		}
 
 		return article.getArticleId();
+	}
+
+	private long _getGroupId(
+		PortletPreferences portletPreferences, long scopeGroupId) {
+
+		String groupExternalReferenceCode = portletPreferences.getValue(
+			"groupExternalReferenceCode", null);
+
+		if (Validator.isNull(groupExternalReferenceCode)) {
+			return scopeGroupId;
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			groupExternalReferenceCode, CompanyThreadLocal.getCompanyId());
+
+		if (group == null) {
+			return scopeGroupId;
+		}
+
+		return group.getGroupId();
 	}
 
 	@Reference

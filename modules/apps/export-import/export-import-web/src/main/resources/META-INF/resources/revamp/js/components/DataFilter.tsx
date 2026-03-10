@@ -5,10 +5,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {dateUtils} from 'frontend-js-web';
 import React, {useState} from 'react';
+
+import FieldSelectWithOption from './forms/FieldSelectWithOption';
 
 const FILTER_OPTIONS = [
 	{
@@ -68,36 +70,28 @@ export default function DataFilter() {
 	return (
 		<ClayLayout.ContentRow className="flex-column flex-lg-row" padded>
 			<ClayLayout.ContentCol>
-				<ClayForm.Group>
-					<label htmlFor="filterContentBy">
-						{Liferay.Language.get('filter-content-by')}
-					</label>
-
-					<ClaySelectWithOption
-						id="filterContentBy"
-						onChange={(event) => setFilterType(event.target.value)}
-						options={FILTER_OPTIONS}
-						value={filterType}
-					/>
-				</ClayForm.Group>
+				<FieldSelectWithOption
+					id="filterContentBy"
+					label={Liferay.Language.get('filter-content-by')}
+					name="filterContentBy"
+					onChange={(event) => setFilterType(event.target.value)}
+					options={FILTER_OPTIONS}
+					value={filterType}
+				/>
 			</ClayLayout.ContentCol>
 
 			{filterType === 'last' && (
 				<ClayLayout.ContentCol>
-					<ClayForm.Group>
-						<label htmlFor="modifiedLast">
-							{Liferay.Language.get('modified-last')}
-						</label>
-
-						<ClaySelectWithOption
-							id="modifiedLast"
-							onChange={(event) =>
-								setModifiedLast(event.target.value)
-							}
-							options={MODIFIED_LAST_OPTIONS}
-							value={modifiedLast}
-						/>
-					</ClayForm.Group>
+					<FieldSelectWithOption
+						id="modifiedLast"
+						label={Liferay.Language.get('modified-last')}
+						name="modifiedLast"
+						onChange={(event) =>
+							setModifiedLast(event.target.value)
+						}
+						options={MODIFIED_LAST_OPTIONS}
+						value={modifiedLast}
+					/>
 				</ClayLayout.ContentCol>
 			)}
 

@@ -736,6 +736,11 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(38, 2, 0),
 			new LayoutSetPrototypeReadyForPropagationUpgradeProcess());
+
+		upgradeVersionTreeMap.put(
+			new Version(38, 2, 1),
+			UpgradeModulesFactory.create(
+				new String[] {"com.liferay.staging.impl"}, null));
 	}
 
 }

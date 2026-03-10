@@ -2,7 +2,7 @@ jobs:
     close-merge-conflicts:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.repository_owner == 'brianchandotcom' || github.repository_owner == 'pyoo47'
+        if: github.repository_owner == 'brianchandotcom'
         permissions:
             issues: write
             pull-requests: write

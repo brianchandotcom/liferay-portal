@@ -11,6 +11,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,7 +77,38 @@ public class SQLServerLimitStringUtil {
 		StringBundler innerOrderBySB = new StringBundler();
 		StringBundler outerOrderBySB = new StringBundler();
 
-		String[] orderByColumns = StringUtil.split(orderBy, CharPool.COMMA);
+		List<String> orderByColumns = new ArrayList<>();
+
+		int depth = 0;
+		int start = 0;
+
+		for (int i = 0; i < orderBy.length(); i++) {
+			char c = orderBy.charAt(i);
+
+			if (c == CharPool.OPEN_PARENTHESIS) {
+				depth++;
+			}
+			else if (c == CharPool.CLOSE_PARENTHESIS) {
+				depth--;
+			}
+			else if ((c == CharPool.COMMA) && (depth == 0)) {
+				String column = orderBy.substring(start, i);
+
+				if (Validator.isNotNull(column)) {
+					orderByColumns.add(column);
+				}
+
+				start = i + 1;
+			}
+		}
+
+		if (start < orderBy.length()) {
+			String column = orderBy.substring(start);
+
+			if (Validator.isNotNull(column)) {
+				orderByColumns.add(column);
+			}
+		}
 
 		for (String orderByColumn : orderByColumns) {
 			orderByColumn = orderByColumn.trim();

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay AI Hub Nexus REST API
 Bundle-SymbolicName: com.liferay.ai.hub.nexus.rest.api
-Bundle-Version: 5.0.0
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.ai.hub.nexus.rest.dto.v1_0,\
 	com.liferay.ai.hub.nexus.rest.manager.v1_0,\

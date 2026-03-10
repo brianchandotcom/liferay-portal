@@ -1,6 +1,6 @@
 Bundle-Name: Liferay AI Hub Nexus API
 Bundle-SymbolicName: com.liferay.ai.hub.nexus.api
-Bundle-Version: 2.0.0
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.ai.hub.nexus.agent,\
 	com.liferay.ai.hub.nexus.util

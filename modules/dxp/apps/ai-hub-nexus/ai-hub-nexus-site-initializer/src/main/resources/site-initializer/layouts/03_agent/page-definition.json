@@ -4,7 +4,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.EditAgentDefinitionFragmentRenderer"
+						"key": "com.liferay.ai.hub.nexus.web.internal.fragment.renderer.EditAgentDefinitionFragmentRenderer"
 					},
 					"fragmentConfig": {
 					},

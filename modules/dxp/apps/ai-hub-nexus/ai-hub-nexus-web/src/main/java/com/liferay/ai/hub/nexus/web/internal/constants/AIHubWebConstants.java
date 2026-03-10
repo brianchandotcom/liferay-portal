@@ -10,6 +10,7 @@ package com.liferay.ai.hub.nexus.web.internal.constants;
  */
 public class AIHubWebConstants {
 
-	public static final String BUNDLE_SYMBOLIC_NAME = "com.liferay.ai.hub.web";
+	public static final String BUNDLE_SYMBOLIC_NAME =
+		"com.liferay.ai.hub.nexus.web";
 
 }

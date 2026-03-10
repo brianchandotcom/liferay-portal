@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.resource;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 
 import java.io.InputStream;
 

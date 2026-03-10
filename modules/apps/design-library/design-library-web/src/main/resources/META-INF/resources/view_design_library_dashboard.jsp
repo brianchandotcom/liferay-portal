@@ -8,18 +8,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long designLibraryId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
-%>
+long designLibraryEntryId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
 
-<%
-DesignLibraryDashboardDisplayContext designLibraryDashboardDisplayContext = new DesignLibraryDashboardDisplayContext(request);
+DesignLibraryDashboardDisplayContext designLibraryDashboardDisplayContext = new DesignLibraryDashboardDisplayContext(request, liferayPortletResponse);
 %>
 
 <div>
 	<div>
 		<react:component
 			module="{DesignLibraryBreadcrumb} from design-library-web"
-			props='<%= designLibraryDashboardDisplayContext.getHeaderProps(designLibraryId) %>'
+			props="<%= designLibraryDashboardDisplayContext.getHeaderProps(designLibraryEntryId) %>"
 		/>
 	</div>
 

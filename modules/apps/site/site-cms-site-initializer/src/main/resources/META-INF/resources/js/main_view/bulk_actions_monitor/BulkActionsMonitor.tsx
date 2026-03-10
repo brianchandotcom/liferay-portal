@@ -85,33 +85,38 @@ function BulkActionsMonitor() {
 			const newTasks = data?.items || [];
 
 			newTasks.forEach((newTask) => {
-				const oldTask = previousTasksRef.current.find(
-					(t) => t.id === newTask.id
-				);
+				const context = taskContext[newTask.id];
 
-				if (
-					oldTask &&
-					oldTask.executionStatus.key !== 'completed' &&
-					newTask.executionStatus.key === 'completed'
-				) {
-					const context = taskContext[newTask.id] || {};
-					const itemsCount =
-						context.itemCount ||
-						newTask.numberOfSuccessfulItems ||
-						0;
+				if (context && newTask.executionStatus.key === 'completed') {
+					const {numberOfFailedItems, numberOfSuccessfulItems} =
+						newTask;
 
-					const message = getBulkActionTaskMessage(
-						newTask.type,
-						'success',
-						{
-							items: new Array(itemsCount),
-							selectAll: context.selectAll || false,
-						},
-						context
-					);
+					if (numberOfSuccessfulItems > 0) {
+						const message = getBulkActionTaskMessage(
+							newTask.type,
+							'success',
+							{
+								items: new Array(numberOfSuccessfulItems),
+								selectAll:
+									context.selectAll &&
+									numberOfFailedItems === 0,
+							},
+							context
+						);
 
-					if (message) {
-						openToast({message, type: 'success'});
+						if (message) {
+							openToast({
+								message,
+								type:
+									numberOfFailedItems > 0
+										? 'warning'
+										: 'success',
+							});
+						}
+					}
+
+					if (numberOfFailedItems > 0) {
+						displayCreateTaskErrorToast(null);
 					}
 
 					setTaskContext((prevContext) => {

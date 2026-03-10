@@ -116,8 +116,7 @@ public class VersionListTypeService extends BaseService {
 
 			if (Validator.isNull(product) ||
 				Validator.isNull(productGroupVersion) ||
-				!product.equals("dxp") ||
-				!_isSupported(releaseJSONObject.optJSONArray("tags"))) {
+				!product.equals("dxp")) {
 
 				continue;
 			}
@@ -131,7 +130,10 @@ public class VersionListTypeService extends BaseService {
 						StringUtil.toUpperCase(productGroupVersion);
 			}
 
-			_addVersion(product + "Major", productMajorVersion, versionsMap);
+			if (_isSupported(releaseJSONObject.optJSONArray("tags"))) {
+				_addVersion(
+					product + "Major", productMajorVersion, versionsMap);
+			}
 
 			String productVersion = releaseJSONObject.getString(
 				"productVersion");

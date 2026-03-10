@@ -46,7 +46,9 @@ public class EnvironmentBuildPropertiesUtil {
 
 			String masterHostname = System.getenv("MASTER_HOSTNAME");
 
-			if (masterHostname.equals("test-5-1")) {
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(masterHostname) &&
+				masterHostname.equals("test-5-1")) {
+
 				environmentBuildProperties.setProperty(
 					"github.webhook.base.invocation.url",
 					environmentBuildProperties.getProperty(

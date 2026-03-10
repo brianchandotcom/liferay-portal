@@ -111,14 +111,14 @@ const EventInput: React.FC<IEventInputProps> = ({
 				);
 
 				dayCriterion = existingDayIMap.merge({
-					operatorName: RelationalOperators.GT,
+					operatorName: RelationalOperators.GTE,
 					touched: true,
 					valid: true,
 					value: newDayValue
 				});
 			} else {
 				dayCriterion = fromJS({
-					operatorName: RelationalOperators.GT,
+					operatorName: RelationalOperators.GTE,
 					propertyName: 'day',
 					touched: true,
 					valid: true,

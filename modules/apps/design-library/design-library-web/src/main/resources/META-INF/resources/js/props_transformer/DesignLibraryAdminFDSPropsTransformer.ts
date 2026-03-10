@@ -18,6 +18,8 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 		...props,
 		creationMenu,
 		hideManagementBarInEmptyState: true,
+		itemsActions: (props.additionalProps as Record<string, unknown>)
+			?.itemsActions,
 		views: [
 			{
 				contentRenderer: 'table',

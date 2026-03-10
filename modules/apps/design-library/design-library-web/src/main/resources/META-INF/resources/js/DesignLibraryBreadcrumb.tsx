@@ -14,8 +14,10 @@ type ActionDropdownItemProps = ComponentProps<
 
 interface DesignLibraryBreadcrumbProps {
 	actionItems?: ActionDropdownItemProps[];
-	portletRoot: string;
-	title: string;
+	breadcrumbProps: {
+		current: {active: boolean; href?: string; label: string};
+		redirect: {active: boolean; href?: string; label: string};
+	};
 }
 
 function ActionDropdownItem({
@@ -31,24 +33,13 @@ function ActionDropdownItem({
 
 export default function DesignLibraryBreadcrumb({
 	actionItems,
-	portletRoot,
-	title = 'placeholder',
+	breadcrumbProps,
 }: DesignLibraryBreadcrumbProps) {
 	return (
 		<div className="autofit-row autofit-row-center bg-white design-library-breadcrumb px-4 py-3">
 			<ClayBreadcrumb
 				className="px-0 py-1"
-				items={[
-					{
-						href: `${window.origin}/group/control_panel/manage?p_p_id=${portletRoot}`,
-						label: Liferay.Language.get('design-libraries'),
-					},
-					{
-						active: true,
-						href: '#top',
-						label: title,
-					},
-				]}
+				items={[breadcrumbProps.redirect, breadcrumbProps.current]}
 			/>
 
 			{actionItems && (

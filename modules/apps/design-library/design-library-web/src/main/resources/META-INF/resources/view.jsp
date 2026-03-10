@@ -8,11 +8,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewDesignLibraryAdminDisplayContext viewDesignLibraryAdminDisplayContext = new ViewDesignLibraryAdminDisplayContext(request);
+ViewDesignLibraryAdminDisplayContext viewDesignLibraryAdminDisplayContext = new ViewDesignLibraryAdminDisplayContext(request, liferayPortletResponse);
 %>
 
 <div class="design-library-fds-wrapper">
 	<frontend-data-set:headless-display
+		additionalProps="<%= viewDesignLibraryAdminDisplayContext.getFDSAdditionalProps() %>"
 		apiURL="<%= viewDesignLibraryAdminDisplayContext.getAPIURL() %>"
 		emptyState="<%= viewDesignLibraryAdminDisplayContext.getEmptyState() %>"
 		formName="fm"

@@ -6,8 +6,8 @@
 package com.liferay.util.servlet;
 
 import com.liferay.petra.io.OutputStreamWriter;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
 
 import jakarta.servlet.ServletOutputStream;

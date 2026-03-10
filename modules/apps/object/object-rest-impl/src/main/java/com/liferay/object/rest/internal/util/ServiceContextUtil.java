@@ -6,7 +6,7 @@
 package com.liferay.object.rest.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.object.comment.ObjectEntryComment;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.ParentTaxonomyCategory;
@@ -218,11 +218,10 @@ public class ServiceContextUtil {
 				}
 
 				AssetCategory assetCategory =
-					AssetCategoryLocalServiceUtil.
-						getOrAddEmptyCategoryWithAncestors(
-							externalReferenceCode, userId, groupId,
-							parentTaxonomyCategoryExternalReferenceCode,
-							parentTaxonomyVocabularyExternalReferenceCode);
+					AssetCategoryServiceUtil.getOrAddEmptyCategoryWithAncestors(
+						externalReferenceCode, userId, groupId,
+						parentTaxonomyCategoryExternalReferenceCode,
+						parentTaxonomyVocabularyExternalReferenceCode);
 
 				assetCategoryIds.add(assetCategory.getCategoryId());
 			}

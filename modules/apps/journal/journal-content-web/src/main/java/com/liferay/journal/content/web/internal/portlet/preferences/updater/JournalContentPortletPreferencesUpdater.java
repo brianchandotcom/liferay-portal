@@ -60,11 +60,14 @@ public class JournalContentPortletPreferencesUpdater
 		portletPreferences.setValue(
 			"articleExternalReferenceCode", article.getExternalReferenceCode());
 
-		Group group = _groupLocalService.fetchGroup(article.getGroupId());
+		if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
+			Group group = _groupLocalService.fetchGroup(article.getGroupId());
 
-		if (group != null) {
-			portletPreferences.setValue(
-				"groupExternalReferenceCode", group.getExternalReferenceCode());
+			if (group != null) {
+				portletPreferences.setValue(
+					"groupExternalReferenceCode",
+					group.getExternalReferenceCode());
+			}
 		}
 
 		_addLayoutClassedModelUsage(

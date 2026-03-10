@@ -55,7 +55,7 @@ public class ServiceContextUtil {
 		).build();
 
 		serviceContext.setAssetCategoryIds(
-			_getAssetCategoryIds(groupId, taxonomyCategoryBriefs, userId));
+			_getAssetCategoryIds(groupId, taxonomyCategoryBriefs));
 		serviceContext.setAssetTagNames(keywords);
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setCreateDate(createDate);
@@ -226,8 +226,7 @@ public class ServiceContextUtil {
 	}
 
 	private static long[] _getAssetCategoryIds(
-			long groupId, TaxonomyCategoryBrief[] taxonomyCategoryBriefs,
-			long userId)
+			long groupId, TaxonomyCategoryBrief[] taxonomyCategoryBriefs)
 		throws Exception {
 
 		if (ArrayUtil.isEmpty(taxonomyCategoryBriefs)) {
@@ -266,7 +265,7 @@ public class ServiceContextUtil {
 					AssetCategoryServiceUtil.getOrAddEmptyCategoryWithAncestors(
 						taxonomyCategoryBrief.
 							getTaxonomyCategoryExternalReferenceCode(),
-						userId, scopeGroupId,
+						scopeGroupId,
 						parentTaxonomyCategoryExternalReferenceCode,
 						parentTaxonomyVocabulary.getExternalReferenceCode());
 

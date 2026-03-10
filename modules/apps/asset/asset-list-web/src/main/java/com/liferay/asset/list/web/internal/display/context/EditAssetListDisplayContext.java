@@ -1049,8 +1049,10 @@ public class EditAssetListDisplayContext {
 		Set<AssetVocabulary> groupsVocabularies = new LinkedHashSet<>(
 			_assetVocabularyService.getGroupsVocabularies(groupIds));
 
-		if (_hasSpaceGroups(groupIds) && !ArrayUtil.contains(groupIds, -1)) {
-			groupIds = ArrayUtil.append(groupIds, -1);
+		if (_hasSpaceGroups(groupIds) &&
+			!ArrayUtil.contains(groupIds, GroupConstants.GROUP_ID_ALL)) {
+
+			groupIds = ArrayUtil.append(groupIds, GroupConstants.GROUP_ID_ALL);
 		}
 
 		for (long groupId : groupIds) {

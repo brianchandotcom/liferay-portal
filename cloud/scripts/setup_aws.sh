@@ -22,9 +22,11 @@ function main {
 
 	aws sso login
 
-	_setup_aws_eks "${1}"
+	local terraform_args="$(_get_terraform_apply_args "${1}")"
 
-	_setup_aws_gitops "${1}"
+	_setup_aws_eks "${terraform_args}"
+
+	_setup_aws_gitops "${terraform_args}"
 
 	_port_forward_argo_cd
 }
@@ -78,7 +80,7 @@ function _generate_tfvars {
 function _get_terraform_apply_args {
 	local auto_approve="false"
 
-	local configuration_json_file="${_SCRIPTS_DIR}/${1}"
+	local configuration_json_file="${1}"
 
 	if jq --exit-status '.options.auto_approve' "${configuration_json_file}" > /dev/null
 	then
@@ -178,7 +180,7 @@ function _terraform_init_and_apply {
 
 	terraform init
 
-	terraform apply "$(_get_terraform_apply_args "${2}")"
+	terraform apply "${2}"
 
 	_popd
 }

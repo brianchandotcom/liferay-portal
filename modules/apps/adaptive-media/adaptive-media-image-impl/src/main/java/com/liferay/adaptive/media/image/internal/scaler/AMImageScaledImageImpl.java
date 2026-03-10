@@ -6,7 +6,7 @@
 package com.liferay.adaptive.media.image.internal.scaler;
 
 import com.liferay.adaptive.media.image.scaler.AMImageScaledImage;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 
 import java.io.InputStream;
 

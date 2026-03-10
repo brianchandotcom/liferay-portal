@@ -10,10 +10,12 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.content.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.journal.content.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -49,6 +51,24 @@ public class JournalContentWebUpgradeStepRegistrator
 					_classNameLocalService.getClassNameId(DDMStructure.class),
 					_ddmTemplateLocalService, _groupLocalService,
 					_journalArticleLocalService, _layoutLocalService, _portal));
+
+		registry.register(
+			"1.1.1", "1.1.2",
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"delete from PortletPreferenceValue where exists( select ",
+					"1 from PortletPreferences inner join Layout on ",
+					"PortletPreferences.plid=Layout.plid inner join Group_ on ",
+					"Layout.groupId = Group_.groupId where ",
+					"PortletPreferenceValue.portletPreferencesId=",
+					"PortletPreferences.portletPreferencesId and ",
+					"PortletPreferences.portletId like ",
+					"'com_liferay_journal_content_web_portlet_",
+					"JournalContentPortlet_INSTANCE_%' and ",
+					"PortletPreferenceValue.name like ",
+					"'groupExternalReferenceCode' and Group_.",
+					"externalReferenceCode=PortletPreferenceValue.",
+					"smallValue)")));
 	}
 
 	@Reference

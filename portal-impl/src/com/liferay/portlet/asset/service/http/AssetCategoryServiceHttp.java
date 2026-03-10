@@ -778,8 +778,7 @@ public class AssetCategoryServiceHttp {
 	public static com.liferay.asset.kernel.model.AssetCategory
 			getOrAddEmptyCategoryWithAncestors(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long userId, long groupId,
-				String parentCategoryExternalReferenceCode,
+				long groupId, String parentCategoryExternalReferenceCode,
 				String vocabularyExternalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -790,7 +789,7 @@ public class AssetCategoryServiceHttp {
 				_getOrAddEmptyCategoryWithAncestorsParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, userId, groupId,
+				methodKey, externalReferenceCode, groupId,
 				parentCategoryExternalReferenceCode,
 				vocabularyExternalReferenceCode);
 
@@ -1793,7 +1792,7 @@ public class AssetCategoryServiceHttp {
 		new Class[] {String.class, long.class};
 	private static final Class<?>[]
 		_getOrAddEmptyCategoryWithAncestorsParameterTypes18 = new Class[] {
-			String.class, long.class, long.class, String.class, String.class
+			String.class, long.class, String.class, String.class
 		};
 	private static final Class<?>[] _getVocabularyCategoriesParameterTypes19 =
 		new Class[] {

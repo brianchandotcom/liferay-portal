@@ -163,7 +163,7 @@ public interface AssetCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategory getOrAddEmptyCategoryWithAncestors(
-			String externalReferenceCode, long userId, long groupId,
+			String externalReferenceCode, long groupId,
 			String parentCategoryExternalReferenceCode,
 			String vocabularyExternalReferenceCode)
 		throws PortalException;

@@ -200,14 +200,13 @@ public class AssetCategoryServiceUtil {
 	}
 
 	public static AssetCategory getOrAddEmptyCategoryWithAncestors(
-			String externalReferenceCode, long userId, long groupId,
+			String externalReferenceCode, long groupId,
 			String parentCategoryExternalReferenceCode,
 			String vocabularyExternalReferenceCode)
 		throws PortalException {
 
 		return getService().getOrAddEmptyCategoryWithAncestors(
-			externalReferenceCode, userId, groupId,
-			parentCategoryExternalReferenceCode,
+			externalReferenceCode, groupId, parentCategoryExternalReferenceCode,
 			vocabularyExternalReferenceCode);
 	}
 

@@ -221,14 +221,13 @@ public class AssetCategoryServiceWrapper
 
 	@Override
 	public AssetCategory getOrAddEmptyCategoryWithAncestors(
-			String externalReferenceCode, long userId, long groupId,
+			String externalReferenceCode, long groupId,
 			String parentCategoryExternalReferenceCode,
 			String vocabularyExternalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryService.getOrAddEmptyCategoryWithAncestors(
-			externalReferenceCode, userId, groupId,
-			parentCategoryExternalReferenceCode,
+			externalReferenceCode, groupId, parentCategoryExternalReferenceCode,
 			vocabularyExternalReferenceCode);
 	}
 

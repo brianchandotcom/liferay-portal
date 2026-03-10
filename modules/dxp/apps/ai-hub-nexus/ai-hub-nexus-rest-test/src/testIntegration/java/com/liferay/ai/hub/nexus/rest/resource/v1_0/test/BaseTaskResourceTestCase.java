@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.resource.v1_0.test;
+package com.liferay.ai.hub.nexus.rest.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.nexus.rest.client.dto.v1_0.Message;
+import com.liferay.ai.hub.nexus.rest.client.dto.v1_0.Task;
 import com.liferay.ai.hub.nexus.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.nexus.rest.client.pagination.Page;
-import com.liferay.ai.hub.nexus.rest.client.resource.v1_0.MessageResource;
-import com.liferay.ai.hub.nexus.rest.client.serdes.v1_0.MessageSerDes;
+import com.liferay.ai.hub.nexus.rest.client.resource.v1_0.TaskResource;
+import com.liferay.ai.hub.nexus.rest.client.serdes.v1_0.TaskSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -72,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseMessageResourceTestCase {
+public abstract class BaseTaskResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -93,12 +93,12 @@ public abstract class BaseMessageResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_messageResource.setContextCompany(testCompany);
+		_taskResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		messageResource = MessageResource.builder(
+		taskResource = TaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -119,23 +119,23 @@ public abstract class BaseMessageResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Message message1 = randomMessage();
+		Task task1 = randomTask();
 
-		String json = objectMapper.writeValueAsString(message1);
+		String json = objectMapper.writeValueAsString(task1);
 
-		Message message2 = MessageSerDes.toDTO(json);
+		Task task2 = TaskSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(message1, message2));
+		Assert.assertTrue(equals(task1, task2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Message message = randomMessage();
+		Task task = randomTask();
 
-		String json1 = objectMapper.writeValueAsString(message);
-		String json2 = MessageSerDes.toJSON(message);
+		String json1 = objectMapper.writeValueAsString(task);
+		String json2 = TaskSerDes.toJSON(task);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -163,51 +163,72 @@ public abstract class BaseMessageResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Message message = randomMessage();
+		Task task = randomTask();
 
-		message.setText(regex);
+		task.setExternalReferenceCode(regex);
+		task.setSseEventSinkKey(regex);
+		task.setType(regex);
 
-		String json = MessageSerDes.toJSON(message);
+		String json = TaskSerDes.toJSON(task);
 
 		Assert.assertFalse(json.contains(regex));
 
-		message = MessageSerDes.toDTO(json);
+		task = TaskSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, message.getText());
+		Assert.assertEquals(regex, task.getExternalReferenceCode());
+		Assert.assertEquals(regex, task.getSseEventSinkKey());
+		Assert.assertEquals(regex, task.getType());
 	}
 
 	@Test
-	public void testPostChatByExternalReferenceCodeMessage() throws Exception {
-		Message randomMessage = randomMessage();
+	public void testGetTaskSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Task task = testGetTaskSubscribe_addTask();
 
-		Message postMessage =
-			testPostChatByExternalReferenceCodeMessage_addMessage(
-				randomMessage);
+		assertHttpResponseStatusCode(
+			204, taskResource.getTaskSubscribeHttpResponse(null));
 
-		assertEquals(randomMessage, postMessage);
-		assertValid(postMessage);
+		assertHttpResponseStatusCode(
+			404, taskResource.getTaskSubscribeHttpResponse(null));
 	}
 
-	protected Message testPostChatByExternalReferenceCodeMessage_addMessage(
-			Message message)
-		throws Exception {
-
+	protected Task testGetTaskSubscribe_addTask() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertContains(Message message, List<Message> messages) {
+	@Test
+	public void testPostTask() throws Exception {
+		Task randomTask = randomTask();
+
+		Task postTask = testPostTask_addTask(randomTask);
+
+		assertEquals(randomTask, postTask);
+		assertValid(postTask);
+	}
+
+	protected Task testPostTask_addTask(Task task) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertContains(Task task, List<Task> tasks) {
 		boolean contains = false;
 
-		for (Message item : messages) {
-			if (equals(message, item)) {
+		for (Task item : tasks) {
+			if (equals(task, item)) {
 				contains = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(messages + " does not contain " + message, contains);
+		Assert.assertTrue(tasks + " does not contain " + task, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -218,78 +239,76 @@ public abstract class BaseMessageResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Message message1, Message message2) {
+	protected void assertEquals(Task task1, Task task2) {
 		Assert.assertTrue(
-			message1 + " does not equal " + message2,
-			equals(message1, message2));
+			task1 + " does not equal " + task2, equals(task1, task2));
 	}
 
-	protected void assertEquals(
-		List<Message> messages1, List<Message> messages2) {
+	protected void assertEquals(List<Task> tasks1, List<Task> tasks2) {
+		Assert.assertEquals(tasks1.size(), tasks2.size());
 
-		Assert.assertEquals(messages1.size(), messages2.size());
+		for (int i = 0; i < tasks1.size(); i++) {
+			Task task1 = tasks1.get(i);
+			Task task2 = tasks2.get(i);
 
-		for (int i = 0; i < messages1.size(); i++) {
-			Message message1 = messages1.get(i);
-			Message message2 = messages2.get(i);
-
-			assertEquals(message1, message2);
+			assertEquals(task1, task2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Message> messages1, List<Message> messages2) {
+		List<Task> tasks1, List<Task> tasks2) {
 
-		Assert.assertEquals(messages1.size(), messages2.size());
+		Assert.assertEquals(tasks1.size(), tasks2.size());
 
-		for (Message message1 : messages1) {
+		for (Task task1 : tasks1) {
 			boolean contains = false;
 
-			for (Message message2 : messages2) {
-				if (equals(message1, message2)) {
+			for (Task task2 : tasks2) {
+				if (equals(task1, task2)) {
 					contains = true;
 
 					break;
 				}
 			}
 
-			Assert.assertTrue(
-				messages2 + " does not contain " + message1, contains);
+			Assert.assertTrue(tasks2 + " does not contain " + task1, contains);
 		}
 	}
 
-	protected void assertValid(Message message) throws Exception {
+	protected void assertValid(Task task) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("chat", additionalAssertFieldName)) {
-				if (message.getChat() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("context", additionalAssertFieldName)) {
-				if (message.getContext() == null) {
+				if (task.getContext() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("scope", additionalAssertFieldName)) {
-				if (message.getScope() == null) {
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (task.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("text", additionalAssertFieldName)) {
-				if (message.getText() == null) {
+			if (Objects.equals("sseEventSinkKey", additionalAssertFieldName)) {
+				if (task.getSseEventSinkKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (task.getType() == null) {
 					valid = false;
 				}
 
@@ -304,18 +323,18 @@ public abstract class BaseMessageResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Message> page) {
+	protected void assertValid(Page<Task> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<Message> page, Map<String, Map<String, String>> expectedActions) {
+		Page<Task> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<Message> messages = page.getItems();
+		java.util.Collection<Task> tasks = page.getItems();
 
-		int size = messages.size();
+		int size = tasks.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -353,9 +372,11 @@ public abstract class BaseMessageResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.nexus.rest.dto.v1_0.Message.class)) {
+					com.liferay.ai.hub.nexus.rest.dto.v1_0.Task.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -403,28 +424,28 @@ public abstract class BaseMessageResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Message message1, Message message2) {
-		if (message1 == message2) {
+	protected boolean equals(Task task1, Task task2) {
+		if (task1 == task2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("chat", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						message1.getChat(), message2.getChat())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("context", additionalAssertFieldName)) {
-				if (!equals(
-						(Map)message1.getContext(),
-						(Map)message2.getContext())) {
+				if (!equals((Map)task1.getContext(), (Map)task2.getContext())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						task1.getExternalReferenceCode(),
+						task2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -432,9 +453,10 @@ public abstract class BaseMessageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("scope", additionalAssertFieldName)) {
+			if (Objects.equals("sseEventSinkKey", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						message1.getScope(), message2.getScope())) {
+						task1.getSseEventSinkKey(),
+						task2.getSseEventSinkKey())) {
 
 					return false;
 				}
@@ -442,10 +464,8 @@ public abstract class BaseMessageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("text", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						message1.getText(), message2.getText())) {
-
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(task1.getType(), task2.getType())) {
 					return false;
 				}
 
@@ -508,13 +528,13 @@ public abstract class BaseMessageResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_messageResource instanceof EntityModelResource)) {
+		if (!(_taskResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_messageResource;
+			(EntityModelResource)_taskResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -547,7 +567,7 @@ public abstract class BaseMessageResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Message message) {
+		EntityField entityField, String operator, Task task) {
 
 		StringBundler sb = new StringBundler();
 
@@ -559,23 +579,105 @@ public abstract class BaseMessageResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("chat")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("context")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("scope")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = task.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
-		if (entityFieldName.equals("text")) {
-			Object object = message.getText();
+		if (entityFieldName.equals("sseEventSinkKey")) {
+			Object object = task.getSseEventSinkKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("type")) {
+			Object object = task.getType();
 
 			String value = String.valueOf(object);
 
@@ -662,25 +764,29 @@ public abstract class BaseMessageResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected Message randomMessage() throws Exception {
-		return new Message() {
+	protected Task randomTask() throws Exception {
+		return new Task() {
 			{
-				text = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				sseEventSinkKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected Message randomIrrelevantMessage() throws Exception {
-		Message randomIrrelevantMessage = randomMessage();
+	protected Task randomIrrelevantTask() throws Exception {
+		Task randomIrrelevantTask = randomTask();
 
-		return randomIrrelevantMessage;
+		return randomIrrelevantTask;
 	}
 
-	protected Message randomPatchMessage() throws Exception {
-		return randomMessage();
+	protected Task randomPatchTask() throws Exception {
+		return randomTask();
 	}
 
-	protected MessageResource messageResource;
+	protected TaskResource taskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -879,14 +985,14 @@ public abstract class BaseMessageResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseMessageResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseTaskResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.nexus.rest.resource.v1_0.MessageResource
-		_messageResource;
+	private com.liferay.ai.hub.nexus.rest.resource.v1_0.TaskResource
+		_taskResource;
 
 }

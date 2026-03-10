@@ -749,19 +749,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 		undeployObjectDefinition(objectDefinition);
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					objectDefinition.getCompanyId())) {
-
-			_inactiveServiceRegistrationsMap.computeIfAbsent(
-				DBPartitionUtil.getPartitionKey(
-					objectDefinition.getObjectDefinitionId()),
-				objectDefinitionId ->
-					InactiveObjectDefinitionDeployerUtil.deploy(
-						_bundleContext, _objectEntryService,
-						_objectFieldLocalService,
-						_objectRelationshipLocalService, objectDefinition));
-		}
+		_inactiveServiceRegistrationsMap.computeIfAbsent(
+			DBPartitionUtil.getPartitionKey(
+				objectDefinition.getObjectDefinitionId()),
+			objectDefinitionId -> InactiveObjectDefinitionDeployerUtil.deploy(
+				_bundleContext, _objectEntryService, _objectFieldLocalService,
+				_objectRelationshipLocalService, objectDefinition));
 	}
 
 	@Override

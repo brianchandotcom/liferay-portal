@@ -1,0 +1,15 @@
+-   tabpanel "Links":
+    -   blockquote:
+        -   paragraph: A link (also known as hyperlink) is a clickable (text or image) element. The link control is used for navigation.
+    -   heading "SINGLE LINK" [level=3]
+    -   blockquote:
+        -   paragraph: Used for stand-alone hyperlinks. Can be a text or an image.
+    -   link "link text":
+        -   /url: "#"
+    -   link "a button link":
+        -   /url: "#"
+    -   paragraph:
+        -   text: This is some inline text with
+        -   link "link text":
+            -   /url: "#"
+        -   text: to test for 3:1 color contrast ratio.

@@ -1,0 +1,71 @@
+-   tabpanel "Management Toolbars":
+    -   blockquote:
+        -   paragraph: Management toolbar is an extension of Toolbar. A combination of different components as filters, orders, search, visualization select and other actions, that allow to manage dataset.
+    -   heading "DEFAULT STATE" [level=3]
+    -   navigation:
+        -   list:
+            -   listitem:
+                -   checkbox "Select All Items on the Page" [disabled]
+            -   listitem: All Selected (0 of 0 Items Selected)
+            -   listitem:
+                -   button "Filter"
+            -   listitem:
+                -   button "Order"
+        -   search:
+            -   searchbox "Search for:"
+            -   button "Search for"
+        -   'button "Select View, Currently Selected: Card"'
+        -   button "New"
+    -   heading "ACTIVE STATE" [level=3]
+    -   navigation:
+        -   list:
+            -   listitem:
+                -   checkbox /Clear selection\. There are currently \d+ of \d+ Items selected\./ [checked]
+            -   listitem: /\d+ of \d+ Items Selected/
+            -   listitem:
+                -   button "Clear"
+            -   listitem:
+                -   button "Select All"
+        -   button "Download"
+        -   link "Delete":
+            -   /url: "#delete"
+        -   button "Actions"
+    -   heading "WITH RESULTS BAR" [level=3]
+    -   navigation:
+        -   list:
+            -   listitem:
+                -   checkbox "Select All Items on the Page"
+            -   listitem: /0 of \d+ Items Selected/
+            -   listitem:
+                -   button "Filter"
+            -   listitem:
+                -   button "Order"
+        -   search:
+            -   searchbox "Search for:"
+            -   button "Search for"
+        -   'button "Select View, Currently Selected: Card"'
+        -   button "New"
+    -   navigation:
+        -   list:
+            -   listitem:
+                -   text: /\d+ Results Found for/
+                -   strong: "\"my search\""
+            -   listitem:
+                -   button /Clear \d+ Results for my search/
+    -   heading "Search Results" [level=3]
+    -   heading "USING DISPLAY CONTEXT" [level=3]
+    -   navigation:
+        -   list:
+            -   listitem:
+                -   checkbox "Select All Items on the Page" [disabled]
+            -   listitem: All Selected (0 of 0 Items Selected)
+            -   listitem:
+                -   button "Filter"
+            -   listitem:
+                -   button "Order"
+        -   search:
+            -   searchbox "Search for:"
+            -   button "Search for"
+        -   'button "Select View, Currently Selected: Card"'
+        -   button "New"
+        -   button "Toggle Info Panel"

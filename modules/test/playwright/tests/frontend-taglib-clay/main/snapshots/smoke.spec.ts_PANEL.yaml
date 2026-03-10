@@ -1,0 +1,22 @@
+-   tabpanel "Panel":
+    -   blockquote:
+        -   paragraph: Toggle content visibility using Panel.
+    -   heading "DEFAULT PANEL" [level=3]
+    -   button "Panel Title 1"
+    -   heading "NOT COLLAPSABLE PANEL" [level=3]
+    -   text: Panel Title 2 Panel Content 2
+    -   heading "CUSTOM COLLAPSABLE CLASS" [level=3]
+    -   button "Panel Title 3"
+    -   heading "ALREADY EXPANDED" [level=3]
+    -   button "Panel Title 4" [expanded]
+    -   region "Panel Content 4"
+    -   heading "HIDDEN ICONS" [level=3]
+    -   button "Panel Title 5"
+    -   heading "SECONDARY STYLE" [level=3]
+    -   button "Panel Title 6"
+    -   heading "NESTED TAG" [level=3]
+    -   button "Panel Title 7"
+    -   heading "PANEL GROUP" [level=3]
+    -   button "Panel Title 8A"
+    -   button /Panel Title [\d,.]+[bkmBKM]+/
+    -   button "Panel Title 8C"

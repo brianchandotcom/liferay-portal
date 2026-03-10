@@ -1,0 +1,50 @@
+-   tabpanel "Navigation Bars":
+    -   blockquote:
+        -   paragraph: A navigation bar, navbar, is an horizontal bar that provides several access points to different parts of a system.
+    -   heading "NAVIGATION BARS USING DISPLAY CONTEXT" [level=3]
+    -   navigation:
+        -   list:
+            -   listitem:
+                -   link "Page 1":
+                    -   /url: "#1"
+            -   listitem:
+                -   link "Page 2":
+                    -   /url: "#2"
+            -   listitem:
+                -   link "Page 3":
+                    -   /url: "#3"
+            -   listitem:
+                -   link "Page 4":
+                    -   /url: "#4"
+            -   listitem:
+                -   link "Page 5":
+                    -   /url: "#5"
+            -   listitem:
+                -   link "Page 6":
+                    -   /url: "#6"
+            -   listitem:
+                -   link "Page 7":
+                    -   /url: "#7"
+    -   navigation:
+        -   list:
+            -   listitem:
+                -   link "Page 1":
+                    -   /url: "#1"
+            -   listitem:
+                -   link "Page 2":
+                    -   /url: "#2"
+            -   listitem:
+                -   link "Page 3":
+                    -   /url: "#3"
+            -   listitem:
+                -   link "Page 4":
+                    -   /url: "#4"
+            -   listitem:
+                -   link "Page 5":
+                    -   /url: "#5"
+            -   listitem:
+                -   link "Page 6":
+                    -   /url: "#6"
+            -   listitem:
+                -   link "Page 7":
+                    -   /url: "#7"

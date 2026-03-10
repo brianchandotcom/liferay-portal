@@ -1,0 +1,111 @@
+-   tabpanel "Vertical Nav":
+    -   blockquote:
+        -   paragraph: Vertical navigation implements a pattern that displays navigation items in a vertical menu.
+    -   heading "DEFAULT VERTICAL NAV" [level=3]
+    -   navigation:
+        -   menubar:
+            -   menuitem "Item 1"
+            -   menuitem "Item 2"
+            -   menuitem "Item 3"
+            -   menuitem "Item 4" [expanded]
+            -   menu:
+                -   menuitem "Item 4.0"
+                -   menuitem "Item 4.1"
+                -   menuitem "Item 4.2" [expanded]
+                -   menu:
+                    -   menuitem "Item 4.2.0"
+                    -   menuitem "Item 4.2.1"
+                    -   menuitem "Item 4.2.2"
+                    -   menuitem "Item 4.2.3"
+                    -   menuitem "Item 4.2.4"
+                -   menuitem "Item 4.3"
+            -   menuitem "Item 5"
+            -   menuitem "Item 6"
+            -   menuitem "Item 7"
+    -   heading "LARGE VERTICAL NAV" [level=3]
+    -   navigation:
+        -   menubar:
+            -   menuitem "Item 1"
+            -   menuitem "Item 2"
+            -   menuitem "Item 3"
+            -   menuitem "Item 4" [expanded]
+            -   menu:
+                -   menuitem "Item 4.0"
+                -   menuitem "Item 4.1"
+                -   menuitem "Item 4.2" [expanded]
+                -   menu:
+                    -   menuitem "Item 4.2.0"
+                    -   menuitem "Item 4.2.1"
+                    -   menuitem "Item 4.2.2"
+                    -   menuitem "Item 4.2.3"
+                    -   menuitem "Item 4.2.4"
+                -   menuitem "Item 4.3"
+            -   menuitem "Item 5"
+            -   menuitem "Item 6"
+            -   menuitem "Item 7"
+    -   heading "DECORATED VERTICAL NAV" [level=3]
+    -   navigation:
+        -   menubar:
+            -   menuitem "Item 1"
+            -   menuitem "Item 2"
+            -   menuitem "Item 3"
+            -   menuitem "Item 4" [expanded]
+            -   menu:
+                -   menuitem "Item 4.0"
+                -   menuitem "Item 4.1"
+                -   menuitem "Item 4.2" [expanded]
+                -   menu:
+                    -   menuitem "Item 4.2.0"
+                    -   menuitem "Item 4.2.1"
+                    -   menuitem "Item 4.2.2"
+                    -   menuitem "Item 4.2.3"
+                    -   menuitem "Item 4.2.4"
+                -   menuitem "Item 4.3"
+            -   menuitem "Item 5"
+            -   menuitem "Item 6"
+            -   menuitem "Item 7"
+    -   heading "PREDEFINED ACTIVE VERTICAL NAV" [level=3]
+    -   navigation:
+        -   menubar:
+            -   menuitem "Item 1"
+            -   menuitem "Item 2"
+            -   menuitem "Item 3"
+            -   menuitem "Item 4" [expanded]
+            -   menu:
+                -   menuitem "Item 4.0"
+                -   menuitem "Item 4.1"
+                -   menuitem "Item 4.2" [expanded]
+                -   menu:
+                    -   menuitem "Item 4.2.0"
+                    -   menuitem "Item 4.2.1"
+                    -   menuitem "Item 4.2.2"
+                    -   menuitem "Item 4.2.3"
+                    -   menuitem "Item 4.2.4"
+                -   menuitem "Item 4.3"
+            -   menuitem "Item 5"
+            -   menuitem "Item 6"
+            -   menuitem "Item 7"
+    -   heading "PREDEFINED EXPANDED VERTICAL NAV" [level=3]
+    -   navigation:
+        -   menubar:
+            -   menuitem "Item 1"
+            -   menuitem "Item 2" [expanded]
+            -   menu:
+                -   menuitem "Item 2.0"
+                -   menuitem "Item 2.1"
+            -   menuitem "Item 3"
+            -   menuitem "Item 4"
+            -   menuitem "Item 5"
+            -   menuitem "Item 6" [expanded]
+            -   menu:
+                -   menuitem "Item 6.0"
+                -   menuitem "Item 6.1"
+                -   menuitem "Item 6.2"
+                -   menuitem "Item 6.3"
+                -   menuitem "Item 6.4"
+                -   menuitem "Item 6.5"
+            -   menuitem "Item 7"
+    -   heading "TEST VERTICAL NAV" [level=3]
+    -   navigation:
+        -   menubar:
+            -   menuitem "<img src=\"alertTest\" onerror=alert(\"Alert\");>"

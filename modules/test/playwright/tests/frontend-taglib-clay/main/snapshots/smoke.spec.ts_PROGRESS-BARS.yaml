@@ -1,0 +1,7 @@
+-   tabpanel "Progress Bars":
+    -   blockquote:
+        -   paragraph: Progress bar is a progress indicator used to show the completion percentage of a task.
+    -   progressbar /Processing \d+/
+    -   'progressbar /Progress: \d+%/'
+    -   'progressbar /Attention: Value is at \d+%/'
+    -   progressbar "% Complete"

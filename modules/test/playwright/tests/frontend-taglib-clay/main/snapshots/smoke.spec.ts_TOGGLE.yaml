@@ -1,0 +1,31 @@
+-   tabpanel "Toggle":
+    -   blockquote:
+        -   paragraph: Toggle provide users with different selection and activation tools.
+    -   heading "DEFAULT TOGGLE" [level=3]
+    -   switch "default toggle"
+    -   heading "TOGGLE INITIALLY SELECTED" [level=3]
+    -   switch "initially selected toggle" [checked]
+    -   heading "TOGGLE DISABLED" [level=3]
+    -   switch "disabled toggle" [disabled]
+    -   switch "Label Text" [disabled]
+    -   text: Label Text
+    -   heading "TOGGLE WITH LABEL" [level=3]
+    -   switch "Label Text"
+    -   text: Label Text
+    -   heading "TOGGLE WITH SYMBOLS" [level=3]
+    -   switch "Label Text"
+    -   text: Label Text
+    -   heading "TOGGLE WITH ON/OFF LABELS" [level=3]
+    -   switch "Off"
+    -   heading "TOGGLE WITH HELP TEXT" [level=3]
+    -   switch "Label Text"
+    -   text: Label Text
+    -   switch "Label Text" [disabled]
+    -   text: Label Text
+    -   heading "TOGGLE SIZING SMALL" [level=3]
+    -   switch "Label Text"
+    -   text: Label Text
+    -   switch "Label Text"
+    -   text: Label Text
+    -   switch "Label Text" [disabled]
+    -   text: Label Text

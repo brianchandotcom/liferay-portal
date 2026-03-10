@@ -1,0 +1,49 @@
+-   tabpanel "Alerts":
+    -   heading "EMBEDDED" [level=3]
+    -   blockquote:
+        -   paragraph: Embedded alerts are thought to be used inside context as forms. Usually you will only need to use the information one. Its width depends on the container with you use it, always respecting the container margins to the content. The close action is not of mandatory use.
+    -   alert:
+        -   strong: "Error:"
+        -   text: This is an error message.
+    -   alert:
+        -   strong: "Success:"
+        -   text: This is a success message.
+    -   alert:
+        -   strong: "Info:"
+        -   text: This is an info message.
+    -   alert:
+        -   strong: "Warning:"
+        -   text: This is a warning message.
+    -   alert:
+        -   strong: "Secondary:"
+        -   text: This is a secondary message.
+    -   heading "STRIPE" [level=3]
+    -   blockquote:
+        -   paragraph: Stripe alerts are always placed below the last navigation element, either the header or the navigation bar. This alert appears usually on "Save" action communicating the status of the action once received from the server. The close action is mandatory in this alert type. Its width is always full container width and pushes all the content below it.
+    -   alert:
+        -   strong: "Error:"
+        -   text: This is an error message.
+        -   button "Close"
+    -   alert:
+        -   strong: "Success:"
+        -   text: This is a success message.
+        -   button "Close"
+    -   alert:
+        -   strong: "Info:"
+        -   text: This is an info message.
+        -   button "Close"
+    -   alert:
+        -   strong: "Warning:"
+        -   text: This is a warning message.
+        -   button "Close"
+    -   alert:
+        -   strong: "Secondary:"
+        -   text: This is a secondary message.
+        -   button "Close"
+    -   heading "TOAST ALERT MESSAGE" [level=3]
+    -   group:
+        -   button "Success Submit"
+        -   button "Fail Submit"
+        -   button "Disappears After 5 Seconds"
+        -   button /Disappears After \d+ Seconds/
+        -   button "Hover"

@@ -1,0 +1,11 @@
+-   tabpanel "Labels":
+    -   blockquote:
+        -   paragraph: Labels are a mechanism to categorize information providing quick recognition.
+    -   text: Label text Label text Status Status Pending Pending Rejected Rejected Approved Approved
+    -   heading "LABEL REMOVABLE" [level=3]
+    -   text: Normal Label
+    -   button "Close"
+    -   text: Large Label
+    -   button "Close"
+    -   heading "LABEL WITH LINK" [level=3]
+    -   text: Label Text

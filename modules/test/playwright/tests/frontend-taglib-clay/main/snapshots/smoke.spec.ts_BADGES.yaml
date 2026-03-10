@@ -1,0 +1,4 @@
+-   tabpanel "Badges":
+    -   blockquote:
+        -   paragraph: Badges help highlight important information such as notifications or new and unread messages. Badges have circular borders and are only used to specify a number.
+    -   text: /8 Primary \d+ Secondary \d+ Info \d+ Error \d+ Success \d+ Warning/

@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.nexus.internal.agent;
 
-import com.liferay.ai.hub.agent.AgentContext;
-import com.liferay.ai.hub.agent.SupervisorAgent;
+import com.liferay.ai.hub.nexus.agent.AgentContext;
+import com.liferay.ai.hub.nexus.agent.SupervisorAgent;
 import com.liferay.ai.hub.nexus.internal.memory.ChatMemoryProviderUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;

@@ -30,7 +30,6 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -408,13 +407,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				AssetRendererFactoryRegistryUtil.getClassNameIds(
 					layout.getCompanyId());
 
-			try (SafeCloseable safeCloseable =
-					FF_LPD_39304_CompanyTemporarySwapper.
-						setCompanyIdWithSafeCloseable(layout.getCompanyId())) {
-
-				assetEntryQuery.setClassNameIds(
-					getClassNameIds(portletPreferences, availableClassNameIds));
-			}
+			assetEntryQuery.setClassNameIds(
+				getClassNameIds(portletPreferences, availableClassNameIds));
 		}
 
 		assetEntryQuery.setClassTypeIds(

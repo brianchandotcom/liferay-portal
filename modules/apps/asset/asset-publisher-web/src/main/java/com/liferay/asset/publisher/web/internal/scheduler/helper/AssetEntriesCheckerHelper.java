@@ -19,11 +19,9 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebC
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
-import com.liferay.asset.publisher.web.internal.util.FF_LPD_39304_CompanyTemporarySwapper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -45,6 +43,7 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
@@ -95,24 +94,31 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetEntriesCheckerHelper {
 
 	public void checkAssetEntries() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_portletPreferencesLocalService.getActionableDynamicQuery();
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				ActionableDynamicQuery actionableDynamicQuery =
+					_portletPreferencesLocalService.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property property = PropertyFactoryUtil.forName("portletId");
+				actionableDynamicQuery.setCompanyId(companyId);
 
-				dynamicQuery.add(
-					property.like(
-						PortletIdCodec.encode(
-							AssetPublisherPortletKeys.ASSET_PUBLISHER,
-							StringPool.PERCENT)));
+				actionableDynamicQuery.setAddCriteriaMethod(
+					dynamicQuery -> {
+						Property property = PropertyFactoryUtil.forName(
+							"portletId");
+
+						dynamicQuery.add(
+							property.like(
+								PortletIdCodec.encode(
+									AssetPublisherPortletKeys.ASSET_PUBLISHER,
+									StringPool.PERCENT)));
+					});
+				actionableDynamicQuery.setPerformActionMethod(
+					(com.liferay.portal.kernel.model.PortletPreferences
+						portletPreferences) -> _checkAssetEntries(
+							portletPreferences));
+
+				actionableDynamicQuery.performActions();
 			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(com.liferay.portal.kernel.model.PortletPreferences
-				portletPreferences) -> _checkAssetEntries(portletPreferences));
-
-		actionableDynamicQuery.performActions();
 	}
 
 	private void _checkAssetEntries(
@@ -244,17 +250,10 @@ public class AssetEntriesCheckerHelper {
 			PortletPreferences portletPreferences, Layout layout)
 		throws PortalException {
 
-		String selectionStyle = StringPool.BLANK;
-
-		try (SafeCloseable safeCloseable =
-				FF_LPD_39304_CompanyTemporarySwapper.
-					setCompanyIdWithSafeCloseable(layout.getCompanyId())) {
-
-			selectionStyle = GetterUtil.getString(
-				portletPreferences.getValue("selectionStyle", null),
-				AssetPublisherSelectionStyleConfigurationUtil.
-					defaultSelectionStyle());
-		}
+		String selectionStyle = GetterUtil.getString(
+			portletPreferences.getValue("selectionStyle", null),
+			AssetPublisherSelectionStyleConfigurationUtil.
+				defaultSelectionStyle());
 
 		if (Objects.equals(
 				selectionStyle,
@@ -605,6 +604,9 @@ public class AssetEntriesCheckerHelper {
 
 	@Reference
 	private AssetPublisherWebHelper _assetPublisherWebHelper;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

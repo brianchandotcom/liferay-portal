@@ -23,7 +23,6 @@ import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectio
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
-import com.liferay.asset.publisher.web.internal.util.FF_LPD_39304_CompanyTemporarySwapper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -43,7 +42,6 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -480,17 +478,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		Layout layout = layoutLocalService.getLayout(
 			portletDataContext.getPlid());
 
-		String selectionStyle = StringPool.BLANK;
-
-		try (SafeCloseable safeCloseable =
-				FF_LPD_39304_CompanyTemporarySwapper.
-					setCompanyIdWithSafeCloseable(layout.getCompanyId())) {
-
-			selectionStyle = portletPreferences.getValue(
-				"selectionStyle",
-				AssetPublisherSelectionStyleConfigurationUtil.
-					defaultSelectionStyle());
-		}
+		String selectionStyle = portletPreferences.getValue(
+			"selectionStyle",
+			AssetPublisherSelectionStyleConfigurationUtil.
+				defaultSelectionStyle());
 
 		if (selectionStyle.equals(
 				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
@@ -584,17 +575,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			assetPublisherHelper.getAssetEntryQuery(
 				portletPreferences, groupId, layout, null, null);
 
-		try (SafeCloseable safeCloseable =
-				FF_LPD_39304_CompanyTemporarySwapper.
-					setCompanyIdWithSafeCloseable(companyId)) {
-
-			assetEntryQuery.setClassNameIds(
-				assetPublisherHelper.getClassNameIds(
-					portletPreferences,
-					AssetRendererFactoryRegistryUtil.getClassNameIds(
-						companyId, true)));
-			assetEntryQuery.setEnablePermissions(false);
-		}
+		assetEntryQuery.setClassNameIds(
+			assetPublisherHelper.getClassNameIds(
+				portletPreferences,
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					companyId, true)));
+		assetEntryQuery.setEnablePermissions(false);
 
 		int end = _assetPublisherWebConfiguration.dynamicExportLimit();
 

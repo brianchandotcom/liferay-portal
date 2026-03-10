@@ -32,104 +32,75 @@ jobs:
                             exit 0
                         fi
 
-                        echo "Checking open pull requests in ${{ github.repository_owner }}/${{ github.event.repository.name }}..."
+                        local pr_number=${{ github.event.pull_request.number }}
+                        local pr_url=${{ github.event.pull_request.html_url }}
 
-                        local pr_json=$( \
+                        echo "Checking pull request #${pr_number} in ${{ github.repository_owner }}/${{ github.event.repository.name }}..."
+
+                        local pr_details_json=$( \
                             curl \
                                 --header "Authorization: Bearer ${GITHUB_TOKEN}" \
                                 --silent \
-                                "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls?state=open")
+                                "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${pr_number}")
 
-                        local pr_list=$( \
-                            echo "${pr_json}" | \
+                        local mergeable_state=$( \
+                            echo "${pr_details_json}" | \
                             jq \
                                 --raw-output \
-                                ".[]
-                                | \"\(.number)\t\(.html_url)\"")
+                                ".mergeable_state")
 
-                        local old_ifs="${IFS}"
+                        local max_retries=6
+                        local retry_count=0
 
-                        IFS=$'\n'
-
-                        for pr_entry in ${pr_list}
+                        while [[ "${mergeable_state}" == "unknown" || "${mergeable_state}" == "null" ]] &&
+                              [[ "${retry_count}" -lt "${max_retries}" ]]
                         do
-                            IFS="${old_ifs}"
+                            echo "Pull request ${pr_url} state is unknown."
+                            echo "Waiting 5s (Attempt $((retry_count + 1)) of ${max_retries})..."
 
-                            local pr_number=$(echo "${pr_entry}" | cut --fields=1)
-                            local pr_url=$(echo "${pr_entry}" | cut --fields=2)
+                            sleep 5
 
-                            if [[ -z "${pr_number}" ]]
-                            then
-                                continue
-                            fi
-
-                            local pr_details_json=$( \
+                            pr_details_json=$( \
                                 curl \
                                     --header "Authorization: Bearer ${GITHUB_TOKEN}" \
                                     --silent \
                                     "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${pr_number}")
 
-                            local mergeable_state=$( \
+                            mergeable_state=$( \
                                 echo "${pr_details_json}" | \
                                 jq \
                                     --raw-output \
                                     ".mergeable_state")
 
-                            local max_retries=6
-                            local retry_count=0
-
-                            while [[ "${mergeable_state}" == "unknown" || "${mergeable_state}" == "null" ]] &&
-                                  [[ "${retry_count}" -lt "${max_retries}" ]]
-                            do
-                                echo "Pull request ${pr_url} state is unknown."
-                                echo "Waiting 5s (Attempt $((retry_count + 1)) of ${max_retries})..."
-
-                                sleep 5
-
-                                pr_details_json=$( \
-                                    curl \
-                                        --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-                                        --silent \
-                                        "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${pr_number}")
-
-                                mergeable_state=$( \
-                                    echo "${pr_details_json}" | \
-                                    jq \
-                                        --raw-output \
-                                        ".mergeable_state")
-
-                                retry_count=$(expr "${retry_count}" + 1)
-                            done
-
-                            if [[ "${mergeable_state}" == "dirty" ]]
-                            then
-                                echo "Closing pull request: ${pr_url} due to conflicts."
-
-                                curl \
-                                    --data "{\"body\": \"This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send.\"}" \
-                                    --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-                                    --output /dev/null \
-                                    --request POST \
-                                    --silent \
-                                    "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/issues/${pr_number}/comments"
-
-                                curl \
-                                    --data "{\"state\": \"closed\"}" \
-                                    --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-                                    --output /dev/null \
-                                    --request PATCH \
-                                    --silent \
-                                    "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${pr_number}"
-                            fi
-
-                            IFS=$'\n'
+                            retry_count=$(expr "${retry_count}" + 1)
                         done
 
-                        IFS="${old_ifs}"
+                        if [[ "${mergeable_state}" == "dirty" ]]
+                        then
+                            echo "Closing pull request: ${pr_url} due to conflicts."
+
+                            curl \
+                                --data "{\"body\": \"This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send.\"}" \
+                                --header "Authorization: Bearer ${GITHUB_TOKEN}" \
+                                --output /dev/null \
+                                --request POST \
+                                --silent \
+                                "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/issues/${pr_number}/comments"
+
+                            curl \
+                                --data "{\"state\": \"closed\"}" \
+                                --header "Authorization: Bearer ${GITHUB_TOKEN}" \
+                                --output /dev/null \
+                                --request PATCH \
+                                --silent \
+                                "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${pr_number}"
+                        else
+                            echo "Pull request #${pr_number} is mergeable or state is ${mergeable_state}. No action taken."
+                        fi
                     }
 
                     main
 on:
-    schedule:
-        -   cron: "*/15 * * * *"
+    pull_request:
+        types: [opened, synchronize, reopened]
     workflow_dispatch:

@@ -41,7 +41,11 @@ const copyBulkAction = ({
 	);
 
 	if (hasFileOrFolder && hasContent) {
-		return openActionNotAllowedModal();
+		const message = Liferay.Language.get(
+			'assets-with-different-content-types-cannot-be-copied-together.-select-assets-with-the-same-content-type-and-try-again'
+		);
+
+		return openActionNotAllowedModal({message});
 	}
 
 	return render(

@@ -5,11 +5,13 @@
 
 import {openCMSModal} from './openCMSModal';
 
-export function openActionNotAllowedModal() {
+export function openActionNotAllowedModal({message}: {message?: string} = {}) {
 	return openCMSModal({
-		bodyHTML: Liferay.Language.get(
-			'this-action-is-not-available-for-the-item-you-have-selected'
-		),
+		bodyHTML:
+			message ??
+			Liferay.Language.get(
+				'this-action-is-not-available-for-the-item-you-have-selected'
+			),
 		buttons: [
 			{
 				autoFocus: true,

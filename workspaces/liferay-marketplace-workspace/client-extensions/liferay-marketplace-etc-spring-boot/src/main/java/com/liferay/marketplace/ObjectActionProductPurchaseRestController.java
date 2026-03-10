@@ -47,167 +47,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ObjectActionProductPurchaseRestController
 	extends BaseRestController {
 
-	public Map<String, String> getInvoiceOrderSubmitTemplate(
-			Order order, Product product,
-			Map<String, String> productSpecificationsMap)
-		throws Exception {
-
-		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
-			account = order.getAccount();
-
-		BillingAddress billingAddress = order.getBillingAddress();
-
-		return HashMapBuilder.put(
-			"[%ACCOUNT_ID%]", String.valueOf(account.getId())
-		).put(
-			"[%ACCOUNT_NAME%]", account.getName()
-		).put(
-			"[%BILLING_ADDRESS_FORMATTED%]",
-			String.join(
-				", ", billingAddress.getStreet1(), billingAddress.getCity(),
-				billingAddress.getRegionISOCode(),
-				billingAddress.getCountryISOCode())
-		).put(
-			"[%BILLING_ADDRESS_NAME%]", billingAddress.getName()
-		).put(
-			"[%BILLING_ADDRESS_PHONE%]", billingAddress.getPhoneNumber()
-		).put(
-			"[%CATALOG_NAME%]",
-			() -> {
-				Catalog catalog = product.getCatalog();
-
-				return catalog.getName();
-			}
-		).put(
-			"[%EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
-		).put(
-			"[%EXCHANGE_RATE%]", _getExchangeRate(order)
-		).put(
-			"[%LICENSE_TYPE%]", productSpecificationsMap.get("license-type")
-		).put(
-			"[%ORDER_DATE%]", MarketplaceUtil.format(order.getCreateDate())
-		).put(
-			"[%ORDER_ID%]", String.valueOf(order.getId())
-		).put(
-			"[%ORDER_PAYMENT_METHOD%]",
-			MarketplaceConstants.getOrderPaymentMethodLabel(
-				order.getPaymentMethod())
-		).put(
-			"[%ORDER_STATUS%]",
-			MarketplaceConstants.getOrderStatusLabel(order.getOrderStatus())
-		).put(
-			"[%PAYMENT_TERM_DESCRIPTION%]", order.getPaymentTermDescription()
-		).put(
-			"[%PRODUCT_NAME%]",
-			product.getName(
-			).get(
-				"en_US"
-			)
-		).put(
-			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
-		).put(
-			"[%PRODUCT_TYPE%]",
-			productSpecificationsMap.get(
-				"type"
-			).replace(
-				"-", " "
-			)
-		).put(
-			"[%SUBSCRIPTION_EXPIRATION_DATE%]",
-			() -> {
-				OrderItem[] orderItems = order.getOrderItems();
-
-				OrderItem orderItem = orderItems[0];
-
-				return MarketplaceUtil.format(
-					MarketplaceUtil.getOrderPurchaseEndDate(
-						productSpecificationsMap.get("license-type"),
-						MarketplaceUtil.getSkuOptionValue(
-							"license-usage-type", orderItem.getOptions())));
-			}
-		).put(
-			"[%SUBSCRIPTION_STARTING_DATE%]",
-			MarketplaceUtil.format(order.getCreateDate())
-		).put(
-			"[%SUBSCRIPTION_TYPE%]",
-			productSpecificationsMap.get("license-type")
-		).put(
-			"[%SUBTOTAL_FORMATTED%]", order.getSubtotalFormatted()
-		).put(
-			"[%TAX_AMOUNT_FORMATTED%]", order.getTaxAmountFormatted()
-		).put(
-			"[%TAX_ID%]", account.getTaxId()
-		).put(
-			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
-		).build();
-	}
-
-	public Map<String, String> getOrderConfirmationTemplate(
-			Order order, Product product,
-			Map<String, String> productSpecificationsMap)
-		throws Exception {
-
-		Catalog catalog = product.getCatalog();
-
-		return new HashMapBuilder<>().put(
-			"[%CATALOG_NAME%]", catalog.getName()
-		).put(
-			"[%CREATOR_EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
-		).put(
-			"[%CTA_TEXT%]", "Go to Dashboard"
-		).put(
-			"[%DESCRIPTION%]",
-			_getOrderConfirmationDescription(order, productSpecificationsMap)
-		).put(
-			"[%ORDER_ID%]", String.valueOf(order.getId())
-		).put(
-			"[%PRODUCT_NAME%]",
-			product.getName(
-			).get(
-				"en_US"
-			)
-		).put(
-			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
-		).put(
-			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
-		).build();
-	}
-
-	public Map<String, String> getPaymentApprovedTemplate(
-			Order order, Product product,
-			Map<String, String> productSpecificationsMap)
-		throws Exception {
-
-		return HashMapBuilder.put(
-			"[%CATALOG_NAME%]",
-			() -> {
-				Catalog catalog = product.getCatalog();
-
-				return catalog.getName();
-			}
-		).put(
-			"[%CREATOR_EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
-		).put(
-			"[%ORDER_ID%]", String.valueOf(order.getId())
-		).put(
-			"[%PRODUCT_NAME%]",
-			product.getName(
-			).get(
-				"en_US"
-			)
-		).put(
-			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
-		).put(
-			"[%SUBTOTAL_FORMATTED%]", order.getSubtotalFormatted()
-		).put(
-			"[%TAX_AMOUNT_FORMATTED%]", order.getTaxAmountFormatted()
-		).put(
-			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
-		).putAll(
-			_getPaymentApprovedDescriptionMap(productSpecificationsMap)
-		).build();
-	}
-
 	@PostMapping("/object/action/product/purchase")
 	public void post(@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
@@ -309,6 +148,101 @@ public class ObjectActionProductPurchaseRestController
 		return "1 USD = " + String.format("%.5f", exchangeRate) + " EUR";
 	}
 
+	private Map<String, String> _getInvoiceOrderSubmitTemplate(
+			Order order, Product product,
+			Map<String, String> productSpecificationsMap)
+		throws Exception {
+
+		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
+			account = order.getAccount();
+
+		BillingAddress billingAddress = order.getBillingAddress();
+
+		return HashMapBuilder.put(
+			"[%ACCOUNT_ID%]", String.valueOf(account.getId())
+		).put(
+			"[%ACCOUNT_NAME%]", account.getName()
+		).put(
+			"[%BILLING_ADDRESS_FORMATTED%]",
+			String.join(
+				", ", billingAddress.getStreet1(), billingAddress.getCity(),
+				billingAddress.getRegionISOCode(),
+				billingAddress.getCountryISOCode())
+		).put(
+			"[%BILLING_ADDRESS_NAME%]", billingAddress.getName()
+		).put(
+			"[%BILLING_ADDRESS_PHONE%]", billingAddress.getPhoneNumber()
+		).put(
+			"[%CATALOG_NAME%]",
+			() -> {
+				Catalog catalog = product.getCatalog();
+
+				return catalog.getName();
+			}
+		).put(
+			"[%EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
+		).put(
+			"[%EXCHANGE_RATE%]", _getExchangeRate(order)
+		).put(
+			"[%LICENSE_TYPE%]", productSpecificationsMap.get("license-type")
+		).put(
+			"[%ORDER_DATE%]", MarketplaceUtil.format(order.getCreateDate())
+		).put(
+			"[%ORDER_ID%]", String.valueOf(order.getId())
+		).put(
+			"[%ORDER_PAYMENT_METHOD%]",
+			MarketplaceConstants.getOrderPaymentMethodLabel(
+				order.getPaymentMethod())
+		).put(
+			"[%ORDER_STATUS%]",
+			MarketplaceConstants.getOrderStatusLabel(order.getOrderStatus())
+		).put(
+			"[%PAYMENT_TERM_DESCRIPTION%]", order.getPaymentTermDescription()
+		).put(
+			"[%PRODUCT_NAME%]",
+			product.getName(
+			).get(
+				"en_US"
+			)
+		).put(
+			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+		).put(
+			"[%PRODUCT_TYPE%]",
+			productSpecificationsMap.get(
+				"type"
+			).replace(
+				"-", " "
+			)
+		).put(
+			"[%SUBSCRIPTION_EXPIRATION_DATE%]",
+			() -> {
+				OrderItem[] orderItems = order.getOrderItems();
+
+				OrderItem orderItem = orderItems[0];
+
+				return MarketplaceUtil.format(
+					MarketplaceUtil.getOrderPurchaseEndDate(
+						productSpecificationsMap.get("license-type"),
+						MarketplaceUtil.getSkuOptionValue(
+							"license-usage-type", orderItem.getOptions())));
+			}
+		).put(
+			"[%SUBSCRIPTION_STARTING_DATE%]",
+			MarketplaceUtil.format(order.getCreateDate())
+		).put(
+			"[%SUBSCRIPTION_TYPE%]",
+			productSpecificationsMap.get("license-type")
+		).put(
+			"[%SUBTOTAL_FORMATTED%]", order.getSubtotalFormatted()
+		).put(
+			"[%TAX_AMOUNT_FORMATTED%]", order.getTaxAmountFormatted()
+		).put(
+			"[%TAX_ID%]", account.getTaxId()
+		).put(
+			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
+		).build();
+	}
+
 	private String _getOrderConfirmationDescription(
 		Order order, Map<String, String> productSpecificationsMap) {
 
@@ -344,6 +278,37 @@ public class ObjectActionProductPurchaseRestController
 		return "";
 	}
 
+	private Map<String, String> _getOrderConfirmationTemplate(
+			Order order, Product product,
+			Map<String, String> productSpecificationsMap)
+		throws Exception {
+
+		Catalog catalog = product.getCatalog();
+
+		return new HashMapBuilder<>().put(
+			"[%CATALOG_NAME%]", catalog.getName()
+		).put(
+			"[%CREATOR_EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
+		).put(
+			"[%CTA_TEXT%]", "Go to Dashboard"
+		).put(
+			"[%DESCRIPTION%]",
+			_getOrderConfirmationDescription(order, productSpecificationsMap)
+		).put(
+			"[%ORDER_ID%]", String.valueOf(order.getId())
+		).put(
+			"[%PRODUCT_NAME%]",
+			product.getName(
+			).get(
+				"en_US"
+			)
+		).put(
+			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+		).put(
+			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
+		).build();
+	}
+
 	private Map<String, String> _getPaymentApprovedDescriptionMap(
 		Map<String, String> productSpecificationsMap) {
 
@@ -372,6 +337,41 @@ public class ObjectActionProductPurchaseRestController
 				"account.</p> <p>You can manage your subscription, access ",
 				"features, and configure your app anytime from your ",
 				"dashboard. Click the button below to get started.</p>")
+		).build();
+	}
+
+	private Map<String, String> _getPaymentApprovedTemplate(
+			Order order, Product product,
+			Map<String, String> productSpecificationsMap)
+		throws Exception {
+
+		return HashMapBuilder.put(
+			"[%CATALOG_NAME%]",
+			() -> {
+				Catalog catalog = product.getCatalog();
+
+				return catalog.getName();
+			}
+		).put(
+			"[%CREATOR_EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
+		).put(
+			"[%ORDER_ID%]", String.valueOf(order.getId())
+		).put(
+			"[%PRODUCT_NAME%]",
+			product.getName(
+			).get(
+				"en_US"
+			)
+		).put(
+			"[%PRODUCT_THUMBNAIL%]", _getProductThumbnail(product)
+		).put(
+			"[%SUBTOTAL_FORMATTED%]", order.getSubtotalFormatted()
+		).put(
+			"[%TAX_AMOUNT_FORMATTED%]", order.getTaxAmountFormatted()
+		).put(
+			"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
+		).putAll(
+			_getPaymentApprovedDescriptionMap(productSpecificationsMap)
 		).build();
 	}
 
@@ -415,7 +415,7 @@ public class ObjectActionProductPurchaseRestController
 
 			_marketplaceService.postNotificationQueueEntry(
 				null, "MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
-				getInvoiceOrderSubmitTemplate(
+				_getInvoiceOrderSubmitTemplate(
 					order, product, productSpecificationsMap));
 		}
 
@@ -428,7 +428,7 @@ public class ObjectActionProductPurchaseRestController
 			_marketplaceService.postNotificationQueueEntry(
 				order.getCreatorEmailAddress(),
 				"MARKETPLACE-ORDER-CONFIRMATION",
-				getOrderConfirmationTemplate(
+				_getOrderConfirmationTemplate(
 					order, product, productSpecificationsMap));
 		}
 
@@ -440,7 +440,7 @@ public class ObjectActionProductPurchaseRestController
 
 			_marketplaceService.postNotificationQueueEntry(
 				order.getCreatorEmailAddress(), "MARKETPLACE-PAYMENT-APPROVED",
-				getPaymentApprovedTemplate(
+				_getPaymentApprovedTemplate(
 					order, product, productSpecificationsMap));
 		}
 	}

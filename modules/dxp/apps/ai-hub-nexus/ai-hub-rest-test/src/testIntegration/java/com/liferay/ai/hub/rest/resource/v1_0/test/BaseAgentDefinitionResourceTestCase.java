@@ -13,12 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.AgentDefinition;
-import com.liferay.ai.hub.rest.client.http.HttpInvoker;
-import com.liferay.ai.hub.rest.client.pagination.Page;
-import com.liferay.ai.hub.rest.client.pagination.Pagination;
-import com.liferay.ai.hub.rest.client.resource.v1_0.AgentDefinitionResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.AgentDefinitionSerDes;
+import com.liferay.ai.hub.nexus.rest.client.dto.v1_0.AgentDefinition;
+import com.liferay.ai.hub.nexus.rest.client.http.HttpInvoker;
+import com.liferay.ai.hub.nexus.rest.client.pagination.Page;
+import com.liferay.ai.hub.nexus.rest.client.pagination.Pagination;
+import com.liferay.ai.hub.nexus.rest.client.resource.v1_0.AgentDefinitionResource;
+import com.liferay.ai.hub.nexus.rest.client.serdes.v1_0.AgentDefinitionSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;

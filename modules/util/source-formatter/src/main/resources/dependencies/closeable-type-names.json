@@ -97,12 +97,6 @@
 			"name": "com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter"
 		},
 		{
-			"name": "com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream"
-		},
-		{
-			"name": "com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream"
-		},
-		{
 			"name": "com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter"
 		},
 		{

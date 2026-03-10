@@ -31,6 +31,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.petra.function-*.jar!/com/liferay/petra/function/transform/TransformUtil.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/BoundaryCheckerUtil.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncBufferedReader.class,\
+	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncByteArrayOutputStream.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncStringWriter.class,\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
@@ -82,8 +83,6 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/exception/PortalException.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/exception/SystemException.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncFilterInputStream.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncFilterOutputStream.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\

@@ -1,0 +1,7 @@
+ext.isFacesModule = true
+
+apply from: "../../build-jakarta-transformer.gradle"
+
+dependencies {
+	compileOnly group: "com.liferay.faces", name: "primefaces", transitive: false, version: "15.0.6.LIFERAY-PATCHED-1"
+}

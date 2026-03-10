@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.design.library.web.internal.portlet;
+package com.liferay.design.library.web.internal.portlet.action;
 
 import com.liferay.design.library.web.internal.constants.DesignLibraryAdminPortletKeys;
 import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"jakarta.portlet.name=" + DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN,
-		"mvc.command.name=/design_library/view_design_library_dashboard"
+		"mvc.command.name=/design_library/design_library_dashboard"
 	},
 	service = MVCRenderCommand.class
 )
@@ -32,11 +32,14 @@ public class DesignLibraryDashboardMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		long designLibraryEntryId = ParamUtil.getLong(renderRequest, "designLibraryEntryId");
+		long designLibraryEntryId = ParamUtil.getLong(
+			renderRequest, DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
 
 		renderRequest.setAttribute(
-			DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY, designLibraryEntryId);
+			DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY,
+			designLibraryEntryId);
 
 		return "/view_design_library_dashboard.jsp";
 	}
+
 }

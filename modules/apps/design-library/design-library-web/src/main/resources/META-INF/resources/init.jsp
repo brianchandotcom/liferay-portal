@@ -7,14 +7,12 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
 <%@ page import="com.liferay.design.library.web.internal.constants.DesignLibraryAdminFDSNames" %><%@
-page import="com.liferay.design.library.web.internal.constants.DesignLibraryAdminPortletKeys" %><%@
 page import="com.liferay.design.library.web.internal.constants.DesignLibraryConstants" %><%@
 page import="com.liferay.design.library.web.internal.display.context.DesignLibraryDashboardDisplayContext" %><%@
 page import="com.liferay.design.library.web.internal.display.context.ViewDesignLibraryAdminDisplayContext" %>
+
+<portlet:defineObjects />

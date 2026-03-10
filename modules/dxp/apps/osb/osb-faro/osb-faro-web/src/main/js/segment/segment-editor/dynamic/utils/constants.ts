@@ -72,7 +72,6 @@ export enum RelationalOperators {
 	EQ = 'eq',
 	GE = 'ge',
 	GT = 'gt',
-	GTE = 'gte',
 	LE = 'le',
 	LT = 'lt',
 	NE = 'ne'

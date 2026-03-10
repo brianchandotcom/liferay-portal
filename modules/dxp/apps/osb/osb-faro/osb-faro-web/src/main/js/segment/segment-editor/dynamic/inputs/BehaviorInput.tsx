@@ -337,14 +337,14 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 			);
 
 			dayCriterion = existingDayIMap.merge({
-				operatorName: RelationalOperators.GTE,
+				operatorName: RelationalOperators.GE,
 				touched: true,
 				valid: true,
 				value: newDayValue
 			});
 		} else {
 			dayCriterion = fromJS({
-				operatorName: RelationalOperators.GTE,
+				operatorName: RelationalOperators.GE,
 				propertyName: 'day',
 				touched: true,
 				valid: true,

@@ -12,6 +12,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.Map;
 
@@ -28,6 +29,23 @@ public class SiteNavigationMenuStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {
 		SiteNavigationMenu.class.getName()
 	};
+
+	@Override
+	public SiteNavigationMenu fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return _siteNavigationMenuLocalService.
+			fetchSiteNavigationMenuByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
+	public SiteNavigationMenu fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return _stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
+	}
 
 	@Override
 	public String[] getClassNames() {
@@ -89,9 +107,8 @@ public class SiteNavigationMenuStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 
 		SiteNavigationMenu existingSiteNavigationMenu =
-			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-				siteNavigationMenu.getUuid(),
-				portletDataContext.getScopeGroupId());
+			fetchExistingStagedModel(
+				siteNavigationMenu, portletDataContext.getScopeGroupId());
 
 		if ((existingSiteNavigationMenu == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
@@ -120,6 +137,9 @@ public class SiteNavigationMenuStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu)"

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.reports.engine;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 
 import java.io.OutputStream;
 

@@ -8,12 +8,14 @@ package com.liferay.depot.internal.search.spi.model.permission.contributor;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -25,6 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Galluzzi
+ * @author Roberto Díaz
  */
 @Component(service = SearchPermissionFilterContributor.class)
 public class DepotEntrySearchPermissionFilterContributor
@@ -59,16 +62,21 @@ public class DepotEntrySearchPermissionFilterContributor
 			return;
 		}
 
+		TermsFilter groupRolesTermsFilter = new TermsFilter(
+			Field.GROUP_ROLE_ID);
+
 		for (long groupId :
 				_depotEntryLocalService.getDepotEntryGroupIds(
 					permissionChecker.getCompanyId(), userId,
 					DepotConstants.TYPE_ANY, true)) {
 
-			TermsFilter termsFilter = new TermsFilter("groupRoleId");
+			groupRolesTermsFilter.addValue(
+				StringBundler.concat(
+					groupId, StringPool.DASH, role.getRoleId()));
+		}
 
-			termsFilter.addValues(groupId + StringPool.DASH + role.getRoleId());
-
-			booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
+		if (!groupRolesTermsFilter.isEmpty()) {
+			booleanFilter.add(groupRolesTermsFilter, BooleanClauseOccur.SHOULD);
 		}
 	}
 

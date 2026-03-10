@@ -7,7 +7,7 @@ package com.liferay.commerce.product.internal.upgrade.v6_4_0;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CPTaxCategory;
-import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.Arrays;
 
 /**
@@ -28,13 +31,11 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 
 	public CommercePermissionUpgradeProcess(
 		CompanyLocalService companyLocalService,
-		CPTaxCategoryLocalService cpTaxCategoryLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourceLocalService resourceLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
 		_companyLocalService = companyLocalService;
-		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourceLocalService = resourceLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -108,27 +109,37 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 			company -> {
 				User user = company.getGuestUser();
 
-				for (CPTaxCategory cpTaxCategory :
-						_cpTaxCategoryLocalService.getCPTaxCategories(
-							company.getCompanyId())) {
+				try (PreparedStatement preparedStatement =
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection,
+							"select CPTaxCategoryId from CPTaxCategory where " +
+								"companyId = ?")) {
 
-					long count =
-						_resourcePermissionLocalService.
-							getResourcePermissionsCount(
-								cpTaxCategory.getCompanyId(),
-								CPTaxCategory.class.getName(),
-								ResourceConstants.SCOPE_INDIVIDUAL,
-								String.valueOf(cpTaxCategory.getPrimaryKey()));
+					preparedStatement.setLong(1, company.getCompanyId());
 
-					if (count > 0) {
-						continue;
+					ResultSet resultSet = preparedStatement.executeQuery();
+
+					while (resultSet.next()) {
+						long cpTaxCategoryId = resultSet.getLong(
+							"CPTaxCategoryId");
+
+						long count =
+							_resourcePermissionLocalService.
+								getResourcePermissionsCount(
+									company.getCompanyId(),
+									CPTaxCategory.class.getName(),
+									ResourceConstants.SCOPE_INDIVIDUAL,
+									String.valueOf(cpTaxCategoryId));
+
+						if (count > 0) {
+							continue;
+						}
+
+						_resourceLocalService.addResources(
+							company.getCompanyId(), 0, user.getUserId(),
+							CPTaxCategory.class.getName(), cpTaxCategoryId,
+							false, false, false);
 					}
-
-					_resourceLocalService.addResources(
-						cpTaxCategory.getCompanyId(), 0, user.getUserId(),
-						CPTaxCategory.class.getName(),
-						cpTaxCategory.getCPTaxCategoryId(), false, false,
-						false);
 				}
 			});
 	}
@@ -150,7 +161,6 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private final CompanyLocalService _companyLocalService;
-	private final CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourceLocalService _resourceLocalService;
 	private final ResourcePermissionLocalService

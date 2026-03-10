@@ -42,7 +42,6 @@ import com.liferay.commerce.product.internal.upgrade.v5_26_0.util.CPConfiguratio
 import com.liferay.commerce.product.internal.upgrade.v5_5_0.util.CPInstanceUnitOfMeasureTable;
 import com.liferay.commerce.product.internal.upgrade.v6_1_0.CPConfigurationEntryUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v6_2_0.CPDefinitionLocalizationUpgradeProcess;
-import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -684,9 +683,8 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			"6.3.1", "6.4.0",
 			new com.liferay.commerce.product.internal.upgrade.v6_4_0.
 				CommercePermissionUpgradeProcess(
-					_companyLocalService, _cpTaxCategoryLocalService,
-					_resourceActionLocalService, _resourceLocalService,
-					_resourcePermissionLocalService));
+					_companyLocalService, _resourceActionLocalService,
+					_resourceLocalService, _resourcePermissionLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
@@ -722,9 +720,6 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 	@Reference
 	private CounterLocalService _counterLocalService;
-
-	@Reference
-	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

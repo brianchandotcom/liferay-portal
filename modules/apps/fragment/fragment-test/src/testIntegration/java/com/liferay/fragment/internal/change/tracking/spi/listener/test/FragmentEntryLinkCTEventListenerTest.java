@@ -118,9 +118,10 @@ public class FragmentEntryLinkCTEventListenerTest {
 
 		String html = fragmentEntryLink.getHtml();
 
+		Assert.assertFalse(html.contains("?previewCTCollectionId="));
+
 		String editableValues = fragmentEntryLink.getEditableValues();
 
-		Assert.assertFalse(html.contains("?previewCTCollectionId="));
 		Assert.assertFalse(editableValues.contains("?previewCTCollectionId="));
 	}
 

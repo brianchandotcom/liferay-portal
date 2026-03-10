@@ -1225,7 +1225,9 @@ test.describe('Manage object entries through Friendly URL', () => {
 		await test.step('Create object entry with friendly URL', async () => {
 			await viewObjectEntriesPage.friendlyUrlInput.fill('Test URL');
 
-			await page.getByRole('textbox').first().fill(objectFieldValue);
+			await page
+				.getByLabel(_objectField.label.en_US)
+				.fill(objectFieldValue);
 
 			await viewObjectEntriesPage.saveObjectEntryButton.click();
 

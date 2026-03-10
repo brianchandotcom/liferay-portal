@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addDisplayPageTemplateEntry(depotName = null, displayPageTemplateEntryName = null, grandParentGroupName = null, masterLayoutEntryName = null, workflowAction = null, parentGroupName = null, groupName = null, site = null, assetCategoryIds = null, assetTagNames = null, subType = null, contentType = null) {
+	macro addDisplayPageTemplateEntry(classTypeKey = null, depotName = null, displayPageTemplateEntryName = null, grandParentGroupName = null, masterLayoutEntryName = null, workflowAction = null, parentGroupName = null, groupName = null, site = null, assetCategoryIds = null, assetTagNames = null, subType = null, contentType = null) {
 		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName}");
 
 		if (!(isSet(groupId))) {
@@ -14,48 +14,12 @@ definition {
 
 		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = ${contentType});
 
-		if ((${subType} == "Basic Document") || (${contentType} == "Blogs Entry") || (${contentType} == "Category") || (${contentType} == "Order") || (${contentType} == "Product") || (${contentType} == "Knowledge Base Article")) {
-			var classTypeKey = "";
-		}
-		else {
-			if (${subType} == "Basic Web Content") {
-				var globalGroupId = JSONGroupAPI._getGroupIdByName(
-					groupName = "Global",
-					site = "true");
-
-				var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
-					classNameId = ${classNameId},
-					groupId = ${globalGroupId},
-					structureName = ${subType});
-			}
-			else if (${subType} == "Google Drive Shortcut") {
-				var globalGroupId = JSONGroupAPI._getGroupIdByName(
-					groupName = "Global",
-					site = "true");
-
-				var classTypeKey = JSONDLfileentrytype._getFileEntryTypeKey(
-					fileEntryTypeName = ${subType},
-					groupId = ${globalGroupId});
+		if (!(isSet(classTypeKey))) {
+			if ((${subType} == "Basic Document") || (${contentType} == "Blogs Entry") || (${contentType} == "Category") || (${contentType} == "Order") || (${contentType} == "Product") || (${contentType} == "Knowledge Base Article")) {
+				var classTypeKey = "";
 			}
 			else {
-				if (isSet(depotName)) {
-					var depotId = JSONLayoutpagetemplateSetter.setGroupId(
-						groupKey = ${depotName},
-						site = "false");
-
-					if (isSet(depotStructure)) {
-						var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
-							classNameId = ${classNameId},
-							groupId = ${depotId},
-							structureName = ${subType});
-					}
-					else if (isSet(depotDocumentType)) {
-						var classTypeKey = JSONDLfileentrytype._getFileEntryTypeKey(
-							fileEntryTypeName = ${subType},
-							groupId = ${depotId});
-					}
-				}
-				else if (isSet(globalStructure)) {
+				if (${subType} == "Basic Web Content") {
 					var globalGroupId = JSONGroupAPI._getGroupIdByName(
 						groupName = "Global",
 						site = "true");
@@ -65,7 +29,7 @@ definition {
 						groupId = ${globalGroupId},
 						structureName = ${subType});
 				}
-				else if (isSet(globalDocumentType)) {
+				else if (${subType} == "Google Drive Shortcut") {
 					var globalGroupId = JSONGroupAPI._getGroupIdByName(
 						groupName = "Global",
 						site = "true");
@@ -75,10 +39,48 @@ definition {
 						groupId = ${globalGroupId});
 				}
 				else {
-					var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
-						classNameId = ${classNameId},
-						groupId = ${groupId},
-						structureName = ${subType});
+					if (isSet(depotName)) {
+						var depotId = JSONLayoutpagetemplateSetter.setGroupId(
+							groupKey = ${depotName},
+							site = "false");
+
+						if (isSet(depotStructure)) {
+							var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
+								classNameId = ${classNameId},
+								groupId = ${depotId},
+								structureName = ${subType});
+						}
+						else if (isSet(depotDocumentType)) {
+							var classTypeKey = JSONDLfileentrytype._getFileEntryTypeKey(
+								fileEntryTypeName = ${subType},
+								groupId = ${depotId});
+						}
+					}
+					else if (isSet(globalStructure)) {
+						var globalGroupId = JSONGroupAPI._getGroupIdByName(
+							groupName = "Global",
+							site = "true");
+
+						var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
+							classNameId = ${classNameId},
+							groupId = ${globalGroupId},
+							structureName = ${subType});
+					}
+					else if (isSet(globalDocumentType)) {
+						var globalGroupId = JSONGroupAPI._getGroupIdByName(
+							groupName = "Global",
+							site = "true");
+
+						var classTypeKey = JSONDLfileentrytype._getFileEntryTypeKey(
+							fileEntryTypeName = ${subType},
+							groupId = ${globalGroupId});
+					}
+					else {
+						var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
+							classNameId = ${classNameId},
+							groupId = ${groupId},
+							structureName = ${subType});
+					}
 				}
 			}
 		}

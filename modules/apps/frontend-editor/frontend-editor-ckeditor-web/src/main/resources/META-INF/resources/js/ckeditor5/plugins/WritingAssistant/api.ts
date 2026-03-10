@@ -8,7 +8,7 @@ import {fetch} from 'frontend-js-web';
 
 import {EActionType} from './types';
 
-const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
+const AI_HUB_NEXUS_ENDPOINT = '/o/ai-hub-nexus/v1.0';
 
 export async function createEventSource() {
 	const token = await postToken();
@@ -18,7 +18,7 @@ export async function createEventSource() {
 	}
 
 	return new EventSource(
-		`${token.serviceURL}${AI_HUB_ENDPOINT}/tasks/subscribe`,
+		`${token.serviceURL}${AI_HUB_NEXUS_ENDPOINT}/tasks/subscribe`,
 		{
 			fetch: (input, init) =>
 				fetch(input as RequestInfo, {
@@ -35,7 +35,7 @@ export async function createEventSource() {
 
 async function postToken() {
 	try {
-		const response = await fetch('/o/ai-hub-client/v1.0/tokens', {
+		const response = await fetch('/o/ai-hub-cell/v1.0/tokens', {
 			method: 'POST',
 		});
 
@@ -75,7 +75,7 @@ export async function postTask(
 		return;
 	}
 
-	await fetch(`${token.serviceURL}${AI_HUB_ENDPOINT}/tasks`, {
+	await fetch(`${token.serviceURL}${AI_HUB_NEXUS_ENDPOINT}/tasks`, {
 		body: JSON.stringify({
 			context: {
 				text: content,

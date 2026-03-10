@@ -10,6 +10,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntry;
@@ -122,7 +123,7 @@ public class ObjectEntryFolderModelListenerTest {
 			JSONUtil.put(
 				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
 				JSONUtil.putAll(
-					ActionKeys.ADD_FOLDER, ActionKeys.DELETE,
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, ActionKeys.DELETE,
 					ActionKeys.PERMISSIONS)
 			).put(
 				RoleConstants.CMS_ADMINISTRATOR,

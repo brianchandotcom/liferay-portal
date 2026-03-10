@@ -25,7 +25,10 @@ public class BaseDBProcessTest {
 	@Test
 	public void testGetFixedThreadPoolSize() throws Exception {
 		_testGetFixedThreadPoolSize(1, 1);
-		_testGetFixedThreadPoolSize(4, 100);
+
+		Runtime runtime = Runtime.getRuntime();
+
+		_testGetFixedThreadPoolSize(runtime.availableProcessors(), 100);
 	}
 
 	private void _testGetFixedThreadPoolSize(

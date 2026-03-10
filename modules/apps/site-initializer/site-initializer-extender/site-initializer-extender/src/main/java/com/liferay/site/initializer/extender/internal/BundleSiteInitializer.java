@@ -1572,33 +1572,87 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		String type = assetListJSONObject.getString("type");
-
 		if (assetListEntry == null) {
+			String type = assetListJSONObject.getString("type");
+
 			if (StringUtil.equals(type, "manual")) {
 				List<Long> assetEntryIds = new ArrayList<>();
+				Set<Long> assetEntryClassNameIds = new HashSet<>();
+				Map<String, Set<Long>> classTypeIdsMap = new HashMap<>();
 
 				Object[] assetListEntryObjects = JSONUtil.toObjectArray(
 					assetListJSONObject.getJSONArray("assetListEntries"));
 
 				for (Object assetListEntryObject : assetListEntryObjects) {
-					JSONObject assetListEntryJSONObject = (JSONObject)assetListEntryObject;
+					JSONObject assetListEntryJSONObject =
+						(JSONObject)assetListEntryObject;
 
 					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-						_portal.getClassNameId(assetListEntryJSONObject.getString("className")),
+						_portal.getClassNameId(
+							assetListEntryJSONObject.getString("className")),
 						assetListEntryJSONObject.getLong("classPK"));
 
-					if (assetEntry != null) {
-						assetEntryIds.add(assetEntry.getEntryId());
+					if (assetEntry == null) {
+						continue;
 					}
+
+					AssetRendererFactory<?> assetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClassNameId(
+								assetEntry.getClassNameId());
+
+					if ((assetRendererFactory == null) ||
+						!assetRendererFactory.isSelectable()) {
+
+						continue;
+					}
+
+					assetEntryIds.add(assetEntry.getEntryId());
+					assetEntryClassNameIds.add(assetEntry.getClassNameId());
+
+					if (!assetRendererFactory.isSupportsClassTypes()) {
+						continue;
+					}
+
+					String manualAssetRendererFactoryName =
+						_getAssetRendererFactoryName(
+							assetRendererFactory.getClassName());
+
+					classTypeIdsMap.computeIfAbsent(
+						manualAssetRendererFactoryName, key -> new HashSet<>()
+					).add(
+						assetEntry.getClassTypeId()
+					);
 				}
 
-				_assetListEntryLocalService.addManualAssetListEntry(
-					assetListJSONObject.getString("externalReferenceCode"),
-					serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-					assetListJSONObject.getString("title"),
-					ArrayUtil.toLongArray(assetEntryIds),
-					serviceContext);
+				Map<String, String> typeSettings = new HashMap<>(map);
+
+				typeSettings.put("anyAssetType", String.valueOf(Boolean.FALSE));
+				typeSettings.put(
+					"classNameIds", StringUtil.merge(assetEntryClassNameIds));
+				typeSettings.put(
+					"groupIds",
+					String.valueOf(serviceContext.getScopeGroupId()));
+
+				classTypeIdsMap.forEach(
+					(manualAssetRendererFactoryName, assetEntryClassTypeId) ->
+						typeSettings.put(
+							"classTypeIds" + manualAssetRendererFactoryName,
+							StringUtil.merge(assetEntryClassTypeId)));
+
+				assetListEntry =
+					_assetListEntryLocalService.addManualAssetListEntry(
+						assetListJSONObject.getString("externalReferenceCode"),
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(),
+						assetListJSONObject.getString("title"),
+						ArrayUtil.toLongArray(assetEntryIds), serviceContext);
+
+				_assetListEntryLocalService.updateAssetListEntryTypeSettings(
+					assetListEntry.getAssetListEntryId(), 0,
+					UnicodePropertiesBuilder.create(
+						typeSettings, true
+					).buildString());
 			}
 			else {
 				_assetListEntryLocalService.addDynamicAssetListEntry(

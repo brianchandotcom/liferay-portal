@@ -1152,7 +1152,9 @@ test.describe('Manage object entries through Friendly URL', () => {
 	let _objectEntryFriendlyURLPath: string;
 	let _objectField: ObjectField;
 
-	test.beforeEach(async ({apiHelpers, site, viewObjectEntriesPage}) => {
+	test.beforeEach(async ({apiHelpers, page, site, viewObjectEntriesPage}) => {
+		page.setViewportSize({height: 1080, width: 1920});
+
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: [
 				{

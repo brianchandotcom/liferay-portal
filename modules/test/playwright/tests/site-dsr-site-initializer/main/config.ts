@@ -4,8 +4,8 @@
  */
 
 export const config = {
-	name: 'digital-sales-room-web.main',
-	testDir: 'tests/digital-sales-room-web/main',
+	name: 'site-dsr-site-initializer.main',
+	testDir: 'tests/site-dsr-site-initializer/main',
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

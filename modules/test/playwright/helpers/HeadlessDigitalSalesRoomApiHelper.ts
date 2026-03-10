@@ -11,18 +11,18 @@ export class HeadlessDigitalSalesRoomApiHelper {
 
 	constructor(apiHelpers: ApiHelpers | DataApiHelpers) {
 		this.apiHelpers = apiHelpers;
-		this.basePath = 'headless-digital-sales-room/v1.0';
+		this.basePath = 'digital-sales-room';
 	}
 
-	async getDigitalSalesRooms() {
+	async getRooms() {
 		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/digital-sales-rooms`
+			`${this.apiHelpers.baseUrl}${this.basePath}/rooms`
 		);
 	}
 
-	async getDigitalSalesRoomTemplates() {
-		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/digital-sales-room-templates`
+	async deleteRoom(roomId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/rooms/${roomId}`
 		);
 	}
 }

@@ -549,8 +549,7 @@ export class ApplicationsMenuPage {
 	}
 
 	async goToDigitalSalesRooms() {
-		await this.goToCommercePanel();
-		await this.digitalSalesRoomsMenuItem.click();
+		await this.page.goto('/web/dsr/rooms');
 	}
 
 	async goToExport() {

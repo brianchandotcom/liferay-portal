@@ -10,6 +10,8 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 
 export class DigitalSalesRoomsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly deleteButton: Locator;
+	readonly deleteConfirmationModal: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly digitalSalesRoomsTable: DataTablePage;
 	readonly editMenuItem: Locator;
@@ -25,11 +27,15 @@ export class DigitalSalesRoomsPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.deleteButton = page.getByRole('button', {name: 'Delete'});
+		this.deleteConfirmationModal = page.getByRole('heading', {
+			name: 'Delete Digital Sales Room',
+		});
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.digitalSalesRoomsTable = new DataTablePage(
 			page,
 			page.locator(
-				'#portlet_com_liferay_digital_sales_room_web_internal_portlet_DigitalSalesRoomManagementPortlet'
+				'[class*="site-dsr-site-initializer-internal-fragment-renderer-viewrooms"]'
 			)
 		);
 		this.editMenuItem = page.getByRole('menuitem', {name: 'Edit'});

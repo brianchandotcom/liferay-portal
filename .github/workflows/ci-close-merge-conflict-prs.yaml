@@ -3,7 +3,9 @@ env:
 
 jobs:
     close-merge-conflicts:
-        if: contains(env.AUTHORIZED_OWNERS, github.repository_owner)
+        if: >
+            contains(env.AUTHORIZED_OWNERS, github.repository_owner) &&
+            github.repository_owner == github.event.pull_request.base.repo.owner.login
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         permissions:
@@ -15,26 +17,6 @@ jobs:
                     set -e
 
                     function main {
-                        local authorized_owner
-                        local authorized=false
-
-                        for authorized_owner in ${AUTHORIZED_OWNERS}
-                        do
-                            if [[ "${authorized_owner}" == "${{ github.repository_owner }}" ]]
-                            then
-                                authorized=true
-
-                                break
-                            fi
-                        done
-
-                        if [[ "${authorized}" == "false" ]]
-                        then
-                            echo "${{ github.repository_owner }} is not authorized."
-
-                            exit 0
-                        fi
-
                         local pr_number=${{ github.event.pull_request.number }}
                         local pr_url=${{ github.event.pull_request.html_url }}
 

@@ -22,7 +22,8 @@ public class EnabledUtil {
 	public static void checkEnabled(Company company, boolean privateLayout) {
 		if (LazyReferencingThreadLocal.isEnabled() ||
 			ExportImportThreadLocal.isExportInProcess() ||
-			ExportImportThreadLocal.isImportInProcess()) {
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
 
 			return;
 		}

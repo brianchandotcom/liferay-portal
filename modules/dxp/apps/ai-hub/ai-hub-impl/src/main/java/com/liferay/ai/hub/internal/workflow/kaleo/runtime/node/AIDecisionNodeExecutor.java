@@ -133,12 +133,12 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiStreamingChatModel.builder(
-			).project(
-				"ai-hub-liferay"
 			).location(
-				"us-central1"
+				"europe-central2"
 			).modelName(
 				"gemini-2.5-flash-lite"
+			).project(
+				"ai-hub-liferay"
 			).build();
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();

@@ -52,7 +52,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 					try (VertexAiGeminiChatModel vertexAiGeminiChatModel =
 							VertexAiGeminiChatModel.builder(
 							).location(
-								"us-central1"
+								"europe-central2"
 							).modelName(
 								"gemini-2.5-flash-lite"
 							).project(

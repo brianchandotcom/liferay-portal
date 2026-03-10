@@ -123,6 +123,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -721,10 +722,12 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				draftFragmentEntryLink2);
 
-		Thread.sleep(1000);
+		fragmentEntryLink2.setModifiedDate(
+			new Date(System.currentTimeMillis() + 10000));
 
-		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-			fragmentEntryLink2);
+		fragmentEntryLink2 =
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink2);
 
 		_layoutLocalService.copyLayoutContent(draftLayout, layout);
 
@@ -740,14 +743,18 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 				draftFragmentEntryLink2.getExternalReferenceCode(),
 				layout.getPlid());
 
-		Assert.assertEquals(
-			draftFragmentEntryLink1.getEditableValues(),
-			updatedFragmentEntryLink1.getEditableValues());
 		Assert.assertTrue(
 			DateUtil.equals(
 				fragmentEntryLink1.getModifiedDate(),
 				updatedFragmentEntryLink1.getModifiedDate()));
+		Assert.assertEquals(
+			draftFragmentEntryLink1.getEditableValues(),
+			updatedFragmentEntryLink1.getEditableValues());
 
+		Assert.assertFalse(
+			DateUtil.equals(
+				fragmentEntryLink2.getModifiedDate(),
+				updatedFragmentEntryLink2.getModifiedDate()));
 		Assert.assertEquals(
 			draftFragmentEntryLink2.getEditableValues(),
 			updatedFragmentEntryLink2.getEditableValues());

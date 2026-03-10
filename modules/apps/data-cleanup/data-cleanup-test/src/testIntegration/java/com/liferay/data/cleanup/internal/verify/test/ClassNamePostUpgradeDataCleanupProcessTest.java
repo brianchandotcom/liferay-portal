@@ -139,10 +139,6 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 					objectDefinitionAtomicReference.get();
 
 				if (objectDefinition != null) {
-					_classNameLocalService.deleteClassName(
-						_classNameLocalService.getClassNameId(
-							objectDefinition.getClassName()));
-
 					_objectDefinitionLocalService.deleteObjectDefinition(
 						objectDefinition);
 				}

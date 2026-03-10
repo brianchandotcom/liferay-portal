@@ -247,9 +247,9 @@ function BulkActionsMonitor() {
 							...prevContext,
 							[newTask.id]: {
 								assetName,
-								itemCount: selectedData.items
-									? selectedData.items.length
-									: 0,
+								itemCount: selectedData.items?.length || 0,
+								replacement: additionalData?.replacement,
+								search: additionalData?.search,
 								selectAll: selectedData.selectAll,
 								targetName: additionalData?.targetName,
 							},

@@ -26,6 +26,7 @@ import {
 	BULK_ACTION_RESET_PERMISSIONS,
 	BULK_ACTION_STATUS,
 	BULK_ACTION_TAGS,
+	BULK_ACTION_UPDATE_OBJECT_VALUES,
 } from './constants';
 
 type MessageType = 'danger' | 'info' | 'success' | 'warning';
@@ -355,13 +356,30 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			),
 		},
 	},
+	[BULK_ACTION_UPDATE_OBJECT_VALUES]: {
+		info: {
+			all: Liferay.Language.get('replacing-x-with-x'),
+			plural: Liferay.Language.get('replacing-x-with-x-across-x-assets'),
+			singular: Liferay.Language.get('replacing-x-with-x-for-one-asset'),
+		},
+		success: {
+			all: Liferay.Language.get('replaced-x-with-x'),
+			plural: Liferay.Language.get('replaced-x-with-x-in-x-assets'),
+			singular: Liferay.Language.get('replaced-x-with-x-for-one-asset'),
+		},
+	},
 };
 
 export function getBulkActionTaskMessage(
 	actionType: keyof IBulkActionTaskType,
 	messageType: MessageType = 'info',
 	selectedData: IBulkActionFDSData,
-	additionalData?: {assetName?: string; targetName?: string}
+	additionalData?: {
+		assetName?: string;
+		replacement?: string;
+		search?: string;
+		targetName?: string;
+	}
 ): string {
 	const {items = [], selectAll = false} = selectedData;
 	const messageKey = selectAll
@@ -378,6 +396,14 @@ export function getBulkActionTaskMessage(
 	}
 
 	const args: (string | number)[] = [];
+
+	if (additionalData?.search) {
+		args.push(Liferay.Util.escapeHTML(additionalData.search));
+	}
+
+	if (additionalData?.replacement) {
+		args.push(Liferay.Util.escapeHTML(additionalData.replacement));
+	}
 
 	if (messageKey === 'singular') {
 		const assetName = additionalData?.assetName || items[0]?.title;

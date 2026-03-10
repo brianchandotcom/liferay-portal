@@ -7,8 +7,8 @@ package com.liferay.ai.hub.cell.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.cell.rest.dto.v1_0.Token;
 import com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource;
-import com.liferay.ai.hub.client.configuration.AIHubConfiguration;
-import com.liferay.ai.hub.client.security.JWTTokenUtil;
+import com.liferay.ai.hub.cell.configuration.AIHubConfiguration;
+import com.liferay.ai.hub.cell.security.JWTTokenUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;

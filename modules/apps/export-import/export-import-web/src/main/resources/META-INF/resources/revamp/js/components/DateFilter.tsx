@@ -48,7 +48,7 @@ const MODIFIED_LAST_OPTIONS = [
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-export default function DataFilter() {
+export default function DateFilter() {
 	const [filterType, setFilterType] = useState('all');
 	const [fromDate, setFromDate] = useState('');
 	const [modifiedLast, setModifiedLast] = useState('12h');

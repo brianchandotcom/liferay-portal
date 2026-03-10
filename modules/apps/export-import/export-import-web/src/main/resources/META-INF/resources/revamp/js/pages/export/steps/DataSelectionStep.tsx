@@ -6,13 +6,13 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import DataFilter from '../../../components/DataFilter';
+import DateFilter from '../../../components/DateFilter';
 
 export default function DataSelectionStep() {
 	return (
 		<>
 			<ClayLayout.Sheet>
-				<DataFilter />
+				<DateFilter />
 			</ClayLayout.Sheet>
 
 			<ClayLayout.Sheet>

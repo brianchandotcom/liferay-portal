@@ -287,6 +287,7 @@ export default function FieldBase({
 		type === 'date_time' ||
 		type === 'document_library' ||
 		type === 'image' ||
+		type === 'localizable_text' ||
 		type === 'numeric' ||
 		type === 'rich_text' ||
 		type === 'search_location' ||

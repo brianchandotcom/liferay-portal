@@ -160,6 +160,13 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			DDMFormInstanceSettings ddmFormInstanceSettings =
 				ddmFormInstance.getSettingsModel();
 
+			DDMFormValues ddmFormValues =
+				ddmStorageAdapterSaveRequest.getDDMFormValues();
+
+			DDMForm ddmForm = ddmFormValues.getDDMForm();
+
+			Set<Long> fileEntryIds = new HashSet<>();
+
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					GetterUtil.getLong(
@@ -169,13 +176,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getCompanyId(),
 					objectDefinition.getStorageType());
-
-			DDMFormValues ddmFormValues =
-				ddmStorageAdapterSaveRequest.getDDMFormValues();
-
-			DDMForm ddmForm = ddmFormValues.getDDMForm();
-
-			Set<Long> fileEntryIds = new HashSet<>();
 
 			ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 				new DefaultDTOConverterContext(

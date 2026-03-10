@@ -94,8 +94,7 @@ public class ServiceContextUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		if (objectEntry.getTaxonomyCategoryIds() == null) {
-			_setObjectEntryTaxonomyCategoryIds(
-				companyId, groupId, userId, objectEntry);
+			_setObjectEntryTaxonomyCategoryIds(companyId, groupId, objectEntry);
 		}
 
 		if (objectEntry.getTaxonomyCategoryIds() != null) {
@@ -170,7 +169,7 @@ public class ServiceContextUtil {
 	}
 
 	private static void _setObjectEntryTaxonomyCategoryIds(
-		long companyId, long groupId, long userId, ObjectEntry objectEntry) {
+		long companyId, long groupId, ObjectEntry objectEntry) {
 
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
 			objectEntry.getTaxonomyCategoryBriefs();
@@ -219,7 +218,7 @@ public class ServiceContextUtil {
 
 				AssetCategory assetCategory =
 					AssetCategoryServiceUtil.getOrAddEmptyCategoryWithAncestors(
-						externalReferenceCode, userId, groupId,
+						externalReferenceCode, groupId,
 						parentTaxonomyCategoryExternalReferenceCode,
 						parentTaxonomyVocabularyExternalReferenceCode);
 

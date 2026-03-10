@@ -176,9 +176,8 @@ public class AssetCategoryServiceTest {
 		Assert.assertThrows(
 			NoSuchCategoryException.class,
 			() -> _assetCategoryService.getOrAddEmptyCategoryWithAncestors(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()));
+				RandomTestUtil.randomString(), _group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -194,8 +193,8 @@ public class AssetCategoryServiceTest {
 			Assert.assertThrows(
 				PrincipalException.class,
 				() -> _assetCategoryService.getOrAddEmptyCategoryWithAncestors(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					_group.getGroupId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), _group.getGroupId(),
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString()));
 
 			RoleTestUtil.addResourcePermission(
@@ -206,8 +205,8 @@ public class AssetCategoryServiceTest {
 			Assert.assertThrows(
 				PrincipalException.class,
 				() -> _assetCategoryService.getOrAddEmptyCategoryWithAncestors(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					_group.getGroupId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), _group.getGroupId(),
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString()));
 
 			AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
@@ -218,8 +217,8 @@ public class AssetCategoryServiceTest {
 
 			AssetCategory assetCategory =
 				_assetCategoryService.getOrAddEmptyCategoryWithAncestors(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					_group.getGroupId(), parentCategoryExternalReferenceCode,
+					RandomTestUtil.randomString(), _group.getGroupId(),
+					parentCategoryExternalReferenceCode,
 					assetVocabulary.getExternalReferenceCode());
 
 			Assert.assertNotNull(
@@ -242,8 +241,8 @@ public class AssetCategoryServiceTest {
 				RandomTestUtil.randomString();
 
 			_assetCategoryService.getOrAddEmptyCategoryWithAncestors(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), parentCategoryExternalReferenceCode,
+				RandomTestUtil.randomString(), _group.getGroupId(),
+				parentCategoryExternalReferenceCode,
 				vocabularyExternalReferenceCode);
 
 			Assert.assertNotNull(

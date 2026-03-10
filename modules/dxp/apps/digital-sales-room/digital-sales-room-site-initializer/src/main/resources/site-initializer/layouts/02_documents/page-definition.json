@@ -3,51 +3,68 @@
 		"pageElements": [
 			{
 				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] h2 {\n  margin-bottom: var(--spacer-4, 1.5rem) !important;\n}\n\n.[$FRAGMENT_CLASS$] h2::after{\nborder-bottom: 4px solid var(--primary, #0B5FFF);\n  content: '';\n  display: inline-block;\n  margin: 0 0 0 0.3rem;\n  width: 1.5rem;\n}",
 					"fragment": {
-						"key": "BASIC_COMPONENT-html"
+						"key": "BASIC_COMPONENT-heading"
 					},
 					"fragmentConfig": {
+						"headingLevel": "h2"
 					},
 					"fragmentFields": [
 						{
-							"id": "element-html",
+							"id": "element-text",
 							"value": {
-								"html": {
+								"fragmentLink": {
+								},
+								"text": {
 									"value_i18n": {
+										"en_US": "DOCUMENTS"
 									}
 								}
 							}
 						}
 					],
-					"indexed": true
+					"indexed": false
 				},
 				"type": "Fragment"
 			},
 			{
 				"definition": {
-					"fragment": {
-						"key": "BASIC_COMPONENT-button"
-					},
-					"fragmentConfig": {
-						"buttonSize": "nm",
-						"buttonType": "secondary",
-						"type": "link"
-					},
-					"fragmentFields": [
-						{
-							"id": "link",
-							"value": {
-								"fragmentLink": {
-								}
-							}
-						}
-					],
-					"fragmentStyle": {
-						"marginTop": "2"
-					},
-					"indexed": true
+					"indexed": false,
+					"layout": {
+						"containerType": "Fluid"
+					}
 				},
-				"type": "Fragment"
+				"pageElements": [
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] .portlet-document-library {\n  background-color: #FFF;\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 1.25rem;\n  margin-bottom: 5rem;\n  overflow: hidden;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-document-library .container-view {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-document-library .document-container {\n  border: 1px solid transparent;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-document-library .document-container .card-page {\n  margin-bottom: 0;\n  padding: 1rem;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-document-library .document-library-breadcrumb {\n  padding: 0 1rem;\n  border-top: 1px solid rgba(0, 0, 0, 0.125);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.125);\n}\n\n.[$FRAGMENT_CLASS$] .portlet-document-library .card-section-header,\n.[$FRAGMENT_CLASS$] .portlet-document-library .list-group-header {\n  display: none;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-document-library .card-page-item-asset {\n  flex-basis: auto;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-document-library .form-check-card {\n  margin-bottom: 1rem;\n  min-width: 285px;\n  max-width: 285px;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-document-library .taglib-empty-result-message {\n  margin-bottom: var(--spacer-4, 1.5rem);\n}",
+							"widgetInstance": {
+								"widgetConfig": {
+									"displayViews": [
+										"icon",
+										"descriptive",
+										"list"
+									],
+									"entryColumns": [
+										"name",
+										"document-type",
+										"size",
+										"status",
+										"modified-date",
+										"action",
+										"downloads",
+										"create-date"
+									],
+									"showActions": "true"
+								},
+								"widgetName": "com_liferay_document_library_web_portlet_DLPortlet"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
 			}
 		],
 		"type": "Root"

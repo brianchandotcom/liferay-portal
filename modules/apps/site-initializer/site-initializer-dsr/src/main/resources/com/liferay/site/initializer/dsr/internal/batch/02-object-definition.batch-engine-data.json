@@ -106,6 +106,20 @@
 					"system": true
 				},
 				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SITE_EXTERNAL_REFERENCE_CODE",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Site External Reference Code"
+					},
+					"name": "siteExternalReferenceCode",
+					"required": false,
+					"system": true
+				},
+				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
 					"externalReferenceCode": "SITE_ID",

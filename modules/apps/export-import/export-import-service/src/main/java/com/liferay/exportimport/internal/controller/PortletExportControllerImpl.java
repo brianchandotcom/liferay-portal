@@ -384,7 +384,9 @@ public class PortletExportControllerImpl implements PortletExportController {
 						PortletPreferencesFactoryUtil.getStrictPortletSetup(
 							layout, portlet.getPortletId());
 				}
-				else if (!portletDataHandler.isBatch()) {
+				else if (!portletDataHandler.isBatch() &&
+						 !portlet.isPreferencesUniquePerLayout()) {
+
 					jxPortletPreferences =
 						PortletPreferencesFactoryUtil.getStrictPortletSetup(
 							portletDataContext.getCompanyId(),

@@ -108,7 +108,7 @@ public class JournalContentSearchLocalServiceImpl
 						portletPreferences);
 
 				String articleId = displayInformationProvider.getClassPK(
-					jxPortletPreferences);
+					jxPortletPreferences, layout.getGroupId());
 
 				JournalContentSearchKey journalContentSearchKey =
 					new JournalContentSearchKey(

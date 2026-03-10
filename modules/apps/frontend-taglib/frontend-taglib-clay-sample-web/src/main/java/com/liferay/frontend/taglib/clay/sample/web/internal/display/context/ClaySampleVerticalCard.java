@@ -149,8 +149,10 @@ public class ClaySampleVerticalCard implements VerticalCard {
 			return _labels;
 		}
 
-		int numItems = 1 + RandomUtil.nextInt(3);
+		return getLabels(1 + RandomUtil.nextInt(3));
+	}
 
+	public List<LabelItem> getLabels(int numItems) {
 		return LabelItemListBuilder.add(
 			labelItem -> {
 				labelItem.setLabel("Approved");
@@ -285,6 +287,10 @@ public class ClaySampleVerticalCard implements VerticalCard {
 
 	public void setInputValue(String inputValue) {
 		_inputValue = inputValue;
+	}
+
+	public void setLabels(int numItems) {
+		_labels = getLabels(numItems);
 	}
 
 	public void setLabels(List<LabelItem> labels) {

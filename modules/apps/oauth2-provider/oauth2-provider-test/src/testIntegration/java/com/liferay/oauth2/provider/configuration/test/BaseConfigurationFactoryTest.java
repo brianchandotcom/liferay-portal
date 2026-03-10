@@ -16,7 +16,6 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -152,13 +151,10 @@ public class BaseConfigurationFactoryTest {
 
 		properties.put("userAccountScreenName", "test");
 
-		List<User> users = _userLocalService.getUsersByRoleName(
-			companyId, RoleConstants.ADMINISTRATOR, 0, 2);
-
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
 				getName(),
-			companyId, properties, users.get(0));
+			companyId, properties, TestPropsValues.getUser());
 
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationUserAgentConfiguration.class.getName(),

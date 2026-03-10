@@ -274,6 +274,17 @@ public class OIDCUserInfoProcessorTest {
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 			_emailAddress = null;
+			_uuid = PortalUUIDUtil.generate();
+
+			try {
+				_testProcessUserInfo(
+					new String[0], "email", new String[0],
+					_customOIDCUserInfoMapperJSON);
+			}
+			catch (Exception exception) {
+				Assert.assertEquals(
+					"Email address is null", exception.getMessage());
+			}
 
 			user = UserTestUtil.addUser();
 
@@ -306,6 +317,19 @@ public class OIDCUserInfoProcessorTest {
 					new String[] {"group1"}, "screenName",
 					new String[] {"group1"},
 					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+
+				_screenName = null;
+				_uuid = PortalUUIDUtil.generate();
+
+				try {
+					_testProcessUserInfo(
+						new String[0], "screenName", new String[0],
+						_customOIDCUserInfoMapperJSON);
+				}
+				catch (Exception exception) {
+					Assert.assertEquals(
+						"Screen name is null", exception.getMessage());
+				}
 			}
 		}
 	}
@@ -445,11 +469,10 @@ public class OIDCUserInfoProcessorTest {
 				_oidcUserInfoProcessor, "processUserInfo",
 				new Class<?>[] {
 					long.class, String.class, OAuthClientEntry.class,
-					ServiceContext.class, String.class, String.class
+					ServiceContext.class, String.class
 				},
 				TestPropsValues.getCompanyId(), _ISSUER, _getOAuthClientEntry(),
-				_serviceContext, RandomTestUtil.randomString(),
-				userInfoJSONObject.toString());
+				_serviceContext, userInfoJSONObject.toString());
 		}
 
 		User user = _fetchUser(matcherField);

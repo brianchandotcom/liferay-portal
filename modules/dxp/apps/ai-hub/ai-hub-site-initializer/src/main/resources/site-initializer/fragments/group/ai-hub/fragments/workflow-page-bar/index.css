@@ -1,0 +1,50 @@
+.workflow-definition-nav{
+	display:flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.workflow-definition-back {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 2rem;
+	justify-content: center;
+	width: 1rem;
+}
+
+.workflow-definition-back:hover{
+	background: #00000009;
+}
+
+.workflow-definition-back svg{
+	fill: #6b6c7e;
+}
+
+.workflow-definition-tbar-nav {
+	align-items: center;
+	display: flex;
+}
+
+.autofit-row.portlet-header {
+	display: none;
+}
+
+.ai-hub-title {
+	font-family:
+		'Source Sans 3',
+		system-ui,
+		-apple-system,
+		'system-ui',
+		'Segoe UI',
+		Roboto,
+		Oxygen-Sans,
+		Ubuntu,
+		Cantarell,
+		'Helvetica Neue',
+		Arial,
+		sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+}

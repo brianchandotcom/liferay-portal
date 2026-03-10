@@ -7,8 +7,7 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
-import com.liferay.marketplace.service.KoroneikiService;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.marketplace.service.ProvisioningService;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
 import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
@@ -16,20 +15,12 @@ import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Paginatio
 import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.petra.string.StringPool;
 
-import java.net.URL;
-
-import java.time.ZonedDateTime;
-
 import java.util.Collections;
-import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -57,7 +48,7 @@ public class ProvisioningRestController extends BaseRestController {
 		throws Exception {
 
 		AppLicenseKeyResource appLicenseKeyResource =
-			_getAppLicenseKeyResource();
+			_provisioningService.getAppLicenseKeyResource();
 
 		appLicenseKeyResource.putAppLicenseKeyDeactivate(
 			jwt.getClaim("username"), jwt.getClaim("sub"), new Long[] {id});
@@ -72,7 +63,7 @@ public class ProvisioningRestController extends BaseRestController {
 		throws Exception {
 
 		AppLicenseKeyResource appLicenseKeyResource =
-			_getAppLicenseKeyResource();
+			_provisioningService.getAppLicenseKeyResource();
 
 		return appLicenseKeyResource.getAppLicenseKey(id);
 	}
@@ -82,7 +73,7 @@ public class ProvisioningRestController extends BaseRestController {
 		throws Exception {
 
 		AppLicenseKeyResource appLicenseKeyResource =
-			_getAppLicenseKeyResource();
+			_provisioningService.getAppLicenseKeyResource();
 
 		AppLicenseKey appLicenseKey = appLicenseKeyResource.getAppLicenseKey(
 			id);
@@ -129,7 +120,7 @@ public class ProvisioningRestController extends BaseRestController {
 		throws Exception {
 
 		AppLicenseKeyResource appLicenseKeyResource =
-			_getAppLicenseKeyResource();
+			_provisioningService.getAppLicenseKeyResource();
 
 		return appLicenseKeyResource.getAppLicenseKeysPage(
 			"", "active eq true and orderId eq '" + orderId + "'",
@@ -141,97 +132,16 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		JSONObject jsonObject = new JSONObject(json);
-
-		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
-			jsonObject.getJSONObject(
-				"licenseEntry"
-			).toString());
-
-		appLicenseKey.setActive(true);
-		appLicenseKey.setCreateDate(new Date());
-
-		ProductPurchase productPurchase = _koroneikiService.getProductPurchase(
-			appLicenseKey.getProductPurchaseKey());
-
-		Date expirationDate = productPurchase.getEndDate();
-
-		if (productPurchase.getPerpetual()) {
-			expirationDate = Date.from(
-				ZonedDateTime.now(
-				).plusYears(
-					100
-				).toInstant());
-		}
-
-		appLicenseKey.setExpirationDate(expirationDate);
-
-		AppLicenseKey.LicenseType licenseType =
-			AppLicenseKey.LicenseType.PRODUCTION;
-
-		appLicenseKey.setLicenseType(licenseType);
-
-		appLicenseKey.setOwner((String)jwt.getClaim("username"));
-
-		if (appLicenseKey.getProductId() == null) {
-			appLicenseKey.setProductId(productPurchase.getProductKey());
-		}
-
-		appLicenseKey.setProductName(
-			productPurchase.getProduct(
-			).getName());
-		appLicenseKey.setProductVersion("1");
-
-		Date startDate = productPurchase.getStartDate();
-
-		if (startDate == null) {
-			startDate = new Date();
-		}
-
-		appLicenseKey.setStartDate(startDate);
-		appLicenseKey.setUserName((String)jwt.getClaim("username"));
-		appLicenseKey.setUserUuid((String)jwt.getClaim("sub"));
-
-		AppLicenseKeyResource appLicenseKeyResource =
-			_getAppLicenseKeyResource();
-
-		appLicenseKey = appLicenseKeyResource.postAppLicenseKey(
-			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Created app license key " + appLicenseKey);
-		}
-
-		return appLicenseKey;
-	}
-
-	private AppLicenseKeyResource _getAppLicenseKeyResource() throws Exception {
-		return AppLicenseKeyResource.builder(
-		).header(
-			"Authorization",
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"external-provisioning")
-		).endpoint(
-			_externalProvisioningHomePageURL
-		).build();
+		return _provisioningService.provision(jwt, json);
 	}
 
 	private static final Log _log = LogFactory.getLog(
 		ProvisioningRestController.class);
 
-	@Value("${external.provisioning.oauth2.headless.server.home.page.url}")
-	private URL _externalProvisioningHomePageURL;
-
-	@Value("${liferay.marketplace.koroneiki.auth.token}")
-	private String _koroneikiAuthToken;
-
-	@Value("${liferay.marketplace.koroneiki.auth.url}")
-	private URL _koroneikiAuthURL;
-
-	@Autowired
-	private KoroneikiService _koroneikiService;
-
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	@Autowired
+	private ProvisioningService _provisioningService;
 
 }

@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.cell.rest.resource.v1_0.test;
 
-import com.liferay.ai.hub.client.configuration.AIHubConfiguration;
+import com.liferay.ai.hub.cell.configuration.AIHubConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
@@ -78,7 +78,7 @@ public class TokenResourceTest extends BaseTokenResourceTestCase {
 			).build());
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, "ai-hub-client/v1.0/tokens", Http.Method.POST);
+			null, "ai-hub-cell/v1.0/tokens", Http.Method.POST);
 
 		Assert.assertTrue(jsonObject.has("accessToken"));
 		Assert.assertTrue(jsonObject.has("scope"));

@@ -69,7 +69,8 @@ public class SseEventSourceTestUtil {
 				).header(
 					"Authorization", authorization
 				).uri(
-					URI.create("http://localhost:8080/o/ai-hub/v1.0/" + uri)
+					URI.create(
+						"http://localhost:8080/o/ai-hub-cell/v1.0/" + uri)
 				).GET(
 				).build(),
 				HttpResponse.BodyHandlers.ofInputStream());

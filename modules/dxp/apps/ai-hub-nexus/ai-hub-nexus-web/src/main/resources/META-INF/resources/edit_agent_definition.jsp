@@ -13,7 +13,7 @@ EditAgentDefinitionDisplayContext editAgentDefinitionDisplayContext = (EditAgent
 
 <div>
 	<react:component
-		module="{AgentDefinitionForm} from ai-hub-web"
+		module="{AgentDefinitionForm} from ai-hub-nexus-web"
 		props="<%= editAgentDefinitionDisplayContext.getReactData() %>"
 	/>
 </div>

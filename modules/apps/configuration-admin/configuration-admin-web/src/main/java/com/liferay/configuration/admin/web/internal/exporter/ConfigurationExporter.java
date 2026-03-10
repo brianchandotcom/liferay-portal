@@ -5,7 +5,7 @@
 
 package com.liferay.configuration.admin.web.internal.exporter;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 
 import java.util.Dictionary;
 

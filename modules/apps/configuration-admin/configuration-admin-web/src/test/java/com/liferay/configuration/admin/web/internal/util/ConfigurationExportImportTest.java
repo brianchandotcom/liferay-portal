@@ -6,8 +6,8 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.web.internal.exporter.ConfigurationExporter;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Dictionary;

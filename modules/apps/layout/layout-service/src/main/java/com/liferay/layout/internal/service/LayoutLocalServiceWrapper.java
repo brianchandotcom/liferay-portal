@@ -1000,7 +1000,10 @@ public class LayoutLocalServiceWrapper
 				targetLayoutFragmentEntryLink.getHtml()) &&
 			Objects.equals(
 				sourceLayoutFragmentEntryLink.getJs(),
-				targetLayoutFragmentEntryLink.getJs())) {
+				targetLayoutFragmentEntryLink.getJs()) &&
+			Objects.equals(
+				sourceLayoutFragmentEntryLink.getLastPropagationDate(),
+				targetLayoutFragmentEntryLink.getLastPropagationDate())) {
 
 			return true;
 		}
@@ -1125,7 +1128,10 @@ public class LayoutLocalServiceWrapper
 						targetLayoutFragmentEntryLink) &&
 					 Objects.equals(
 						 editableValuesJSONObject.toString(),
-						 targetLayoutFragmentEntryLink.getEditableValues())) {
+						 targetLayoutFragmentEntryLink.getEditableValues()) &&
+					 Objects.equals(
+						 namespace,
+						 targetLayoutFragmentEntryLink.getNamespace())) {
 
 				newFragmentEntryLink = targetLayoutFragmentEntryLink;
 			}

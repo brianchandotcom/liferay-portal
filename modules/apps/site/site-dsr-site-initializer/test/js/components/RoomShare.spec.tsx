@@ -44,7 +44,7 @@ const mockUsers = [
 		emailAddress: 'ran.doe@liferay.com',
 		id: 2,
 		name: 'Ran Doe',
-		roleKey: 'Site Administrator',
+		roleKey: 'DSR Contributor',
 	},
 	{
 		emailAddress: 'win.doe@liferay.com',
@@ -237,7 +237,7 @@ describe('RoomShare', () => {
 				10,
 				3,
 				{
-					roleKey: 'Site Administrator',
+					roleKey: 'DSR Contributor',
 				}
 			);
 		});
@@ -332,7 +332,7 @@ describe('RoomShare', () => {
 		await waitFor(() => {
 			expect(RoomService.addRoomUserAccount).toHaveBeenCalledWith(10, {
 				emailAddress: 'newuser@liferay.com',
-				roleKey: 'Site Administrator',
+				roleKey: 'DSR Contributor',
 			});
 		});
 	});

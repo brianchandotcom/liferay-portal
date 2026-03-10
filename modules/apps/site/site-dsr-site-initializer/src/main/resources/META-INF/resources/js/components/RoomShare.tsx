@@ -21,7 +21,7 @@ export const DSR_SITE_ROLES = [
 		description: Liferay.Language.get(
 			'users-can-view-content-leave-comments-and-upload-documents'
 		),
-		key: 'Site Administrator',
+		key: 'DSR Contributor',
 		label: Liferay.Language.get('contributor'),
 	},
 	{

@@ -160,6 +160,20 @@ function RoomInitializer({
 
 					room = await RoomService.getRoom(room.id);
 
+					for (let i = 0; i < 10; i++) {
+						await new Promise((resolve) =>
+							setTimeout(resolve, 2000)
+						);
+
+						const data = await RoomService.checkSitePages(
+							room.siteExternalReferenceCode
+						);
+
+						if (data?.items.length) {
+							break;
+						}
+					}
+
 					window.location.href = createRedirectURL.replace(
 						/{siteId}/,
 						String(room.siteId)

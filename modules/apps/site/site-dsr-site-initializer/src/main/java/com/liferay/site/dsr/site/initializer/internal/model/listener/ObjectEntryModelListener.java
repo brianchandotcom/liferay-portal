@@ -9,6 +9,8 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -17,13 +19,18 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -41,6 +48,7 @@ import com.liferay.sites.kernel.util.Sites;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -158,6 +166,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 				false);
 
+			_setResourcePermissions(objectEntry);
+
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					_objectEntryLocalService.partialUpdateObjectEntry(
@@ -166,6 +176,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 						HashMapBuilder.<String, Serializable>put(
 							"friendlyURL",
 							StringUtil.removeFirst(group.getFriendlyURL(), "/")
+						).put(
+							"siteExternalReferenceCode",
+							group.getExternalReferenceCode()
 						).put(
 							"siteId", group.getGroupId()
 						).build(),
@@ -209,6 +222,51 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
+	private void _setResourcePermissions(ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		String[] actionIds = TransformUtil.transformToArray(
+			_resourceActionLocalService.getResourceActions(
+				objectDefinition.getClassName()),
+			ResourceAction::getActionId, String.class);
+
+		Map<String, String[]> permissionsMap = HashMapBuilder.put(
+			RoleConstants.OWNER, actionIds
+		).put(
+			RoleConstants.SITE_MEMBER,
+			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW}
+		).put(
+			RoleConstants.SITE_OWNER, actionIds
+		).put(
+			"DSR Contributor",
+			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW}
+		).build();
+
+		for (Role role :
+				_roleLocalService.getGroupRolesAndTeamRoles(
+					objectEntry.getCompanyId(), null,
+					Arrays.asList(RoleConstants.ADMINISTRATOR), null, null,
+					new int[] {
+						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
+					},
+					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			String[] roleActionIds = permissionsMap.get(role.getName());
+
+			if (roleActionIds == null) {
+				roleActionIds = new String[0];
+			}
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				objectEntry.getCompanyId(), objectEntry.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				role.getRoleId(), roleActionIds);
+		}
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -226,6 +284,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

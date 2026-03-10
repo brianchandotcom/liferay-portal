@@ -110,6 +110,7 @@ export interface IRoomObjectEntry {
 		name: string;
 	};
 	r_accountToDSRRooms_accountEntryId: number;
+	siteExternalReferenceCode: string;
 	siteId: number;
 	status: {
 		code: number;

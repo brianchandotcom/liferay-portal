@@ -328,6 +328,7 @@ definition {
 	@priority = 3
 	test AssertSearchUsingTxtaiWithTextEmbeddingElementHasNoError {
 		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
+		property custom.system.properties = "liferay.mode=test";
 		property txtai.enabled = "true";
 
 		JSONWebcontent.addWebContent(
@@ -404,6 +405,7 @@ definition {
 	@priority = 3
 	test AssertTxtaiWithTextEmbeddingElementAffectsBlueprintPreview {
 		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
+		property custom.system.properties = "liferay.mode=test";
 		property txtai.enabled = "true";
 
 		JSONWebcontent.addWebContent(

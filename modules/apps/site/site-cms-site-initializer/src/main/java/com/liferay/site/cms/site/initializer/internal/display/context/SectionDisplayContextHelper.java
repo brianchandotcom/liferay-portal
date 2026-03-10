@@ -15,6 +15,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinitionSetting;
@@ -65,6 +66,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Daniel Sanz
@@ -202,19 +204,42 @@ public class SectionDisplayContextHelper {
 				DepotConstants.TYPE_SPACE);
 		}
 
-		depotEntryGroupIds = _filter(
+		List<Long> objectEntryDepotEntryGroupIds = _filter(
 			depotEntryGroupIds, ActionKeys.ADD_ENTRY,
 			_getRootObjectEntryFolderExternalReferenceCodes(
 				rootObjectEntryFolderExternalReferenceCode),
 			themeDisplay);
 
-		if (ListUtil.isEmpty(depotEntryGroupIds)) {
+		List<Long> objectEntryFolderDepotEntryGroupIds = _filter(
+			depotEntryGroupIds, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+			_getRootObjectEntryFolderExternalReferenceCodes(
+				rootObjectEntryFolderExternalReferenceCode),
+			themeDisplay);
+
+		if (ListUtil.isEmpty(objectEntryDepotEntryGroupIds) &&
+			ListUtil.isEmpty(objectEntryFolderDepotEntryGroupIds)) {
+
 			return creationMenu;
 		}
 
 		for (DropdownItem dropdownItem : dropdownItems) {
-			JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray(
-				depotEntryGroupIds, dropdownItem, themeDisplay.getLocale());
+			JSONArray depotEntriesJSONArray = null;
+
+			HashMap<String, Object> dropdownItemData =
+				(HashMap<String, Object>)dropdownItem.get("data");
+
+			if (Objects.equals(
+					dropdownItemData.get("action"), "createFolder")) {
+
+				depotEntriesJSONArray = _getDepotEntriesJSONArray(
+					objectEntryFolderDepotEntryGroupIds, dropdownItem,
+					themeDisplay.getLocale());
+			}
+			else {
+				depotEntriesJSONArray = _getDepotEntriesJSONArray(
+					objectEntryDepotEntryGroupIds, dropdownItem,
+					themeDisplay.getLocale());
+			}
 
 			if (depotEntriesJSONArray.length() == 0) {
 				continue;

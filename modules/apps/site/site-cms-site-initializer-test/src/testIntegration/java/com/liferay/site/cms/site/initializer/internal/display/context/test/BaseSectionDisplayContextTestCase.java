@@ -14,6 +14,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -377,6 +378,18 @@ public abstract class BaseSectionDisplayContextTestCase
 		expectedCreationMenuItems = _getLocalizedKeysMap(
 			expectedCreationMenuItems);
 
+		Map<String, String> objectEntryExpectedCreationMenuItems =
+			new HashMap<>(expectedCreationMenuItems);
+
+		Map<String, String> objectEntryFolderExpectedCreationMenuItems =
+			new HashMap<>();
+
+		if (expectedCreationMenuItems.containsKey("Folder")) {
+			objectEntryExpectedCreationMenuItems.remove("Folder");
+			objectEntryFolderExpectedCreationMenuItems.put(
+				"Folder", StringPool.BLANK);
+		}
+
 		setUser(adminUser);
 
 		_assertCreationMenu(getCreationMenu(adminUser), Collections.emptyMap());
@@ -391,16 +404,15 @@ public abstract class BaseSectionDisplayContextTestCase
 		groupLocalService.addUserGroup(
 			user2.getUserId(), depotEntry1.getGroup());
 
-		User user3 = UserTestUtil.addUser();
-
-		groupLocalService.addUserGroup(
-			user3.getUserId(), depotEntry1.getGroup());
-
-		Role role = _getRoleWithPermissions(ActionKeys.ADD_ENTRY, depotEntry1);
-
-		_userGroupRoleLocalService.addUserGroupRoles(
-			user3.getUserId(), depotEntry1.getGroupId(),
-			new long[] {role.getRoleId()});
+		User user3 = _addUser(new String[] {ActionKeys.ADD_ENTRY}, depotEntry1);
+		User user4 = _addUser(
+			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER},
+			depotEntry1);
+		User user5 = _addUser(
+			new String[] {
+				ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER
+			},
+			depotEntry1);
 
 		_assertCreationMenu(
 			getCreationMenu(adminUser), expectedCreationMenuItems);
@@ -421,7 +433,17 @@ public abstract class BaseSectionDisplayContextTestCase
 
 		setUser(user3);
 
-		_assertCreationMenu(getCreationMenu(user3), expectedCreationMenuItems);
+		_assertCreationMenu(
+			getCreationMenu(user3), objectEntryExpectedCreationMenuItems);
+
+		setUser(user4);
+
+		_assertCreationMenu(
+			getCreationMenu(user4), objectEntryFolderExpectedCreationMenuItems);
+
+		setUser(user5);
+
+		_assertCreationMenu(getCreationMenu(user5), expectedCreationMenuItems);
 
 		// Create menu with custom object definitions
 
@@ -523,6 +545,18 @@ public abstract class BaseSectionDisplayContextTestCase
 
 			_assertCreationMenu(
 				getCreationMenu(objectEntryFolder, user3),
+				objectEntryExpectedCreationMenuItems);
+
+			setUser(user4);
+
+			_assertCreationMenu(
+				getCreationMenu(objectEntryFolder, user4),
+				objectEntryFolderExpectedCreationMenuItems);
+
+			setUser(user5);
+
+			_assertCreationMenu(
+				getCreationMenu(objectEntryFolder, user5),
 				expectedCreationMenuItems);
 		}
 
@@ -532,6 +566,8 @@ public abstract class BaseSectionDisplayContextTestCase
 		_userLocalService.deleteUser(user1);
 		_userLocalService.deleteUser(user2);
 		_userLocalService.deleteUser(user3);
+		_userLocalService.deleteUser(user4);
+		_userLocalService.deleteUser(user5);
 	}
 
 	@Test
@@ -764,6 +800,22 @@ public abstract class BaseSectionDisplayContextTestCase
 			rootObjectEntryFolder.getObjectEntryFolderId(),
 			RandomTestUtil.randomString(), null, StringUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
+	private User _addUser(String[] actionIds, DepotEntry depotEntry)
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		groupLocalService.addUserGroup(user.getUserId(), depotEntry.getGroup());
+
+		Role role = _getRoleWithPermissions(actionIds, depotEntry);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			user.getUserId(), depotEntry.getGroupId(),
+			new long[] {role.getRoleId()});
+
+		return user;
 	}
 
 	private void _assertCreationMenu(
@@ -1099,14 +1151,15 @@ public abstract class BaseSectionDisplayContextTestCase
 		return (String)map.get("redirect");
 	}
 
-	private Role _getRoleWithPermissions(String actionId, DepotEntry depotEntry)
+	private Role _getRoleWithPermissions(
+			String[] actionIds, DepotEntry depotEntry)
 		throws Exception {
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			HashMapBuilder.put(
-				role.getName(), new String[] {actionId}
+				role.getName(), actionIds
 			).build(),
 			ObjectEntryFolder.class.getName());
 

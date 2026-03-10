@@ -34,7 +34,8 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select resourcePermissionId, companyId, roleId from ",
 					"ResourcePermission where name = 'com.liferay.commerce.",
-					"inventory.model.CommerceInventoryWarehouse' and scope = 4"));
+					"inventory.model.CommerceInventoryWarehouse' and scope = ",
+					"4"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

@@ -6,8 +6,8 @@
 package com.liferay.dynamic.data.mapping.internal.webdav;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.webdav.BaseResourceImpl;
 import com.liferay.portal.kernel.webdav.WebDAVException;

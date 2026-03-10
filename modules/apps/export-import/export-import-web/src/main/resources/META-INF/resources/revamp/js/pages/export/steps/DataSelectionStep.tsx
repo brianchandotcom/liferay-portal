@@ -8,11 +8,15 @@ import React from 'react';
 
 import DateFilter from '../../../components/DateFilter';
 
-export default function DataSelectionStep() {
+export default function DataSelectionStep({
+	onApplyFilter,
+}: {
+	onApplyFilter?: (filterValues: any) => void;
+}) {
 	return (
 		<>
 			<ClayLayout.Sheet>
-				<DateFilter />
+				<DateFilter onApplyFilter={onApplyFilter} />
 			</ClayLayout.Sheet>
 
 			<ClayLayout.Sheet>

@@ -46,16 +46,18 @@ const MODIFIED_LAST_OPTIONS = [
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
-export default function DateFilter() {
+export default function DateFilter({
+	onApplyFilter,
+}: {
+	onApplyFilter?: (filterValues: any) => void;
+}) {
 	const [filterType, setFilterType] = useState('all');
 	const [fromDate, setFromDate] = useState('');
 	const [modifiedLast, setModifiedLast] = useState('12h');
 	const [toDate, setToDate] = useState('');
 
 	const handleShowResults = () => {
-
-		// eslint-disable-next-line no-console
-		console.log('Filtering by:', {
+		onApplyFilter?.({
 			filterType,
 			fromDate,
 			modifiedLast,

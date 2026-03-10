@@ -28,14 +28,14 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 						{
 							actionId: 'edit',
 							contentRenderer: 'actionLink',
-							fieldName: 'title',
+							fieldName: 'name',
 							label: Liferay.Language.get('title'),
 							localizeLabel: true,
 							sortable: true,
 						},
 						{
-							fieldName: 'description',
-							label: Liferay.Language.get('description'),
+							fieldName: 'creatorUserId',
+							label: Liferay.Language.get('author'),
 							localizeLabel: true,
 							truncate: true,
 						},

@@ -13,19 +13,19 @@ jobs:
 
                     function main {
                         local authorized_owner
-                        local is_authorized_user=false
+                        local authorized=false
 
                         for authorized_owner in ${AUTHORIZED_OWNERS}
                         do
                             if [[ "${authorized_owner}" == "${{ github.repository_owner }}" ]]
                             then
-                                is_authorized_user=true
+                                authorized=true
 
                                 break
                             fi
                         done
 
-                        if [[ "${is_authorized_user}" == "false" ]]
+                        if [[ "${authorized}" == "false" ]]
                         then
                             echo "${{ github.repository_owner }} is not authorized."
 

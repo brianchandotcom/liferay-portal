@@ -49,8 +49,6 @@ public class VulcanCompanyConfigurationUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeConfigurationCompanyIds() throws Exception {
-		String path = RandomTestUtil.randomString();
-
 		String factoryPid =
 			"com.liferay.portal.vulcan.internal.configuration." +
 				"VulcanCompanyConfiguration";
@@ -60,6 +58,7 @@ public class VulcanCompanyConfigurationUpgradeProcessTest {
 				factoryPid, StringPool.QUESTION);
 
 		long companyId = TestPropsValues.getCompanyId();
+		String path = RandomTestUtil.randomString();
 
 		configuration.update(
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -78,8 +77,6 @@ public class VulcanCompanyConfigurationUpgradeProcessTest {
 				"=", companyId, ")(path=", path, ")(service.factoryPid=",
 				factoryPid, "))"));
 
-		Assert.assertNotNull(configurations);
-
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
 
@@ -89,8 +86,6 @@ public class VulcanCompanyConfigurationUpgradeProcessTest {
 
 		Object value = dictionary.get(
 			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
-
-		Assert.assertNotNull(value);
 
 		Assert.assertTrue(value instanceof Long);
 

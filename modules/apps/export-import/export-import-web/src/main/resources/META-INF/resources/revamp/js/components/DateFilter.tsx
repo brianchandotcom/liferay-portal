@@ -4,12 +4,10 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayDatePicker from '@clayui/date-picker';
-import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {dateUtils} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import FieldDatePicker from './forms/FieldDatePicker';
 import FieldSelectWithOption from './forms/FieldSelectWithOption';
 
 const FILTER_OPTIONS = [
@@ -54,8 +52,6 @@ export default function DateFilter() {
 	const [modifiedLast, setModifiedLast] = useState('12h');
 	const [toDate, setToDate] = useState('');
 
-	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
-
 	const handleShowResults = () => {
 
 		// eslint-disable-next-line no-console
@@ -98,61 +94,37 @@ export default function DateFilter() {
 			{filterType === 'range' && (
 				<>
 					<ClayLayout.ContentCol>
-						<ClayForm.Group>
-							<label htmlFor="fromDate">
-								{Liferay.Language.get('from')}
-							</label>
-
-							<ClayDatePicker
-								dateFormat={DATE_FORMAT}
-								firstDayOfWeek={dateUtils.getFirstDayOfWeek(
-									locale
-								)}
-								id="fromDate"
-								months={dateUtils.getMonthsLong(locale)}
-								onChange={(value) => setFromDate(value)}
-								placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
-								time
-								timezone={Liferay.ThemeDisplay.getTimeZone()}
-								value={fromDate}
-								weekdaysShort={dateUtils.getWeekdaysShort(
-									locale
-								)}
-								years={{
-									end: new Date().getFullYear(),
-									start: new Date().getFullYear() - 10,
-								}}
-							/>
-						</ClayForm.Group>
+						<FieldDatePicker
+							dateFormat={DATE_FORMAT}
+							id="fromDate"
+							label={Liferay.Language.get('from')}
+							name="fromDate"
+							onChange={(value) => setFromDate(value)}
+							placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
+							time
+							value={fromDate}
+							years={{
+								end: new Date().getFullYear(),
+								start: new Date().getFullYear() - 10,
+							}}
+						/>
 					</ClayLayout.ContentCol>
 
 					<ClayLayout.ContentCol>
-						<ClayForm.Group>
-							<label htmlFor="toDate">
-								{Liferay.Language.get('to')}
-							</label>
-
-							<ClayDatePicker
-								dateFormat={DATE_FORMAT}
-								firstDayOfWeek={dateUtils.getFirstDayOfWeek(
-									locale
-								)}
-								id="toDate"
-								months={dateUtils.getMonthsLong(locale)}
-								onChange={(value) => setToDate(value)}
-								placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
-								time
-								timezone={Liferay.ThemeDisplay.getTimeZone()}
-								value={toDate}
-								weekdaysShort={dateUtils.getWeekdaysShort(
-									locale
-								)}
-								years={{
-									end: new Date().getFullYear(),
-									start: new Date().getFullYear() - 10,
-								}}
-							/>
-						</ClayForm.Group>
+						<FieldDatePicker
+							dateFormat={DATE_FORMAT}
+							id="toDate"
+							label={Liferay.Language.get('to')}
+							name="toDate"
+							onChange={(value) => setToDate(value)}
+							placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
+							time
+							value={toDate}
+							years={{
+								end: new Date().getFullYear(),
+								start: new Date().getFullYear() - 10,
+							}}
+						/>
 					</ClayLayout.ContentCol>
 				</>
 			)}

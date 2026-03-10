@@ -19,6 +19,7 @@ import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RequiredGroupException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Company;
@@ -142,6 +143,47 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		return putSiteSiteInitializer(
 			site.getExternalReferenceCode(), multipartBody);
+	}
+
+	@Override
+	public void putSiteActivate(String siteExternalReferenceCode)
+		throws Exception {
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		GroupPermissionUtil.check(
+			PermissionThreadLocal.getPermissionChecker(), group,
+			ActionKeys.UPDATE);
+
+		if (!group.isActive()) {
+			group.setActive(true);
+
+			_groupLocalService.updateGroup(group);
+		}
+	}
+
+	@Override
+	public void putSiteDeactivate(String siteExternalReferenceCode)
+		throws Exception {
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			siteExternalReferenceCode, contextCompany.getCompanyId());
+
+		GroupPermissionUtil.check(
+			PermissionThreadLocal.getPermissionChecker(), group,
+			ActionKeys.UPDATE);
+
+		if (group.isCompany() || group.isControlPanel() || group.isGuest()) {
+			throw new RequiredGroupException.MustNotDeactivateSystemGroup(
+				siteExternalReferenceCode);
+		}
+
+		if (group.isActive()) {
+			group.setActive(false);
+
+			_groupLocalService.updateGroup(group);
+		}
 	}
 
 	@Override
@@ -996,6 +1038,14 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					contextCompany, contextUser)) {
+
+			if ((group.isCompany() || group.isControlPanel() ||
+				 group.isGuest()) &&
+				(site.getActive() == false)) {
+
+				throw new RequiredGroupException.MustNotDeactivateSystemGroup(
+					site.getExternalReferenceCode());
+			}
 
 			Group updatedGroup = _groupLocalService.updateGroup(
 				group.getGroupId(),

@@ -130,16 +130,18 @@ function executeBulkCopyAction({
 	folder,
 	onClose,
 	selectedData,
+	targetName,
 }: {
 	apiURL: string | undefined;
 	dataSetId?: string;
 	folder: Folder;
 	onClose: () => void;
 	selectedData: any;
+	targetName?: string;
 }) {
 	triggerAssetBulkAction({
 		additionalData: {
-			targetName: folder.title,
+			targetName: targetName ?? folder.title,
 		},
 		apiURL,
 		dataSetId,
@@ -305,7 +307,7 @@ function FolderItemSelectorModalContent({
 		};
 	};
 
-	const handleOnItemsChange = (folder: Folder) => {
+	const handleOnItemsChange = (folder: Folder, targetName?: string) => {
 		if (isBulk) {
 			executeBulkCopyAction({
 				apiURL,
@@ -313,6 +315,7 @@ function FolderItemSelectorModalContent({
 				folder,
 				onClose: () => onOpenChange(false),
 				selectedData,
+				targetName,
 			});
 		}
 		else if (itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
@@ -503,13 +506,29 @@ function FolderItemSelectorModalContent({
 					observer={observer}
 					onItemsChange={(items: any[]) => {
 						if (items.length) {
-							handleOnItemsChange({
-								id:
-									selectedItemType === 'folder'
-										? items[0].embedded.id
-										: items[0].id,
-								title: items[0].title,
-							});
+							const item = items[0];
+							const isFolder = selectedItemType === 'folder';
+
+							let name = item.title;
+
+							if (isFolder) {
+								const isRootFolder =
+									!item.embedded.parentObjectEntryFolderId ||
+									item.embedded.parentObjectEntryFolderId ===
+										null;
+
+								if (isRootFolder) {
+									name = currentSpace?.name || item.title;
+								}
+							}
+
+							handleOnItemsChange(
+								{
+									id: isFolder ? item.embedded.id : item.id,
+									title: name,
+								},
+								name
+							);
 						}
 					}}
 					onOpenChange={onOpenChange}

@@ -27,6 +27,7 @@ export default function ({
 	configurationNamespace,
 	configurationURL,
 	consentRenewalPeriod = 12,
+	dissentRenewalPeriod = 12,
 	includeDeclineAllButton,
 	modifiedDate = 0,
 	namespace,
@@ -122,13 +123,18 @@ export default function ({
 							'use-necessary-cookies-only'
 						),
 						onClick() {
+							const renewalPeriod =
+								dissentRenewalPeriod === 0
+									? consentRenewalPeriod
+									: dissentRenewalPeriod;
+
 							declineAllCookies(
-								consentRenewalPeriod,
+								renewalPeriod,
 								optionalConsentCookieTypeNames,
 								requiredConsentCookieTypeNames
 							);
 
-							setUserConfigCookie(consentRenewalPeriod);
+							setUserConfigCookie(renewalPeriod);
 
 							setBannerVisibility(cookieBanner);
 
@@ -199,13 +205,18 @@ export default function ({
 			declineAllButton.addEventListener('click', () => {
 				cookieBanner.style.display = 'none';
 
+				const renewalPeriod =
+					dissentRenewalPeriod === 0
+						? consentRenewalPeriod
+						: dissentRenewalPeriod;
+
 				declineAllCookies(
-					consentRenewalPeriod,
+					renewalPeriod,
 					optionalConsentCookieTypeNames,
 					requiredConsentCookieTypeNames
 				);
 
-				setUserConfigCookie(consentRenewalPeriod);
+				setUserConfigCookie(renewalPeriod);
 			});
 		}
 	}

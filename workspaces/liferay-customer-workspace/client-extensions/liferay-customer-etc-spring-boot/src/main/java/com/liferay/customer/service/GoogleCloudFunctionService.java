@@ -44,6 +44,7 @@ public class GoogleCloudFunctionService {
 		throws Exception {
 
 		return _handleRequest(
+			_gcfCustomerServiceAccountKey, _FUNCTION_CUSTOMER_USAGE_API_PATH,
 			StringBundler.concat(
 				_gcfBaseUrl, _FUNCTION_CUSTOMER_USAGE_API_PATH,
 				"/api/v1/customer/usage/accounts/", accountKey),
@@ -55,8 +56,10 @@ public class GoogleCloudFunctionService {
 		throws Exception {
 
 		return _handleRequest(
+			_gcfComposableServiceAccountKey,
+			_FUNCTION_COMPOSABLE_USAGE_API_PATH,
 			StringBundler.concat(
-				_gcfBaseUrl, _FUNCTION_CUSTOMER_USAGE_API_PATH,
+				_gcfBaseUrl, _FUNCTION_COMPOSABLE_USAGE_API_PATH,
 				"/api/v1/accounts/", accountKey, "/usage/month/", month),
 			accountKey);
 	}
@@ -66,18 +69,20 @@ public class GoogleCloudFunctionService {
 	public void scheduledCacheEviction() throws Exception {
 	}
 
-	private JSONObject _handleRequest(String url, String accountKey)
+	private JSONObject _handleRequest(
+			String serviceAccountKey, String targetAudience, String url,
+			String accountKey)
 		throws Exception {
 
 		try (InputStream inputStream = new ByteArrayInputStream(
-				_gcfServiceAccountKey.getBytes())) {
+				serviceAccountKey.getBytes())) {
 
 			IdTokenCredentials idTokenCredential =
 				IdTokenCredentials.newBuilder(
 				).setIdTokenProvider(
 					(IdTokenProvider)GoogleCredentials.fromStream(inputStream)
 				).setTargetAudience(
-					_gcfBaseUrl + _FUNCTION_CUSTOMER_USAGE_API_PATH
+					_gcfBaseUrl + targetAudience
 				).build();
 
 			HttpRequest httpRequest = new NetHttpTransport(
@@ -122,13 +127,19 @@ public class GoogleCloudFunctionService {
 		}
 	}
 
+	private static final String _FUNCTION_COMPOSABLE_USAGE_API_PATH =
+		"/composable_usage_api";
+
 	private static final String _FUNCTION_CUSTOMER_USAGE_API_PATH =
 		"/customer_usage_api";
 
 	@Value("${liferay.customer.gcf.base.url}")
 	private String _gcfBaseUrl;
 
-	@Value("${liferay.customer.gcf.service.account.key}")
-	private String _gcfServiceAccountKey;
+	@Value("${liferay.customer.gcf.composable.service.account.key}")
+	private String _gcfComposableServiceAccountKey;
+
+	@Value("${liferay.customer.gcf.customer.service.account.key}")
+	private String _gcfCustomerServiceAccountKey;
 
 }

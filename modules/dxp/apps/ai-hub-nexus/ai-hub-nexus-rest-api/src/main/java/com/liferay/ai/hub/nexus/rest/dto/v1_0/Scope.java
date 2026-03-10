@@ -137,7 +137,7 @@ public class Scope implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.Scope",
+		defaultValue = "com.liferay.ai.hub.nexus.rest.dto.v1_0.Scope",
 		name = "x-class-name"
 	)
 	public String xClassName;

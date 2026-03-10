@@ -661,8 +661,8 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 
 		HttpResponse httpResponse =
 			importTaskResource.deleteImportTaskHttpResponse(
-				"com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition", null, null,
-				null, null,
+				"com.liferay.ai.hub.nexus.rest.dto.v1_0.AgentDefinition", null,
+				null, null, null,
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"externalReferenceCode", () -> externalReferenceCode)));
@@ -912,7 +912,8 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.nexus.rest.dto.v1_0.AgentDefinition.class)) {
+					com.liferay.ai.hub.nexus.rest.dto.v1_0.AgentDefinition.
+						class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {

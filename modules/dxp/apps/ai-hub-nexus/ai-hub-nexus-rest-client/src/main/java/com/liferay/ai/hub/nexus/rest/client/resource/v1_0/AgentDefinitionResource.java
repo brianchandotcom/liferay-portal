@@ -288,7 +288,7 @@ public interface AgentDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}");
+						"/o/ai-hub-nexus/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -416,7 +416,7 @@ public interface AgentDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/agent-definitions");
+						"/o/ai-hub-nexus/v1.0/agent-definitions");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -529,7 +529,7 @@ public interface AgentDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}/update-active");
+						"/o/ai-hub-nexus/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}/update-active");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -639,7 +639,7 @@ public interface AgentDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}/copy");
+						"/o/ai-hub-nexus/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}/copy");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -767,7 +767,7 @@ public interface AgentDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/agent-definitions/export-batch");
+						"/o/ai-hub-nexus/v1.0/agent-definitions/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

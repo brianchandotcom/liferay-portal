@@ -1,0 +1,199 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.site.dsr.site.initializer.internal.object.deployer.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntryModel;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.dsr.site.initializer.test.util.DSRLayoutTestUtil;
+import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Stefano Motta
+ */
+@FeatureFlag("LPD-66359")
+@RunWith(Arquillian.class)
+public class ObjectDefinitionDeployerImplTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		DSRTestUtil.getOrAddGroup(ObjectDefinitionDeployerImplTest.class);
+	}
+
+	@Test
+	public void testDeploy() throws Exception {
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.
+				fetchLayoutSetPrototypeByUuidAndCompanyId(
+					"L_DSR_LAYOUT_SET_PROTOTYPE",
+					TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(layoutSetPrototype);
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+				layoutSetPrototype.getGroupId(), "dsr");
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					FragmentEntryLocalServiceUtil.getFragmentEntries(
+						layoutSetPrototype.getGroupId(),
+						fragmentCollection.getFragmentCollectionId(), 0),
+					FragmentEntryModel::getName, String.class),
+				new String[] {
+					"Gallery Block", "Header Main", "Header User",
+					"Our Team Block", "PDF Preview Block",
+					"Question and Answer Block", "Text Block", "Timeline Block",
+					"Video Block", "Welcome Block"
+				}));
+
+		DSRLayoutTestUtil.assertLayouts(
+			layoutSetPrototype.getGroupId(),
+			new String[] {"Documents", "Login", "Onboarding"}, true);
+
+		Assert.assertNotNull(
+			_roleLocalService.fetchRoleByExternalReferenceCode(
+				"L_DSR_CONTRIBUTOR", TestPropsValues.getCompanyId()));
+
+		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
+			"L_DSR_SELLER", TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), PortletKeys.PORTAL,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				role.getRoleId(), ActionKeys.VIEW_CONTROL_PANEL));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DSR_ROOM", TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				role.getCompanyId(), objectDefinition.getResourceName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY));
+
+		String[] actionIds = TransformUtil.transformToArray(
+			_resourceActionLocalService.getResourceActions(
+				"com.liferay.document.library"),
+			ResourceAction::getActionId, String.class);
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.OWNER);
+
+		_assertHasResourcePermissions(
+			actionIds, layoutSetPrototype.getGroupId(),
+			Arrays.asList(
+				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
+				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW),
+			role.getRoleId());
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		_assertHasResourcePermissions(
+			actionIds, layoutSetPrototype.getGroupId(),
+			Arrays.asList(ActionKeys.SUBSCRIBE, ActionKeys.VIEW),
+			role.getRoleId());
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), "DSR Contributor");
+
+		_assertHasResourcePermissions(
+			actionIds, layoutSetPrototype.getGroupId(),
+			Arrays.asList(
+				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
+				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW),
+			role.getRoleId());
+	}
+
+	private void _assertHasResourcePermissions(
+			String[] actionIds, long groupId, List<String> roleActionIds,
+			long roleId)
+		throws Exception {
+
+		for (String actionId : actionIds) {
+			if (roleActionIds.contains(actionId)) {
+				Assert.assertTrue(
+					_resourcePermissionLocalService.hasResourcePermission(
+						TestPropsValues.getCompanyId(),
+						"com.liferay.document.library",
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(groupId), roleId, actionId));
+			}
+			else {
+				Assert.assertFalse(
+					_resourcePermissionLocalService.hasResourcePermission(
+						TestPropsValues.getCompanyId(),
+						"com.liferay.document.library",
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(groupId), roleId, actionId));
+			}
+		}
+	}
+
+	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+}

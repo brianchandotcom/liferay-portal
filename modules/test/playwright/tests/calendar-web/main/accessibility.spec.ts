@@ -190,7 +190,10 @@ test('assert that the screen reader reads the event date', async ({
 });
 
 test.describe('Accessibility check', () => {
-	test('Check accessibility of calendar list', async ({calendarWidgetPage, page}) => {
+	test('Check accessibility of calendar list', async ({
+		calendarWidgetPage,
+		page,
+	}) => {
 		await calendarWidgetPage.unhideSidebar();
 
 		await checkAccessibility({

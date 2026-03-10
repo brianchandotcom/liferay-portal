@@ -193,13 +193,15 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 					_resourceActionLocalService,
 					_resourcePermissionLocalService));
 
+		registry.register("2.11.2", "2.11.3", new DummyUpgradeStep());
+
 		registry.register(
-			"2.11.2", "2.11.3",
+			"2.11.3", "2.11.4",
 			UpgradeProcessFactory.dropColumns(
 				"CIWarehouseGroupRel", "mvccVersion"));
 
 		registry.register(
-			"2.11.3", "2.11.4",
+			"2.11.4", "2.11.5",
 			new com.liferay.commerce.inventory.internal.upgrade.v2_11_4.
 				CommercePermissionUpgradeProcess(
 					_resourceActionLocalService,

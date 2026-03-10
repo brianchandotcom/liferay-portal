@@ -1,5 +1,7 @@
 import com.liferay.portal.tools.jakarta.ee.transformer.JarTransformer
 
+import java.util.function.Function
+
 import org.eclipse.transformer.cli.JakartaTransformerCLI
 
 buildscript {
@@ -52,9 +54,40 @@ jar {
 
 				optionDefaults.put("versions", String.valueOf(file.toURI()))
 
+				boolean isFacesModule = project.hasProperty("isFacesModule") && project.isFacesModule
+
+				if (isFacesModule) {
+					System.out.println("Configure extra transform properties for Faces modules...")
+
+					file = new File(rootDir, "liferay-jakarta-direct.properties")
+
+					optionDefaults.put("direct", String.valueOf(file.toURI()))
+
+					file = new File(rootDir, "liferay-jakarta-text-master.properties")
+
+					optionDefaults.put("text", String.valueOf(file.toURI()))
+
+					Function<String, URL> ruleLoader = jakartaTransformerCLI.getRuleLoader();
+
+					jakartaTransformerCLI.setOptionDefaults(
+						fileName -> {
+							if (fileName.startsWith("liferay")) {
+								File resolvedFile = new File(rootDir, fileName);
+
+								return resolvedFile.toURI().toURL()
+							}
+
+							return ruleLoader.apply(fileName)
+						},
+						optionDefaults
+					)
+				}
+
 				JakartaTransformerCLI.runWith(jakartaTransformerCLI)
 
-				JarTransformer.transform(jar.archivePath)
+				if (!isFacesModule) {
+					JarTransformer.transform(jar.archivePath)
+				}
 			}
 
 		}

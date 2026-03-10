@@ -1,7 +1,10 @@
+env:
+    AUTHORIZED_OWNERS: brianchandotcom
+
 jobs:
     close-merge-conflicts:
+        if: contains(env.AUTHORIZED_OWNERS, github.repository_owner)
         env:
-            AUTHORIZED_OWNERS: brianchandotcom
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         permissions:
             issues: write

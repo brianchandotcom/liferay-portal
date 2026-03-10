@@ -11,6 +11,7 @@ import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -283,16 +284,18 @@ public class DepotEntryLocalServiceTest {
 
 		Assert.assertArrayEquals(
 			new String[] {
-				ActionKeys.ADD_ENTRY, ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+				ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.SUBSCRIBE, ActionKeys.VIEW
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR)));
 		Assert.assertArrayEquals(
 			new String[] {
-				ActionKeys.ADD_ENTRY, ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+				ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.SUBSCRIBE, ActionKeys.VIEW
 			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(

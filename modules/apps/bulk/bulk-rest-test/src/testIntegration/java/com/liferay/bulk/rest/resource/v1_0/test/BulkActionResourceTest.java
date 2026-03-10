@@ -37,6 +37,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -278,6 +279,19 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		Assert.assertEquals(expectedClassPK, (long)bulkActionItem.getClassPK());
 		Assert.assertEquals(expectedName, bulkActionItem.getName());
+	}
+
+	private void _assertHasActionIds(
+		List<String> actionIds, ResourcePermission resourcePermission) {
+
+		for (String actionId : _ACTION_IDS) {
+			if (actionIds.contains(actionId)) {
+				Assert.assertTrue(resourcePermission.hasActionId(actionId));
+			}
+			else {
+				Assert.assertFalse(resourcePermission.hasActionId(actionId));
+			}
+		}
 	}
 
 	private JSONObject _getDefaultPermissionsJSONObject(
@@ -1425,7 +1439,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntry1.getObjectEntryId()),
 				role.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(List.of(ActionKeys.VIEW), resourcePermission);
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -1434,7 +1448,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntry2.getObjectEntryId()),
 				role.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(List.of(ActionKeys.VIEW), resourcePermission);
 	}
 
 	private void _testPostBulkActionWithTypePermissionSingleRole()
@@ -1512,6 +1526,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				JSONUtil.put(
 					role1.getName(),
 					JSONUtil.putAll(
+						ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
 						ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW))
 			).put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
@@ -1521,8 +1536,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				JSONUtil.put(
 					role1.getName(),
 					JSONUtil.putAll(
-						ActionKeys.ADD_ENTRY, ActionKeys.PERMISSIONS,
-						ActionKeys.SUBSCRIBE))
+						ActionKeys.ADD_ENTRY,
+						ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+						ActionKeys.PERMISSIONS, ActionKeys.SUBSCRIBE))
 			).toString());
 
 		permissionBulkAction.setRoleKey(role1.getName());
@@ -1538,9 +1554,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntry1.getObjectEntryId()),
 				role1.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(
+			List.of(ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW),
+			resourcePermission);
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -1549,9 +1565,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntry1.getObjectEntryId()),
 				role2.getRoleId());
 
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(List.of(ActionKeys.VIEW), resourcePermission);
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -1561,11 +1575,11 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntryFolder2.getObjectEntryFolderId()),
 				role1.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.ADD_ENTRY));
-		Assert.assertTrue(
-			resourcePermission.hasActionId(ActionKeys.PERMISSIONS));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.SUBSCRIBE));
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(
+			List.of(
+				ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+				ActionKeys.PERMISSIONS, ActionKeys.SUBSCRIBE),
+			resourcePermission);
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -1575,13 +1589,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntryFolder2.getObjectEntryFolderId()),
 				role2.getRoleId());
 
-		Assert.assertFalse(
-			resourcePermission.hasActionId(ActionKeys.ADD_ENTRY));
-		Assert.assertFalse(
-			resourcePermission.hasActionId(ActionKeys.PERMISSIONS));
-		Assert.assertFalse(
-			resourcePermission.hasActionId(ActionKeys.SUBSCRIBE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(List.of(ActionKeys.VIEW), resourcePermission);
 	}
 
 	private void _testPostBulkActionWithTypeResetPermission() throws Exception {
@@ -1624,7 +1632,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 			JSONUtil.put(
 				RoleConstants.CMS_ADMINISTRATOR,
-				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW))
+				JSONUtil.putAll(
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, ActionKeys.UPDATE,
+					ActionKeys.VIEW))
 		).put(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
 			JSONUtil.put(
@@ -1634,7 +1644,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			"OBJECT_ENTRY_FOLDERS",
 			JSONUtil.put(
 				RoleConstants.CMS_ADMINISTRATOR,
-				JSONUtil.putAll(ActionKeys.ADD_ENTRY, ActionKeys.SUBSCRIBE))
+				JSONUtil.putAll(
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+					ActionKeys.ADD_ENTRY, ActionKeys.SUBSCRIBE))
 		);
 
 		ObjectEntry objectEntry1 = CMSDefaultPermissionUtil.fetchObjectEntry(
@@ -1719,9 +1731,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntry2.getObjectEntryId()),
 				_cmsAdministratorRole.getRoleId());
 
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(
+			List.of(ActionKeys.UPDATE, ActionKeys.VIEW), resourcePermission);
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -1731,9 +1742,11 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntryFolder3.getObjectEntryFolderId()),
 				_cmsAdministratorRole.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.ADD_ENTRY));
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.SUBSCRIBE));
+		_assertHasActionIds(
+			List.of(
+				ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+				ActionKeys.SUBSCRIBE),
+			resourcePermission);
 
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.
@@ -1831,10 +1844,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntry3.getObjectEntryId()),
 				_cmsAdministratorRole.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(
-			resourcePermission.hasActionId(ActionKeys.PERMISSIONS));
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+		_assertHasActionIds(
+			List.of(ActionKeys.DELETE, ActionKeys.PERMISSIONS),
+			resourcePermission);
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -1844,9 +1856,11 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				String.valueOf(objectEntryFolder4.getObjectEntryFolderId()),
 				_cmsAdministratorRole.getRoleId());
 
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.ADD_ENTRY));
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.SUBSCRIBE));
+		_assertHasActionIds(
+			List.of(
+				ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+				ActionKeys.SUBSCRIBE),
+			resourcePermission);
 	}
 
 	private void _testPostBulkActionWithTypeTaxonomyCategory()
@@ -1996,6 +2010,12 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			}
 		}
 	}
+
+	private static final String[] _ACTION_IDS = {
+		ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+		ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.SUBSCRIBE,
+		ActionKeys.UPDATE, ActionKeys.VIEW
+	};
 
 	private static final String _LANGUAGE_ID = "en_US";
 

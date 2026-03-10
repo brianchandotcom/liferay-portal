@@ -14,6 +14,12 @@ import SettingsStep from './steps/SettingsStep';
 import SetupStep from './steps/SetupStep';
 
 export function NewExport({backURL}: {backURL: string}) {
+	const handleApplyFilter = (filterValues: any) => {
+
+		// eslint-disable-next-line no-console
+		console.log('Filtering by:', filterValues);
+	};
+
 	return (
 		<Wizard backURL={backURL}>
 			<WizardStep
@@ -46,7 +52,7 @@ export function NewExport({backURL}: {backURL: string}) {
 				)}
 				title={Liferay.Language.get('data-selection')}
 			>
-				<DataSelectionStep />
+				<DataSelectionStep onApplyFilter={handleApplyFilter} />
 			</WizardStep>
 
 			<WizardStep

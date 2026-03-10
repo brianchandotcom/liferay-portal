@@ -1266,7 +1266,11 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 			displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-			await pageEditorPage.addFragment('Basic Components', 'Heading');
+			await pageEditorPage.addFragment(
+				'Basic Components',
+				'Heading',
+				page.getByText('Drag and drop fragments or widgets here')
+			);
 
 			await page.getByText('Heading Example', {exact: true}).click();
 

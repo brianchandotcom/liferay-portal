@@ -1,12 +1,12 @@
 output "network_id" {
-	value=module.vpc.network_id
+	value=google_compute_network.vpc.id
 }
 output "network_name" {
-	value=module.vpc.network_name
+	value=google_compute_network.vpc.name
 }
 output "subnet_id" {
-	value=module.vpc.subnets_ids[0]
+	value=google_compute_subnetwork.subnet.id
 }
 output "subnet_name" {
-	value=module.vpc.subnets_names[0]
+	value=google_compute_subnetwork.subnet.name
 }

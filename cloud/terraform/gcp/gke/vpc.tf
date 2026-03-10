@@ -1,51 +1,29 @@
-module "vpc" {
-	network_name="${var.deployment_name}-vpc"
-	project_id=var.project_id
-	routes=[
-		{
-			destination_range="0.0.0.0/0"
-			name="${var.deployment_name}-egress-internet"
-			next_hop_internet=true
-			tags=["egress-inet",],
-		},
-	]
-	routing_mode="GLOBAL"
-	secondary_ranges={
-		"${var.deployment_name}-subnet"=[
-			{
-				ip_cidr_range=var.pod_cidr
-				range_name="${var.deployment_name}-pods",
-			},
-			{
-				ip_cidr_range=var.service_cidr
-				range_name="${var.deployment_name}-services",
-			},
-		],
-	}
-	source="git::https://github.com/terraform-google-modules/terraform-google-network.git?ref=6d5eaa89ce07578e9d87c6fb3e2b77ba7a925550"
-	subnets=[
-		{
-			subnet_flow_logs=true
-			subnet_flow_logs_interval="INTERVAL_10_MIN"
-			subnet_flow_logs_metadata="INCLUDE_ALL_METADATA"
-			subnet_flow_logs_sampling=0.5
-			subnet_ip=var.vpc_cidr
-			subnet_name="${var.deployment_name}-subnet"
-			subnet_region=var.region,
-		},
-	]
-}
 resource "google_compute_global_address" "private_ip_alloc" {
 	address_type="INTERNAL"
 	name="${var.deployment_name}-psa-range"
-	network=module.vpc.network_id
+	network=google_compute_network.vpc.id
 	prefix_length=16
 	project=var.project_id
 	purpose="VPC_PEERING"
 }
+resource "google_compute_network" "vpc" {
+	auto_create_subnetworks=false
+	name="${var.deployment_name}-vpc"
+	project=var.project_id
+	routing_mode="GLOBAL"
+}
+resource "google_compute_route" "egress_internet" {
+	dest_range="0.0.0.0/0"
+	name="${var.deployment_name}-egress-internet"
+	network=google_compute_network.vpc.name
+	next_hop_gateway="default-internet-gateway"
+	priority=1000
+	project=var.project_id
+	tags=["egress-inet",]
+}
 resource "google_compute_router" "router" {
 	name="${var.deployment_name}-router"
-	network=module.vpc.network_name
+	network=google_compute_network.vpc.name
 	project=var.project_id
 	region=var.region
 }
@@ -61,9 +39,29 @@ resource "google_compute_router_nat" "nat" {
 	router=google_compute_router.router.name
 	source_subnetwork_ip_ranges_to_nat="ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
+resource "google_compute_subnetwork" "subnet" {
+	ip_cidr_range=var.vpc_cidr
+	log_config {
+		aggregation_interval="INTERVAL_10_MIN"
+		flow_sampling=0.5
+		metadata="INCLUDE_ALL_METADATA"
+	}
+	name="${var.deployment_name}-subnet"
+	network=google_compute_network.vpc.id
+	private_ip_google_access=true
+	project=var.project_id
+	region=var.region
+	secondary_ip_range {
+		ip_cidr_range=var.pod_cidr
+		range_name="${var.deployment_name}-pods"
+	}
+	secondary_ip_range {
+		ip_cidr_range=var.service_cidr
+		range_name="${var.deployment_name}-services"
+	}
+}
 resource "google_service_networking_connection" "private_vpc_connection" {
-	depends_on=[module.vpc]
-	network=module.vpc.network_id
+	network=google_compute_network.vpc.id
 	reserved_peering_ranges=[google_compute_global_address.private_ip_alloc.name]
 	service="servicenetworking.googleapis.com"
 }

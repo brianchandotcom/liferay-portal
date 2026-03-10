@@ -5,7 +5,7 @@
 
 package com.liferay.source.formatter.processor;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.elements.PoshiElement;

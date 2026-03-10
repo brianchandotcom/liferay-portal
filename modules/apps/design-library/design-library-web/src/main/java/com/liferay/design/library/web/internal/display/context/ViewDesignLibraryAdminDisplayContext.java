@@ -25,8 +25,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 
 	public String getAPIURL() {
 		return "/o/headless-asset-library/v1.0/asset-libraries?filter=type " +
-			"eq 'DesignLibrary'&nestedFields=numberOfConnectedSites" +
-				",numberOfUserAccounts,numberOfUserGroups";
+			"eq 'DesignLibrary'";
 	}
 
 	public Map<String, Object> getEmptyState() {

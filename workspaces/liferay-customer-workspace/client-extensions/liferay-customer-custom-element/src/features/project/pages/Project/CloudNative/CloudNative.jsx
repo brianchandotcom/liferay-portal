@@ -170,7 +170,7 @@ const CloudNative = () => {
 									featureFlags={featureFlags}
 									handleAlertStatus={handleAlertStatus}
 									label="non-production"
-									nodes={i18n.translate('unlimited')}
+									nodes={1}
 									oAuthToken={oAuthToken}
 									projectName={project.name}
 									provisioningServerAPI={

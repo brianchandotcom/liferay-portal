@@ -119,47 +119,51 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-oidc-specific-configurations" /></h3>
 
-				<%
-				String matcherField = (oAuthClientEntry != null) ? oAuthClientEntry.getMatcherField() : "email";
-				%>
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-49855") %>'>
 
-				<aui:select helpMessage="matcher-field-help" label="matcher-field" name="matcherField" required="<%= true %>" type="text">
-					<aui:option label="email" selected='<%= Objects.equals(matcherField, "email") %>' value="email" />
-					<aui:option label="screen-name" selected='<%= Objects.equals(matcherField, "screenName") %>' value="screenName" />
-				</aui:select>
+					<%
+					String matcherField = (oAuthClientEntry != null) ? oAuthClientEntry.getMatcherField() : "email";
+					%>
+
+					<aui:select helpMessage="matcher-field-help" label="matcher-field" name="matcherField" required="<%= true %>" type="text">
+						<aui:option label="email" selected='<%= Objects.equals(matcherField, "email") %>' value="email" />
+						<aui:option label="screen-name" selected='<%= Objects.equals(matcherField, "screenName") %>' value="screenName" />
+					</aui:select>
+				</c:if>
 
 				<aui:input cssClass="info-mapper-textarea" helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="OIDCUserInfoMapperJSON" type="textarea" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" />
 
-				<div class="lfr-form-rows" id="<portlet:namespace />customClaimsContentBox">
-					<label class="c-mb-1 c-mt-2 font-weight-semi-bold text-4">
-						<liferay-ui:message key="custom-claims" />
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-49855") %>'>
+					<div class="lfr-form-rows" id="<portlet:namespace />customClaimsContentBox">
+						<label class="c-mb-1 c-mt-2 font-weight-semi-bold text-4">
+							<liferay-ui:message key="custom-claims" />
 
-						<span class="c-ml-1 lfr-portal-tooltip taglib-icon-help" tabindex="0" title="<%= LanguageUtil.get(request, "custom-claims-help") %>">
-							<clay:icon
-								symbol="question-circle-full"
-							/>
-						</span>
-					</label>
+							<span class="c-ml-1 lfr-portal-tooltip taglib-icon-help" tabindex="0" title="<%= LanguageUtil.get(request, "custom-claims-help") %>">
+								<clay:icon
+									symbol="question-circle-full"
+								/>
+							</span>
+						</label>
 
-					<%
-					JSONObject customClaimsJSONObject = null;
+						<%
+						JSONObject customClaimsJSONObject = null;
 
-					if (oAuthClientEntry != null) {
-						customClaimsJSONObject = JSONFactoryUtil.createJSONObject(oAuthClientEntry.getCustomClaimsJSON());
-					}
+						if (oAuthClientEntry != null) {
+							customClaimsJSONObject = JSONFactoryUtil.createJSONObject(oAuthClientEntry.getCustomClaimsJSON());
+						}
 
-					if ((customClaimsJSONObject == null) || (customClaimsJSONObject.length() < 1)) {
-						customClaimsJSONObject = JSONUtil.put("", "");
-					}
+						if ((customClaimsJSONObject == null) || (customClaimsJSONObject.length() < 1)) {
+							customClaimsJSONObject = JSONUtil.put("", "");
+						}
 
-					int index = 0;
+						int index = 0;
 
-					for (String key : customClaimsJSONObject.keySet()) {
-						String customClaimsKeyId = "customClaimsKey-" + index;
-						String customClaimsValueId = "customClaimsValue-" + index;
+						for (String key : customClaimsJSONObject.keySet()) {
+							String customClaimsKeyId = "customClaimsKey-" + index;
+							String customClaimsValueId = "customClaimsValue-" + index;
 
-						index++;
-					%>
+							index++;
+						%>
 
 						<div class="lfr-form-row">
 							<div class="form-group">
@@ -167,32 +171,39 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 									<div class="form-group-item">
 										<aui:select fieldParam="<%= customClaimsKeyId %>" id="<%= customClaimsKeyId %>" inlineField="<%= true %>" label="user-custom-fields" name="<%= customClaimsKeyId %>" showEmptyOption="<%= true %>">
 
-											<%
-											for (ExpandoColumn expandoColumn : (List<ExpandoColumn>)request.getAttribute("expandoColumns")) {
-											%>
+												<%
+												for (ExpandoColumn expandoColumn : (List<ExpandoColumn>)request.getAttribute("expandoColumns")) {
+												%>
 
-												<aui:option label="<%= expandoColumn.getName() %>" selected="<%= Objects.equals(expandoColumn.getName(), key) %>" value="<%= expandoColumn.getName() %>"></aui:option>
+													<aui:option label="<%= expandoColumn.getName() %>" selected="<%= Objects.equals(expandoColumn.getName(), key) %>" value="<%= expandoColumn.getName() %>"></aui:option>
 
-											<%
-											}
-											%>
+												<%
+												}
+												%>
 
-										</aui:select>
-									</div>
-
+											</aui:select>
+										</div>
 									<div class="form-group-item">
 										<aui:input fieldParam="<%= customClaimsValueId %>" id="<%= customClaimsValueId %>" label="custom-claim" name="<%= customClaimsValueId %>" type="text" value="<%= customClaimsJSONObject.get(key) %>" />
 									</div>
 								</div>
 							</div>
-						</div>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-					<aui:input name="customClaimsIndexes" type="hidden" />
-				</div>
+						<aui:input name="customClaimsIndexes" type="hidden" />
+					</div>
+
+					<aui:script use="liferay-auto-fields">
+						new Liferay.AutoFields({
+							contentBox: '#<portlet:namespace />customClaimsContentBox',
+							fieldIndexes: '<portlet:namespace />customClaimsIndexes',
+							namespace: '<portlet:namespace />',
+						}).render();
+					</aui:script>
+				</c:if>
 			</aui:fieldset>
 
 			<aui:button-row>
@@ -202,14 +213,6 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 		</div>
 	</clay:container-fluid>
 </aui:form>
-
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />customClaimsContentBox',
-		fieldIndexes: '<portlet:namespace />customClaimsIndexes',
-		namespace: '<portlet:namespace />',
-	}).render();
-</aui:script>
 
 <aui:script>
 	<portlet:namespace />init();
@@ -278,7 +281,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 		var matcherFieldValue = document.getElementById(
 			'<portlet:namespace />matcherField'
-		).value;
+		)?.value;
 
 		if (
 			matcherFieldValue == 'screenName' &&

@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.Message;
-import com.liferay.ai.hub.rest.client.http.HttpInvoker;
-import com.liferay.ai.hub.rest.client.pagination.Page;
-import com.liferay.ai.hub.rest.client.resource.v1_0.MessageResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.MessageSerDes;
+import com.liferay.ai.hub.nexus.rest.client.dto.v1_0.Message;
+import com.liferay.ai.hub.nexus.rest.client.http.HttpInvoker;
+import com.liferay.ai.hub.nexus.rest.client.pagination.Page;
+import com.liferay.ai.hub.nexus.rest.client.resource.v1_0.MessageResource;
+import com.liferay.ai.hub.nexus.rest.client.serdes.v1_0.MessageSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;

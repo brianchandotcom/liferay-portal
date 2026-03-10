@@ -301,6 +301,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			parentCategoryId);
 	}
 
+	@Override
 	public AssetCategory getOrAddEmptyCategory(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -320,8 +321,9 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			externalReferenceCode, getUserId(), groupId);
 	}
 
+	@Override
 	public AssetCategory getOrAddEmptyCategoryWithAncestors(
-			String externalReferenceCode, long userId, long groupId,
+			String externalReferenceCode, long groupId,
 			String parentCategoryExternalReferenceCode,
 			String vocabularyExternalReferenceCode)
 		throws PortalException {
@@ -350,7 +352,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		}
 
 		return assetCategoryLocalService.getOrAddEmptyCategoryWithAncestors(
-			externalReferenceCode, userId, groupId,
+			externalReferenceCode, getUserId(), groupId,
 			parentCategoryExternalReferenceCode,
 			vocabularyExternalReferenceCode);
 	}

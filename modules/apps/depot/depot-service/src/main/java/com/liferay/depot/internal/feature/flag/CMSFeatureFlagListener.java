@@ -6,6 +6,8 @@
 package com.liferay.depot.internal.feature.flag;
 
 import com.liferay.depot.internal.util.DepotRoleUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;
@@ -34,23 +36,27 @@ public class CMSFeatureFlagListener implements FeatureFlagListener {
 			return;
 		}
 
-		for (String name : DepotRoleUtil.DEPOT_ROLE_NAMES) {
-			Role role = _roleLocalService.fetchRole(companyId, name);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
-			if (role == null) {
-				continue;
+			for (String name : DepotRoleUtil.DEPOT_ROLE_NAMES) {
+				Role role = _roleLocalService.fetchRole(companyId, name);
+
+				if (role == null) {
+					continue;
+				}
+
+				Map<Locale, String> titleMap = DepotRoleUtil.getTitleMap(
+					companyId, _language, name);
+
+				if (Objects.equals(titleMap, role.getTitleMap())) {
+					continue;
+				}
+
+				role.setTitleMap(titleMap);
+
+				_roleLocalService.updateRole(role);
 			}
-
-			Map<Locale, String> titleMap = DepotRoleUtil.getTitleMap(
-				companyId, _language, name);
-
-			if (Objects.equals(titleMap, role.getTitleMap())) {
-				continue;
-			}
-
-			role.setTitleMap(titleMap);
-
-			_roleLocalService.updateRole(role);
 		}
 	}
 

@@ -10,13 +10,13 @@
  */
 
 module.exports = {
-	hash: '61e3890ddde27095689e4ca414ab5776d0aea19641f5e07a2dd37a6660e3e0b4',
+	hash: 'e80ca002c3bb88d508a5e4e333654c99f8479965659f019b0511cb3c53e5fc26',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
 		'@liferay/address-web': [],
 		'@liferay/ai-creator-openai-web': [],
-		'@liferay/ai-hub-web': [],
+		'@liferay/ai-hub-nexus-web': [],
 		'@liferay/analytics-reports-js-components-web': [],
 		'@liferay/analytics-settings-web': [],
 		'@liferay/application-list-taglib': [],

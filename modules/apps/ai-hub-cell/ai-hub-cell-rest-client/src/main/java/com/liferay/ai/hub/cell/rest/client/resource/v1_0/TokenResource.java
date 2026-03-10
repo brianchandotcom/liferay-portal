@@ -242,7 +242,7 @@ public interface TokenResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub-client/v1.0/tokens");
+						"/o/ai-hub-cell/v1.0/tokens");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -341,7 +341,7 @@ public interface TokenResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub-client/v1.0/tokens/batch");
+						"/o/ai-hub-cell/v1.0/tokens/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

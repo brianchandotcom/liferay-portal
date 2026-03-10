@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/ai-hub-client/v1.0/Token",
+	property = "resource.locator.key=/ai-hub-cell/v1.0/Token",
 	service = TokenResource.Factory.class
 )
 @Generated("")

@@ -35,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/ai-hub-client/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/ai-hub-cell/v1.0
  *
  * @author Feliphe Marinho
  * @generated

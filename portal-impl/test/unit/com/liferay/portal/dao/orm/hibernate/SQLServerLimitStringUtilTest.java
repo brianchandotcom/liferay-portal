@@ -5,6 +5,7 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -55,6 +56,20 @@ public class SQLServerLimitStringUtilTest {
 		Assert.assertTrue(sql.indexOf("30") > 0);
 		Assert.assertTrue(sql.indexOf("11") > 0);
 		Assert.assertTrue(sql.indexOf("top") != 0);
+	}
+
+	@Test
+	public void testOrderByWithFunctionExpression() throws Exception {
+		String sql = SQLServerLimitStringUtil.getLimitString(
+			StringBundler.concat(
+				"select tempgroup.groupid from (select distinct ",
+				"group_.groupid, group_.name from group_ where ",
+				"group_.companyid = ?) tempgroup order by ",
+				"replace(tempgroup.name, ?, ?) asc"),
+			0, 20);
+
+		Assert.assertTrue(
+			sql, sql.contains("replace(tempgroup.name, ?, ?) asc"));
 	}
 
 	@Test

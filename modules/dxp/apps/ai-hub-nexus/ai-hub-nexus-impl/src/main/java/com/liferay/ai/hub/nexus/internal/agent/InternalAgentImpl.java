@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.nexus.internal.agent;
 
-import com.liferay.ai.hub.agent.AgentContext;
+import com.liferay.ai.hub.nexus.agent.AgentContext;
 import com.liferay.ai.hub.nexus.internal.agent.util.AgentUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;

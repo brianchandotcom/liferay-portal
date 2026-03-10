@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.nexus.internal.agent;
 
-import com.liferay.ai.hub.agent.AgentContext;
+import com.liferay.ai.hub.nexus.agent.AgentContext;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.GetterUtil;

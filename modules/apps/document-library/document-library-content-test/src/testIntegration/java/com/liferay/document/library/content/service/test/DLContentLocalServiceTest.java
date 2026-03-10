@@ -97,23 +97,6 @@ public class DLContentLocalServiceTest {
 	}
 
 	@Test
-	public void testAddContentByKernelUnsyncByteArrayInputStream()
-		throws Exception {
-
-		String path = RandomTestUtil.randomString();
-
-		DLContent addDLContent = _dlContentLocalService.addContent(
-			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
-			new com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream(
-				_DATA_VERSION_1));
-
-		DLContent getDLContent = _dlContentLocalService.getContent(
-			_companyId, _repositoryId, path, StringPool.BLANK);
-
-		Assert.assertEquals(addDLContent, getDLContent);
-	}
-
-	@Test
 	public void testAddContentByPetraUnsyncByteArrayInputStream()
 		throws Exception {
 

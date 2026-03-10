@@ -2,6 +2,10 @@ resource "aws_iam_policy" "provider_aws_backup_policy" {
 	name="${local.cluster_name}-provider-aws-backup"
 	policy=data.aws_iam_policy_document.provider_aws_backup_policy_document.json
 }
+resource "aws_iam_policy" "provider_aws_cloudwatchlogs_policy" {
+	name="${local.cluster_name}-provider-aws-cloudwatchlogs"
+	policy=data.aws_iam_policy_document.provider_aws_cloudwatchlogs_policy_document.json
+}
 resource "aws_iam_policy" "provider_aws_ec2_policy" {
 	name="${local.cluster_name}-provider-aws-ec2"
 	policy=data.aws_iam_policy_document.provider_aws_ec2_policy_document.json
@@ -26,6 +30,10 @@ resource "aws_iam_role" "provider_aws_backup_role" {
 	assume_role_policy=data.aws_iam_policy_document.provider_aws_backup_assume_role_policy_document.json
 	name="${local.cluster_name}-provider-aws-backup-role"
 }
+resource "aws_iam_role" "provider_aws_cloudwatchlogs_role" {
+	assume_role_policy=data.aws_iam_policy_document.provider_aws_cloudwatchlogs_assume_role_policy_document.json
+	name="${local.cluster_name}-provider-aws-cloudwatchlogs-role"
+}
 resource "aws_iam_role" "provider_aws_ec2_role" {
 	assume_role_policy=data.aws_iam_policy_document.provider_aws_ec2_assume_role_policy_document.json
 	name="${local.cluster_name}-provider-aws-ec2-role"
@@ -49,6 +57,10 @@ resource "aws_iam_role" "provider_aws_s3_role" {
 resource "aws_iam_role_policy_attachment" "provider_aws_backup_attachment" {
 	policy_arn=aws_iam_policy.provider_aws_backup_policy.arn
 	role=aws_iam_role.provider_aws_backup_role.name
+}
+resource "aws_iam_role_policy_attachment" "provider_aws_cloudwatchlogs_attachment" {
+	policy_arn=aws_iam_policy.provider_aws_cloudwatchlogs_policy.arn
+	role=aws_iam_role.provider_aws_cloudwatchlogs_role.name
 }
 resource "aws_iam_role_policy_attachment" "provider_aws_ec2_attachment" {
 	policy_arn=aws_iam_policy.provider_aws_ec2_policy.arn

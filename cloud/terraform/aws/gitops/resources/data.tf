@@ -69,6 +69,45 @@ data "aws_iam_policy_document" "provider_aws_backup_policy_document" {
 		resources=["*"]
 	}
 }
+data "aws_iam_policy_document" "provider_aws_cloudwatchlogs_assume_role_policy_document" {
+	statement {
+		actions=["sts:AssumeRoleWithWebIdentity"]
+		condition {
+			test="StringEquals"
+			values=["sts.amazonaws.com"]
+			variable="${local.oidc_provider}:aud"
+		}
+		condition {
+			test="StringLike"
+			values=["system:serviceaccount:${var.crossplane_namespace}:provider-aws-cloudwatchlogs*"]
+			variable="${local.oidc_provider}:sub"
+		}
+		effect="Allow"
+		principals {
+			identifiers=["arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"]
+			type="Federated"
+		}
+	}
+}
+data "aws_iam_policy_document" "provider_aws_cloudwatchlogs_policy_document" {
+	statement {
+		actions=[
+			"logs:CreateLogGroup",
+			"logs:DeleteLogGroup",
+			"logs:DeleteResourcePolicy",
+			"logs:DeleteRetentionPolicy",
+			"logs:DescribeLogGroups",
+			"logs:DescribeResourcePolicies",
+			"logs:ListTagsForResource",
+			"logs:PutResourcePolicy",
+			"logs:PutRetentionPolicy",
+			"logs:TagResource",
+			"logs:UntagResource",
+		]
+		effect="Allow"
+		resources=["arn:aws:logs:${var.region}:${local.account_id}:log-group:*"]
+	}
+}
 data "aws_iam_policy_document" "provider_aws_ec2_assume_role_policy_document" {
 	statement {
 		actions=["sts:AssumeRoleWithWebIdentity"]

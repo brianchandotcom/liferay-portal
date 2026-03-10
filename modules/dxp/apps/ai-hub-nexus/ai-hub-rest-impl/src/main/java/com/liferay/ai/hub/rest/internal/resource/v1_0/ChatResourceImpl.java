@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.rest.resource.v1_0.ChatResource;
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.ChatResource;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import jakarta.ws.rs.core.Context;

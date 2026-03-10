@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.rest.internal.resource.v1_0.factory;
 
 import com.liferay.ai.hub.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.TaskResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;

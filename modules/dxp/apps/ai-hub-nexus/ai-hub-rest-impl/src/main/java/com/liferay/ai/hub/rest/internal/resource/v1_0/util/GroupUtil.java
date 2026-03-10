@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0.util;
 
-import com.liferay.ai.hub.rest.dto.v1_0.Scope;
+import com.liferay.ai.hub.nexus.rest.dto.v1_0.Scope;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;

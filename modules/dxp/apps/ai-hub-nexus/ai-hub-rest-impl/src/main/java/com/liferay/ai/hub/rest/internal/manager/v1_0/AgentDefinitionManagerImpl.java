@@ -6,12 +6,14 @@
 package com.liferay.ai.hub.rest.internal.manager.v1_0;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.ai.hub.nexus.rest.dto.v1_0.AgentDefinition;
+import com.liferay.ai.hub.nexus.rest.dto.v1_0.Variable;
+import com.liferay.ai.hub.nexus.rest.manager.v1_0.AgentDefinitionManager;
 import com.liferay.ai.hub.nexus.util.AccountEntryUtil;
 import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.dto.v1_0.Status;
 import com.liferay.ai.hub.rest.dto.v1_0.Variable;
 import com.liferay.ai.hub.rest.internal.resource.v1_0.AgentDefinitionResourceImpl;
-import com.liferay.ai.hub.rest.manager.v1_0.AgentDefinitionManager;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;

@@ -12,7 +12,7 @@ import com.liferay.ai.hub.nexus.internal.workflow.kaleo.runtime.node.util.Conten
 import com.liferay.ai.hub.nexus.internal.workflow.kaleo.runtime.node.util.KaleoLogUtil;
 import com.liferay.ai.hub.nexus.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
 import com.liferay.ai.hub.nexus.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.petra.lang.SafeCloseable;

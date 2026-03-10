@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
-import com.liferay.ai.hub.rest.resource.v1_0.AgentDefinitionResource;
+import com.liferay.ai.hub.nexus.rest.dto.v1_0.AgentDefinition;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.AgentDefinitionResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;

@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.internal.background.task;
 
+import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -16,6 +19,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.Callable;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,7 +40,7 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_reindexIndexReindexerBackgroundTaskExecutor =
 			new ReindexIndexReindexerBackgroundTaskExecutor();
 
@@ -55,12 +59,33 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 			_indexReindexer1
 		);
 
+		Mockito.when(
+			_portalExecutorManager.getPortalExecutor(Mockito.anyString())
+		).thenReturn(
+			_noticeableExecutorService
+		);
+
+		Mockito.when(
+			_noticeableExecutorService.submit(Mockito.any(Callable.class))
+		).thenAnswer(
+			invocation -> {
+				Callable<?> callable = invocation.getArgument(0);
+
+				callable.call();
+
+				return Mockito.mock(NoticeableFuture.class);
+			}
+		);
+
 		ReflectionTestUtil.setFieldValue(
 			_reindexIndexReindexerBackgroundTaskExecutor,
 			"_companyLocalService", _companyLocalService);
 		ReflectionTestUtil.setFieldValue(
 			_reindexIndexReindexerBackgroundTaskExecutor,
 			"_indexReindexerRegistry", _indexReindexerRegistry);
+		ReflectionTestUtil.setFieldValue(
+			_reindexIndexReindexerBackgroundTaskExecutor,
+			"_portalExecutorManager", _portalExecutorManager);
 		ReflectionTestUtil.setFieldValue(
 			_reindexIndexReindexerBackgroundTaskExecutor,
 			"_reindexStatusMessageSender", _reindexStatusMessageSender);
@@ -158,6 +183,10 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 		IndexReindexer.class);
 	private final IndexReindexerRegistry _indexReindexerRegistry = Mockito.mock(
 		IndexReindexerRegistry.class);
+	private final NoticeableExecutorService _noticeableExecutorService =
+		Mockito.mock(NoticeableExecutorService.class);
+	private final PortalExecutorManager _portalExecutorManager = Mockito.mock(
+		PortalExecutorManager.class);
 	private ReindexIndexReindexerBackgroundTaskExecutor
 		_reindexIndexReindexerBackgroundTaskExecutor;
 	private final ReindexStatusMessageSender _reindexStatusMessageSender =

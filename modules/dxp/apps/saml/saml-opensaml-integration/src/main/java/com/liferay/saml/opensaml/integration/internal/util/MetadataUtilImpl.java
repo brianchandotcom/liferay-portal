@@ -5,8 +5,8 @@
 
 package com.liferay.saml.opensaml.integration.internal.util;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;

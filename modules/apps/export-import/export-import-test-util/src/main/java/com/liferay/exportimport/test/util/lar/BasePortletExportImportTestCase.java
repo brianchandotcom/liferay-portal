@@ -547,13 +547,14 @@ public abstract class BasePortletExportImportTestCase
 		return LayoutTestUtil.getPortletPreferences(importedLayout, portletId);
 	}
 
-	protected void importPortlet(String portletId, Layout layout)
+	protected ExportImportConfiguration importPortlet(
+			String portletId, Layout layout)
 		throws Exception {
 
-		importPortlet(portletId, new LinkedHashMap<>(), false, layout);
+		return importPortlet(portletId, new LinkedHashMap<>(), false, layout);
 	}
 
-	protected void importPortlet(
+	protected ExportImportConfiguration importPortlet(
 			String portletId, Map<String, String[]> importParameterMap,
 			boolean portletStagingInProcess, Layout layout)
 		throws Exception {
@@ -625,6 +626,8 @@ public abstract class BasePortletExportImportTestCase
 		finally {
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 		}
+
+		return exportImportConfiguration;
 	}
 
 	protected boolean isVersioningEnabled() {

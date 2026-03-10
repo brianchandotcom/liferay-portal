@@ -12,18 +12,6 @@
 		"react": "18.2.0",
 		"react-dom": "18.2.0"
 	},
-	"jest": {
-		"moduleNameMapper": {
-			"^frontend-js-web$": "<rootDir>/test/js/__mocks__/frontend-js-web.ts"
-		},
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.ts"
-		],
-		"testPathIgnorePatterns": [
-			"<rootDir>/.*/mocks",
-			"<rootDir>/.*/__mocks__"
-		]
-	},
 	"main": "js/index.ts",
 	"name": "@liferay/design-library-web",
 	"scripts": {

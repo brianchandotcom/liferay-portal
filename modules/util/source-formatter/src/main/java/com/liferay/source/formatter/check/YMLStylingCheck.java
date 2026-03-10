@@ -46,6 +46,14 @@ public class YMLStylingCheck extends BaseFileCheck {
 		return _formatQuotes(content);
 	}
 
+	private boolean _containsLogicalOperator(String s) {
+		if (s.contains("!") || s.contains("&&") || s.contains("||")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _fixBooleanValue(String s) {
 		if (_isBooleanFalse(s)) {
 			return "false";
@@ -97,12 +105,12 @@ public class YMLStylingCheck extends BaseFileCheck {
 
 			if (unquotedValue.contains("\\") ||
 				unquotedValue.matches("-?\\d+(\\.\\d*)?") ||
-				unquotedValue.startsWith("!") ||
 				unquotedValue.startsWith("#") ||
 				unquotedValue.startsWith("&") ||
 				unquotedValue.startsWith("*") ||
 				unquotedValue.startsWith("[") ||
 				unquotedValue.startsWith("{") ||
+				_containsLogicalOperator(unquotedValue) ||
 				_isBooleanValue(unquotedValue) || _isNullValue(unquotedValue)) {
 
 				return s;

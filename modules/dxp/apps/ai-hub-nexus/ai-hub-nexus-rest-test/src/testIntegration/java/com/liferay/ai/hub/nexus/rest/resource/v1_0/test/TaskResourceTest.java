@@ -9,8 +9,8 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.ai.hub.client.configuration.AIHubConfiguration;
-import com.liferay.ai.hub.client.security.JWTTokenUtil;
+import com.liferay.ai.hub.cell.configuration.AIHubConfiguration;
+import com.liferay.ai.hub.cell.security.JWTTokenUtil;
 import com.liferay.ai.hub.nexus.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.nexus.rest.resource.v1_0.util.SseUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -147,7 +147,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer(
-				"com.liferay.ai.hub.site.initializer");
+				"com.liferay.ai.hub.nexus.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 

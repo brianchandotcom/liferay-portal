@@ -62,7 +62,7 @@ public class AIHubSiteInitializerTest {
 	public void test() throws Exception {
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer(
-				"com.liferay.ai.hub.site.initializer");
+				"com.liferay.ai.hub.nexus.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 

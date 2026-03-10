@@ -7,9 +7,9 @@ package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.nexus.agent.AgentContext;
 import com.liferay.ai.hub.nexus.agent.SupervisorAgent;
-import com.liferay.ai.hub.rest.dto.v1_0.Message;
+import com.liferay.ai.hub.nexus.rest.dto.v1_0.Message;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.MessageResource;
 import com.liferay.ai.hub.rest.internal.resource.v1_0.util.GroupUtil;
-import com.liferay.ai.hub.rest.resource.v1_0.MessageResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;

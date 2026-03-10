@@ -328,7 +328,7 @@ public abstract class BaseChatResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.Chat.class)) {
+					com.liferay.ai.hub.nexus.rest.dto.v1_0.Chat.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -817,6 +817,7 @@ public abstract class BaseChatResourceTestCase {
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.ChatResource _chatResource;
+	private com.liferay.ai.hub.nexus.rest.resource.v1_0.ChatResource
+		_chatResource;
 
 }

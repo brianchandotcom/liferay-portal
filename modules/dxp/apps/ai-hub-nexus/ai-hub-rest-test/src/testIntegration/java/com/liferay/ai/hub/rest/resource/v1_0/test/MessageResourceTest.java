@@ -6,8 +6,8 @@
 package com.liferay.ai.hub.rest.resource.v1_0.test;
 
 import com.liferay.ai.hub.client.security.JWTTokenUtil;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.util.SseUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;

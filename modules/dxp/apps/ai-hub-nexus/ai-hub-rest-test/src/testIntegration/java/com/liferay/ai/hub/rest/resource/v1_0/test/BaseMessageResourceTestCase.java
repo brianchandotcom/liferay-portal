@@ -355,7 +355,7 @@ public abstract class BaseMessageResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.Message.class)) {
+					com.liferay.ai.hub.nexus.rest.dto.v1_0.Message.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -886,7 +886,7 @@ public abstract class BaseMessageResourceTestCase {
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.MessageResource
+	private com.liferay.ai.hub.nexus.rest.resource.v1_0.MessageResource
 		_messageResource;
 
 }

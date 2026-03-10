@@ -376,7 +376,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.Task.class)) {
+					com.liferay.ai.hub.nexus.rest.dto.v1_0.Task.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -992,6 +992,7 @@ public abstract class BaseTaskResourceTestCase {
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.TaskResource _taskResource;
+	private com.liferay.ai.hub.nexus.rest.resource.v1_0.TaskResource
+		_taskResource;
 
 }

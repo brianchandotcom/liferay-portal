@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0.test.util;
 
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;

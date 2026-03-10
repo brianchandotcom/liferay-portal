@@ -497,20 +497,16 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
-		int depotEntryType;
+		int depotEntryType = DepotConstants.TYPE_ASSET_LIBRARY;
 
-		switch (assetLibrary.getType()) {
-			case DESIGN_LIBRARY:
-				depotEntryType = DepotConstants.TYPE_DESIGN_LIBRARY;
-				break;
-			case PROJECT:
-				depotEntryType = DepotConstants.TYPE_PROJECT;
-				break;
-			case SPACE:
-				depotEntryType = DepotConstants.TYPE_SPACE;
-				break;
-			default:
-				depotEntryType = DepotConstants.TYPE_ASSET_LIBRARY;
+		if (assetLibrary.getType() == AssetLibrary.Type.DESIGN_LIBRARY) {
+			depotEntryType = DepotConstants.TYPE_DESIGN_LIBRARY;
+		}
+		else if (assetLibrary.getType() == AssetLibrary.Type.PROJECT) {
+			depotEntryType = DepotConstants.TYPE_PROJECT;
+		}
+		else if (assetLibrary.getType() == AssetLibrary.Type.SPACE) {
+			depotEntryType = DepotConstants.TYPE_SPACE;
 		}
 
 		Assert.assertEquals(

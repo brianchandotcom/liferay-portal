@@ -44,7 +44,8 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-124190."
+	@description = "This is a use case for LPS-124190. Ignored because of LPD-81151"
+	@ignore = "true"
 	@priority = 4
 	test ExportRoleWithSiteAssignee {
 		HeadlessSite.addSite(siteName = "Site Name");

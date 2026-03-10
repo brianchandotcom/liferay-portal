@@ -152,9 +152,10 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 								ObjectFieldConstants.DB_TYPE_STRING, true, true,
 								null, "First Name", "firstName", true)));
 
-				_objectDefinitionLocalService.publishCustomObjectDefinition(
-					TestPropsValues.getUserId(),
-					objectDefinition.getObjectDefinitionId());
+				objectDefinition =
+					_objectDefinitionLocalService.publishCustomObjectDefinition(
+						TestPropsValues.getUserId(),
+						objectDefinition.getObjectDefinitionId());
 
 				objectDefinitionAtomicReference.set(objectDefinition);
 			});

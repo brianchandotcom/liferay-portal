@@ -990,20 +990,17 @@ public class LayoutLocalServiceWrapper
 
 		if ((targetLayoutFragmentEntryLink != null) &&
 			Objects.equals(
-				sourceLayoutFragmentEntryLink.getCss(),
-				targetLayoutFragmentEntryLink.getCss()) &&
-			Objects.equals(
 				sourceLayoutFragmentEntryLink.getConfiguration(),
 				targetLayoutFragmentEntryLink.getConfiguration()) &&
 			Objects.equals(
-				sourceLayoutFragmentEntryLink.getEditableValues(),
-				targetLayoutFragmentEntryLink.getEditableValues()) &&
-			Objects.equals(
-				sourceLayoutFragmentEntryLink.getJs(),
-				targetLayoutFragmentEntryLink.getJs()) &&
+				sourceLayoutFragmentEntryLink.getCss(),
+				targetLayoutFragmentEntryLink.getCss()) &&
 			Objects.equals(
 				sourceLayoutFragmentEntryLink.getHtml(),
-				targetLayoutFragmentEntryLink.getHtml())) {
+				targetLayoutFragmentEntryLink.getHtml()) &&
+			Objects.equals(
+				sourceLayoutFragmentEntryLink.getJs(),
+				targetLayoutFragmentEntryLink.getJs())) {
 
 			return true;
 		}
@@ -1125,7 +1122,10 @@ public class LayoutLocalServiceWrapper
 			}
 			else if (_isUnmodifiedFragmentEntryLink(
 						sourceLayoutFragmentEntryLink,
-						targetLayoutFragmentEntryLink)) {
+						targetLayoutFragmentEntryLink) &&
+					 Objects.equals(
+						 editableValuesJSONObject.toString(),
+						 targetLayoutFragmentEntryLink.getEditableValues())) {
 
 				newFragmentEntryLink = targetLayoutFragmentEntryLink;
 			}

@@ -24,12 +24,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface StagingConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "publish-displayed-content-help",
-		name = "publish-displayed-content", required = false
-	)
-	public boolean publishDisplayedContent();
-
-	@Meta.AD(
 		deflt = "true", description = "staging-delete-temp-lar-on-failure-help",
 		name = "staging-delete-temp-lar-on-failure", required = false
 	)

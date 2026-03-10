@@ -15,7 +15,7 @@ import com.liferay.calendar.notification.NotificationSenderException;
 import com.liferay.calendar.notification.NotificationTemplateContext;
 import com.liferay.calendar.notification.NotificationUtil;
 import com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.Localization;

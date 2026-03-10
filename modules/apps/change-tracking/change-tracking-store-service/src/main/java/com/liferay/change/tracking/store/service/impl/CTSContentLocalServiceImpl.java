@@ -188,19 +188,6 @@ public class CTSContentLocalServiceImpl extends CTSContentLocalServiceBaseImpl {
 				unsyncByteArrayInputStream.available());
 		}
 
-		if (inputStream instanceof
-				com.liferay.portal.kernel.io.unsync.
-					UnsyncByteArrayInputStream) {
-
-			com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream
-				unsyncByteArrayInputStream =
-					(com.liferay.portal.kernel.io.unsync.
-						UnsyncByteArrayInputStream)inputStream;
-
-			return new OutputBlob(
-				inputStream, unsyncByteArrayInputStream.available());
-		}
-
 		if (inputStream instanceof FileInputStream) {
 			FileInputStream fileInputStream = (FileInputStream)inputStream;
 

@@ -9,6 +9,8 @@ dependencies {
 	testImplementation project(":apps:portal-search:portal-search-spi")
 	testImplementation project(":apps:portal-search:portal-search-test-util")
 	testImplementation project(":core:osgi-service-tracker-collections")
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-executor")
 	testImplementation project(":core:petra:petra-function")
 	testImplementation project(":core:petra:petra-lang")
 	testImplementation project(":core:petra:petra-string")

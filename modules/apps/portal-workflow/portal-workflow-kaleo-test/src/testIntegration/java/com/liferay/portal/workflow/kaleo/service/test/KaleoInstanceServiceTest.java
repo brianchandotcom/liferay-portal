@@ -77,10 +77,8 @@ public class KaleoInstanceServiceTest {
 
 	@Test
 	public void testAddKaleoInstance() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
 
-		User user = _addUser();
+		// Group ID as 0
 
 		ConfigurationTestUtil.saveConfiguration(
 			_configurationAdmin.getConfiguration(
@@ -89,6 +87,11 @@ public class KaleoInstanceServiceTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"company.administrator.can.publish", true
 			).build());
+
+		User user = _addUser();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			RandomTestUtil.randomString(), user.getUserId(),
@@ -115,8 +118,6 @@ public class KaleoInstanceServiceTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"company.administrator.can.publish", false
 			).build());
-
-		// Group ID as 0
 
 		serviceContext.setScopeGroupId(0);
 

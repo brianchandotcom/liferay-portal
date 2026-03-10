@@ -198,9 +198,9 @@ public class GetObjectEntriesValuesStrutsActionTest {
 
 		Assert.assertNotNull(textFieldJSONObject);
 		Assert.assertEquals(
-			textFieldValue, textFieldJSONObject.getString("value"));
-		Assert.assertEquals(
 			textFieldName, textFieldJSONObject.getString("label"));
+		Assert.assertEquals(
+			textFieldValue, textFieldJSONObject.getString("value"));
 	}
 
 	@Test

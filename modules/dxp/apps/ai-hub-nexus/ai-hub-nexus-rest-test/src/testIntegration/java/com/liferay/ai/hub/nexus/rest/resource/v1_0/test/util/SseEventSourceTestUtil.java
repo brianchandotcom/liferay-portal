@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.resource.v1_0.test.util;
+package com.liferay.ai.hub.nexus.rest.resource.v1_0.test.util;
 
 import com.liferay.ai.hub.nexus.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.log.Log;

@@ -1,5 +1,6 @@
 jobs:
     close-merge-conflicts:
+        if: github.repository_owner == 'brianchandotcom' || github.repository_owner == 'pyoo47'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: >

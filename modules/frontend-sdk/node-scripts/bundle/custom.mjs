@@ -5,7 +5,7 @@
 
 import * as esbuild from 'esbuild';
 
-import getCustomBuildConfig from '../configuration/getCustomBuildConfig.mjs';
+import getCustomBuildConfig from '../util/configuration/getCustomBuildConfig.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
 
 const DEFAULT_PORT = 8081;

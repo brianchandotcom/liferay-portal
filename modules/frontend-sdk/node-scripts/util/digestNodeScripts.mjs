@@ -16,7 +16,7 @@ export default async function digestNodeScripts() {
 	let files = await fg(['**/*.mjs', '**/*.js'], {
 		absolute: true,
 		cwd: NODE_SCRIPTS_DIR,
-		ignore: ['bundle/sass/binary/**', 'node_modules/**'],
+		ignore: ['util/sass/binary/**', 'node_modules/**'],
 	});
 
 	files = files.filter((file) => !path.basename(file).startsWith('.'));

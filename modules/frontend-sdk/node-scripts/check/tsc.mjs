@@ -5,13 +5,13 @@
 
 import path from 'path';
 
-import checkProject from '../tsc/checkProject.mjs';
-import checkProjects from '../tsc/checkProjects.mjs';
-import extractProjectDirs from '../tsc/extractProjectDirs.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
 import getProjectDirs from '../util/getProjectDirs.mjs';
 import gitUtil from '../util/gitUtil.mjs';
 import {MODULES_DIR} from '../util/locations.mjs';
+import checkProject from '../util/tsc/checkProject.mjs';
+import checkProjects from '../util/tsc/checkProjects.mjs';
+import extractProjectDirs from '../util/tsc/extractProjectDirs.mjs';
 
 export default async function main() {
 	const {all, currentBranch, localChanges} = getNamedArguments({

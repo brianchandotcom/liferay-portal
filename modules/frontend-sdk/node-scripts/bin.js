@@ -153,7 +153,7 @@ const COMMANDS = {
 		parameters: '[<timings directory>]',
 		script: './report/build.mjs',
 	},
-	'report:bundle:imports': {
+	'report:bundle-imports': {
 		description: `
 		Generate aggregated information about external imports found in each bundle.
 
@@ -168,9 +168,9 @@ const COMMANDS = {
 		reports about bundle sizes are created inside the 'build' directory of each project).
 `,
 		parameters: '',
-		script: './report/bundle/imports.mjs',
+		script: './report/bundle-imports.mjs',
 	},
-	'report:bundle:sizes': {
+	'report:bundle-sizes': {
 		description: `
 		Generate aggregated information about bundle sizes. Optionally report the size of internal
 		files inside each bundle (if the --with-internals flag is provided).
@@ -180,7 +180,7 @@ const COMMANDS = {
 		reports about bundle sizes are created inside the 'build' directory of each project).
 `,
 		parameters: '[--with-internals]',
-		script: './report/bundle/sizes.mjs',
+		script: './report/bundle-sizes.mjs',
 	},
 	'report:dependencies': {
 		description: `
@@ -193,15 +193,15 @@ const COMMANDS = {
 		parameters: '',
 		script: './report/dependencies.mjs',
 	},
-	'report:java:imports': {
+	'report:java-imports': {
 		description: `
 		Generate aggregated information about imported external packages and symbols by parsing
 		Java and JSP source files.
 `,
 		parameters: '',
-		script: './report/java/imports.mjs',
+		script: './report/java-imports.mjs',
 	},
-	'report:source:imports': {
+	'report:source-imports': {
 		description: `
 		Generate aggregated information about imported external symbols by parsing JavaScript source
 		files.
@@ -212,7 +212,7 @@ const COMMANDS = {
 		dynamic imports.
 `,
 		parameters: '',
-		script: './report/source/imports.mjs',
+		script: './report/source-imports.mjs',
 	},
 	'setup': {
 		description: `

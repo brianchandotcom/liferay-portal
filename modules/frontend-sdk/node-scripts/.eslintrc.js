@@ -12,7 +12,7 @@ config.ignorePatterns = [
 
 	// Ignore files with top level await (not supported until eslint v8)
 
-	'bundle/sass/runSass.mjs',
+	'util/sass/runSass.mjs',
 ];
 
 config.rules = {

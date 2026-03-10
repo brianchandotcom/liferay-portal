@@ -61,7 +61,7 @@
 	},
 	"exports": {
 		".": "./index.js",
-		"./theme": "./exports/theme.js"
+		"./theme": "./api/exports/theme.js"
 	},
 	"name": "@liferay/node-scripts",
 	"scripts": {

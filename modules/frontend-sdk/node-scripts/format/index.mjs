@@ -6,10 +6,10 @@
 import fg from 'fast-glob';
 import path from 'path';
 
+import doFormat from '../util/format/doFormat.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
 import gitUtil from '../util/gitUtil.mjs';
 import {MODULES_DIR, PORTAL_DIR} from '../util/locations.mjs';
-import format from './format.mjs';
 
 export default async function main() {
 	const {all, check, currentBranch, emitSuppressed, localChanges} =
@@ -64,7 +64,7 @@ export default async function main() {
 
 	console.log('📝 Running format...\n');
 
-	const formatOutput = await format(!check, files, {
+	const formatOutput = await doFormat(!check, files, {
 		emitSuppressed,
 	});
 

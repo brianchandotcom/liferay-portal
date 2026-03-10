@@ -5,13 +5,13 @@
 
 import path from 'path';
 
-import format from '../format/format.mjs';
-import runPreflight from '../preflight/runPreflight.mjs';
-import checkProjects from '../tsc/checkProjects.mjs';
-import extractProjectDirs from '../tsc/extractProjectDirs.mjs';
-import visitOutdatedTsconfigFiles from '../tsconfig/visitOutdatedTsconfigFiles.mjs';
+import doFormat from '../util/format/doFormat.mjs';
 import gitUtil from '../util/gitUtil.mjs';
 import {MODULES_DIR} from '../util/locations.mjs';
+import doPreflight from '../util/preflight/doPreflight.mjs';
+import checkProjects from '../util/tsc/checkProjects.mjs';
+import extractProjectDirs from '../util/tsc/extractProjectDirs.mjs';
+import visitOutdatedTsconfigFiles from '../util/tsconfig/visitOutdatedTsconfigFiles.mjs';
 
 export default async function main() {
 	const cwd = path.resolve('.');
@@ -29,7 +29,7 @@ export default async function main() {
 
 	console.log('\n⚙️ Running preflight checks...');
 
-	const preflightErrors = await runPreflight();
+	const preflightErrors = await doPreflight();
 
 	if (preflightErrors.length) {
 		console.error(
@@ -69,7 +69,7 @@ export default async function main() {
 
 	const formatFiles = await gitUtil('current-branch');
 
-	const formatOutput = await format(false, formatFiles);
+	const formatOutput = await doFormat(false, formatFiles);
 
 	if (formatOutput) {
 		console.error(

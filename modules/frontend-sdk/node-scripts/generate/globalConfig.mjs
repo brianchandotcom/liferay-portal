@@ -6,8 +6,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import format from '../format/format.mjs';
 import {createGlobalConfig} from '../util/createGlobalConfig.mjs';
+import doFormat from '../util/format/doFormat.mjs';
 import {
 	GLOBAL_NODE_SCRIPTS_CONFIG_FILE,
 	PORTAL_DIR,
@@ -18,7 +18,7 @@ export default async function main() {
 
 	await fs.writeFile(GLOBAL_NODE_SCRIPTS_CONFIG_FILE, config);
 
-	await format(true, [
+	await doFormat(true, [
 		path.relative(PORTAL_DIR, GLOBAL_NODE_SCRIPTS_CONFIG_FILE),
 	]);
 }

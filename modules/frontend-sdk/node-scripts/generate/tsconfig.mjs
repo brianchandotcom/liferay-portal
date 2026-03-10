@@ -6,8 +6,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import visitOutdatedTsconfigFiles from '../tsconfig/visitOutdatedTsconfigFiles.mjs';
 import {MODULES_DIR} from '../util/locations.mjs';
+import visitOutdatedTsconfigFiles from '../util/tsconfig/visitOutdatedTsconfigFiles.mjs';
 
 export default async function main() {
 	const cwd = path.resolve('.');

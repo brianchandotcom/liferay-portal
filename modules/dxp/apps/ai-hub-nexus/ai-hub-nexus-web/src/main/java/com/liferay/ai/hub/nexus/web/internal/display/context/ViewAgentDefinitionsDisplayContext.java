@@ -40,7 +40,7 @@ public class ViewAgentDefinitionsDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/ai-hub/v1.0/agent-definitions";
+		return "/o/ai-hub-nexus/v1.0/agent-definitions";
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {

@@ -10,11 +10,15 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationPa
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -190,6 +194,53 @@ public class SiteNavigationMenuExportImportTest
 	}
 
 	@Test
+	public void testExportImportGroupEmbeddedPortlet() throws Exception {
+		_setUpLocalStaging();
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_stagingGroup);
+
+		_setUpSiteNavigationMenu(_stagingGroup);
+
+		String portletInstanceId = PortletIdCodec.encode(
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
+			RandomTestUtil.randomString());
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			_stagingGroup.getCompanyId(),
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU);
+
+		_addGroupEmbeddedPortlet(
+			portletInstanceId, portlet,
+			_getPortletPreferencesXML(
+				"siteNavigationMenuExternalReferenceCode",
+				new String[] {_siteNavigationMenu.getExternalReferenceCode()}));
+
+		_publishAllLayouts();
+
+		_siteNavigationMenuLocalService.
+			getSiteNavigationMenuByExternalReferenceCode(
+				_siteNavigationMenu.getExternalReferenceCode(),
+				_liveGroup.getGroupId());
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.getPreferences(
+				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED, portletInstanceId);
+
+		Assert.assertEquals(
+			_siteNavigationMenu.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"siteNavigationMenuExternalReferenceCode", StringPool.BLANK));
+		Assert.assertNull(
+			portletPreferences.getValue(
+				"siteNavigationMenuGroupExternalReferenceCode", null));
+		Assert.assertNull(
+			portletPreferences.getValue(
+				"rootMenuItemExternalReferenceCode", null));
+	}
+
+	@Test
 	@TestInfo("LPD-37038")
 	public void testExportImportWithSiteNavigationMenuFromDifferentGroup()
 		throws Exception {
@@ -248,6 +299,50 @@ public class SiteNavigationMenuExportImportTest
 			_siteNavigationMenuItem.getExternalReferenceCode(),
 			portletPreferences.getValue(
 				"rootMenuItemExternalReferenceCode", StringPool.BLANK));
+	}
+
+	private void _addGroupEmbeddedPortlet(
+		String portletInstanceId, Portlet portlet, String portletPreferences) {
+
+		_portletPreferencesLocalService.addPortletPreferences(
+			_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, PortletKeys.PREFS_PLID_SHARED,
+			portletInstanceId, portlet, portletPreferences);
+
+		_portletPreferencesLocalService.addPortletPreferences(
+			_stagingGroup.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			portletInstanceId, portlet, PortletConstants.DEFAULT_PREFERENCES);
+	}
+
+	private String _getPortletPreferencesXML(String name, String[] values) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("<portlet-preferences>");
+
+		if ((name != null) || (values != null)) {
+			sb.append("<preference>");
+
+			if (name != null) {
+				sb.append("<name>");
+				sb.append(name);
+				sb.append("</name>");
+			}
+
+			if (values != null) {
+				for (String value : values) {
+					sb.append("<value>");
+					sb.append(value);
+					sb.append("</value>");
+				}
+			}
+
+			sb.append("</preference>");
+		}
+
+		sb.append("</portlet-preferences>");
+
+		return sb.toString();
 	}
 
 	private void _publishAllLayouts() throws Exception {
@@ -309,6 +404,9 @@ public class SiteNavigationMenuExportImportTest
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

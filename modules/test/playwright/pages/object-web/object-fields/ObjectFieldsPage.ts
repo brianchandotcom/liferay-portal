@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, test} from '@playwright/test';
 
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
@@ -169,18 +169,20 @@ export class ObjectFieldsPage {
 	}
 
 	async disableDefaultValue(objectFieldName: string) {
-		await this.openObjectField(objectFieldName);
+		await test.step(`Disable default value for '${objectFieldName}'`, async () => {
+			await this.openObjectField(objectFieldName);
 
-		await this.advancedTab.click();
+			await this.advancedTab.click();
 
-		await this.useDefaultValueToggle.uncheck();
+			await this.useDefaultValueToggle.uncheck();
 
-		await this.editFieldSaveButton.click();
+			await this.editFieldSaveButton.click();
 
-		await waitForAlert(
-			this.page,
-			'The object field was updated successfully'
-		);
+			await waitForAlert(
+				this.page,
+				'The object field was updated successfully'
+			);
+		});
 	}
 
 	async goto(objectDefinitionLabel: string) {
@@ -221,61 +223,63 @@ export class ObjectFieldsPage {
 		objectFieldBusinessType: string;
 		objectFieldName: string;
 	}) {
-		await this.openObjectField(objectFieldName);
+		await test.step(`Set default value '${defaultValue}' for '${objectFieldName}' (${objectFieldBusinessType})`, async () => {
+			await this.openObjectField(objectFieldName);
 
-		await this.advancedTab.click();
+			await this.advancedTab.click();
 
-		await this.useDefaultValueToggle.check({timeout: 1000});
+			await this.useDefaultValueToggle.check({timeout: 1000});
 
-		if (objectFieldBusinessType === 'Boolean') {
-			await this.selectDefaultValue(defaultValue);
-		}
+			if (objectFieldBusinessType === 'Boolean') {
+				await this.selectDefaultValue(defaultValue);
+			}
 
-		if (objectFieldBusinessType === 'Date') {
-			await this.iframeLocator
-				.getByPlaceholder('__/__/____')
-				.fill(defaultValue);
-		}
+			if (objectFieldBusinessType === 'Date') {
+				await this.iframeLocator
+					.getByPlaceholder('__/__/____')
+					.fill(defaultValue);
+			}
 
-		if (objectFieldBusinessType === 'DateTime') {
-			await this.iframeLocator
-				.getByPlaceholder('__/__/____ __:__ _')
-				.fill(defaultValue);
-		}
+			if (objectFieldBusinessType === 'DateTime') {
+				await this.iframeLocator
+					.getByPlaceholder('__/__/____ __:__ _')
+					.fill(defaultValue);
+			}
 
-		if (
-			objectFieldBusinessType === 'Decimal' ||
-			objectFieldBusinessType === 'Integer' ||
-			objectFieldBusinessType === 'LongInteger' ||
-			objectFieldBusinessType === 'PrecisionDecimal'
-		) {
-			await this.iframeLocator
-				.getByPlaceholder('Enter a default value.')
-				.fill(defaultValue);
-		}
+			if (
+				objectFieldBusinessType === 'Decimal' ||
+				objectFieldBusinessType === 'Integer' ||
+				objectFieldBusinessType === 'LongInteger' ||
+				objectFieldBusinessType === 'PrecisionDecimal'
+			) {
+				await this.iframeLocator
+					.getByPlaceholder('Enter a default value.')
+					.fill(defaultValue);
+			}
 
-		if (
-			objectFieldBusinessType === 'LongText' ||
-			objectFieldBusinessType === 'Text'
-		) {
-			await this.iframeLocator
-				.getByLabel('Default ValueMandatory')
-				.fill(defaultValue);
-		}
+			if (
+				objectFieldBusinessType === 'LongText' ||
+				objectFieldBusinessType === 'Text'
+			) {
+				await this.iframeLocator
+					.getByLabel('Default ValueMandatory')
+					.fill(defaultValue);
+			}
 
-		if (objectFieldBusinessType === 'RichText') {
-			await this.iframeLocator
-				.getByLabel('Rich Text Editor')
-				.nth(1)
-				.fill(defaultValue);
-		}
+			if (objectFieldBusinessType === 'RichText') {
+				await this.iframeLocator
+					.getByLabel('Rich Text Editor')
+					.nth(1)
+					.fill(defaultValue);
+			}
 
-		await this.editFieldSaveButton.click();
+			await this.editFieldSaveButton.click();
 
-		await waitForAlert(
-			this.page,
-			'The object field was updated successfully'
-		);
+			await waitForAlert(
+				this.page,
+				'The object field was updated successfully'
+			);
+		});
 	}
 
 	getMaximumFileSizeErrorMessage({

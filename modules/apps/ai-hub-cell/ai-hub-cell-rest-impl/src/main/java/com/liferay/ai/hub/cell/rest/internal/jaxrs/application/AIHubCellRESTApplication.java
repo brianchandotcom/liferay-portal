@@ -17,12 +17,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"liferay.jackson=false", "osgi.jaxrs.application.base=/ai-hub-client",
+		"liferay.jackson=false", "osgi.jaxrs.application.base=/ai-hub-cell",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.AI.Hub.Client.REST"
+		"osgi.jaxrs.name=Liferay.AI.Hub.Cell.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class AIHubClientRESTApplication extends Application {
+public class AIHubCellRESTApplication extends Application {
 }

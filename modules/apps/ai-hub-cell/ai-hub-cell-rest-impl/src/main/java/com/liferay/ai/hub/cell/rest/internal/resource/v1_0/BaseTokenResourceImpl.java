@@ -71,7 +71,7 @@ public abstract class BaseTokenResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-client/v1.0/tokens'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-cell/v1.0/tokens'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Token")}
@@ -87,7 +87,7 @@ public abstract class BaseTokenResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-client/v1.0/tokens/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-cell/v1.0/tokens/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -333,7 +333,7 @@ public abstract class BaseTokenResourceImpl
 	}
 
 	protected String getApplicationPath() {
-		return "ai-hub-client";
+		return "ai-hub-cell";
 	}
 
 	public void setVulcanBatchEngineExportTaskResource(

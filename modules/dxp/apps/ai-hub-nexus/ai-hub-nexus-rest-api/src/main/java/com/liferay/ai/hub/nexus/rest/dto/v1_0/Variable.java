@@ -190,7 +190,7 @@ public class Variable implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.Variable",
+		defaultValue = "com.liferay.ai.hub.nexus.rest.dto.v1_0.Variable",
 		name = "x-class-name"
 	)
 	public String xClassName;

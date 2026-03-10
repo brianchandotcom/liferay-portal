@@ -43,7 +43,7 @@ public abstract class BaseChatResourceImpl implements ChatResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub/v1.0/chats/subscribe'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub-nexus/v1.0/chats/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Chat")}
@@ -129,7 +129,7 @@ public abstract class BaseChatResourceImpl implements ChatResource {
 	}
 
 	protected String getApplicationPath() {
-		return "ai-hub";
+		return "ai-hub-nexus";
 	}
 
 	protected Map<String, String> addAction(

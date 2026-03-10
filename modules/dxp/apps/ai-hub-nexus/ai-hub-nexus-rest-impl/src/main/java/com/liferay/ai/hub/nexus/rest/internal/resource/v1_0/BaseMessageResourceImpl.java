@@ -44,7 +44,7 @@ public abstract class BaseMessageResourceImpl implements MessageResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/chats/by-external-reference-code/{externalReferenceCode}/messages' -d $'{"context": ___, "scope": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-nexus/v1.0/chats/by-external-reference-code/{externalReferenceCode}/messages' -d $'{"context": ___, "scope": ___, "text": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -146,7 +146,7 @@ public abstract class BaseMessageResourceImpl implements MessageResource {
 	}
 
 	protected String getApplicationPath() {
-		return "ai-hub";
+		return "ai-hub-nexus";
 	}
 
 	protected Map<String, String> addAction(

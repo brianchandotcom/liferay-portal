@@ -5,10 +5,10 @@
 
 package com.liferay.ai.hub.nexus.rest.client.resource.v1_0;
 
-import com.liferay.ai.hub.nexus.rest.client.serdes.v1_0.TaskSerDes;
 import com.liferay.ai.hub.nexus.rest.client.dto.v1_0.Task;
 import com.liferay.ai.hub.nexus.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.nexus.rest.client.problem.Problem;
+import com.liferay.ai.hub.nexus.rest.client.serdes.v1_0.TaskSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -253,7 +253,7 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/tasks/subscribe");
+						"/o/ai-hub-nexus/v1.0/tasks/subscribe");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -314,8 +314,7 @@ public interface TaskResource {
 			}
 
 			try {
-				return TaskSerDes.
-					toDTO(content);
+				return TaskSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -355,7 +354,7 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/tasks");
+						"/o/ai-hub-nexus/v1.0/tasks");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -454,7 +453,7 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/tasks/batch");
+						"/o/ai-hub-nexus/v1.0/tasks/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

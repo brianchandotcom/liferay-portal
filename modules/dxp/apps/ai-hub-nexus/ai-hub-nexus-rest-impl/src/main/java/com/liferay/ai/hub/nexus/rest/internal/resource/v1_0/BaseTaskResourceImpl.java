@@ -71,7 +71,7 @@ public abstract class BaseTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub/v1.0/tasks/subscribe'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub-nexus/v1.0/tasks/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Task")}
@@ -89,7 +89,7 @@ public abstract class BaseTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/tasks' -d $'{"context": ___, "sseEventSinkKey": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-nexus/v1.0/tasks' -d $'{"context": ___, "sseEventSinkKey": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Task")}
@@ -106,7 +106,7 @@ public abstract class BaseTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/tasks/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-nexus/v1.0/tasks/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -351,7 +351,7 @@ public abstract class BaseTaskResourceImpl
 	}
 
 	protected String getApplicationPath() {
-		return "ai-hub";
+		return "ai-hub-nexus";
 	}
 
 	public void setVulcanBatchEngineExportTaskResource(

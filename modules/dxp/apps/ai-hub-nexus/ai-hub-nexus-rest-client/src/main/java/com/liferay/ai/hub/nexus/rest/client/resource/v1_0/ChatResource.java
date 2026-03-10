@@ -239,7 +239,7 @@ public interface ChatResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/chats/subscribe");
+						"/o/ai-hub-nexus/v1.0/chats/subscribe");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

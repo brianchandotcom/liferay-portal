@@ -88,6 +88,7 @@ export interface IBulkActionTaskStarterDTO<T extends keyof IBulkActionType> {
 		| null;
 	overrideDefaultErrorToast?: boolean;
 	overrideDefaultSuccessToast?: boolean;
+	resetSearch?: boolean;
 	selectedData: IBulkActionFDSData;
 	type: keyof IBulkActionType;
 }

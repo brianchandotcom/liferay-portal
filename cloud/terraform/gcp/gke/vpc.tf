@@ -1,3 +1,30 @@
+resource "google_compute_firewall" "allow_health_checks" {
+	allow {
+		ports=["443", "80", "8080",]
+		protocol="tcp"
+	}
+	name="${var.deployment_name}-allow-health-checks"
+	network=google_compute_network.vpc.name
+	priority=1000
+	source_ranges=["130.211.0.0/22", "35.191.0.0/16",]
+}
+resource "google_compute_firewall" "allow_internal" {
+	allow {
+		ports=["0-65535",]
+		protocol="tcp"
+	}
+	allow {
+		ports=["0-65535",]
+		protocol="udp"
+	}
+	allow {
+		protocol="icmp"
+	}
+	name="${var.deployment_name}-allow-internal"
+	network=google_compute_network.vpc.name
+	priority=1000
+	source_ranges=[var.pod_cidr, var.service_cidr, var.vpc_cidr,]
+}
 resource "google_compute_global_address" "private_ip_alloc" {
 	address_type="INTERNAL"
 	name="${var.deployment_name}-psa-range"

@@ -11,73 +11,8 @@
 
 <tbody>
 <tr>
-	<td>CUSTOM_ELEMENT_MODULE_SCRIPT</td>
-	<td>xpath=(//head//script[@type='module'])</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_ROW_FIELD_LABEL_NAME_INDEX</td>
-	<td>//button[contains(@class,'delete-row') and not(contains(@class,'disabled'))]//ancestor::div[@class='lfr-form-rows']//div[(@class='lfr-form-row')][${key_index}]//label[normalize-space(text())='${key_fieldLabelName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_ROW_FIELD_LABEL_NAME_INDEX</td>
-	<td>//button[contains(@class,'add-row') and not(contains(@class,'disabled'))]//ancestor::div[@class='lfr-form-rows']//div[(@class='lfr-form-row')][${key_index}]//label[normalize-space(text())='${key_fieldLabelName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAME</td>
-	<td>//input[@id='_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_URL_ROW</td>
-	<td>//*[contains(@id,'${key_id}')]//button[contains(@class,'add-row')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOVE_URL_ROW</td>
-	<td>//*[(@class='lfr-form-row')][${key_index}]//button[contains(@class,'delete-row')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>URL</td>
-	<td>//input[(contains(@id,'${key_id}'))]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>URL_ROW_INDEX</td>
-	<td>//*[@class='lfr-form-row'][${key_index}]//input[(contains(@id,'${key_id}'))]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USE_ES_MODULES</td>
-	<td>//input[contains(@id,'useESM')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOTE_APPS_INSTANCEABLE</td>
-	<td>//input[contains(@id,'instanceable')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOTE_APPS_PROPERTIES</td>
-	<td>//textarea[contains(@id,'properties')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOTE_APPS_PORTLET_CATEGORY_NAME</td>
-	<td>//div[label[contains(.,'Widget Category Name')]]/select</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REMOTE_APPS_ERROR_WITH_MESSAGE</td>
 	<td>//div[contains(@class, 'alert alert-dismissible alert-danger') and contains(.,'${text}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WARNING_SPECIFIC</td>
-	<td>//div[contains(@class, 'form-feedback-item') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 </tbody>

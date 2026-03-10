@@ -10,35 +10,14 @@
 </thead>
 
 <tbody>
-
-<tr>
-	<td>DROPDOWN_MENU_ITEM_LANGUAGE</td>
-	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[contains(.,'${key_locale}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_ITEM_LANGUAGE</td>
-	<td>//tr//td[contains(text(),'${key_language}')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>LIST_ITEM_DELETE_LANGUAGE_BUTTON</td>
 	<td>//tr//td[contains(text(),'${key_language}')]/following-sibling::td//button[@*[contains(.,'Delete')]]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>LANGUAGE_STATUS</td>
-	<td>//tr//td[contains(text(),'${key_language}')]/following-sibling::td//span[text()='${key_status}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_FIELD</td>
-	<td>//div[contains(@class,'modal-dialog')]//input[contains(@placeholder,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TABLE_BODY_ROW_INDEX</td>
-	<td>//tbody//tr[${key_index}]</td>
+	<td>LIST_ITEM_LANGUAGE</td>
+	<td>//tr//td[contains(text(),'${key_language}')]</td>
 	<td></td>
 </tr>
 </tbody>

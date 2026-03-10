@@ -20,9 +20,18 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionWrapper;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceWrapper;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+import com.liferay.portal.model.impl.ResourceActionImpl;
+import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -103,6 +112,11 @@ public class GroupFinderImplTest {
 			@Override
 			public List<?> list(boolean unmodifiable) {
 				return Collections.emptyList();
+			}
+
+			@Override
+			public Query setInteger(int pos, int value) {
+				return this;
 			}
 
 			@Override
@@ -219,6 +233,74 @@ public class GroupFinderImplTest {
 				"companyid = ? and group_.parentgroupid != ? and group_.",
 				"livegroupid = ? and group_.groupkey != ? and (lower(",
 				"group_.name) like ?) and (lower(group_.description) like ?)"),
+			_capturedSQL);
+	}
+
+	@Test
+	public void testFindByC_C_PG_N_DWithActionId() throws Exception {
+		RoleLocalServiceUtil.setService(
+			new RoleLocalServiceWrapper(null) {
+
+				@Override
+				public Role fetchRole(long companyId, String name) {
+					return new RoleImpl();
+				}
+
+				@Override
+				public boolean hasUserRole(long userId, long roleId) {
+					return false;
+				}
+
+			});
+
+		ResourceActionLocalServiceUtil.setService(
+			new ResourceActionLocalServiceWrapper(null) {
+
+				@Override
+				public ResourceAction fetchResourceAction(
+					String name, String actionId) {
+
+					return new ResourceActionImpl();
+				}
+
+				@Override
+				public ResourceAction getResourceAction(
+					String name, String actionId) {
+
+					return new ResourceActionImpl();
+				}
+
+			});
+
+		_groupFinderImpl.findByC_C_PG_N_D(
+			_COMPANY_ID, null, GroupConstants.ANY_PARENT_GROUP_ID,
+			new String[] {null}, new String[] {null},
+			LinkedHashMapBuilder.<String, Object>put(
+				"actionId", "VIEW"
+			).put(
+				"userId", 42L
+			).build(),
+			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"( select distinct group_.groupid as groupid, replace(group_.",
+				"name, ' lfr_organization', '') as groupname, group_.type_ as ",
+				"grouptype, group_.friendlyurl as groupfriendlyurl from ",
+				"group_ left join users_groups on users_groups.groupid = ",
+				"group_.groupid left join (select roleid, userid from ",
+				"usergrouprole where userid = ? union all select roleid, ",
+				"userid from users_roles where userid = ?) roles on ",
+				"users_groups.userid = roles.userid left join ",
+				"resourcepermission on resourcepermission.roleid = ",
+				"roles.roleid where ( (? = 1) or (((roles.roleid = ?) or ",
+				"(roles.roleid = ?)) or (bitand(cast_long(",
+				"resourcepermission.actionids), ?) != 0)) ) and (group_.",
+				"companyid = ?) and (group_.parentgroupid != ?) and (group_.",
+				"livegroupid = 0) and (group_.groupkey != 'control panel') ",
+				"and (lower(group_.name) like ? or ? is null) and ",
+				"(lower(group_.description) like ? or ? is null) ) order by ",
+				"groupname asc"),
 			_capturedSQL);
 	}
 

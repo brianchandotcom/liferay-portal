@@ -11,9 +11,11 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
+import com.liferay.headless.admin.site.dto.v1_0.RepeatableFieldsCollectionProviderReference;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
@@ -85,6 +87,14 @@ public class CollectionUtil {
 
 		if (Validator.isNull(key)) {
 			return null;
+		}
+
+		if (Objects.equals(
+				key,
+				RepeatableFieldInfoItemCollectionProvider.class.getName())) {
+
+			return _toRepeatableFieldsCollectionProviderReference(
+				jsonObject, scopeGroupId);
 		}
 
 		ClassNameReference classNameReference = new ClassNameReference();
@@ -316,6 +326,31 @@ public class CollectionUtil {
 				scopeGroupId));
 
 		return collectionItemExternalReference;
+	}
+
+	private static RepeatableFieldsCollectionProviderReference
+		_toRepeatableFieldsCollectionProviderReference(
+			JSONObject jsonObject, long scopeGroupId) {
+
+		RepeatableFieldsCollectionProviderReference
+			repeatableFieldsCollectionProviderReference =
+				new RepeatableFieldsCollectionProviderReference();
+
+		repeatableFieldsCollectionProviderReference.setClassName(
+			() -> jsonObject.getString("itemType"));
+		repeatableFieldsCollectionProviderReference.setCollectionType(
+			() ->
+				CollectionReference.CollectionType.
+					REPEATABLE_FIELDS_COLLECTION_PROVIDER);
+		repeatableFieldsCollectionProviderReference.setFieldName(
+			() -> jsonObject.getString("fieldName"));
+		repeatableFieldsCollectionProviderReference.setSubTypeExternalReference(
+			() -> SubtypeUtil.getSubtypeItemExternalReference(
+				jsonObject.getString("itemType"),
+				jsonObject.getLong("itemSubtype"),
+				jsonObject.getString("itemSubtypeKey"), scopeGroupId));
+
+		return repeatableFieldsCollectionProviderReference;
 	}
 
 	private static final Pattern _objectDefinitionClassNamePattern =

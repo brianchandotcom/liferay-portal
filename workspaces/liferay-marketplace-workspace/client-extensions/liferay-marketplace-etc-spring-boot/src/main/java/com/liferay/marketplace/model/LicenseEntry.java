@@ -70,10 +70,6 @@ public class LicenseEntry {
 		return _productVersion;
 	}
 
-	public void setProductId(Long productId) {
-		_productId = productId;
-	}
-
 	public void setProductPurchaseKey(String productPurchaseKey) {
 		_productPurchaseKey = productPurchaseKey;
 	}
@@ -105,7 +101,7 @@ public class LicenseEntry {
 	private final String _ipAddresses;
 	private final String _macAddresses;
 	private final Long _orderId;
-	private Long _productId;
+	private final Long _productId;
 	private String _productPurchaseKey;
 	private final String _productVersion;
 

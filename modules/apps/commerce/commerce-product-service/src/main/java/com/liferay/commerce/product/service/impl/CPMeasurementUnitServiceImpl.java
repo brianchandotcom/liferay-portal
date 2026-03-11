@@ -44,7 +44,7 @@ public class CPMeasurementUnitServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_hasPortletResourcePermission(
+		_checkPortletResourcePermission(
 			CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT);
 
 		return cpMeasurementUnitLocalService.addCPMeasurementUnit(
@@ -150,7 +150,7 @@ public class CPMeasurementUnitServiceImpl
 			OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws PortalException {
 
-		_hasPortletResourcePermission(
+		_checkPortletResourcePermission(
 			CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		return cpMeasurementUnitLocalService.getCPMeasurementUnits(
@@ -163,7 +163,7 @@ public class CPMeasurementUnitServiceImpl
 			OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws PortalException {
 
-		_hasPortletResourcePermission(
+		_checkPortletResourcePermission(
 			CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		return cpMeasurementUnitLocalService.getCPMeasurementUnits(
@@ -174,7 +174,7 @@ public class CPMeasurementUnitServiceImpl
 	public int getCPMeasurementUnitsCount(long companyId)
 		throws PortalException {
 
-		_hasPortletResourcePermission(
+		_checkPortletResourcePermission(
 			CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		return cpMeasurementUnitLocalService.getCPMeasurementUnitsCount(
@@ -185,7 +185,7 @@ public class CPMeasurementUnitServiceImpl
 	public int getCPMeasurementUnitsCount(long companyId, int type)
 		throws PortalException {
 
-		_hasPortletResourcePermission(
+		_checkPortletResourcePermission(
 			CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		return cpMeasurementUnitLocalService.getCPMeasurementUnitsCount(
@@ -220,7 +220,7 @@ public class CPMeasurementUnitServiceImpl
 			primary, priority, type, serviceContext);
 	}
 
-	private void _hasPortletResourcePermission(String actionId)
+	private void _checkPortletResourcePermission(String actionId)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =

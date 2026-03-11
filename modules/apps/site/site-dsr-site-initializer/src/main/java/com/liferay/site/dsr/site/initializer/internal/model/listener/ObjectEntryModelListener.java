@@ -130,7 +130,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 				GroupConstants.DEFAULT_LIVE_GROUP_ID,
 				HashMapBuilder.put(
-					LocaleUtil.getDefault(), StringUtil.randomString()
+					LocaleUtil.getDefault(),
+					GetterUtil.getString(values.get("name"))
 				).build(),
 				null, GroupConstants.TYPE_SITE_RESTRICTED, null, true,
 				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,

@@ -1,4 +1,9 @@
+import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
+import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
+import URLConstants from 'shared/util/url-constants';
 import {
 	DataDrivenConfig,
 	GeneralInfoSection
@@ -89,15 +94,56 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 		}
 
 		if (key === 'annualRevenue') {
-			return formatCurrency(
-				accountData?.get('currencyCode'),
-				accountData?.get('locale'),
-				accountData?.get(key)
-			);
+			return accountData?.get(key)
+				? formatCurrency(
+						accountData?.get('currencyCode'),
+						accountData?.get('locale'),
+						accountData?.get(key)
+				  )
+				: undefined;
 		}
 
 		return accountData?.get(key) || undefined;
 	};
+
+	const sectionContent = accountData ? (
+		<GeneralInfoSection
+			config={accountMembershipConfig}
+			getValue={getValue}
+			languageMap={ACCOUNT_MEMBERSHIP_LABEL_MAP}
+		/>
+	) : (
+		<Card className='p-5'>
+			<Card.Body className='p-5'>
+				<NoResultsDisplay
+					description={
+						<>
+							<p className='mb-2'>
+								{Liferay.Language.get(
+									'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+								)}
+							</p>
+							<ClayLink
+								className='d-block mb-3'
+								decoration='underline'
+								href={URLConstants.DataSourceConnection}
+								target='_blank'
+							>
+								{Liferay.Language.get(
+									'learn-more-about-data-sources'
+								)}
+								<span className='inline-item inline-item-after'>
+									<ClayIcon fontSize={8} symbol='shortcut' />
+								</span>
+							</ClayLink>
+						</>
+					}
+					primary
+					title={Liferay.Language.get('there-is-no-data-found')}
+				/>
+			</Card.Body>
+		</Card>
+	);
 
 	return (
 		<>
@@ -106,15 +152,7 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 				title={Liferay.Language.get('account-membership')}
 			/>
 
-			{showEmptyState ? (
-				emptyState
-			) : (
-				<GeneralInfoSection
-					config={accountMembershipConfig}
-					getValue={getValue}
-					languageMap={ACCOUNT_MEMBERSHIP_LABEL_MAP}
-				/>
-			)}
+			{showEmptyState ? emptyState : sectionContent}
 		</>
 	);
 };

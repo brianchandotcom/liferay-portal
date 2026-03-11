@@ -166,7 +166,10 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 				/>
 			</IndividualAttributesCDP>
 
-			<AccountMembership showEmptyState={showEmptyState}>
+			<AccountMembership
+				accountData={individual.get('account')}
+				showEmptyState={showEmptyState}
+			>
 				<ProfileCDPEmptyState
 					authorized={authorized}
 					dataSourceData={dataSourceData}

@@ -58,13 +58,17 @@ public class LayoutExportBackgroundTaskExecutor
 		File larFile = _exportImportLocalService.exportLayoutsAsFile(
 			exportImportConfiguration);
 
+		String name = StringUtil.replace(
+			exportImportConfiguration.getName(), CharPool.SPACE,
+			CharPool.UNDERLINE);
+
+		String title = name + ".lar";
+
+		String sourceFileName = StringBundler.concat(
+			name, StringPool.DASH, Time.getTimestamp(), ".lar");
+
 		_backgroundTaskManager.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(),
-			StringBundler.concat(
-				StringUtil.replace(
-					exportImportConfiguration.getName(), CharPool.SPACE,
-					CharPool.UNDERLINE),
-				StringPool.DASH, Time.getTimestamp(), ".lar"),
+			userId, backgroundTask.getBackgroundTaskId(), sourceFileName, title,
 			larFile);
 
 		return BackgroundTaskResult.SUCCESS;

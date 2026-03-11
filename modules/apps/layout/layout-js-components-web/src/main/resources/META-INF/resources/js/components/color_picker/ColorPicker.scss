@@ -8,6 +8,10 @@ html#{$cadmin-selector} {
 		.layout__color-picker {
 			display: flex;
 
+			.clay-color-picker {
+				width: 100%;
+			}
+
 			.clay-color > .input-group-item > .input-group-text {
 				border-radius: 4px 0 0 4px;
 			}
@@ -27,6 +31,11 @@ html#{$cadmin-selector} {
 					opacity: 0;
 				}
 			}
+		}
+
+		&.layout__color-picker__dropdown .clay-color-dropdown-menu {
+			padding-left: 0;
+			padding-right: 0;
 		}
 	}
 }

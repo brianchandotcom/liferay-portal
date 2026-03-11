@@ -8,12 +8,15 @@ package com.liferay.fragment.model.impl.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.test.util.FragmentCompositionTestUtil;
 import com.liferay.fragment.test.util.FragmentEntryTestUtil;
 import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -103,6 +106,53 @@ public class FragmentCollectionImplTest {
 	}
 
 	@Test
+	@TestInfo("LPD-82487")
+	public void testHasExportableItems() throws Exception {
+		Assert.assertFalse(_fragmentCollection.hasExportableItems());
+
+		FragmentComposition marketplaceFragmentComposition =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString());
+
+		marketplaceFragmentComposition.setMarketplace(true);
+
+		_fragmentCompositionLocalService.updateFragmentComposition(
+			marketplaceFragmentComposition);
+
+		Assert.assertFalse(_fragmentCollection.hasExportableItems());
+
+		FragmentEntry reactFragmentEntry =
+			FragmentEntryTestUtil.addFragmentEntryByType(
+				_fragmentCollection.getFragmentCollectionId(),
+				FragmentConstants.TYPE_REACT);
+
+		Assert.assertTrue(reactFragmentEntry.isTypeReact());
+
+		Assert.assertFalse(_fragmentCollection.hasExportableItems());
+
+		FragmentEntry marketplaceFragmentEntry =
+			FragmentEntryTestUtil.addFragmentEntry(
+				_fragmentCollection.getFragmentCollectionId());
+
+		marketplaceFragmentEntry.setMarketplace(true);
+
+		_fragmentEntryLocalService.updateFragmentEntry(
+			marketplaceFragmentEntry);
+
+		Assert.assertFalse(_fragmentCollection.hasExportableItems());
+
+		FragmentComposition exportableFragmentComposition =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString());
+
+		Assert.assertFalse(exportableFragmentComposition.isMarketplace());
+
+		Assert.assertTrue(_fragmentCollection.hasExportableItems());
+	}
+
+	@Test
 	@TestInfo("LPD-33704")
 	public void testPopulateZipWriter() throws Exception {
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
@@ -189,7 +239,7 @@ public class FragmentCollectionImplTest {
 	private FragmentCollection _fragmentCollection;
 
 	@Inject
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+	private FragmentCompositionLocalService _fragmentCompositionLocalService;
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;

@@ -2905,6 +2905,59 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotEquals(
 				objectDefinition1.getClassName(),
 				objectDefinition2.getClassName());
+
+			_assertObjectDefinitionSettingsValues(
+				objectDefinition2.getObjectDefinitionSettings(),
+				HashMapBuilder.put(
+					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME,
+					objectDefinition1.getClassName()
+				).put(
+					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME_ID,
+					String.valueOf(
+						_classNameLocalService.getClassNameId(
+							objectDefinition1.getClassName()))
+				).build());
+
+			ObjectDefinition objectDefinition3 =
+				ObjectDefinitionTestUtil.publishObjectDefinition();
+
+			objectDefinition3 = _updateCustomObjectDefinition(
+				objectDefinition1.getClassName(), objectDefinition3);
+
+			Assert.assertNotEquals(
+				objectDefinition1.getClassName(),
+				objectDefinition3.getClassName());
+
+			_assertObjectDefinitionSettingsValues(
+				objectDefinition3.getObjectDefinitionSettings(),
+				HashMapBuilder.put(
+					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME,
+					objectDefinition1.getClassName()
+				).put(
+					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME_ID,
+					String.valueOf(
+						_classNameLocalService.getClassNameId(
+							objectDefinition1.getClassName()))
+				).build());
+
+			objectDefinition3 = _updateCustomObjectDefinition(
+				objectDefinition2.getClassName(), objectDefinition3);
+
+			Assert.assertNotEquals(
+				objectDefinition2.getClassName(),
+				objectDefinition3.getClassName());
+
+			_assertObjectDefinitionSettingsValues(
+				objectDefinition3.getObjectDefinitionSettings(),
+				HashMapBuilder.put(
+					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME,
+					objectDefinition1.getClassName()
+				).put(
+					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME_ID,
+					String.valueOf(
+						_classNameLocalService.getClassNameId(
+							objectDefinition1.getClassName()))
+				).build());
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);

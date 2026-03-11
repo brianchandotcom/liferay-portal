@@ -1,0 +1,15 @@
+buildService {
+	apiDir = "../portal-tools-service-builder-test-compat710-api/src/main/java"
+	incubationFeatures = []
+}
+
+dependencies {
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.io", version: "5.0.1"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.2.1"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "6.0.5"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.132.1"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":util:portal-tools-service-builder-test-compat710-api")
+}

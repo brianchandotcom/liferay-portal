@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.client.serdes.v1_0;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.RepeatableFieldsCollectionProviderReference;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -58,6 +59,14 @@ public class CollectionReferenceSerDes {
 			if (collectionTypeString.equals("CollectionProvider")) {
 				return ClassNameReferenceSerDes.toJSON(
 					(ClassNameReference)collectionReference);
+			}
+
+			if (collectionTypeString.equals(
+					"RepeatableFieldsCollectionProvider")) {
+
+				return RepeatableFieldsCollectionProviderReferenceSerDes.toJSON(
+					(RepeatableFieldsCollectionProviderReference)
+						collectionReference);
 			}
 
 			throw new IllegalArgumentException(
@@ -134,6 +143,13 @@ public class CollectionReferenceSerDes {
 
 				if (collectionTypeString.equals("CollectionProvider")) {
 					return ClassNameReference.toDTO(json);
+				}
+
+				if (collectionTypeString.equals(
+						"RepeatableFieldsCollectionProvider")) {
+
+					return RepeatableFieldsCollectionProviderReference.toDTO(
+						json);
 				}
 
 				throw new IllegalArgumentException(

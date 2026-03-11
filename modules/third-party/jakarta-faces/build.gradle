@@ -1,4 +1,6 @@
-ext.isFacesModule = true
+ext {
+	isFacesModule = true
+}
 
 apply from: "../../build-jakarta-transformer.gradle"
 
@@ -25,6 +27,5 @@ jar {
 		}
 
 		ant.jar(destfile: jarFile, basedir: tempDir, manifest: file("$tempDir/META-INF/MANIFEST.MF"))
-
 	}
 }

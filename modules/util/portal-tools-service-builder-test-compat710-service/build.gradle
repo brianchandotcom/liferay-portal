@@ -1,0 +1,9 @@
+buildService {
+	apiDir = "../portal-tools-service-builder-test-compat710-api/src/main/java"
+	incubationFeatures = []
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.1.3-ga4"
+	compileOnly project(":util:portal-tools-service-builder-test-compat710-api")
+}

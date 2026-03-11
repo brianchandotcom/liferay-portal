@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Portal Tools Service Builder Test Compat710 API
+Bundle-SymbolicName: com.liferay.portal.tools.service.builder.test.compat710.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.tools.service.builder.test.compat710.model,\
+	com.liferay.portal.tools.service.builder.test.compat710.service,\
+	com.liferay.portal.tools.service.builder.test.compat710.service.persistence
+Import-Package:\
+	org.hibernate.proxy,\
+	\
+	*

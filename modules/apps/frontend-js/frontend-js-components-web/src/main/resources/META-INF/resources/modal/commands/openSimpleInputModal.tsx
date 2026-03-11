@@ -29,6 +29,7 @@ export default function openSimpleInputModalImplementation({
 	checkboxFieldName,
 	checkboxFieldValue,
 	dialogTitle,
+	disableSubmitOnError,
 	formSubmitURL,
 	idFieldName,
 	idFieldValue,
@@ -71,6 +72,7 @@ export default function openSimpleInputModalImplementation({
 			checkboxFieldValue={checkboxFieldValue}
 			closeModal={cleanUp}
 			dialogTitle={dialogTitle}
+			disableSubmitOnError={disableSubmitOnError}
 			formSubmitURL={formSubmitURL}
 			idFieldName={idFieldName}
 			idFieldValue={idFieldValue}

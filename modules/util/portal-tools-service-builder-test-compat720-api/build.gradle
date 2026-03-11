@@ -1,0 +1,4 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.2.1-ga2"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
+}

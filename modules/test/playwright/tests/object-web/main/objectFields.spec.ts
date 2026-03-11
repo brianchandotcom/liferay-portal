@@ -1261,56 +1261,68 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		objectFieldsPage,
 		page,
 	}) => {
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
+		let objectDefinition: ObjectDefinition;
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
+		await test.step('Create an object definition', async () => {
+			objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
 		});
 
-		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+		await test.step('Go to the object definition fields page', async () => {
+			await objectFieldsPage.goto(objectDefinition.label['en_US']);
+		});
 
-		await objectFieldsPage.openObjectField(
-			objectDefinition.objectFields[0].label['en_US']
-		);
+		await test.step('Check that the ERC input is disabled for a system field', async () => {
+			await objectFieldsPage.openObjectField(
+				objectDefinition.objectFields[0].label['en_US']
+			);
 
-		await expect(
-			objectFieldsPage.externalReferenceCodeField
-		).toBeDisabled();
+			await expect(
+				objectFieldsPage.externalReferenceCodeField
+			).toBeDisabled();
+		});
 
-		const field = objectDefinition.objectFields.find((item) => {
+		const customField = objectDefinition.objectFields.find((item) => {
 			return !item.system;
 		});
 
-		await objectFieldsPage.openObjectField(field.label['en_US']);
+		const ercValue = getRandomString();
 
-		await objectFieldsPage.externalReferenceCodeField.click();
+		await test.step('Edit the ERC of a custom field', async () => {
+			await objectFieldsPage.openObjectField(customField.label['en_US']);
 
-		const ERCValue = getRandomString();
+			await objectFieldsPage.externalReferenceCodeField.click();
 
-		await objectFieldsPage.externalReferenceCodeField.fill(ERCValue);
+			await objectFieldsPage.externalReferenceCodeField.fill(ercValue);
 
-		await objectFieldsPage.editFieldSaveButton.click();
+			await objectFieldsPage.editFieldSaveButton.click();
 
-		await waitForAlert(
-			page,
-			'Success:The object field was updated successfully.'
-		);
+			await waitForAlert(
+				page,
+				'Success:The object field was updated successfully.'
+			);
+		});
 
-		await objectFieldsPage.openObjectField(field.label['en_US']);
+		await test.step('Verify that the ERC was updated', async () => {
+			await objectFieldsPage.openObjectField(customField.label['en_US']);
 
-		await page
-			.frameLocator('iframe')
-			.getByText('Field')
-			.first()
-			.waitFor({state: 'visible'});
+			await page
+				.frameLocator('iframe')
+				.getByText('Field')
+				.first()
+				.waitFor({state: 'visible'});
 
-		expect(objectFieldsPage.externalReferenceCodeField).toHaveValue(
-			ERCValue
-		);
+			expect(objectFieldsPage.externalReferenceCodeField).toHaveValue(
+				ercValue
+			);
+		});
 	});
 
 	test('cannot create localized object fields in unmodifiable system object definition', async ({

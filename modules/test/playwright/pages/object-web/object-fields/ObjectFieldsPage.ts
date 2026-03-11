@@ -193,11 +193,17 @@ export class ObjectFieldsPage {
 	}
 
 	async openObjectField(fieldLabel: string) {
-		await this.page
-			.getByRole('cell')
-			.getByRole('link')
-			.filter({hasText: fieldLabel})
-			.click();
+		await clickAndExpectToBeVisible({
+			target: this.page.locator('.fds-side-panel.is-visible'),
+			trigger: this.page
+				.getByRole('cell')
+				.getByRole('link')
+				.filter({hasText: fieldLabel}),
+		});
+
+		await this.editFieldSaveButton.waitFor();
+
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	async selectDefaultValue(value: string) {

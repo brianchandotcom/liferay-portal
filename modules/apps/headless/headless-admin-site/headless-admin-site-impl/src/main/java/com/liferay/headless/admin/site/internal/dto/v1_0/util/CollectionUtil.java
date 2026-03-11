@@ -11,13 +11,21 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
+import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.RepeatableFieldsCollectionProviderReference;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
+import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.InfoItemServiceRegistryUtil;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.item.provider.RepeatableFieldsInfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
@@ -28,6 +36,8 @@ import com.liferay.object.service.ObjectDefinitionSettingLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,10 +65,17 @@ public class CollectionUtil {
 				(ClassNameReference)collectionReference, companyId,
 				infoItemServiceRegistry);
 		}
+		else if (collectionReference instanceof
+					CollectionItemExternalReference) {
 
-		return _getCollectionItemExternalReferenceJSONObject(
-			(CollectionItemExternalReference)collectionReference, companyId,
-			scopeGroupId);
+			return _getCollectionItemExternalReferenceJSONObject(
+				(CollectionItemExternalReference)collectionReference, companyId,
+				scopeGroupId);
+		}
+
+		return _getRepeatableFieldsCollectionProviderReferenceJSONObject(
+			(RepeatableFieldsCollectionProviderReference)collectionReference,
+			companyId, scopeGroupId);
 	}
 
 	public static CollectionReference getCollectionReference(
@@ -106,20 +123,7 @@ public class CollectionUtil {
 		return classNameReference;
 	}
 
-	private static JSONObject _getClassNameReferenceJSONObject(
-		ClassNameReference classNameReference, long companyId,
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		if (infoItemServiceRegistry == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		String className = classNameReference.getClassName();
-
-		if (Validator.isNull(className)) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
+	private static String _getClassName(String className, long companyId) {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			Matcher matcher = _objectDefinitionClassNamePattern.matcher(
 				className);
@@ -134,6 +138,24 @@ public class CollectionUtil {
 							objectDefinition.getClassName()));
 				}
 			}
+		}
+
+		return className;
+	}
+
+	private static JSONObject _getClassNameReferenceJSONObject(
+		ClassNameReference classNameReference, long companyId,
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		if (infoItemServiceRegistry == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		String className = _getClassName(
+			classNameReference.getClassName(), companyId);
+
+		if (Validator.isNull(className)) {
+			return JSONFactoryUtil.createJSONObject();
 		}
 
 		InfoCollectionProvider infoCollectionProvider =
@@ -256,6 +278,39 @@ public class CollectionUtil {
 		);
 	}
 
+	private static String _getFormVariationKey(
+		String className, ItemExternalReference itemExternalReference,
+		long scopeGroupId) {
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			InfoItemServiceRegistryUtil.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className);
+
+		if (infoItemFormVariationsProvider == null) {
+			LogUtil.logOptionalReference(itemExternalReference, scopeGroupId);
+
+			return null;
+		}
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.
+				getInfoItemFormVariationByExternalReferenceCode(
+					itemExternalReference.getExternalReferenceCode(),
+					scopeGroupId);
+
+		if (infoItemFormVariation == null) {
+			LogUtil.logOptionalReference(
+				infoItemFormVariationsProvider.
+					getInfoItemFormVariationClassName(),
+				itemExternalReference.getExternalReferenceCode(),
+				itemExternalReference.getScope(), scopeGroupId);
+
+			return null;
+		}
+
+		return infoItemFormVariation.getKey();
+	}
+
 	private static InfoCollectionProvider _getInfoCollectionProvider(
 		String className, InfoItemServiceRegistry infoItemServiceRegistry) {
 
@@ -287,6 +342,102 @@ public class CollectionUtil {
 
 		return ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
 			objectDefinitionSetting.getObjectDefinitionId());
+	}
+
+	private static JSONObject
+		_getRepeatableFieldsCollectionProviderReferenceJSONObject(
+			RepeatableFieldsCollectionProviderReference
+				repeatableFieldsCollectionProviderReference,
+			long companyId, long scopeGroupId) {
+
+		String className = _getClassName(
+			repeatableFieldsCollectionProviderReference.getClassName(),
+			companyId);
+
+		if (Validator.isNull(className)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		ItemExternalReference subTypeExternalReferenceCode =
+			repeatableFieldsCollectionProviderReference.
+				getSubTypeExternalReference();
+
+		if ((subTypeExternalReferenceCode == null) ||
+			(subTypeExternalReferenceCode.getExternalReferenceCode() == null)) {
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		return JSONUtil.put(
+			"fieldName",
+			repeatableFieldsCollectionProviderReference.getFieldName()
+		).put(
+			"itemSubtypeKey",
+			SubtypeUtil.getClassTypeKey(
+				className, scopeGroupId, subTypeExternalReferenceCode)
+		).put(
+			"itemType", className
+		).put(
+			"key", RepeatableFieldInfoItemCollectionProvider.class.getName()
+		).put(
+			"title",
+			_getTitle(
+				className, companyId,
+				repeatableFieldsCollectionProviderReference.getFieldName(),
+				subTypeExternalReferenceCode, scopeGroupId)
+		).put(
+			"type", InfoListProviderItemSelectorReturnType.class.getName()
+		);
+	}
+
+	private static String _getTitle(
+		String className, long companyId, String fieldName,
+		ItemExternalReference itemExternalReference, long scopeGroupId) {
+
+		RepeatableFieldsInfoItemFormProvider<?>
+			repeatableFieldsInfoItemFormProvider =
+				InfoItemServiceRegistryUtil.getFirstInfoItemService(
+					RepeatableFieldsInfoItemFormProvider.class, className);
+
+		if (repeatableFieldsInfoItemFormProvider == null) {
+			LogUtil.logOptionalReference(
+				RepeatableFieldsInfoItemFormProvider.class, className,
+				companyId);
+
+			return null;
+		}
+
+		try {
+			InfoForm infoForm =
+				repeatableFieldsInfoItemFormProvider.
+					getRepeatableFieldsInfoForm(
+						_getFormVariationKey(
+							className, itemExternalReference, scopeGroupId));
+
+			InfoField infoField = infoForm.getInfoField(fieldName);
+
+			if (infoField == null) {
+				LogUtil.logOptionalReference(
+					InfoField.class, fieldName, companyId);
+
+				return null;
+			}
+
+			if (infoField.isRepeatable()) {
+				return infoField.getLabel(LocaleUtil.getDefault());
+			}
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			LogUtil.logOptionalReference(
+				InfoForm.class,
+				itemExternalReference.getExternalReferenceCode(), companyId);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFormVariationException);
+			}
+		}
+
+		return null;
 	}
 
 	private static CollectionItemExternalReference
@@ -352,6 +503,8 @@ public class CollectionUtil {
 
 		return repeatableFieldsCollectionProviderReference;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CollectionUtil.class);
 
 	private static final Pattern _objectDefinitionClassNamePattern =
 		Pattern.compile(

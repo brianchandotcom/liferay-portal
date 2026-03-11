@@ -214,25 +214,6 @@ declare module Liferay {
 												}
 											: Readonly<T>;
 
-		const ATOM = 'Liferay.State.ATOM';
-		const SELECTOR = 'Liferay.State.SELECTOR';
-
-		type Atom<T> = Immutable<{
-			[ATOM]: true;
-			default: T;
-			key: string;
-		}>;
-
-		interface Getter {
-			<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T>;
-		}
-
-		type Selector<T> = Immutable<{
-			[SELECTOR]: true;
-			deriveValue: (get: Getter) => T;
-			key: string;
-		}>;
-
 		export function atom<T>(key: string, value: T): Atom<T>;
 
 		export function read<T>(

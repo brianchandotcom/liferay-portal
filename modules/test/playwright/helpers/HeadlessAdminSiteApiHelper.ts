@@ -52,4 +52,19 @@ export class HeadlessAdminSiteApiHelper {
 			{data: page, failOnStatusCode: true}
 		);
 	}
+
+	async postSiteNavigationMenu(
+		siteExternalReferenceCode: string,
+		name: string
+	): Promise<any> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/navigation-menus`,
+			{
+				data: {
+					name,
+				},
+				failOnStatusCode: true,
+			}
+		);
+	}
 }

@@ -55,6 +55,10 @@ public class SideNavigationDisplayContext {
 	}
 
 	public Map<String, Object> getProps() throws Exception {
+		if (_panelCategory == null) {
+			return Collections.emptyMap();
+		}
+
 		String itemSelectedEventName = String.format(
 			"_%s_selectSite",
 			ProductNavigationProductMenuPortletKeys.

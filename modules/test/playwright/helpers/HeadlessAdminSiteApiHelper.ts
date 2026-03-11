@@ -3,10 +3,33 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApiHelpers} from './ApiHelpers';
+import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
+
+export type TNavigationMenu = {
+	name: string;
+	navigationMenuItems?: TNavigationMenuItem[];
+	navigationType?: 'Primary' | 'Secondary' | 'Social';
+};
+
+export type TNavigationMenuItem = {
+	name?: string;
+	name_i18n?: {[key: string]: string};
+	navigationMenuItemSettings?: {
+		className?: string;
+		externalReferenceCode?: string;
+		privatePage?: boolean;
+		scopeExternalReferenceCode?: string;
+		showAssetVocabularyLevel?: boolean;
+		title?: string;
+		url?: string;
+		useNewTab?: boolean;
+	};
+	navigationMenuItems?: TNavigationMenuItem[];
+	type: 'asset_vocabulary' | 'layout' | 'node' | 'url' | string;
+};
 
 export class HeadlessAdminSiteApiHelper {
-	apiHelpers: ApiHelpers;
+	apiHelpers: ApiHelpers | DataApiHelpers;
 	basePath: string;
 
 	constructor(apiHelpers: ApiHelpers) {
@@ -55,17 +78,24 @@ export class HeadlessAdminSiteApiHelper {
 
 	async postSiteNavigationMenu(
 		siteExternalReferenceCode: string,
-		name: string
+		navigationMenu: TNavigationMenu
 	): Promise<any> {
-		return this.apiHelpers.post(
+		const postNavigationMenu = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/navigation-menus`,
 			{
-				data: {
-					name,
-				},
+				data: navigationMenu,
 				failOnStatusCode: true,
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: `${siteExternalReferenceCode}|${postNavigationMenu.externalReferenceCode}`,
+				type: 'navigationMenu',
+			});
+		}
+
+		return postNavigationMenu;
 	}
 
 	async deleteSiteNavigationMenu(

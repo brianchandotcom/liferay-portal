@@ -87,6 +87,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -589,11 +590,19 @@ public class FragmentEntryProcessorHelperImpl
 		if (value instanceof Date) {
 			Date date = (Date)value;
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)
+					fragmentEntryProcessorContext.getHttpServletRequest(
+					).getAttribute(
+						WebKeys.THEME_DISPLAY
+					);
+
 			return _getDateValue(
 				editableValueJSONObject, date,
 				_getShortTimeStylePattern(
 					fragmentEntryProcessorContext.getLocale()),
-				fragmentEntryProcessorContext.getLocale());
+				fragmentEntryProcessorContext.getLocale(),
+				themeDisplay.getTimeZone());
 		}
 		else if (value instanceof KeyLocalizedLabelPair) {
 			KeyLocalizedLabelPair keyLocalizedLabelPair =
@@ -636,6 +645,13 @@ public class FragmentEntryProcessorHelperImpl
 					}
 				}
 
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)
+						fragmentEntryProcessorContext.getHttpServletRequest(
+						).getAttribute(
+							WebKeys.THEME_DISPLAY
+						);
+
 				try {
 					DateFormat dateFormat =
 						DateFormatFactoryUtil.getSimpleDateFormat(
@@ -647,7 +663,8 @@ public class FragmentEntryProcessorHelperImpl
 						editableValueJSONObject, date,
 						_getShortTimeStylePattern(
 							fragmentEntryProcessorContext.getLocale()),
-						fragmentEntryProcessorContext.getLocale());
+						fragmentEntryProcessorContext.getLocale(),
+						themeDisplay.getTimeZone());
 				}
 				catch (ParseException parseException1) {
 					if (_log.isDebugEnabled()) {
@@ -664,7 +681,8 @@ public class FragmentEntryProcessorHelperImpl
 							dateFormat.parse(value.toString()),
 							_getDefaultPattern(
 								fragmentEntryProcessorContext.getLocale()),
-							fragmentEntryProcessorContext.getLocale());
+							fragmentEntryProcessorContext.getLocale(),
+							themeDisplay.getTimeZone());
 					}
 					catch (ParseException parseException2) {
 						if (_log.isDebugEnabled()) {
@@ -856,11 +874,11 @@ public class FragmentEntryProcessorHelperImpl
 
 	private String _getDateValue(
 		JSONObject editableValueJSONObject, Date date, String defaultPattern,
-		Locale locale) {
+		Locale locale, TimeZone timeZone) {
 
 		if (editableValueJSONObject == null) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				defaultPattern, locale);
+				defaultPattern, locale, timeZone);
 
 			return dateFormat.format(date);
 		}
@@ -870,7 +888,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		if (configJSONObject == null) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				defaultPattern, locale);
+				defaultPattern, locale, timeZone);
 
 			return dateFormat.format(date);
 		}
@@ -880,7 +898,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		if (dateFormatJSONObject == null) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				defaultPattern, locale);
+				defaultPattern, locale, timeZone);
 
 			return dateFormat.format(date);
 		}
@@ -895,14 +913,14 @@ public class FragmentEntryProcessorHelperImpl
 
 		if (Validator.isNull(pattern)) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				defaultPattern, locale);
+				defaultPattern, locale, timeZone);
 
 			return dateFormat.format(date);
 		}
 
 		try {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				pattern, locale);
+				pattern, locale, timeZone);
 
 			return dateFormat.format(date);
 		}
@@ -912,7 +930,7 @@ public class FragmentEntryProcessorHelperImpl
 			}
 
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				defaultPattern, locale);
+				defaultPattern, locale, timeZone);
 
 			return dateFormat.format(date);
 		}

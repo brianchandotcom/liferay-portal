@@ -280,8 +280,32 @@ public class CloudBucketUtil {
 		return false;
 	}
 
+	public static boolean isS3ObjectPathAvailable(String s3ObjectPath) {
+		if (!_isValidS3ObjectPath(s3ObjectPath)) {
+			return false;
+		}
+
+		if (isS3ObjectRefAvailable(s3ObjectPath)) {
+			return true;
+		}
+
+		try {
+			String listS3Files = listS3Files(s3ObjectPath, true);
+
+			return !JenkinsResultsParserUtil.isNullOrEmpty(listS3Files.trim());
+		}
+		catch (IOException | TimeoutException exception) {
+			return false;
+		}
+	}
+
 	public static boolean isS3ObjectRefAvailable(String s3ObjectPath) {
-		_validateS3ObjectPath(s3ObjectPath);
+		if (!_isValidS3ObjectPath(s3ObjectPath)) {
+			System.out.println(
+				"WARNING: Invalid s3 object path: " + s3ObjectPath);
+
+			return false;
+		}
 
 		File s3ObjectRefFile = _getS3ObjectRefFile(s3ObjectPath);
 
@@ -711,6 +735,17 @@ public class CloudBucketUtil {
 		}
 	}
 
+	private static boolean _isValidS3ObjectPath(String s3ObjectPath) {
+		if (s3ObjectPath == null) {
+			return false;
+		}
+
+		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			s3ObjectPath);
+
+		return s3ObjectPathMatcher.find();
+	}
+
 	private static String _replaceS3ObjectPath(String s3ObjectPath) {
 		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
 			s3ObjectPath);
@@ -799,10 +834,7 @@ public class CloudBucketUtil {
 	}
 
 	private static void _validateS3ObjectPath(String s3ObjectPath) {
-		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
-			s3ObjectPath);
-
-		if (!s3ObjectPathMatcher.find()) {
+		if (!_isValidS3ObjectPath(s3ObjectPath)) {
 			throw new RuntimeException(
 				"Invalid S3 object path: " + s3ObjectPath);
 		}

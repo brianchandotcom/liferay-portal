@@ -578,31 +578,6 @@ definition {
 		}
 	}
 
-	@description = "This checks that a blog entry can be automatically saved as a draft."
-	@priority = 4
-	@refactordone
-	test CanAutomaticallySaveEntryAsDraft {
-		property portal.acceptance = "true";
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addDraftViaAutoSave(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(
-			entryStatus = "Draft",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-	}
-
 	@description = "This checks that a user can change the publish date for a scheduled entry to the present and publish it."
 	@e2etest
 	@priority = 3

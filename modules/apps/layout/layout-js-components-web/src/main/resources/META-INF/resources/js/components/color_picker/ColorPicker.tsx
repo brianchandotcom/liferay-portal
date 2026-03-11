@@ -301,9 +301,22 @@ function ColorPicker({
 					<ColorPickerField
 						active={activeColorPicker}
 						colors={customColors}
+						colorsFromStylebook={colors}
 						onActiveChange={setActiveColorPicker}
 						onBlurInput={onBlurInput}
 						onChange={onChangeInput}
+						onClickColorPalette={({label, name, value}) => {
+							onSetValue({label, name, value});
+
+							if (error.value) {
+								setError({
+									label: null,
+									value: null,
+								});
+
+								deleteStyleError(field.name);
+							}
+						}}
 						onColorChangeEditor={(color: string) => {
 							debouncedOnValueSelect(field.name, color);
 						}}

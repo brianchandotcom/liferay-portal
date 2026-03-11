@@ -70,6 +70,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -259,12 +260,22 @@ public class MarketplaceRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		LicenseEntry licenseEntry = LicenseEntry.fromJson(
-			new JSONObject(
-				json
-			).getJSONObject(
-				"licenseEntry"
-			));
+		LicenseEntry licenseEntry;
+
+		try {
+			licenseEntry = LicenseEntry.fromJson(
+					new JSONObject(
+							json
+					).getJSONObject(
+							"licenseEntry"
+					));
+		} catch (JSONException jsonException) {
+			throw new ResponseStatusException(
+					HttpStatus.BAD_REQUEST,
+					"Invalid JSON or missing 'licenseEntry' field",
+					jsonException
+			);
+		}
 
 		Order order = _marketplaceService.getOrder(licenseEntry.getOrderId());
 

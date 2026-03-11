@@ -118,6 +118,11 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 							prune=true
 							selfHeal=true
 						}
+						managedNamespaceMetadata={
+							labels = {
+								"pod-security.kubernetes.io/enforce"="restricted"
+							}
+						}
 						syncOptions=[
 							"CreateNamespace=true",
 							"IgnoreExtraneous=true",
@@ -424,6 +429,11 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 						automated={
 							prune=true
 							selfHeal=true
+						}
+						managedNamespaceMetadata={
+							labels = {
+								"pod-security.kubernetes.io/enforce"="restricted"
+							}
 						}
 						syncOptions=[
 							"CreateNamespace=true",

@@ -7,6 +7,8 @@ package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.web.internal.display.context.FragmentDisplayContext;
+import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
@@ -36,10 +38,11 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 	}
 
 	@Test
+	@TestInfo("LPD-82487")
 	public void testGetActionDropdowns() {
 		setUpFragmentPermission(true);
 
-		_setUpFragmentCollection(false);
+		_setUpFragmentCollection(false, true);
 
 		FragmentCollectionActionDropdownItemsProvider
 			fragmentCollectionActionDropdownItemsProvider =
@@ -54,10 +57,30 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 	}
 
 	@Test
-	public void testGetActionDropdownsForMarketplaceFragmentCollection() {
+	@TestInfo("LPD-82487")
+	public void testGetActionDropdownsForFragmentCollectionWithExportableComposition() {
 		setUpFragmentPermission(true);
 
-		_setUpFragmentCollection(true);
+		_setUpFragmentCollection(false, true);
+
+		FragmentCollectionActionDropdownItemsProvider
+			fragmentCollectionActionDropdownItemsProvider =
+				new FragmentCollectionActionDropdownItemsProvider(
+					_fragmentDisplayContext, httpServletRequest,
+					renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			fragmentCollectionActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"edit", "export", "import", "delete");
+	}
+
+	@Test
+	@TestInfo("LPD-82487")
+	public void testGetActionDropdownsForFragmentCollectionWithOnlyMarketplaceFragments() {
+		setUpFragmentPermission(true);
+
+		_setUpFragmentCollection(false, false);
 
 		FragmentCollectionActionDropdownItemsProvider
 			fragmentCollectionActionDropdownItemsProvider =
@@ -71,7 +94,72 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 			"edit", "import", "delete");
 	}
 
-	private void _setUpFragmentCollection(boolean marketplace) {
+	@Test
+	@TestInfo("LPD-82487")
+	public void testGetActionDropdownsForMarketplaceFragmentCollection() {
+		setUpFragmentPermission(true);
+
+		_setUpFragmentCollection(true, false);
+
+		FragmentCollectionActionDropdownItemsProvider
+			fragmentCollectionActionDropdownItemsProvider =
+				new FragmentCollectionActionDropdownItemsProvider(
+					_fragmentDisplayContext, httpServletRequest,
+					renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			fragmentCollectionActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"edit", "import", "delete");
+	}
+
+	@Test
+	@TestInfo("LPD-82487")
+	public void testGetActionDropdownsForMarketplaceFragmentCollectionWithExportableFragment() {
+		setUpFragmentPermission(true);
+
+		_setUpFragmentCollection(true, true);
+
+		FragmentCollectionActionDropdownItemsProvider
+			fragmentCollectionActionDropdownItemsProvider =
+				new FragmentCollectionActionDropdownItemsProvider(
+					_fragmentDisplayContext, httpServletRequest,
+					renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			fragmentCollectionActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"edit", "export", "import", "delete");
+	}
+
+	@Test
+	@TestInfo("LPD-82487")
+	public void testGetActionDropdownsWithReactFragment() {
+		setUpFragmentPermission(true);
+
+		_setUpFragmentCollection(false, false);
+
+		FragmentCollectionActionDropdownItemsProvider
+			fragmentCollectionActionDropdownItemsProvider =
+				new FragmentCollectionActionDropdownItemsProvider(
+					_fragmentDisplayContext, httpServletRequest,
+					renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			fragmentCollectionActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"edit", "import", "delete");
+	}
+
+	private void _setUpFragmentCollection(
+		boolean marketplace, boolean hasExportableItems) {
+
+		Mockito.when(
+			_fragmentCollection.getFragmentCollectionId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
 		Mockito.when(
 			_fragmentDisplayContext.getFragmentCollection()
 		).thenReturn(
@@ -82,6 +170,12 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 			_fragmentCollection.isMarketplace()
 		).thenReturn(
 			marketplace
+		);
+
+		Mockito.when(
+			_fragmentCollection.hasExportableItems()
+		).thenReturn(
+			hasExportableItems
 		);
 	}
 

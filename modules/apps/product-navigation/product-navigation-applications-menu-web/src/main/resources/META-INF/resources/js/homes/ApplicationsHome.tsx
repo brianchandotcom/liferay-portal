@@ -9,14 +9,7 @@ import HomePageLayout from './components/HomePageLayout';
 import {HomeProps} from './types';
 
 const ApplicationsHome = ({icon, items, title}: HomeProps) => {
-	return (
-		<HomePageLayout
-			displayType="horizontal"
-			icon={icon}
-			items={items}
-			title={title}
-		/>
-	);
+	return <HomePageLayout icon={icon} items={items} title={title} />;
 };
 
 export default ApplicationsHome;

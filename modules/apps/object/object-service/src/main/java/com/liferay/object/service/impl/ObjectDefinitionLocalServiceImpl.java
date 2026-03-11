@@ -1759,22 +1759,32 @@ public class ObjectDefinitionLocalServiceImpl
 			String className, ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		if (Validator.isNotNull(className) &&
-			!StringUtil.equals(className, objectDefinition.getClassName())) {
+		if (Validator.isNull(className) ||
+			StringUtil.equals(className, objectDefinition.getClassName())) {
 
+			return;
+		}
+
+		ObjectDefinitionSetting objectDefinitionSetting =
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				objectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME);
+
+		if (objectDefinitionSetting != null) {
+			return;
+		}
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME, className);
+
+		for (long classNameId : _getClassNameIds(className)) {
 			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
 				objectDefinition.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
-				ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME,
-				className);
-
-			for (long classNameId : _getClassNameIds(className)) {
-				_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-					objectDefinition.getUserId(),
-					objectDefinition.getObjectDefinitionId(),
-					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME_ID,
-					String.valueOf(classNameId));
-			}
+				ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME_ID,
+				String.valueOf(classNameId));
 		}
 	}
 

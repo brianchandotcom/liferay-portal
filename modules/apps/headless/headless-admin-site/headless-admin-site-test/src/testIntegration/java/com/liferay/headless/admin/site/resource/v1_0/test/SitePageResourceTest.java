@@ -3405,12 +3405,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			putSitePage.getTaxonomyCategoryBriefs();
 
 		Assert.assertEquals(
-			Arrays.toString(putTaxonomyCategoryBriefs), 3,
+			Arrays.toString(putTaxonomyCategoryBriefs), 1,
 			putTaxonomyCategoryBriefs.length);
 
 		TaxonomyCategoryBrief putTaxonomyCategoryBrief =
 			putTaxonomyCategoryBriefs[0];
 
+		Assert.assertEquals(
+			taxonomyCategoryBrief3.getTaxonomyCategoryExternalReferenceCode(),
+			putTaxonomyCategoryBrief.
+				getTaxonomyCategoryExternalReferenceCode());
 		Assert.assertNotEquals(
 			taxonomyCategoryBrief3.getParentTaxonomyCategory(),
 			putTaxonomyCategoryBrief.getParentTaxonomyCategory());

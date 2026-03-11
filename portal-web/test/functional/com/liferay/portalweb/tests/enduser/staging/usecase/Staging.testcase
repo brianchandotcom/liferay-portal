@@ -1914,24 +1914,13 @@ definition {
 			publishTemplateName = "Publish Template Name");
 	}
 
-	@description = "This is a use case for LPS-131578 and LPS-149374. Users can configure the portal to exclude displayed contents from publishing."
+	@description = "This is a use case for LPS-131578, LPS-149374 and LPD-81248. Users can no longer configure the portal to exclude displayed contents from publishing, the displayed contents are excluded by default."
 	@priority = 3
 	test PublishViaPortletWithoutContent {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Unable the publish displayed content by default function and enable local staging") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Infrastructure",
-				configurationName = "Staging",
-				configurationScope = "Virtual Instance Scope");
-
-			SystemSettings.configureSystemSetting(
-				enableSetting = "false",
-				settingFieldName = "Publish Displayed Content by Default");
-
+		task ("Given: Enable local staging") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 		}
 
@@ -2022,7 +2011,7 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("And: Publish staging without any content and verify that on Live the portlets are present but not the contents from them") {
+		task ("And: Publish staging without any content") {
 			Staging.gotoPublishToLive();
 
 			Staging.configurePublishToLive(
@@ -2031,7 +2020,9 @@ definition {
 				uncheckContentNameList = "Web Content,Forms,Wiki");
 
 			Staging.publishToLive();
+		}
 
+		task ("Then: Verify that on Live the portlets are present but not the contents from them") {
 			Navigator.gotoSitePage(
 				pageName = "Staging Test Page",
 				siteName = "Site Name");
@@ -2057,67 +2048,6 @@ definition {
 			WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 			WikiNode.viewNoCP(wikiNodeName = "Wiki Node Name");
-		}
-
-		task ("When: Enable the publish displayed content by default function and republish staging without any content") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Infrastructure",
-				configurationName = "Staging",
-				configurationScope = "Virtual Instance Scope");
-
-			SystemSettings.configureSystemSetting(
-				enableSetting = "true",
-				settingFieldName = "Publish Displayed Content by Default");
-
-			Navigator.gotoStagedSitePage(
-				pageName = "Staging Test Page",
-				siteName = "Site Name");
-
-			Staging.gotoPublishToLive();
-
-			Staging.configurePublishToLive(
-				checkPageName = "Staging Test Page",
-				contentDateRange = "All",
-				uncheckContentNameList = "Web Content,Forms,Wiki");
-
-			Staging.publishToLive();
-		}
-
-		task ("Then: Verify that on Live the portlets are present with the contents displayed in them") {
-			Navigator.gotoSitePage(
-				pageName = "Staging Test Page",
-				siteName = "Site Name");
-
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-
-			AssertTextPresent(value1 = "Test Form");
-
-			WikiPage.viewPG(
-				wikiPageContent = "Wiki Page Content",
-				wikiPageTitle = "Wiki Page Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			LexiconList.viewListEntryPresent(listEntry = "Web Content Title");
-
-			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
-
-			FormsAdmin.viewForm(
-				formDescription = "Test description",
-				formName = "Test Form");
-
-			WikiNavigator.openToWikiPage(
-				siteURLKey = "site-name",
-				wikiNodeName = "Wiki Node Name",
-				wikiPageTitle = "Wiki Page Title");
-
-			WikiPage.viewCP(
-				wikiPageContent = "Wiki Page Content",
-				wikiPageTitle = "Wiki Page Title");
 		}
 	}
 

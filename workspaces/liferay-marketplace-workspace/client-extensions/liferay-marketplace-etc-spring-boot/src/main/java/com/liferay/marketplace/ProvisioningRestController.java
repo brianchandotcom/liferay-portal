@@ -7,6 +7,7 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.marketplace.model.LicenseEntry;
 import com.liferay.marketplace.service.ProvisioningService;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
@@ -19,6 +20,8 @@ import java.util.Collections;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -132,7 +135,14 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		return _provisioningService.provision(jwt, json);
+		LicenseEntry licenseEntry = LicenseEntry.fromJson(
+			new JSONObject(
+				json
+			).getJSONObject(
+				"licenseEntry"
+			));
+
+		return _provisioningService.provision(jwt, licenseEntry);
 	}
 
 	private static final Log _log = LogFactory.getLog(

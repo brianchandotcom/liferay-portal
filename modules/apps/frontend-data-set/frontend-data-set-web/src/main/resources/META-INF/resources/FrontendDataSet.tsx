@@ -35,9 +35,6 @@ import FDSDndProvider from './dnd/FDSDndProvider';
 import isFileDropEnabled from './utils/isFileDropEnabled';
 
 import './styles/main.scss';
-
-import {Atom, Selector, State} from '@liferay/frontend-js-state-web';
-
 import DnDContext from './DnDContext';
 import FrontendDataSetContext from './FrontendDataSetContext';
 import useFDSDrop from './dnd/useFDSDrop';
@@ -106,7 +103,6 @@ const FrontendDataSetContent = ({
 	additionalAPIURLParameters: initialAdditionalAPIURLParameters,
 	apiURL,
 	appURL,
-	atom,
 	bulkActions = [],
 	configInURLBehavior = EConfigInURLBehavior.PUSH,
 	creationMenu: initialCreationMenu,

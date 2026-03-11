@@ -5,13 +5,14 @@
 
 package com.liferay.design.library.web.internal.constants;
 
+import com.liferay.design.library.web.internal.constants.DesignLibraryAdminPortletKeys;
+
 /**
  * @author Mario Leandro
  */
 public class DesignLibraryAdminFDSNames {
 
-	public static final String ALL_DESIGN_LIBRARIES_SECTION =
-		DesignLibraryConstants.BUNDLE_SYMBOLIC_NAME +
-			"-allDesignLibrariesSection";
+    public static final String ALL_DESIGN_LIBRARIES_SECTION =
+        DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN + "-allDesignLibrariesSection";
 
 }

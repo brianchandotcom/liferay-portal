@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
@@ -76,9 +77,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 	public List<BreadcrumbEntry> getBreadcrumbEntries() {
 		return BreadcrumbEntryListBuilder.add(
 			breadcrumbEntry -> {
-				String backURL = ParamUtil.getString(
-					_httpServletRequest, "backURL",
-					PortalUtil.getCurrentURL(_httpServletRequest));
+				String backURL = _getBackURL();
 
 				breadcrumbEntry.setBrowsable(backURL != null);
 
@@ -351,6 +350,24 @@ public class SelectSiteNavigationMenuDisplayContext {
 		).build();
 	}
 
+	private String _getBackURL() {
+		if (_backURL != null) {
+			return _backURL;
+		}
+
+		String backURL = PortalUtil.escapeRedirect(
+			ParamUtil.getString(_httpServletRequest, "backURL"));
+
+		if (Validator.isNotNull(backURL)) {
+			_backURL = backURL;
+		}
+		else {
+			_backURL = PortalUtil.getCurrentURL(_httpServletRequest);
+		}
+
+		return _backURL;
+	}
+
 	private PortletURL _getBasePortletURL(long siteNavigationMenuId)
 		throws PortletException {
 
@@ -363,9 +380,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 				_portletURL,
 				PortalUtil.getLiferayPortletResponse(portletResponse))
 		).setBackURL(
-			ParamUtil.getString(
-				_httpServletRequest, "backURL",
-				PortalUtil.getCurrentURL(_httpServletRequest))
+			_getBackURL()
 		).setParameter(
 			"siteNavigationMenuId", siteNavigationMenuId
 		).buildPortletURL();
@@ -579,6 +594,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 			_getPagesHierarchySiteNavigationMenu());
 	}
 
+	private String _backURL;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private Long _parentSiteNavigationMenuItemId;

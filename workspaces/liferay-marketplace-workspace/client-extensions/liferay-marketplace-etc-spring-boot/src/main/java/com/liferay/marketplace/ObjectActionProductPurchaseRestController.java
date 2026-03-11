@@ -148,7 +148,7 @@ public class ObjectActionProductPurchaseRestController
 		return "1 USD = " + String.format("%.5f", exchangeRate) + " EUR";
 	}
 
-	private Map<String, String> _getInvoiceOrderSubmitTemplate(
+	private Map<String, String> _getInvoiceOrderMap(
 			Order order, Product product,
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
@@ -278,7 +278,7 @@ public class ObjectActionProductPurchaseRestController
 		return "";
 	}
 
-	private Map<String, String> _getOrderConfirmationTemplate(
+	private Map<String, String> _getOrderConfirmationMap(
 			Order order, Product product,
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
@@ -340,7 +340,7 @@ public class ObjectActionProductPurchaseRestController
 		).build();
 	}
 
-	private Map<String, String> _getPaymentApprovedTemplate(
+	private Map<String, String> _getPaymentApprovedMap(
 			Order order, Product product,
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
@@ -414,9 +414,8 @@ public class ObjectActionProductPurchaseRestController
 				 MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED))) {
 
 			_marketplaceService.postNotificationQueueEntry(
-				null, "MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
-				_getInvoiceOrderSubmitTemplate(
-					order, product, productSpecificationsMap));
+				null, "MARKETPLACE-INVOICE-ORDER",
+				_getInvoiceOrderMap(order, product, productSpecificationsMap));
 		}
 
 		if (Objects.equals(
@@ -428,7 +427,7 @@ public class ObjectActionProductPurchaseRestController
 			_marketplaceService.postNotificationQueueEntry(
 				order.getCreatorEmailAddress(),
 				"MARKETPLACE-ORDER-CONFIRMATION",
-				_getOrderConfirmationTemplate(
+				_getOrderConfirmationMap(
 					order, product, productSpecificationsMap));
 		}
 
@@ -440,7 +439,7 @@ public class ObjectActionProductPurchaseRestController
 
 			_marketplaceService.postNotificationQueueEntry(
 				order.getCreatorEmailAddress(), "MARKETPLACE-PAYMENT-APPROVED",
-				_getPaymentApprovedTemplate(
+				_getPaymentApprovedMap(
 					order, product, productSpecificationsMap));
 		}
 	}

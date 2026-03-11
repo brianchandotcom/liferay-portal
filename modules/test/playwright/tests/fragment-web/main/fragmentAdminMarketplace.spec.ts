@@ -135,7 +135,7 @@ test(
 test(
 	'Check available actions of marketplace fragment',
 	{
-		tag: '@LPD-43455',
+		tag: ['@LPD-43455', '@LPD-63087'],
 	},
 	async ({apiHelpers, fragmentsPage, page, site}) => {
 
@@ -178,7 +178,7 @@ test(
 
 		// Check available actions
 
-		['View Usages', 'Move', 'Delete'].forEach(async (action) => {
+		['Rename', 'View Usages', 'Move', 'Delete'].forEach(async (action) => {
 			await expect(
 				page.getByRole('menuitem', {name: action})
 			).toBeVisible();
@@ -190,7 +190,6 @@ test(
 			'Mark as Cacheable',
 			'Export',
 			'Make a Copy',
-			'Rename',
 		].forEach(async (action) => {
 			await expect(
 				page.getByRole('menuitem', {name: action})

@@ -181,6 +181,71 @@ test('can create an object custom view using object relationship entry', async (
 	).toBeVisible();
 });
 
+test('can use external reference code field in view column', async ({
+	apiHelpers,
+	objectViewPage,
+	page,
+	viewObjectEntriesPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	const applicationName = 'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{[objectFields[0].name]: 'Entry Test'},
+		applicationName
+	);
+
+	await objectViewPage.goto(objectDefinition.label['en_US']);
+
+	const viewName = 'Custom Views';
+
+	await objectViewPage.createObjectView(viewName);
+
+	await page.getByRole('link', {name: viewName}).click();
+
+	await objectViewPage.markAsDefault.check();
+
+	await objectViewPage.viewBuilderTab.click();
+
+	await objectViewPage.iframe
+		.getByRole('button', {name: 'Add Column'})
+		.click({timeout: 500});
+
+	await page.getByRole('checkbox', {name: 'External Reference Code'}).check();
+
+	await page.getByRole('checkbox', {name: objectFields[0].name}).check();
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await page
+		.locator('iframe')
+		.contentFrame()
+		.getByRole('button', {name: 'Save'})
+		.click();
+
+	await viewObjectEntriesPage.goto(objectDefinition.className!);
+
+	await expect(page.getByRole('cell', {name: 'Entry Test'})).toBeVisible();
+
+	await expect(
+		page.getByRole('columnheader', {name: 'External Reference Code'})
+	).toBeVisible();
+});
+
 test('cannot create an object custom view using empty multiselectpicklist entry', async ({
 	apiHelpers,
 	editObjectViewPage,

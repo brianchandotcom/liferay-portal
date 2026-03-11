@@ -2401,6 +2401,116 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
+	test('can create an object entry with aggregation field', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const objectFieldsA = generateObjectFields({
+			objectFieldBusinessTypes: ['Integer'],
+		});
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: objectFieldsA,
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition2.externalReferenceCode!,
+			{
+				label: {en_US: 'Relationship'},
+				name: 'relationship' + Math.floor(Math.random() * 99),
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionId2: objectDefinition1.id,
+				objectDefinitionName2: objectDefinition1.name,
+				type: 'oneToMany',
+			}
+		);
+
+		await objectFieldsPage.goto(objectDefinition2.label['en_US']);
+
+		await objectFieldsPage.addObjectField({
+			aggregationField: objectFieldsA[0].name,
+			aggregationFieldFunction: 'Sum',
+			aggregationFieldRelationship: 'Relationship',
+			objectFieldBusinessType: 'Aggregation',
+			objectFieldLabel: 'Custom Aggregation',
+		});
+
+		await expect(
+			page.getByRole('link', {name: 'Custom Aggregation'})
+		).toBeVisible();
+	});
+
+	test('can delete a custom field when existing entries', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Integer', 'LongInteger'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const integerFieldName = objectFields[0].name;
+		const longIntegerFieldName = objectFields[1].name;
+
+		const applicationName =
+			'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{[integerFieldName]: 18, [longIntegerFieldName]: 187082187082},
+			applicationName
+		);
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		const longIntegerLabel = objectFields[1].label.en_US;
+
+		await objectFieldsPage.deleteObjectFieldByLabel(longIntegerLabel);
+
+		await waitForAlert(
+			page,
+			`Success:${longIntegerLabel} was deleted successfully.`
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className!);
+
+		await expect(page.getByText(longIntegerLabel)).toBeHidden();
+	});
+
 	test('can download and delete a file from the Attachment field when adding an object entry', async ({
 		apiHelpers,
 		page,

@@ -83,6 +83,6 @@ public abstract class BaseNotificationService extends BaseService {
 	protected NotificationTemplateService notificationTemplateService;
 
 	@Value("${liferay.customer.portal.url}")
-	protected String portalUrl;
+	protected String portalURL;
 
 }

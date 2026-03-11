@@ -44,11 +44,11 @@ public class GoogleCloudFunctionService {
 		throws Exception {
 
 		return _handleRequest(
-			_gcfCustomerServiceAccountKey, _FUNCTION_CUSTOMER_USAGE_API_PATH,
+			accountKey, _gcfCustomerServiceAccountKey,
+			_FUNCTION_CUSTOMER_USAGE_API_PATH,
 			StringBundler.concat(
-				_gcfBaseUrl, _FUNCTION_CUSTOMER_USAGE_API_PATH,
-				"/api/v1/customer/usage/accounts/", accountKey),
-			accountKey);
+				_gcfBaseURL, _FUNCTION_CUSTOMER_USAGE_API_PATH,
+				"/api/v1/customer/usage/accounts/", accountKey));
 	}
 
 	@Cacheable("accountUsage")
@@ -56,12 +56,11 @@ public class GoogleCloudFunctionService {
 		throws Exception {
 
 		return _handleRequest(
-			_gcfComposableServiceAccountKey,
+			accountKey, _gcfComposableServiceAccountKey,
 			_FUNCTION_COMPOSABLE_USAGE_API_PATH,
 			StringBundler.concat(
-				_gcfBaseUrl, _FUNCTION_COMPOSABLE_USAGE_API_PATH,
-				"/api/v1/accounts/", accountKey, "/usage/month/", month),
-			accountKey);
+				_gcfBaseURL, _FUNCTION_COMPOSABLE_USAGE_API_PATH,
+				"/api/v1/accounts/", accountKey, "/usage/month/", month));
 	}
 
 	@CacheEvict(allEntries = true, value = "accountUsage")
@@ -70,8 +69,8 @@ public class GoogleCloudFunctionService {
 	}
 
 	private JSONObject _handleRequest(
-			String serviceAccountKey, String targetAudience, String url,
-			String accountKey)
+			String accountKey, String serviceAccountKey, String targetAudience,
+			String url)
 		throws Exception {
 
 		try (InputStream inputStream = new ByteArrayInputStream(
@@ -82,7 +81,7 @@ public class GoogleCloudFunctionService {
 				).setIdTokenProvider(
 					(IdTokenProvider)GoogleCredentials.fromStream(inputStream)
 				).setTargetAudience(
-					_gcfBaseUrl + targetAudience
+					_gcfBaseURL + targetAudience
 				).build();
 
 			HttpRequest httpRequest = new NetHttpTransport(
@@ -134,7 +133,7 @@ public class GoogleCloudFunctionService {
 		"/customer_usage_api";
 
 	@Value("${liferay.customer.gcf.base.url}")
-	private String _gcfBaseUrl;
+	private String _gcfBaseURL;
 
 	@Value("${liferay.customer.gcf.composable.service.account.key}")
 	private String _gcfComposableServiceAccountKey;

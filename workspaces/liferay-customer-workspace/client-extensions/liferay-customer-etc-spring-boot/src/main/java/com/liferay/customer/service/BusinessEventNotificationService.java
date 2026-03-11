@@ -148,7 +148,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				"BUSINESSEVENT_ACTIVITY_HISTORY_PAGE_LINK",
 				String.format(
 					"%s/project/#/%s/business-events/%s/activity-history",
-					portalUrl, externalReferenceCode, businessEventId)
+					portalURL, externalReferenceCode, businessEventId)
 			).put(
 				"BUSINESSEVENT_EVENTTYPE",
 				businessEventJSONObject.getJSONObject(

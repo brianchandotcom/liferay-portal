@@ -53,7 +53,6 @@ public class HomeDisplayContext {
 	}
 
 	public Map<String, Object> getProps() throws Exception {
-
 		return HashMapBuilder.<String, Object>put(
 			"icon",
 			String.format(
@@ -138,6 +137,8 @@ public class HomeDisplayContext {
 					"id", panelApp.getPortletId()
 				).put(
 					"label", panelApp.getLabel(_themeDisplay.getLocale())
+				).put(
+					"leadingIcon", panelApp.getIcon()
 				).build());
 		}
 

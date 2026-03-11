@@ -101,7 +101,8 @@ public class ProvisioningService extends BaseService {
 			jwt.getClaim("username"), jwt.getClaim("sub"), appLicenseKey);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Created app license key " + appLicenseKey);
+			_log.info(
+				"Created app license key for" + appLicenseKey.getProductName());
 		}
 
 		return appLicenseKey;

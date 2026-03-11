@@ -141,17 +141,16 @@ public class ProvisioningRestController extends BaseRestController {
 
 		try {
 			licenseEntry = LicenseEntry.fromJson(
-					new JSONObject(
-							json
-					).getJSONObject(
-							"licenseEntry"
-					));
-		} catch (JSONException jsonException) {
+				new JSONObject(
+					json
+				).getJSONObject(
+					"licenseEntry"
+				));
+		}
+		catch (JSONException jsonException) {
 			throw new ResponseStatusException(
-					HttpStatus.BAD_REQUEST,
-					"Invalid JSON or missing 'licenseEntry' field",
-					jsonException
-			);
+				HttpStatus.BAD_REQUEST,
+				"Invalid JSON or missing 'licenseEntry' field", jsonException);
 		}
 
 		return _provisioningService.provision(jwt, licenseEntry);

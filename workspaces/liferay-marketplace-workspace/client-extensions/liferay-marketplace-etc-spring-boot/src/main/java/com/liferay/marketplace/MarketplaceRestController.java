@@ -35,6 +35,7 @@ import com.liferay.marketplace.service.ProvisioningService;
 import com.liferay.marketplace.service.SalesforceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -256,7 +257,7 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	@PostMapping("cmp-beta-provisioning")
-	public void postCMPBetaProvisioning(
+	public AppLicenseKey postCMPBetaProvisioning(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
@@ -264,17 +265,16 @@ public class MarketplaceRestController extends BaseRestController {
 
 		try {
 			licenseEntry = LicenseEntry.fromJson(
-					new JSONObject(
-							json
-					).getJSONObject(
-							"licenseEntry"
-					));
-		} catch (JSONException jsonException) {
+				new JSONObject(
+					json
+				).getJSONObject(
+					"licenseEntry"
+				));
+		}
+		catch (JSONException jsonException) {
 			throw new ResponseStatusException(
-					HttpStatus.BAD_REQUEST,
-					"Invalid JSON or missing 'licenseEntry' field",
-					jsonException
-			);
+				HttpStatus.BAD_REQUEST,
+				"Invalid JSON or missing 'licenseEntry' field", jsonException);
 		}
 
 		Order order = _marketplaceService.getOrder(licenseEntry.getOrderId());
@@ -288,7 +288,7 @@ public class MarketplaceRestController extends BaseRestController {
 
 		licenseEntry.setProductPurchaseKey(productPurchases[0].getProductKey());
 
-		_provisioningService.provision(jwt, licenseEntry);
+		return _provisioningService.provision(jwt, licenseEntry);
 	}
 
 	@PostMapping("product/purchase")

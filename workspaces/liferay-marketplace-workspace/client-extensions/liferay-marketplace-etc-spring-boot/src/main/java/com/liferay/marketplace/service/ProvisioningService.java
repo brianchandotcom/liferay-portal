@@ -42,7 +42,7 @@ public class ProvisioningService extends BaseService {
 		).build();
 	}
 
-	public AppLicenseKey postAppLicenseKey(Jwt jwt, AppLicenseKey appLicenseKey)
+	public AppLicenseKey postAppLicenseKey(AppLicenseKey appLicenseKey, Jwt jwt)
 		throws Exception {
 
 		appLicenseKey.setActive(true);

@@ -180,7 +180,7 @@ function _terraform_init_and_apply {
 
 	terraform init
 
-	terraform apply "${2}"
+	terraform apply ${2}
 
 	_popd
 }

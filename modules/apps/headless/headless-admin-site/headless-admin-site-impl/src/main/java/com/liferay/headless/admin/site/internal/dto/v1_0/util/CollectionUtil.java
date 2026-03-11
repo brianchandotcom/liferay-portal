@@ -410,11 +410,19 @@ public class CollectionUtil {
 		}
 
 		try {
+			String formVariationKey = _getFormVariationKey(
+				className, itemExternalReference, scopeGroupId);
+
 			InfoForm infoForm =
 				repeatableFieldsInfoItemFormProvider.
-					getRepeatableFieldsInfoForm(
-						_getFormVariationKey(
-							className, itemExternalReference, scopeGroupId));
+					getRepeatableFieldsInfoForm(formVariationKey);
+
+			if (infoForm == null) {
+				LogUtil.logOptionalReference(
+					InfoForm.class, formVariationKey, companyId);
+
+				return null;
+			}
 
 			InfoField infoField = infoForm.getInfoField(fieldName);
 

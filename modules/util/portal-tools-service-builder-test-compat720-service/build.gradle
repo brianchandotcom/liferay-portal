@@ -1,0 +1,18 @@
+buildService {
+	apiDir = "../portal-tools-service-builder-test-compat720-api/src/main/java"
+	incubationFeatures = []
+}
+
+dependencies {
+	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "5.0.1"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.io", version: "5.0.1"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "5.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.reflect", version: "5.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.sql.dsl.api", version: "2.1.1"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.1"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "6.0.5"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "10.6.2"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":util:portal-tools-service-builder-test-compat720-api")
+}

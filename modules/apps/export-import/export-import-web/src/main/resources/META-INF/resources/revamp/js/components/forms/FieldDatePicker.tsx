@@ -6,7 +6,7 @@
 import ClayDatePicker from '@clayui/date-picker';
 import {FieldBase} from 'frontend-js-components-web';
 import {dateUtils} from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 export type FieldDatePickerProps = {
 	disabled?: boolean;
@@ -25,7 +25,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 
 	const {
 		disabled,
-		errorMessage,
+		errorMessage: externalErrorMessage,
 		firstDayOfWeek = dateUtils.getFirstDayOfWeek(locale),
 		formGroupProps,
 		helpMessage,
@@ -33,6 +33,8 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 		label,
 		months = dateUtils.getMonthsLong(locale),
 		name,
+		onBlur,
+		onChange,
 		required,
 		timezone = Liferay.ThemeDisplay.getTimeZone(),
 		value = '',
@@ -40,7 +42,35 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 		...restProps
 	} = props;
 
+	const [internalErrorMessage, setInternalErrorMessage] =
+		useState<string>('');
+
 	const fieldId = id ?? name;
+
+	const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+		const val = event.target.value;
+
+		if (val && !dateUtils.isValid(val)) {
+			setInternalErrorMessage(
+				Liferay.Language.get('the-field-value-is-invalid')
+			);
+		}
+		else {
+			setInternalErrorMessage('');
+		}
+
+		onBlur?.(event);
+	};
+
+	const handleOnChange = (val: string) => {
+		if (internalErrorMessage && (!val || dateUtils.isValid(val))) {
+			setInternalErrorMessage('');
+		}
+
+		onChange?.(val);
+	};
+
+	const errorMessage = internalErrorMessage || externalErrorMessage;
 
 	return (
 		<FieldBase
@@ -59,12 +89,14 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 						? `${fieldId}fieldFeedback`
 						: undefined
 				}
-				aria-invalid={errorMessage ? true : undefined}
+				aria-invalid={!!errorMessage}
 				disabled={disabled}
 				firstDayOfWeek={firstDayOfWeek}
 				id={fieldId}
 				inputName={name}
 				months={months}
+				onBlur={handleOnBlur}
+				onChange={handleOnChange}
 				timezone={timezone}
 				value={value}
 				weekdaysShort={weekdaysShort}

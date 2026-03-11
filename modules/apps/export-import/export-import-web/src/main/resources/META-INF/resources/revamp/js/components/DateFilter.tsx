@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import {dateUtils} from 'frontend-js-web';
 import React, {useMemo, useReducer} from 'react';
 
 import FieldDatePicker from './forms/FieldDatePicker';
@@ -73,6 +74,10 @@ type State = {
 		modifiedLast: ModifiedLastType;
 		toDate: string;
 	};
+	touchedFields: {
+		fromDate: boolean;
+		toDate: boolean;
+	};
 };
 
 function mapEditingToFilterValues(editing: State['editing']): DateFilterValues {
@@ -91,6 +96,8 @@ function mapEditingToFilterValues(editing: State['editing']): DateFilterValues {
 
 type Action =
 	| {payload: Partial<State['editing']>; type: 'UPDATE_FILTER'}
+	| {payload: Partial<State['touchedFields']>; type: 'UPDATE_TOUCHED'}
+	| {type: 'SET_TOUCH_ALL'}
 	| {type: 'APPLY'}
 	| {type: 'RESET'};
 
@@ -102,6 +109,10 @@ const INITIAL_STATE: State = {
 		modifiedLast: ModifiedLastType.H12,
 		toDate: '',
 	},
+	touchedFields: {
+		fromDate: false,
+		toDate: false,
+	},
 };
 
 function filterReducer(state: State, action: Action): State {
@@ -110,6 +121,16 @@ function filterReducer(state: State, action: Action): State {
 			return {
 				...state,
 				editing: {...state.editing, ...action.payload},
+			};
+		case 'UPDATE_TOUCHED':
+			return {
+				...state,
+				touchedFields: {...state.touchedFields, ...action.payload},
+			};
+		case 'SET_TOUCH_ALL':
+			return {
+				...state,
+				touchedFields: {fromDate: true, toDate: true},
 			};
 		case 'APPLY':
 			return {
@@ -132,7 +153,58 @@ export default function DateFilter({
 }) {
 	const [state, dispatch] = useReducer(filterReducer, INITIAL_STATE);
 
-	const {applied, editing} = state;
+	const {applied, editing, touchedFields} = state;
+
+	const validation = useMemo(() => {
+		const errors: {fromDate?: string; toDate?: string} = {};
+		let isValid = true;
+
+		if (editing.filterType === FilterType.Range) {
+			const {fromDate, toDate} = editing;
+
+			if (!fromDate && !toDate) {
+				isValid = false;
+			}
+
+			const isFromValid = !fromDate || dateUtils.isValid(fromDate);
+			const isToValid = !toDate || dateUtils.isValid(toDate);
+
+			if (!isFromValid || !isToValid) {
+				isValid = false;
+			}
+			else {
+				const fromDateObj = fromDate ? new Date(fromDate) : null;
+				const now = new Date();
+				const toDateObj = toDate ? new Date(toDate) : null;
+
+				if (fromDateObj && fromDateObj > now) {
+					errors.fromDate = Liferay.Language.get(
+						'dates-must-not-be-in-the-future'
+					);
+					isValid = false;
+				}
+
+				if (toDateObj && toDateObj > now) {
+					errors.toDate = Liferay.Language.get(
+						'dates-must-not-be-in-the-future'
+					);
+					isValid = false;
+				}
+
+				if (fromDateObj && toDateObj && fromDateObj > toDateObj) {
+					errors.fromDate = Liferay.Language.get(
+						'date-range-is-invalid'
+					);
+					errors.toDate = Liferay.Language.get(
+						'date-range-is-invalid'
+					);
+					isValid = false;
+				}
+			}
+		}
+
+		return {errors, isValid};
+	}, [editing]);
 
 	const isDirty = useMemo(() => {
 		if (editing.filterType !== applied.filterType) {
@@ -163,20 +235,49 @@ export default function DateFilter({
 		}
 
 		if (applied.filterType === FilterType.Range) {
-			return Liferay.Util.sub(Liferay.Language.get('date-range-x-to-x'), [
-				applied.fromDate,
-				applied.toDate,
-			]);
+			const {fromDate, toDate} = applied;
+
+			if (fromDate && toDate) {
+				return Liferay.Util.sub(
+					Liferay.Language.get('date-range-x-to-x'),
+					[fromDate, toDate]
+				);
+			}
+
+			if (fromDate) {
+				return Liferay.Util.sub(
+					Liferay.Language.get('date-range-after-x'),
+					fromDate
+				);
+			}
+
+			if (toDate) {
+				return Liferay.Util.sub(
+					Liferay.Language.get('date-range-before-x'),
+					toDate
+				);
+			}
 		}
 
 		return '';
 	}, [applied]);
 
 	const handleShowResults = () => {
-		dispatch({type: 'APPLY'});
+		dispatch({type: 'SET_TOUCH_ALL'});
 
-		onApplyFilter?.(mapEditingToFilterValues(editing));
+		if (validation.isValid) {
+			dispatch({type: 'APPLY'});
+			onApplyFilter?.(mapEditingToFilterValues(editing));
+		}
 	};
+
+	const currentYear = new Date().getFullYear();
+	const fromDateYear = editing.fromDate
+		? new Date(editing.fromDate).getFullYear()
+		: currentYear - 10;
+	const toDateYear = editing.toDate
+		? new Date(editing.toDate).getFullYear()
+		: currentYear;
 
 	return (
 		<>
@@ -226,9 +327,20 @@ export default function DateFilter({
 						<ClayLayout.ContentCol>
 							<FieldDatePicker
 								dateFormat={DATE_FORMAT}
+								errorMessage={
+									touchedFields.fromDate
+										? validation.errors.fromDate
+										: undefined
+								}
 								id="fromDate"
 								label={Liferay.Language.get('from')}
 								name="fromDate"
+								onBlur={() =>
+									dispatch({
+										payload: {fromDate: true},
+										type: 'UPDATE_TOUCHED',
+									})
+								}
 								onChange={(value) =>
 									dispatch({
 										payload: {fromDate: value as string},
@@ -239,8 +351,8 @@ export default function DateFilter({
 								time
 								value={editing.fromDate}
 								years={{
-									end: new Date().getFullYear(),
-									start: new Date().getFullYear() - 10,
+									end: toDateYear,
+									start: currentYear - 10,
 								}}
 							/>
 						</ClayLayout.ContentCol>
@@ -248,9 +360,20 @@ export default function DateFilter({
 						<ClayLayout.ContentCol>
 							<FieldDatePicker
 								dateFormat={DATE_FORMAT}
+								errorMessage={
+									touchedFields.toDate
+										? validation.errors.toDate
+										: undefined
+								}
 								id="toDate"
 								label={Liferay.Language.get('to')}
 								name="toDate"
+								onBlur={() =>
+									dispatch({
+										payload: {toDate: true},
+										type: 'UPDATE_TOUCHED',
+									})
+								}
 								onChange={(value) =>
 									dispatch({
 										payload: {toDate: value as string},
@@ -261,8 +384,8 @@ export default function DateFilter({
 								time
 								value={editing.toDate}
 								years={{
-									end: new Date().getFullYear(),
-									start: new Date().getFullYear() - 10,
+									end: currentYear,
+									start: fromDateYear,
 								}}
 							/>
 						</ClayLayout.ContentCol>
@@ -278,7 +401,7 @@ export default function DateFilter({
 						applied.filterType === FilterType.All
 					) && (
 						<ClayButton
-							disabled={!isDirty}
+							disabled={isDirty ? !validation.isValid : true}
 							displayType="secondary"
 							onClick={handleShowResults}
 							size="sm"
@@ -310,7 +433,9 @@ export default function DateFilter({
 							className="w-100"
 							displayType="info"
 							title={Liferay.Util.sub(
-								Liferay.Language.get('x-items-found-for:'),
+								Liferay.Language.get(
+									'x-results-found-for-colon'
+								),
 								String(itemsCount)
 							)}
 							variant="inline"

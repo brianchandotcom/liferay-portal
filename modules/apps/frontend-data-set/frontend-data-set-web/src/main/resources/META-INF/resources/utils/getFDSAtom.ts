@@ -8,19 +8,33 @@ import {Atom, Selector, State} from '@liferay/frontend-js-state-web';
 import {IFDSState} from './types';
 
 const getFDSAtom = ({
+	atom,
+	atomKey,
 	fdsName,
 }: {
-	fdsName: string;
+	atom?: Atom<IFDSState> | undefined;
+	atomKey?: string;
+	fdsName?: string;
 }): Atom<IFDSState> | Selector<IFDSState> => {
-	const fdsStateKey = `${fdsName}_fdsState`;
+	if (!atom && !atomKey && !fdsName) {
+		throw new Error(
+			'getFDSAtom requires at least one of the following parameters: atom, atomKey, fdsName'
+		);
+	}
 
-	const fallbackAtom: Atom<IFDSState> | null =
+	if (atom) {
+		return atom;
+	}
+
+	const fdsStateKey = atomKey ?? `${fdsName}_fdsState`;
+
+	const fdsAtom: Atom<IFDSState> | null =
 		State.__unsafe__.getAtomOrSelectorKey(
 			fdsStateKey
 		) as Atom<IFDSState> | null;
 
 	return (
-		fallbackAtom ||
+		fdsAtom ||
 		State.atom<IFDSState>(fdsStateKey, {
 			filters: [],
 			search: {query: ''},

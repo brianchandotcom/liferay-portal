@@ -103,6 +103,7 @@ const FrontendDataSetContent = ({
 	additionalAPIURLParameters: initialAdditionalAPIURLParameters,
 	apiURL,
 	appURL,
+	atom,
 	bulkActions = [],
 	configInURLBehavior = EConfigInURLBehavior.PUSH,
 	creationMenu: initialCreationMenu,
@@ -363,7 +364,10 @@ const FrontendDataSetContent = ({
 		id,
 	});
 
-	const memoizedAtom = useMemo(() => getFDSAtom({fdsName: id}), [id]);
+	const memoizedAtom = useMemo(
+		() => getFDSAtom({atom, fdsName: id}),
+		[atom, id]
+	);
 
 	const [additionalAPIURLParameters, setAdditionalAPIURLParameters] =
 		useState(initialAdditionalAPIURLParameters);

@@ -64,6 +64,9 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 			"explicitConsentMode",
 			ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
 		).put(
+			"floatingIcon",
+			ParamUtil.getString(httpServletRequest, "floatingIcon", "cookie")
+		).put(
 			"floatingIconEnabled",
 			() -> {
 				if (FeatureFlagManagerUtil.isEnabled(

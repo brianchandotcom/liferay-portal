@@ -5,3 +5,26 @@ apply from: "../../build-jakarta-transformer.gradle"
 dependencies {
 	compileOnly group: "com.liferay.faces", name: "jakarta.faces", transitive: false, version: "2.3.21.LIFERAY-PATCHED-2"
 }
+
+jar {
+	doLast {
+		File jarFile = archiveFile.get().asFile
+		File tempDir = file("$buildDir/tmp/jarExtract")
+
+		copy {
+			from zipTree(jarFile)
+			into tempDir
+
+			includeEmptyDirs = false
+
+			eachFile {
+				if (it.path.contains("javax.faces")) {
+					it.path = it.path.replace("javax.faces", "jakarta.faces")
+				}
+			}
+		}
+
+		ant.jar(destfile: jarFile, basedir: tempDir, manifest: file("$tempDir/META-INF/MANIFEST.MF"))
+
+	}
+}

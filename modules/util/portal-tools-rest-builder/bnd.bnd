@@ -10,8 +10,6 @@ Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
 -includeresource:\
 	@com.liferay.petra.function-*.jar!/com/liferay/petra/function/UnsafeFunction.class,\
 	@com.liferay.petra.function-*.jar!/com/liferay/petra/function/transform/TransformUtil.class,\
-	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncByteArrayInputStream.class,\
-	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncByteArrayOutputStream.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/CharPool.class,\
@@ -29,6 +27,8 @@ Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/exception/NestableRuntimeException.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/exception/SystemException.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/search/Sort.class,\

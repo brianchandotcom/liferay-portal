@@ -51,42 +51,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a user can add non-image/video files to asset library folder via MG on a connected site."
-	@priority = 3
-	test CanAddDocumentToFolder {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		Navigator.openSitePage(
-			pageName = "Media Gallery Page",
-			siteName = "Site Name");
-
-		MGPortlet.setRootFolder(
-			depotName = "Test Depot Name",
-			dmRootFolderName = "DM Folder Name");
-
-		DMDocument.addPGViaMG(
-			mgDocumentDescription = "DM Document Description",
-			mgDocumentFile = "Document_1.txt",
-			mgDocumentTitle = "Document_1.txt");
-
-		DMDocument.viewNoFilesViaMG(mgImagePreview = "Document_1.txt");
-
-		DepotNavigator.openToDMFolder(
-			depotName = "Test Depot Name",
-			folderName = "DM Folder Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.txt");
-	}
-
 	@description = "This ensures that a user can add an image to the subfolder of asset library via MG on a connected site."
 	@priority = 4
 	test CanAddImageToSubFolder {

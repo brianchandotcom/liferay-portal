@@ -65,9 +65,9 @@ test(
 	'Consent Renewal Period configuration field validation',
 	{tag: '@LPD-68505'},
 	async ({page}) => {
-		const consentRenewalPeriodField = await page.getByLabel(
-			'Consent Renewal Period'
-		);
+		const consentRenewalPeriodField = await page
+			.getByLabel('Consent Renewal Period')
+			.first();
 
 		await test.step('Validate Consent Renewal Period field', async () => {
 			await test.step('Validate default value of 12 months', async () => {
@@ -143,9 +143,9 @@ test(
 
 		await enabledButton.setChecked(true);
 
-		const consentRenewalPeriodField = await page.getByLabel(
-			'Consent Renewal Period'
-		);
+		const consentRenewalPeriodField = await page
+			.getByLabel('Consent Renewal Period')
+			.first();
 
 		await consentRenewalPeriodField.fill('12');
 
@@ -197,9 +197,9 @@ test(
 
 		await enabledButton.setChecked(false);
 
-		const consentRenewalPeriod = await page.getByLabel(
-			'Consent Renewal Period'
-		);
+		const consentRenewalPeriod = await page
+			.getByLabel('Consent Renewal Period')
+			.first();
 
 		await expect(consentRenewalPeriod).not.toBeEnabled();
 
@@ -361,7 +361,12 @@ async function validateConsentRenewalPeriodValue(
 			.getByRole('dialog', {name: 'banner cookies'})
 			.waitFor({state: 'visible'});
 
-		await page.getByRole('button', {name: 'Accept All'}).click();
+		if (dissent) {
+			await page.getByRole('button', {name: 'Decline All'}).click();
+		}
+		else {
+			await page.getByRole('button', {name: 'Accept All'}).click();
+		}
 	}
 	else {
 		await page.reload();

@@ -59,12 +59,12 @@ public class CTRowUtil {
 
 			sb.append(")");
 
-			try (PreparedStatement selectPreparedStatement =
+			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(selectSQL);
-				 PreparedStatement insertPreparedStatement =
+				 PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(connection, sb.toString());
 
-				 ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+				 ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {
 					int parameterIndex = 1;
@@ -73,11 +73,11 @@ public class CTRowUtil {
 						if (type == Types.BLOB) {
 							Blob blob = resultSet.getBlob(parameterIndex);
 
-							insertPreparedStatement.setBlob(
+							preparedStatement2.setBlob(
 								parameterIndex, blob.getBinaryStream());
 						}
 						else {
-							insertPreparedStatement.setObject(
+							preparedStatement2.setObject(
 								parameterIndex,
 								resultSet.getObject(parameterIndex));
 						}
@@ -85,12 +85,12 @@ public class CTRowUtil {
 						parameterIndex++;
 					}
 
-					insertPreparedStatement.addBatch();
+					preparedStatement2.addBatch();
 				}
 
 				int result = 0;
 
-				for (int count : insertPreparedStatement.executeBatch()) {
+				for (int count : preparedStatement2.executeBatch()) {
 					result += count;
 				}
 

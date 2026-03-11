@@ -74,8 +74,9 @@ public class CollectionUtil {
 		}
 
 		return _getRepeatableFieldsCollectionProviderReferenceJSONObject(
+			companyId,
 			(RepeatableFieldsCollectionProviderReference)collectionReference,
-			companyId, scopeGroupId);
+			scopeGroupId);
 	}
 
 	public static CollectionReference getCollectionReference(
@@ -346,9 +347,10 @@ public class CollectionUtil {
 
 	private static JSONObject
 		_getRepeatableFieldsCollectionProviderReferenceJSONObject(
+			long companyId,
 			RepeatableFieldsCollectionProviderReference
 				repeatableFieldsCollectionProviderReference,
-			long companyId, long scopeGroupId) {
+			long scopeGroupId) {
 
 		String className = _getClassName(
 			repeatableFieldsCollectionProviderReference.getClassName(),

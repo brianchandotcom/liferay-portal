@@ -81,7 +81,7 @@ interface ColorPaletteProps {
 	) => void;
 	onSetSearchValue: Dispatch<SetStateAction<string>>;
 	onValueChange?: (color: Omit<Color, 'disabled'>) => void;
-	triggerElementRef: RefObject<HTMLDivElement | HTMLButtonElement>;
+	triggerElementRef?: RefObject<HTMLDivElement | HTMLButtonElement>;
 }
 
 export default function ColorPalette({
@@ -146,7 +146,7 @@ export default function ColorPalette({
 														onActiveChange(!active);
 													}}
 													onKeyPress={() => {
-														triggerElementRef.current?.focus();
+														triggerElementRef?.current?.focus();
 													}}
 													title={label}
 													value={value}

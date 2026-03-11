@@ -14,6 +14,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.KeyLocalizedLabelPair;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -40,6 +41,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -262,23 +264,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		_testObjectEntryInfoItemFieldValuesProvider(
 			fileEntry, localDateTime, objectAction, objectEntry,
 			parentTextObjectFieldNameValue, null);
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
-		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-
-		User user = UserTestUtil.addUser();
-
-		user.setTimeZoneId("Asia/Kolkata");
-
-		themeDisplay.setTimeZone(
-			TimeZoneUtil.getTimeZone(user.getTimeZoneId()));
-		themeDisplay.setUser(user);
-
 		_testObjectEntryInfoItemFieldValuesProvider(
 			fileEntry,
 			localDateTime.atZone(
@@ -289,7 +274,11 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				).toZoneId()
 			).toLocalDateTime(),
 			objectAction, objectEntry, parentTextObjectFieldNameValue,
-			themeDisplay);
+			_getThemeDisplay(StringPool.BLANK, "Asia/Kolkata"));
+		_testObjectEntryInfoItemFieldValuesProvider(
+			fileEntry, localDateTime, objectAction, objectEntry,
+			parentTextObjectFieldNameValue,
+			_getThemeDisplay(RandomTestUtil.randomString(), "UTC"));
 	}
 
 	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
@@ -328,6 +317,35 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSetting;
+	}
+
+	private ThemeDisplay _getThemeDisplay(String doAsUserId, String timeZoneId)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setDoAsUserId(doAsUserId);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		User user = UserTestUtil.addUser();
+
+		user.setTimeZoneId(timeZoneId);
+
+		themeDisplay.setTimeZone(
+			TimeZoneUtil.getTimeZone(user.getTimeZoneId()));
+		themeDisplay.setUser(user);
+
+		return themeDisplay;
 	}
 
 	private void _testObjectEntryInfoItemFieldValuesProvider(
@@ -383,11 +401,19 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			Assert.assertEquals(
 				HttpComponentsUtil.removeParameter(
 					_dlURLHelper.getDownloadURL(
-						fileEntry, fileEntry.getFileVersion(), null,
+						fileEntry, fileEntry.getFileVersion(), themeDisplay,
 						StringPool.BLANK),
 					"t"),
 				HttpComponentsUtil.removeParameter(
 					String.valueOf(downloadURLInfoFieldValue.getValue()), "t"));
+
+			if (themeDisplay != null) {
+				Assert.assertEquals(
+					themeDisplay.getDoAsUserId(),
+					HttpComponentsUtil.getParameter(
+						String.valueOf(downloadURLInfoFieldValue.getValue()),
+						"doAsUserId", false));
+			}
 
 			_assertInfoFieldValue(
 				"#fileName", infoItemFieldValues, objectField,

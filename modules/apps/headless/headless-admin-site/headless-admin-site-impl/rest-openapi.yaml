@@ -363,13 +363,14 @@ components:
                 mapping:
                     Collection: "#/components/schemas/CollectionItemExternalReference"
                     CollectionProvider: "#/components/schemas/ClassNameReference"
+                    RepeatableFieldsCollectionProvider: "#/components/schemas/RepeatableFieldsCollectionProviderReference"
                 propertyName: collectionType
             properties:
                 collectionType:
                     # @review
                     description:
-                        The collection's type (Collection, CollectionProvider).
-                    enum: [Collection, CollectionProvider]
+                        The collection's type (Collection, CollectionProvider, RepeatableFieldsCollectionProvider).
+                    enum: [Collection, CollectionProvider, RepeatableFieldsCollectionProvider]
                     type: string
             type: object
         CollectionSettings:
@@ -3187,6 +3188,23 @@ components:
                         The type of rating system to use
                     enum: [like, stacked-stars, stars, thumbs]
                     type: string
+            type: object
+        RepeatableFieldsCollectionProviderReference:
+            allOf:
+                -   $ref: "#/components/schemas/CollectionReference"
+                -   properties:
+                        className:
+                            type: string
+                        fieldName:
+                            type: string
+                        subTypeExternalReference:
+                            $ref: "#/components/schemas/ItemExternalReference"
+            # @review
+            description:
+                A unique reference to a repeatable fields collection which remains constant across environments.
+            required:
+                -   className
+                -   fieldName
             type: object
         SEOSettings:
             # @review

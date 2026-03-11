@@ -1363,12 +1363,10 @@ public class PageElementsTestUtil {
 			new Locale[] {LocaleUtil.getSiteDefault()},
 			LocaleUtil.getSiteDefault());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(scopeGroupId);
-
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			scopeGroupId, JournalArticle.class.getName(), 0, ddmForm,
-			LocaleUtil.getSiteDefault(), serviceContext);
+			LocaleUtil.getSiteDefault(),
+			ServiceContextTestUtil.getServiceContext(scopeGroupId));
 
 		RepeatableFieldsCollectionProviderReference
 			repeatableFieldsCollectionProviderReference =

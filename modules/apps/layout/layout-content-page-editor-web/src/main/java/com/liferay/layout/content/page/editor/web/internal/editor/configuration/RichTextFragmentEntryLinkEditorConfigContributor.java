@@ -108,8 +108,6 @@ public class RichTextFragmentEntryLinkEditorConfigContributor
 					_getAllowedContentLists(), _getAllowedContentTable(),
 					" span[*](*){*}; ")
 			).put(
-				"autoParagraph", false
-			).put(
 				"extraPlugins", getExtraPluginsLists()
 			).put(
 				"removePlugins", getRemovePluginsLists()

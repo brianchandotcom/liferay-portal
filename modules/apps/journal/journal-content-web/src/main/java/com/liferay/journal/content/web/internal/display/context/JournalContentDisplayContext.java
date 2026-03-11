@@ -610,19 +610,6 @@ public class JournalContentDisplayContext {
 		PortletPreferences portletPreferences =
 			_portletRequest.getPreferences();
 
-		long assetEntryId = GetterUtil.getLong(
-			portletPreferences.getValue("assetEntryId", StringPool.BLANK));
-
-		if (assetEntryId > 0) {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
-				assetEntryId);
-
-			if (assetEntry != null) {
-				return JournalArticleLocalServiceUtil.fetchLatestArticle(
-					assetEntry.getClassPK());
-			}
-		}
-
 		String articleExternalReferenceCode = portletPreferences.getValue(
 			"articleExternalReferenceCode", null);
 

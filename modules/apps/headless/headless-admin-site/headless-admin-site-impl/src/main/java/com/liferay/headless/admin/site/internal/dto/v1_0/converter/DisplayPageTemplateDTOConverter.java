@@ -11,13 +11,10 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateOpenGraphSettings;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.SubtypeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ThumbnailUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -72,8 +69,14 @@ public class DisplayPageTemplateDTOConverter
 						{
 							setClassName(layoutPageTemplateEntry::getClassName);
 							setSubTypeExternalReference(
-								() -> _getSubtypeItemExternalReference(
-									layoutPageTemplateEntry));
+								() ->
+									SubtypeUtil.getSubtypeItemExternalReference(
+										layoutPageTemplateEntry.getClassName(),
+										layoutPageTemplateEntry.
+											getClassTypeId(),
+										layoutPageTemplateEntry.
+											getClassTypeKey(),
+										layoutPageTemplateEntry.getGroupId()));
 						}
 					});
 				setCreator(
@@ -226,74 +229,12 @@ public class DisplayPageTemplateDTOConverter
 		};
 	}
 
-	private ItemExternalReference _getSubtypeItemExternalReference(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		if ((layoutPageTemplateEntry.getClassTypeId() < 0) &&
-			Validator.isNull(layoutPageTemplateEntry.getClassTypeKey())) {
-
-			return null;
-		}
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				layoutPageTemplateEntry.getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			if (Validator.isNull(layoutPageTemplateEntry.getClassTypeKey())) {
-				return null;
-			}
-
-			return new ItemExternalReference() {
-				{
-					setExternalReferenceCode(
-						layoutPageTemplateEntry::getClassTypeKey);
-				}
-			};
-		}
-
-		if (Validator.isNotNull(layoutPageTemplateEntry.getClassTypeKey())) {
-			return new ItemExternalReference() {
-				{
-					setClassName(
-						infoItemFormVariationsProvider::
-							getInfoItemFormVariationClassName);
-					setExternalReferenceCode(
-						layoutPageTemplateEntry::getClassTypeKey);
-				}
-			};
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				layoutPageTemplateEntry.getGroupId(),
-				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
-
-		if (infoItemFormVariation == null) {
-			return null;
-		}
-
-		return new ItemExternalReference() {
-			{
-				setClassName(
-					infoItemFormVariationsProvider::
-						getInfoItemFormVariationClassName);
-				setExternalReferenceCode(
-					infoItemFormVariation::getExternalReferenceCode);
-			}
-		};
-	}
-
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.DisplayPageTemplateFolderDTOConverter)"
 	)
 	private DTOConverter
 		<LayoutPageTemplateCollection, DisplayPageTemplateFolder>
 			_displayPageTemplateFolderDTOConverter;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

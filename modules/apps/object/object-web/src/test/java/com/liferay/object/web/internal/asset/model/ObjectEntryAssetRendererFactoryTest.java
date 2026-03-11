@@ -52,7 +52,7 @@ public class ObjectEntryAssetRendererFactoryTest {
 			_assetDisplayPageFriendlyURLProvider, _depotEntryLocalService,
 			_dlAppLocalService, _dlURLHelper, _objectDefinition,
 			_objectEntryDisplayContextFactoryImpl, _objectEntryLocalService,
-			_objectFieldLocalService, _objectEntryService, _servletContext);
+			_objectEntryService, _objectFieldLocalService, _servletContext);
 
 		_objectEntryAssetRendererFactory.setClassName(
 			RandomTestUtil.randomString());

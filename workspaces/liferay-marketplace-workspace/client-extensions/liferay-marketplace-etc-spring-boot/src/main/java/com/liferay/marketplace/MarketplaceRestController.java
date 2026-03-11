@@ -26,12 +26,15 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.marketplace.model.LicenseEntry;
 import com.liferay.marketplace.model.PublisherAssetLink;
 import com.liferay.marketplace.model.SalesforceOpportunity;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.service.ProvisioningService;
 import com.liferay.marketplace.service.SalesforceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -249,6 +252,32 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 
 		return ResponseEntity.ok(account);
+	}
+
+	@PostMapping("cmp-beta-provisioning")
+	public void postCMPBetaProvisioning(
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
+		throws Exception {
+
+		LicenseEntry licenseEntry = LicenseEntry.fromJson(
+			new JSONObject(
+				json
+			).getJSONObject(
+				"licenseEntry"
+			));
+
+		Order order = _marketplaceService.getOrder(licenseEntry.getOrderId());
+
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				_marketplaceService.getOrderProductId(order));
+
+		ProductPurchase[] productPurchases = _setUpProductEntitlements(
+			jwt, productSpecificationsMap.get("license-type"), order);
+
+		licenseEntry.setProductPurchaseKey(productPurchases[0].getProductKey());
+
+		_provisioningService.provision(jwt, licenseEntry);
 	}
 
 	@PostMapping("product/purchase")
@@ -912,7 +941,7 @@ public class MarketplaceRestController extends BaseRestController {
 				licenseType, order, orderItem, product, userAccount));
 	}
 
-	private void _setUpProductEntitlements(
+	private ProductPurchase[] _setUpProductEntitlements(
 			Jwt jwt, String licenseType, Order order)
 		throws Exception {
 
@@ -937,13 +966,18 @@ public class MarketplaceRestController extends BaseRestController {
 				});
 		}
 
+		List<ProductPurchase> productPurchases = new ArrayList<>();
+
 		try {
 			for (OrderItem orderItem : order.getOrderItems()) {
-				_koroneikiService.postAccountAccountKeyProductPurchase(
-					accountExternalReferenceCode, jwt, licenseType,
-					MarketplaceUtil.getSkuOptionValue(
-						"license-usage-type", orderItem.getOptions()),
-					orderItem);
+				ProductPurchase productPurchase =
+					_koroneikiService.postAccountAccountKeyProductPurchase(
+						accountExternalReferenceCode, jwt, licenseType,
+						MarketplaceUtil.getSkuOptionValue(
+							"license-usage-type", orderItem.getOptions()),
+						orderItem);
+
+				productPurchases.add(productPurchase);
 			}
 
 			_marketplaceService.updateOrder(
@@ -953,6 +987,8 @@ public class MarketplaceRestController extends BaseRestController {
 		catch (Exception exception) {
 			_log.error("Unable to create account product purchase", exception);
 		}
+
+		return productPurchases.toArray(new ProductPurchase[0]);
 	}
 
 	private static final int _ACCOUNT_TYPE_BUSINESS = 2;
@@ -974,6 +1010,9 @@ public class MarketplaceRestController extends BaseRestController {
 
 	@Autowired
 	private MarketplaceService _marketplaceService;
+
+	@Autowired
+	private ProvisioningService _provisioningService;
 
 	@Autowired
 	private SalesforceService _salesforceService;

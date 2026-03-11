@@ -175,7 +175,7 @@ public class KoroneikiService {
 			productPurchase);
 	}
 
-	public void postAccountAccountKeyProductPurchase(
+	public ProductPurchase postAccountAccountKeyProductPurchase(
 			String accountKey, Jwt jwt, String licenseType,
 			String licenseUsageType, OrderItem orderItem)
 		throws Exception {
@@ -225,6 +225,8 @@ public class KoroneikiService {
 		if (_log.isInfoEnabled()) {
 			_log.info("Created account product purchase " + productPurchase);
 		}
+
+		return productPurchase;
 	}
 
 	public Account postKoroneikiAccount(

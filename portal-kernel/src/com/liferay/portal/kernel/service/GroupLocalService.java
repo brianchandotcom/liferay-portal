@@ -1065,9 +1065,6 @@ public interface GroupLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserGroupsCount(long userId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, long[]> getUserInheritedSiteGroupIds(long companyId);
-
 	/**
 	 * Returns the groups associated with the user groups.
 	 *
@@ -1087,6 +1084,9 @@ public interface GroupLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getUserGroupsRelatedGroups(List<UserGroup> userGroups);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, long[]> getUserInheritedSiteGroupIds(long companyId);
 
 	/**
 	 * Returns the range of all groups associated with the user's organization

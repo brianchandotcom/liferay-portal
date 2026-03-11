@@ -120,12 +120,6 @@ public class GroupFinderUtil {
 			liveGroupId, typeSettings, site, remoteStagingGroupCount);
 	}
 
-	public static java.util.Map<Long, long[]>
-		findByC_C_S_A_UserInheritedGroupIds(long companyId) {
-
-		return getFinder().findByC_C_S_A_UserInheritedGroupIds(companyId);
-	}
-
 	public static java.util.List<com.liferay.portal.kernel.model.Group>
 		findByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
@@ -138,6 +132,12 @@ public class GroupFinderUtil {
 		return getFinder().findByC_C_PG_N_D(
 			companyId, classNameIds, parentGroupId, names, descriptions, params,
 			andOperator, start, end, orderByComparator);
+	}
+
+	public static java.util.Map<Long, long[]>
+		findByC_C_S_A_UserInheritedGroupIds(long companyId) {
+
+		return getFinder().findByC_C_S_A_UserInheritedGroupIds(companyId);
 	}
 
 	public static GroupFinder getFinder() {

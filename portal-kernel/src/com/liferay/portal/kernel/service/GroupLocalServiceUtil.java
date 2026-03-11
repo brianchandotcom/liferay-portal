@@ -1344,12 +1344,6 @@ public class GroupLocalServiceUtil {
 		return getService().getUserGroupsCount(userId);
 	}
 
-	public static java.util.Map<Long, long[]> getUserInheritedSiteGroupIds(
-		long companyId) {
-
-		return getService().getUserInheritedSiteGroupIds(companyId);
-	}
-
 	/**
 	 * Returns the groups associated with the user groups.
 	 *
@@ -1374,6 +1368,12 @@ public class GroupLocalServiceUtil {
 		List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
 
 		return getService().getUserGroupsRelatedGroups(userGroups);
+	}
+
+	public static Map<Long, long[]> getUserInheritedSiteGroupIds(
+		long companyId) {
+
+		return getService().getUserInheritedSiteGroupIds(companyId);
 	}
 
 	/**

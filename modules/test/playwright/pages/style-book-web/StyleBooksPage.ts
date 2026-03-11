@@ -39,6 +39,16 @@ export class StyleBooksPage {
 		await this.page.getByRole('menuitem', {name: nextPage}).click();
 	}
 
+	async clickOnAction(styleBookName: string, action: string) {
+		const card = this.getStyleBookCard(styleBookName);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: action}),
+			trigger: card.getByLabel('More actions'),
+		});
+	}
+
 	async create(styleBookName: string, baseThemeName?: string) {
 		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
 
@@ -80,9 +90,7 @@ export class StyleBooksPage {
 	async delete(styleBookName: string) {
 		await this.search(styleBookName);
 
-		await this.page.getByLabel('More actions').click();
-
-		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+		await this.clickOnAction(styleBookName, 'Delete');
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
@@ -90,9 +98,7 @@ export class StyleBooksPage {
 	async edit(styleBookName: string) {
 		await this.search(styleBookName);
 
-		await this.page.getByLabel('More actions').click();
-
-		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
+		await this.clickOnAction(styleBookName, 'Edit');
 	}
 
 	async importStyleBookFile(fileName: string, filePath: string) {
@@ -124,15 +130,11 @@ export class StyleBooksPage {
 	async markAsDefault(styleBookName: string) {
 		await this.search(styleBookName);
 
-		await this.page.getByLabel('More actions').click();
-
 		this.page.once('dialog', (dialog) => {
 			dialog.accept();
 		});
 
-		await this.page
-			.getByRole('menuitem', {exact: false, name: 'Mark as Default'})
-			.click();
+		await this.clickOnAction(styleBookName, 'Mark as Default');
 	}
 
 	async clickOnPublishAction(action: string) {
@@ -161,6 +163,20 @@ export class StyleBooksPage {
 			.getByRole('dialog')
 			.getByRole('button', {name: 'Publish'})
 			.click();
+
+		await waitForAlert(this.page);
+	}
+
+	async rename(styleBookName: string, newStyleBookName: string) {
+		await this.search(styleBookName);
+
+		await this.clickOnAction(styleBookName, 'Rename');
+
+		await this.page
+			.getByRole('textbox', {name: 'Name'})
+			.fill(newStyleBookName);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForAlert(this.page);
 	}

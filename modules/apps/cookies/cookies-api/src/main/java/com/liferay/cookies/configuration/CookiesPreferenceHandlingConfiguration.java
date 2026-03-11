@@ -43,6 +43,9 @@ public interface CookiesPreferenceHandlingConfiguration {
 	)
 	public boolean explicitConsentMode();
 
+	@Meta.AD(deflt = "cookie", name = "icon", required = false)
+	public String floatingIcon();
+
 	@Meta.AD(
 		deflt = "true", description = "floating-icon-enabled-help",
 		name = "floating-icon-enabled", required = false

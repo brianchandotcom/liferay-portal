@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
-import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
@@ -66,9 +65,9 @@ test(
 	'Consent Renewal Period configuration field validation',
 	{tag: '@LPD-68505'},
 	async ({page}) => {
-		const consentRenewalPeriodField = await page.getByLabel(
-			'Consent Renewal Period'
-		);
+		const consentRenewalPeriodField = await page
+			.getByLabel('Consent Renewal Period')
+			.first();
 
 		await test.step('Validate Consent Renewal Period field', async () => {
 			await test.step('Validate default value of 12 months', async () => {
@@ -144,9 +143,9 @@ test(
 
 		await enabledButton.setChecked(true);
 
-		const consentRenewalPeriodField = await page.getByLabel(
-			'Consent Renewal Period'
-		);
+		const consentRenewalPeriodField = await page
+			.getByLabel('Consent Renewal Period')
+			.first();
 
 		await consentRenewalPeriodField.fill('12');
 
@@ -171,11 +170,6 @@ test(
 		});
 
 		await page.getByRole('button', {name: 'Update'}).click();
-
-		await reloadUntilVisible({
-			myLocator: cookiesBanner,
-			page,
-		});
 
 		await expect(cookiesBanner).toBeVisible();
 	}
@@ -203,9 +197,9 @@ test(
 
 		await enabledButton.setChecked(false);
 
-		const consentRenewalPeriod = await page.getByLabel(
-			'Consent Renewal Period'
-		);
+		const consentRenewalPeriod = await page
+			.getByLabel('Consent Renewal Period')
+			.first();
 
 		await expect(consentRenewalPeriod).not.toBeEnabled();
 
@@ -371,7 +365,12 @@ async function validateConsentRenewalPeriodValue(
 			)
 		).toBeVisible();
 
-		await page.getByRole('button', {name: 'Accept All'}).click();
+		if (dissent) {
+			await page.getByRole('button', {name: 'Decline All'}).click();
+		}
+		else {
+			await page.getByRole('button', {name: 'Accept All'}).click();
+		}
 	}
 	else {
 		await page.reload();

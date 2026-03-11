@@ -135,6 +135,7 @@ export async function updateConsentManagerConfiguration(
 		if (consentRenewalPeriod) {
 			await page
 				.getByLabel('Consent Renewal Period')
+				.first()
 				.fill(consentRenewalPeriod);
 		}
 

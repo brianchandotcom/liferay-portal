@@ -7,7 +7,6 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
-import com.liferay.marketplace.model.LicenseEntry;
 import com.liferay.marketplace.service.ProvisioningService;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
@@ -137,15 +136,15 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		LicenseEntry licenseEntry;
+		AppLicenseKey appLicenseKey;
 
 		try {
-			licenseEntry = LicenseEntry.fromJson(
+			appLicenseKey = AppLicenseKey.toDTO(
 				new JSONObject(
 					json
 				).getJSONObject(
 					"licenseEntry"
-				));
+				).toString());
 		}
 		catch (JSONException jsonException) {
 			throw new ResponseStatusException(
@@ -153,7 +152,7 @@ public class ProvisioningRestController extends BaseRestController {
 				"Invalid JSON or missing 'licenseEntry' field", jsonException);
 		}
 
-		return _provisioningService.provision(jwt, licenseEntry);
+		return _provisioningService.postAppLicenseKey(jwt, appLicenseKey);
 	}
 
 	private static final Log _log = LogFactory.getLog(

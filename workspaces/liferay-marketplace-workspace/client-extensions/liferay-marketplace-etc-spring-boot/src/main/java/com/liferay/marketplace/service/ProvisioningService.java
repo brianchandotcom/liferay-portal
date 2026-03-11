@@ -7,7 +7,6 @@ package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
-import com.liferay.marketplace.model.LicenseEntry;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
@@ -43,12 +42,8 @@ public class ProvisioningService extends BaseService {
 		).build();
 	}
 
-	public AppLicenseKey provision(Jwt jwt, LicenseEntry licenseEntry)
+	public AppLicenseKey postAppLicenseKey(Jwt jwt, AppLicenseKey appLicenseKey)
 		throws Exception {
-
-		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
-			licenseEntry.toJSONObject(
-			).toString());
 
 		appLicenseKey.setActive(true);
 		appLicenseKey.setCreateDate(new Date());
@@ -102,7 +97,8 @@ public class ProvisioningService extends BaseService {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Created app license key for" + appLicenseKey.getProductName());
+				"Created app license key for " +
+					appLicenseKey.getProductName());
 		}
 
 		return appLicenseKey;

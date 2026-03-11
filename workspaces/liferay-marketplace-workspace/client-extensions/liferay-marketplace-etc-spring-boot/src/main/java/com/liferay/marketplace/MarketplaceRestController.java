@@ -26,7 +26,6 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
-import com.liferay.marketplace.model.LicenseEntry;
 import com.liferay.marketplace.model.PublisherAssetLink;
 import com.liferay.marketplace.model.SalesforceOpportunity;
 import com.liferay.marketplace.service.KoroneikiService;
@@ -261,23 +260,20 @@ public class MarketplaceRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		LicenseEntry licenseEntry;
+		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(json);
 
-		try {
-			licenseEntry = LicenseEntry.fromJson(
-				new JSONObject(
-					json
-				).getJSONObject(
-					"licenseEntry"
-				));
-		}
-		catch (JSONException jsonException) {
+		if (Objects.equals(appLicenseKey.getHostName(), null) &&
+			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
+			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
+
 			throw new ResponseStatusException(
 				HttpStatus.BAD_REQUEST,
-				"Invalid JSON or missing 'licenseEntry' field", jsonException);
+				"Required at least one of: hostName, ipAddresses, " +
+					"macAddresses");
 		}
 
-		Order order = _marketplaceService.getOrder(licenseEntry.getOrderId());
+		Order order = _marketplaceService.getOrder(
+			GetterUtil.getLong(appLicenseKey.getOrderId()));
 
 		Map<String, String> productSpecificationsMap =
 			_marketplaceService.getProductSpecificationsMap(
@@ -286,9 +282,15 @@ public class MarketplaceRestController extends BaseRestController {
 		ProductPurchase[] productPurchases = _setUpProductEntitlements(
 			jwt, productSpecificationsMap.get("license-type"), order);
 
-		licenseEntry.setProductPurchaseKey(productPurchases[0].getProductKey());
+		ProductPurchase productPurchase = productPurchases[0];
 
-		return _provisioningService.provision(jwt, licenseEntry);
+		if (productPurchase == null) {
+			return null;
+		}
+
+		appLicenseKey.setProductPurchaseKey(productPurchase.getKey());
+
+		return _provisioningService.postAppLicenseKey(jwt, appLicenseKey);
 	}
 
 	@PostMapping("product/purchase")

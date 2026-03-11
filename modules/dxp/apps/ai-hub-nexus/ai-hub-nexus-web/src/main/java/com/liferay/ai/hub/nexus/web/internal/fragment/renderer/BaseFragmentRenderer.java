@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.nexus.web.internal.fragment.renderer;
 
-import com.liferay.ai.hub.nexus.web.internal.constants.AIHubWebConstants;
+import com.liferay.ai.hub.nexus.web.internal.constants.AIHubNexusWebConstants;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 
@@ -66,7 +66,7 @@ public abstract class BaseFragmentRenderer<T> implements FragmentRenderer {
 	protected abstract String getJSPPath();
 
 	@Reference(
-		target = "(osgi.web.symbolicname=" + AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + ")"
+		target = "(osgi.web.symbolicname=" + AIHubNexusWebConstants.BUNDLE_SYMBOLIC_NAME + ")"
 	)
 	protected ServletContext servletContext;
 

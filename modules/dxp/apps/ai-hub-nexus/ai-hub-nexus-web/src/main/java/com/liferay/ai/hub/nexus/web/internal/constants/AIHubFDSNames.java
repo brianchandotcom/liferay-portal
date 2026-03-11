@@ -11,6 +11,6 @@ package com.liferay.ai.hub.nexus.web.internal.constants;
 public class AIHubFDSNames {
 
 	public static final String AGENT_DEFINITIONS =
-		AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + "-agentDefinitions";
+		AIHubNexusWebConstants.BUNDLE_SYMBOLIC_NAME + "-agentDefinitions";
 
 }

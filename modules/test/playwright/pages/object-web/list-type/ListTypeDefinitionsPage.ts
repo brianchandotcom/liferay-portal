@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 
 export class ListTypeDefinitionsPage {
@@ -92,7 +93,9 @@ export class ListTypeDefinitionsPage {
 	}
 
 	async goto() {
-		await this.globalMenuPage.goToControlPanel('Picklists');
+		await this.page.goto(`/group/guest${PORTLET_URLS.picklists}`, {
+			waitUntil: 'load',
+		});
 	}
 
 	async translatePicklist(

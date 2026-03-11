@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,10 @@ public class HomeDisplayContext {
 	}
 
 	public Map<String, Object> getProps() throws Exception {
+		if (_panelCategory == null) {
+			return Collections.emptyMap();
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"icon",
 			String.format(

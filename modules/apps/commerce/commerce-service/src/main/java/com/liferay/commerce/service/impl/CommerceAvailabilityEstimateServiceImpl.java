@@ -42,7 +42,7 @@ public class CommerceAvailabilityEstimateServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_hasPortletResourcePermission(
+		_checkPortletResourcePermission(
 			CommerceActionKeys.ADD_COMMERCE_AVAILABILITY_ESTIMATE);
 
 		return commerceAvailabilityEstimateLocalService.
@@ -81,7 +81,7 @@ public class CommerceAvailabilityEstimateServiceImpl
 			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
 		throws PortalException {
 
-		_hasPortletResourcePermission(
+		_checkPortletResourcePermission(
 			CommerceActionKeys.VIEW_COMMERCE_AVAILABILITY_ESTIMATES);
 
 		return commerceAvailabilityEstimateLocalService.
@@ -93,7 +93,7 @@ public class CommerceAvailabilityEstimateServiceImpl
 	public int getCommerceAvailabilityEstimatesCount(long companyId)
 		throws PortalException {
 
-		_hasPortletResourcePermission(
+		_checkPortletResourcePermission(
 			CommerceActionKeys.VIEW_COMMERCE_AVAILABILITY_ESTIMATES);
 
 		return commerceAvailabilityEstimateLocalService.
@@ -116,7 +116,7 @@ public class CommerceAvailabilityEstimateServiceImpl
 				serviceContext);
 	}
 
-	private void _hasPortletResourcePermission(String actionId)
+	private void _checkPortletResourcePermission(String actionId)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =

@@ -42,6 +42,8 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Commerce availability estimate
+
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		long commerceAvailabilityEstimateId = counterLocalService.increment();
@@ -56,13 +58,16 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 		commerceAvailabilityEstimate.setTitleMap(titleMap);
 		commerceAvailabilityEstimate.setPriority(priority);
 
+		commerceAvailabilityEstimate =
+			commerceAvailabilityEstimatePersistence.update(
+				commerceAvailabilityEstimate);
+
 		// Resources
 
 		_resourceLocalService.addModelResources(
 			commerceAvailabilityEstimate, serviceContext);
 
-		return commerceAvailabilityEstimatePersistence.update(
-			commerceAvailabilityEstimate);
+		return commerceAvailabilityEstimate;
 	}
 
 	@Override
@@ -71,20 +76,20 @@ public class CommerceAvailabilityEstimateLocalServiceImpl
 			CommerceAvailabilityEstimate commerceAvailabilityEstimate)
 		throws PortalException {
 
-		// Commerce availability range
+		// Commerce availability estimate
 
 		commerceAvailabilityEstimatePersistence.remove(
 			commerceAvailabilityEstimate);
-
-		// Commerce product definition availability ranges
-
-		_cpdAvailabilityEstimateLocalService.deleteCPDAvailabilityEstimates(
-			commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId());
 
 		// Resources
 
 		_resourceLocalService.deleteResource(
 			commerceAvailabilityEstimate, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		// Commerce product definition availability estimates
+
+		_cpdAvailabilityEstimateLocalService.deleteCPDAvailabilityEstimates(
+			commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId());
 
 		return commerceAvailabilityEstimate;
 	}

@@ -3,146 +3,323 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
-import React, {useState} from 'react';
+import React, {useMemo, useReducer} from 'react';
 
 import FieldDatePicker from './forms/FieldDatePicker';
 import FieldSelectWithOption from './forms/FieldSelectWithOption';
 
+export enum FilterType {
+	All = 'all',
+	Last = 'last',
+	Range = 'range',
+}
+
+export enum ModifiedLastType {
+	H12 = '12h',
+	H24 = '24h',
+	H48 = '48h',
+	D7 = '7d',
+}
+
+export type DateFilterValues =
+	| {filterType: FilterType.All}
+	| {filterType: FilterType.Last; modifiedLast: ModifiedLastType}
+	| {filterType: FilterType.Range; fromDate: string; toDate: string};
+
 const FILTER_OPTIONS = [
 	{
 		label: Liferay.Language.get('show-all'),
-		value: 'all',
+		value: FilterType.All,
 	},
 	{
 		label: Liferay.Language.get('date-range'),
-		value: 'range',
+		value: FilterType.Range,
 	},
 	{
 		label: Liferay.Language.get('modified-last'),
-		value: 'last',
+		value: FilterType.Last,
 	},
 ];
 
 const MODIFIED_LAST_OPTIONS = [
 	{
 		label: Liferay.Util.sub(Liferay.Language.get('x-hours'), '12'),
-		value: '12h',
+		value: ModifiedLastType.H12,
 	},
 	{
 		label: Liferay.Util.sub(Liferay.Language.get('x-hours'), '24'),
-		value: '24h',
+		value: ModifiedLastType.H24,
 	},
 	{
 		label: Liferay.Util.sub(Liferay.Language.get('x-hours'), '48'),
-		value: '48h',
+		value: ModifiedLastType.H48,
 	},
 	{
 		label: Liferay.Util.sub(Liferay.Language.get('x-days'), '7'),
-		value: '7d',
+		value: ModifiedLastType.D7,
 	},
 ];
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 
+type State = {
+	applied: DateFilterValues;
+	editing: {
+		filterType: FilterType;
+		fromDate: string;
+		modifiedLast: ModifiedLastType;
+		toDate: string;
+	};
+};
+
+function mapEditingToFilterValues(editing: State['editing']): DateFilterValues {
+	const {filterType, fromDate, modifiedLast, toDate} = editing;
+
+	if (filterType === FilterType.Range) {
+		return {filterType, fromDate, toDate};
+	}
+
+	if (filterType === FilterType.Last) {
+		return {filterType, modifiedLast};
+	}
+
+	return {filterType: FilterType.All};
+}
+
+type Action =
+	| {payload: Partial<State['editing']>; type: 'UPDATE_FILTER'}
+	| {type: 'APPLY'}
+	| {type: 'RESET'};
+
+const INITIAL_STATE: State = {
+	applied: {filterType: FilterType.All},
+	editing: {
+		filterType: FilterType.All,
+		fromDate: '',
+		modifiedLast: ModifiedLastType.H12,
+		toDate: '',
+	},
+};
+
+function filterReducer(state: State, action: Action): State {
+	switch (action.type) {
+		case 'UPDATE_FILTER':
+			return {
+				...state,
+				editing: {...state.editing, ...action.payload},
+			};
+		case 'APPLY':
+			return {
+				...state,
+				applied: mapEditingToFilterValues(state.editing),
+			};
+		case 'RESET':
+			return INITIAL_STATE;
+		default:
+			return state;
+	}
+}
+
 export default function DateFilter({
+	itemsCount = 0,
 	onApplyFilter,
 }: {
-	onApplyFilter?: (filterValues: any) => void;
+	itemsCount?: number;
+	onApplyFilter?: (filterValues: DateFilterValues) => void;
 }) {
-	const [filterType, setFilterType] = useState('all');
-	const [fromDate, setFromDate] = useState('');
-	const [modifiedLast, setModifiedLast] = useState('12h');
-	const [toDate, setToDate] = useState('');
+	const [state, dispatch] = useReducer(filterReducer, INITIAL_STATE);
+
+	const {applied, editing} = state;
+
+	const isDirty = useMemo(() => {
+		if (editing.filterType !== applied.filterType) {
+			return true;
+		}
+
+		if (editing.filterType === FilterType.Last) {
+			return editing.modifiedLast !== (applied as any).modifiedLast;
+		}
+
+		if (editing.filterType === FilterType.Range) {
+			return (
+				editing.fromDate !== (applied as any).fromDate ||
+				editing.toDate !== (applied as any).toDate
+			);
+		}
+
+		return false;
+	}, [editing, applied]);
+
+	const appliedFilterSummary = useMemo(() => {
+		if (applied.filterType === FilterType.Last) {
+			const option = MODIFIED_LAST_OPTIONS.find(
+				(opt) => opt.value === applied.modifiedLast
+			);
+
+			return `${Liferay.Language.get('modified-last')}: ${option?.label}`;
+		}
+
+		if (applied.filterType === FilterType.Range) {
+			return Liferay.Util.sub(Liferay.Language.get('date-range-x-to-x'), [
+				applied.fromDate,
+				applied.toDate,
+			]);
+		}
+
+		return '';
+	}, [applied]);
 
 	const handleShowResults = () => {
-		onApplyFilter?.({
-			filterType,
-			fromDate,
-			modifiedLast,
-			toDate,
-		});
+		dispatch({type: 'APPLY'});
+
+		onApplyFilter?.(mapEditingToFilterValues(editing));
 	};
 
 	return (
-		<ClayLayout.ContentRow className="flex-column flex-lg-row" padded>
-			<ClayLayout.ContentCol>
-				<FieldSelectWithOption
-					id="filterContentBy"
-					label={Liferay.Language.get('filter-content-by')}
-					name="filterContentBy"
-					onChange={(event) => setFilterType(event.target.value)}
-					options={FILTER_OPTIONS}
-					value={filterType}
-				/>
-			</ClayLayout.ContentCol>
-
-			{filterType === 'last' && (
+		<>
+			<ClayLayout.ContentRow className="flex-column flex-lg-row" padded>
 				<ClayLayout.ContentCol>
 					<FieldSelectWithOption
-						id="modifiedLast"
-						label={Liferay.Language.get('modified-last')}
-						name="modifiedLast"
+						id="filterContentBy"
+						label={Liferay.Language.get('filter-content-by')}
+						name="filterContentBy"
 						onChange={(event) =>
-							setModifiedLast(event.target.value)
+							dispatch({
+								payload: {
+									filterType: event.target
+										.value as FilterType,
+								},
+								type: 'UPDATE_FILTER',
+							})
 						}
-						options={MODIFIED_LAST_OPTIONS}
-						value={modifiedLast}
+						options={FILTER_OPTIONS}
+						value={editing.filterType}
 					/>
 				</ClayLayout.ContentCol>
-			)}
 
-			{filterType === 'range' && (
-				<>
+				{editing.filterType === FilterType.Last && (
 					<ClayLayout.ContentCol>
-						<FieldDatePicker
-							dateFormat={DATE_FORMAT}
-							id="fromDate"
-							label={Liferay.Language.get('from')}
-							name="fromDate"
-							onChange={(value) => setFromDate(value)}
-							placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
-							time
-							value={fromDate}
-							years={{
-								end: new Date().getFullYear(),
-								start: new Date().getFullYear() - 10,
-							}}
+						<FieldSelectWithOption
+							id="modifiedLast"
+							label={Liferay.Language.get('modified-last')}
+							name="modifiedLast"
+							onChange={(event) =>
+								dispatch({
+									payload: {
+										modifiedLast: event.target
+											.value as ModifiedLastType,
+									},
+									type: 'UPDATE_FILTER',
+								})
+							}
+							options={MODIFIED_LAST_OPTIONS}
+							value={editing.modifiedLast}
 						/>
 					</ClayLayout.ContentCol>
+				)}
 
-					<ClayLayout.ContentCol>
-						<FieldDatePicker
-							dateFormat={DATE_FORMAT}
-							id="toDate"
-							label={Liferay.Language.get('to')}
-							name="toDate"
-							onChange={(value) => setToDate(value)}
-							placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
-							time
-							value={toDate}
-							years={{
-								end: new Date().getFullYear(),
-								start: new Date().getFullYear() - 10,
-							}}
-						/>
-					</ClayLayout.ContentCol>
-				</>
-			)}
+				{editing.filterType === FilterType.Range && (
+					<>
+						<ClayLayout.ContentCol>
+							<FieldDatePicker
+								dateFormat={DATE_FORMAT}
+								id="fromDate"
+								label={Liferay.Language.get('from')}
+								name="fromDate"
+								onChange={(value) =>
+									dispatch({
+										payload: {fromDate: value as string},
+										type: 'UPDATE_FILTER',
+									})
+								}
+								placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
+								time
+								value={editing.fromDate}
+								years={{
+									end: new Date().getFullYear(),
+									start: new Date().getFullYear() - 10,
+								}}
+							/>
+						</ClayLayout.ContentCol>
 
-			<ClayLayout.ContentCol
-				className="align-items-end d-flex justify-content-center"
-				expand
-			>
-				<ClayButton
-					displayType="secondary"
-					onClick={handleShowResults}
-					size="sm"
+						<ClayLayout.ContentCol>
+							<FieldDatePicker
+								dateFormat={DATE_FORMAT}
+								id="toDate"
+								label={Liferay.Language.get('to')}
+								name="toDate"
+								onChange={(value) =>
+									dispatch({
+										payload: {toDate: value as string},
+										type: 'UPDATE_FILTER',
+									})
+								}
+								placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
+								time
+								value={editing.toDate}
+								years={{
+									end: new Date().getFullYear(),
+									start: new Date().getFullYear() - 10,
+								}}
+							/>
+						</ClayLayout.ContentCol>
+					</>
+				)}
+
+				<ClayLayout.ContentCol
+					className="align-items-end d-flex justify-content-center"
+					expand
 				>
-					{Liferay.Language.get('show-results')}
-				</ClayButton>
-			</ClayLayout.ContentCol>
-		</ClayLayout.ContentRow>
+					{!(
+						editing.filterType === FilterType.All &&
+						applied.filterType === FilterType.All
+					) && (
+						<ClayButton
+							disabled={!isDirty}
+							displayType="secondary"
+							onClick={handleShowResults}
+							size="sm"
+						>
+							{Liferay.Language.get('show-results')}
+						</ClayButton>
+					)}
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
+
+			{applied.filterType !== FilterType.All && (
+				<ClayLayout.ContentRow padded>
+					<ClayLayout.ContentCol expand>
+						<ClayAlert
+							actions={
+								<ClayButton
+									borderless
+									onClick={() => {
+										dispatch({type: 'RESET'});
+										onApplyFilter?.({
+											filterType: FilterType.All,
+										});
+									}}
+									size="sm"
+								>
+									{Liferay.Language.get('clear-filters')}
+								</ClayButton>
+							}
+							className="w-100"
+							displayType="info"
+							title={Liferay.Util.sub(
+								Liferay.Language.get('x-items-found-for:'),
+								String(itemsCount)
+							)}
+							variant="inline"
+						>
+							{appliedFilterSummary}
+						</ClayAlert>
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
+			)}
+		</>
 	);
 }

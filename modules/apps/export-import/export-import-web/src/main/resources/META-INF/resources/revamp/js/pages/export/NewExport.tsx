@@ -8,13 +8,14 @@ import ClayIcon from '@clayui/icon';
 import {FormikValues} from 'formik';
 import React from 'react';
 
+import {DateFilterValues} from '../../components/DateFilter';
 import {Wizard, WizardStep} from '../../components/Wizard';
 import DataSelectionStep from './steps/DataSelectionStep';
 import SettingsStep from './steps/SettingsStep';
 import SetupStep from './steps/SetupStep';
 
 export function NewExport({backURL}: {backURL: string}) {
-	const handleApplyFilter = (filterValues: any) => {
+	const handleApplyFilter = (filterValues: DateFilterValues) => {
 
 		// eslint-disable-next-line no-console
 		console.log('Filtering by:', filterValues);
@@ -52,7 +53,10 @@ export function NewExport({backURL}: {backURL: string}) {
 				)}
 				title={Liferay.Language.get('data-selection')}
 			>
-				<DataSelectionStep onApplyFilter={handleApplyFilter} />
+				<DataSelectionStep
+					itemsCount={0}
+					onApplyFilter={handleApplyFilter}
+				/>
 			</WizardStep>
 
 			<WizardStep

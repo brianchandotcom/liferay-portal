@@ -6,17 +6,22 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import DateFilter from '../../../components/DateFilter';
+import DateFilter, {DateFilterValues} from '../../../components/DateFilter';
 
 export default function DataSelectionStep({
+	itemsCount = 0,
 	onApplyFilter,
 }: {
-	onApplyFilter?: (filterValues: any) => void;
+	itemsCount?: number;
+	onApplyFilter?: (filterValues: DateFilterValues) => void;
 }) {
 	return (
 		<>
 			<ClayLayout.Sheet>
-				<DateFilter onApplyFilter={onApplyFilter} />
+				<DateFilter
+					itemsCount={itemsCount}
+					onApplyFilter={onApplyFilter}
+				/>
 			</ClayLayout.Sheet>
 
 			<ClayLayout.Sheet>

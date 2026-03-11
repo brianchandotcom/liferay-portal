@@ -38,6 +38,8 @@ public class JournalFolderKeywordQueryContributor
 			booleanQuery, searchContext, Field.DESCRIPTION, false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.DESCRIPTION, false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		_queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.TITLE, false);
 		_queryHelper.addSearchTerm(

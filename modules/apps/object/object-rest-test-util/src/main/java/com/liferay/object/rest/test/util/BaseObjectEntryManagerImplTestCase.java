@@ -31,7 +31,9 @@ import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -139,11 +141,17 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 				expectedFacet.getFacetCriteria(),
 				actualFacet.getFacetCriteria());
 
-			List<Facet.FacetValue> actualFacetFacetValues =
-				actualFacet.getFacetValues();
+			List<Facet.FacetValue> actualFacetFacetValues = new ArrayList<>(
+				actualFacet.getFacetValues());
 
-			List<Facet.FacetValue> expectedFacetFacetValues =
-				expectedFacet.getFacetValues();
+			actualFacetFacetValues.sort(
+				Comparator.comparing(Facet.FacetValue::getTerm));
+
+			List<Facet.FacetValue> expectedFacetFacetValues = new ArrayList<>(
+				expectedFacet.getFacetValues());
+
+			expectedFacetFacetValues.sort(
+				Comparator.comparing(Facet.FacetValue::getTerm));
 
 			Assert.assertEquals(
 				actualFacetFacetValues.toString(),

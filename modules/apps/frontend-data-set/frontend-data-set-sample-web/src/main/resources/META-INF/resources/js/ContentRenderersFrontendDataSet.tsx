@@ -13,6 +13,21 @@ const ContentRenderersFrontendDataSet = () => {
 			numberDefault: 0,
 			title: 'Item with 0',
 		},
+		{
+			numberActionLink: 1,
+			numberDefault: 1,
+			title: 'Item with 1',
+		},
+		{
+			numberActionLink: 2,
+			numberDefault: 2,
+			title: 'Item with 2',
+		},
+		{
+			numberActionLink: 3,
+			numberDefault: 3,
+			title: 'Item with 3',
+		},
 	];
 
 	return (
@@ -29,6 +44,12 @@ const ContentRenderersFrontendDataSet = () => {
 					onClick: () => {},
 				},
 			]}
+			onItemsPropSearch={(item, search) => item.title.includes(search)}
+			pagination={{
+				deltas: [{label: 2}, {label: 4}],
+				initialDelta: 2,
+			}}
+			showPagination
 			views={[
 				{
 					contentRenderer: 'table',

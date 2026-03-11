@@ -533,6 +533,10 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().getVersions(fragmentEntry);
 	}
 
+	public static boolean hasExportableItems(long fragmentCollectionId) {
+		return getService().hasExportableItems(fragmentCollectionId);
+	}
+
 	public static FragmentEntry moveFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId)
 		throws PortalException {

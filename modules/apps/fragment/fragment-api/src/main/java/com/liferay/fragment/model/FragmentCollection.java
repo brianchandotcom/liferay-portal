@@ -69,6 +69,8 @@ public interface FragmentCollection
 				getResourcesMap()
 			throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean hasExportableItems();
+
 	public boolean hasResources()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

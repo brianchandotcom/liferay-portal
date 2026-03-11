@@ -432,6 +432,9 @@ public interface FragmentEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryVersion> getVersions(FragmentEntry fragmentEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasExportableItems(long fragmentCollectionId);
+
 	public FragmentEntry moveFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId)
 		throws PortalException;

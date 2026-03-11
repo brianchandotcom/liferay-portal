@@ -460,6 +460,10 @@ public class FragmentCompositionLocalServiceUtil {
 			groupId, fragmentCollectionId, name);
 	}
 
+	public static boolean hasExportableItems(long fragmentCollectionId) {
+		return getService().hasExportableItems(fragmentCollectionId);
+	}
+
 	public static FragmentComposition moveFragmentComposition(
 			long fragmentCompositionId, long fragmentCollectionId)
 		throws PortalException {

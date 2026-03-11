@@ -7,6 +7,7 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 import {EFDSVisualizationMode, waitForFDS} from '../../../../utils/waitFor';
 import getFragmentDefinition from '../../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
@@ -235,6 +236,19 @@ export class FDSSamplePage {
 		await dropdownItem.click();
 	}
 
+	async changePage(pageNumber: number) {
+		const button = this.page.getByLabel(`Go to page, ${pageNumber}`);
+
+		await clickAndExpectToBeVisible({
+			target: this.page
+				.locator('.page-item.active')
+				.filter({has: button}),
+			trigger: button,
+		});
+
+		await this.page.getByLabel(`Go to page, ${pageNumber}`).click();
+	}
+
 	async changeVisualizationMode({
 		page,
 		visualizationMode,
@@ -301,6 +315,12 @@ export class FDSSamplePage {
 		await dropdownMenu.filter({has: this.page.getByRole('menu')}).waitFor();
 
 		return dropdownMenu;
+	}
+
+	async search(value: string) {
+		await this.managementToolbar.searchInput.fill(value);
+
+		await this.managementToolbar.searchInput.press('Enter');
 	}
 
 	selectItemActionsByRow(text: string) {

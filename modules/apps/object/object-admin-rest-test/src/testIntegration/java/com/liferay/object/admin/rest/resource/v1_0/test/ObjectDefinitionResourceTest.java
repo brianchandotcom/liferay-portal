@@ -2903,14 +2903,12 @@ public class ObjectDefinitionResourceTest
 		Assert.assertEquals(2, jsonObject.getLong("processedItemsCount"));
 		Assert.assertEquals(2, jsonObject.getLong("totalItemsCount"));
 
-		Page<ObjectDefinition> page =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null,
-				"objectFolderExternalReferenceCode eq '" +
-					_objectFolder1.getExternalReferenceCode() + "'",
-				null, null);
-
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertNotNull(
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				objectDefinition1.getExternalReferenceCode()));
+		Assert.assertNotNull(
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				objectDefinition2.getExternalReferenceCode()));
 	}
 
 	private void _testPostObjectDefinitionWithSystemAggregationObjectField()

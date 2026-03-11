@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
@@ -131,11 +132,14 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		InfoItemFieldValues infoItemFieldValues = threadLocalCache.get(key);
 
-		if (infoItemFieldValues != null) {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		if ((infoItemFieldValues != null) &&
+			((themeDisplay == null) ||
+			 Validator.isNull(themeDisplay.getDoAsUserId()))) {
+
 			return infoItemFieldValues;
 		}
-
-		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		try {
 			infoItemFieldValues = InfoItemFieldValues.builder(
@@ -160,7 +164,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			throw new RuntimeException(exception);
 		}
 
-		if (themeDisplay != null) {
+		if ((themeDisplay != null) &&
+			Validator.isNull(themeDisplay.getDoAsUserId())) {
+
 			threadLocalCache.put(key, infoItemFieldValues);
 		}
 

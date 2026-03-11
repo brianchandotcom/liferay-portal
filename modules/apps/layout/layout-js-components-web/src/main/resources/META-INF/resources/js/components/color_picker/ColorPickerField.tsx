@@ -8,6 +8,7 @@ import ClayColorPicker, {useColorPicker} from '@clayui/color-picker';
 import ClayDropDown from '@clayui/drop-down';
 import {FocusScope, InternalDispatch} from '@clayui/shared';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import ColorPalette from './ColorPalette';
@@ -87,6 +88,13 @@ export default function ColorPickerField({
 		<FocusScope arrowKeysUpDown={false}>
 			<div className="clay-color-picker">
 				<ClayColorPicker.Field
+					ariaLabels={{
+						selectColor: Liferay.Language.get('select-a-color'),
+						selectionIs: sub(
+							Liferay.Language.get('color-selection-is-x'),
+							color
+						),
+					}}
 					disabled={disabled}
 					name={name}
 					onClickSplotch={onClickSplotch}
@@ -115,16 +123,24 @@ export default function ColorPickerField({
 				>
 					<ClayButton.Group className="c-mb-3 c-mx-3">
 						<ClayButton
+							aria-controls="tabpanel1"
+							aria-selected={tab === 'custom'}
+							className={classNames({active: tab === 'custom'})}
 							displayType="secondary"
 							onClick={() => setTab('custom')}
+							role="tab"
 							size="xs"
 						>
 							{Liferay.Language.get('custom')}
 						</ClayButton>
 
 						<ClayButton
+							aria-controls="tabpanel2"
+							aria-selected={tab === 'values'}
+							className={classNames({active: tab === 'values'})}
 							displayType="secondary"
 							onClick={() => setTab('values')}
+							role="tab"
 							size="xs"
 						>
 							{Liferay.Language.get('value-from-stylebook')}
@@ -137,6 +153,8 @@ export default function ColorPickerField({
 								className={classNames('c-px-3', {
 									'd-none': tab !== 'custom',
 								})}
+								id="tabpanel1"
+								role="tabpanel"
 							>
 								<ClayColorPicker.Editor
 									color={color}
@@ -164,6 +182,8 @@ export default function ColorPickerField({
 								className={classNames({
 									'd-none': tab !== 'values',
 								})}
+								id="tabpanel2"
+								role="tabpanel"
 							>
 								<ColorPaletteTab
 									active={active}

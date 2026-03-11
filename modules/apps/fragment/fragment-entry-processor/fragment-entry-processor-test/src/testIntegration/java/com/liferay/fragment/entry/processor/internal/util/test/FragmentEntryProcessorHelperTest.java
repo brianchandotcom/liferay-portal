@@ -122,6 +122,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -192,6 +193,65 @@ public class FragmentEntryProcessorHelperTest {
 					"fieldId", "AssetTag_tagNames"
 				),
 				LocaleUtil.SPAIN));
+	}
+
+	@Test
+	@TestInfo("LPD-82453")
+	public void testGetFieldValueFromDateValueWithTimeZone() throws Exception {
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.TEXT);
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
+			_group.getGroupId(), _journalConverter);
+
+		Date displayDate = journalArticle.getDisplayDate();
+
+		TimeZone originalTimeZone = _themeDisplay.getTimeZone();
+
+		try {
+			TimeZone tokyoTimeZone = TimeZone.getTimeZone("Asia/Tokyo");
+
+			_themeDisplay.setTimeZone(tokyoTimeZone);
+
+			Assert.assertEquals(
+				_formatDate(displayDate, LocaleUtil.US, tokyoTimeZone),
+				_getFieldValue(
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						_portal.getClassNameId(JournalArticle.class.getName())
+					).put(
+						"classPK", journalArticle.getResourcePrimKey()
+					).put(
+						"fieldId", "displayDate"
+					),
+					LocaleUtil.US));
+
+			TimeZone utcTimeZone = TimeZone.getTimeZone("UTC");
+
+			_themeDisplay.setTimeZone(utcTimeZone);
+
+			Assert.assertEquals(
+				_formatDate(displayDate, LocaleUtil.US, utcTimeZone),
+				_getFieldValue(
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						_portal.getClassNameId(JournalArticle.class.getName())
+					).put(
+						"classPK", journalArticle.getResourcePrimKey()
+					).put(
+						"fieldId", "displayDate"
+					),
+					LocaleUtil.US));
+		}
+		finally {
+			_themeDisplay.setTimeZone(originalTimeZone);
+		}
 	}
 
 	@Test
@@ -1242,6 +1302,16 @@ public class FragmentEntryProcessorHelperTest {
 			DateTimeFormatterBuilder.getLocalizedDateTimePattern(
 				FormatStyle.SHORT, null, IsoChronology.INSTANCE, locale),
 			locale);
+
+		return dateFormat.format(date);
+	}
+
+	private String _formatDate(Date date, Locale locale, TimeZone timeZone) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+				FormatStyle.SHORT, FormatStyle.SHORT, IsoChronology.INSTANCE,
+				locale),
+			locale, timeZone);
 
 		return dateFormat.format(date);
 	}

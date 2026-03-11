@@ -11,8 +11,7 @@ import {getFDSAtom} from '@liferay/frontend-data-set-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import React, {useEffect, useMemo, useState} from 'react';
 
-const ADVANCED_FDS_ATOM_KEY =
-	'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-advanced';
+const ADVANCED_FDS_NAME = 'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-advanced';
 
 /**
  * This fragment highlights sync with FDS from isolated context, if there is
@@ -24,7 +23,7 @@ const ADVANCED_FDS_ATOM_KEY =
  */
 const AdvancedSearch = () => {
 	const memoizedAtom = useMemo(
-		() => getFDSAtom({key: ADVANCED_FDS_ATOM_KEY}),
+		() => getFDSAtom({fdsName: ADVANCED_FDS_NAME}),
 		[]
 	);
 

@@ -45,14 +45,6 @@ public class HomeDisplayContext {
 			_portletId, _themeDisplay);
 	}
 
-	public String getPanelCategoryLabel() {
-		return _panelCategory.getLabel(_themeDisplay.getLocale());
-	}
-
-	public String getPortletId() {
-		return _portletId;
-	}
-
 	public Map<String, Object> getProps() throws Exception {
 		if (_panelCategory == null) {
 			return Collections.emptyMap();
@@ -68,7 +60,7 @@ public class HomeDisplayContext {
 		).put(
 			"portletId", _portletId
 		).put(
-			"title", getPanelCategoryLabel()
+			"title", _panelCategory.getLabel(_themeDisplay.getLocale())
 		).build();
 	}
 

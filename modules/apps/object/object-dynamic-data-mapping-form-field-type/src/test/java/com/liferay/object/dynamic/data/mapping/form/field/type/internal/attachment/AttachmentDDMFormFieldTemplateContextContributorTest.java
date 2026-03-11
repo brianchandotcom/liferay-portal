@@ -12,9 +12,12 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTemplateContextContributorTestCase;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -60,8 +63,10 @@ public class AttachmentDDMFormFieldTemplateContextContributorTest
 		_setUpAttachmentManager();
 		_setUpDLAppLocalService();
 		_setUpDLURLHelper();
+		_setUpGroupLocalService();
 		_setUpJSONFactory();
 		_setUpLanguage();
+		_setUpObjectFieldLocalService();
 		_setUpUploadServletRequestConfigurationProvider();
 
 		_ddmFormField.setDDMForm(getDDMForm());
@@ -198,6 +203,12 @@ public class AttachmentDDMFormFieldTemplateContextContributorTest
 			_dlURLHelper);
 	}
 
+	private void _setUpGroupLocalService() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			_attachmentDDMFormFieldTemplateContextContributor,
+			"_groupLocalService", _groupLocalService);
+	}
+
 	private void _setUpJSONFactory() {
 		ReflectionTestUtil.setFieldValue(
 			_attachmentDDMFormFieldTemplateContextContributor, "_jsonFactory",
@@ -208,6 +219,18 @@ public class AttachmentDDMFormFieldTemplateContextContributorTest
 		ReflectionTestUtil.setFieldValue(
 			_attachmentDDMFormFieldTemplateContextContributor, "_language",
 			language);
+	}
+
+	private void _setUpObjectFieldLocalService() throws Exception {
+		Mockito.when(
+			_objectFieldLocalService.fetchObjectField(Mockito.anyLong())
+		).thenReturn(
+			Mockito.mock(ObjectField.class)
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_attachmentDDMFormFieldTemplateContextContributor,
+			"_objectFieldLocalService", _objectFieldLocalService);
 	}
 
 	private void _setUpUploadServletRequestConfigurationProvider() {
@@ -254,6 +277,10 @@ public class AttachmentDDMFormFieldTemplateContextContributorTest
 	private final DLURLHelper _dlURLHelper = Mockito.mock(DLURLHelper.class);
 	private final FileEntry _fileEntry1 = Mockito.mock(FileEntry.class);
 	private final FileEntry _fileEntry2 = Mockito.mock(FileEntry.class);
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
+	private final ObjectFieldLocalService _objectFieldLocalService =
+		Mockito.mock(ObjectFieldLocalService.class);
 	private final UploadServletRequestConfigurationProvider
 		_uploadServletRequestConfigurationProvider = Mockito.mock(
 			UploadServletRequestConfigurationProvider.class);

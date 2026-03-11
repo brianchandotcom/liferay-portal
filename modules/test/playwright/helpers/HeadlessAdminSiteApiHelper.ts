@@ -67,4 +67,14 @@ export class HeadlessAdminSiteApiHelper {
 			}
 		);
 	}
+
+	async deleteSiteNavigationMenu(
+		siteExternalReferenceCode: string,
+		navigationMenuExternalReferenceCode: string
+	): Promise<any> {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}/navigation-menus/${navigationMenuExternalReferenceCode}`,
+			{failOnStatusCode: true}
+		);
+	}
 }

@@ -515,6 +515,17 @@ export class DataApiHelpers extends ApiHelpers {
 			else if (item.type === 'listTypeDefinition') {
 				await this.listTypeAdmin.deleteListTypeDefinition(item.id);
 			}
+			else if (item.type === 'navigationMenu') {
+				const [
+					siteExternalReferenceCode,
+					navigationMenuExternalReferenceCode,
+				] = item.id.split('_');
+
+				await this.headlessAdminSite.deleteSiteNavigationMenu(
+					siteExternalReferenceCode,
+					navigationMenuExternalReferenceCode
+				);
+			}
 			else if (item.type === 'notificationQueueEntry') {
 				await this.notification.deleteNotificationQueueEntry(item.id);
 			}

@@ -20,6 +20,7 @@ interface SidebarElement {
 
 export interface SidebarCategory {
 	items: SidebarElement[];
+	key: string;
 	label: string;
 }
 interface SidebarProps {

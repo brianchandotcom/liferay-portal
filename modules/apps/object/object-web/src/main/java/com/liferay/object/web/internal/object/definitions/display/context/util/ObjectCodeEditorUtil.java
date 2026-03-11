@@ -389,6 +389,8 @@ public class ObjectCodeEditorUtil {
 		return HashMapBuilder.<String, Object>put(
 			"items", items
 		).put(
+			"key", key
+		).put(
 			"label", LanguageUtil.get(locale, key)
 		).build();
 	}

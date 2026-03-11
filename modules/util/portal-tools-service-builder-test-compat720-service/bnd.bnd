@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Tools Service Builder Test Compat720 Service
+Bundle-SymbolicName: com.liferay.portal.tools.service.builder.test.compat720.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -34,10 +36,31 @@ public class DataLayoutTaglibUtil {
 			long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		Map<Long, DataDefinition> dataDefinitions =
+			(Map<Long, DataDefinition>)httpServletRequest.getAttribute(
+				_DATA_DEFINITIONS);
+
+		if (dataDefinitions == null) {
+			dataDefinitions = new HashMap<>();
+
+			httpServletRequest.setAttribute(_DATA_DEFINITIONS, dataDefinitions);
+		}
+
+		DataDefinition dataDefinition = dataDefinitions.get(dataDefinitionId);
+
+		if (dataDefinition != null) {
+			return dataDefinition;
+		}
+
 		DataDefinitionResource dataDefinitionResource =
 			_getDataDefinitionResource(httpServletRequest);
 
-		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
+		dataDefinition = dataDefinitionResource.getDataDefinition(
+			dataDefinitionId);
+
+		dataDefinitions.put(dataDefinitionId, dataDefinition);
+
+		return dataDefinition;
 	}
 
 	public static JSONArray getFieldTypesJSONArray(
@@ -132,6 +155,9 @@ public class DataLayoutTaglibUtil {
 			}
 		}
 	}
+
+	private static final String _DATA_DEFINITIONS =
+		DataLayoutTaglibUtil.class.getName() + "#DATA_DEFINITIONS";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutTaglibUtil.class);

@@ -6,6 +6,7 @@
 package com.liferay.oauth.client.persistence.internal.upgrade.v1_4_1;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -34,9 +35,11 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update OAuthClientEntry set matcherField = ? WHERE " +
-					"oAuthClientEntryId = ?");
+		try (PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"update OAuthClientEntry set matcherField = ? WHERE " +
+						"oAuthClientEntryId = ?");
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
 				"select authServerWellKnownURI, clientId, companyId, " +

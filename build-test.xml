@@ -7971,6 +7971,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-host-git-dir />
 
 			<start-docker-container image="${browser.docker.image}" name="${browser.host}" options="${browser.docker.browser.options}">\
+				-e SE_NODE_SESSION_TIMEOUT=600 \
 				${browser.docker.run.options} \
 				${docker.add.host.hostname.arg} \
 				${docker.add.host.node.name.arg} \

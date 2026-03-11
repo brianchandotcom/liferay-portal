@@ -159,6 +159,7 @@ export class PagesAdminPage {
 	}) {
 		await clickAndExpectToBeVisible({
 			target: this.addPageModal,
+			timeout: 5000,
 			trigger: this.page
 				.locator('.card-page-item')
 				.filter({hasText: template}),
@@ -168,11 +169,13 @@ export class PagesAdminPage {
 
 		await fillAndClickOutside(this.page, this.pageTitleBox, name);
 
-		await this.addButton.waitFor({state: 'attached'});
-		await this.addButton.hover();
-		await this.addButton.click();
+		await expect(async () => {
+			await this.addButton.click({timeout: 1000});
 
-		await waitForAlert(this.page, 'page was created successfully.');
+			await waitForAlert(this.page, 'page was created successfully.', {
+				timeout: 5000,
+			});
+		}).toPass();
 	}
 
 	private async addThemeFaviconClientExtension(clientExtensionName: string) {

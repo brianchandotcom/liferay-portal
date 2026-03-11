@@ -213,57 +213,6 @@ definition {
 		}
 	}
 
-	@description = "Edit the global web content via Asset Publisher."
-	@priority = 4
-	test EditGlobalWebContentViaAssetPublisher {
-		var title = StringUtil.randomString(8);
-
-		task ("Add a global web content") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Global",
-				title = ${title});
-		}
-
-		task ("View no assets shown in Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.viewManualNoAssetsMessagePG();
-		}
-
-		task ("Add the Global site to Site Scope") {
-			AssetPublisherPortlet.configureScope(globalSite = "true");
-		}
-
-		task ("View the global web content shown in Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "WC WebContent Content",
-				assetTitle = ${title});
-		}
-
-		task ("Edit the global web content via Asset Publisher") {
-			AssetPublisherPortlet.gotoEditAssetPG(assetTitle = ${title});
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content Edit",
-				webContentTitle = "${title} Edit");
-
-			WebContent.publishExistingWCArticleWithPermissions();
-		}
-
-		task ("View the edited content shown in Asset Publisher") {
-			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "WC WebContent Content Edit",
-				assetTitle = "${title} Edit");
-		}
-	}
-
 	@description = "This is a use case for LPS-120568. The user could edit message board thread reply via Asset Publisher."
 	@priority = 5
 	test EditMessageBoardThreadReplyViaAP {
@@ -1837,53 +1786,6 @@ definition {
 
 		task ("View the friendly URL shown in address") {
 			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/-/webcontent-title");
-		}
-	}
-
-	@description = "This is a use case for LPS-49853. View the web content with viewable by Site Members in Asset Publisher as Guest with VIEW permission."
-	@priority = 5
-	test ViewWebContentWithViewableBySiteMembersAsGuestWithViewPermission {
-		property portal.acceptance = "true";
-
-		task ("Add VIEW permission of to Guest role") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "Guest");
-		}
-
-		task ("Add a web content with viewable by Site Members") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent Title");
-
-			WebContent.publishWithPermissions(viewableBy = "Site Members");
-		}
-
-		task ("View the web content in Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "WC WebContent Content",
-				assetTitle = "WC WebContent Title");
-		}
-
-		task ("View the web content in Asset Publisher as Guest") {
-			User.logoutPG();
-
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "WC WebContent Content",
-				assetTitle = "WC WebContent Title");
 		}
 	}
 

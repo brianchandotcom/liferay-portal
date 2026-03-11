@@ -519,7 +519,7 @@ export class DataApiHelpers extends ApiHelpers {
 				const [
 					siteExternalReferenceCode,
 					navigationMenuExternalReferenceCode,
-				] = item.id.split('_');
+				] = item.id.split('|');
 
 				await this.headlessAdminSite.deleteSiteNavigationMenu(
 					siteExternalReferenceCode,

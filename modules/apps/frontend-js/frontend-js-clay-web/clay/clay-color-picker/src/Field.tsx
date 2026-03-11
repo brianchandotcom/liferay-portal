@@ -112,15 +112,19 @@ export default function Field({
 	splotchRef,
 	splotchTitle,
 	title,
-	triggerElementRef,
+	triggerElementRef: externalTriggerElementRef,
 	useNative = false,
 	value,
 	valueInputRef,
 	...otherProps
 }: IProps) {
+	const internalTriggerElementRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const isHex = tinycolor(value).getFormat() === 'hex';
+
+	const triggerElementRef =
+		externalTriggerElementRef || internalTriggerElementRef;
 
 	return (
 		<>

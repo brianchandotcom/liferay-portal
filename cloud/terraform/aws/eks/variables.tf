@@ -23,7 +23,7 @@ variable "gateway_namespace" {
 	default="envoy-gateway-system"
 }
 variable "max_availability_zones" {
-	default=1
+	default=2
 }
 variable "private_subnets" {
 	default=null

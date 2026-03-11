@@ -1,0 +1,15 @@
+.floating-icon-custom {
+    width: 60px;
+    height: 60px;
+    background-color: var(--gray-400);
+    transition: background-color 0.2s ease;
+}
+
+.floating-icon-custom:hover {
+    background-color: var(--gray-700);
+}
+
+.floating-icon-custom .lexicon-icon {
+    width: 30px;
+    height: 30px;
+}

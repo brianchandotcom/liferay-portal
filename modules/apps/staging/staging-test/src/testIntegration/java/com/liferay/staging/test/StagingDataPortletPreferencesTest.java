@@ -15,7 +15,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -23,21 +22,17 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
-import com.liferay.staging.configuration.StagingConfiguration;
 
 import jakarta.portlet.PortletPreferences;
 
 import java.util.Map;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,21 +49,6 @@ public class StagingDataPortletPreferencesTest
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		ConfigurationTestUtil.saveConfiguration(
-			StagingConfiguration.class.getName(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"publishDisplayedContent", false
-			).build());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		ConfigurationTestUtil.deleteConfiguration(
-			StagingConfiguration.class.getName());
-	}
 
 	@Test
 	public void testJournalContentDataPortletPreferences() throws Exception {

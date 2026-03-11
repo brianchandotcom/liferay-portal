@@ -88,7 +88,9 @@ public abstract class CollectionReference implements Cloneable, Serializable {
 
 	public static enum CollectionType {
 
-		COLLECTION("Collection"), COLLECTION_PROVIDER("CollectionProvider");
+		COLLECTION("Collection"), COLLECTION_PROVIDER("CollectionProvider"),
+		REPEATABLE_FIELDS_COLLECTION_PROVIDER(
+			"RepeatableFieldsCollectionProvider");
 
 		public static CollectionType create(String value) {
 			for (CollectionType collectionType : values()) {

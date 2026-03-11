@@ -80,7 +80,12 @@ test(
 					'min',
 					'1'
 				);
-				await validateConsentRenewalPeriodValue('0', page, false);
+				await validateConsentRenewalPeriodValue(
+					false,
+					'0',
+					page,
+					false
+				);
 			});
 
 			await test.step('Validate value cannot be more than 12', async () => {
@@ -88,11 +93,16 @@ test(
 					'max',
 					'12'
 				);
-				await validateConsentRenewalPeriodValue('13', page, false);
+				await validateConsentRenewalPeriodValue(
+					false,
+					'13',
+					page,
+					false
+				);
 			});
 
 			await test.step('Validate value cannot be null', async () => {
-				await validateConsentRenewalPeriodValue('', page, false);
+				await validateConsentRenewalPeriodValue(false, '', page, false);
 			});
 
 			await test.step('Validate value must be a number', async () => {
@@ -114,14 +124,14 @@ test(
 		});
 
 		await test.step('Verify dismissing the dialog does not change configuration value', async () => {
-			await validateConsentRenewalPeriodValue('1', page, false);
+			await validateConsentRenewalPeriodValue(false, '1', page, false);
 		});
 
 		await test.step('Verify accepting dialog updates configuration value and Cookies Banner appears again', async () => {
 			page.once('dialog', async (dialogWindow) => {
 				await dialogWindow.accept();
 			});
-			await validateConsentRenewalPeriodValue('1', page, true);
+			await validateConsentRenewalPeriodValue(false, '1', page, true);
 		});
 	}
 );
@@ -209,62 +219,15 @@ test(
 	'Verify Consent Renewal Period correctly sets cookie expiration',
 	{tag: '@LPD-68505'},
 	async ({page}) => {
-		const dateBeforeCookiesSet = new Date().getTime();
+		await validateConsentRenewalPeriodCookieExpiration(false, page);
+	}
+);
 
-		await test.step('Set Consent Renewal Period to 1 month', async () => {
-			page.once('dialog', async (dialogWindow) => {
-				await dialogWindow.accept();
-			});
-			await validateConsentRenewalPeriodValue('1', page, true);
-		});
-
-		const cookies = await page.context().cookies();
-
-		let userConsentConfiguredDate;
-
-		await test.step('Verify USER_CONSENT_CONFIGURED_DATE cookie value is now', async () => {
-			const cookie = await cookies.find(
-				(cookie) => cookie.name === 'USER_CONSENT_CONFIGURED_DATE'
-			);
-
-			await expect(cookie).toBeDefined();
-
-			userConsentConfiguredDate = Number(cookie.value);
-
-			await expect(userConsentConfiguredDate).toBeGreaterThanOrEqual(
-				dateBeforeCookiesSet
-			);
-			await expect(userConsentConfiguredDate).toBeLessThanOrEqual(
-				new Date().getTime()
-			);
-		});
-
-		await test.step('Verify Consent Cookies expire in 1 month', async () => {
-			const oneMonthFromNowInSeconds =
-				userConsentConfiguredDate / 1000 +
-				60 * 60 * 24 * 365 * (1 / 12);
-
-			for (const cookieKey of cookieKeys) {
-				const cookie = await cookies.find(
-					(cookie) => cookie.name === cookieKey
-				);
-
-				await expect(cookie).toBeDefined();
-
-				// Normalize cookie.expires by removing millis
-
-				const cookieExpiration = Number(cookie.expires.toFixed());
-
-				// Expect expiration within +/- 1 second
-
-				await expect(cookieExpiration).toBeGreaterThanOrEqual(
-					oneMonthFromNowInSeconds - 1
-				);
-				await expect(cookieExpiration).toBeLessThanOrEqual(
-					oneMonthFromNowInSeconds + 1
-				);
-			}
-		});
+test(
+	'Verify Consent Renewal Period for Dissent correctly sets cookie expiration',
+	{tag: '@LPD-80057'},
+	async ({page}) => {
+		await validateConsentRenewalPeriodCookieExpiration(true, page);
 	}
 );
 
@@ -314,14 +277,82 @@ test(
 	}
 );
 
+async function validateConsentRenewalPeriodCookieExpiration(
+	dissent: boolean,
+	page
+) {
+	const dateBeforeCookiesSet = new Date().getTime();
+
+	await test.step('Set Consent Renewal Period to 1 month', async () => {
+		page.once('dialog', async (dialogWindow) => {
+			await dialogWindow.accept();
+		});
+		await validateConsentRenewalPeriodValue(dissent, '1', page, true);
+	});
+
+	const cookies = await page.context().cookies();
+
+	let userConsentConfiguredDate;
+
+	await test.step('Verify USER_CONSENT_CONFIGURED_DATE cookie value is now', async () => {
+		const cookie = await cookies.find(
+			(cookie) => cookie.name === 'USER_CONSENT_CONFIGURED_DATE'
+		);
+
+		await expect(cookie).toBeDefined();
+
+		userConsentConfiguredDate = Number(cookie.value);
+
+		await expect(userConsentConfiguredDate).toBeGreaterThanOrEqual(
+			dateBeforeCookiesSet
+		);
+		await expect(userConsentConfiguredDate).toBeLessThanOrEqual(
+			new Date().getTime()
+		);
+	});
+
+	await test.step('Verify Consent Cookies expire in 1 month', async () => {
+		const oneMonthFromNowInSeconds =
+			userConsentConfiguredDate / 1000 + 60 * 60 * 24 * 365 * (1 / 12);
+
+		for (const cookieKey of cookieKeys) {
+			const cookie = await cookies.find(
+				(cookie) => cookie.name === cookieKey
+			);
+
+			await expect(cookie).toBeDefined();
+
+			// Normalize cookie.expires by removing millis
+
+			const cookieExpiration = Number(cookie.expires.toFixed());
+
+			// Expect expiration within +/- 1 second
+
+			await expect(cookieExpiration).toBeGreaterThanOrEqual(
+				oneMonthFromNowInSeconds - 1
+			);
+			await expect(cookieExpiration).toBeLessThanOrEqual(
+				oneMonthFromNowInSeconds + 1
+			);
+		}
+	});
+}
+
 async function validateConsentRenewalPeriodValue(
+	dissent: boolean,
 	newValue: string,
 	page,
 	saveSuccessful: boolean
 ) {
-	const consentRenewalPeriodField = await page.getByLabel(
-		'Consent Renewal Period'
-	);
+	let consentRenewalPeriodField = await page
+		.getByLabel('Consent Renewal Period')
+		.first();
+
+	if (dissent) {
+		consentRenewalPeriodField = await page.getByLabel(
+			'Consent Renewal Period for Dissent'
+		);
+	}
 
 	let expectedValue = await consentRenewalPeriodField.getAttribute('value');
 

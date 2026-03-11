@@ -125,8 +125,6 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_multiVMPool.clear();
-
 		oAuthClientEntry1 = _oAuthClientEntryLocalService.fetchOAuthClientEntry(
 			oAuthClientEntry1.getOAuthClientEntryId());
 
@@ -157,6 +155,8 @@ public class OAuthClientEntryUpgradeProcessTest {
 			_upgradeStepRegistrator, _CLASS_NAME);
 
 		upgradeProcess.upgrade();
+
+		_multiVMPool.clear();
 	}
 
 	private static final String _CLASS_NAME =

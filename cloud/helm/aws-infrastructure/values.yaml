@@ -23,8 +23,10 @@ orphanOnDelete: false
 overlay: {}
 search:
     opensearch:
+        autoSoftwareUpdateEnabled: true
         engineVersion: OpenSearch_2.15
         instanceCount: 2
         instanceType: t3.small.search
         username: liferay_search_admin
+        volumeSizeGB: 20
 storage: {}

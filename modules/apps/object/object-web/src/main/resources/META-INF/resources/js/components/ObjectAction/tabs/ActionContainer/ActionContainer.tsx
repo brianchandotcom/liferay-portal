@@ -340,7 +340,7 @@ export function ActionContainer({
 					}
 					readOnly={values.system || disableGroovyAction}
 					sidebarElements={objectActionCodeEditorElements.filter(
-						(element) => element.label === 'Fields'
+						(element) => element.key === 'fields'
 					)}
 					sidebarElementsDisabled={values.system}
 					value={values.parameters?.script ?? ''}

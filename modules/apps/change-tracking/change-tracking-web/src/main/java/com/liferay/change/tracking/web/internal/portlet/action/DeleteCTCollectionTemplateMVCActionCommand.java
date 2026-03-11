@@ -9,6 +9,7 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -39,8 +40,13 @@ public class DeleteCTCollectionTemplateMVCActionCommand
 		long ctCollectionTemplateId = ParamUtil.getLong(
 			actionRequest, "ctCollectionTemplateId");
 
-		_ctCollectionTemplateService.deleteCTCollectionTemplate(
-			ctCollectionTemplateId);
+		try {
+			_ctCollectionTemplateService.deleteCTCollectionTemplate(
+				ctCollectionTemplateId);
+		}
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
+		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

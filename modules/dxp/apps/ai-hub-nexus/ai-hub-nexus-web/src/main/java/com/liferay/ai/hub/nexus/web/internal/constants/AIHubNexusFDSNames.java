@@ -8,7 +8,7 @@ package com.liferay.ai.hub.nexus.web.internal.constants;
 /**
  * @author Feliphe Marinho
  */
-public class AIHubFDSNames {
+public class AIHubNexusFDSNames {
 
 	public static final String AGENT_DEFINITIONS =
 		AIHubNexusWebConstants.BUNDLE_SYMBOLIC_NAME + "-agentDefinitions";

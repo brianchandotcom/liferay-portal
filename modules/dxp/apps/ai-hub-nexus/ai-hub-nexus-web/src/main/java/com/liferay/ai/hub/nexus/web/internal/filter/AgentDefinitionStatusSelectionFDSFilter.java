@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.nexus.web.internal.filter;
 
-import com.liferay.ai.hub.nexus.web.internal.constants.AIHubFDSNames;
+import com.liferay.ai.hub.nexus.web.internal.constants.AIHubNexusFDSNames;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Davyson Melo
  */
 @Component(
-	property = "frontend.data.set.name=" + AIHubFDSNames.AGENT_DEFINITIONS,
+	property = "frontend.data.set.name=" + AIHubNexusFDSNames.AGENT_DEFINITIONS,
 	service = FDSFilter.class
 )
 public class AgentDefinitionStatusSelectionFDSFilter

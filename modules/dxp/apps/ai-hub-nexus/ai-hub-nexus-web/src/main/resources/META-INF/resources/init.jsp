@@ -16,7 +16,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.ai.hub.nexus.web.internal.constants.AIHubFDSNames" %><%@
+<%@ page import="com.liferay.ai.hub.nexus.web.internal.constants.AIHubNexusFDSNames" %><%@
 page import="com.liferay.ai.hub.nexus.web.internal.display.context.EditAgentDefinitionDisplayContext" %><%@
 page import="com.liferay.ai.hub.nexus.web.internal.display.context.ViewAgentDefinitionsDisplayContext" %><%@
 page import="com.liferay.portal.workflow.constants.WorkflowPortletKeys" %>

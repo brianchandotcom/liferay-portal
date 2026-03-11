@@ -21,7 +21,7 @@ ViewAgentDefinitionsDisplayContext viewAgentDefinitionsDisplayContext = (ViewAge
 	apiURL="<%= viewAgentDefinitionsDisplayContext.getAPIURL() %>"
 	creationMenu="<%= viewAgentDefinitionsDisplayContext.getCreationMenu() %>"
 	fdsActionDropdownItems="<%= viewAgentDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
-	id="<%= AIHubFDSNames.AGENT_DEFINITIONS %>"
+	id="<%= AIHubNexusFDSNames.AGENT_DEFINITIONS %>"
 	itemsPerPage="<%= 20 %>"
 	style="fluid"
 />

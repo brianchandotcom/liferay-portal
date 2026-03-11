@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.nexus.web.internal.frontend.data.set.view.list;
 
-import com.liferay.ai.hub.nexus.web.internal.constants.AIHubFDSNames;
+import com.liferay.ai.hub.nexus.web.internal.constants.AIHubNexusFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.list.BaseListFDSView;
 
@@ -15,7 +15,7 @@ import org.osgi.service.component.annotations.Component;
  * @author João Victor Alves
  */
 @Component(
-	property = "frontend.data.set.name=" + AIHubFDSNames.AGENT_DEFINITIONS,
+	property = "frontend.data.set.name=" + AIHubNexusFDSNames.AGENT_DEFINITIONS,
 	service = FDSView.class
 )
 public class AgentDefinitionListFDSView extends BaseListFDSView {

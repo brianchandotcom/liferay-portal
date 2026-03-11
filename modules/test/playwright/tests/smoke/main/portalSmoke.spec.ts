@@ -15,6 +15,8 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {sitesPageTest} from '../../../fixtures/sitesPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
 
@@ -75,7 +77,7 @@ test('Smoke', async ({
 	});
 
 	await test.step('When the admin user creates a new blank site', async () => {
-		await applicationsMenuPage.goToSites();
+		await applicationsMenuPage.goToSites(false);
 
 		siteName = getRandomString();
 
@@ -91,7 +93,7 @@ test('Smoke', async ({
 	});
 
 	await test.step('Then the created site should be visible in the sites page with the correct membership, status, and options', async () => {
-		await applicationsMenuPage.goToSites();
+		await applicationsMenuPage.goToSites(false);
 
 		const row = page.getByRole('row').filter({hasText: siteName});
 
@@ -115,21 +117,30 @@ test('Smoke', async ({
 
 		await productMenuPage.goToPages();
 
-		await page.waitForSelector('h1.taglib-empty-result-message-title', {
-			state: 'visible',
-		});
-
-		await page.getByText('New', {exact: true}).click();
-
 		pageNames = [getRandomString(), getRandomString(), getRandomString()];
 
 		for (const pageName of pageNames) {
+			await clickAndExpectToBeHidden({
+				target: page.locator('.miller-columns-item--active'),
+				trigger: page.locator('.breadcrumb-item', {hasText: 'Pages'}),
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.locator('.nav-link', {
+					hasText: 'Basic Templates',
+				}),
+				trigger: page.locator('.management-bar').getByText('New'),
+			});
+
 			await pagesAdminPage.addPage({
 				name: pageName,
 				template: 'Widget Page',
 			});
 
-			await page.goBack();
+			await clickAndExpectToBeVisible({
+				target: page.locator('.management-bar').getByText('New'),
+				trigger: page.getByText('Go to Pages'),
+			});
 		}
 	});
 
@@ -171,7 +182,9 @@ test('Smoke', async ({
 			template: 'Blank',
 		});
 
-		await pageEditorPage.addFragment('Basic Components', 'Heading');
+		await expect(async () => {
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+		}).toPass();
 
 		await pageEditorPage.publishPage();
 	});

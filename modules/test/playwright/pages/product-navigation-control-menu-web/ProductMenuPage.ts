@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {openProductMenu} from '../../utils/productMenu';
 
 export class ProductMenuPage {
 	readonly backButton: Locator;
@@ -133,40 +134,23 @@ export class ProductMenuPage {
 	}
 
 	async goToPages() {
-		await this.openProductMenuIfClosed();
+		await openProductMenu(this.page);
 
-		const pagesLink = await this.page
-			.locator('#productMenuSidebar')
-			.getByRole('menuitem', {
-				exact: true,
-				includeHidden: true,
-				name: 'Pages',
-			})
-			.evaluate((element) => element.getAttribute('href'));
+		await clickAndExpectToBeVisible({
+			target: this.page
+				.locator('.product-menu')
+				.getByText('Pages', {exact: true}),
+			trigger: this.page
+				.locator('.product-menu')
+				.getByText('Site Builder', {exact: true}),
+		});
 
-		const waitForPagesReady = async () => {
-			await this.page.waitForSelector('form[id*="GroupPagesPortlet"]', {
-				state: 'visible',
-				timeout: 2000,
-			});
-		};
-
-		for (let attempt = 1; attempt <= 3; attempt++) {
-			await this.page.goto(pagesLink, {
-				waitUntil: 'domcontentloaded',
-			});
-
-			try {
-				await waitForPagesReady();
-
-				return;
-			}
-			catch (error) {
-				if (attempt === 3) {
-					throw error;
-				}
-			}
-		}
+		await clickAndExpectToBeVisible({
+			target: this.page.getByLabel('Control Menu').getByText('Pages'),
+			trigger: this.page
+				.locator('.product-menu')
+				.getByText('Pages', {exact: true}),
+		});
 	}
 
 	async goToPublishingExport() {

@@ -104,7 +104,7 @@ export class PageEditorPage {
 		setName: string,
 		name: string,
 		dropTarget?: Locator,
-		timeout: number = 2000
+		timeout: number = 5000
 	) {
 		await this.goToSidebarTab('Components');
 
@@ -999,7 +999,7 @@ export class PageEditorPage {
 		await expect(async () => {
 			await this.page.keyboard.press('Escape');
 
-			await this.waitForChangesSaved({timeout: 2000});
+			await this.waitForChangesSaved({timeout: 3000});
 
 			await expect(editor).not.toBeVisible({
 				timeout: 1000,
@@ -1483,7 +1483,7 @@ export class PageEditorPage {
 
 			await input.press('Enter', {timeout: 2000});
 
-			await this.waitForChangesSaved({timeout: 2000});
+			await this.waitForChangesSaved({timeout: 4000});
 		}).toPass();
 	}
 

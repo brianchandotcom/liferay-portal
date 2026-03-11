@@ -45,9 +45,9 @@ export class RolesPage {
 			exact: true,
 			name: 'Account Roles',
 		});
-		this.applicationsMenuButton = page.getByLabel(
-			'Open Applications MenuCtrl+'
-		);
+		this.applicationsMenuButton = page
+			.getByRole('button', {name: 'Open Applications Menu'})
+			.or(page.getByTestId('globalMenu'));
 		this.copyFrame = page.frameLocator('iframe[id="modalIframe"]');
 		this.copyFrameValidNameErrorMessage = this.copyFrame
 			.locator('.alert.alert-dismissible')

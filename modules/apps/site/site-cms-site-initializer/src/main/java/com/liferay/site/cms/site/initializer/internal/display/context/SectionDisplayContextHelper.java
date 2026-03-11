@@ -183,7 +183,8 @@ public class SectionDisplayContextHelper {
 			return creationMenu;
 		}
 
-		List<Long> depotEntryGroupIds = null;
+		List<Long> objectEntryDepotEntryGroupIds = new ArrayList<>();
+		List<Long> objectEntryFolderDepotEntryGroupIds = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -195,29 +196,42 @@ public class SectionDisplayContextHelper {
 			rootObjectEntryFolderExternalReferenceCode);
 
 		if (objectEntryFolder != null) {
-			depotEntryGroupIds = Collections.singletonList(
-				objectEntryFolder.getGroupId());
+			if (_modelResourcePermissionContains(
+					ActionKeys.ADD_ENTRY, objectEntryFolder, themeDisplay)) {
+
+				objectEntryDepotEntryGroupIds.add(
+					objectEntryFolder.getGroupId());
+			}
+
+			if (_modelResourcePermissionContains(
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, objectEntryFolder,
+					themeDisplay)) {
+
+				objectEntryFolderDepotEntryGroupIds.add(
+					objectEntryFolder.getGroupId());
+			}
 		}
 		else {
-			depotEntryGroupIds = DepotEntryServiceUtil.getDepotEntryGroupIds(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				DepotConstants.TYPE_SPACE);
+			List<Long> depotEntryGroupIds =
+				DepotEntryServiceUtil.getDepotEntryGroupIds(
+					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+					DepotConstants.TYPE_SPACE);
+
+			String[] objectEntryFolderExternalReferenceCodes =
+				_getRootObjectEntryFolderExternalReferenceCodes(
+					rootObjectEntryFolderExternalReferenceCode);
+
+			objectEntryDepotEntryGroupIds = _filter(
+				depotEntryGroupIds, ActionKeys.ADD_ENTRY,
+				objectEntryFolderExternalReferenceCodes, themeDisplay);
+
+			objectEntryFolderDepotEntryGroupIds = _filter(
+				depotEntryGroupIds, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+				objectEntryFolderExternalReferenceCodes, themeDisplay);
 		}
 
-		List<Long> objectEntryDepotEntryGroupIds = _filter(
-			depotEntryGroupIds, ActionKeys.ADD_ENTRY,
-			_getRootObjectEntryFolderExternalReferenceCodes(
-				rootObjectEntryFolderExternalReferenceCode),
-			themeDisplay);
-
-		List<Long> objectEntryFolderDepotEntryGroupIds = _filter(
-			depotEntryGroupIds, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
-			_getRootObjectEntryFolderExternalReferenceCodes(
-				rootObjectEntryFolderExternalReferenceCode),
-			themeDisplay);
-
-		if (ListUtil.isEmpty(objectEntryDepotEntryGroupIds) &&
-			ListUtil.isEmpty(objectEntryFolderDepotEntryGroupIds)) {
+		if (objectEntryDepotEntryGroupIds.isEmpty() &&
+			objectEntryFolderDepotEntryGroupIds.isEmpty()) {
 
 			return creationMenu;
 		}
@@ -416,20 +430,11 @@ public class SectionDisplayContextHelper {
 								objectEntryFolderExternalReferenceCode,
 								depotEntryGroupId, themeDisplay.getCompanyId());
 
-					try {
-						if ((objectEntryFolder != null) &&
-							_objectEntryFolderModelResourcePermission.contains(
-								themeDisplay.getPermissionChecker(),
-								objectEntryFolder.getObjectEntryFolderId(),
-								actionId)) {
+					if ((objectEntryFolder != null) &&
+						_modelResourcePermissionContains(
+							actionId, objectEntryFolder, themeDisplay)) {
 
-							return true;
-						}
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
-						}
+						return true;
 					}
 				}
 
@@ -679,6 +684,24 @@ public class SectionDisplayContextHelper {
 			Validator.isNull(objectDefinitionSetting.getValue())) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _modelResourcePermissionContains(
+		String actionId, ObjectEntryFolder objectEntryFolder,
+		ThemeDisplay themeDisplay) {
+
+		try {
+			return _objectEntryFolderModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(),
+				objectEntryFolder.getObjectEntryFolderId(), actionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 
 		return false;

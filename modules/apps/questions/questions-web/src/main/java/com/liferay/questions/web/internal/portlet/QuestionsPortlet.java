@@ -18,6 +18,7 @@ import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -174,6 +175,20 @@ public class QuestionsPortlet extends MVCPortlet {
 			QuestionsWebKeys.TRUSTED_USER, _isTrustedUser(renderRequest));
 
 		super.doView(renderRequest, renderResponse);
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(renderRequest), "LPD-82301")) {
+
+			return;
+		}
+
+		super.render(renderRequest, renderResponse);
 	}
 
 	private String _getTagSelectorURL(

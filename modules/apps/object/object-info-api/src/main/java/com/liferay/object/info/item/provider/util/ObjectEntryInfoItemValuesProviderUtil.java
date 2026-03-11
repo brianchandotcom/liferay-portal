@@ -390,13 +390,13 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 						GetterUtil.getLong(fileEntryId));
 
 					downloadURLInfoFieldValue = dlURLHelper.getDownloadURL(
-						fileEntry, fileEntry.getFileVersion(), null,
+						fileEntry, fileEntry.getFileVersion(), themeDisplay,
 						StringPool.BLANK);
 
 					fileNameInfoFieldValue = fileEntry.getFileName();
 					mimeTypeInfoFieldValue = fileEntry.getMimeType();
 					previewURLInfoFieldValue = dlURLHelper.getPreviewURL(
-						fileEntry, fileEntry.getFileVersion(), null,
+						fileEntry, fileEntry.getFileVersion(), themeDisplay,
 						StringPool.BLANK);
 					sizeInfoFieldValue = fileEntry.getSize();
 				}
@@ -431,8 +431,8 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 						downloadURLInfoFieldValueBuilder.value(
 							entry.getKey(),
 							dlURLHelper.getDownloadURL(
-								fileEntry, fileEntry.getFileVersion(), null,
-								StringPool.BLANK));
+								fileEntry, fileEntry.getFileVersion(),
+								themeDisplay, StringPool.BLANK));
 						fileNameInfoFieldValueBuilder.value(
 							entry.getKey(), fileEntry.getFileName());
 						mimeTypeInfoFieldValueBuilder.value(
@@ -440,8 +440,8 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 						previewURLInfoFieldValueBuilder.value(
 							entry.getKey(),
 							dlURLHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(), null,
-								StringPool.BLANK));
+								fileEntry, fileEntry.getFileVersion(),
+								themeDisplay, StringPool.BLANK));
 						sizeInfoFieldValueBuilder.value(
 							entry.getKey(), fileEntry.getSize());
 					}

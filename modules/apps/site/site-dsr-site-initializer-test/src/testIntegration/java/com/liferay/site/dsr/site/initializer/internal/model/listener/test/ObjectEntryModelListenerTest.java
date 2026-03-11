@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -80,14 +81,14 @@ public class ObjectEntryModelListenerTest {
 
 	@Test
 	public void testOnAfterCreate() throws Exception {
-		String randomString = StringUtil.toLowerCase(
+		String randomString1 = StringUtil.toLowerCase(
 			"A" + RandomTestUtil.randomString());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
-				"name", randomString
+				"name", randomString1
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				_accountEntry.getAccountEntryId()
@@ -100,10 +101,12 @@ public class ObjectEntryModelListenerTest {
 				_objectDefinition.getClassName()),
 			objectEntry.getObjectEntryId());
 
-		Assert.assertEquals("/" + randomString, group.getFriendlyURL());
+		Assert.assertEquals("/" + randomString1, group.getFriendlyURL());
 		Assert.assertEquals(
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			group.getMembershipRestriction());
+		Assert.assertEquals(
+			randomString1, group.getName(LocaleUtil.getDefault()));
 		Assert.assertEquals(
 			GroupConstants.TYPE_SITE_RESTRICTED, group.getType());
 		Assert.assertTrue(group.isManualMembership());
@@ -119,16 +122,16 @@ public class ObjectEntryModelListenerTest {
 			values.get("siteExternalReferenceCode"));
 		Assert.assertEquals(group.getGroupId(), values.get("siteId"));
 
-		randomString = StringUtil.toLowerCase(
+		String randomString2 = StringUtil.toLowerCase(
 			"A" + RandomTestUtil.randomString());
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
-				"friendlyURL", randomString
+				"friendlyURL", randomString2
 			).put(
-				"name", RandomTestUtil.randomString()
+				"name", randomString1
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				_accountEntry.getAccountEntryId()
@@ -141,7 +144,9 @@ public class ObjectEntryModelListenerTest {
 				_objectDefinition.getClassName()),
 			objectEntry.getObjectEntryId());
 
-		Assert.assertEquals("/" + randomString, group.getFriendlyURL());
+		Assert.assertEquals("/" + randomString2, group.getFriendlyURL());
+		Assert.assertEquals(
+			randomString1, group.getName(LocaleUtil.getDefault()));
 
 		DSRLayoutTestUtil.assertLayouts(
 			group.getGroupId(),

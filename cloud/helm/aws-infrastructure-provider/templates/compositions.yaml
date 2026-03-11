@@ -1112,7 +1112,7 @@ spec:
                                     enabled: true
                                 region: {{ $searchRegion }}
                                 softwareUpdateOptions:
-                                    autoSoftwareUpdateEnabled: {{ $searchSpec.autoSoftwareUpdates }}
+                                    autoSoftwareUpdateEnabled: {{ $searchSpec.autoSoftwareUpdateEnabled }}
                                 tags:
                                     Name: {{ $searchName }}
                                 vpcOptions:

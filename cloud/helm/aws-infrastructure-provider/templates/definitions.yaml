@@ -103,7 +103,7 @@ spec:
                                     properties:
                                         opensearch:
                                             properties:
-                                                autoSoftwareUpdates:
+                                                autoSoftwareUpdateEnabled:
                                                     default: true
                                                     type: boolean
                                                 engineVersion:

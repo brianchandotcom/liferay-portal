@@ -1007,7 +1007,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				rowName: sampleScalarField,
 			});
 
-			const rendererButton = page.getByRole('button', {name: 'Default'});
+			const rendererButton = page.getByRole('button', {name: 'Renderer'});
 			await expect(rendererButton).toBeInViewport();
 
 			const rendererDropdownId =

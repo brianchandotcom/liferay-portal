@@ -15,6 +15,10 @@ const ERROR_MESSAGES = {
 	selfReferenced: Liferay.Language.get('tokens-cannot-reference-itself'),
 };
 
+const HEX_LENGTH_6 = 6;
+
+const HEX_LENGTH_8 = 8;
+
 interface ColorValue {
 	color?: string;
 	label?: string;
@@ -41,6 +45,12 @@ export function parseColorValue({
 	let tokenLabel: string | undefined = undefined;
 	let pickerColor: string = '';
 
+	const isHexFormat = (color: TinyColorInstance) => {
+		const colorFormat = color.getFormat();
+
+		return colorFormat === 'hex' || colorFormat === 'hex8';
+	};
+
 	const color = tinycolor(value);
 
 	if (token) {
@@ -55,9 +65,7 @@ export function parseColorValue({
 		tokenLabel = token.label;
 	}
 	else if (color.isValid()) {
-		const colorFormat = color.getFormat();
-
-		if (colorFormat === 'hex' || colorFormat === 'hex8') {
+		if (isHexFormat(color)) {
 			validValue = internalToHex(color);
 		}
 		else if (color.toString() !== value) {
@@ -85,7 +93,25 @@ export function parseColorValue({
 		}
 	}
 	else {
-		return {};
+
+		// Hexadecimals with 7 characters or more than 8 are invalid. Here the
+		// value is truncated to 6 or 8 characters, and it is checked to ensure
+		// the resulting value is still a valid hexadecimal.
+
+		if (value.length === 7) {
+			value = value.substring(0, HEX_LENGTH_6);
+		}
+		else if (value.length > 8) {
+			value = value.substring(0, HEX_LENGTH_8);
+		}
+
+		const color = tinycolor(value);
+
+		if (!isHexFormat(color)) {
+			return {};
+		}
+
+		validValue = internalToHex(color);
 	}
 
 	return {

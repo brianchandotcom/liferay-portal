@@ -443,6 +443,9 @@ export default function propsTransformer({
 					item?.data?.isAICreatorOpenAIAPIKey
 				);
 			}
+			else if (item?.data?.action) {
+				Liferay.fire(item.data.action, {data: item.data});
+			}
 		},
 		onFilterDropdownItemClick(event, {item}) {
 			if (item?.data?.action === 'openCategoriesSelector') {

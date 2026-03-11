@@ -253,7 +253,17 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 				DepotEntryTable.INSTANCE
 			).leftJoinOn(
 				Users_GroupsTable.INSTANCE,
-				_getPredicate(userId, dynamicInheritanceOnly)
+				() -> {
+					if (dynamicInheritanceOnly) {
+						return null;
+					}
+
+					return Users_GroupsTable.INSTANCE.groupId.eq(
+						DepotEntryTable.INSTANCE.groupId
+					).and(
+						Users_GroupsTable.INSTANCE.userId.eq(userId)
+					);
+				}
 			).leftJoinOn(
 				Groups_OrgsTable.INSTANCE,
 				Groups_OrgsTable.INSTANCE.groupId.eq(
@@ -453,20 +463,6 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		return _depotEntryGroupRelPersistence.findByTGI_T(
 			groupId, type, start, end);
-	}
-
-	private Predicate _getPredicate(
-		long userId, boolean dynamicInheritanceOnly) {
-
-		if (dynamicInheritanceOnly) {
-			return null;
-		}
-
-		return Users_GroupsTable.INSTANCE.groupId.eq(
-			DepotEntryTable.INSTANCE.groupId
-		).and(
-			Users_GroupsTable.INSTANCE.userId.eq(userId)
-		);
 	}
 
 	private boolean _isStaged(DepotEntry depotEntry) throws PortalException {

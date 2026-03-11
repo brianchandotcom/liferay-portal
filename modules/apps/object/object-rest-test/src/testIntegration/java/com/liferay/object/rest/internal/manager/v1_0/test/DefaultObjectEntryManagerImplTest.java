@@ -542,6 +542,15 @@ public class DefaultObjectEntryManagerImplTest
 
 		_objectDefinition1 = _addObjectDefinition(
 			Arrays.asList(
+				new RichTextObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"richTextObjectFieldName"
+				).build(),
 				new TextObjectFieldBuilder(
 				).indexed(
 					true
@@ -4970,6 +4979,9 @@ public class DefaultObjectEntryManagerImplTest
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
+							"richTextObjectFieldName",
+							"<i>richTextObjectFieldNameValue</i>"
+						).put(
 							"textObjectFieldName", "Able"
 						).put(
 							"textObjectFieldNameExtension", "Baker"
@@ -5775,77 +5787,25 @@ public class DefaultObjectEntryManagerImplTest
 			).build(),
 			childObjectEntry1);
 
-		ObjectFieldUtil.addCustomObjectField(
-			new RichTextObjectFieldBuilder(
-			).userId(
-				adminUser.getUserId()
-			).indexed(
-				true
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"richTextTitle"
-			).objectDefinitionId(
-				_objectDefinition1.getObjectDefinitionId()
-			).build());
-
-		ObjectField richTextTitleObjectField =
-			objectFieldLocalService.getObjectField(
-				_objectDefinition1.getObjectDefinitionId(), "richTextTitle");
-
 		long originalTitleObjectFieldId =
 			_objectDefinition1.getTitleObjectFieldId();
 
+		objectField = objectFieldLocalService.fetchObjectField(
+			_objectDefinition1.getObjectDefinitionId(),
+			"richTextObjectFieldName");
+
 		_objectDefinition1.setTitleObjectFieldId(
-			richTextTitleObjectField.getObjectFieldId());
+			objectField.getObjectFieldId());
 
 		_objectDefinition1 =
 			objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition1);
 
-		ObjectEntry parentObjectEntry3 =
-			_defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"richTextTitle", "<p>Rich Able Title</p>"
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectEntry childObjectEntry3 =
-			_defaultObjectEntryManager.addObjectEntry(
-				dtoConverterContext, _objectDefinition2,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							_objectRelationshipFieldName,
-							parentObjectEntry3.getId()
-						).put(
-							"localizedLongTextObjectFieldName",
-							"en_US localizedLongTextObjectFieldValue"
-						).put(
-							"longIntegerObjectFieldName", 300L
-						).put(
-							"picklistObjectFieldName", picklistObjectFieldValue2
-						).put(
-							"textObjectFieldName", "zkkc"
-						).putAll(
-							_localizedObjectFieldI18nValues
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"search", "Rich Able Title"
+				"search", "richTextObjectFieldNameValue"
 			).build(),
-			childObjectEntry3);
-
-		_objectEntryLocalService.deleteObjectEntry(childObjectEntry3.getId());
+			childObjectEntry1);
 
 		_objectDefinition1.setTitleObjectFieldId(originalTitleObjectFieldId);
 

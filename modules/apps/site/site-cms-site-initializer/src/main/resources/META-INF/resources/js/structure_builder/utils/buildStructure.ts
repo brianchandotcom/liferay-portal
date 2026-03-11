@@ -310,14 +310,16 @@ function getFieldSettings(objectField: ObjectField): Field['settings'] {
 			objectFieldSettings.acceptedFileExtensions;
 		settings.fileSource = objectFieldSettings.fileSource;
 		settings.maximumFileSize = objectFieldSettings.maximumFileSize;
+		settings.storageDepotGroup = objectFieldSettings.storageDepotGroup;
 
 		if (
-			objectFieldSettings.fileSource === 'userComputerToDocumentsAndMedia'
+			objectFieldSettings.fileSource === 'userComputerToCMSBasicDocument'
 		) {
 			settings.showFilesInLibrary =
 				objectFieldSettings.showFilesInLibrary;
 			settings.storageDLFolderPath =
 				objectFieldSettings.storageDLFolderPath;
+			settings.storageDepotGroup = objectFieldSettings.storageDepotGroup;
 		}
 	}
 	else if (objectField.businessType === 'DateTime') {

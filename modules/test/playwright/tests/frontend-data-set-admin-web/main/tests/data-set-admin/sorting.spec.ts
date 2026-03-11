@@ -364,7 +364,7 @@ test.describe('Sorting in Data Set Manager', () => {
 
 		await test.step('Check that save button is disabled when "Sort By" is not selected', async () => {
 			await page.getByLabel('Label').fill('ID');
-			await page.getByLabel('Sort By').selectOption('');
+			await expect(page.getByLabel('Sort By')).toHaveValue('');
 
 			await expect(
 				page.locator('.liferay-modal').getByRole('button', {

@@ -11,6 +11,7 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -93,6 +94,15 @@ public class MBCategoryAssetRendererFactory
 		return _mbCategoryModelResourcePermission.contains(
 			permissionChecker, _mbCategoryLocalService.getMBCategory(classPK),
 			actionId);
+	}
+
+	@Override
+	public boolean isActive(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-82301")) {
+			return false;
+		}
+
+		return super.isActive(companyId);
 	}
 
 	private final CompanyLocalService _companyLocalService;

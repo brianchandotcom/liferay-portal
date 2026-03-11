@@ -106,14 +106,14 @@ export default function ColorPickerField({
 					alignElementRef={triggerElementRef}
 					className="clay-color-dropdown-menu"
 					containerProps={{
-						className: 'cadmin',
+						className: 'cadmin layout__color-picker__dropdown',
 					}}
 					deps={[internalActive]}
 					onActiveChange={setInternalActive}
 					ref={dropdownContainerRef}
 					triggerRef={splotchRef}
 				>
-					<ClayButton.Group className="c-mb-3">
+					<ClayButton.Group className="c-mb-3 c-mx-3">
 						<ClayButton
 							displayType="secondary"
 							onClick={() => setTab('custom')}

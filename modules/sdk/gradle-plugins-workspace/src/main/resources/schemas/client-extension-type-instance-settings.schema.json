@@ -4637,12 +4637,6 @@
 					"description": "The settings in this configuration let you control the staging process.",
 					"title": "Staging"
 				},
-				"publishDisplayedContent": {
-					"default": false,
-					"description": "If checked, the displayed content will be published to Live for Dynamic Data Lists Display, Form, Web Content Display and Wiki Display. These widgets will publish the displayed content to Live independently of the Publish Process settings. For example, a Web Content Display will publish the Web Content even if Web Contents were not selected on the Publish Process screen. This can be useful to make sure that Staging and Live display the same content. However, in most cases the content is already available in Live and publishing it again can slow down the process unnecessarily. Uncheck to not publish the displayed content.",
-					"title": "Publish Displayed Content by Default",
-					"type": "boolean"
-				},
 				"stagingDeleteTempLAROnFailure": {
 					"default": true,
 					"description": "Uncheck to avoid deleting the temporary LAR during a failed staging publish process. In remote staging contexts, this only applies for the staging environment.",

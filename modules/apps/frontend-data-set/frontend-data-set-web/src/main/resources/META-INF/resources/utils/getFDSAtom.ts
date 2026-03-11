@@ -8,11 +8,11 @@ import {Atom, Selector, State} from '@liferay/frontend-js-state-web';
 import {IFDSState} from './types';
 
 const getFDSAtom = ({
-	key,
+	fdsName,
 }: {
-	key: string;
+	fdsName: string;
 }): Atom<IFDSState> | Selector<IFDSState> => {
-	const fdsStateKey = `${key}_fdsState`;
+	const fdsStateKey = `${fdsName}_fdsState`;
 
 	const fallbackAtom: Atom<IFDSState> | null =
 		State.__unsafe__.getAtomOrSelectorKey(

@@ -367,7 +367,7 @@ const FrontendDataSetContent = ({
 		id,
 	});
 
-	const memoizedAtom = useMemo(() => getFDSAtom({key: id}), [id]);
+	const memoizedAtom = useMemo(() => getFDSAtom({fdsName: id}), [id]);
 
 	const [additionalAPIURLParameters, setAdditionalAPIURLParameters] =
 		useState(initialAdditionalAPIURLParameters);

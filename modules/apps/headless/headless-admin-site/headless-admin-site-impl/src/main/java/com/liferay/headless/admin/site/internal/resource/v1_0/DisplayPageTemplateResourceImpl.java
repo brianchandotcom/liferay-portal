@@ -15,10 +15,10 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateOpenGraphSettings;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.SubtypeUtil;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.DisplayPageTemplateEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.DisplayPageTemplateFolderUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
@@ -30,9 +30,7 @@ import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
-import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -411,8 +409,9 @@ public class DisplayPageTemplateResourceImpl
 
 		long classNameId = _getClassNameId(
 			contentTypeClassSubtypeReference.getClassName());
-		String classTypeKey = _getClassTypeKey(
-			contentTypeClassSubtypeReference, groupId);
+		String classTypeKey = SubtypeUtil.getClassTypeKey(
+			contentTypeClassSubtypeReference.getClassName(), groupId,
+			contentTypeClassSubtypeReference.getSubTypeExternalReference());
 
 		if ((classNameId != layoutPageTemplateEntry.getClassNameId()) ||
 			!StringUtil.equals(
@@ -592,8 +591,11 @@ public class DisplayPageTemplateResourceImpl
 				layoutPageTemplateCollectionId, displayPageTemplate.getKey(),
 				_getClassNameId(
 					contentTypeClassSubtypeReference.getClassName()),
-				_getClassTypeKey(
-					contentTypeClassSubtypeReference, layout.getGroupId()),
+				SubtypeUtil.getClassTypeKey(
+					contentTypeClassSubtypeReference.getClassName(),
+					layout.getGroupId(),
+					contentTypeClassSubtypeReference.
+						getSubTypeExternalReference()),
 				displayPageTemplate.getName(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				FileEntryUtil.getPreviewFileEntryId(
@@ -626,43 +628,6 @@ public class DisplayPageTemplateResourceImpl
 		LogUtil.logOptionalReference(contentTypeClassName);
 
 		return _portal.getClassNameId(contentTypeClassName);
-	}
-
-	private String _getClassTypeKey(
-		ClassSubtypeReference classSubtypeReference, long groupId) {
-
-		ItemExternalReference itemExternalReference =
-			classSubtypeReference.getSubTypeExternalReference();
-
-		if (itemExternalReference == null) {
-			return null;
-		}
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				classSubtypeReference.getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			LogUtil.logOptionalReference(itemExternalReference, groupId);
-
-			return itemExternalReference.getExternalReferenceCode();
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.
-				getInfoItemFormVariationByExternalReferenceCode(
-					itemExternalReference.getExternalReferenceCode(), groupId);
-
-		if (infoItemFormVariation == null) {
-			LogUtil.logOptionalReference(
-				infoItemFormVariationsProvider.
-					getInfoItemFormVariationClassName(),
-				itemExternalReference.getExternalReferenceCode(),
-				itemExternalReference.getScope(), groupId);
-		}
-
-		return itemExternalReference.getExternalReferenceCode();
 	}
 
 	private long _getLayoutPageTemplateCollectionId(

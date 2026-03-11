@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistryUtil;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -15,6 +16,40 @@ import com.liferay.portal.kernel.util.Validator;
  * @author Mikel Lorza
  */
 public class SubtypeUtil {
+
+	public static String getClassTypeKey(
+		String className, long groupId,
+		ItemExternalReference itemExternalReference) {
+
+		if (itemExternalReference == null) {
+			return null;
+		}
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			InfoItemServiceRegistryUtil.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className);
+
+		if (infoItemFormVariationsProvider == null) {
+			LogUtil.logOptionalReference(itemExternalReference, groupId);
+
+			return itemExternalReference.getExternalReferenceCode();
+		}
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.
+				getInfoItemFormVariationByExternalReferenceCode(
+					itemExternalReference.getExternalReferenceCode(), groupId);
+
+		if (infoItemFormVariation == null) {
+			LogUtil.logOptionalReference(
+				infoItemFormVariationsProvider.
+					getInfoItemFormVariationClassName(),
+				itemExternalReference.getExternalReferenceCode(),
+				itemExternalReference.getScope(), groupId);
+		}
+
+		return itemExternalReference.getExternalReferenceCode();
+	}
 
 	public static ItemExternalReference getSubtypeItemExternalReference(
 		String className, long classTypeId, String classTypeKey, long groupId) {

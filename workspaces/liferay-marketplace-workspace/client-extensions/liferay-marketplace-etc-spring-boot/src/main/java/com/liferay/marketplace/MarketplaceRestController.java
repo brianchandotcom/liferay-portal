@@ -70,7 +70,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -290,7 +289,7 @@ public class MarketplaceRestController extends BaseRestController {
 
 		appLicenseKey.setProductPurchaseKey(productPurchase.getKey());
 
-		return _provisioningService.postAppLicenseKey(jwt, appLicenseKey);
+		return _provisioningService.postAppLicenseKey(appLicenseKey, jwt);
 	}
 
 	@PostMapping("product/purchase")

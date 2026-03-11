@@ -152,7 +152,7 @@ public class ProvisioningRestController extends BaseRestController {
 				"Invalid JSON or missing 'licenseEntry' field", jsonException);
 		}
 
-		return _provisioningService.postAppLicenseKey(jwt, appLicenseKey);
+		return _provisioningService.postAppLicenseKey(appLicenseKey, jwt);
 	}
 
 	private static final Log _log = LogFactory.getLog(

@@ -107,8 +107,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 					).add(
 						() ->
 							hasManageFragmentEntriesPermission &&
-							!_fragmentEntry.isReadOnly() &&
-							!_fragmentEntry.isMarketplace(),
+							!_fragmentEntry.isReadOnly(),
 						_getRenameFragmentEntryActionUnsafeConsumer()
 					).add(
 						() ->

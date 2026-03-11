@@ -340,21 +340,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateAppIsNotPresentOnApplicationsMenuApplications(portlet = null) {
-		Navigator.openURL();
-
-		ProductMenuHelper.closeProductMenu();
-
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		Navigator.gotoNavTab(navTab = "Applications");
-
-		AssertElementNotPresent(
-			key_category = ${portlet},
-			locator1 = "ApplicationsMenu#CATEGORY");
-	}
-
-	@summary = "Default summary"
 	macro validateAppIsNotPresentOnSite(portlet = null) {
 		ProductMenuHelper.openProductMenu();
 

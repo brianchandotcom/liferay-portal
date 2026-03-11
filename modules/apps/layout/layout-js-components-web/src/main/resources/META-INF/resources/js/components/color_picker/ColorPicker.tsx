@@ -326,60 +326,32 @@ function ColorPicker({
 					/>
 				)}
 
-				{tokenLabel ? (
-					canDetachTokenValues && (
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('detach-style')}
-							className="border-0 flex-shrink-0 layout__color-picker__action-button mb-0 ml-2"
-							displayType="secondary"
-							onClick={() => {
-								if (tokenValues[value]) {
-									setCustomColors([
-										tokenValues[value].value.replace(
-											'#',
-											''
-										),
-									]);
+				{tokenLabel && canDetachTokenValues && (
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('detach-style')}
+						className="border-0 flex-shrink-0 layout__color-picker__action-button mb-0 ml-2"
+						displayType="secondary"
+						onClick={() => {
+							if (tokenValues[value]) {
+								setCustomColors([
+									tokenValues[value].value.replace('#', ''),
+								]);
 
-									onSetValue({
-										value: tokenValues[value].value,
-									});
-								}
-								else {
-									setCustomColors(
-										defaultTokenValue
-											? [defaultTokenValue]
-											: []
-									);
-
-									onSetValue({value: defaultTokenValue});
-								}
-							}}
-							size="sm"
-							symbol="chain-broken"
-							title={Liferay.Language.get('detach-style')}
-						/>
-					)
-				) : (
-					<DropdownColorPicker
-						active={activeDropdownColorPicker}
-						colors={colors}
-						fieldLabel={showLabel ? null : field.label}
-						onSetActive={setActiveDropdownColorPicker}
-						onValueChange={({label, name, value}) => {
-							onSetValue({label, name, value});
-
-							if (error.value) {
-								setError({
-									label: null,
-									value: null,
+								onSetValue({
+									value: tokenValues[value].value,
 								});
-								deleteStyleError(field.name);
+							}
+							else {
+								setCustomColors(
+									defaultTokenValue ? [defaultTokenValue] : []
+								);
+
+								onSetValue({value: defaultTokenValue});
 							}
 						}}
-						showSelector={false}
-						small
-						value={color}
+						size="sm"
+						symbol="chain-broken"
+						title={Liferay.Language.get('detach-style')}
 					/>
 				)}
 

@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
@@ -76,6 +78,17 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 	@Override
 	@Test
 	public void testSearchByDDMStructureField() throws Exception {
+	}
+
+	@Test
+	public void testSearchByFolderId() throws Exception {
+		JournalFolder folder = JournalTestUtil.addFolder(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		assertBaseModelsCount(
+			1, String.valueOf(folder.getFolderId()),
+			SearchContextTestUtil.getSearchContext(group.getGroupId()));
 	}
 
 	@Override

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -529,34 +530,45 @@ public abstract class BaseSectionDisplayContextTestCase
 				getCreationMenu(objectEntryFolder, adminUser),
 				expectedCreationMenuItems);
 
+			groupLocalService.addUserGroup(
+				user1.getUserId(), depotEntry1.getGroup());
+
+			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+			_userGroupRoleLocalService.addUserGroupRoles(
+				user1.getUserId(), depotEntry1.getGroupId(),
+				new long[] {role.getRoleId()});
+
 			setUser(user1);
 
 			_assertCreationMenu(
 				getCreationMenu(objectEntryFolder, user1),
 				Collections.emptyMap());
 
-			setUser(user2);
+			_setResourcePermissions(
+				new String[] {ActionKeys.ADD_ENTRY}, objectEntryFolder, role);
 
 			_assertCreationMenu(
-				getCreationMenu(objectEntryFolder, user2),
-				Collections.emptyMap());
-
-			setUser(user3);
-
-			_assertCreationMenu(
-				getCreationMenu(objectEntryFolder, user3),
+				getCreationMenu(objectEntryFolder, user1),
 				objectEntryExpectedCreationMenuItems);
 
-			setUser(user4);
+			_setResourcePermissions(
+				new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER},
+				objectEntryFolder, role);
 
 			_assertCreationMenu(
-				getCreationMenu(objectEntryFolder, user4),
+				getCreationMenu(objectEntryFolder, user1),
 				objectEntryFolderExpectedCreationMenuItems);
 
-			setUser(user5);
+			_setResourcePermissions(
+				new String[] {
+					ActionKeys.ADD_ENTRY,
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER
+				},
+				objectEntryFolder, role);
 
 			_assertCreationMenu(
-				getCreationMenu(objectEntryFolder, user5),
+				getCreationMenu(objectEntryFolder, user1),
 				expectedCreationMenuItems);
 		}
 
@@ -1208,6 +1220,18 @@ public abstract class BaseSectionDisplayContextTestCase
 		}
 
 		return new String[] {rootObjectEntryFolderExternalReferenceCode};
+	}
+
+	private void _setResourcePermissions(
+			String[] actionIds, ObjectEntryFolder objectEntryFolder, Role role)
+		throws Exception {
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			objectEntryFolder.getCompanyId(),
+			objectEntryFolder.getModelClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+			role.getRoleId(), actionIds);
 	}
 
 	private void _testGetDepotEntriesJSONArray(

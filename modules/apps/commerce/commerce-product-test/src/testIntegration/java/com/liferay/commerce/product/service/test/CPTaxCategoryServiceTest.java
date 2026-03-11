@@ -109,6 +109,7 @@ public class CPTaxCategoryServiceTest {
 
 			_cpTaxCategoryService.countCPTaxCategoriesByCompanyId(
 				TestPropsValues.getCompanyId(), _cpTaxCategory.getName());
+
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {

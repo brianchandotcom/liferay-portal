@@ -12,6 +12,10 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -50,6 +54,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewport;
@@ -58,6 +63,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.RepeatableFieldsCollectionProviderReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.TemplateListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentMappedValue;
@@ -78,6 +84,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.template.model.TemplateEntry;
@@ -89,6 +96,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -607,25 +615,30 @@ public class PageElementsTestUtil {
 		return pageElements;
 	}
 
-	public static PageElement[] getPageElements(long scopeGroupId) {
+	public static PageElement[] getPageElements(long scopeGroupId)
+		throws Exception {
+
 		List<PageElement> pageElements = new ArrayList<>();
 
 		int position = 0;
 
 		pageElements.add(
-			_getCollectionDisplayPageElement(position++, scopeGroupId));
+			_getCollectionDisplayPageElement(
+				new PageElement[0], position++, scopeGroupId));
 		pageElements.add(
 			_getPageElement(
 				getPageElementDefinition(
 					PageElementDefinition.Type.CONTAINER, scopeGroupId),
 				StringPool.BLANK, position++));
 		pageElements.add(_getGridPageElement(position++));
-
 		pageElements.add(
 			_getPageElement(
 				getPageElementDefinition(
 					PageElementDefinition.Type.WIDGET, scopeGroupId),
-				StringPool.BLANK, position));
+				StringPool.BLANK, position++));
+		pageElements.add(
+			_getRepeatableFieldsCollectionDisplayPageElement(
+				position, scopeGroupId));
 
 		return pageElements.toArray(new PageElement[0]);
 	}
@@ -906,7 +919,8 @@ public class PageElementsTestUtil {
 	}
 
 	private static PageElement _getCollectionDisplayPageElement(
-		int position, long scopeGroupId) {
+		PageElement[] collectionItemPageElements, int position,
+		long scopeGroupId) {
 
 		PageElement collectionDisplayPageElement = _getPageElement(
 			getPageElementDefinition(
@@ -916,10 +930,13 @@ public class PageElementsTestUtil {
 		collectionDisplayPageElement.setPageElements(
 			new PageElement[] {
 				_getPageElement(
+					RandomTestUtil.randomString(),
 					getPageElementDefinition(
 						PageElementDefinition.Type.COLLECTION_ITEM,
 						scopeGroupId),
-					collectionDisplayPageElement.getExternalReferenceCode(), 0)
+					collectionItemPageElements,
+					collectionDisplayPageElement.getExternalReferenceCode(),
+					position)
 			});
 
 		return collectionDisplayPageElement;
@@ -1333,6 +1350,65 @@ public class PageElementsTestUtil {
 
 	private static PageElementDefinition.Type _getRandomType() {
 		return _types.get(RandomTestUtil.randomInt(0, _types.size() - 1));
+	}
+
+	private static PageElement _getRepeatableFieldsCollectionDisplayPageElement(
+			int position, long scopeGroupId)
+		throws Exception {
+
+		String fieldName = RandomTestUtil.randomString();
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			fieldName, "string", "text", true, DDMFormFieldTypeConstants.TEXT,
+			new Locale[] {LocaleUtil.getSiteDefault()},
+			LocaleUtil.getSiteDefault());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(scopeGroupId);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			scopeGroupId, JournalArticle.class.getName(), 0, ddmForm,
+			LocaleUtil.getSiteDefault(), serviceContext);
+
+		RepeatableFieldsCollectionProviderReference
+			repeatableFieldsCollectionProviderReference =
+				new RepeatableFieldsCollectionProviderReference();
+
+		repeatableFieldsCollectionProviderReference.setClassName(
+			JournalArticle.class::getName);
+		repeatableFieldsCollectionProviderReference.setCollectionType(
+			() ->
+				CollectionReference.CollectionType.
+					REPEATABLE_FIELDS_COLLECTION_PROVIDER);
+		repeatableFieldsCollectionProviderReference.setFieldName(fieldName);
+		repeatableFieldsCollectionProviderReference.setSubTypeExternalReference(
+			() -> new ItemExternalReference() {
+				{
+					setClassName(DDMStructure.class::getName);
+					setExternalReferenceCode(ddmStructure.getStructureKey());
+				}
+			});
+
+		PageElement pageElement = _getPageElement(
+			_getCollectionDisplayPageElementDefinition(
+				repeatableFieldsCollectionProviderReference, Boolean.FALSE),
+			StringPool.BLANK, position);
+
+		pageElement.setPageElements(
+			new PageElement[] {
+				_getPageElement(
+					RandomTestUtil.randomString(),
+					getPageElementDefinition(
+						Boolean.FALSE,
+						PageElementDefinition.Type.COLLECTION_ITEM,
+						scopeGroupId),
+					new PageElement[0], pageElement.getExternalReferenceCode(),
+					0)
+			});
+
+		pageElement.setPosition(position);
+
+		return pageElement;
 	}
 
 	private static String _getScopeGroupTemplateEntryExternalUniqueIdFieldKey(

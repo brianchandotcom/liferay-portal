@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -65,6 +66,17 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionResource.
+				getListTypeDefinitionByExternalReferenceCode(
+					"LIST_APPLICATION_STATES");
+
+		_listTypeDefinitionResource.deleteListTypeDefinition(
+			listTypeDefinition.getId());
+	}
 
 	@Before
 	@Override
@@ -166,14 +178,6 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 			objectDefinitionResource.deleteObjectDefinition(
 				getId("TestObjectDefinitionenUSRemoved"));
-
-			ListTypeDefinition listTypeDefinition =
-				_listTypeDefinitionResource.
-					getListTypeDefinitionByExternalReferenceCode(
-						"LIST_APPLICATION_STATES");
-
-			_listTypeDefinitionResource.deleteListTypeDefinition(
-				listTypeDefinition.getId());
 		}
 	}
 
@@ -283,6 +287,9 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, (int)status.getCode());
+
+		objectDefinitionResource.deleteObjectDefinition(
+			testObjectDefinition.getId());
 
 		// Published object definition
 
@@ -444,7 +451,7 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		return items.get(0);
 	}
 
-	private ListTypeDefinitionResource _listTypeDefinitionResource;
+	private static ListTypeDefinitionResource _listTypeDefinitionResource;
 
 	@Inject
 	private ListTypeDefinitionResource.Factory

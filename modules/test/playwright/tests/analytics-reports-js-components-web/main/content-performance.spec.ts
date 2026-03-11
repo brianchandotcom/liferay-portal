@@ -5,10 +5,13 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
+import {GlobalMenuPage} from '../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import getRandomString from '../../../utils/getRandomString';
 import {
 	connectToAnalyticsCloud,
@@ -77,8 +80,11 @@ async function createWebContentIntoAssetLibrary({
 	).toBeVisible();
 }
 
-async function deleteAssetLibraries(page: Page) {
-	await goToAssetLibraries(page);
+async function deleteAssetLibraries(
+	page: Page,
+	globalMenuPage: GlobalMenuPage
+) {
+	await goToAssetLibraries(globalMenuPage);
 
 	await page.waitForTimeout(3000);
 
@@ -90,17 +96,17 @@ async function deleteAssetLibraries(page: Page) {
 	await page.getByRole('button', {name: 'Delete'}).click();
 }
 
-async function goToAssetLibraries(page: Page) {
-	await page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
-
-	await page.getByRole('tab', {name: 'Applications'}).click();
-
-	await page.getByRole('menuitem', {name: 'Asset Libraries'}).click();
+async function goToAssetLibraries(globalMenuPage: GlobalMenuPage) {
+	await globalMenuPage.goToApplications('Asset Libraries');
 }
 
 export const test = mergeTests(
 	blogsPagesTest,
 	contentDashboardPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	loginAnalyticsCloudTest(),
@@ -147,6 +153,7 @@ test('Displays empty state when Analytics Cloud is not connected', async ({
 
 test('Displays empty state when asset belongs to an asset library with no site connected', async ({
 	contentDashboardPage,
+	globalMenuPage,
 	journalEditArticlePage,
 	page,
 	site,
@@ -155,7 +162,7 @@ test('Displays empty state when asset belongs to an asset library with no site c
 
 	await page.goto(liferayConfig.environment.baseUrl);
 
-	await goToAssetLibraries(page);
+	await goToAssetLibraries(globalMenuPage);
 
 	const assetLibraryName = getRandomString();
 	const articleTitle = getRandomString();
@@ -185,7 +192,7 @@ test('Displays empty state when asset belongs to an asset library with no site c
 
 	await expect(page.getByText('Connected Sites')).toBeVisible();
 
-	await deleteAssetLibraries(page);
+	await deleteAssetLibraries(page, globalMenuPage);
 });
 
 test('Displays empty state when site is not synced to Analytics Cloud', async ({

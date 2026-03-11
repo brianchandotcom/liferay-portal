@@ -1280,9 +1280,8 @@ test('Can import object with different classname via portlet', async ({
 
 	await test.step('Import Object Entry into Virtual Instance & Verify', async () => {
 		await page.goto(`http://www.able.com:8080`);
-		await page.getByLabel('Open Applications MenuCtrl+').click();
-		await page.getByRole('tab', {name: 'Control Panel'}).click();
-		await page.getByRole('menuitem', {name: objectDefinition.name}).click();
+
+		await globalMenuPage.goToObjectDefinition(objectDefinition.name);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

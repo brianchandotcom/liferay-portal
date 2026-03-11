@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../../utils/waitForAlert';
@@ -22,6 +23,7 @@ export const test = mergeTests(
 		'LPS-164563': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	sortingPageTest,
 	loginTest()
 );
@@ -655,6 +657,7 @@ test.describe('Sorting in Data Set Manager', () => {
 	});
 
 	test('Sorting label in the table is not blank after changing default site language @LPD-25464', async ({
+		globalMenuPage,
 		page,
 		sortingPage,
 	}) => {
@@ -662,17 +665,10 @@ test.describe('Sorting in Data Set Manager', () => {
 
 		try {
 			await test.step('Navigate to Instance Settings Localization', async () => {
-				await page
-					.getByLabel('Open Applications MenuCtrl+Alt+A')
-					.click();
-
-				await page.getByRole('tab', {name: 'Control Panel'}).click();
-
-				await page
-					.getByRole('menuitem', {name: 'Instance Settings'})
-					.click();
-
-				await page.getByRole('link', {name: 'Localization'}).click();
+				await globalMenuPage.goToControlPanel(
+					'Instance Settings',
+					'Localization'
+				);
 			});
 
 			await test.step('Change default site language to Spanish', async () => {
@@ -719,21 +715,10 @@ test.describe('Sorting in Data Set Manager', () => {
 		finally {
 			if (spanishLanguage) {
 				await test.step('Navigate to Instance Settings Localization', async () => {
-					await page
-						.getByLabel('Open Applications MenuCtrl+Alt+A')
-						.click();
-
-					await page
-						.getByRole('tab', {name: 'Control Panel'})
-						.click();
-
-					await page
-						.getByRole('menuitem', {name: 'Instance Settings'})
-						.click();
-
-					await page
-						.getByRole('link', {name: 'Localization'})
-						.click();
+					await globalMenuPage.goToControlPanel(
+						'Instance Settings',
+						'Localization'
+					);
 				});
 
 				await test.step('Change default site language back to English', async () => {

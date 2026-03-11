@@ -69,7 +69,7 @@ public class ExportFragmentCollectionsMVCResourceCommand
 								exportFragmentCollectionId);
 
 						if ((fragmentCollection != null) &&
-							!fragmentCollection.isMarketplace()) {
+							fragmentCollection.hasExportableItems()) {
 
 							return fragmentCollection;
 						}

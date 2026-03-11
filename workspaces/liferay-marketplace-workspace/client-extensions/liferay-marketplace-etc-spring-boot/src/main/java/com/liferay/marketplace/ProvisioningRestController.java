@@ -21,6 +21,7 @@ import java.util.Collections;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * @author Keven Leone
@@ -135,12 +137,22 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		LicenseEntry licenseEntry = LicenseEntry.fromJson(
-			new JSONObject(
-				json
-			).getJSONObject(
-				"licenseEntry"
-			));
+		LicenseEntry licenseEntry;
+
+		try {
+			licenseEntry = LicenseEntry.fromJson(
+					new JSONObject(
+							json
+					).getJSONObject(
+							"licenseEntry"
+					));
+		} catch (JSONException jsonException) {
+			throw new ResponseStatusException(
+					HttpStatus.BAD_REQUEST,
+					"Invalid JSON or missing 'licenseEntry' field",
+					jsonException
+			);
+		}
 
 		return _provisioningService.provision(jwt, licenseEntry);
 	}

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.UniqueUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
+import com.liferay.style.book.exception.DuplicateStyleBookEntryNameException;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
 import com.liferay.style.book.exception.StyleBookEntryThemeIdException;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -67,7 +68,7 @@ public class StyleBookEntryLocalServiceImpl
 			serviceContext = new ServiceContext();
 		}
 
-		_validate(name);
+		_validate(groupId, name, null);
 
 		if (Validator.isNull(styleBookEntryKey)) {
 			styleBookEntryKey = generateStyleBookEntryKey(groupId, name);
@@ -385,7 +386,7 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
-		_validate(name);
+		_validate(styleBookEntry.getGroupId(), name, styleBookEntryId);
 
 		styleBookEntry.setModifiedDate(new Date());
 		styleBookEntry.setName(name);
@@ -446,7 +447,7 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
-		_validate(name);
+		_validate(styleBookEntry.getGroupId(), name, styleBookEntryId);
 
 		if (Validator.isNull(styleBookEntryKey)) {
 			styleBookEntryKey = generateStyleBookEntryKey(
@@ -495,7 +496,7 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
-		_validate(name);
+		_validate(styleBookEntry.getGroupId(), name, styleBookEntryId);
 
 		styleBookEntry.setModifiedDate(new Date());
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
@@ -566,7 +567,9 @@ public class StyleBookEntryLocalServiceImpl
 		return StringPool.BLANK;
 	}
 
-	private void _validate(String name) throws PortalException {
+	private void _validate(Long groupId, String name, Long styleBookEntryId)
+		throws PortalException {
+
 		if (Validator.isNull(name)) {
 			throw new StyleBookEntryNameException("Name must not be null");
 		}
@@ -584,6 +587,17 @@ public class StyleBookEntryLocalServiceImpl
 		if (name.length() > nameMaxLength) {
 			throw new StyleBookEntryNameException(
 				"Maximum length of name exceeded");
+		}
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.fetchByG_N_First(groupId, name, null);
+
+		if ((styleBookEntry != null) &&
+			((styleBookEntryId == null) ||
+			 !styleBookEntryId.equals(styleBookEntry.getPrimaryKey()))) {
+
+			throw new DuplicateStyleBookEntryNameException(
+				"Duplicate style book entry name " + name);
 		}
 	}
 

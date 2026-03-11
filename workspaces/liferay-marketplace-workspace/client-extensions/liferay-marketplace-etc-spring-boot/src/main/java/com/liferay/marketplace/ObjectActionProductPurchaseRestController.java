@@ -148,7 +148,7 @@ public class ObjectActionProductPurchaseRestController
 		return "1 USD = " + String.format("%.5f", exchangeRate) + " EUR";
 	}
 
-	private Map<String, String> _getInvoiceOrderSubmitTemplate(
+	private Map<String, String> _getInvoiceOrderSubmitReplaceMap(
 			Order order, Product product,
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
@@ -278,7 +278,7 @@ public class ObjectActionProductPurchaseRestController
 		return "";
 	}
 
-	private Map<String, String> _getOrderConfirmationTemplate(
+	private Map<String, String> _getOrderConfirmationReplaceMap(
 			Order order, Product product,
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
@@ -340,7 +340,7 @@ public class ObjectActionProductPurchaseRestController
 		).build();
 	}
 
-	private Map<String, String> _getPaymentApprovedTemplate(
+	private Map<String, String> _getPaymentApprovedReplaceMap(
 			Order order, Product product,
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
@@ -415,7 +415,7 @@ public class ObjectActionProductPurchaseRestController
 
 			_marketplaceService.postNotificationQueueEntry(
 				null, "MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
-				_getInvoiceOrderSubmitTemplate(
+				_getInvoiceOrderSubmitReplaceMap(
 					order, product, productSpecificationsMap));
 		}
 
@@ -428,7 +428,7 @@ public class ObjectActionProductPurchaseRestController
 			_marketplaceService.postNotificationQueueEntry(
 				order.getCreatorEmailAddress(),
 				"MARKETPLACE-ORDER-CONFIRMATION",
-				_getOrderConfirmationTemplate(
+				_getOrderConfirmationReplaceMap(
 					order, product, productSpecificationsMap));
 		}
 
@@ -440,7 +440,7 @@ public class ObjectActionProductPurchaseRestController
 
 			_marketplaceService.postNotificationQueueEntry(
 				order.getCreatorEmailAddress(), "MARKETPLACE-PAYMENT-APPROVED",
-				_getPaymentApprovedTemplate(
+				_getPaymentApprovedReplaceMap(
 					order, product, productSpecificationsMap));
 		}
 	}

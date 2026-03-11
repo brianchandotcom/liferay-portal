@@ -1255,20 +1255,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			irrelevantGroup.getExternalReferenceCode(),
 			layout.getExternalReferenceCode());
 
-		_assertSitePage(layout, sitePage);
-
-		_testPutSiteSitePage(sitePage, testGroup, sitePage);
-
-		Layout importedLayout =
-			_layoutLocalService.getLayoutByExternalReferenceCode(
-				layout.getExternalReferenceCode(), testGroup.getGroupId());
-		SitePage importedSitePage = sitePageResource.getSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			layout.getExternalReferenceCode());
-
-		_assertSitePage(importedLayout, importedSitePage);
-
-		return importedSitePage;
+		return _testPutSiteSitePage(sitePage, testGroup, sitePage);
 	}
 
 	private CustomMetaTag[] _getCustomMetaTags() {

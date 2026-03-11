@@ -10,6 +10,7 @@ import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import {config} from '../../config';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
 import {Field, UploadField} from '../../utils/field';
@@ -18,13 +19,11 @@ import Input from '../Input';
 const FILE_SOURCE_OPTIONS = [
 	{
 		label: Liferay.Language.get('upload-directly-from-users-computer'),
-		value: 'userComputerToDocumentsAndMedia',
+		value: 'userComputerToCMSBasicDocument',
 	},
 	{
-		label: Liferay.Language.get(
-			'upload-or-select-from-documents-and-media-item-selector'
-		),
-		value: 'documentsAndMedia',
+		label: Liferay.Language.get('upload-or-select-from-item-selector'),
+		value: 'CMSBasicDocument',
 	},
 ];
 
@@ -101,7 +100,7 @@ function FirstSectionComponent({
 			</ClayForm.Group>
 
 			{uploadField.settings.fileSource ===
-			'userComputerToDocumentsAndMedia' ? (
+			'userComputerToCMSBasicDocument' ? (
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={
@@ -109,7 +108,7 @@ function FirstSectionComponent({
 						}
 						disabled={disabled || isPublished}
 						label={Liferay.Language.get(
-							'show-files-in-documents-and-media'
+							'show-files-in-cms-library'
 						)}
 						onChange={(event) => {
 							dispatch({
@@ -118,6 +117,8 @@ function FirstSectionComponent({
 									showFilesInLibrary: event.target.checked,
 									storageDLFolderPath:
 										'/' + Liferay.Language.get('new'),
+									storageDepotGroup:
+										config.spaceExternalReferenceCode,
 								},
 								type: 'update-field',
 								uuid: field.uuid,
@@ -132,9 +133,9 @@ function FirstSectionComponent({
 					disabled={disabled || isPublished}
 					helpMessage={sub(
 						Liferay.Language.get(
-							'input-the-path-of-the-chosen-folder-in-documents-and-media-an-example-of-a-valid-path-is-x'
+							'input-the-path-of-the-chosen-folder-in-cms-files-an-example-of-a-valid-path-is-x'
 						),
-						'/myDocumentsAndMediaFolder'
+						'/myFolder'
 					)}
 					label={Liferay.Language.get('storage-folder')}
 					onValueChange={(value) => {

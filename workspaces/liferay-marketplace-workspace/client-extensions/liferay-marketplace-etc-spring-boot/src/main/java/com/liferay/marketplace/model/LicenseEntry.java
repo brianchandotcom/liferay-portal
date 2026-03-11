@@ -86,6 +86,8 @@ public class LicenseEntry {
 		).put(
 			"macAddresses", _macAddresses
 		).put(
+				"orderId", _orderId
+		).put(
 			"productId", _productId
 		).put(
 			"productPurchaseKey", _productPurchaseKey

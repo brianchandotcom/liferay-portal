@@ -19,11 +19,10 @@ import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
 import FDSDndProvider from '../../dnd/FDSDndProvider';
 import useFDSDrop from '../../dnd/useFDSDrop';
+import getLabels from '../../utils/getLabels';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import {
-	DisplayType,
 	IHeader,
-	ILabelSchema,
 	IListSchema,
 	IListTitleRenderer,
 	IView,
@@ -110,44 +109,6 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			getLocalizedValue(item, accessibleNameItemKey)?.value ||
 			Liferay.Language.get('item');
 
-		const getLabels = (
-			item: any
-		): Array<{
-			displayType: DisplayType;
-			value: string;
-		}> => {
-			if (!labels) {
-				return [];
-			}
-
-			return labels.flatMap((label: ILabelSchema) => {
-				const {displayTypeKey, displayTypeValues} = label;
-				let {displayType} = label;
-
-				if (!displayType && displayTypeValues && displayTypeKey) {
-					const keyValue = getLocalizedValue(
-						item,
-						displayTypeKey
-					)?.value;
-
-					displayType = displayTypeValues[keyValue!];
-				}
-
-				const value = getLocalizedValue(item, label.value)?.value;
-
-				if (!value) {
-					return [];
-				}
-
-				return [
-					{
-						displayType: displayType || DisplayType.UNSTYLED,
-						value,
-					},
-				];
-			});
-		};
-
 		return (
 			<ClayList.Item
 				className={classNames(className, {
@@ -232,16 +193,18 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 
 					{labels && (
 						<ClayLayout.ContentRow className="mt-1">
-							{getLabels(item).map((label, index: number) => (
-								<ClayLabel
-									className="text-uppercase"
-									displayType={label.displayType}
-									key={index}
-									large
-								>
-									{label.value}
-								</ClayLabel>
-							))}
+							{getLabels(item, labels).map(
+								(label, index: number) => (
+									<ClayLabel
+										className="text-uppercase"
+										displayType={label.displayType}
+										key={index}
+										large
+									>
+										{label.value}
+									</ClayLabel>
+								)
+							)}
 						</ClayLayout.ContentRow>
 					)}
 				</ClayList.ItemField>

@@ -15,11 +15,11 @@ database:
     multiAz: false
     storageGB: 20
     username: liferay_database_admin
-deletionProtection: false
 enabled: true
 endpoints: {}
 gateway: {}
 license: {}
+orphanOnDelete: false
 overlay: {}
 search:
     opensearch:

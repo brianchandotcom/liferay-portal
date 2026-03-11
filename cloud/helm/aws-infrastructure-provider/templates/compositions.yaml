@@ -34,8 +34,8 @@ spec:
                         {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectIdFull | sha256sum | trunc 6 -}}
                         {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
-                        {{- $managementPolicies := $xr.spec.deletionProtection | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
-                        {{- $managementPoliciesNoUpdate := $xr.spec.deletionProtection | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
+                        {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
+                        {{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
                         {{- $namespace := $xr.metadata.namespace -}}
                         {{- $oidcProvider := `}}{{ .Values.aws.oidcProvider | quote }}{{` -}}
                         {{- $storageName := printf "%s-%s-storage" $accountId $baseName -}}
@@ -1255,7 +1255,7 @@ spec:
                         {{- $xr := .observed.composite.resource -}}
 
                         {{- $environmentId := $xr.spec.environmentId -}}
-                        {{- $managementPolicies := $xr.spec.deletionProtection | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
+                        {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
                         {{- $namespace := $xr.metadata.namespace -}}
                         {{- $projectId := $xr.spec.projectId -}}
                         {{- $restorePhase := $xr.spec.restorePhase | default "none" -}}

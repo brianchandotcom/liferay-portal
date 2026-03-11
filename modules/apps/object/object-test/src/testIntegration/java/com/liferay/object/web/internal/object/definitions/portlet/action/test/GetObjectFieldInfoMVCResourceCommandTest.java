@@ -130,6 +130,8 @@ public class GetObjectFieldInfoMVCResourceCommandTest
 							"label", "ID"
 						))
 				).put(
+					"key", "fields"
+				).put(
 					"label", "Fields"
 				),
 				JSONUtil.put(
@@ -139,6 +141,8 @@ public class GetObjectFieldInfoMVCResourceCommandTest
 						JSONUtil.put("label", "Minus"),
 						JSONUtil.put("label", "Plus"),
 						JSONUtil.put("label", "Times"))
+				).put(
+					"key", "operators"
 				).put(
 					"label", "Operators"
 				),

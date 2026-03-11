@@ -6167,11 +6167,11 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition1);
 
 		assertFacets(
+			page.getFacets(),
 			List.of(
 				new Facet(
 					"textObjectFieldName",
-					List.of(new Facet.FacetValue(2, textObjectFieldValue)))),
-			page.getFacets());
+					List.of(new Facet.FacetValue(2, textObjectFieldValue)))));
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(adminUser));
@@ -6203,6 +6203,7 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition2);
 
 		assertFacets(
+			page.getFacets(),
 			List.of(
 				new Facet(
 					_objectRelationshipFieldName,
@@ -6210,8 +6211,7 @@ public class DefaultObjectEntryManagerImplTest
 						new Facet.FacetValue(
 							1, String.valueOf(parentObjectEntry1.getId())),
 						new Facet.FacetValue(
-							2, String.valueOf(parentObjectEntry2.getId()))))),
-			page.getFacets());
+							2, String.valueOf(parentObjectEntry2.getId()))))));
 
 		_defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition2,
@@ -6230,6 +6230,7 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition2);
 
 		assertFacets(
+			page.getFacets(),
 			List.of(
 				new Facet(
 					_objectRelationshipFieldName,
@@ -6237,8 +6238,7 @@ public class DefaultObjectEntryManagerImplTest
 						new Facet.FacetValue(
 							2, String.valueOf(parentObjectEntry1.getId())),
 						new Facet.FacetValue(
-							1, String.valueOf(parentObjectEntry2.getId()))))),
-			page.getFacets());
+							1, String.valueOf(parentObjectEntry2.getId()))))));
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			_objectDefinition2, childObjectEntry.getId());
@@ -6249,6 +6249,7 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinition2);
 
 		assertFacets(
+			page.getFacets(),
 			List.of(
 				new Facet(
 					_objectRelationshipFieldName,
@@ -6256,8 +6257,7 @@ public class DefaultObjectEntryManagerImplTest
 						new Facet.FacetValue(
 							1, String.valueOf(parentObjectEntry1.getId())),
 						new Facet.FacetValue(
-							1, String.valueOf(parentObjectEntry2.getId()))))),
-			page.getFacets());
+							1, String.valueOf(parentObjectEntry2.getId()))))));
 	}
 
 	@Test

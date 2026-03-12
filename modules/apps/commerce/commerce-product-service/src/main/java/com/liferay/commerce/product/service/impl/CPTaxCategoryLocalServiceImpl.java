@@ -73,6 +73,8 @@ public class CPTaxCategoryLocalServiceImpl
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
+		// Commerce product tax category
+
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		_validate(user.getCompanyId(), 0, externalReferenceCode, nameMap);

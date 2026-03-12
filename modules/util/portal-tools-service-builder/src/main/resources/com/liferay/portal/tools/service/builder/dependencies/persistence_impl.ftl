@@ -378,14 +378,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public void cacheResult(List<${entity.name}> ${entity.pluralVariableName}) {
-		<#if serviceBuilder.isVersionGTE_7_0_0()>
-			if ((_valueObjectFinderCacheListThreshold == 0) ||
-				((_valueObjectFinderCacheListThreshold > 0) &&
-				 (${entity.pluralVariableName}.size() > _valueObjectFinderCacheListThreshold))) {
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (${entity.pluralVariableName}.size() > _valueObjectFinderCacheListThreshold))) {
 
-				return;
-			}
-		</#if>
+			return;
+		}
 
 		for (${entity.name} ${entity.variableName} : ${entity.pluralVariableName}) {
 			<#if entity.isChangeTrackingEnabled()>
@@ -2555,15 +2553,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#if>
 
-		<#if serviceBuilder.isVersionGTE_7_0_0()>
-			_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(PropsUtil.get(
-				<#if serviceBuilder.isVersionGTE_7_1_0()>
-					PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD
-				<#else>
-					"value.object.finder.cache.list.threshold"
-				</#if>
-			));
-		</#if>
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(PropsUtil.get(
+			<#if serviceBuilder.isVersionGTE_7_1_0()>
+				PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD
+			<#else>
+				"value.object.finder.cache.list.threshold"
+			</#if>
+		));
 
 		<#list entity.entityColumns as entityColumn>
 			<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>

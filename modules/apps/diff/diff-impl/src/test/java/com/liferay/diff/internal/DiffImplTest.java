@@ -7,8 +7,8 @@ package com.liferay.diff.internal;
 
 import com.liferay.diff.Diff;
 import com.liferay.diff.DiffResult;
+import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Reader;

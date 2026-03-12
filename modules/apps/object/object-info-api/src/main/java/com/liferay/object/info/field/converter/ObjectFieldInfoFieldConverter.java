@@ -319,6 +319,9 @@ public class ObjectFieldInfoFieldConverter {
 
 		if (Objects.equals(
 				objectFieldSetting.getValue(),
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT) ||
+			Objects.equals(
+				objectFieldSetting.getValue(),
 				ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
 			return FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA;
@@ -326,7 +329,11 @@ public class ObjectFieldInfoFieldConverter {
 		else if (Objects.equals(
 					objectFieldSetting.getValue(),
 					ObjectFieldSettingConstants.
-						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
+						VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT) ||
+				 Objects.equals(
+					 objectFieldSetting.getValue(),
+					 ObjectFieldSettingConstants.
+						 VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
 
 			return FileInfoFieldType.FileSourceType.USER_COMPUTER;
 		}

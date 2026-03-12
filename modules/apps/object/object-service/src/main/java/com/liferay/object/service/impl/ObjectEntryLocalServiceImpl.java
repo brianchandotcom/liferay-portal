@@ -5801,7 +5801,6 @@ public class ObjectEntryLocalServiceImpl
 				dynamicQuery.add(
 					objectDefinitionIdProperty.eq(objectDefinitionId));
 			});
-		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
 
 		actionableDynamicQuery.performActions();

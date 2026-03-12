@@ -278,7 +278,7 @@ public class DownloadObjectEntryFolderServletTest {
 							"name", objectEntry.getTitleValue()
 						))
 				).put(
-					"selectAll", false
+					"selectionScope", JSONUtil.put("selectAll", false)
 				).put(
 					"type", "DownloadBulkAction"
 				).toString(

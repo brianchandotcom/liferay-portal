@@ -443,6 +443,7 @@ export default {
 	'no-cloud-projects-available': 'No Cloud Projects Available',
 	'no-licenses-yet': 'No Licenses Yet',
 	'no-orders-yet': 'No Orders Yet',
+	'no-projects-available-for-x': 'No projects available for {0}',
 	'no-results-found': 'No Results Found',
 	'no-trials-yet': 'No Trials Yet',
 	'no-x': 'No {0}',

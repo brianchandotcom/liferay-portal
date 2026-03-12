@@ -37,18 +37,18 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
 					productKey,
 					productPurchaseKey,
-					provisioning: {
+					provisioningForm: {
+						allowedEmailDomains: this.form?.allowedEmailDomains,
 						corpProjectName: this.form?.workspaceName,
 						corpProjectUuid: this.account.externalReferenceCode,
-						emailAddressDomains: this.form?.allowedEmailDomains,
-						friendlyURL: this.form?.friendlyWorkspaceURL
+						dataCenterLocation: this.form?.dataCenterLocation,
+						friendlyWorkspaceURL: this.form?.friendlyWorkspaceURL
 							? `/${sanitizeStringForURL(this.form?.friendlyWorkspaceURL)}`
 							: '',
 						incidentReportEmailAddresses:
 							this.form?.incidentReportContacts,
-						name: this.form?.workspaceName,
 						ownerEmailAddress: this.form?.workspaceOwnerEmail,
-						serverLocation: this.form?.dataCenterLocation,
+						workspaceName: this.form?.workspaceName,
 					},
 				}),
 			},

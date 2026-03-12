@@ -5,6 +5,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -12,7 +13,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsValues;

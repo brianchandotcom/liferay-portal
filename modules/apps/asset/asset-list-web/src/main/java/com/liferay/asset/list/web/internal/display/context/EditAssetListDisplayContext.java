@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyGroupRelService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -143,7 +142,8 @@ public class EditAssetListDisplayContext {
 		UnicodeProperties unicodeProperties) {
 
 		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
-		_assetVocabularyGroupRelLocalService = assetVocabularyGroupRelLocalService;
+		_assetVocabularyGroupRelLocalService =
+			assetVocabularyGroupRelLocalService;
 		_assetVocabularyService = assetVocabularyService;
 		_depotEntryService = depotEntryService;
 		_groupService = groupService;

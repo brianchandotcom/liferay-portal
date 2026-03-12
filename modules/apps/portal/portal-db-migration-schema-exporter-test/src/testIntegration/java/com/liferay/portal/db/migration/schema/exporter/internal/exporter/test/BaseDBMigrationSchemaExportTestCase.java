@@ -18,6 +18,7 @@ import com.liferay.portal.db.migration.schema.exporter.internal.test.util.Config
 import com.liferay.portal.db.migration.schema.exporter.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -32,7 +33,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.Assert;
@@ -93,8 +93,8 @@ public abstract class BaseDBMigrationSchemaExportTestCase {
 			dataSource);
 
 		Assert.assertEquals(
-			StringUtils.difference(
-				copyIndexColumnNames.toString(), indexColumnNames.toString()),
+			_getColumnNamesMismatchMessage(
+				indexColumnNames, copyIndexColumnNames),
 			indexColumnNames.size(), copyIndexColumnNames.size());
 
 		for (int i = 0; i < indexColumnNames.size(); i++) {
@@ -113,8 +113,8 @@ public abstract class BaseDBMigrationSchemaExportTestCase {
 			dataSource);
 
 		Assert.assertEquals(
-			StringUtils.difference(
-				copyTableColumnNames.toString(), tableColumnNames.toString()),
+			_getColumnNamesMismatchMessage(
+				tableColumnNames, copyTableColumnNames),
 			tableColumnNames.size(), copyTableColumnNames.size());
 
 		for (int i = 0; i < tableColumnNames.size(); i++) {
@@ -180,6 +180,15 @@ public abstract class BaseDBMigrationSchemaExportTestCase {
 
 	@Inject
 	protected ConfigurationAdmin configurationAdmin;
+
+	private String _getColumnNamesMismatchMessage(
+		List<String> columnNames, List<String> copyColumnNames) {
+
+		return String.format(
+			"Column names mismatch. Missing in copy: %s | Extra in copy: %s",
+			ListUtil.remove(columnNames, copyColumnNames),
+			ListUtil.remove(copyColumnNames, columnNames));
+	}
 
 	private static ObjectDefinition _objectDefinition1;
 	private static ObjectDefinition _objectDefinition2;

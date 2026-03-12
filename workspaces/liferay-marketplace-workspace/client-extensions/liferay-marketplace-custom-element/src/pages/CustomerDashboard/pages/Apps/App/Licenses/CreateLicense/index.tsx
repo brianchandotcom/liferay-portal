@@ -135,27 +135,29 @@ const CreateLicense = () => {
 			);
 
 			try {
-				const licenseKey = await provisioningOAuth2.createLicenseKey({
-					licenseEntry: {
-						description: form.description,
-						hostName: form.hostname,
-						ipAddresses: form.ipAddress.replaceAll('\n', ','),
-						macAddresses: form.macAddress.replaceAll('\n', ','),
-						orderId: orderId as string,
-						productId:
-							marketplaceProduct.specificationValues
-								.APP_ENTRY_UUID || undefined,
-						productPurchaseKey: form.subscription
-							?.productPurchasedKey as string,
-						productVersion:
-							form.subscription?.productVersion ||
-							marketplaceProduct.specificationValues
-								.APP_VERSION ||
-							'1.0.0',
-					},
-					skuId: form.subscription?.skuId as number,
-					type: form.subscription?.name as string,
-				});
+				const licenseKey = await provisioningOAuth2.createAppLicenseKey(
+					{
+						licenseEntry: {
+							description: form.description,
+							hostName: form.hostname,
+							ipAddresses: form.ipAddress.replaceAll('\n', ','),
+							macAddresses: form.macAddress.replaceAll('\n', ','),
+							orderId: orderId as string,
+							productId:
+								marketplaceProduct.specificationValues
+									.APP_ENTRY_UUID || undefined,
+							productPurchaseKey: form.subscription
+								?.productPurchasedKey as string,
+							productVersion:
+								form.subscription?.productVersion ||
+								marketplaceProduct.specificationValues
+									.APP_VERSION ||
+								'1.0.0',
+						},
+						skuId: form.subscription?.skuId as number,
+						type: form.subscription?.name as string,
+					}
+				);
 
 				Liferay.Util.openToast({
 					message: 'License Key created successfully',
@@ -170,7 +172,7 @@ const CreateLicense = () => {
 
 				navigate(`/order/${orderId}/licenses`);
 
-				await provisioningOAuth2.downloadLicenseKey(licenseKey.id);
+				await provisioningOAuth2.downloadAppLicenseKey(licenseKey.id);
 
 				Analytics.track('DOWNLOAD_LICENSE_KEY', {
 					licenseType: licenseKey.licenseType,

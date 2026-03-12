@@ -72,7 +72,7 @@ const Licenses = () => {
 		`/order-license-keys/${orderId}/${page}/${pageSize}`,
 		async () => {
 			try {
-				return provisioningOAuth2.getOrderLicenseKeys(
+				return provisioningOAuth2.getOrderAppLicenseKeys(
 					orderId as string,
 					new URLSearchParams({
 						page: page.toString(),

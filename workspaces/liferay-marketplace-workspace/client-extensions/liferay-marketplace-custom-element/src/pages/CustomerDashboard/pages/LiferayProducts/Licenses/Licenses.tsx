@@ -56,7 +56,7 @@ const LiferayProductLicenses = () => {
 		`/order-free-dxp-license-keys/${orderId}`,
 		async (): Promise<LicenseKey[]> => {
 			try {
-				return provisioningOAuth2.getOrderDXPLicenseKeys(
+				return provisioningOAuth2.getOrderLicenseKeys(
 					orderId as string
 				);
 			}
@@ -151,7 +151,7 @@ const LiferayProductLicenses = () => {
 											disabled={!renewalAvailable}
 											displayType="unstyled"
 											onClick={() => {
-												provisioningOAuth2.licenseKeysRenew(
+												provisioningOAuth2.licenseKeyTypeFreeRenew(
 													licenseKey
 												);
 											}}
@@ -171,7 +171,7 @@ const LiferayProductLicenses = () => {
 											disabled={expired}
 											displayType="secondary"
 											onClick={() => {
-												provisioningOAuth2.downloadLicenseKey(
+												provisioningOAuth2.downloadAppLicenseKey(
 													licenseKey
 												);
 											}}

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -65,6 +66,7 @@ public class ObjectEntryDisplayContextImplTest {
 	public void setUp() throws Exception {
 		_setUpMockHttpServletRequest();
 		_setUpObjectDefinition();
+		_setUpObjectEntryLocalService();
 		_setUpThemeDisplay();
 	}
 
@@ -93,6 +95,14 @@ public class ObjectEntryDisplayContextImplTest {
 		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.BRAZIL));
 		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.SPAIN));
 		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetBackURL() throws Exception {
+		_testGetBackURL(false, 0, null);
+		_testGetBackURL(false, 0, _OBJECT_ENTRY_ID);
+		_testGetBackURL(true, 1, null);
+		_testGetBackURL(true, 1, _OBJECT_ENTRY_ID);
 	}
 
 	@Test
@@ -125,6 +135,14 @@ public class ObjectEntryDisplayContextImplTest {
 			LocaleUtil.US,
 			objectEntryDisplayContextImpl.getDefaultLocale(
 				LocaleUtil.US, null));
+	}
+
+	@Test
+	public void testGetMethod() throws Exception {
+		_testGetMethod("PATCH", _OBJECT_ENTRY_ID, RandomTestUtil.randomLong());
+		_testGetMethod("PUT", _OBJECT_ENTRY_ID, 0);
+		_testGetMethod("PUT", null, 0);
+		_testGetMethod("PUT", null, RandomTestUtil.randomLong());
 	}
 
 	@Test
@@ -243,6 +261,30 @@ public class ObjectEntryDisplayContextImplTest {
 	}
 
 	private ObjectEntryDisplayContextImpl _createObjectEntryDisplayContextImpl(
+		HttpServletRequest httpServletRequest, Long objectEntryId) {
+
+		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
+			_createObjectEntryDisplayContextImpl(
+				httpServletRequest,
+				Mockito.mock(ObjectEntryManagerRegistry.class),
+				Mockito.mock(ObjectFieldBusinessTypeRegistry.class),
+				Mockito.mock(ObjectRelationshipLocalService.class));
+
+		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
+
+		Mockito.when(
+			objectEntry.getId()
+		).thenReturn(
+			objectEntryId
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			objectEntryDisplayContextImpl, "_objectEntry", objectEntry);
+
+		return objectEntryDisplayContextImpl;
+	}
+
+	private ObjectEntryDisplayContextImpl _createObjectEntryDisplayContextImpl(
 		HttpServletRequest httpServletRequest,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
@@ -253,8 +295,7 @@ public class ObjectEntryDisplayContextImplTest {
 			Mockito.mock(DDMFormRenderer.class), httpServletRequest,
 			Mockito.mock(ItemSelector.class),
 			Mockito.mock(ObjectDefinitionLocalService.class),
-			objectEntryManagerRegistry,
-			Mockito.mock(ObjectEntryLocalService.class),
+			objectEntryManagerRegistry, _objectEntryLocalService,
 			Mockito.mock(ObjectEntryService.class),
 			objectFieldBusinessTypeRegistry,
 			Mockito.mock(ObjectFieldLocalService.class),
@@ -285,19 +326,35 @@ public class ObjectEntryDisplayContextImplTest {
 	}
 
 	private void _setUpMockHttpServletRequest() {
+		_mockHttpServletRequest.addParameter("backURL", _BACK_URL);
 		_mockHttpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
 		_mockHttpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_ENTRY_READ_ONLY, Boolean.FALSE);
+		_mockHttpServletRequest.setAttribute(WebKeys.PORTLET_ID, _PORTLET_ID);
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);
 	}
 
 	private void _setUpObjectDefinition() {
 		Mockito.when(
+			_objectDefinition.getPortletId()
+		).thenReturn(
+			_PORTLET_ID
+		);
+
+		Mockito.when(
 			_objectDefinition.getStorageType()
 		).thenReturn(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
+		);
+	}
+
+	private void _setUpObjectEntryLocalService() {
+		Mockito.when(
+			_objectEntryLocalService.fetchObjectEntry(_OBJECT_ENTRY_ID)
+		).thenReturn(
+			_serviceBuilderObjectEntry
 		);
 	}
 
@@ -315,10 +372,63 @@ public class ObjectEntryDisplayContextImplTest {
 		);
 	}
 
+	private void _testGetBackURL(
+			boolean defaultStorageType, int expectedTimes, Long objectEntryId)
+		throws Exception {
+
+		Mockito.when(
+			_objectDefinition.isDefaultStorageType()
+		).thenReturn(
+			defaultStorageType
+		);
+
+		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
+			_createObjectEntryDisplayContextImpl(
+				_mockHttpServletRequest, objectEntryId);
+
+		Assert.assertEquals(
+			_BACK_URL, objectEntryDisplayContextImpl.getBackURL());
+
+		Mockito.verify(
+			_objectEntryLocalService, Mockito.times(expectedTimes)
+		).fetchObjectEntry(
+			GetterUtil.getLong(objectEntryId)
+		);
+	}
+
+	private void _testGetMethod(
+			String expectedMethod, Long objectEntryId, long rootObjectEntryId)
+		throws Exception {
+
+		Mockito.when(
+			_serviceBuilderObjectEntry.getRootObjectEntryId()
+		).thenReturn(
+			rootObjectEntryId
+		);
+
+		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
+			_createObjectEntryDisplayContextImpl(
+				_mockHttpServletRequest, objectEntryId);
+
+		Assert.assertEquals(
+			expectedMethod, objectEntryDisplayContextImpl.getMethod());
+	}
+
+	private static final String _BACK_URL = RandomTestUtil.randomString();
+
+	private static final long _OBJECT_ENTRY_ID = RandomTestUtil.randomLong();
+
+	private static final String _PORTLET_ID = RandomTestUtil.randomString();
+
 	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
+	private final ObjectEntryLocalService _objectEntryLocalService =
+		Mockito.mock(ObjectEntryLocalService.class);
+	private final com.liferay.object.model.ObjectEntry
+		_serviceBuilderObjectEntry = Mockito.mock(
+			com.liferay.object.model.ObjectEntry.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

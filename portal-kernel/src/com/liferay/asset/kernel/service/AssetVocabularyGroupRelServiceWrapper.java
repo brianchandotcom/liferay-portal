@@ -40,14 +40,6 @@ public class AssetVocabularyGroupRelServiceWrapper
 
 	@Override
 	public java.util.List<AssetVocabularyGroupRel>
-		getAssetVocabularyGroupRelsByGroupId(long groupId) {
-
-		return _assetVocabularyGroupRelService.
-			getAssetVocabularyGroupRelsByGroupId(groupId);
-	}
-
-	@Override
-	public java.util.List<AssetVocabularyGroupRel>
 			getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

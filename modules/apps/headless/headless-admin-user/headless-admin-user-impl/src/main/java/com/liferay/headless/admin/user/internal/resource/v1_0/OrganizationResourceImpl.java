@@ -922,8 +922,7 @@ public class OrganizationResourceImpl
 					AssetCategory assetCategory =
 						_assetCategoryService.
 							getOrAddEmptyCategoryWithAncestors(
-								externalReferenceCode, contextUser.getUserId(),
-								group.getGroupId(),
+								externalReferenceCode, group.getGroupId(),
 								taxonomyCategoryBrief.
 									getParentTaxonomyCategoryExternalReferenceCode(),
 								taxonomyCategoryBrief.

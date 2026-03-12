@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export default function DesignLibraryResourcesFDSPropsTransformer(props: {}) {
+import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+
+export default function DesignLibraryResourcesFDSPropsTransformer(
+	props: IFrontendDataSetProps
+): IFrontendDataSetProps {
 	const creationMenu = {
 		primaryItems: [
 			{
@@ -16,32 +20,51 @@ export default function DesignLibraryResourcesFDSPropsTransformer(props: {}) {
 		...props,
 		creationMenu,
 		hideManagementBarInEmptyState: true,
-		itemsPerPage: 20,
-		multiSelect: true,
 		selectedItemsKey: 'embedded.id',
 		selectionType: 'multiple',
 		showSelectAll: true,
 		views: [
 			{
-				contentRenderer: 'list',
+				contentRenderer: 'table',
 				default: true,
-				label: 'List',
-				name: 'list',
+				label: Liferay.Language.get('table'),
+				name: 'table',
 				schema: {
-					title: 'title',
+					fields: [
+						{
+							actionId: 'edit',
+							contentRenderer: 'actionLink',
+							fieldName: 'name',
+							label: Liferay.Language.get('title'),
+							localizeLabel: true,
+							sortable: true,
+						},
+						{
+							fieldName: 'creatorUserId',
+							label: Liferay.Language.get('author'),
+							localizeLabel: true,
+							truncate: true,
+						},
+						{
+							contentRenderer: 'dateTime',
+							fieldName: 'dateModified',
+							label: Liferay.Language.get('last-updated'),
+							localizeLabel: true,
+							sortable: true,
+						},
+					],
 				},
-				thumbnail: 'list',
+				thumbnail: 'table',
 			},
 			{
-				active: true,
 				contentRenderer: 'cards',
-				default: false,
-				id: 'cards',
+				label: Liferay.Language.get('cards'),
 				name: 'cards',
 				schema: {
+					description: 'dateModified',
+					symbol: '',
 					title: 'title',
 				},
-				template: 'cards',
 				thumbnail: 'cards2',
 			},
 		],

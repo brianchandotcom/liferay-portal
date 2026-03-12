@@ -6,7 +6,7 @@
 package com.liferay.staging.internal.upgrade.registry;
 
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.staging.internal.upgrade.v1_0_0.RemovePublishDisplayedContentInStagingConfigurationUpgradeProcess;
+import com.liferay.staging.internal.upgrade.v1_0_0.StagingConfigurationUpgradeProcess;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -25,8 +25,7 @@ public class StagingImplUpgradeStepRegistrator
 
 		registry.register(
 			"0.0.1", "1.0.0",
-			new RemovePublishDisplayedContentInStagingConfigurationUpgradeProcess(
-				_configurationAdmin));
+			new StagingConfigurationUpgradeProcess(_configurationAdmin));
 	}
 
 	@Reference

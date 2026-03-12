@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "org.springframework", name: "spring-jdbc", version: "6.2.9"
 	compileOnly project(":core:petra:petra-concurrent")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-reflect")
 }
 

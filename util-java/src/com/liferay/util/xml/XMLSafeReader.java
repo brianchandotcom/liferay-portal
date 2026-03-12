@@ -5,8 +5,8 @@
 
 package com.liferay.util.xml;
 
+import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 
 /**
  * @author Brian Wing Shun Chan

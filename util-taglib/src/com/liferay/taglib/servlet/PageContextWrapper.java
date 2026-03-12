@@ -5,7 +5,7 @@
 
 package com.liferay.taglib.servlet;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;

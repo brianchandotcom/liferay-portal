@@ -5,10 +5,10 @@
 
 package com.liferay.taglib;
 
+import com.liferay.petra.io.unsync.UnsyncStringReader;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.BodyContent;

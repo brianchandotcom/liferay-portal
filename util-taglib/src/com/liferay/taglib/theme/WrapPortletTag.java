@@ -5,8 +5,8 @@
 
 package com.liferay.taglib.theme;
 
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.PortletDisplay;

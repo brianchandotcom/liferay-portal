@@ -5,9 +5,9 @@
 
 package com.liferay.taglib.portlet;
 
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;

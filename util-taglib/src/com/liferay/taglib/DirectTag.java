@@ -5,7 +5,7 @@
 
 package com.liferay.taglib;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 import com.liferay.taglib.servlet.PipingPageContext;
 

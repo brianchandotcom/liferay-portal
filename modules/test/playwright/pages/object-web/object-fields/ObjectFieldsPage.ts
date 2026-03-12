@@ -192,32 +192,34 @@ export class ObjectFieldsPage {
 	}
 
 	async openObjectField(fieldLabel: string) {
-		await expect(async () => {
-			const trigger = this.page
-				.getByRole('cell')
-				.getByRole('link')
-				.filter({hasText: fieldLabel});
+		await test.step(`Open object field '${fieldLabel}'`, async () => {
+			await expect(async () => {
+				const trigger = this.page
+					.getByRole('cell')
+					.getByRole('link')
+					.filter({hasText: fieldLabel});
 
-			// Click on trigger again here because clickAndExpectToBeVisible
-			// won't click again if the side panel is already open.
+				// Click on trigger again here because clickAndExpectToBeVisible
+				// won't click again if the side panel is already open.
 
-			await trigger.click();
+				await trigger.click();
 
-			// Check that the side panel is opened after clicking.
+				// Check that the side panel is opened after clicking.
 
-			await clickAndExpectToBeVisible({
-				target: this.page.locator('.fds-side-panel.is-visible'),
-				trigger,
-			});
+				await clickAndExpectToBeVisible({
+					target: this.page.locator('.fds-side-panel.is-visible'),
+					trigger,
+				});
 
-			// Check that the correct field was opened.
+				// Check that the correct field was opened.
 
-			await expect(
-				this.iframeLocator.locator('#objectFieldLabelInput')
-			).toHaveValue(fieldLabel);
-		}).toPass();
+				await expect(
+					this.iframeLocator.locator('#objectFieldLabelInput')
+				).toHaveValue(fieldLabel);
+			}).toPass();
 
-		await this.page.waitForLoadState('networkidle');
+			await this.page.waitForLoadState('networkidle');
+		});
 	}
 
 	async saveObjectField() {

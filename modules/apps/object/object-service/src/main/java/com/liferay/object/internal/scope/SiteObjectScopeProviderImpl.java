@@ -80,7 +80,8 @@ public class SiteObjectScopeProviderImpl implements ObjectScopeProvider {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if ((group != null) &&
-			(group.isSite() || group.isStagingGroup() || group.isUserGroup())) {
+			(group.isLayoutSetPrototype() || group.isSite() ||
+			 group.isStagingGroup() || group.isUserGroup())) {
 
 			return true;
 		}

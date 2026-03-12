@@ -17,10 +17,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -38,6 +40,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -56,6 +59,57 @@ public class OrganizationServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@After
+	public void tearDown() throws Exception {
+		_organizationLocalService.clearGroupOrganizations(
+			TestPropsValues.getGroupId());
+	}
+
+	@Test
+	public void testAddGroupOrganizations() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_groupLocalService.addUserGroups(
+			user.getUserId(), new long[] {TestPropsValues.getGroupId()});
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_OWNER);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			user.getUserId(), TestPropsValues.getGroupId(),
+			new long[] {role.getRoleId()});
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization1);
+
+		_userLocalService.addOrganizationUsers(
+			organization1.getOrganizationId(), new long[] {user.getUserId()});
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization2);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			_organizationService.addGroupOrganizations(
+				TestPropsValues.getGroupId(),
+				new long[] {organization1.getOrganizationId()});
+
+			Assert.assertEquals(
+				1,
+				_organizationLocalService.getGroupOrganizationsCount(
+					TestPropsValues.getGroupId()));
+
+			Assert.assertThrows(
+				PrincipalException.class,
+				() -> _organizationService.addGroupOrganizations(
+					TestPropsValues.getGroupId(),
+					new long[] {organization2.getOrganizationId()}));
+		}
+	}
 
 	@Test
 	public void testGetGtOrganizations() throws Exception {
@@ -112,11 +166,10 @@ public class OrganizationServiceTest {
 
 			User user = UserTestUtil.addUser();
 
-			UserLocalServiceUtil.addRoleUser(
-				role.getRoleId(), user.getUserId());
+			_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
 
 			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-					user, PermissionCheckerFactoryUtil.create(user))) {
+					user)) {
 
 				Organization organization =
 					_organizationService.getOrAddEmptyOrganization(
@@ -131,7 +184,7 @@ public class OrganizationServiceTest {
 			user = UserTestUtil.addUser();
 
 			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-					user, PermissionCheckerFactoryUtil.create(user))) {
+					user)) {
 
 				_organizationService.getOrAddEmptyOrganization(
 					RandomTestUtil.randomString(),
@@ -216,6 +269,116 @@ public class OrganizationServiceTest {
 		}
 	}
 
+	@Test
+	public void testSetGroupOrganizations() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_groupLocalService.addUserGroups(
+			user.getUserId(), new long[] {TestPropsValues.getGroupId()});
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_OWNER);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			user.getUserId(), TestPropsValues.getGroupId(),
+			new long[] {role.getRoleId()});
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization1);
+
+		_userLocalService.addOrganizationUsers(
+			organization1.getOrganizationId(), new long[] {user.getUserId()});
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization2);
+
+		_organizationLocalService.addGroupOrganizations(
+			TestPropsValues.getGroupId(),
+			new long[] {organization2.getOrganizationId()});
+
+		Organization organization3 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization3);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			_organizationService.setGroupOrganizations(
+				TestPropsValues.getGroupId(),
+				new long[] {organization1.getOrganizationId()});
+
+			Assert.assertEquals(
+				1,
+				_organizationLocalService.getGroupOrganizationsCount(
+					TestPropsValues.getGroupId()));
+
+			Assert.assertTrue(
+				_organizationLocalService.hasGroupOrganization(
+					TestPropsValues.getGroupId(),
+					organization1.getOrganizationId()));
+
+			Assert.assertThrows(
+				PrincipalException.class,
+				() -> _organizationService.setGroupOrganizations(
+					TestPropsValues.getGroupId(),
+					new long[] {organization3.getOrganizationId()}));
+		}
+	}
+
+	@Test
+	public void testUnsetGroupOrganizations() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_groupLocalService.addUserGroups(
+			user.getUserId(), new long[] {TestPropsValues.getGroupId()});
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_OWNER);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			user.getUserId(), TestPropsValues.getGroupId(),
+			new long[] {role.getRoleId()});
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization1);
+
+		_userLocalService.addOrganizationUsers(
+			organization1.getOrganizationId(), new long[] {user.getUserId()});
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization2);
+
+		_organizationLocalService.addGroupOrganizations(
+			TestPropsValues.getGroupId(),
+			new long[] {
+				organization1.getOrganizationId(),
+				organization2.getOrganizationId()
+			});
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			_organizationService.unsetGroupOrganizations(
+				TestPropsValues.getGroupId(),
+				new long[] {organization1.getOrganizationId()});
+
+			Assert.assertEquals(
+				1,
+				_organizationLocalService.getGroupOrganizationsCount(
+					TestPropsValues.getGroupId()));
+
+			Assert.assertThrows(
+				PrincipalException.class,
+				() -> _organizationService.unsetGroupOrganizations(
+					TestPropsValues.getGroupId(),
+					new long[] {organization2.getOrganizationId()}));
+		}
+	}
+
 	private void _assertExpectedOrganizations(
 			List<Organization> expectedOrganizations, long parentOrganizationId,
 			String nameSearch)
@@ -241,6 +404,9 @@ public class OrganizationServiceTest {
 	}
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
 	@DeleteAfterTestRun
@@ -248,5 +414,14 @@ public class OrganizationServiceTest {
 
 	@Inject
 	private OrganizationService _organizationService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -7,7 +7,6 @@ package com.liferay.portal.vulcan.util;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -105,10 +104,7 @@ public class GroupUtil {
 	private static boolean _checkGroup(Group group) {
 		if ((group != null) &&
 			(_isDepotOrSite(group) || _isDepotOrSite(group.getLiveGroup()) ||
-			 group.isCMS() ||
-			 (group.isLayoutSetPrototype() &&
-			  (ExportImportThreadLocal.isExportInProcess() ||
-			   ExportImportThreadLocal.isImportInProcess())) ||
+			 group.isCMS() || group.isLayoutSetPrototype() ||
 			 group.isUserGroup())) {
 
 			return true;

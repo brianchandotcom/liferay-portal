@@ -127,13 +127,14 @@ const RequiredInformation = ({
 		setBaseButtonDisabled(getVerificationDisabledType());
 
 		setAddButtonDisabled(
-			hasReachedMaximumKeys || !hasFilledAtLeastOneField
+			hasReachedMaximumKeys || !hasFilledAtLeastOneField || isComplimentaryKey
 		);
 	}, [
 		hasError,
 		hasFilledAtLeastOneField,
 		hasNotPermanentLicenseRenewKeyType,
 		hasReachedMaximumKeys,
+		isComplimentaryKey,
 		selectedKeyData.hasNotPermanentLicense,
 		isOemOrEnterprise,
 		values.maxClusterNodes,

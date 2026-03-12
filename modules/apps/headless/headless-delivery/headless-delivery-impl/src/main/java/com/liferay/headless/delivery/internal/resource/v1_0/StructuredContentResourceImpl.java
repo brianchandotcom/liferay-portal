@@ -1335,9 +1335,9 @@ public class StructuredContentResourceImpl
 				_journalArticleService, _layoutLocalService,
 				contextAcceptLanguage.getPreferredLocale());
 
-			field.setValue(
-				contextAcceptLanguage.getPreferredLocale(),
-				value.getString(contextAcceptLanguage.getPreferredLocale()));
+			for (Locale locale : value.getAvailableLocales()) {
+				field.setValue(locale, value.getString(locale));
+			}
 
 			ContentField[] nestedContentFields =
 				contentField.getNestedContentFields();

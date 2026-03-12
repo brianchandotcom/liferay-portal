@@ -62,7 +62,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -239,8 +238,8 @@ public class SectionDisplayContextHelper {
 		for (DropdownItem dropdownItem : dropdownItems) {
 			JSONArray depotEntriesJSONArray = null;
 
-			HashMap<String, Object> dropdownItemData =
-				(HashMap<String, Object>)dropdownItem.get("data");
+			Map<String, Object> dropdownItemData =
+				(Map<String, Object>)dropdownItem.get("data");
 
 			if (Objects.equals(
 					dropdownItemData.get("action"), "createFolder")) {
@@ -487,7 +486,7 @@ public class SectionDisplayContextHelper {
 		Locale locale) {
 
 		Map<String, Object> dropdownItemData =
-			(HashMap<String, Object>)dropdownItem.get("data");
+			(Map<String, Object>)dropdownItem.get("data");
 
 		long objectDefinitionId = GetterUtil.getLong(
 			dropdownItemData.get("objectDefinitionId"));

@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
@@ -12,10 +13,10 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {ConfigurationTabPage} from '../../../pages/portal-workflow-kaleo-designer-web/ConfigurationTabPage';
 import {MetricsPage} from '../../../pages/portal-workflow-metrics-web/MetricsPage';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
+	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
@@ -25,12 +26,9 @@ const test = mergeTests(
 	objectPagesTest
 );
 
-// Migrated from ObjectActiveInactive.testcase
-
-test.fixme(
-	'LPD-78504 Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+test(
+	'Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated',
+	async ({apiHelpers, applicationsMenuPage, page, viewObjectDefinitionsPage}) => {
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Text'],
 		});
@@ -50,7 +48,9 @@ test.fixme(
 
 		const configurationTabPage = new ConfigurationTabPage(page);
 
-		await configurationTabPage.goTo();
+		await applicationsMenuPage.goToProcessBuilder();
+
+		await configurationTabPage.configurationTabLink.click();
 
 		await configurationTabPage.assignWorkflowToAssetType(
 			'Single Approver',
@@ -76,10 +76,6 @@ test.fixme(
 			objectDefinition.name
 		);
 
-		await waitForAlert(page);
-
-		// Navigate to Workflow Metrics and verify no pending items for Single Approver
-
 		const metricsPage = new MetricsPage(page);
 
 		await metricsPage.goTo();
@@ -98,9 +94,9 @@ test.fixme(
 			objectDefinition.name
 		);
 
-		await waitForAlert(page);
+		await applicationsMenuPage.goToProcessBuilder();
 
-		await configurationTabPage.goTo();
+		await configurationTabPage.configurationTabLink.click();
 
 		await configurationTabPage.unassignWorkflowFromAssetType(
 			objectDefinition.label['en_US']

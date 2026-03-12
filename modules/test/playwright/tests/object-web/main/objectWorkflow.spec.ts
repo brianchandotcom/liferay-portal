@@ -27,8 +27,7 @@ const test = mergeTests(
 );
 
 test(
-	'LPD-78504 Can preview entry information on My Workflow Tasks',
-	{tag: '@LPD-78504'},
+	'Can preview entry information on My Workflow Tasks',
 	async ({
 		apiHelpers,
 		applicationsMenuPage,
@@ -78,15 +77,12 @@ test(
 
 		await expect(
 			page.getByText(objectFields[0].label['en_US'])
-		).toBeVisible();
-
-		await expect(page.getByText('Entry Test')).toBeVisible();
+		).toHaveValue('Entry Test');
 	}
 );
 
 test(
-	'LPD-78504 Can view entry information through View button on My Workflow Tasks',
-	{tag: '@LPD-78504'},
+	'Can view entry information through View button on My Workflow Tasks',
 	async ({
 		apiHelpers,
 		applicationsMenuPage,
@@ -134,19 +130,16 @@ test(
 			objectDefinition.label['en_US']
 		);
 
-		await workflowTaskDetailsPage.editAssetButton.click();
+		await workflowTaskDetailsPage.viewButton.click();
 
 		await expect(
 			page.getByText(objectFields[0].label['en_US'])
-		).toBeVisible();
-
-		await expect(page.getByText('Entry Test')).toBeVisible();
+		).toHaveValue('Entry Test');
 	}
 );
 
 test.skip(
-	'LPD-78504 Workflow is not triggered for draft entry',
-	{tag: '@LPD-78504'},
+	'Workflow is not triggered for draft entry',
 	async () => {
 		// This test requires:
 		// 1. A site-scoped custom object with "Allow Users to Save Entries as Draft" enabled

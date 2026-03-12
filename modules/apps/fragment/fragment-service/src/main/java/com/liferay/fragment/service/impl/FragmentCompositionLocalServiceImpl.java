@@ -9,7 +9,9 @@ import com.liferay.fragment.exception.DuplicateFragmentCompositionKeyException;
 import com.liferay.fragment.exception.FragmentCompositionDescriptionException;
 import com.liferay.fragment.exception.FragmentCompositionNameException;
 import com.liferay.fragment.model.FragmentComposition;
+import com.liferay.fragment.model.FragmentCompositionTable;
 import com.liferay.fragment.service.base.FragmentCompositionLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -278,6 +280,27 @@ public class FragmentCompositionLocalServiceImpl
 				return newName;
 			}
 		}
+	}
+
+	@Override
+	public boolean hasExportableItems(long fragmentCollectionId) {
+		int count = dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				FragmentCompositionTable.INSTANCE
+			).where(
+				FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
+					fragmentCollectionId
+				).and(
+					FragmentCompositionTable.INSTANCE.marketplace.eq(false)
+				)
+			));
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -126,6 +126,7 @@ export default function TranslationAdminSelector({
 	const [activeLanguageIds, setActiveLanguageIds] = useState<
 		Liferay.Language.Locale[]
 	>(initialActiveLanguageIds);
+	const activeLanguageIdsRef = useRef<Liferay.Language.Locale[] | null>(null);
 	const [selectedLanguageId, setSelectedLanguageId] =
 		useState<Liferay.Language.Locale>(initialSelectedLanguageId);
 	const [selectorDropdownActive, setSelectorDropdownActive] = useState(false);
@@ -163,7 +164,14 @@ export default function TranslationAdminSelector({
 	}, [availableLocales, defaultLanguageId, selectedLanguageId]);
 
 	useEffect(() => {
-		onActiveLanguageIdsChange(activeLanguageIds);
+		if (
+			activeLanguageIdsRef.current === null ||
+			JSON.stringify(activeLanguageIdsRef.current) !==
+				JSON.stringify(activeLanguageIds)
+		) {
+			onActiveLanguageIdsChange(activeLanguageIds);
+			activeLanguageIdsRef.current = activeLanguageIds;
+		}
 	}, [activeLanguageIds, onActiveLanguageIdsChange]);
 
 	useEffect(() => {

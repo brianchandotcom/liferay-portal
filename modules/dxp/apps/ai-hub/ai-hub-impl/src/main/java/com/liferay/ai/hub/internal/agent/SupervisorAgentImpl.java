@@ -18,6 +18,8 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -46,9 +48,15 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 	public void invoke(AgentContext agentContext) {
 		InternalAgent[] internalAgents = _createInternalAgents(agentContext);
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		_noticeableExecutorService.submit(
 			new CompanyInheritableThreadLocalCallable<>(
 				() -> {
+					PermissionChecker originalPermissionChecker =
+						PermissionThreadLocal.getPermissionChecker();
+
 					try (VertexAiGeminiChatModel vertexAiGeminiChatModel =
 							VertexAiGeminiChatModel.builder(
 							).location(
@@ -58,6 +66,9 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 							).project(
 								"ai-hub-liferay"
 							).build()) {
+
+						PermissionThreadLocal.setPermissionChecker(
+							permissionChecker);
 
 						_invoke(
 							agentContext, internalAgents,
@@ -70,6 +81,10 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 							"I cannot fulfill this request.",
 							"Chat Message Sent", null,
 							agentContext.getSseEventSinkKey());
+					}
+					finally {
+						PermissionThreadLocal.setPermissionChecker(
+							originalPermissionChecker);
 					}
 
 					return null;

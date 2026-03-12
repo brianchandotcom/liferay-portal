@@ -40,6 +40,7 @@ type Props = {
 	onValueChange?: (color: Omit<Color, 'disabled'>) => void;
 	showSelector?: boolean;
 	small?: boolean;
+	triggerElementRef?: React.RefObject<HTMLButtonElement>;
 	value?: string;
 };
 
@@ -52,13 +53,17 @@ export function DropdownColorPicker({
 	onSetActive,
 	onValueChange = noop,
 	showSelector = true,
+	triggerElementRef: externaltriggerElementRef,
 	small,
 	value = '#FFFFFF',
 }: Props) {
 	const dropdownContainerRef = useRef<HTMLDivElement>(null);
-	const triggerElementRef = useRef<HTMLButtonElement>(null);
+	const internalTriggerElementRef = useRef<HTMLButtonElement>(null);
 
 	const [searchValue, setSearchValue] = useState('');
+
+	const triggerElementRef =
+		externaltriggerElementRef || internalTriggerElementRef;
 
 	const filteredColors = useMemo<ColorCategoryMap>(() => {
 		if (!searchValue) {

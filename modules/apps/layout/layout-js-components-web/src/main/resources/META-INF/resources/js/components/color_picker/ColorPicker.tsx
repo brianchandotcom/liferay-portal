@@ -6,9 +6,16 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {useIsFirstRender} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {KeyboardEvent, useMemo, useState} from 'react';
+import React, {
+	KeyboardEvent,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 
 import {
 	useDeleteStyleError,
@@ -94,6 +101,8 @@ function ColorPicker({
 }: Props) {
 	const colors: ColorCategoryMap = {};
 	const deleteStyleError = useDeleteStyleError();
+	const dropdownColorPickerRef = useRef<HTMLButtonElement>(null);
+	const isFirstRender = useIsFirstRender();
 	const setStyleError = useSetStyleError();
 	const styleErrors = useStyleErrors();
 
@@ -270,6 +279,12 @@ function ColorPicker({
 		}
 	};
 
+	useEffect(() => {
+		if (!isFirstRender && tokenLabel) {
+			dropdownColorPickerRef.current?.focus();
+		}
+	}, [tokenLabel, isFirstRender]);
+
 	return (
 		<ClayForm.Group aria-label={field.label} small>
 			<label className={classNames({'sr-only': !showLabel})}>
@@ -295,6 +310,7 @@ function ColorPicker({
 							onSetValue({label, name, value})
 						}
 						small
+						triggerElementRef={dropdownColorPickerRef}
 						value={color || defaultTokenValue}
 					/>
 				) : (

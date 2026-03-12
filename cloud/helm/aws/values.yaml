@@ -83,7 +83,7 @@ liferay-default:
                                 then
                                     echo "Unable to download OpenSearch modules for product version ${product_version}." >&2
 
-                                    exit 1
+                                    exit 0
                                 fi
                             }
 

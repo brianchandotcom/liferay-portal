@@ -707,6 +707,11 @@ public class DDMServiceUpgradeStepRegistrator
 		registry.register(
 			"7.0.6", "7.1.0",
 			new DDMFacetTemplateVersionUpgradeProcess(_classNameLocalService));
+
+		registry.register(
+			"7.1.0", "7.1.1",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v7_1_1.
+				DDMFieldAttributeUpgradeProcess());
 	}
 
 	@Activate

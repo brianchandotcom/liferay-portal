@@ -590,12 +590,12 @@ public class FragmentEntryProcessorHelperImpl
 		if (value instanceof Date) {
 			Date date = (Date)value;
 
+			HttpServletRequest httpServletRequest =
+				fragmentEntryProcessorContext.getHttpServletRequest();
+
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)
-					fragmentEntryProcessorContext.getHttpServletRequest(
-					).getAttribute(
-						WebKeys.THEME_DISPLAY
-					);
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			return _getDateValue(
 				editableValueJSONObject, date,
@@ -645,12 +645,12 @@ public class FragmentEntryProcessorHelperImpl
 					}
 				}
 
+				HttpServletRequest httpServletRequest =
+					fragmentEntryProcessorContext.getHttpServletRequest();
+
 				ThemeDisplay themeDisplay =
-					(ThemeDisplay)
-						fragmentEntryProcessorContext.getHttpServletRequest(
-						).getAttribute(
-							WebKeys.THEME_DISPLAY
-						);
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				try {
 					DateFormat dateFormat =

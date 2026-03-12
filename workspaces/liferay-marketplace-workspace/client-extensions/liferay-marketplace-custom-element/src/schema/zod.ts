@@ -150,7 +150,7 @@ const zodSchema = {
 			.min(3, 'Purpose is required')
 			.optional()
 			.or(z.literal('')),
-		termsAndConditions: z.boolean().refine((value) => value == true),
+		termsAndConditions: z.boolean().refine((value) => value === true),
 		userAgreement: z.boolean().refine((value) => value === true),
 	}),
 	analyticsProvisioning: z.object({

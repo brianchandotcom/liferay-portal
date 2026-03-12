@@ -6,6 +6,7 @@
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {MarketplaceDeliveryProduct} from '../../entity/MarketplaceDeliveryProduct';
 import {MarketplaceCategories} from '../../enums/Categories';
 import {
 	ProductSpecificationKey,
@@ -28,8 +29,9 @@ import ContactSalesPage from './pages/App/InsuficientResources/ContactSales';
 import ContactSalesForm from './pages/App/InsuficientResources/ContactSalesForm';
 import License from './pages/App/License';
 import PaymentMethod from './pages/App/PaymentMethod';
-import OrderSummary from './pages/App/PaymentMethod/OrderSummary/OrderSummary';
+import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm/ActivationKeyForm';
 import LDPOrderSummary from './pages/LiferayProduct/OrderSummary';
+import OrderSummary from './pages/LiferayProduct/OrderSummary';
 import ProjectSelection from './pages/LiferayProduct/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
@@ -76,36 +78,65 @@ export const productTypeRoutes = {
 			});
 		},
 	},
-	[ProductTypeVocabulary.LIFERAY_PRODUCTS]: {
+	[ProductTypeVocabulary.LIFERAY_PRODUCT]: {
 		metadata: {
+			showSteps: true,
 			skipSingleAccountSelection: true,
 			tinyStepsDisplay: true,
 			useCart: true,
 		},
-		routes: () => [
-			{
-				element: ProductPurchaseAccountSelection,
-				index: true,
-				title: i18n.translate('account'),
-			},
+		routes: (product: DeliveryProduct) => {
+			const marketplaceDeliveryProduct = new MarketplaceDeliveryProduct(
+				product
+			);
 
-			{
-				element: ProjectSelection,
-				path: 'project',
-				title: i18n.translate('project'),
-			},
+			const solutionType =
+				marketplaceDeliveryProduct.specificationValues.SOLUTION_TYPE;
 
-			{
-				element: LDPProvisioning,
-				path: 'provisioning',
-				title: i18n.translate('provisioning'),
-			},
-			{
-				element: LDPOrderSummary,
-				path: 'summary',
-				title: i18n.translate('summary'),
-			},
-		],
+			if (solutionType === SolutionTypes.DXP) {
+				return [
+					{
+						element: ProductPurchaseAccountSelection,
+						index: true,
+						title: i18n.translate('account'),
+					},
+					{
+						element: ActivationKeyForm,
+						path: 'activation-key-form',
+						title: i18n.translate('activation-key'),
+					},
+				];
+			}
+
+			if (solutionType === SolutionTypes.LIFERAY_DATA_PLATFORM) {
+				return [
+					{
+						element: ProductPurchaseAccountSelection,
+						index: true,
+						title: i18n.translate('account'),
+					},
+
+					{
+						element: ProjectSelection,
+						path: 'project',
+						title: i18n.translate('project'),
+					},
+
+					{
+						element: LDPProvisioning,
+						path: 'provisioning',
+						title: i18n.translate('provisioning'),
+					},
+					{
+						element: LDPOrderSummary,
+						path: 'summary',
+						title: i18n.translate('summary'),
+					},
+				];
+			}
+
+			return [];
+		},
 	},
 	[ProductTypeVocabulary.SOLUTION]: {
 		metadata: {
@@ -160,7 +191,10 @@ const ProductPurchaseRouter = () => {
 	const solutionTypeSpecificationValue =
 		solutionTypeSpecification?.value as SolutionTypes;
 
-	const productTypeRoute = productTypeRoutes[productTypeCategory];
+	const productTypeRoute =
+		productTypeRoutes[
+			productTypeCategory as keyof typeof productTypeRoutes
+		];
 
 	const {routes: _routes = []} = productTypeRoute || {};
 

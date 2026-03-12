@@ -443,7 +443,7 @@ public class ObjectEntryVersionLocalServiceTest {
 		// Complete pending object entry's workflow instance
 
 		List<WorkflowTask> workflowTasks =
-			_workflowTaskManager.getWorkflowTasksByUserRoles(
+			_workflowTaskManager.getWorkflowTasksBySubmittingUser(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 

@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 
 type StagedPortletsSelection = 'all' | 'none' | string[];
@@ -90,13 +91,15 @@ export class StagingPage {
 	}
 
 	async publishTemplate(templateName: string) {
-		await this.page
-			.locator(`tr`)
-			.filter({hasText: templateName})
-			.getByRole('button')
-			.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Publish'}),
+			trigger: this.page
+				.locator(`tr`)
+				.filter({hasText: templateName})
+				.getByRole('button'),
+		});
 
-		await this.page.getByRole('menuitem', {name: 'Publish'}).click();
 		await this.page.getByRole('button', {name: 'Publish to Live'}).click();
 		await expect(
 			this.page

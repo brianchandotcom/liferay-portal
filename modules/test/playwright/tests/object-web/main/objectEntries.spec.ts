@@ -2219,6 +2219,41 @@ test.describe('Manage object entries through View Object Entries', () => {
 	});
 
 	test(
+		'can add entry with empty value for date field',
+		{tag: '@LPS-147658'},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: generateObjectFields({
+						objectFieldBusinessTypes: ['Date'],
+					}),
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page);
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await expect(
+				page.getByText('Showing 1 to 1 of 1 entries.')
+			).toBeVisible();
+		}
+	);
+
+	test(
 		'can attach files after changing the overall maximum upload request size setting',
 		{tag: ['@LPD-56964']},
 		async ({
@@ -3217,6 +3252,59 @@ test.describe('Manage object entries through View Object Entries', () => {
 			page.locator('td').getByText('test 2', {exact: true})
 		).toBeVisible();
 	});
+
+	test(
+		'character count is updated dynamically when typing in text field',
+		{tag: '@LPS-146889'},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: [
+					{
+						businessType: 'Text',
+						name: 'customText',
+						objectFieldSettings: [
+							{
+								name: 'showCounter',
+								value: true,
+							},
+							{
+								name: 'maxLength',
+								value: 10,
+							},
+						],
+						required: false,
+					},
+				],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await expect(page.getByText('0/10 Characters')).toBeVisible();
+
+			const fieldInput = page.getByLabel(objectFields[0].label.en_US);
+
+			await fieldInput.click();
+
+			await page.keyboard.type('entry');
+
+			await expect(page.getByText('5/10 Characters')).toBeVisible();
+		}
+	);
 
 	test(
 		'different versions of Commerce Products have same input values when used as relationship of an object entry',

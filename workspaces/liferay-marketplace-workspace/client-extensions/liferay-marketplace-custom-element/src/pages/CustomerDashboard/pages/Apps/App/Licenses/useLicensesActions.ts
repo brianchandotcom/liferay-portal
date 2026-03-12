@@ -32,7 +32,7 @@ const useLicenseActions = ({
 }: Props) => {
 	const onDeativateLicenseKey = (licenseKey: LicenseKey) =>
 		provisioningOAuth2
-			.deactivateLicenseKey(licenseKey?.id as number)
+			.deactivateAppLicenseKey(licenseKey?.id as number)
 			.then(() => {
 				mutate((data: any) => data, {revalidate: true});
 
@@ -63,7 +63,7 @@ const useLicenseActions = ({
 			}
 
 			try {
-				await provisioningOAuth2.downloadLicenseKey(
+				await provisioningOAuth2.downloadAppLicenseKey(
 					licenseKey?.id as number
 				);
 

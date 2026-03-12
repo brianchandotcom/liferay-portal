@@ -30,6 +30,8 @@ export type DateFilterValues =
 	| {filterType: FilterType.Last; modifiedLast: ModifiedLastType}
 	| {filterType: FilterType.Range; fromDate: string; toDate: string};
 
+const YEARS_OFFSET = 10;
+
 const FILTER_OPTIONS = [
 	{
 		label: Liferay.Language.get('show-all'),
@@ -278,12 +280,6 @@ export default function DateFilter({
 	};
 
 	const currentYear = new Date().getFullYear();
-	const fromDateYear = editing.fromDate
-		? new Date(editing.fromDate).getFullYear()
-		: currentYear - 10;
-	const toDateYear = editing.toDate
-		? new Date(editing.toDate).getFullYear()
-		: currentYear;
 
 	return (
 		<>
@@ -357,8 +353,8 @@ export default function DateFilter({
 								time
 								value={editing.fromDate}
 								years={{
-									end: toDateYear,
-									start: currentYear - 10,
+									end: currentYear,
+									start: currentYear - YEARS_OFFSET,
 								}}
 							/>
 						</ClayLayout.ContentCol>
@@ -391,7 +387,7 @@ export default function DateFilter({
 								value={editing.toDate}
 								years={{
 									end: currentYear,
-									start: fromDateYear,
+									start: currentYear - YEARS_OFFSET,
 								}}
 							/>
 						</ClayLayout.ContentCol>

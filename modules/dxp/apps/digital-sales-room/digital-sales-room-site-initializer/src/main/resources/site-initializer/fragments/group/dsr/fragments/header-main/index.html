@@ -1,8 +1,12 @@
 [#if !portalUtil.isSystemGroup(themeDisplay.getScopeGroupName())]
 	[#if paramUtil.get(themeDisplay.getRequest(), "preview", false)]
 		[@liferay_aui.style]
-			.control-menu-container {
+			.control-menu, .footer-admin, .product-menu {
 				display: none
+			}
+
+			.product-menu-open #wrapper {
+				padding: 0 !important;
 			}
 		[/@]
 	[/#if]

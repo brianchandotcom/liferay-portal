@@ -10,8 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -19,7 +17,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
@@ -35,7 +32,6 @@ import com.liferay.portal.workflow.kaleo.service.base.KaleoInstanceServiceBaseIm
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,15 +58,6 @@ public class KaleoInstanceServiceImpl extends KaleoInstanceServiceBaseImpl {
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionLocalService.getKaleoDefinition(
 				kaleoDefinitionName, serviceContext);
-
-		if (Objects.equals(
-				kaleoDefinition.getScope(),
-				WorkflowDefinitionConstants.SCOPE_AI)) {
-
-			_portletResourcePermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				ActionKeys.ADD_INSTANCE);
-		}
 
 		if (!kaleoDefinition.isActive()) {
 			throw new WorkflowException(
@@ -171,10 +158,5 @@ public class KaleoInstanceServiceImpl extends KaleoInstanceServiceBaseImpl {
 
 	@Reference
 	private KaleoSignaler _kaleoSignaler;
-
-	@Reference(
-		target = "(resource.name=" + WorkflowConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

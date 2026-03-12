@@ -58,6 +58,7 @@ import {config as systemSettingsOverrideConfig} from './tests/configuration-admi
 import {config as systemSettingsOverrideOsgiConfig} from './tests/configuration-admin-web/override-with-osgi/config';
 import {config as systemSettingsExportConfig} from './tests/configuration-admin-web/site-settings-export/config';
 import {config as systemSettingsWithUIConfig} from './tests/configuration-admin-web/system-settings-with-ui/config';
+import {config as contactsWebConfig} from './tests/contacts-web/main/config';
 import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/main/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/main/config';
 import {config as dataCleanupConfig} from './tests/data-cleanup/main/config';
@@ -253,6 +254,7 @@ export default defineConfig({
 		commerceWishListWebConfig,
 		commerceWorkspaceConfig,
 		configurationAdminWebConfig,
+		contactsWebConfig,
 		systemSettingsExportConfig,
 		systemSettingsOverrideOsgiConfig,
 		systemSettingsOverrideConfig,

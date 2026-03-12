@@ -117,3 +117,132 @@ test(
 		await expect(digitalSalesRoomsPage.noResultsFoundMessage).toBeVisible();
 	}
 );
+
+test(
+	'Invite external user and verify pending status then remove user',
+	{tag: '@LPD-66359'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomUsersPage,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const accountName = `B${getRandomInt()}`;
+		const email = `invited-${getRandomInt()}@liferay.com`;
+		const roomName = `A${getRandomInt()}`;
+
+		await apiHelpers.headlessAdminUser.postAccount({
+			name: accountName,
+			type: 'business',
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName, false)
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await digitalSalesRoomsPage.digitalSalesRoomsTable.rowActions(
+					roomName,
+					0,
+					false
+				)
+			).click();
+
+			await expect(digitalSalesRoomsPage.shareMenuItem).toBeVisible({
+				timeout: 200,
+			});
+		}).toPass({timeout: 1000});
+
+		await digitalSalesRoomsPage.shareMenuItem.click();
+
+		await expect(
+			digitalSalesRoomUsersPage.userEmailAddressesInput
+		).toBeVisible();
+
+		await digitalSalesRoomUsersPage.userEmailAddressesInput.fill(email);
+		await digitalSalesRoomUsersPage.userEmailAddressesInput.press('Enter');
+
+		await digitalSalesRoomUsersPage.inviteButton.click();
+
+		await waitForAlert(page, 'Success:User was invited successfully.');
+
+		await expect(digitalSalesRoomUsersPage.userRow(email)).toBeVisible();
+		await expect(
+			digitalSalesRoomUsersPage.roleText(email, 'Viewer')
+		).toBeVisible();
+
+		await digitalSalesRoomUsersPage.removeUserButton(email).click();
+
+		await expect(digitalSalesRoomUsersPage.removeUserModal).toBeVisible();
+
+		await digitalSalesRoomUsersPage.removeUserModalRemoveButton.click();
+
+		await waitForAlert(page, 'Success:User was removed successfully.');
+
+		await expect(
+			digitalSalesRoomUsersPage.userRow(email)
+		).not.toBeVisible();
+	}
+);
+
+test(
+	'Share room via header share button',
+	{tag: '@LPD-66359'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomUsersPage,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const accountName = `B${getRandomInt()}`;
+		const roomName = `A${getRandomInt()}`;
+
+		await apiHelpers.headlessAdminUser.postAccount({
+			name: accountName,
+			type: 'business',
+		});
+
+		await digitalSalesRoomsPage.goto();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName,
+			roomName,
+		});
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		await expect(digitalSalesRoomUsersPage.shareButton).toBeVisible();
+
+		await digitalSalesRoomUsersPage.shareButton.click();
+
+		await expect(digitalSalesRoomUsersPage.shareModalHeading).toBeVisible();
+
+		await expect(
+			digitalSalesRoomUsersPage.shareModalEmailInput
+		).toBeVisible();
+	}
+);

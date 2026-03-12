@@ -1251,8 +1251,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			Layout layout, SitePageResource sitePageResource)
 		throws Exception {
 
+		Group group = _groupLocalService.getGroup(layout.getGroupId());
+
 		SitePage sitePage = sitePageResource.getSiteSitePage(
-			irrelevantGroup.getExternalReferenceCode(),
+			group.getExternalReferenceCode(),
 			layout.getExternalReferenceCode());
 
 		return _testPutSiteSitePage(sitePage, testGroup, sitePage);

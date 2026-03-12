@@ -193,15 +193,21 @@ export class ObjectFieldsPage {
 
 	async openObjectField(fieldLabel: string) {
 		await expect(async () => {
+			const trigger = this.page
+				.getByRole('cell')
+				.getByRole('link')
+				.filter({hasText: fieldLabel});
+
+			// Click on trigger again here because clickAndExpectToBeVisible
+			// won't click again if the side panel is already open.
+
+			await trigger.click();
 
 			// Check that the side panel is opened after clicking.
 
 			await clickAndExpectToBeVisible({
 				target: this.page.locator('.fds-side-panel.is-visible'),
-				trigger: this.page
-					.getByRole('cell')
-					.getByRole('link')
-					.filter({hasText: fieldLabel}),
+				trigger,
 			});
 
 			// Check that the correct field was opened.

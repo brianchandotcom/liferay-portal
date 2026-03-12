@@ -254,8 +254,8 @@ public class MarketplaceRestController extends BaseRestController {
 		return ResponseEntity.ok(account);
 	}
 
-	@PostMapping("cmp-beta-provisioning")
-	public AppLicenseKey postCMPBetaProvisioning(
+	@PostMapping("cmp-beta-license-key")
+	public AppLicenseKey postCMPBetaLicenseKey(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
@@ -279,7 +279,7 @@ public class MarketplaceRestController extends BaseRestController {
 				_marketplaceService.getOrderProductId(order));
 
 		_marketplaceService.updateOrder(
-				null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
+			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
 		ProductPurchase[] productPurchases = _setUpProductEntitlements(
 			jwt, productSpecificationsMap.get("license-type"), order);

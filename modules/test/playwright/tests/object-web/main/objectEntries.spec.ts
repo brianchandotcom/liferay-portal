@@ -29,6 +29,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import createUserWithPermissions from '../../../utils/createUserWithPermissions';
@@ -39,6 +40,7 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import createSiteTemplate from '../../layout-set-prototype-web/main/utils/createSiteTemplate';
 import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
 import {
 	getObjectEntryUIDateTimeFormat,
@@ -70,6 +72,7 @@ const test = mergeTests(
 	objectPagesTest,
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
+	productMenuPageTest,
 	templatesPageTest,
 	workflowPagesTest,
 	usersAndOrganizationsPagesTest
@@ -2166,6 +2169,60 @@ test.describe('Manage object entries through View Object Entries', () => {
 				exact: true,
 				name: listTypeEntry.name_i18n['en-US'],
 			})
+		).toBeVisible();
+	});
+
+	test('can add entry for site scoped definition in a site template', async ({
+		apiHelpers,
+		page,
+		productMenuPage,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				scope: 'site',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const siteTemplateName: string = 'Template-' + getRandomString();
+
+		const layoutSetPrototype = await createSiteTemplate({
+			apiHelpers,
+			page,
+			productMenuPage,
+			templateName: siteTemplateName,
+		});
+
+		apiHelpers.data.push({
+			id: layoutSetPrototype.layoutSetPrototypeId,
+			type: 'layoutSetPrototype',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: 'textField',
+			objectFieldValue: 'test',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.locator('td').getByText('test', {exact: true})
 		).toBeVisible();
 	});
 

@@ -45,6 +45,13 @@ customInitContainers:
                     image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
                     imagePullPolicy: {{ .image.pullPolicy }}
                     name: liferay-overlay
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        seccompProfile:
+                            type: RuntimeDefault
                     {{- if and .overlay .overlay.enabled }}
                     volumeMounts:
                         -   mountPath: /mnt/liferay/overlay
@@ -121,6 +128,13 @@ customInitContainers:
                     image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
                     imagePullPolicy: {{ .image.pullPolicy }}
                     name: liferay-prepopulate-data
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        seccompProfile:
+                            type: RuntimeDefault
                     volumeMounts:
                         -   mountPath: /temp
                             name: liferay-persistent-volume
@@ -146,6 +160,13 @@ customInitContainers:
                     image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
                     imagePullPolicy: {{ .image.pullPolicy }}
                     name: liferay-wait-on-services
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        seccompProfile:
+                            type: RuntimeDefault
 customLabels:
     origin: liferay-cloud
 customPorts: {}
@@ -238,9 +259,15 @@ overlay:
 podAnnotations: {}
 podLabels: {}
 podSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+        drop:
+            -   ALL
     fsGroup: 1000
     runAsNonRoot: true
     runAsUser: 1000
+    seccompProfile:
+        type: RuntimeDefault
 portalBundleDenyList: []
 portalComponentDenyList: []
 portalProperties:
@@ -270,9 +297,12 @@ replicaCount: 1
 resources: {}
 schedulingGates: []
 securityContext:
+    allowPrivilegeEscalation: false
     capabilities:
         drop:
             -   ALL
+    seccompProfile:
+        type: RuntimeDefault
     readOnlyRootFilesystem: true
 service:
     annotations: {}

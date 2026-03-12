@@ -94,6 +94,13 @@ liferay-default:
                         image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
                         imagePullPolicy: {{ .image.pullPolicy }}
                         name: liferay-install-opensearch-modules
+                        securityContext:
+                            allowPrivilegeEscalation: false
+                            capabilities:
+                                drop:
+                                    -   ALL
+                            seccompProfile:
+                                type: RuntimeDefault
                         volumeMounts:
                             -   mountPath: /temp
                                 name: liferay-persistent-volume
@@ -115,6 +122,11 @@ liferay-default:
         timeouts:
             backendRequest: 300s
             request: 300s
+    podSecurityContext:
+        runAsNonRoot: true
+        fsGroup: 1000
+        seccompProfile:
+        type: RuntimeDefault
     portalBundleDenyList:
         -   com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
         -   com.liferay.portal.search.elasticsearch.monitoring.web
@@ -129,6 +141,15 @@ liferay-default:
         requests:
             cpu: 2000m
             memory: 4Gi
+    securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+            drop:
+                -   ALL
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+            type: RuntimeDefault
     volumeClaimTemplates:
         -   metadata:
                 name: liferay-persistent-volume

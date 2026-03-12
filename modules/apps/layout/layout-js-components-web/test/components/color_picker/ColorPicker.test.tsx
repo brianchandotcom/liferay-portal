@@ -208,7 +208,7 @@ describe('ColorPicker', () => {
 			).toBeInTheDocument();
 		});
 
-		it('change to dropdown color picker when value from stylebook button is clicked', async () => {
+		it('changes to dropdown color picker and focus it when value from stylebook button is clicked', async () => {
 			const {getByLabelText, getByText, getByTitle} = renderColorPicker({
 				value: '#fff',
 			});
@@ -377,6 +377,18 @@ describe('ColorPicker', () => {
 					getByText('tokens-cannot-be-mutually-referenced')
 				).toBeInTheDocument();
 			});
+		});
+	});
+
+	describe('When the value is a CSS color', () => {
+		it('ensures that when a CSS color color longer than 9 characters is typed, the color remains unchanged', async () => {
+			const {baseElement} = renderColorPicker({
+				value: '#ffb46e',
+			});
+
+			await onTypeValue(baseElement.querySelector('input')!, 'aliceblue');
+
+			expect(baseElement.querySelector('input')).toHaveValue('aliceblue');
 		});
 	});
 });

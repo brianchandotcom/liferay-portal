@@ -13,6 +13,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.model.SalesforceOpportunity;
 import com.liferay.marketplace.service.KoroneikiService;
@@ -515,9 +516,37 @@ public class ObjectActionProductPurchaseRestController
 		UserAccount userAccount = _marketplaceService.getUserAccount(
 			order.getCreatorEmailAddress());
 
-		_salesforceService.postSalesforceOpportunity(
-			new SalesforceOpportunity(
-				licenseType, order, orderItem, product, userAccount));
+		SalesforceOpportunity salesforceOpportunity = new SalesforceOpportunity(
+			licenseType, order, orderItem, product, userAccount);
+
+		JSONObject jsonObject = _salesforceService.postSalesforceOpportunity(
+			salesforceOpportunity);
+
+		if (!jsonObject.getBoolean("success")) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to create Salesforce opportunity for Order ",
+					order.getId(), " Message: ",
+					jsonObject.optString("message"), " Error: ",
+					jsonObject.optString("error")));
+
+			return;
+		}
+
+		OrderResource orderResource = _marketplaceService.getOrderResource();
+
+		orderResource.patchOrder(
+			order.getId(),
+			new Order() {
+				{
+					setExternalReferenceCode(
+						() -> jsonObject.getJSONObject(
+							"data"
+						).getString(
+							"opportunityId"
+						));
+				}
+			});
 	}
 
 	private static final Log _log = LogFactory.getLog(

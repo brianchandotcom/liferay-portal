@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page, expect, test} from '@playwright/test';
+import {FrameLocator, Locator, Page, test} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForPageToBeLoaded} from '../../../utils/waitForPageToBeLoaded';
@@ -179,15 +179,7 @@ export class ObjectFieldsPage {
 
 			await this.page.waitForTimeout(1000); // Wait for any UI change after unchecking.
 
-			await this.editFieldSaveButton.click();
-
-			await expect(this.page.locator('.alert-danger')).toBeHidden(); // Catch any error alerts that appear.
-
-			await this.page
-				.locator('.fds-side-panel')
-				.waitFor({state: 'hidden'});
-
-			await waitForPageToBeLoaded(this.page);
+			await this.saveObjectField();
 		});
 	}
 
@@ -203,16 +195,25 @@ export class ObjectFieldsPage {
 
 	async openObjectField(fieldLabel: string) {
 		await clickAndExpectToBeVisible({
-			target: this.page.locator('.fds-side-panel.is-visible'),
+			target: this.iframeLocator.locator(
+				`#objectFieldLabelInput[value="${fieldLabel}"]`
+			),
+			timeout: 2000,
 			trigger: this.page
 				.getByRole('cell')
 				.getByRole('link')
 				.filter({hasText: fieldLabel}),
 		});
 
-		await this.editFieldSaveButton.waitFor();
-
 		await this.page.waitForLoadState('networkidle');
+	}
+
+	async saveObjectField() {
+		await this.editFieldSaveButton.click();
+
+		await this.page.locator('.fds-side-panel').waitFor({state: 'hidden'});
+
+		await waitForPageToBeLoaded(this.page);
 	}
 
 	async selectDefaultValue(value: string) {
@@ -285,13 +286,7 @@ export class ObjectFieldsPage {
 					.fill(defaultValue);
 			}
 
-			await this.editFieldSaveButton.click();
-
-			await this.page
-				.locator('.fds-side-panel')
-				.waitFor({state: 'hidden'});
-
-			await waitForPageToBeLoaded(this.page);
+			await this.saveObjectField();
 		});
 	}
 

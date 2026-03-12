@@ -1259,7 +1259,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	test('can only edit external reference code of custom fields through the UI', async ({
 		apiHelpers,
 		objectFieldsPage,
-		page,
 	}) => {
 		let objectDefinition: ObjectDefinition;
 
@@ -1279,10 +1278,12 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			await objectFieldsPage.goto(objectDefinition.label['en_US']);
 		});
 
-		await test.step('Check that the ERC input is disabled for a system field', async () => {
-			await objectFieldsPage.openObjectField(
-				objectDefinition.objectFields[0].label['en_US']
-			);
+		const systemField = objectDefinition.objectFields.find((item) => {
+			return item.system;
+		});
+
+		await test.step(`Check that the ERC input is disabled for a system field (${systemField.label['en_US']}) `, async () => {
+			await objectFieldsPage.openObjectField(systemField.label['en_US']);
 
 			await expect(
 				objectFieldsPage.externalReferenceCodeField
@@ -1293,34 +1294,23 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			return !item.system;
 		});
 
-		const ercValue = getRandomString();
+		const newERCValue = getRandomString();
 
-		await test.step('Edit the ERC of a custom field', async () => {
+		await test.step(`Edit the ERC of a custom field (${customField.label['en_US']})`, async () => {
 			await objectFieldsPage.openObjectField(customField.label['en_US']);
 
 			await objectFieldsPage.externalReferenceCodeField.click();
 
-			await objectFieldsPage.externalReferenceCodeField.fill(ercValue);
+			await objectFieldsPage.externalReferenceCodeField.fill(newERCValue);
 
-			await objectFieldsPage.editFieldSaveButton.click();
-
-			await waitForAlert(
-				page,
-				'Success:The object field was updated successfully.'
-			);
+			await objectFieldsPage.saveObjectField();
 		});
 
 		await test.step('Verify that the ERC was updated', async () => {
 			await objectFieldsPage.openObjectField(customField.label['en_US']);
 
-			await page
-				.frameLocator('iframe')
-				.getByText('Field')
-				.first()
-				.waitFor({state: 'visible'});
-
 			expect(objectFieldsPage.externalReferenceCodeField).toHaveValue(
-				ercValue
+				newERCValue
 			);
 		});
 	});

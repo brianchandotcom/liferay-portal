@@ -77,7 +77,24 @@ liferay-default:
                                 then
                                     echo "Unable to download OpenSearch modules for product version ${product_version}." >&2
 
+                                    rm --force --verbose /temp/liferay/deploy/com.liferay.portal.search.opensearch2.${1}.jar
+
                                     exit 0
+                                fi
+                            }
+
+                            function install_existing_opensearch_modules {
+                                if ls /opt/liferay/deploy/com.liferay.portal.search.opensearch2* 1> /dev/null 2>&1
+                                then
+                                    echo "Found existing OpenSearch modules."
+
+                                    cp --verbose /opt/liferay/deploy/com.liferay.portal.search.opensearch2* /temp/liferay/deploy
+
+                                    return 0
+                                else
+                                    echo "No existing OpenSearch modules found in /opt/liferay/deploy"
+
+                                    return 1
                                 fi
                             }
 
@@ -86,8 +103,16 @@ liferay-default:
 
                                 rm --force --verbose "/temp/osgi/modules/com.liferay.portal.search.opensearch2"*
 
-                                download_module "api"
-                                download_module "impl"
+                                if install_existing_opensearch_modules
+                                then
+                                    echo "Install successful. Skipping download."
+                                else
+                                    echo "Triggering download for modules."
+                                    download_module "api"
+                                    download_module "impl"
+                                fi
+
+                                rm --force --verbose "/temp/osgi/modules/com.liferay.portal.search.opensearch2"*
                             }
 
                             main

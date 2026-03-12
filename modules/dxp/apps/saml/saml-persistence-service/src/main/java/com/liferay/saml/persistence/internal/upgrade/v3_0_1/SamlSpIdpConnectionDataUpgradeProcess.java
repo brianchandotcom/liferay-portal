@@ -5,7 +5,7 @@
 
 package com.liferay.saml.persistence.internal.upgrade.v3_0_1;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.OrderedProperties;
 import com.liferay.portal.kernel.util.Validator;

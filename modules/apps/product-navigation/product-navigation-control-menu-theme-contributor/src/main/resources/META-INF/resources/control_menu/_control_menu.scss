@@ -13,7 +13,7 @@ html#{$cadmin-selector} {
 	.cadmin {
 		&.affix,
 		&.control-menu-container {
-			top: 0;
+			top: var(--change-tracking-indicator-height, 0px);
 			z-index: $control-menu-zindex;
 
 			@include media-breakpoint-up(lg) {

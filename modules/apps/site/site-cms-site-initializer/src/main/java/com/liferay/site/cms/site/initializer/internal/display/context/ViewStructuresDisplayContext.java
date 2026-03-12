@@ -78,9 +78,9 @@ public class ViewStructuresDisplayContext {
 			).setHref(
 				"#"
 			).setIcon(
-				"document"
+				"workflow"
 			).setLabel(
-				LanguageUtil.get(_httpServletRequest, "assign-workflow")
+				LanguageUtil.get(_httpServletRequest, "assign-default-workflow")
 			).setModalSize(
 				"lg"
 			).setTarget(

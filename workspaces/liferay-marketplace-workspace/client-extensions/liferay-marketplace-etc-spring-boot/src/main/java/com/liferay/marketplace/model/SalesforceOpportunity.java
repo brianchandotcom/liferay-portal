@@ -13,13 +13,17 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.ShippingAddress;
 import com.liferay.marketplace.util.MarketplaceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -41,23 +45,19 @@ public class SalesforceOpportunity {
 	public String toString() {
 		Account account = _order.getAccount();
 
-		Map<String, String> customFields =
-			(Map<String, String>)_order.getCustomFields();
-
-		JSONObject orderMetadataJSONObject = new JSONObject(
-			customFields.getOrDefault("order-metadata", "{}"));
-
 		ShippingAddress shippingAddress = _order.getShippingAddress();
 
 		JSONObject jsonObject = new JSONObject(
 		).put(
-			"accountId", account.getId()
+			"accountId", _getAccountId(account)
 		).put(
 			"accountName", account.getName()
 		).put(
 			"billingAddress", _getBillingAddressJSONObject()
 		).put(
 			"closeDate", _format(_order.getCreateDate())
+		).put(
+			"lineItems", _getLineItemsJSONArray()
 		).put(
 			"marketplaceDealId", _order.getId()
 		).put(
@@ -67,10 +67,7 @@ public class SalesforceOpportunity {
 		).put(
 			"primaryContact", _getPrimaryContactJSONObject()
 		).put(
-			"product", _getProductJSONObject()
-		).put(
-			"projectId",
-			orderMetadataJSONObject.optString("salesforceProjectId")
+			"project", _getProjectJSONObject()
 		).put(
 			"shippingAddress", _getShippingAddressJSONObject()
 		).put(
@@ -78,7 +75,7 @@ public class SalesforceOpportunity {
 		).put(
 			"termType", "Single Year"
 		).put(
-			"typeOfBusiness", "New Business"
+			"typeOfBusiness", "Existing Business"
 		);
 
 		if (Objects.equals(_order.getPaymentMethod(), "money-order")) {
@@ -93,13 +90,35 @@ public class SalesforceOpportunity {
 			return null;
 		}
 
-		return DateTimeFormatter.ISO_INSTANT.format(date.toInstant());
+		return date.toInstant(
+		).atZone(
+			ZoneOffset.UTC
+		).toLocalDate(
+		).format(
+			DateTimeFormatter.ISO_LOCAL_DATE
+		);
+	}
+
+	private String _getAccountId(Account account) {
+		Map<String, String> customFields =
+			(Map<String, String>)account.getCustomFields();
+
+		String salesforceAccountKey = customFields.get(
+			"salesforce-account-key");
+
+		if (Validator.isNotNull(salesforceAccountKey)) {
+			return salesforceAccountKey;
+		}
+
+		return account.getExternalReferenceCode();
 	}
 
 	private JSONObject _getBillingAddressJSONObject() {
 		BillingAddress billingAddress = _order.getBillingAddress();
 
 		return new JSONObject(
+		).put(
+			"addressName", billingAddress.getName()
 		).put(
 			"city", billingAddress.getCity()
 		).put(
@@ -131,6 +150,37 @@ public class SalesforceOpportunity {
 		);
 	}
 
+	private JSONArray _getLineItemsJSONArray() {
+		JSONArray jsonArray = new JSONArray();
+
+		for (OrderItem orderItem : _order.getOrderItems()) {
+			jsonArray.put(
+				new JSONObject(
+				).put(
+					"endDate",
+					_format(
+						MarketplaceUtil.getOrderPurchaseEndDate(
+							_licenseType,
+							MarketplaceUtil.getSkuOptionValue(
+								"license-usage-type", orderItem.getOptions())))
+				).put(
+					"orderType", "New"
+				).put(
+					"productId",
+					StringUtil.removeSubstring(
+						orderItem.getSkuExternalReferenceCode(), "SF-")
+				).put(
+					"quantity", orderItem.getQuantity()
+				).put(
+					"startDate", _format(_order.getCreateDate())
+				).put(
+					"unitPrice", _order.getTotalAmount()
+				));
+		}
+
+		return jsonArray;
+	}
+
 	private JSONObject _getPrimaryContactJSONObject() {
 		return new JSONObject(
 		).put(
@@ -140,31 +190,41 @@ public class SalesforceOpportunity {
 		).put(
 			"lastName", _userAccount.getFamilyName()
 		).put(
-			"role", "Marketplace User"
+			"role", "Opportunity Owner"
 		);
 	}
 
-	private JSONObject _getProductJSONObject() {
+	private JSONObject _getProjectJSONObject() {
+		Map<String, String> customFields =
+			(Map<String, String>)_order.getCustomFields();
+
+		JSONObject provisioningFormJSONObject = new JSONObject(
+			customFields.getOrDefault("order-metadata", "{}")
+		).getJSONObject(
+			"provisioningForm"
+		);
+
 		return new JSONObject(
 		).put(
-			"listPrice", _order.getTotal()
+			"allowedEmailDomains",
+			provisioningFormJSONObject.optString("allowedEmailDomains")
 		).put(
-			"orderType", "New"
+			"dataCenterLocation",
+			provisioningFormJSONObject.optString("dataCenterLocation")
 		).put(
-			"productEndDate",
-			_format(
-				MarketplaceUtil.getOrderPurchaseEndDate(
-					_licenseType,
-					MarketplaceUtil.getSkuOptionValue(
-						"license-usage-type", _orderItem.getOptions())))
+			"friendlyWorkspaceURL",
+			provisioningFormJSONObject.optString("friendlyWorkspaceURL")
 		).put(
-			"productId", _product.getId()
+			"projectContacts",
+			new JSONArray(
+			).put(
+				_getPrimaryContactJSONObject().put("role", "LDP Administrator")
+			)
 		).put(
-			"productName", MarketplaceUtil.getDefaultLocale(_product.getName())
+			"securityContactEmailAddress", _order.getCreatorEmailAddress()
 		).put(
-			"productStartDate", _format(_order.getCreateDate())
-		).put(
-			"quantity", _orderItem.getQuantity()
+			"workspaceName",
+			provisioningFormJSONObject.optString("workspaceName")
 		);
 	}
 
@@ -172,6 +232,8 @@ public class SalesforceOpportunity {
 		ShippingAddress shippingAddress = _order.getShippingAddress();
 
 		return new JSONObject(
+		).put(
+			"addressName", shippingAddress.getName()
 		).put(
 			"city", shippingAddress.getCity()
 		).put(

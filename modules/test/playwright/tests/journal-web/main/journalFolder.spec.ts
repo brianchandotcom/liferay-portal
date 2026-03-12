@@ -6,17 +6,75 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import {openFieldset} from '../../../utils/openFieldset';
+import createSiteTemplate from '../../layout-set-prototype-web/main/utils/createSiteTemplate';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	loginTest(),
 	isolatedSiteTest,
-	journalPagesTest
+	journalPagesTest,
+	productMenuPageTest
+);
+
+test(
+	'Workflow configuration should not be visible for journal folders in Site Templates',
+	{tag: '@LPD-82511'},
+	async ({
+		apiHelpers,
+		journalEditFolderPage,
+		journalPage,
+		page,
+		productMenuPage,
+	}) => {
+		const siteTemplateName: string = 'Template-' + getRandomString();
+
+		const layoutSetPrototype = await createSiteTemplate({
+			apiHelpers,
+			page,
+			productMenuPage,
+			templateName: siteTemplateName,
+		});
+
+		apiHelpers.data.push({
+			id: layoutSetPrototype.layoutSetPrototypeId,
+			type: 'layoutSetPrototype',
+		});
+
+		await journalPage.goto(
+			'/template-' + layoutSetPrototype.layoutSetPrototypeId
+		);
+		await journalPage.goToCreateFolder();
+
+		const title = getRandomString();
+		await journalEditFolderPage.title.fill(title);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await journalEditFolderPage.editFolder(title);
+
+		await page.waitForURL(/edit_folder/);
+
+		await openFieldset(page, 'Structure Restrictions');
+
+		await expect(page.getByText('Inherit allowed structures')).toBeHidden();
+		await expect(page.getByText('Set the allowed structures')).toBeHidden();
+		await expect(
+			page.getByText('Set the default workflow for')
+		).toBeHidden();
+
+		await expect(
+			page.getByText('Use structure restrictions of')
+		).toBeVisible();
+		await expect(page.getByText('Define specific structure')).toBeVisible();
+	}
 );
 
 test(

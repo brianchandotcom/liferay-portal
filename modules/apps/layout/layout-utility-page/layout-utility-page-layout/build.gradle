@@ -8,5 +8,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:layout:layout-utility-page-api")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 }

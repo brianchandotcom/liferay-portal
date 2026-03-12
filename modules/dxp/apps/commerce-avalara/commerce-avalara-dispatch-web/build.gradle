@@ -8,5 +8,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:dispatch:dispatch-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":dxp:apps:commerce-avalara:commerce-avalara-connector-api")
 }

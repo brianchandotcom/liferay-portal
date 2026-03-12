@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:cookies:cookies-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

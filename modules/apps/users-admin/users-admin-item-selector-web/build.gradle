@@ -13,4 +13,5 @@ dependencies {
 	compileOnly project(":apps:users-admin:users-admin-api")
 	compileOnly project(":apps:users-admin:users-admin-item-selector-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-io")
 }

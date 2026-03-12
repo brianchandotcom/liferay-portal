@@ -11,5 +11,6 @@ dependencies {
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-item-selector-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 }

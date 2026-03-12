@@ -7,5 +7,6 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-changeset-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:staging:staging-taglib")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 }

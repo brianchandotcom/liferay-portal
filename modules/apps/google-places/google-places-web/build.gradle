@@ -10,5 +10,6 @@ dependencies {
 	compileOnly project(":apps:google-places:google-places-api")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:site:site-api")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 }

@@ -13,5 +13,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-tax-engine-fixed-api")
 	compileOnly project(":apps:dispatch:dispatch-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":dxp:apps:commerce-avalara:commerce-avalara-connector-api")
 }

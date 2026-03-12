@@ -779,6 +779,30 @@ public class TaxonomyCategoryResourceImpl
 			return assetCategory.getParentCategoryId();
 		}
 
+		String parentTaxonomyCategoryExternalReferenceCode =
+			parentTaxonomyCategory.getExternalReferenceCode();
+
+		if (Validator.isNotNull(parentTaxonomyCategoryExternalReferenceCode)) {
+			AssetCategory parentAssetCategory =
+				_assetCategoryLocalService.
+					fetchAssetCategoryByExternalReferenceCode(
+						parentTaxonomyCategoryExternalReferenceCode, groupId);
+
+			if (parentAssetCategory != null) {
+				if (assetVocabularyId !=
+						parentAssetCategory.getVocabularyId()) {
+
+					throw new BadRequestException(
+						StringBundler.concat(
+							"Taxonomy category ", assetCategory.getCategoryId(),
+							" and its parent taxonomy category must belong to ",
+							"the same taxonomy vocabulary"));
+				}
+
+				return parentAssetCategory.getCategoryId();
+			}
+		}
+
 		if (parentTaxonomyCategory.getId() != null) {
 			if (parentTaxonomyCategory.getId() <=
 					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
@@ -800,9 +824,6 @@ public class TaxonomyCategoryResourceImpl
 
 			return parentTaxonomyCategory.getId();
 		}
-
-		String parentTaxonomyCategoryExternalReferenceCode =
-			parentTaxonomyCategory.getExternalReferenceCode();
 
 		if (Validator.isBlank(parentTaxonomyCategoryExternalReferenceCode)) {
 			return AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;

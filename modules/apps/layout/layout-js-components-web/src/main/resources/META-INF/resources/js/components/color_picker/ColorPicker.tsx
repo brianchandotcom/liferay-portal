@@ -22,12 +22,9 @@ import {
 	useSetStyleError,
 	useStyleErrors,
 } from '../../contexts/StyleErrorsContext';
+import {Color, ColorCategoryMap, Field, Token} from '../../types/ColorPicker';
 import ColorPickerField from './ColorPickerField';
-import {
-	Color,
-	ColorCategoryMap,
-	DropdownColorPicker,
-} from './DropdownColorPicker';
+import {DropdownColorPicker} from './DropdownColorPicker';
 import OldColorPicker from './OldColorPicker';
 import {parseColorValue} from './parseColorValue';
 
@@ -45,31 +42,6 @@ function usePropsFirst<T>(value: T, {forceProp = false}) {
 	}
 
 	return [nextValue, setNextValue] as const;
-}
-
-export interface Token {
-	editorType: string;
-	label: string;
-	name: string;
-	tokenCategoryLabel: string;
-	tokenSetLabel: string;
-	value: string;
-}
-
-export interface Field {
-	cssProperty?: string;
-	dataType?: string;
-	defaultValue?: string;
-	description?: string;
-	icon?: string;
-	inherited?: boolean;
-	label: string;
-	name: string;
-	type?: string;
-	typeOptions?: {
-		showLengthField?: boolean;
-	};
-	value?: string;
 }
 
 interface Props {

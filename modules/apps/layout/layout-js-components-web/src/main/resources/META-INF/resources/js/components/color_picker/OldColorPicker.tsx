@@ -17,11 +17,8 @@ import {
 	useSetStyleError,
 	useStyleErrors,
 } from '../../contexts/StyleErrorsContext';
-import {
-	Color,
-	ColorCategoryMap,
-	DropdownColorPicker,
-} from './DropdownColorPicker';
+import {Color, ColorCategoryMap} from '../../types/ColorPicker';
+import {DropdownColorPicker} from './DropdownColorPicker';
 import {oldParseColorValue} from './oldParseColorValue';
 
 import './ColorPicker.scss';

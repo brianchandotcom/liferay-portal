@@ -8,10 +8,9 @@ import {fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import ColorPicker, {
-	Field,
-} from '../../../src/main/resources/META-INF/resources/js/components/color_picker/ColorPicker';
+import ColorPicker from '../../../src/main/resources/META-INF/resources/js/components/color_picker/ColorPicker';
 import {StyleErrorsContextProvider} from '../../../src/main/resources/META-INF/resources/js/contexts/StyleErrorsContext';
+import {Field} from '../../../src/main/resources/META-INF/resources/js/types/ColorPicker';
 
 const COLOR_PICKER_CLASS = '.layout__color-picker';
 const INPUT_NAME = 'Color Picker';

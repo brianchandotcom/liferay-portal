@@ -18,8 +18,8 @@ import React, {
 	useRef,
 } from 'react';
 
+import {Color, ColorCategoryMap} from '../../types/ColorPicker';
 import SearchForm from '../search_form/SearchForm';
-import {Color, ColorCategoryMap} from './DropdownColorPicker';
 
 interface SplotchProps {
 	active?: boolean;

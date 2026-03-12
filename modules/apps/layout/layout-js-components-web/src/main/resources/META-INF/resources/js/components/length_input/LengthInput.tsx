@@ -20,9 +20,9 @@ import React, {
 
 import useControlledState from '../../hooks/useControlledState';
 import isValidStyleValue from '../../utils/isValidStyleValue';
-import {Field} from '../color_picker/ColorPicker';
 
 import './LengthInput.scss';
+import {Field} from '../../types/ColorPicker';
 
 const CUSTOM = 'custom' as const;
 

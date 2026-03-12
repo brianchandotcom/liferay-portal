@@ -11,8 +11,8 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
+import {Color, ColorCategoryMap} from '../../types/ColorPicker';
 import ColorPalette from './ColorPalette';
-import {Color, ColorCategoryMap} from './DropdownColorPicker';
 
 interface Props
 	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {

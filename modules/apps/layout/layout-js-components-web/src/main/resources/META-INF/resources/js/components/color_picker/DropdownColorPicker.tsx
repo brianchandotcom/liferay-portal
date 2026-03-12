@@ -16,17 +16,8 @@ import React, {
 	useState,
 } from 'react';
 
+import {Color, ColorCategoryMap} from '../../types/ColorPicker';
 import ColorPalette from './ColorPalette';
-
-export interface Color {
-	disabled?: boolean;
-	label: string;
-	name: string;
-	value: string;
-}
-
-export type ColorCategory = Record<string, Color[]>;
-export type ColorCategoryMap = Record<string, ColorCategory>;
 
 const noop = () => {};
 

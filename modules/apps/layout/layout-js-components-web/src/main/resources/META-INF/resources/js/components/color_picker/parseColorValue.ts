@@ -5,8 +5,8 @@
 
 import {TinyColorInstance, tinycolor} from '@clayui/color-picker';
 
+import {Field, Token} from '../../types/ColorPicker';
 import convertRGBtoHex from '../../utils/convertRGBtoHex';
-import {Field, Token} from './ColorPicker';
 
 const ERROR_MESSAGES = {
 	mutuallyReferenced: Liferay.Language.get(

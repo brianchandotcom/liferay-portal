@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page, test} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect, test} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForPageToBeLoaded} from '../../../utils/waitForPageToBeLoaded';
@@ -192,16 +192,24 @@ export class ObjectFieldsPage {
 	}
 
 	async openObjectField(fieldLabel: string) {
-		await clickAndExpectToBeVisible({
-			target: this.iframeLocator.locator(
-				`#objectFieldLabelInput[value="${fieldLabel}"]`
-			),
-			timeout: 2000,
-			trigger: this.page
-				.getByRole('cell')
-				.getByRole('link')
-				.filter({hasText: fieldLabel}),
-		});
+		await expect(async () => {
+
+			// Check that the side panel is opened after clicking.
+
+			await clickAndExpectToBeVisible({
+				target: this.page.locator('.fds-side-panel.is-visible'),
+				trigger: this.page
+					.getByRole('cell')
+					.getByRole('link')
+					.filter({hasText: fieldLabel}),
+			});
+
+			// Check that the correct field was opened.
+
+			await expect(
+				this.iframeLocator.locator('#objectFieldLabelInput')
+			).toHaveValue(fieldLabel);
+		}).toPass();
 
 		await this.page.waitForLoadState('networkidle');
 	}

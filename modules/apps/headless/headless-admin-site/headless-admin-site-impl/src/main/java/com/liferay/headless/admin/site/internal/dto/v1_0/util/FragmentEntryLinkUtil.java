@@ -59,11 +59,15 @@ public class FragmentEntryLinkUtil {
 				return fragmentEntryLink.getHtml();
 			}
 
-			String editableValues = fragmentEntryLink.getEditableValues();
-
 			long mvccVersion = fragmentEntryLink.getMvccVersion();
 
+			// This is a super ugly temporary workaround
+			// https://github.com/brianchandotcom/liferay-portal/pull/171495
+
 			fragmentEntryLink.setMvccVersion(-1);
+
+			String editableValues = fragmentEntryLink.getEditableValues();
+
 			fragmentEntryLink.setEditableValues(null);
 
 			try {

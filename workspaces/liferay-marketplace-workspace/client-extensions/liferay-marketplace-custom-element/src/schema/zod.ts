@@ -122,6 +122,37 @@ const zodSchema = {
 			.string()
 			.min(1, {message: 'Please enter a Tax/VAT number to continue'}),
 	}),
+	activationKey: z.object({
+		businessEmail: z.string().email('Please fill in valid email'),
+		companyName: z
+			.string()
+			.min(3, 'Company name is required')
+			.optional()
+			.or(z.literal('')),
+		country: z.string().min(2, 'Please select the country to continue'),
+		domain: z.string().min(3, 'Domain is required'),
+		extension: z.string(),
+		fullname: z.string().min(3, 'Full name is required'),
+		intlCode: z.object({
+			code: z.string(),
+			flag: z.string(),
+		}),
+		phoneNumber: z.string(),
+		jobTitle: z
+			.string()
+			.min(3, 'Job title is required')
+			.optional()
+			.or(z.literal('')),
+		notifyMeAboutProducts: z.boolean(),
+		purpose: z.string().min(3, 'Purpose is required'),
+		purposeOther: z
+			.string()
+			.min(3, 'Purpose is required')
+			.optional()
+			.or(z.literal('')),
+		termsAndConditions: z.boolean().refine((data) => data),
+		userAgreement: z.boolean().refine((data) => data),
+	}),
 	analyticsProvisioning: z.object({
 		_refAllowedEmailDomains: z.array(z.any()),
 		_refIncidentReportContacts: z.array(z.any()),
@@ -198,7 +229,6 @@ const zodSchema = {
 			.min(3, {message: 'Request Description is required'}),
 	}),
 	billingAddress,
-
 	contactSales: z.object({
 		accountName: z
 			.string()

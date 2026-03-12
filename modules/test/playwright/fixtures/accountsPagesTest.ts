@@ -15,6 +15,7 @@ import {AccountGroupAccountSelectorPage} from '../pages/account-admin-web/Accoun
 import {AccountGroupAccountsPage} from '../pages/account-admin-web/AccountGroupAccountsPage';
 import {AccountGroupsPage} from '../pages/account-admin-web/AccountGroupsPage';
 import {AccountInstanceSettingsAccountAddressSubtypePage} from '../pages/account-admin-web/AccountInstanceSettingsAccountAddressSubtypePage';
+import {AccountInstanceSettingsPage} from '../pages/account-admin-web/AccountInstanceSettingsPage';
 import {AccountManagementWidgetPage} from '../pages/account-admin-web/AccountManagementWidgetPage';
 import {AccountOrganizationSelectorPage} from '../pages/account-admin-web/AccountOrganizationSelectorPage';
 import {AccountOrganizationsPage} from '../pages/account-admin-web/AccountOrganizationsPage';
@@ -51,6 +52,7 @@ const accountsPagesTest = test.extend<{
 	accountGroupAccountsPage: AccountGroupAccountsPage;
 	accountGroupsPage: AccountGroupsPage;
 	accountInstanceSettingsAccountAddressSubtypePage: AccountInstanceSettingsAccountAddressSubtypePage;
+	accountInstanceSettingsPage: AccountInstanceSettingsPage;
 	accountManagementWidgetPage: AccountManagementWidgetPage;
 	accountOrganizationSelectorPage: AccountOrganizationSelectorPage;
 	accountOrganizationsPage: AccountOrganizationsPage;
@@ -105,6 +107,9 @@ const accountsPagesTest = test.extend<{
 	},
 	accountInstanceSettingsAccountAddressSubtypePage: async ({page}, use) => {
 		await use(new AccountInstanceSettingsAccountAddressSubtypePage(page));
+	},
+	accountInstanceSettingsPage: async ({page}, use) => {
+		await use(new AccountInstanceSettingsPage(page));
 	},
 	accountManagementWidgetPage: async ({page}, use) => {
 		await use(new AccountManagementWidgetPage(page));

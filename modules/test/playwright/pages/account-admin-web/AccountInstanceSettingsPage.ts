@@ -29,10 +29,7 @@ export class AccountInstanceSettingsPage {
 		return this.page.getByRole('option', {name});
 	}
 
-	async setAllowedAccountType(
-		siteUrl: string,
-		allowedType: string
-	) {
+	async setAllowedAccountType(siteUrl: string, allowedType: string) {
 		await this.siteSettingsPage.goToSiteSetting(
 			'Accounts',
 			'Accounts',

@@ -37,15 +37,13 @@ export const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-async function createWidgetPage(
-	apiHelpers: any,
-	siteId: number | string
-) {
+async function createWidgetPage(apiHelpers: any, siteId: number | string) {
 	return await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
 			getWidgetDefinition({
 				id: getRandomString(),
-				widgetName: 'com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet',
+				widgetName:
+					'com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet',
 			}),
 		]),
 		siteId,
@@ -328,27 +326,19 @@ test(
 		await page.goto(`/web/${site.name}/${layout1.friendlyUrlPath}`);
 
 		await expect(
-			accountManagementWidgetPage.accountsTable.cell(
-				businessAccount.name
-			)
+			accountManagementWidgetPage.accountsTable.cell(businessAccount.name)
 		).not.toBeVisible();
 		await expect(
-			accountManagementWidgetPage.accountsTable.cell(
-				personAccount.name
-			)
+			accountManagementWidgetPage.accountsTable.cell(personAccount.name)
 		).toBeVisible();
 
 		await page.goto(`/web/${site2.name}/${layout2.friendlyUrlPath}`);
 
 		await expect(
-			accountManagementWidgetPage.accountsTable.cell(
-				businessAccount.name
-			)
+			accountManagementWidgetPage.accountsTable.cell(businessAccount.name)
 		).toBeVisible();
 		await expect(
-			accountManagementWidgetPage.accountsTable.cell(
-				personAccount.name
-			)
+			accountManagementWidgetPage.accountsTable.cell(personAccount.name)
 		).toBeVisible();
 
 		await accountManagementWidgetPage.accountsTable.newButton.click();
@@ -387,24 +377,18 @@ test(
 
 		await pagesAdminPage.gotoPagesConfiguration(site.friendlyUrlPath);
 
-		await page
-			.getByRole('button', {name: 'Change Current Theme'})
-			.click();
+		await page.getByRole('button', {name: 'Change Current Theme'}).click();
 
 		await page
 			.frameLocator('iframe[title="Available Themes"]')
 			.getByRole('button', {name: /Select Dialect/})
 			.click();
 
-		await page
-			.getByRole('button', {exact: true, name: 'Save'})
-			.click();
+		await page.getByRole('button', {exact: true, name: 'Save'}).click();
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		await page
-			.getByRole('link', {exact: true, name: account.name})
-			.click();
+		await page.getByRole('link', {exact: true, name: account.name}).click();
 
 		await page.getByRole('link', {exact: true, name: 'Users'}).click();
 
@@ -622,14 +606,10 @@ test(
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
 		await expect(
-			accountManagementWidgetPage.accountsTable.cell(
-				personAccount.name
-			)
+			accountManagementWidgetPage.accountsTable.cell(personAccount.name)
 		).not.toBeVisible();
 		await expect(
-			accountManagementWidgetPage.accountsTable.cell(
-				businessAccount.name
-			)
+			accountManagementWidgetPage.accountsTable.cell(businessAccount.name)
 		).toBeVisible();
 	}
 );

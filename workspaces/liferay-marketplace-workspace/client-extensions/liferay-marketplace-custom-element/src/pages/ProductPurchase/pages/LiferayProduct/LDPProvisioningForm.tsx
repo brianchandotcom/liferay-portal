@@ -33,7 +33,7 @@ const LDPProvisioning = () => {
 		useState('');
 
 	const {
-		actions: {nextStep},
+		actions: {previousStep, nextStep},
 		product,
 		productPurchaseCart,
 		selectedAccount,
@@ -80,7 +80,7 @@ const LDPProvisioning = () => {
 	return (
 		<ProductPurchase.Shell
 			footerProps={{
-				backButtonProps: {className: 'd-none'},
+				backButtonProps: {onClick: previousStep},
 				continueButtonProps: {
 					children: i18n.translate('continue'),
 					disabled: !formState.isValid,

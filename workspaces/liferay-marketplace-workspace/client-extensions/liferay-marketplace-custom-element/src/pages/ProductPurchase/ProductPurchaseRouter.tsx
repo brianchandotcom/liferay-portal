@@ -33,7 +33,7 @@ import LDPOrderSummary from './pages/LiferayProduct/OrderSummary';
 import ProjectSelection from './pages/LiferayProduct/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
-import LDPProvisioning from './pages/Solution/LDPProvisioningForm';
+import LDPProvisioning from './pages/LiferayProduct/LDPProvisioningForm';
 
 export const productTypeRoutes = {
 	[ProductTypeVocabulary.APP]: {
@@ -78,6 +78,7 @@ export const productTypeRoutes = {
 	},
 	[ProductTypeVocabulary.LIFERAY_PRODUCTS]: {
 		metadata: {
+			skipSingleAccountSelection: true,
 			tinyStepsDisplay: true,
 			useCart: true,
 		},

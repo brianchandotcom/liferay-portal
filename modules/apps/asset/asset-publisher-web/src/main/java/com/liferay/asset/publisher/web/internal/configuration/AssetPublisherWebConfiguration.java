@@ -21,9 +21,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AssetPublisherWebConfiguration {
 
 	/**
-	 * Set the cron expression to schedule when to check for new assets.
-	 * Users will be notified via email of new assets. If it is empty or
-	 * invalid, {@link #checkInterval()} is used instead.
+	 * Set the cron expression to schedule when to check for new assets. Users
+	 * will be notified via email of new assets. If it is empty or invalid,
+	 * {@link #checkInterval()} is used instead.
 	 *
 	 * @return cron expression to schedule when to check for new assets.
 	 */
@@ -34,9 +34,9 @@ public interface AssetPublisherWebConfiguration {
 	public String checkCronExpression();
 
 	/**
-	 * Set the interval in hours on how often to check for new assets.
-	 * Users will be notified via email of new assets. This field is ignored if
-	 * {@link #checkCronExpression()} is set to a valid value.
+	 * Set the interval in hours on how often to check for new assets. Users
+	 * will be notified via email of new assets. This field is ignored if {@link
+	 * #checkCronExpression()} is set to a valid value.
 	 *
 	 * @return interval in hours on how often to check for new assets.
 	 */
@@ -84,8 +84,8 @@ public interface AssetPublisherWebConfiguration {
 	public int dynamicSubscriptionLimit();
 
 	/**
-	 * Set this to <code>true</code> to disable autoscroll when opening
-	 * an asset.
+	 * Set this to <code>true</code> to disable autoscroll when opening an
+	 * asset.
 	 *
 	 * @return <code>true</code> autoScroll is enabled.
 	 */

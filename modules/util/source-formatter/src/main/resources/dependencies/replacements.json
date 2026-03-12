@@ -5318,6 +5318,14 @@
 		"to": "getSitemap(param#0#, param#1#, param#2#)"
 	},
 	{
+		"from": "regex:(?<variableName>\\w+)\\.getParameter\\((?<nameAttribute>\\w*)\\)",
+		"issueKey": "LPD-59929",
+		"newImports": [
+			"com.liferay.portal.kernel.util.HttpComponentsUtil"
+		],
+		"to": "HttpComponentsUtil.getParameter(HttpComponentsUtil.getRequestURL(${variableName}), ${nameAttribute})"
+	},
+	{
 		"classNames": [
 			"CPMedia"
 		],

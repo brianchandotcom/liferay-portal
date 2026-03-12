@@ -241,6 +241,17 @@ public class ObjectEntryDisplayContextImpl
 			backURL = String.valueOf(liferayPortletResponse.createRenderURL());
 		}
 
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		if (!objectDefinition.isDefaultStorageType() ||
+			!StringUtil.equals(
+				String.valueOf(
+					httpServletRequest.getAttribute(WebKeys.PORTLET_ID)),
+				objectDefinition.getPortletId())) {
+
+			return backURL;
+		}
+
 		ObjectEntry objectEntry = _getObjectEntry();
 
 		if (objectEntry == null) {
@@ -248,16 +259,11 @@ public class ObjectEntryDisplayContextImpl
 		}
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
+			_objectEntryLocalService.fetchObjectEntry(
+				GetterUtil.getLong(objectEntry.getId()));
 
-		ObjectDefinition objectDefinition = getObjectDefinition1();
-
-		if (!objectDefinition.isDefaultStorageType() ||
-			!serviceBuilderObjectEntry.isRootDescendantNode() ||
-			!StringUtil.equals(
-				String.valueOf(
-					httpServletRequest.getAttribute(WebKeys.PORTLET_ID)),
-				objectDefinition.getPortletId())) {
+		if ((serviceBuilderObjectEntry == null) ||
+			!serviceBuilderObjectEntry.isRootDescendantNode()) {
 
 			return backURL;
 		}
@@ -353,10 +359,15 @@ public class ObjectEntryDisplayContextImpl
 			return "POST";
 		}
 
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.getObjectEntry(_objectEntry.getId());
+		if (getObjectLayoutTab() != null) {
+			return "PATCH";
+		}
 
-		if ((getObjectLayoutTab() != null) ||
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.fetchObjectEntry(
+				GetterUtil.getLong(_objectEntry.getId()));
+
+		if ((serviceBuilderObjectEntry != null) &&
 			(serviceBuilderObjectEntry.getRootObjectEntryId() != 0)) {
 
 			return "PATCH";

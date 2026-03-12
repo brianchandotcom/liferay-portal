@@ -810,11 +810,11 @@ public class TaxonomyCategoryResourceImpl
 				return parentTaxonomyCategory.getId();
 			}
 
-			AssetCategory existingAssetCategory =
+			AssetCategory parentAssetCategory =
 				_assetCategoryLocalService.getAssetCategory(
 					parentTaxonomyCategory.getId());
 
-			if (assetVocabularyId != existingAssetCategory.getVocabularyId()) {
+			if (assetVocabularyId != parentAssetCategory.getVocabularyId()) {
 				throw new BadRequestException(
 					StringBundler.concat(
 						"Taxonomy category ", assetCategory.getCategoryId(),

@@ -79,7 +79,9 @@ export class MarketplaceDeliveryProduct {
 	}
 
 	get specificationValues() {
-		const _specifications = {} as typeof ProductSpecificationKey;
+		const _specifications = {} as {
+			[key in keyof typeof ProductSpecificationKey]: string;
+		};
 
 		for (const specificationKey in ProductSpecificationKey) {
 			const _key =

@@ -36,7 +36,7 @@ const ProductPurchaseShell: React.FC<ProductPurchaseShellProps> = ({
 
 		{children}
 
-		<ProductPurchaseFooter {...footerProps} />
+		{footerProps && <ProductPurchaseFooter {...footerProps} />}
 	</Component>
 );
 

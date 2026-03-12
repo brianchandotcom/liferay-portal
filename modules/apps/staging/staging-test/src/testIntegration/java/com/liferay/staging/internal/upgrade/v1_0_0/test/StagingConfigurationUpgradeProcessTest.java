@@ -35,8 +35,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Carlos Correa
  */
 @RunWith(Arquillian.class)
-public class
-	RemovePublishDisplayedContentInStagingConfigurationUpgradeProcessTest {
+public class StagingConfigurationUpgradeProcessTest {
 
 	@ClassRule
 	@Rule

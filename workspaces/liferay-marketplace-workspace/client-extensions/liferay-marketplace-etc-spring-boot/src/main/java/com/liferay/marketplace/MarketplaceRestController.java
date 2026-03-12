@@ -278,6 +278,9 @@ public class MarketplaceRestController extends BaseRestController {
 			_marketplaceService.getProductSpecificationsMap(
 				_marketplaceService.getOrderProductId(order));
 
+		_marketplaceService.updateOrder(
+				null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
+
 		ProductPurchase[] productPurchases = _setUpProductEntitlements(
 			jwt, productSpecificationsMap.get("license-type"), order);
 

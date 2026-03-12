@@ -14,8 +14,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Christian Moura
  */
 @Component(service = UpgradeStepRegistrator.class)
-public class CookiesPreferenceHandlingUpgradeStepRegistrator
-	implements UpgradeStepRegistrator {
+public class CookiesUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {

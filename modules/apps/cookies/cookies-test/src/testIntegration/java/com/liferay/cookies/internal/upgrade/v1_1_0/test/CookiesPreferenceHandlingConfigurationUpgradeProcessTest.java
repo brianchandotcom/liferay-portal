@@ -126,7 +126,7 @@ public class CookiesPreferenceHandlingConfigurationUpgradeProcessTest {
 			RandomTestUtil.randomString();
 
 	@Inject(
-		filter = "component.name=com.liferay.cookies.internal.upgrade.registry.CookiesPreferenceHandlingUpgradeStepRegistrator"
+		filter = "component.name=com.liferay.cookies.internal.upgrade.registry.CookiesUpgradeStepRegistrator"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
 

@@ -30,7 +30,7 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
-test.describe('manage Object Layouts through the Object Layout tab', () => {
+test.describe('Manage custom layouts through object layout tab', () => {
 	test('can add seo block when creating its layout', async ({
 		apiHelpers,
 		objectLayoutsPage,
@@ -100,6 +100,246 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 		});
 	});
 
+	test('can create, read, update and delete relationship child entry when selected', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinitionLabel1 = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName1 = 'ObjectDefinitionName' + getRandomInt();
+
+		const objectDefinitionLabel2 = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName2 = 'ObjectDefinitionName' + getRandomInt();
+
+		const objectFields1: Partial<ObjectField>[] = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const {objectEntry: objectEntry1} = await generateObjectEntryValues({
+			objectEntryFormat: 'UI',
+			objectFields: objectFields1,
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				label: {
+					en_US: objectDefinitionLabel1,
+				},
+				name: objectDefinitionName1,
+				objectFields: objectFields1,
+				pluralLabel: {
+					en_US: objectDefinitionLabel1,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const parentObjectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			objectEntry1,
+			applicationName
+		);
+
+		const objectFields2: Partial<ObjectField>[] = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const {objectEntry: objectEntry2} = await generateObjectEntryValues({
+			objectEntryFormat: 'UI',
+			objectFields: objectFields2,
+		});
+
+		const {body: objectDefinition2} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				label: {
+					en_US: objectDefinitionLabel2,
+				},
+				name: objectDefinitionName2,
+				objectFields: objectFields2,
+				pluralLabel: {
+					en_US: objectDefinitionLabel2,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName2 =
+			'c/' + objectDefinition2.name.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			objectEntry2,
+			applicationName2
+		);
+
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition.externalReferenceCode,
+				{
+					label: {
+						en_US: 'objectRelationshipLabel' + getRandomInt(),
+					},
+					name:
+						'objectRelationshipName' +
+						Math.floor(Math.random() * 99),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId1: objectDefinition.id,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		await objectLayoutsPage.goto(objectDefinitionLabel1);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutContent({
+			objectFieldNames: [objectFields1[0].label.en_US],
+			objectLayoutName,
+			objectLayoutRegularBlockName: getRandomString(),
+			objectLayoutTabName: getRandomString(),
+		});
+
+		await objectLayoutsPage.setObjectLayoutAsDefault();
+
+		const objectLayoutRelTabName = getRandomString();
+
+		await objectLayoutsPage.createObjectRelationshipTab(
+			objectLayoutName,
+			objectLayoutRelTabName,
+			objectRelationship.label.en_US
+		);
+
+		await waitForAlert(
+			page,
+			'Success:The object layout was updated successfully'
+		);
+
+		const objectChildEntry = 'ChildEntry' + getRandomInt();
+
+		await test.step('Create relationship entry', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await page
+				.getByRole('link', {name: parentObjectEntry.id.toString()})
+				.click();
+
+			await page
+				.getByRole('link')
+				.filter({hasText: objectLayoutRelTabName})
+				.click();
+
+			await page.getByRole('button', {name: 'New'}).first().click();
+
+			await page.getByRole('menuitem', {name: 'Create New'}).click();
+
+			await page
+				.getByLabel(objectFields2[0].label.en_US)
+				.fill(objectChildEntry);
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(page);
+		});
+
+		const relationshipInput = page.getByPlaceholder('Search');
+
+		await test.step('Read relationship input value', async () => {
+			await viewObjectEntriesPage.backButton.click();
+
+			await page.getByRole('cell').getByRole('link').click();
+
+			await page
+				.getByLabel(objectFields2[0].label.en_US)
+				.waitFor({state: 'visible'});
+
+			await expect(relationshipInput).toHaveValue(
+				parentObjectEntry.externalReferenceCode
+			);
+
+			await expect(
+				page.getByLabel(objectFields2[0].label.en_US)
+			).toHaveValue(objectChildEntry);
+		});
+
+		await test.step('Update relationship input value', async () => {
+			const newEntry = await generateObjectEntryValues({
+				objectEntryFormat: 'UI',
+				objectFields: objectFields1,
+			});
+
+			const newRelationshipEntry =
+				await apiHelpers.objectEntry.postObjectEntry(
+					newEntry,
+					applicationName
+				);
+
+			await page.reload();
+
+			await relationshipInput.click();
+
+			await page
+				.getByRole('menuitem', {
+					name: newRelationshipEntry.externalReferenceCode,
+				})
+				.click();
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await expect(relationshipInput).toHaveValue(
+				newRelationshipEntry.externalReferenceCode
+			);
+		});
+
+		await test.step('Delete relationship input value', async () => {
+			await relationshipInput.fill('');
+
+			await page.keyboard.press('Enter');
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await expect(relationshipInput).toHaveValue('');
+		});
+	});
+
 	test('can view all fields of an object when creating its layout', async ({
 		apiHelpers,
 		objectLayoutsPage,
@@ -149,7 +389,7 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 		);
 	});
 
-	test('can view Entries with Custom Layout Created', async ({
+	test('can view entries with custom layout created', async ({
 		apiHelpers,
 		objectLayoutsPage,
 		page,
@@ -225,200 +465,76 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 		});
 	});
 
-	test('can view relationship child entry when selected', async ({
-		apiHelpers,
-		objectLayoutsPage,
-		page,
-		viewObjectEntriesPage,
-	}) => {
-		const objectDefinitionLabel1 = 'ObjectDefinitionLabel' + getRandomInt();
-		const objectDefinitionName1 = 'ObjectDefinitionName' + getRandomInt();
-
-		const objectDefinitionLabel2 = 'ObjectDefinitionLabel' + getRandomInt();
-		const objectDefinitionName2 = 'ObjectDefinitionName' + getRandomInt();
-
-		const objectFields1: Partial<ObjectField>[] = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectEntry1 = await generateObjectEntryValues({
-			objectEntryFormat: 'UI',
-			objectFields: objectFields1,
-		});
-
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				label: {
-					en_US: objectDefinitionLabel1,
-				},
-				name: objectDefinitionName1,
-				objectFields: objectFields1,
-				pluralLabel: {
-					en_US: objectDefinitionLabel1,
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
+	test(
+		'cannot save layout as default when other is already set',
+		{tag: ['@LPS-165850']},
+		async ({apiHelpers, objectLayoutsPage, page}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
 			});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
 
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-
-		const {id: objectEntryId} =
-			await apiHelpers.objectEntry.postObjectEntry(
-				objectEntry1,
-				applicationName
-			);
-
-		const objectFields2: Partial<ObjectField>[] = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectEntry2 = await generateObjectEntryValues({
-			objectEntryFormat: 'UI',
-			objectFields: objectFields2,
-		});
-
-		const {body: objectDefinition2} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				label: {
-					en_US: objectDefinitionLabel2,
-				},
-				name: objectDefinitionName2,
-				objectFields: objectFields2,
-				pluralLabel: {
-					en_US: objectDefinitionLabel2,
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
 			});
 
-		apiHelpers.data.push({
-			id: objectDefinition2.id,
-			type: 'objectDefinition',
-		});
+			await objectLayoutsPage.goto(objectDefinition.name);
 
-		const applicationName2 =
-			'c/' + objectDefinition2.name.toLowerCase() + 's';
+			await objectLayoutsPage.goto(objectDefinition.label.en_US);
 
-		await apiHelpers.objectEntry.postObjectEntry(
-			objectEntry2,
-			applicationName2
-		);
+			const objectLayout1Name = getRandomString();
 
-		const objectRelationshipLabel =
-			'objectRelationshipLabel' + getRandomInt();
-		const objectRelationshipName =
-			'objectRelationshipName' + Math.floor(Math.random() * 99);
+			await objectLayoutsPage.createObjectLayout(objectLayout1Name);
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipAPI
-		);
+			await objectLayoutsPage.createObjectLayoutContent({
+				objectFieldNames: [objectFields[0].label.en_US],
+				objectLayoutName: objectLayout1Name,
+				objectLayoutRegularBlockName: getRandomString(),
+				objectLayoutTabName: getRandomString(),
+			});
 
-		const {body: objectRelationship} =
-			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				objectDefinition.externalReferenceCode,
-				{
-					label: {
-						en_US: objectRelationshipLabel,
-					},
-					name: objectRelationshipName,
-					objectDefinitionExternalReferenceCode1:
-						objectDefinition.externalReferenceCode,
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition2.externalReferenceCode,
-					objectDefinitionId1: objectDefinition.id,
-					objectDefinitionId2: objectDefinition2.id,
-					objectDefinitionName2: objectDefinition2.name,
-					type: 'oneToMany',
-				}
+			await objectLayoutsPage.setObjectLayoutAsDefault();
+
+			await page
+				.frameLocator('iframe')
+				.getByRole('button', {name: 'Save'})
+				.first()
+				.click();
+
+			const objectLayout2Name = getRandomString();
+
+			await objectLayoutsPage.createObjectLayout(objectLayout2Name);
+
+			await objectLayoutsPage.createObjectLayoutContent({
+				objectFieldNames: [objectFields[0].label.en_US],
+				objectLayoutName: objectLayout2Name,
+				objectLayoutRegularBlockName: getRandomString(),
+				objectLayoutTabName: getRandomString(),
+			});
+
+			await objectLayoutsPage.setObjectLayoutAsDefault();
+
+			await page
+				.frameLocator('iframe')
+				.getByRole('button', {name: 'Save'})
+				.first()
+				.click();
+
+			await waitForAlert(
+				page,
+				'Error:There can only be one default object layout',
+				{type: 'danger'}
 			);
+		}
+	);
 
-		apiHelpers.data.push({
-			id: objectRelationship.id,
-			type: 'objectRelationship',
-		});
-
-		await objectLayoutsPage.goto(objectDefinitionLabel1);
-
-		const objectLayoutName = getRandomString();
-
-		await objectLayoutsPage.createObjectLayout(objectLayoutName);
-
-		await objectLayoutsPage.createObjectLayoutContent({
-			objectFieldNames: [objectFields1[0].label.en_US],
-			objectLayoutName,
-			objectLayoutRegularBlockName: getRandomString(),
-			objectLayoutTabName: getRandomString(),
-		});
-
-		await objectLayoutsPage.setObjectLayoutAsDefault();
-
-		const objectLayoutRelTabName = getRandomString();
-
-		await objectLayoutsPage.createObjectRelationshipTab(
-			objectLayoutName,
-			objectLayoutRelTabName,
-			objectRelationshipLabel
-		);
-
-		await waitForAlert(
-			page,
-			'Success:The object layout was updated successfully'
-		);
-
-		await viewObjectEntriesPage.goto(objectDefinition.className);
-
-		await page.getByRole('link', {name: objectEntryId.toString()}).click();
-
-		await page
-			.getByRole('link')
-			.filter({hasText: objectLayoutRelTabName})
-			.click();
-
-		await page.getByRole('button', {name: 'New'}).first().click();
-
-		await page.getByRole('menuitem', {name: 'Create New'}).click();
-
-		const objectChildEntry = 'ChildEntry' + getRandomInt();
-
-		await page
-			.getByLabel(objectFields2[0].label.en_US)
-			.fill(objectChildEntry);
-
-		await page.getByRole('button', {name: 'Save'}).click();
-
-		await waitForAlert(page);
-
-		await viewObjectEntriesPage.backButton.click();
-
-		await page.getByRole('cell').getByRole('link').click();
-
-		await page
-			.getByLabel(objectFields2[0].label.en_US)
-			.waitFor({state: 'visible'});
-
-		await expect(page.getByRole('textbox').last()).toHaveValue(
-			objectChildEntry
-		);
-	});
-
-	test('seo block can be collapsed', async ({
+	test('seo and categorization blocks can be added and removed from layout', async ({
 		apiHelpers,
 		objectLayoutsPage,
 		page,
@@ -436,10 +552,10 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 			type: 'objectDefinition',
 		});
 
-		await test.step('create layout with SEO collapsible block and set it as default', async () => {
-			await objectLayoutsPage.goto(objectDefinition.name);
+		const objectLayoutName = getRandomString();
 
-			const objectLayoutName = getRandomString();
+		await test.step('create layout with SEO and Categorization collapsible blocks and set it as default', async () => {
+			await objectLayoutsPage.goto(objectDefinition.name);
 
 			await objectLayoutsPage.createObjectLayout(objectLayoutName);
 
@@ -452,6 +568,8 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 				objectLayoutTabName: getRandomString(),
 			});
 
+			await objectLayoutsPage.toggleCollapsible('Categorization');
+
 			await objectLayoutsPage.toggleCollapsible('SEO');
 
 			await objectLayoutsPage.setObjectLayoutAsDefault();
@@ -463,18 +581,55 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 				.click();
 		});
 
-		await test.step('verify SEO block is collapsible', async () => {
+		await test.step('verify SEO and Categorization blocks are visible and collapsible', async () => {
 			await viewObjectEntriesPage.goto(objectDefinition.className);
 
 			await viewObjectEntriesPage.clickAddObjectEntry(
 				objectDefinition.label['en_US']
 			);
 
-			expect(
+			await expect(
+				page.getByRole('button', {name: 'Categorization'})
+			).toBeVisible();
+
+			await expect(page.getByRole('button', {name: 'SEO'})).toBeVisible();
+		});
+
+		await test.step('edit layout and remove SEO and Categorization blocks', async () => {
+			await objectLayoutsPage.goto(objectDefinition.name);
+
+			await page.getByRole('link', {name: objectLayoutName}).click();
+
+			await objectLayoutsPage.layoutTab.click();
+
+			const frame = page.locator('iframe').contentFrame();
+			const itemsToDelete = 2;
+
+			for (let i = 0; i < itemsToDelete; i++) {
+				await frame
+					.getByRole('button', {name: 'More Actions'})
+					.last()
+					.click();
+				await frame.getByRole('menuitem', {name: 'Delete'}).click();
+			}
+
+			await objectLayoutsPage.saveUpdateLayoutButton.click();
+		});
+
+		await test.step('verify that blocks are not visible anymore', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await expect(
 				page.getByRole('button', {name: 'Categorization'})
 			).not.toBeVisible();
 
-			expect(page.getByRole('button', {name: 'SEO'})).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: 'SEO'})
+			).not.toBeVisible();
 		});
 	});
 });

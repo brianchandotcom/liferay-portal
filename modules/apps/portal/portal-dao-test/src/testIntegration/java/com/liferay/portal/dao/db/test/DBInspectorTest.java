@@ -20,7 +20,6 @@ import java.sql.DatabaseMetaData;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -68,297 +67,150 @@ public class DBInspectorTest {
 
 	@Test
 	public void testHasColumn() throws Exception {
-		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME));
-	}
-
-	@Test
-	public void testHasColumnIsNullSafeColumnNameParameter() throws Exception {
+		Assert.assertFalse(
+			_dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME_NONEXISTING));
 		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, null));
-	}
-
-	@Test
-	public void testHasColumnIsNullSafeTableNameParameter() throws Exception {
 		Assert.assertFalse(_dbInspector.hasColumn(null, _COLUMN_NAME));
-	}
+		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME));
 
-	@Test
-	public void testHasColumnLowerCase() throws Exception {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
-		Assume.assumeTrue(databaseMetaData.storesLowerCaseIdentifiers());
+		if (databaseMetaData.storesLowerCaseIdentifiers()) {
+			Assert.assertTrue(
+				_dbInspector.hasColumn(
+					_TABLE_NAME, StringUtil.toLowerCase(_COLUMN_NAME)));
+		}
 
-		Assert.assertTrue(
-			_dbInspector.hasColumn(
-				_TABLE_NAME, StringUtil.toLowerCase(_COLUMN_NAME)));
+		if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			Assert.assertTrue(
+				_dbInspector.hasColumn(
+					_TABLE_NAME, StringUtil.toUpperCase(_COLUMN_NAME)));
+		}
 	}
 
 	@Test
-	public void testHasColumnNonexistent() throws Exception {
-		Assert.assertTrue(
-			!_dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME_NONEXISTING));
-	}
-
-	@Test
-	public void testHasColumnTypeBigDecimal() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeBigDecimal", "BIGDECIMAL"));
-	}
-
-	@Test
-	public void testHasColumnTypeBlob() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeBlob", "BLOB null"));
-	}
-
-	@Test
-	public void testHasColumnTypeBoolean() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeBoolean", "BOOLEAN null"));
-	}
-
-	@Test
-	public void testHasColumnTypeDate() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeDate", "DATE null"));
-	}
-
-	@Test
-	public void testHasColumnTypeDouble() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeDouble", "DOUBLE null"));
-	}
-
-	@Test
-	public void testHasColumnTypeInteger() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeInteger", "INTEGER null"));
-	}
-
-	@Test
-	public void testHasColumnTypeIsNullSafeColumnNameParameter()
-		throws Exception {
-
+	public void testHasColumnType() throws Exception {
 		Assert.assertFalse(
-			_dbInspector.hasColumnType(_TABLE_NAME, null, "STRING null"));
-	}
-
-	@Test
-	public void testHasColumnTypeIsNullSafeColumnTypeParameter()
-		throws Exception {
-
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(_TABLE_NAME, _COLUMN_NAME, null));
-	}
-
-	@Test
-	public void testHasColumnTypeIsNullSafeTableNameParameter()
-		throws Exception {
-
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(null, _COLUMN_NAME, "STRING null"));
-	}
-
-	@Test
-	public void testHasColumnTypeLong() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeLong", "LONG null"));
-	}
-
-	@Test
-	public void testHasColumnTypeLongDefaultNotNull() throws Exception {
-		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeLongDefault", "LONG default 10 not null"));
+				_TABLE_NAME, "nilColumn", "VARCHAR(75) not null"));
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "notNilColumn", "VARCHAR(75) null"));
 		Assert.assertFalse(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "typeLongDefault", "LONG default 15 not null"));
-	}
-
-	@Test
-	public void testHasColumnTypeSBlob() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeSBlob", "SBLOB null"));
-	}
-
-	@Test
-	public void testHasColumnTypeString() throws Exception {
-		Assert.assertTrue(
+		Assert.assertFalse(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeString", "STRING null"));
-	}
-
-	@Test
-	public void testHasColumnTypeText() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeText", "TEXT null"));
-	}
-
-	@Test
-	public void testHasColumnTypeVarchar() throws Exception {
-		Assert.assertTrue(
+				_TABLE_NAME, "typeVarchar", "STRING null"));
+		Assert.assertFalse(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeVarchar", "VARCHAR(75) null"));
-	}
-
-	@Test
-	public void testHasColumnTypeVarcharDefaultNotNull() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeVarcharDefault",
-				"VARCHAR(10) default 'testValue' not null"));
-
+				_TABLE_NAME, "typeVarchar", "TEXT null"));
 		Assert.assertFalse(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "typeVarcharDefault",
 				"VARCHAR(10) default 'notTestValue' not null"));
-	}
-
-	@Test
-	public void testHasColumnUpperCase() throws Exception {
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-		Assume.assumeTrue(databaseMetaData.storesUpperCaseIdentifiers());
-
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(_TABLE_NAME, _COLUMN_NAME, null));
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(_TABLE_NAME, null, "STRING null"));
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(null, _COLUMN_NAME, "STRING null"));
 		Assert.assertTrue(
-			_dbInspector.hasColumn(
-				_TABLE_NAME, StringUtil.toUpperCase(_COLUMN_NAME)));
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "nilColumn", "VARCHAR(75) null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "notNilColumn", "VARCHAR(75) not null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeBigDecimal", "BIGDECIMAL"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeBlob", "BLOB null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeBoolean", "BOOLEAN null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeDate", "DATE null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeDouble", "DOUBLE null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeInteger", "INTEGER null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeLong", "LONG null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeLongDefault", "LONG default 10 not null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeSBlob", "SBLOB null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeString", "STRING null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeText", "TEXT null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeVarchar", "VARCHAR(75) null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeVarcharDefault",
+				"VARCHAR(10) default 'testValue' not null"));
 	}
 
 	@Test
-	public void testHasIndexIsNullSafeIndexNameParameter() throws Exception {
+	public void testHasIndex() throws Exception {
 		Assert.assertFalse(_dbInspector.hasIndex(_TABLE_NAME, null));
-	}
-
-	@Test
-	public void testHasIndexIsNullSafeTableNameParameter() throws Exception {
 		Assert.assertFalse(_dbInspector.hasIndex(null, "IX_40A51197"));
 	}
 
 	@Test
-	public void testHasNotNullColumnTypeNotNull() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "notNilColumn", "VARCHAR(75) not null"));
-	}
-
-	@Test
-	public void testHasNotNullColumnTypeNull() throws Exception {
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "notNilColumn", "VARCHAR(75) null"));
-	}
-
-	@Test
-	public void testHasNullColumnTypeNotNull() throws Exception {
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "nilColumn", "VARCHAR(75) not null"));
-	}
-
-	@Test
-	public void testHasNullColumnTypeNull() throws Exception {
-		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "nilColumn", "VARCHAR(75) null"));
-	}
-
-	@Test
-	public void testHasRowsIsNullSafe() {
+	public void testHasRows() {
 		Assert.assertFalse(_dbInspector.hasRows(null));
 	}
 
 	@Test
 	public void testHasTable() throws Exception {
-		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME));
-	}
-
-	@Test
-	public void testHasTableIsNullSafe() throws Exception {
-		Assert.assertFalse(_dbInspector.hasTable(null));
-	}
-
-	@Test
-	public void testHasTableLowerCase() throws Exception {
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-		Assume.assumeTrue(databaseMetaData.storesLowerCaseIdentifiers());
-
-		Assert.assertTrue(
-			_dbInspector.hasTable(StringUtil.toLowerCase(_TABLE_NAME)));
-	}
-
-	@Test
-	public void testHasTableNonexistent() throws Exception {
 		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_NONEXISTING));
-	}
+		Assert.assertFalse(_dbInspector.hasTable(null));
+		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME));
 
-	@Test
-	public void testHasTableUpperCase() throws Exception {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
-		Assume.assumeTrue(databaseMetaData.storesUpperCaseIdentifiers());
+		if (databaseMetaData.storesLowerCaseIdentifiers()) {
+			Assert.assertTrue(
+				_dbInspector.hasTable(StringUtil.toLowerCase(_TABLE_NAME)));
+		}
 
-		Assert.assertTrue(
-			_dbInspector.hasTable(StringUtil.toUpperCase(_TABLE_NAME)));
+		if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			Assert.assertTrue(
+				_dbInspector.hasTable(StringUtil.toUpperCase(_TABLE_NAME)));
+		}
 	}
 
 	@Test
-	public void testHasViewIsNullSafe() throws Exception {
+	public void testHasView() throws Exception {
 		Assert.assertFalse(_dbInspector.hasView(null));
 	}
 
 	@Test
-	public void testIsNotNullColumnNullable() throws Exception {
+	public void testIsNullable() throws Exception {
+		Assert.assertFalse(
+			_dbInspector.isNullable(_TABLE_NAME, "notNilColumn"));
+		Assert.assertFalse(_dbInspector.isNullable(_TABLE_NAME, null));
+		Assert.assertFalse(_dbInspector.isNullable(null, _COLUMN_NAME));
 		Assert.assertTrue(_dbInspector.isNullable(_TABLE_NAME, "nilColumn"));
 	}
 
 	@Test
-	public void testIsNullableColumnNullable() throws Exception {
-		Assert.assertFalse(
-			_dbInspector.isNullable(_TABLE_NAME, "notNilColumn"));
-	}
-
-	@Test
-	public void testIsNullableIsNullSafeColumnNameParameter() throws Exception {
-		Assert.assertFalse(_dbInspector.isNullable(_TABLE_NAME, null));
-	}
-
-	@Test
-	public void testIsNullableIsNullSafeTableNameParameter() throws Exception {
-		Assert.assertFalse(_dbInspector.isNullable(null, _COLUMN_NAME));
-	}
-
-	@Test
-	public void testIsNumericIsNullSafeColumnNameParameter() throws Exception {
+	public void testIsNumeric() throws Exception {
 		Assert.assertFalse(_dbInspector.isNumeric(_TABLE_NAME, null));
-	}
-
-	@Test
-	public void testIsNumericIsNullSafeTableNameParameter() throws Exception {
 		Assert.assertFalse(_dbInspector.isNumeric(null, _COLUMN_NAME));
 	}
 
 	@Test
-	public void testIsObjectTableIsNullSafe() {
+	public void testIsObjectTable() {
 		Assert.assertFalse(_dbInspector.isObjectTable(null));
-	}
-
-	@Test
-	public void testNotHasColumnTypeString() throws Exception {
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeVarchar", "STRING null"));
-	}
-
-	@Test
-	public void testNotHasColumnTypeText() throws Exception {
-		Assert.assertFalse(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME, "typeVarchar", "TEXT null"));
 	}
 
 	private static final String _COLUMN_NAME = "id";

@@ -10,8 +10,7 @@ package com.liferay.design.library.web.internal.constants;
  */
 public class DesignLibraryAdminFDSNames {
 
-    public static final String DESIGN_LIBRARIES =
-        DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN +
-            "-designLibraries";
+	public static final String DESIGN_LIBRARIES =
+		DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN + "-designLibraries";
 
 }

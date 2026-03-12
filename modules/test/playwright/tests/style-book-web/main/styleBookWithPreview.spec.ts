@@ -388,6 +388,7 @@ test.describe('Style Book Editor Preview', () => {
 				'com.liferay.fragment.collection.contributor.inputs',
 				'com.liferay.fragment.collection.contributor.navigation.bars',
 				'com.liferay.commerce.fragment.collection.contributor.account',
+				'com.liferay.commerce.fragment.collection.contributor.account.selector',
 				'com.liferay.commerce.fragment.collection.contributor.cart',
 			];
 

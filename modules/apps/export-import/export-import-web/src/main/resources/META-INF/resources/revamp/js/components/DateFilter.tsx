@@ -211,14 +211,20 @@ export default function DateFilter({
 			return true;
 		}
 
-		if (editing.filterType === FilterType.Last) {
-			return editing.modifiedLast !== (applied as any).modifiedLast;
+		if (
+			applied.filterType === FilterType.Last &&
+			editing.filterType === FilterType.Last
+		) {
+			return editing.modifiedLast !== applied.modifiedLast;
 		}
 
-		if (editing.filterType === FilterType.Range) {
+		if (
+			applied.filterType === FilterType.Range &&
+			editing.filterType === FilterType.Range
+		) {
 			return (
-				editing.fromDate !== (applied as any).fromDate ||
-				editing.toDate !== (applied as any).toDate
+				editing.fromDate !== applied.fromDate ||
+				editing.toDate !== applied.toDate
 			);
 		}
 

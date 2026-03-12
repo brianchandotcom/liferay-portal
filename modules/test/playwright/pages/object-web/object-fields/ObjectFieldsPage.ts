@@ -177,8 +177,6 @@ export class ObjectFieldsPage {
 
 			await this.useDefaultValueToggle.uncheck();
 
-			await this.page.waitForTimeout(1000); // Wait for any UI change after unchecking.
-
 			await this.saveObjectField();
 		});
 	}

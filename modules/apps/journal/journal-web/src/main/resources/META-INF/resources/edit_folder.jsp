@@ -18,7 +18,9 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", J
 
 boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 
-boolean workflowEnabled = WorkflowHandlerRegistryUtil.getWorkflowHandler(JournalArticle.class.getName()) != null;
+Group scopeGroup = themeDisplay.getScopeGroup();
+
+boolean workflowEnabled = (WorkflowHandlerRegistryUtil.getWorkflowHandler(JournalArticle.class.getName()) != null) && !scopeGroup.isLayoutSetPrototype();
 
 List<WorkflowDefinition> workflowDefinitions = null;
 

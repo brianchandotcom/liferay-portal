@@ -173,7 +173,6 @@
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portal/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portlet/exportimport/service\.xml" />
 		<suppress checks="XMLSpringFileCheck" files="portal-impl/src/META-INF/portal-spring\.xml" />
-		<suppress checks="YMLWhitespaceCheck" files=".github/workflows/ci-close-merge-conflict-prs\.yaml" />
 
 		<!-- Temporary suppressions for deprecated apps (LPS-100170) -->
 

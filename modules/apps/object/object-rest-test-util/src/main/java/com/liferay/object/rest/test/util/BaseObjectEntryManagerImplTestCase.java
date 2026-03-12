@@ -144,14 +144,15 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 			List<Facet.FacetValue> actualFacetFacetValues = new ArrayList<>(
 				actualFacet.getFacetValues());
 
-			actualFacetFacetValues.sort(
-				Comparator.comparing(Facet.FacetValue::getTerm));
+			Comparator<Facet.FacetValue> comparator = Comparator.comparing(
+				Facet.FacetValue::getTerm);
+
+			actualFacetFacetValues.sort(comparator);
 
 			List<Facet.FacetValue> expectedFacetFacetValues = new ArrayList<>(
 				expectedFacet.getFacetValues());
 
-			expectedFacetFacetValues.sort(
-				Comparator.comparing(Facet.FacetValue::getTerm));
+			expectedFacetFacetValues.sort(comparator);
 
 			Assert.assertEquals(
 				actualFacetFacetValues.toString(),

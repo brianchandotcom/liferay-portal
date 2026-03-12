@@ -6,6 +6,7 @@
 package com.liferay.batch.engine.internal.unit.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -14,11 +15,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -28,6 +33,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,6 +60,71 @@ public class BatchEngineUnitProcessorImplDBPartitionTest {
 		Assume.assumeTrue(PropsValues.DATABASE_PARTITION_ENABLED);
 	}
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@Test
+	public void testGetAdminUserIdResolvesCorrectPartition() throws Exception {
+		Assert.assertEquals(
+			TestPropsValues.getUserId(),
+			(long)ReflectionTestUtil.invoke(
+				_batchEngineUnitProcessor, "_getAdminUserId",
+				new Class<?>[] {long.class}, TestPropsValues.getCompanyId()));
+
+		User user;
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
+
+			user = UserTestUtil.getAdminUser(_company.getCompanyId());
+		}
+
+		Assert.assertEquals(
+			user.getUserId(),
+			(long)ReflectionTestUtil.invoke(
+				_batchEngineUnitProcessor, "_getAdminUserId",
+				new Class<?>[] {long.class}, _company.getCompanyId()));
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					TestPropsValues.getCompanyId())) {
+
+			Assert.assertEquals(
+				TestPropsValues.getUserId(),
+				(long)ReflectionTestUtil.invoke(
+					_batchEngineUnitProcessor, "_getAdminUserId",
+					new Class<?>[] {long.class},
+					TestPropsValues.getCompanyId()));
+
+			Assert.assertEquals(
+				user.getUserId(),
+				(long)ReflectionTestUtil.invoke(
+					_batchEngineUnitProcessor, "_getAdminUserId",
+					new Class<?>[] {long.class}, _company.getCompanyId()));
+		}
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
+
+			Assert.assertEquals(
+				TestPropsValues.getUserId(),
+				(long)ReflectionTestUtil.invoke(
+					_batchEngineUnitProcessor, "_getAdminUserId",
+					new Class<?>[] {long.class},
+					TestPropsValues.getCompanyId()));
+
+			Assert.assertEquals(
+				user.getUserId(),
+				(long)ReflectionTestUtil.invoke(
+					_batchEngineUnitProcessor, "_getAdminUserId",
+					new Class<?>[] {long.class}, _company.getCompanyId()));
+		}
+	}
+
 	@Test
 	public void testProcessBatchEngineUnitsImportsSystemObjectEntriesForVirtualInstance()
 		throws Exception {
@@ -62,8 +133,6 @@ public class BatchEngineUnitProcessorImplDBPartitionTest {
 			_objectDefinitionLocalService.getSystemObjectDefinitions();
 
 		int objectEntriesCount = _getObjectEntriesCount(objectDefinitions1);
-
-		_company = CompanyTestUtil.addCompany();
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
@@ -94,13 +163,18 @@ public class BatchEngineUnitProcessorImplDBPartitionTest {
 		return objectEntriesCount;
 	}
 
-	@DeleteAfterTestRun
-	private Company _company;
+	private static Company _company;
+
+	@Inject
+	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Button from '@clayui/button';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import DropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -172,7 +170,7 @@ const ActivationKeyForm = () => {
 				<ClayForm.Group>
 					<div className="d-flex justify-content-between purchased-solutions-phone">
 						<div className="col-3 p-0">
-							<DropDown
+							<ClayDropDown
 								closeOnClick
 								tabIndex={0}
 								trigger={
@@ -188,12 +186,12 @@ const ActivationKeyForm = () => {
 									</div>
 								}
 							>
-								<DropDown.ItemList items={phones as any}>
+								<ClayDropDown.ItemList items={phones as any}>
 									{(item) => {
 										const phone = item as any;
 
 										return (
-											<DropDown.Item
+											<ClayDropDown.Item
 												onClick={() => {
 													setCurrentPhonesFlags({
 														code: phone.code,
@@ -212,11 +210,11 @@ const ActivationKeyForm = () => {
 												/>
 
 												{phone.code}
-											</DropDown.Item>
+											</ClayDropDown.Item>
 										);
 									}}
-								</DropDown.ItemList>
-							</DropDown>
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
 
 							<div className="form-feedback-group">
 								<div className="form-text">
@@ -256,7 +254,7 @@ const ActivationKeyForm = () => {
 					onActiveChange={setActive}
 					trigger={
 						<ClayButton
-							className="align-items-center app-type-dropdown d-flex activation-key-form-select-input justify-content-between rounded-lg w-100"
+							className="activation-key-form-select-input align-items-center app-type-dropdown d-flex justify-content-between rounded-lg w-100"
 							displayType="secondary"
 							onClick={() => setActive(!active)}
 						>
@@ -294,7 +292,7 @@ const ActivationKeyForm = () => {
 
 				{purpose === 'other' && (
 					<textarea
-						className="custom-input mt-5 activation-key-form-textarea rounded-lg w-100"
+						className="activation-key-form-textarea custom-input mt-5 rounded-lg w-100"
 						{...register('purposeOther')}
 					/>
 				)}
@@ -375,10 +373,10 @@ const ActivationKeyForm = () => {
 
 					<span className="ml-1">
 						(these terms and the eula together form the
-						"agreement"). Please read these terms and the Liferay
-						End User License Agreement carefully before accessing,
-						downloading, installing or in any way using the
-						software. By clicking your assent or accessing,
+						&quot;agreement&quot;). Please read these terms and the
+						Liferay End User License Agreement carefully before
+						accessing, downloading, installing or in any way using
+						the software. By clicking your assent or accessing,
 						downloading, installing or in any way using the
 						software, you signify your assent to and acceptance of
 						the agreement and acknowledge that you have read and you
@@ -393,7 +391,7 @@ const ActivationKeyForm = () => {
 					</span>
 				</p>
 
-				<label className="d-flex cursor-pointer font-weight-normal w-100">
+				<label className="cursor-pointer d-flex font-weight-normal w-100">
 					<ClayCheckbox
 						checked={termsAndConditions}
 						className="activation-key-form-fail"
@@ -406,7 +404,7 @@ const ActivationKeyForm = () => {
 						required
 					/>
 
-					<span className="align-items-center d-flex activation-key-form-aggreements-check-box justify-content-center mb-0 ml-2">
+					<span className="activation-key-form-aggreements-check-box align-items-center d-flex justify-content-center mb-0 ml-2">
 						<p
 							className={classNames(
 								'align-items-center d-flex justify-content-center mb-1',
@@ -425,7 +423,7 @@ const ActivationKeyForm = () => {
 					</span>
 				</label>
 
-				<label className="d-flex cursor-pointer font-weight-normal">
+				<label className="cursor-pointer d-flex font-weight-normal">
 					<ClayCheckbox
 						checked={userAgreement}
 						onChange={(event) => {
@@ -434,7 +432,7 @@ const ActivationKeyForm = () => {
 						required
 					/>
 
-					<span className="align-items-center d-flex activation-key-form-aggreements-check-box justify-content-center mb-0 ml-2">
+					<span className="activation-key-form-aggreements-check-box align-items-center d-flex justify-content-center mb-0 ml-2">
 						<p
 							className={classNames(
 								'align-items-center d-flex justify-content-center mb-1',
@@ -463,7 +461,7 @@ const ActivationKeyForm = () => {
 				</label>
 			</ClayForm.Group>
 
-			<Button
+			<ClayButton
 				className="w-100"
 				disabled={loading}
 				onClick={handleSubmit(onSubmit)}
@@ -475,7 +473,7 @@ const ActivationKeyForm = () => {
 						{loading && <ClayLoadingIndicator />}
 					</span>
 				</div>
-			</Button>
+			</ClayButton>
 		</ProductPurchase.Shell>
 	);
 };

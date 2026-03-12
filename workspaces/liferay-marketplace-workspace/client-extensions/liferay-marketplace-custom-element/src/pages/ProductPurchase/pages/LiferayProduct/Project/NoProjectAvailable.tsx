@@ -25,7 +25,7 @@ const NoProjectAvailable = () => {
 			}}
 			title={i18n.translate('project-selection')}
 		>
-			<div className="d-flex flex-column align-items-center justify-content-center text-center">
+			<div className="align-items-center d-flex flex-column justify-content-center text-center">
 				<AlertBox className="mb-4" />
 
 				<h2>

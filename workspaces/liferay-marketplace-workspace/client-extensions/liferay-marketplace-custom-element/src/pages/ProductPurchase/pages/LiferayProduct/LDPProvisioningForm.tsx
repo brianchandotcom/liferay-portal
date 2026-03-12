@@ -33,7 +33,7 @@ const LDPProvisioning = () => {
 		useState('');
 
 	const {
-		actions: {previousStep, nextStep},
+		actions: {nextStep, previousStep},
 		product,
 		productPurchaseCart,
 		selectedAccount,

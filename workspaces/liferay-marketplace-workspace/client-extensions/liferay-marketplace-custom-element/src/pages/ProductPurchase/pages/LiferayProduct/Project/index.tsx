@@ -32,20 +32,20 @@ const ProjectSelection = () => {
 		selectedAccount,
 	} = useProductPurchaseOutletContext();
 
-	const accountKey = selectedAccount?.externalReferenceCode;
+	const accountKey = selectedAccount?.externalReferenceCode || '';
+
+	const isKoroneikiAccount = accountKey.startsWith('KOR-');
 
 	const {data: childAccounts, isLoading} = useSWR(
-		`/account/${accountKey}/child-accounts`,
+		isKoroneikiAccount ? `/account/${accountKey}/child-accounts` : null,
 		() => koroneikiOAuth2.getChildAccounts(accountKey)
 	);
-
-	const noChildAccount = !childAccounts?.items?.length;
 
 	if (isLoading) {
 		return <ClayLoadingIndicator />;
 	}
 
-	if (noChildAccount) {
+	if (!childAccounts?.items?.length || !isKoroneikiAccount) {
 		return <NoProjectAvailable />;
 	}
 

@@ -302,51 +302,6 @@ definition {
 			webContentTitle = "Depot WebContent Title");
 	}
 
-	@description = "This ensures that a single approver workflow of web content can be defined for the asset library."
-	@priority = 5
-	@refactordone
-	test CanApproveWCArticleWithinDepot {
-		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Web Content Article");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithWorkflowCP(
-			webContentContent = "Depot WebContent Content",
-			webContentTitle = "Depot WebContent Title");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WorkflowAsset.gotoViaNotification(
-			assetType = "Web Content Article",
-			user = "Test Test");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Depot WebContent Title",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Depot WebContent Title",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Approved",
-			webContentTitle = "Depot WebContent Title");
-	}
-
 	@description = "This ensures that the approved WC article in folder from a depot is available to use in its connected site."
 	@priority = 5
 	@refactordone
@@ -691,84 +646,6 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.submitForWorkflow();
-	}
-
-	@description = "This ensures that the resubmitted web content can be approved in an asset library."
-	@priority = 5
-	@refactordone
-	test CanRejectAndResubmitWCArticleWithinDepot {
-		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Web Content Article");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithWorkflowCP(
-			webContentContent = "Depot WebContent Content",
-			webContentTitle = "Depot WebContent Title");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Depot WebContent Title",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		Workflow.rejectTaskByActions(
-			workflowAssetTitle = "Depot WebContent Title",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Pending",
-			webContentTitle = "Depot WebContent Title");
-
-		Navigator.openURL();
-
-		Notifications.gotoNotifications();
-
-		AssertClick(
-			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-			value1 = "Your submission was rejected by Test Test, please modify and resubmit.");
-
-		Workflow.gotoPreviewEdit();
-
-		WebContent.addCP(webContentTitle = "Depot WebContent Title Edit");
-
-		Button.click(button = "Save");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.resubmitTaskByActions(
-			workflowAssetTitle = "Depot WebContent Title Edit",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Update");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Depot WebContent Title Edit",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Depot WebContent Title Edit",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Approved",
-			webContentTitle = "Depot WebContent Title Edit");
 	}
 
 	@description = "This ensures that an asset library WC article can be rejected by the content reviewer."

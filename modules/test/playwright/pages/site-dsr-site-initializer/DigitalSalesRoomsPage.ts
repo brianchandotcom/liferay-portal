@@ -20,6 +20,7 @@ export class DigitalSalesRoomsPage {
 	readonly page: Page;
 	readonly roomsLink: Locator;
 	readonly saveAsTemplateMenuItem: Locator;
+	readonly shareMenuItem: Locator;
 	readonly settingsMenuItem: Locator;
 	readonly startFromScratchButton: Locator;
 	readonly startFromTemplateButton: Locator;
@@ -48,6 +49,7 @@ export class DigitalSalesRoomsPage {
 		this.saveAsTemplateMenuItem = page.getByRole('menuitem', {
 			name: 'Save as Template',
 		});
+		this.shareMenuItem = page.getByRole('menuitem', {name: 'Share'});
 		this.settingsMenuItem = page.getByRole('menuitem', {name: 'Settings'});
 		this.startFromScratchButton = page.getByRole('menuitem', {
 			name: 'Start from Scratch',

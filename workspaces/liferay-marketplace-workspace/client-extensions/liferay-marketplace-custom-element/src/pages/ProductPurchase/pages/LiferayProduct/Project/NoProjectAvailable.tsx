@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import AlertBox from '../../../../../components/AlertBox';
 import ProductPurchase from '../../../../../components/ProductPurchase';
+import i18n from '../../../../../i18n';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 
 const NoProjectAvailable = () => {
@@ -14,22 +16,37 @@ const NoProjectAvailable = () => {
 
 	return (
 		<ProductPurchase.Shell
-			className="d-flex flex-column py-4"
+			className="d-flex flex-column"
 			footerProps={{
 				backButtonProps: {onClick: previousStep},
 				continueButtonProps: {
 					disabled: true,
 				},
 			}}
-			title={`No projects available for ${selectedAccount.name}`}
+			title={i18n.translate('project-selection')}
 		>
-			It looks like this account does not have any projects yet. Please
-			check back later or contact your administrator to get access to
-			projects.
-			<p className="d-flex justify-content-center my-4 next-step-page-text-bold">
-				Need help?&nbsp;{' '}
-				<a href="mailto:support@liferay.com">support@liferay.com</a>
-			</p>
+			<div className="d-flex flex-column align-items-center justify-content-center text-center">
+				<AlertBox className="mb-4" />
+
+				<h2>
+					{i18n.sub(
+						'no-projects-available-for-x',
+						selectedAccount.name
+					)}
+				</h2>
+
+				<p className="px-2">
+					It looks like this account does not have any projects yet.
+					Please check back later or contact your administrator to get
+					access to projects.
+					<p className="d-flex justify-content-center my-4 next-step-page-text-bold">
+						Need help?&nbsp;{' '}
+						<a href="mailto:support@liferay.com">
+							support@liferay.com
+						</a>
+					</p>
+				</p>
+			</div>
 		</ProductPurchase.Shell>
 	);
 };

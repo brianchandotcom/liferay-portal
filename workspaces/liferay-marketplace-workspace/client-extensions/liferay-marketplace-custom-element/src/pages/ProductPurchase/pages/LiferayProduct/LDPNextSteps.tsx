@@ -9,6 +9,7 @@ import Loading from '../../../../components/Loading';
 import {OrderStatus} from '../../../../enums/Order';
 import {usePlacedOrder} from '../../../../hooks/data/usePlacedOrder';
 import i18n from '../../../../i18n';
+import {getSiteURL} from '../../../../utils/site';
 
 import './LDPNextSteps.scss';
 
@@ -50,15 +51,18 @@ const LDPNextSteps: React.FC<{
 	description: string;
 	title: string;
 }> = ({description, title}) => {
-	const urlParams = new URLSearchParams(window.location.search);
-	const orderId = urlParams.get('orderId');
+	const searchParams = new URLSearchParams(window.location.search);
 
-	const {data: order, error} = usePlacedOrder(orderId!!, {
-		refreshInterval: 10000,
+	const orderId = searchParams.get('orderId') as string;
+
+	const {data: order, error} = usePlacedOrder(orderId, {
+		refreshInterval: 30000,
 	});
 
 	if (order?.orderStatusInfo.label === OrderStatus.COMPLETED) {
-		sendRedirect(`/liferay-service/launch?orderId=${orderId}`);
+		sendRedirect(
+			`${getSiteURL()}/customer-dashboard/#/products/${orderId}`
+		);
 	}
 
 	if (error) {

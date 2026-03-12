@@ -201,7 +201,9 @@ public class PortletDataContextFactoryImpl
 				ExportImportDateUtil.RANGE, new String[] {range}
 			).build();
 
-			if (ExportImportDateUtil.isRangeDateRange(parameterMap)) {
+			if (ExportImportDateUtil.isRangeDateRange(parameterMap) ||
+				ExportImportDateUtil.isRangeLast(parameterMap)) {
+
 				portletDataContext.setEndDate(endDate);
 			}
 		}

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.template;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;

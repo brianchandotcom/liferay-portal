@@ -12,7 +12,7 @@ const dummyUploader: TOnFileDrop = (droppedFiles: File[], dropTarget: any) => {
 		return (
 			<>
 				<FrontendDataSet
-					id=""
+					id="dummyUploader"
 					items={droppedFiles.map((file: File) => ({
 						name: file.name,
 						size: file.size,

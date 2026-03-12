@@ -19,6 +19,8 @@ export default {
 	'account-type': 'Account Type',
 	'accounts': 'Accounts',
 	'activation-key': 'Activation Key',
+	'activation-key-creation': 'Activation Key Creation',
+	'activation-key-server-details': 'Activation Key Server Details',
 	'activation-keys': 'Activation Keys',
 	'activation-status': 'Activation Status',
 	'active': 'Active',
@@ -109,6 +111,7 @@ export default {
 	'business': 'Business',
 	'business-account': 'Business Account',
 	'business-address': 'Business Address',
+	'business-email': 'Business Email',
 	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
@@ -136,6 +139,7 @@ export default {
 	'cloud-upload': 'Cloud Upload',
 	'columns': 'Columns',
 	'comments': 'Comments',
+	'company-name': 'Company Name',
 	'company-profile': 'Company Profile',
 	'compatible-offering': 'Compatible Offering',
 	'compatible-versions': 'Compatible Versions',
@@ -167,6 +171,7 @@ export default {
 	'could-not-find-ssa-account': 'Could not find SSA account',
 	'could-not-upload-the-file-a-package-with-this-filename-already-exists':
 		'Could not upload the file. A package with this filename already exists.',
+	'country': 'Country',
 	'coupon-code': 'Coupon Code',
 	'create': 'Create',
 	'create-a-cloud-app-to-be-delivered-as-a-live-service':
@@ -241,6 +246,7 @@ export default {
 	'email-address': 'Email Address',
 	'end-user-license-agreement': 'End User License Agreement',
 	'enter-app-description': 'Enter app description',
+	'enter-domain-here': 'Enter domain here',
 	'enter-email-address': 'Enter email address',
 	'enter-first-name': 'Enter first name',
 	'enter-last-name': 'Enter last name',
@@ -252,8 +258,13 @@ export default {
 	'enter-the-required-ram': 'Enter the required RAM',
 	'enter-the-required-ram-0-is-valid': 'Enter the required RAM (0 is valid)',
 	'enter-title-header': 'Enter title header',
+	'enter-your-business-email': 'Enter your business email',
+	'enter-your-company-name': 'Enter your company name',
 	'enter-your-contact-details-in-the-fields-below-in-the-request-description-enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit-we-will-be-in-contact-regarding-your-request':
 		'Enter your contact details in the fields below. In the Request Description, enter the name and a brief description of the app you would like to submit. We will be in contact regarding your request.',
+	'enter-your-country': 'Enter your country',
+	'enter-your-full-name': 'Enter your full name',
+	'enter-your-job-title': 'Enter your job title',
 	'enter-your-solution-details-this-information-will-be-used-for-submission-presentation-customer-support-and-search-capabilities':
 		'Enter your solution details. This information will be used for submission, presentation, customer support, and search capabilities.',
 	'entity-type': 'Entity Type',
@@ -301,7 +312,9 @@ export default {
 	'fragment-collection-of-fragments': 'Fragment/Collection of Fragments',
 	'free': 'Free',
 	'fulfillment-date': 'Fulfillment Date',
+	'full-name': 'Full Name',
 	'general-info': 'General Info',
+	'get-activation-key': 'Get Activation Key',
 	'get-app': 'Get App',
 	'get-started': 'Get Started',
 	'github-username': 'Github Username',
@@ -324,6 +337,10 @@ export default {
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
+	'i-have-read-and-agree-to-the-liferay-end-user-agreement':
+		'I have read and agree to the Liferay End User Agreement',
+	'i-have-read-and-agree-to-the-terms-and-conditions-above':
+		'I have read and agree to the terms and conditions above:',
 	'id': 'ID',
 	'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-the-compatibility-range':
 		'If the app is compatible with different updates of 7.4, please upload multiple packages for each update or update the compatibility range.',
@@ -338,6 +355,7 @@ export default {
 		'In the future, you will be able to submit your app source code for additional support and partnership opportunities with Liferay.',
 	'incident-report-contacts': 'Incident Report Contacts',
 	'income': 'Income',
+	'input-one-domain-name-per-instance': 'Input one domain name per instance',
 	'insert-text-here': 'Insert text here',
 	'install': 'Install',
 	'installation': 'Installation',
@@ -349,6 +367,7 @@ export default {
 	'insufficient-resource-requirements': 'Insufficient Resource Requirements',
 	'intl-code': 'Intl. Code',
 	'ip-addresses': 'IP Addresses',
+	'job-title': 'Job Title',
 	'join-an-existing-business-account-e-g-your-company-and-gain-full-access':
 		'Join an existing business account (e.g., your company) and gain full access.',
 	'join-existing-business-account': 'Join Existing Business Account',
@@ -373,6 +392,7 @@ export default {
 	'license-type': 'License Type',
 	'licenses': 'Licenses',
 	'licensing': 'Licensing',
+	'liferay-end-user-agreement': 'Liferay End User Agreement',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-paas': 'Liferay PaaS',
 	'liferay-publisher-license-agreement':
@@ -452,6 +472,8 @@ export default {
 	'notes': 'Notes',
 	'notes-pertaining-to-the-release-of-the-project-these-will-be-displayed-when-the-customer-goes-to-purchase-and-or-update-the-app':
 		'Notes pertaining to the release of the project. These will be displayed when the customer goes to purchase and/or update the app.',
+	'notify-me-about-products-services-and-events':
+		'Notify me about products, services and events.',
 	'number-of-cpus': 'Number of CPUs',
 	'object-action': 'Object Action',
 	'objective': 'Objective',
@@ -489,6 +511,7 @@ export default {
 	'pending': 'Pending',
 	'personal': 'Personal',
 	'personal-account': 'Personal Account',
+	'personal-information-purpose': 'Personal Information & Purpose',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',
 	'please-be-aware-that-since-you-are-adding-a-new-version-of-the-app-the-only-section-visible-is-the-build':
@@ -556,6 +579,7 @@ export default {
 	'purchase-number': 'Purchase Number',
 	'purchase-order-number': 'Purchase Order Number',
 	'purchased-by': 'Purchased by',
+	'purpose': 'Purpose',
 	'qty': 'Qty',
 	'quantity': 'Quantity',
 	'quarter': 'Quarter',
@@ -727,6 +751,8 @@ export default {
 	'timezone': 'Timezone',
 	'title': 'Title',
 	'to-be-renewed': 'To be Renewed',
+	'to-generate-your-unique-activation-key-file-and-access-the-download-please-complete-your-profile-details-below-tell-us-a-bit-about-your-intended-use-to-help-us-support-your-experience':
+		'To generate your unique activation key file and access the download, please complete your profile details below. Tell us a bit about your intended use to help us support your experience',
 	'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace':
 		'To join an existing business account, please contact your administrator, who can add you. Once added, you will automatically become part of that account and will be able to manage it and make purchases on Markeplace.',
 	'total': 'Total',

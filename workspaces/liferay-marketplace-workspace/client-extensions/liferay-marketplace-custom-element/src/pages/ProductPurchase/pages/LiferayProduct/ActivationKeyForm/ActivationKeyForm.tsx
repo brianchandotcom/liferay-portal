@@ -98,7 +98,7 @@ const ActivationKeyForm = () => {
 			</p>
 
 			<p className="h3 mb-0">
-				{i18n.translate('personal-information-and-purpose')}
+				{i18n.translate('personal-information-purpose')}
 			</p>
 
 			<hr className="mb-5 mt-3" />

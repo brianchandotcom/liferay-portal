@@ -2043,16 +2043,6 @@ public class ServiceBuilder {
 		return txRequiredMethodNames.contains(javaMethod.getName());
 	}
 
-	public boolean isVersionGTE_7_0_0() {
-		if (_dtdVersion.isLaterVersionThan("7.0.0") ||
-			_dtdVersion.isSameVersionAs("7.0.0")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isVersionGTE_7_1_0() {
 		if (_dtdVersion.isLaterVersionThan("7.1.0") ||
 			_dtdVersion.isSameVersionAs("7.1.0")) {

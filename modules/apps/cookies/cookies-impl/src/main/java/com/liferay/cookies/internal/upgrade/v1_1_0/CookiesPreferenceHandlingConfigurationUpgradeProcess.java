@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -52,7 +51,7 @@ public class CookiesPreferenceHandlingConfigurationUpgradeProcess
 				String dictionaryString = resultSet.getString("dictionary");
 
 				if (Validator.isNull(dictionaryString)) {
-					return;
+					continue;
 				}
 
 				Dictionary<String, Object> dictionary =
@@ -60,13 +59,8 @@ public class CookiesPreferenceHandlingConfigurationUpgradeProcess
 						new UnsyncByteArrayInputStream(
 							dictionaryString.getBytes(StringPool.UTF8)));
 
-				dictionary = HashMapDictionaryBuilder.putAll(
-					dictionary
-				).put(
-					"floatingIcon", "cookie"
-				).put(
-					"floatingIconEnabled", true
-				).build();
+				dictionary.put("floatingIcon", "cookie");
+				dictionary.put("floatingIconEnabled", true);
 
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();

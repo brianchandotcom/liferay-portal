@@ -82,11 +82,10 @@ spec:
                                         username:
                                             type: string
                                     type: object
-                                deletionProtection:
-                                    default: false
-                                    type: boolean
                                 environmentId:
                                     type: string
+                                orphanOnDelete:
+                                    type: boolean
                                 overlay:
                                     properties:
                                         region:
@@ -134,8 +133,8 @@ spec:
                                     type: string
                             required:
                                 -   database
-                                -   deletionProtection
                                 -   environmentId
+                                -   orphanOnDelete
                                 -   projectId
                                 -   region
                                 -   search

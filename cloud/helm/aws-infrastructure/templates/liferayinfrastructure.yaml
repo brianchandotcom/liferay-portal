@@ -13,8 +13,8 @@ spec:
         EnvironmentId: {{ .Values.environmentId }}
         ProjectId: {{ .Values.projectId }}
     database: {{ .Values.database | toYaml | nindent 8 }}
-    deletionProtection: {{ .Values.deletionProtection }}
     environmentId: {{ .Values.environmentId }}
+    orphanOnDelete: {{ .Values.orphanOnDelete }}
     overlay: {{ .Values.overlay | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId }}
     region: {{ .Values.region }}

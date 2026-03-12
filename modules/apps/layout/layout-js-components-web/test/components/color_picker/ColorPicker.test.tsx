@@ -80,6 +80,14 @@ const onTypeValue = async (input: HTMLInputElement, value: string) => {
 };
 
 describe('ColorPicker', () => {
+	afterEach(() => {
+		Liferay.FeatureFlags['LPD-40054'] = false;
+	});
+
+	beforeEach(() => {
+		Liferay.FeatureFlags['LPD-40054'] = true;
+	});
+
 	it('renders the ColorPicker', () => {
 		const {baseElement} = renderColorPicker();
 
@@ -105,10 +113,18 @@ describe('ColorPicker', () => {
 
 		await userEvent.click(getByTitle('clear-selection'));
 
-		expect(baseElement.querySelector('input')).toHaveValue('#ABCABC');
+		expect(baseElement.querySelector('input')).toHaveValue('ABCABC');
 	});
 
 	describe('When the value is an existing token', () => {
+		afterEach(() => {
+			Liferay.FeatureFlags['LPD-40054'] = false;
+		});
+
+		beforeEach(() => {
+			Liferay.FeatureFlags['LPD-40054'] = true;
+		});
+
 		it('renders the dropdown color picker', () => {
 			const {getByLabelText, getByTitle} = renderColorPicker();
 
@@ -127,40 +143,41 @@ describe('ColorPicker', () => {
 		});
 
 		it('change to input color picker when detach token button is clicked', async () => {
-			const {baseElement, getByTitle} = renderColorPicker();
+			const {baseElement, getByLabelText, getByText, getByTitle} =
+				renderColorPicker();
 
 			await userEvent.click(getByTitle('detach-style'));
+			await userEvent.click(getByLabelText('select-a-color'));
+			await userEvent.click(getByText('value-from-stylebook'));
 
-			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
-			expect(baseElement.querySelector('input')).toHaveValue('#9BE169');
+			expect(baseElement.querySelector('input')).toHaveValue('9BE169');
 			expect(
 				baseElement.querySelector('.clay-color-picker')
 			).toBeInTheDocument();
 		});
 
-		it('does not show the Value From Stylebook button when the value is inherited', () => {
-			const {queryByTitle} = renderColorPicker({
+		it('does not show the Value From Stylebook button when the value is inherited', async () => {
+			const {queryByText} = renderColorPicker({
 				field: {...FIELD, inherited: true, value: undefined},
 			});
 
-			expect(
-				queryByTitle('value-from-stylebook')
-			).not.toBeInTheDocument();
+			expect(queryByText('select-a-color')).not.toBeInTheDocument();
 		});
 
 		it('disabled the color when the token references itself', async () => {
-			const {getByTitle} = renderColorPicker({
+			const {getByLabelText, getByText, getByTitle} = renderColorPicker({
 				field: {...FIELD, name: 'orange'},
 				value: '#fff',
 			});
 
-			await userEvent.click(getByTitle('value-from-stylebook'));
+			await userEvent.click(getByLabelText('select-a-color'));
+			await userEvent.click(getByText('value-from-stylebook'));
 
 			expect(getByTitle('Orange')).toBeDisabled();
 		});
 
 		it('disables the colors when the tokens are mutually referenced', async () => {
-			const {getByTitle} = renderColorPicker({
+			const {getByLabelText, getByText, getByTitle} = renderColorPicker({
 				editedTokenValues: {
 					orange: {
 						name: 'blue',
@@ -171,7 +188,8 @@ describe('ColorPicker', () => {
 				value: '#fff',
 			});
 
-			await userEvent.click(getByTitle('value-from-stylebook'));
+			await userEvent.click(getByLabelText('select-a-color'));
+			await userEvent.click(getByText('value-from-stylebook'));
 
 			expect(getByTitle('Orange')).toBeDisabled();
 			expect(getByTitle('Blue')).toBeDisabled();
@@ -180,23 +198,23 @@ describe('ColorPicker', () => {
 
 	describe('When the value is an hexadecimal', () => {
 		it('renders the autocomplete color picker', () => {
-			const {baseElement, getByTitle} = renderColorPicker({
+			const {baseElement} = renderColorPicker({
 				value: '#ffb46e',
 			});
 
-			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
-			expect(baseElement.querySelector('input')).toHaveValue('#FFB46E');
+			expect(baseElement.querySelector('input')).toHaveValue('FFB46E');
 			expect(
 				baseElement.querySelector('.clay-color-picker')
 			).toBeInTheDocument();
 		});
 
 		it('change to dropdown color picker when value from stylebook button is clicked', async () => {
-			const {getByLabelText, getByTitle} = renderColorPicker({
+			const {getByLabelText, getByText, getByTitle} = renderColorPicker({
 				value: '#fff',
 			});
 
-			await userEvent.click(getByTitle('value-from-stylebook'));
+			await userEvent.click(getByLabelText('select-a-color'));
+			await userEvent.click(getByText('value-from-stylebook'));
 			await userEvent.click(getByTitle('Blue'));
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
@@ -224,7 +242,7 @@ describe('ColorPicker', () => {
 
 			await onTypeValue(input, '');
 
-			expect(input).toHaveValue('#444444');
+			expect(input).toHaveValue('444444');
 		});
 
 		it('sets the previous value when the input value is an invalid hexcolor', async () => {
@@ -235,7 +253,7 @@ describe('ColorPicker', () => {
 
 			await onTypeValue(input, '#44');
 
-			expect(input).toHaveValue('#444444');
+			expect(input).toHaveValue('444444');
 		});
 
 		it('takes a 6-digit hexcolor if the input value has 7 digits', async () => {
@@ -244,9 +262,9 @@ describe('ColorPicker', () => {
 			});
 			const input = baseElement.querySelector('input')!;
 
-			await onTypeValue(input, '#123456A');
+			await onTypeValue(input, '123456A');
 
-			expect(input).toHaveValue('#123456');
+			expect(input).toHaveValue('123456');
 		});
 
 		it('takes an 8-digit hexcolor', async () => {
@@ -257,7 +275,7 @@ describe('ColorPicker', () => {
 
 			await onTypeValue(input, '#AABBCCDD');
 
-			expect(input).toHaveValue('#AABBCCDD');
+			expect(input).toHaveValue('AABBCCDD');
 		});
 
 		it('takes an 8-digit hexcolor even if the input value has more digits', async () => {
@@ -268,7 +286,7 @@ describe('ColorPicker', () => {
 
 			await onTypeValue(input, '#55555555555');
 
-			expect(input).toHaveValue('#55555555');
+			expect(input).toHaveValue('55555555');
 		});
 
 		it('converts the 3-digit hexcolor to a 6-digit hexcolor', async () => {
@@ -279,7 +297,7 @@ describe('ColorPicker', () => {
 
 			await onTypeValue(input, '#abc');
 
-			expect(input).toHaveValue('#AABBCC');
+			expect(input).toHaveValue('AABBCC');
 		});
 
 		it('converts the 4-digit hexcolor to an 8-digit hexcolor', async () => {
@@ -290,7 +308,7 @@ describe('ColorPicker', () => {
 
 			await onTypeValue(input, '#abcd');
 
-			expect(input).toHaveValue('#AABBCCDD');
+			expect(input).toHaveValue('AABBCCDD');
 		});
 
 		describe('Input errors', () => {
@@ -303,7 +321,7 @@ describe('ColorPicker', () => {
 
 				await onTypeValue(input, 'prim');
 
-				expect(input).toHaveValue('#FFF');
+				expect(input).toHaveValue('FFF');
 			});
 
 			it('clears an error when the clear selection button is clicked', async () => {

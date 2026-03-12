@@ -199,7 +199,7 @@ public class TemplatesAspect {
 		methodParameterTypes = {
 			"com.liferay.portal.kernel.theme.ThemeDisplay", "java.util.Map",
 			"java.lang.String", "java.lang.String",
-			"com.liferay.portal.kernel.io.unsync.UnsyncStringWriter",
+			"com.liferay.petra.io.unsync.UnsyncStringWriter",
 			"jakarta.servlet.http.HttpServletRequest",
 			"jakarta.servlet.http.HttpServletResponse"
 		},

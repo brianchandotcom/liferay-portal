@@ -1914,7 +1914,7 @@ definition {
 			publishTemplateName = "Publish Template Name");
 	}
 
-	@description = "This is a use case for LPS-131578, LPS-149374 and LPD-81248. Users can no longer configure the portal to exclude displayed contents from publishing, the displayed contents are excluded by default."
+	@description = "This is a use case for LPD-81248. The content is not included."
 	@priority = 3
 	test PublishViaPortletWithoutContent {
 		property test.liferay.virtual.instance = "false";

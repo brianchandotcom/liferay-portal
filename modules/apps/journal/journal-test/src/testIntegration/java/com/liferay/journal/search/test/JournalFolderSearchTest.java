@@ -83,7 +83,8 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 	@Test
 	public void testSearchByFolderId() throws Exception {
 		JournalFolder folder = JournalTestUtil.addFolder(
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		assertBaseModelsCount(

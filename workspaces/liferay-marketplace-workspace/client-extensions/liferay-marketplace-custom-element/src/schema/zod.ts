@@ -137,13 +137,13 @@ const zodSchema = {
 			code: z.string(),
 			flag: z.string(),
 		}),
-		phoneNumber: z.string(),
 		jobTitle: z
 			.string()
 			.min(3, 'Job title is required')
 			.optional()
 			.or(z.literal('')),
 		notifyMeAboutProducts: z.boolean(),
+		phoneNumber: z.string(),
 		purpose: z.string().min(3, 'Purpose is required'),
 		purposeOther: z
 			.string()

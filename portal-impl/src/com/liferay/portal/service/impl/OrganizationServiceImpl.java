@@ -66,6 +66,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
 
+		_checkUserOrganizationsPermission(organizationIds);
+
 		organizationLocalService.addGroupOrganizations(
 			groupId, organizationIds);
 	}
@@ -703,6 +705,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
 
+		_checkUserOrganizationsPermission(organizationIds);
+
 		organizationLocalService.setGroupOrganizations(
 			groupId, organizationIds);
 	}
@@ -719,6 +723,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
+
+		_checkUserOrganizationsPermission(organizationIds);
 
 		organizationLocalService.unsetGroupOrganizations(
 			groupId, organizationIds);
@@ -896,6 +902,21 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			externalReferenceCode, organizationId, parentOrganizationId, name,
 			type, regionId, countryId, statusListTypeId, comments, true, null,
 			site, null, null, null, null, null, serviceContext);
+	}
+
+	private void _checkUserOrganizationsPermission(long[] organizationIds)
+		throws PortalException {
+
+		for (long organizationId : organizationIds) {
+			if (organizationLocalService.hasUserOrganization(
+					getUserId(), organizationId, false, false)) {
+
+				continue;
+			}
+
+			OrganizationPermissionUtil.check(
+				getPermissionChecker(), organizationId, ActionKeys.VIEW);
+		}
 	}
 
 	@BeanReference(type = AssetCategoryLocalService.class)

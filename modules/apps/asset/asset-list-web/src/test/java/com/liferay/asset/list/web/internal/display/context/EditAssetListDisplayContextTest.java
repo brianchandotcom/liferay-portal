@@ -44,6 +44,7 @@ import jakarta.portlet.PortletResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -126,6 +127,37 @@ public class EditAssetListDisplayContextTest {
 		DropdownItem dropdownItem = dropdownItems.get(0);
 
 		Assert.assertEquals(expectedLabel, dropdownItem.get("label"));
+	}
+
+	@Test
+	public void testGetActionDropdownItemsEmptyClassTypeIdsProperty()
+		throws Exception {
+
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+		String expectedLabel = RandomTestUtil.randomString();
+
+		_setUpAssetRendererFactoryRegistryUtil(
+			className, classNameId,
+			_getClassTypeReader(
+				ListUtil.fromArray(
+					_getClassType(), _getClassType(), _getClassType())),
+			true, expectedLabel);
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
+			"selectionStyle", "manual"
+		).build();
+
+		_setUpAssetListEntryLocalServiceUtil(
+			StringPool.BLANK, className, unicodeProperties.toString());
+
+		EditAssetListDisplayContext editAssetListDisplayContext =
+			_getEditAssetListDisplayContext(unicodeProperties);
+
+		List<DropdownItem> dropdownItems =
+			editAssetListDisplayContext.getActionDropdownItems();
+
+		Assert.assertEquals(dropdownItems.toString(), 3, dropdownItems.size());
 	}
 
 	@Test
@@ -497,6 +529,12 @@ public class EditAssetListDisplayContextTest {
 			);
 
 			Mockito.when(
+				assetRendererFactory.getClassNameId()
+			).thenReturn(
+				classNameId
+			);
+
+			Mockito.when(
 				assetRendererFactory.getClassTypeReader()
 			).thenReturn(
 				classTypeReader
@@ -527,6 +565,18 @@ public class EditAssetListDisplayContextTest {
 					getAssetRendererFactoryByClassNameId(classNameId)
 		).thenReturn(
 			assetRendererFactory
+		);
+
+		ArrayList<AssetRendererFactory<?>> assetRendererFactories =
+			new ArrayList<>();
+
+		assetRendererFactories.add(assetRendererFactory);
+
+		_assetRendererFactoryRegistryUtilMockedStatic.when(
+			() -> AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				Mockito.anyLong(), Mockito.eq(true))
+		).thenReturn(
+			assetRendererFactories
 		);
 	}
 

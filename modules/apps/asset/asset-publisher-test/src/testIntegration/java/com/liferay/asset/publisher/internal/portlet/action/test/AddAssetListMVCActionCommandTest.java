@@ -6,7 +6,10 @@
 package com.liferay.asset.publisher.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -16,6 +19,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -26,11 +30,14 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -95,6 +102,8 @@ public class AddAssetListMVCActionCommandTest {
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setSiteGroupId(group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -130,16 +139,32 @@ public class AddAssetListMVCActionCommandTest {
 			PortletPreferencesFactoryUtil.getExistingPortletSetup(
 				layout, portletId);
 
-		String externalReferenceCode = portletPreferences.getValue(
-			"assetListEntryExternalReferenceCode", null);
-
-		Assert.assertNotNull(
-			_assetListEntryLocalService.
-				fetchAssetListEntryByExternalReferenceCode(
-					externalReferenceCode, expectedGroup.getGroupId()));
-
 		Assert.assertEquals(
 			"asset-list", portletPreferences.getValue("selectionStyle", null));
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.
+				fetchAssetListEntryByExternalReferenceCode(
+					portletPreferences.getValue(
+						"assetListEntryExternalReferenceCode", null),
+					expectedGroup.getGroupId());
+
+		Assert.assertNotNull(assetListEntry);
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+			_assetListEntrySegmentsEntryRelLocalService.
+				fetchAssetListEntrySegmentsEntryRel(
+					assetListEntry.getAssetListEntryId(),
+					SegmentsEntryConstants.ID_DEFAULT);
+
+		Assert.assertNotNull(assetListEntrySegmentsEntryRel);
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.load(
+			assetListEntrySegmentsEntryRel.getTypeSettings()
+		).build();
+
+		Assert.assertEquals(
+			"true", unicodeProperties.getProperty("anyAssetType", null));
 	}
 
 	private void _testAddAssetListFromManualCollection(
@@ -183,6 +208,10 @@ public class AddAssetListMVCActionCommandTest {
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

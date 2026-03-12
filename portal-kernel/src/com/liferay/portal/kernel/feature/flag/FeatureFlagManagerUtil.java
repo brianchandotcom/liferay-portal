@@ -42,10 +42,6 @@ public class FeatureFlagManagerUtil {
 		}
 	}
 
-	public static FeatureFlagManager getFeatureFlagManager() {
-		return _featureFlagManager;
-	}
-
 	public static String getJSON(long companyId) {
 		if (_featureFlagManager != null) {
 			return _featureFlagManager.getJSON(companyId);
@@ -101,16 +97,6 @@ public class FeatureFlagManagerUtil {
 		return new FeatureFlaggedServiceRegistration<>(
 			bundleContext, featureFlagKey, serviceClass, serviceFunction,
 			servicePropertiesFunction);
-	}
-
-	public static AutoCloseable setFeatureFlagManagerWithAutoCloseable(
-		FeatureFlagManager featureFlagManager) {
-
-		FeatureFlagManager oldFeatureFlagManager = _featureFlagManager;
-
-		_featureFlagManager = featureFlagManager;
-
-		return () -> _featureFlagManager = oldFeatureFlagManager;
 	}
 
 	public void setFeatureFlagManager(FeatureFlagManager featureFlagManager) {

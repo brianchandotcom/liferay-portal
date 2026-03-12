@@ -7,7 +7,6 @@ package com.liferay.asset.list.web.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyGroupRelService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
@@ -171,7 +170,8 @@ public class AssetListPortlet extends MVCPortlet {
 		_assetRendererFactoryClassProvider;
 
 	@Reference
-	private AssetVocabularyGroupRelLocalService _assetVocabularyGroupRelLocalService;
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;

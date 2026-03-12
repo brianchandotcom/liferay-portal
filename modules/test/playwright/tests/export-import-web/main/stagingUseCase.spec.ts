@@ -302,7 +302,11 @@ test('Staging only approved content goes to live', async ({
 
 	await pageEditorPage.goto(layout1, site.friendlyUrlPath);
 
-	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
+	await pageEditorPage.addWidget(
+		'Content Management',
+		'Web Content Display',
+		pageEditorPage.dropZone
+	);
 
 	await pageEditorPage.publishPage();
 
@@ -313,7 +317,11 @@ test('Staging only approved content goes to live', async ({
 	});
 
 	await pageEditorPage.goto(layout2, site.friendlyUrlPath);
-	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
+	await pageEditorPage.addWidget(
+		'Content Management',
+		'Web Content Display',
+		pageEditorPage.dropZone
+	);
 	await pageEditorPage.publishPage();
 
 	await workflowPage.goto(site.friendlyUrlPath);
@@ -465,7 +473,11 @@ test(
 			name: displayPageTemplateName,
 		});
 		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-		await pageEditorPage.addFragment('Basic Components', 'Button');
+		await pageEditorPage.addFragment(
+			'Basic Components',
+			'Button',
+			pageEditorPage.dropZone
+		);
 		await pageEditorPage.mapEditableLink({
 			editableId: 'link',
 			fragmentName: 'Button',
@@ -536,7 +548,11 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontentStructureId}`,
 			webContentName
 		);
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
-		await pageEditorPage.addWidget('Content Management', 'Asset Publisher');
+		await pageEditorPage.addWidget(
+			'Content Management',
+			'Asset Publisher',
+			pageEditorPage.dropZone
+		);
 
 		const widgetId = await pageEditorPage.getFragmentId('Asset Publisher');
 

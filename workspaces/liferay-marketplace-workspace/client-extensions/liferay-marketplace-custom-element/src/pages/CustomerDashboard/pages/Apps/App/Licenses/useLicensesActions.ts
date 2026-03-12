@@ -56,7 +56,7 @@ const useLicenseActions = ({
 		setModal({...licenseKey, keyType});
 	};
 
-	const onDownload = useCallback(
+	const onDownloadAppLicenseKey = useCallback(
 		async (licenseKey: LicenseKey) => {
 			if (!licenseKey?.id) {
 				return;
@@ -84,9 +84,30 @@ const useLicenseActions = ({
 		[product?.name]
 	);
 
+	const onDownloadLicenseKey = useCallback(
+		async (licenseKey: LicenseKey) => {
+			if (!licenseKey?.id) {
+				return;
+			}
+
+			await provisioningOAuth2
+				.downloadLicenseKey(licenseKey?.id as number)
+				.catch(() =>
+					Liferay.Util.openToast({
+						message: i18n.translate(
+							'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'
+						),
+						type: 'danger',
+					})
+				);
+		},
+		[product?.name]
+	);
+
 	return {
 		onDeativateLicenseKey,
-		onDownload,
+		onDownloadAppLicenseKey,
+		onDownloadLicenseKey,
 		onViewLicenseKey,
 	};
 };

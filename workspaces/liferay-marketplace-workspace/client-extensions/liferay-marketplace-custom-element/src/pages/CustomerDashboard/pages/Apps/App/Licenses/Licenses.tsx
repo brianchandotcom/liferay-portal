@@ -29,9 +29,8 @@ import LicenceKeyModalContent from '../../../../components/LicenseModalContent';
 import TableActions from '../../../../components/TableActions';
 import TitleSubtitleHeader from '../../../../components/TitleSubtitleHeader';
 import useLicenseActions from './useLicensesActions';
-
-import './Licenses.scss';
 import {OrderStatus, OrderTypes} from '../../../../../../enums/Order';
+import './Licenses.scss';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
@@ -94,7 +93,7 @@ const Licenses = () => {
 	const orderStatusIsNotCompleted =
 		placedOrder?.orderStatusInfo?.label !== OrderStatus.COMPLETED;
 
-	const {onDeativateLicenseKey, onDownload, onViewLicenseKey} =
+	const {onDeativateLicenseKey, onDownloadAppLicenseKey, onViewLicenseKey} =
 		useLicenseActions({
 			deactivateLicenseModal,
 			keyType,
@@ -136,7 +135,7 @@ const Licenses = () => {
 						)}
 						displayType="primary"
 						onClick={() => {
-							onDownload(modalData as LicenseKey);
+							onDownloadAppLicenseKey(modalData as LicenseKey);
 						}}
 						title={
 							isLicenseExpired(
@@ -154,7 +153,12 @@ const Licenses = () => {
 				</>
 			),
 		}),
-		[licenseKeyModal, modalData, deactivateLicenseModal, onDownload]
+		[
+			deactivateLicenseModal,
+			licenseKeyModal,
+			modalData,
+			onDownloadAppLicenseKey,
+		]
 	);
 
 	if (isLoading) {
@@ -173,7 +177,7 @@ const Licenses = () => {
 
 								deactivateLicenseModal.onOpenChange(true);
 							}}
-							onDownload={() => onDownload(row)}
+							onDownload={() => onDownloadAppLicenseKey(row)}
 							onView={() => onViewLicenseKey(row)}
 							tooltip={
 								isLicenseExpired(row.expirationDate)

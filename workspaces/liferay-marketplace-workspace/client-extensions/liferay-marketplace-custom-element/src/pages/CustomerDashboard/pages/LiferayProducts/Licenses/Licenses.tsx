@@ -4,30 +4,22 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {differenceInDays, format, isBefore, subMonths} from 'date-fns';
-import {useEffect, useState} from 'react';
+import {Fragment, useEffect} from 'react';
 import {useLocation, useOutletContext, useParams} from 'react-router-dom';
-import useSWR from 'swr';
+import useSWR, {KeyedMutator} from 'swr';
 
 import {breadcrumbStore} from '../../../../../components/Breadcrumb/BreadcrumbStore';
 import EmptyState from '../../../../../components/EmptyState';
-import Modal from '../../../../../components/Modal';
 import StatusCell from '../../../../../components/Table/StatusCell';
 import Table from '../../../../../components/Table/Table';
-import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
-import {OrderTypes} from '../../../../../enums/Order';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
 import provisioningOAuth2 from '../../../../../services/oauth/Provisioning';
 import {LicenseKey} from '../../../../../services/oauth/types';
-import LicenseDetailsModalHeader from '../../../components/LicenseDetailsModalHeader';
-import LicenceKeyModalContent from '../../../components/LicenseModalContent';
 import TitleSubtitleHeader from '../../../components/TitleSubtitleHeader';
-import useLicenseActions from '../../Apps/App/Licenses/useLicensesActions';
 import ActivationKeyAlert from './LicenseAlert';
 import LicenseTitleHeader from './LicenseTitleHeader';
 
@@ -35,39 +27,210 @@ import './Licenses.scss';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
+const isNewActivationKey = (licenseKey: LicenseKey) => {
+	if (!licenseKey?.createDate) {
+		return false;
+	}
+
+	const created = new Date(licenseKey.createDate);
+	const today = new Date();
+
+	return differenceInDays(today, created) <= 15;
+};
+
+const isRenewalAvailable = (licenseKey: LicenseKey) => {
+	if (!licenseKey.active || !licenseKey.expirationDate) {
+		return false;
+	}
+
+	return isBefore(
+		subMonths(new Date(licenseKey.expirationDate), 3),
+		new Date()
+	);
+};
+
 const isLicenseExpired = (expirationDate: string) =>
 	!isBefore(new Date(), new Date(expirationDate));
 
-const LiferayProductLicenses = () => {
-	const [modalData, setModalData] = useState<LicenseKey>();
-	const {myUserAccount} = useMarketplaceContext();
+const ActivationKeysTable = ({
+	licenseKeysResponse,
+	mutate,
+}: {
+	mutate: KeyedMutator<APIResponse<LicenseKey>>;
+	licenseKeysResponse: APIResponse<LicenseKey>;
+}) => {
+	if (licenseKeysResponse.totalCount === 0) {
+		return <EmptyState title="No Activation Keys" />;
+	}
+
+	return (
+		<Table
+			Actions={({row}) => {
+				const expired =
+					!row.expirationDate || isLicenseExpired(row.expirationDate);
+
+				const renewalAvailable = isRenewalAvailable(row);
+
+				const Wrapper = renewalAvailable
+					? ClayTooltipProvider
+					: Fragment;
+
+				return (
+					<Wrapper>
+						<div className="align-items-center d-flex license-actions">
+							<ClayButton
+								className="mr-3 renew-link"
+								disabled={!renewalAvailable}
+								displayType="unstyled"
+								onClick={() => {
+									provisioningOAuth2
+										.licenseKeyTypeFreeRenew(row.id)
+										.then(() =>
+											mutate((data) => data, {
+												revalidate: true,
+											})
+										);
+								}}
+								title={
+									renewalAvailable
+										? undefined
+										: i18n.translate(
+												'renewal-will-be-available-3-months-before-your-activation-key-expires'
+											)
+								}
+							>
+								{i18n.translate('renew')}
+							</ClayButton>
+
+							<ClayButton
+								className="license-download-btn px-3 rounded"
+								disabled={expired}
+								displayType="secondary"
+								onClick={() => {
+									provisioningOAuth2.downloadLicenseKey(
+										row.id
+									);
+								}}
+							>
+								{i18n.translate('download')}
+							</ClayButton>
+						</div>
+					</Wrapper>
+				);
+			}}
+			columns={[
+				{
+					bodyClass: 'border-0 cursor-pointer text-capitalize',
+					expanded: true,
+					key: 'licenseType',
+					noWrap: true,
+					render: (_, row) => (
+						<LicenseTitleHeader
+							isNewActivationKey={isNewActivationKey(row)}
+							isToBeRenewed={isRenewalAvailable(row)}
+							title={row.productName}
+						/>
+					),
+					title: (
+						<TitleSubtitleHeader
+							title={i18n.translate('activation-key')}
+						/>
+					),
+				},
+				{
+					bodyClass: 'border-0 cursor-pointer',
+					key: 'domains',
+					render: (domains: string) => (
+						<ul className="list-unstyled">
+							{domains.split(',').map((domain) => (
+								<li
+									className="font-weight-bold description-title mt-2"
+									key={domain}
+								>
+									{domain}
+								</li>
+							))}
+						</ul>
+					),
+					title: (
+						<TitleSubtitleHeader title={i18n.translate('domain')} />
+					),
+				},
+				{
+					bodyClass: 'border-0 cursor-pointer',
+					key: 'startDate',
+					render: (startDate, {expirationDate}) => (
+						<div className="date-cell">
+							<p className="m-0">
+								{format(new Date(startDate), 'MMM dd, yyyy')} -
+							</p>
+
+							<p className="m-0">
+								{expirationDate
+									? format(
+											new Date(expirationDate),
+											'MMM dd, yyyy'
+										)
+									: 'DNE'}
+							</p>
+						</div>
+					),
+					title: (
+						<TitleSubtitleHeader
+							title={
+								<span>
+									Start Date -<br />
+									Exp. Date
+								</span>
+							}
+						/>
+					),
+				},
+				{
+					bodyClass: 'border-0 cursor-pointer',
+					key: 'status',
+					render: (_, {active, expirationDate}) => {
+						const isActive =
+							active &&
+							isBefore(new Date(), new Date(expirationDate));
+
+						const label = isActive ? 'active' : 'expired';
+
+						return (
+							<StatusCell icon="circle" iconClassName={label}>
+								{i18n.translate(label)}
+							</StatusCell>
+						);
+					},
+					title: (
+						<TitleSubtitleHeader title={i18n.translate('status')} />
+					),
+				},
+			]}
+			hasHover
+			hasKebabButton
+			hasPagination
+			kebabClassName="border-0"
+			rows={licenseKeysResponse.items ?? []}
+		/>
+	);
+};
+
+export default function ActivationKeys() {
 	const {orderId} = useParams();
-	const deactivateLicenseModal = useModal();
-	const licenseKeyModal = useModal();
 	const location = useLocation();
 	const outletContext = useOutletContext<OutletContext['data']>();
 	const searchParams = new URLSearchParams(location.search);
+
+	const product = outletContext?.product;
 
 	const {
 		data: licenseKeysResponse,
 		isLoading,
 		mutate,
-	} = useSWR<LicenseKey[]>(
-		`/order-free-dxp-license-keys/${orderId}`,
-		async (): Promise<LicenseKey[]> => {
-			try {
-				return provisioningOAuth2.getOrderLicenseKeys(
-					orderId as string
-				);
-			}
-			catch {
-				return [];
-			}
-		}
+	} = useSWR(`/order-free-dxp-license-keys/${orderId}`, () =>
+		provisioningOAuth2.getOrderLicenseKeys(orderId as string)
 	);
-
-	const placedOrder = outletContext?.placedOrder;
-	const product = outletContext?.product;
 
 	useEffect(() => {
 		breadcrumbStore.send({
@@ -76,47 +239,9 @@ const LiferayProductLicenses = () => {
 		});
 	}, [orderId, product?.name]);
 
-	const keyType =
-		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.DXP
-			? 'On-Premise'
-			: 'Cloud';
-
-	const isNewActivationKey = (licenseKey: LicenseKey) => {
-		if (!licenseKey?.createDate) {
-			return false;
-		}
-
-		const created = new Date(licenseKey.createDate);
-		const today = new Date();
-
-		return differenceInDays(today, created) <= 15;
-	};
-
-	const isRenewalAvailable = (licenseKey: LicenseKey) => {
-		if (!licenseKey.active || !licenseKey.expirationDate) {
-			return false;
-		}
-
-		return isBefore(
-			subMonths(new Date(licenseKey.expirationDate), 3),
-			new Date()
-		);
-	};
-
-	const {onDownload, onViewLicenseKey} = useLicenseActions({
-		deactivateLicenseModal,
-		keyType,
-		licenseKeyModal,
-		mutate,
-		product,
-		setModal: setModalData,
-	});
-
 	if (isLoading) {
 		return <ClayLoadingIndicator />;
 	}
-
-	const rows = licenseKeysResponse ?? [];
 
 	return (
 		<div className="mt-5">
@@ -133,223 +258,13 @@ const LiferayProductLicenses = () => {
 			)}
 
 			<div className="licenses mb-9">
-				{rows.length ? (
-					<Table
-						Actions={({row}) => {
-							const expired =
-								!row.expirationDate ||
-								isLicenseExpired(row.expirationDate);
-
-							const licenseKey = row.id;
-							const renewalAvailable = isRenewalAvailable(row);
-
-							return (
-								<ClayTooltipProvider>
-									<div className="align-items-center d-flex license-actions">
-										<ClayButton
-											className="mr-3 renew-link"
-											disabled={!renewalAvailable}
-											displayType="unstyled"
-											onClick={() => {
-												provisioningOAuth2.licenseKeyTypeFreeRenew(
-													licenseKey
-												);
-											}}
-											title={
-												!renewalAvailable
-													? i18n.translate(
-															'renewal-will-be-available-3-months-before-your-activation-key-expires'
-														)
-													: undefined
-											}
-										>
-											{i18n.translate('renew')}
-										</ClayButton>
-
-										<ClayButton
-											className="license-download-btn px-3 rounded"
-											disabled={expired}
-											displayType="secondary"
-											onClick={() => {
-												provisioningOAuth2.downloadAppLicenseKey(
-													licenseKey
-												);
-											}}
-										>
-											{i18n.translate('download')}
-										</ClayButton>
-									</div>
-								</ClayTooltipProvider>
-							);
-						}}
-						columns={[
-							{
-								bodyClass:
-									'border-0 cursor-pointer text-capitalize',
-								expanded: true,
-								key: 'licenseType',
-								noWrap: true,
-								render: (_, row) => (
-									<LicenseTitleHeader
-										isNewActivationKey={isNewActivationKey(
-											row
-										)}
-										isToBeRenewed={isRenewalAvailable(row)}
-										title={row.productName}
-									/>
-								),
-								title: (
-									<TitleSubtitleHeader
-										title={i18n.translate('activation-key')}
-									/>
-								),
-							},
-							{
-								bodyClass: 'border-0 cursor-pointer',
-								key: 'ipAddresses',
-								render: (ipAddresses) => (
-									<TitleSubtitleHeader
-										title={ipAddresses || '-'}
-									/>
-								),
-								title: (
-									<TitleSubtitleHeader
-										title={i18n.translate('domain')}
-									/>
-								),
-							},
-							{
-								bodyClass: 'border-0 cursor-pointer',
-								key: 'startDate',
-								render: (startDate, {expirationDate}) => (
-									<div className="date-cell">
-										<p className="m-0">
-											{format(
-												new Date(startDate),
-												'MMM dd, yyyy'
-											)}{' '}
-											-
-										</p>
-
-										<p className="m-0">
-											{expirationDate
-												? format(
-														new Date(
-															expirationDate
-														),
-														'MMM dd, yyyy'
-													)
-												: 'DNE'}
-										</p>
-									</div>
-								),
-								title: (
-									<TitleSubtitleHeader
-										title={
-											<span>
-												Start Date -<br />
-												Exp. Date
-											</span>
-										}
-									/>
-								),
-							},
-							{
-								bodyClass: 'border-0 cursor-pointer',
-								key: 'status',
-								render: (_, {active, expirationDate}) => {
-									const isActive =
-										active &&
-										isBefore(
-											new Date(),
-											new Date(expirationDate)
-										);
-
-									return (
-										<StatusCell
-											icon="circle"
-											iconClassName={
-												isActive ? 'active' : 'expired'
-											}
-										>
-											{i18n.translate(
-												isActive ? 'active' : 'expired'
-											)}
-										</StatusCell>
-									);
-								},
-								title: (
-									<TitleSubtitleHeader
-										title={i18n.translate('status')}
-									/>
-								),
-							},
-						]}
-						hasHover={false}
-						hasKebabButton
-						hasPagination
-						kebabClassName="border-0"
-						onClickRow={onViewLicenseKey}
-						rows={rows}
-					/>
-				) : (
-					<EmptyState title="No Activation Keys" type="BLANK" />
-				)}
-
-				{licenseKeyModal.open && (
-					<Modal
-						first={
-							<ClayButton
-								className="ml-4"
-								displayType="unstyled"
-								onClick={licenseKeyModal.onClose}
-							>
-								{i18n.translate('cancel')}
-							</ClayButton>
-						}
-						last={
-							<ClayButton
-								className="ml-4 mr-1"
-								disabled={isLicenseExpired(
-									modalData?.expirationDate as string
-								)}
-								displayType="primary"
-								onClick={() => {
-									onDownload(modalData as LicenseKey);
-								}}
-								title={
-									isLicenseExpired(
-										modalData?.expirationDate as string
-									)
-										? i18n.translate(
-												'this-key-is-expired-and-cannot-be-downloaded'
-											)
-										: ''
-								}
-							>
-								<ClayIcon symbol="download" />
-								{i18n.translate('download-key')}
-							</ClayButton>
-						}
-						observer={licenseKeyModal.observer}
-						size="lg"
-						visible={true}
-					>
-						<LicenceKeyModalContent
-							Header={
-								<LicenseDetailsModalHeader
-									modalData={modalData}
-									myUserAccount={myUserAccount}
-									product={product as DeliveryProduct}
-								/>
-							}
-							modalData={modalData as LicenseKey}
-						/>
-					</Modal>
-				)}
+				<ActivationKeysTable
+					mutate={mutate}
+					licenseKeysResponse={
+						licenseKeysResponse as APIResponse<LicenseKey>
+					}
+				/>
 			</div>
 		</div>
 	);
-};
-
-export default LiferayProductLicenses;
+}

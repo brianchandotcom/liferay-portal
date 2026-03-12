@@ -7,7 +7,6 @@ import {useModal} from '@clayui/modal';
 import {useCallback} from 'react';
 import {KeyedMutator} from 'swr';
 
-import {Analytics} from '../../../../../../core/Analytics';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 import provisioningOAuth2 from '../../../../../../services/oauth/Provisioning';
@@ -27,7 +26,6 @@ const useLicenseActions = ({
 	keyType,
 	licenseKeyModal,
 	mutate,
-	product,
 	setModal,
 }: Props) => {
 	const onDeativateLicenseKey = (licenseKey: LicenseKey) =>
@@ -40,11 +38,6 @@ const useLicenseActions = ({
 					message: i18n.translate(
 						'key-deactivation-requested-succesfully'
 					),
-				});
-
-				Analytics.track('DEACTIVATE_LICENSE_KEY', {
-					licenseType: licenseKey.licenseType,
-					productName: product?.name,
 				});
 
 				deactivateLicenseModal.onClose();
@@ -66,11 +59,6 @@ const useLicenseActions = ({
 				await provisioningOAuth2.downloadAppLicenseKey(
 					licenseKey?.id as number
 				);
-
-				Analytics.track('DOWNLOAD_LICENSE_KEY', {
-					licenseType: licenseKey.licenseType,
-					productName: product?.name,
-				});
 			}
 			catch {
 				Liferay.Util.openToast({
@@ -81,28 +69,25 @@ const useLicenseActions = ({
 				});
 			}
 		},
-		[product?.name]
+		[]
 	);
 
-	const onDownloadLicenseKey = useCallback(
-		async (licenseKey: LicenseKey) => {
-			if (!licenseKey?.id) {
-				return;
-			}
+	const onDownloadLicenseKey = useCallback(async (licenseKey: LicenseKey) => {
+		if (!licenseKey?.id) {
+			return;
+		}
 
-			await provisioningOAuth2
-				.downloadLicenseKey(licenseKey?.id as number)
-				.catch(() =>
-					Liferay.Util.openToast({
-						message: i18n.translate(
-							'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'
-						),
-						type: 'danger',
-					})
-				);
-		},
-		[product?.name]
-	);
+		await provisioningOAuth2
+			.downloadLicenseKey(licenseKey?.id as number)
+			.catch(() =>
+				Liferay.Util.openToast({
+					message: i18n.translate(
+						'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'
+					),
+					type: 'danger',
+				})
+			);
+	}, []);
 
 	return {
 		onDeativateLicenseKey,

@@ -51,13 +51,9 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 	}
 
 	async getOrderLicenseKeys(orderId: string) {
-		const response = await this.get<APIResponse<LicenseKey>>(
+		return this.get<APIResponse<LicenseKey>>(
 			`/order-license-keys/${orderId}`
 		);
-
-		console.log({response});
-
-		return response;
 	}
 
 	async getOrderAppLicenseKeys(

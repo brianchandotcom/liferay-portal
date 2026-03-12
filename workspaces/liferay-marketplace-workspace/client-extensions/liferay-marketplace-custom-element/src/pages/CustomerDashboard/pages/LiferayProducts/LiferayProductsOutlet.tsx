@@ -4,7 +4,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useParams} from 'react-router-dom';
 
 import {NavbarProps} from '../../../../components/Navbar';
 import {OrderTypes} from '../../../../enums/Order';
@@ -43,36 +42,31 @@ const getTabs = (data: ProductAndOrderPayload): NavbarProps['routes'] => {
 	];
 };
 
-const LiferayProductsOutlet = () => {
-	const {orderId} = useParams();
-
-	return (
-		<BaseOutlet
-			actionButtons={(props) =>
-				[OrderTypes.CMP, OrderTypes.DXP].includes(
-					props?.placedOrder
-						?.orderTypeExternalReferenceCode as OrderTypes
-				) && (
-					<ClayButton
-						className="mt-6 new-license-button"
-						onClick={() => {
-							Liferay.Util.navigate(
-								`${getSiteURL()}/product-purchase?productId=${props?.product?.productId}#/activation-key-form`
-							);
-						}}
-						outline
-					>
-						{i18n.translate('new-activation-key')}
-					</ClayButton>
-				)
-			}
-			backTitle={i18n.translate('back-to-my-products')}
-			backURL="../../products"
-			description="Manage your service by downloading software bundles, retrieving specific activation keys, and renewing your free plan directly when it nears expiration at no additional cost."
-			routes={getTabs}
-			showActions={false}
-		/>
-	);
-};
+const LiferayProductsOutlet = () => (
+	<BaseOutlet
+		actionButtons={(props) =>
+			[OrderTypes.CMP, OrderTypes.DXP].includes(
+				props?.placedOrder?.orderTypeExternalReferenceCode as OrderTypes
+			) && (
+				<ClayButton
+					className="mt-6 new-license-button"
+					onClick={() => {
+						Liferay.Util.navigate(
+							`${getSiteURL()}/product-purchase?productId=${props?.product?.productId}#/activation-key-form`
+						);
+					}}
+					outline
+				>
+					{i18n.translate('new-activation-key')}
+				</ClayButton>
+			)
+		}
+		backTitle={i18n.translate('back-to-my-products')}
+		backURL="../../products"
+		description="Manage your service by downloading software bundles, retrieving specific activation keys, and renewing your free plan directly when it nears expiration at no additional cost."
+		routes={getTabs}
+		showActions={false}
+	/>
+);
 
 export default LiferayProductsOutlet;

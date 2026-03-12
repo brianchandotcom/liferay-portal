@@ -19,6 +19,7 @@ import Modal from '../../../../../../components/Modal';
 import StatusCell from '../../../../../../components/Table/StatusCell';
 import Table from '../../../../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
+import {OrderStatus, OrderTypes} from '../../../../../../enums/Order';
 import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../../i18n';
 import provisioningOAuth2 from '../../../../../../services/oauth/Provisioning';
@@ -29,7 +30,7 @@ import LicenceKeyModalContent from '../../../../components/LicenseModalContent';
 import TableActions from '../../../../components/TableActions';
 import TitleSubtitleHeader from '../../../../components/TitleSubtitleHeader';
 import useLicenseActions from './useLicensesActions';
-import {OrderStatus, OrderTypes} from '../../../../../../enums/Order';
+
 import './Licenses.scss';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;

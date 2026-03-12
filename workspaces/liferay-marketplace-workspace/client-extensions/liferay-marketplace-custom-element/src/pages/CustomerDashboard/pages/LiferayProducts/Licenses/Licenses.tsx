@@ -56,8 +56,8 @@ const ActivationKeysTable = ({
 	licenseKeysResponse,
 	mutate,
 }: {
-	mutate: KeyedMutator<APIResponse<LicenseKey>>;
 	licenseKeysResponse: APIResponse<LicenseKey>;
+	mutate: KeyedMutator<APIResponse<LicenseKey>>;
 }) => {
 	if (licenseKeysResponse.totalCount === 0) {
 		return <EmptyState title="No Activation Keys" />;
@@ -89,7 +89,8 @@ const ActivationKeysTable = ({
 											mutate((data) => data, {
 												revalidate: true,
 											})
-										);
+										)
+										.catch(console.error);
 								}}
 								title={
 									renewalAvailable
@@ -144,7 +145,7 @@ const ActivationKeysTable = ({
 						<ul className="list-unstyled">
 							{domains.split(',').map((domain) => (
 								<li
-									className="font-weight-bold description-title mt-2"
+									className="description-title font-weight-bold mt-2"
 									key={domain}
 								>
 									{domain}
@@ -259,10 +260,10 @@ export default function ActivationKeys() {
 
 			<div className="licenses mb-9">
 				<ActivationKeysTable
-					mutate={mutate}
 					licenseKeysResponse={
 						licenseKeysResponse as APIResponse<LicenseKey>
 					}
+					mutate={mutate}
 				/>
 			</div>
 		</div>

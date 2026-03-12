@@ -57,7 +57,7 @@ const LiferayProductsOutlet = () => {
 						className="mt-6 new-license-button"
 						onClick={() => {
 							Liferay.Util.navigate(
-								`${getSiteURL()}/product-purchase?productId=${orderId}#/license`
+								`${getSiteURL()}/product-purchase?productId=${props?.product?.productId}#/activation-key-form`
 							);
 						}}
 						outline

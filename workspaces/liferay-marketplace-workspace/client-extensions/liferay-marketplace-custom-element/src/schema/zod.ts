@@ -150,8 +150,8 @@ const zodSchema = {
 			.min(3, 'Purpose is required')
 			.optional()
 			.or(z.literal('')),
-		termsAndConditions: z.boolean().refine((data) => data),
-		userAgreement: z.boolean().refine((data) => data),
+		termsAndConditions: z.boolean().refine((value) => value == true),
+		userAgreement: z.boolean().refine((value) => value === true),
 	}),
 	analyticsProvisioning: z.object({
 		_refAllowedEmailDomains: z.array(z.any()),

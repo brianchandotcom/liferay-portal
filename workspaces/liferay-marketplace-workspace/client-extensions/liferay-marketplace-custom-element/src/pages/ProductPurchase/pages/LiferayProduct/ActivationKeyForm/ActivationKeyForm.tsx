@@ -32,7 +32,7 @@ const ActivationKeyForm = () => {
 		useProductPurchaseOutletContext();
 
 	const {
-		formState: {errors},
+		formState: {errors, isValid},
 		handleSubmit,
 		register,
 		setValue,
@@ -463,7 +463,7 @@ const ActivationKeyForm = () => {
 
 			<ClayButton
 				className="w-100"
-				disabled={loading}
+				disabled={loading || !isValid}
 				onClick={handleSubmit(onSubmit)}
 			>
 				<div className="align-items-center d-flex justify-content-center">

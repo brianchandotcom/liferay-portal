@@ -24,6 +24,17 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 		});
 	}
 
+	async downloadLicenseKey(id: number) {
+		const response = await this.get<Response>(
+			`/license-keys/${id}/download`,
+			{
+				earlyReturn: true,
+			}
+		);
+
+		await downloadFile('license.xml', response);
+	}
+
 	async downloadAppLicenseKey(id: number) {
 		const response = await this.get<Response>(
 			`/app-license-keys/${id}/download`,
@@ -40,9 +51,13 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 	}
 
 	async getOrderLicenseKeys(orderId: string) {
-		return this.get<LicenseKey[]>(`/order-license-keys/${orderId}`, {
-			earlyReturn: true,
-		});
+		const response = await this.get<APIResponse<LicenseKey>>(
+			`/order-license-keys/${orderId}`
+		);
+
+		console.log({response});
+
+		return response;
 	}
 
 	async getOrderAppLicenseKeys(

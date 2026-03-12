@@ -1,8 +1,8 @@
 .floating-icon-custom {
-    width: 60px;
-    height: 60px;
     background-color: var(--gray-400);
+    height: 60px;
     transition: background-color 0.2s ease;
+    width: 60px;
 }
 
 .floating-icon-custom:hover {
@@ -10,6 +10,6 @@
 }
 
 .floating-icon-custom .lexicon-icon {
-    width: 30px;
     height: 30px;
+    width: 30px;
 }

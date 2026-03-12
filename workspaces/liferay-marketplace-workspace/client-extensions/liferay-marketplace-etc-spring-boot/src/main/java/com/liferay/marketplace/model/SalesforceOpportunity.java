@@ -49,7 +49,7 @@ public class SalesforceOpportunity {
 
 		JSONObject jsonObject = new JSONObject(
 		).put(
-			"accountId", _getAccountId(account)
+			"accountId", _getAccountId()
 		).put(
 			"accountName", account.getName()
 		).put(
@@ -99,7 +99,9 @@ public class SalesforceOpportunity {
 		);
 	}
 
-	private String _getAccountId(Account account) {
+	private String _getAccountId() {
+		Account account = _order.getAccount();
+
 		Map<String, String> customFields =
 			(Map<String, String>)account.getCustomFields();
 

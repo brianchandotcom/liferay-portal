@@ -516,18 +516,16 @@ public class ObjectActionProductPurchaseRestController
 		UserAccount userAccount = _marketplaceService.getUserAccount(
 			order.getCreatorEmailAddress());
 
-		SalesforceOpportunity salesforceOpportunity = new SalesforceOpportunity(
-			licenseType, order, orderItem, product, userAccount);
-
 		JSONObject jsonObject = _salesforceService.postSalesforceOpportunity(
-			salesforceOpportunity);
+			new SalesforceOpportunity(
+				licenseType, order, orderItem, product, userAccount));
 
-		if (!jsonObject.getBoolean("success")) {
+		if (!jsonObject.optBoolean("success")) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to create Salesforce opportunity for Order ",
-					order.getId(), " Message: ",
-					jsonObject.optString("message"), " Error: ",
+					"Unable to create Salesforce opportunity for order ",
+					order.getId(), " message: ",
+					jsonObject.optString("message"), " error: ",
 					jsonObject.optString("error")));
 
 			return;

@@ -264,21 +264,27 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	}
 
 	private long _getAdminUserId(long companyId) throws PortalException {
-		Role role = _roleLocalService.getRole(
-			companyId, RoleConstants.ADMINISTRATOR);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
-		for (long userId : _userLocalService.getRoleUserIds(role.getRoleId())) {
-			User user = _userLocalService.fetchUser(userId);
+			Role role = _roleLocalService.getRole(
+				companyId, RoleConstants.ADMINISTRATOR);
 
-			if ((user != null) && user.isActive()) {
-				return user.getUserId();
+			for (long userId :
+					_userLocalService.getRoleUserIds(role.getRoleId())) {
+
+				User user = _userLocalService.fetchUser(userId);
+
+				if ((user != null) && user.isActive()) {
+					return user.getUserId();
+				}
 			}
-		}
 
-		throw new NoSuchUserException(
-			StringBundler.concat(
-				"No active user exists in company ", companyId, " with role ",
-				role.getName()));
+			throw new NoSuchUserException(
+				StringBundler.concat(
+					"No active user exists in company ", companyId,
+					" with role ", role.getName()));
+		}
 	}
 
 	private Bundle _getBundle(BatchEngineUnit batchEngineUnit) {

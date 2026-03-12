@@ -17,6 +17,7 @@ import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
@@ -131,7 +132,7 @@ public class EditAssetListDisplayContext {
 
 	public EditAssetListDisplayContext(
 		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
-		AssetVocabularyGroupRelService assetVocabularyGroupRelService,
+		AssetVocabularyGroupRelLocalService assetVocabularyGroupRelLocalService,
 		AssetVocabularyService assetVocabularyService,
 		DepotEntryService depotEntryService, GroupService groupService,
 		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
@@ -142,7 +143,7 @@ public class EditAssetListDisplayContext {
 		UnicodeProperties unicodeProperties) {
 
 		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
-		_assetVocabularyGroupRelService = assetVocabularyGroupRelService;
+		_assetVocabularyGroupRelLocalService = assetVocabularyGroupRelLocalService;
 		_assetVocabularyService = assetVocabularyService;
 		_depotEntryService = depotEntryService;
 		_groupService = groupService;
@@ -1057,7 +1058,7 @@ public class EditAssetListDisplayContext {
 
 		for (long groupId : groupIds) {
 			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
-				_assetVocabularyGroupRelService.
+				_assetVocabularyGroupRelLocalService.
 					getAssetVocabularyGroupRelsByGroupId(groupId);
 
 			for (AssetVocabularyGroupRel assetVocabularyGroupRel :
@@ -1588,8 +1589,8 @@ public class EditAssetListDisplayContext {
 	private Integer _assetListEntryType;
 	private final AssetRendererFactoryClassProvider
 		_assetRendererFactoryClassProvider;
-	private final AssetVocabularyGroupRelService
-		_assetVocabularyGroupRelService;
+	private final AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
 	private final AssetVocabularyService _assetVocabularyService;
 	private List<Long> _availableClassNameIds;
 	private List<SegmentsEntry> _availableSegmentsEntries;

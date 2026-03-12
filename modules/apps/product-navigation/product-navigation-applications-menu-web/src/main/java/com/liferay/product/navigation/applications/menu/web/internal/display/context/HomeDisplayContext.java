@@ -40,9 +40,8 @@ public class HomeDisplayContext {
 
 		_portletId = _themeDisplay.getPpid();
 
-		_panelCategory = _getActivePanelCategory(
-			_panelCategoryHelper, PanelCategoryKeys.APPLICATIONS_MENU,
-			_portletId, _themeDisplay);
+		_panelCategory = _panelCategoryHelper.getActivePanelCategory(
+			PanelCategoryKeys.APPLICATIONS_MENU, _portletId, _themeDisplay);
 	}
 
 	public Map<String, Object> getProps() throws Exception {
@@ -62,24 +61,6 @@ public class HomeDisplayContext {
 		).put(
 			"title", _panelCategory.getLabel(_themeDisplay.getLocale())
 		).build();
-	}
-
-	private PanelCategory _getActivePanelCategory(
-		PanelCategoryHelper panelCategoryHelper, String panelCategoryKey,
-		String portletId, ThemeDisplay themeDisplay) {
-
-		for (PanelCategory childPanelCategory :
-				panelCategoryHelper.getChildPanelCategories(
-					panelCategoryKey, themeDisplay)) {
-
-			if (panelCategoryHelper.containsPortlet(
-					portletId, childPanelCategory.getKey())) {
-
-				return childPanelCategory;
-			}
-		}
-
-		return null;
 	}
 
 	private List<Map<String, Object>> _getPropsItems() throws Exception {

@@ -49,9 +49,8 @@ public class SideNavigationDisplayContext {
 
 		_portletId = _themeDisplay.getPpid();
 
-		_panelCategory = _getActivePanelCategory(
-			_panelCategoryHelper, PanelCategoryKeys.APPLICATIONS_MENU,
-			_portletId, _themeDisplay);
+		_panelCategory = _panelCategoryHelper.getActivePanelCategory(
+			PanelCategoryKeys.APPLICATIONS_MENU, _portletId, _themeDisplay);
 	}
 
 	public Map<String, Object> getProps() throws Exception {
@@ -112,24 +111,6 @@ public class SideNavigationDisplayContext {
 			_httpServletRequest, _VISIBLE_SESSION_KEY, "visible");
 
 		return state.equals("visible");
-	}
-
-	private PanelCategory _getActivePanelCategory(
-		PanelCategoryHelper panelCategoryHelper, String panelCategoryKey,
-		String portletId, ThemeDisplay themeDisplay) {
-
-		for (PanelCategory childPanelCategory :
-				panelCategoryHelper.getChildPanelCategories(
-					panelCategoryKey, themeDisplay)) {
-
-			if (panelCategoryHelper.containsPortlet(
-					portletId, childPanelCategory.getKey())) {
-
-				return childPanelCategory;
-			}
-		}
-
-		return null;
 	}
 
 	private List<String> _getExpandedKeys() {

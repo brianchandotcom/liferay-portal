@@ -67,6 +67,7 @@ export enum ProductSpecificationKey {
 	APP_TYPE = 'type',
 	APP_VERSION = 'latest-version',
 	APP_VERSION_NOTES = 'product-notes',
+	LIFERAY_PRODUCT_TYPE = 'liferay-product-type',
 	LIFERAY_VERSION = 'liferay-version',
 	SOLUTION_COMPANY_DESCRIPTION = 'solution-company-description',
 	SOLUTION_COMPANY_EMAIL = 'solution-company-email',
@@ -110,7 +111,7 @@ export enum ProductType {
 
 export enum ProductTypeVocabulary {
 	APP = 'App',
-	LIFERAY_PRODUCTS = 'Liferay Product',
+	LIFERAY_PRODUCT = 'Liferay Product',
 	SOLUTION = 'Solution',
 }
 
@@ -150,6 +151,7 @@ export enum SkuOptions {
 
 export enum SolutionTypes {
 	ANALYTICS = 'analytics',
+	DXP = 'dxp',
 	LIFERAY_DATA_PLATFORM = 'liferay-data-platform',
 	PRE_BUILT_TRIAL = 'pre-built-trial',
 }

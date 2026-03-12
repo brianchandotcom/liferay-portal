@@ -280,7 +280,7 @@ export function NextSteps() {
 	const productTypeCategory = productTypes[0] as ProductTypeVocabulary;
 
 	if (
-		productTypeCategory === ProductTypeVocabulary.LIFERAY_PRODUCTS &&
+		productTypeCategory === ProductTypeVocabulary.LIFERAY_PRODUCT &&
 		solutionTypeSpecificationValue === SolutionTypes.LIFERAY_DATA_PLATFORM
 	) {
 		return (

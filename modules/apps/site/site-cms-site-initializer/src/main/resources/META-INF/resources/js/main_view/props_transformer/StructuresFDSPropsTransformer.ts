@@ -125,14 +125,25 @@ export default function StructuresFDSPropsTransformer({
 		}) => {
 			if (action?.data?.id === 'assign-default-workflow') {
 				const structureWorkflows = selectedData.items.map(
-					(itemData: any): StructureWorkflowItem => ({
-						id: String(itemData.id),
-						name: getLocalizedValue(itemData.label),
-						workflow: itemData.workflowDefinitionLinks?.[0]
-							? itemData.workflowDefinitionLinks[0]
-									.workflowDefinitionName
-							: '',
-					})
+					(itemData: any): StructureWorkflowItem => {
+						const defaultWorkflowLink =
+							itemData.workflowDefinitionLinks.find(
+								(workflowDefinitionLink: {
+									groupExternalReferenceCode: string;
+									workflowDefinitionName: string;
+								}) =>
+									workflowDefinitionLink.groupExternalReferenceCode ===
+									''
+							);
+
+						return {
+							id: String(itemData.id),
+							name: getLocalizedValue(itemData.label),
+							workflow:
+								defaultWorkflowLink?.workflowDefinitionName ||
+								'',
+						};
+					}
 				);
 
 				assignStructureDefaultWorkflowBulkAction({

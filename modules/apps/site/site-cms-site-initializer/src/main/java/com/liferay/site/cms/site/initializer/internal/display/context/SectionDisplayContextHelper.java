@@ -62,6 +62,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -196,37 +197,34 @@ public class SectionDisplayContextHelper {
 
 		if (objectEntryFolder != null) {
 			if (_modelResourcePermissionContains(
-					ActionKeys.ADD_ENTRY, objectEntryFolder, themeDisplay)) {
+					ActionKeys.ADD_ENTRY,
+					objectEntryFolder.getObjectEntryFolderId(), themeDisplay)) {
 
 				objectEntryDepotEntryGroupIds.add(
 					objectEntryFolder.getGroupId());
 			}
 
 			if (_modelResourcePermissionContains(
-					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, objectEntryFolder,
-					themeDisplay)) {
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+					objectEntryFolder.getObjectEntryFolderId(), themeDisplay)) {
 
 				objectEntryFolderDepotEntryGroupIds.add(
 					objectEntryFolder.getGroupId());
 			}
 		}
 		else {
-			List<Long> depotEntryGroupIds =
-				DepotEntryServiceUtil.getDepotEntryGroupIds(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					DepotConstants.TYPE_SPACE);
+			Map<Long, List<Long>> objectEntryFolderIdsMap =
+				_getObjectEntryFolderIdsMap(
+					themeDisplay.getCompanyId(),
+					rootObjectEntryFolderExternalReferenceCode,
+					themeDisplay.getUserId());
 
-			String[] objectEntryFolderExternalReferenceCodes =
-				_getRootObjectEntryFolderExternalReferenceCodes(
-					rootObjectEntryFolderExternalReferenceCode);
+			objectEntryDepotEntryGroupIds = _getDepotEntryGroupIds(
+				ActionKeys.ADD_ENTRY, objectEntryFolderIdsMap, themeDisplay);
 
-			objectEntryDepotEntryGroupIds = _filter(
-				depotEntryGroupIds, ActionKeys.ADD_ENTRY,
-				objectEntryFolderExternalReferenceCodes, themeDisplay);
-
-			objectEntryFolderDepotEntryGroupIds = _filter(
-				depotEntryGroupIds, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
-				objectEntryFolderExternalReferenceCodes, themeDisplay);
+			objectEntryFolderDepotEntryGroupIds = _getDepotEntryGroupIds(
+				ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+				objectEntryFolderIdsMap, themeDisplay);
 		}
 
 		if (objectEntryDepotEntryGroupIds.isEmpty() &&
@@ -412,35 +410,6 @@ public class SectionDisplayContextHelper {
 				null));
 	}
 
-	private List<Long> _filter(
-		List<Long> depotEntryGroupIds, String actionId,
-		String[] objectEntryFolderExternalReferenceCodes,
-		ThemeDisplay themeDisplay) {
-
-		return ListUtil.filter(
-			depotEntryGroupIds,
-			depotEntryGroupId -> {
-				for (String objectEntryFolderExternalReferenceCode :
-						objectEntryFolderExternalReferenceCodes) {
-
-					ObjectEntryFolder objectEntryFolder =
-						ObjectEntryFolderLocalServiceUtil.
-							fetchObjectEntryFolderByExternalReferenceCode(
-								objectEntryFolderExternalReferenceCode,
-								depotEntryGroupId, themeDisplay.getCompanyId());
-
-					if ((objectEntryFolder != null) &&
-						_modelResourcePermissionContains(
-							actionId, objectEntryFolder, themeDisplay)) {
-
-						return true;
-					}
-				}
-
-				return false;
-			});
-	}
-
 	private List<Long> _getAcceptedDepotEntryGroupIds(
 		List<Long> depotEntryGroupIds, long objectDefinitionId) {
 
@@ -517,6 +486,29 @@ public class SectionDisplayContextHelper {
 		return jsonArray;
 	}
 
+	private List<Long> _getDepotEntryGroupIds(
+		String actionId, Map<Long, List<Long>> objectEntryFolderIdsMap,
+		ThemeDisplay themeDisplay) {
+
+		List<Long> depotEntryGroupIds = new ArrayList<>();
+
+		for (Map.Entry<Long, List<Long>> entry :
+				objectEntryFolderIdsMap.entrySet()) {
+
+			for (long objectEntryFolderId : entry.getValue()) {
+				if (_modelResourcePermissionContains(
+						actionId, objectEntryFolderId, themeDisplay)) {
+
+					depotEntryGroupIds.add(entry.getKey());
+
+					break;
+				}
+			}
+		}
+
+		return depotEntryGroupIds;
+	}
+
 	private JSONObject _getJSONObject(long groupId, Locale locale) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -550,6 +542,40 @@ public class SectionDisplayContextHelper {
 		}
 
 		return null;
+	}
+
+	private Map<Long, List<Long>> _getObjectEntryFolderIdsMap(
+		long companyId, String rootObjectEntryFolderExternalReferenceCode,
+		long userId) {
+
+		Map<Long, List<Long>> objectEntryFolderIdsMap = new HashMap<>();
+
+		for (long depotEntryGroupId :
+				DepotEntryServiceUtil.getDepotEntryGroupIds(
+					companyId, userId, DepotConstants.TYPE_SPACE)) {
+
+			for (String objectEntryFolderExternalReferenceCode :
+					_getRootObjectEntryFolderExternalReferenceCodes(
+						rootObjectEntryFolderExternalReferenceCode)) {
+
+				ObjectEntryFolder objectEntryFolder =
+					ObjectEntryFolderLocalServiceUtil.
+						fetchObjectEntryFolderByExternalReferenceCode(
+							objectEntryFolderExternalReferenceCode,
+							depotEntryGroupId, companyId);
+
+				if (objectEntryFolder != null) {
+					List<Long> objectEntryFolderIds =
+						objectEntryFolderIdsMap.computeIfAbsent(
+							depotEntryGroupId, key -> new ArrayList<>());
+
+					objectEntryFolderIds.add(
+						objectEntryFolder.getObjectEntryFolderId());
+				}
+			}
+		}
+
+		return objectEntryFolderIdsMap;
 	}
 
 	private FDSActionDropdownItem _getPermissionsFDSActionDropdownItem(
@@ -689,13 +715,12 @@ public class SectionDisplayContextHelper {
 	}
 
 	private boolean _modelResourcePermissionContains(
-		String actionId, ObjectEntryFolder objectEntryFolder,
-		ThemeDisplay themeDisplay) {
+		String actionId, long objectEntryFolderId, ThemeDisplay themeDisplay) {
 
 		try {
 			return _objectEntryFolderModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				objectEntryFolder.getObjectEntryFolderId(), actionId);
+				themeDisplay.getPermissionChecker(), objectEntryFolderId,
+				actionId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

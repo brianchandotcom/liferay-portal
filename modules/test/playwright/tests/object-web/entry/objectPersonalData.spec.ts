@@ -120,7 +120,7 @@ test('can anonymize object entries', async ({
 
 	await usersAndOrganizationsPage.goToUsers();
 
-	await usersAndOrganizationsPage.filterUsers('inactive');
+	await usersAndOrganizationsPage.filterUsers('Inactive');
 
 	await viewObjectEntriesPage.goto(objectDefinition.className);
 
@@ -284,7 +284,7 @@ test('can delete object entries via personal data management', async ({
 
 	await usersAndOrganizationsPage.goToUsers(true);
 
-	await usersAndOrganizationsPage.filterUsers('inactive');
+	await usersAndOrganizationsPage.filterUsers('Inactive');
 
 	await usersAndOrganizationsPage.activateUsers([userAccount.name]);
 

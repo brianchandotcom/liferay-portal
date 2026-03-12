@@ -131,6 +131,19 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 	}
 
 	@Override
+	public boolean hasExportableItems() {
+		if (FragmentCompositionLocalServiceUtil.hasExportableItems(
+				getFragmentCollectionId()) ||
+			FragmentEntryLocalServiceUtil.hasExportableItems(
+				getFragmentCollectionId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean hasResources() throws PortalException {
 		Repository repository = _getRepository(true);
 

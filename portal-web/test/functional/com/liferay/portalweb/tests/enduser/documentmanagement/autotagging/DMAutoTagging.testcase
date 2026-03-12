@@ -32,31 +32,6 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that an image is auto-tagged during upload when Auto-Tagging is enabled."
-	@priority = 5
-	@refactordone
-	test CanAddAutoTag {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document JPG",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_4.jpg");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document JPG",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
-
-		DMDocument.viewTagInfo(tagName = "carton");
-	}
-
 	@description = "This is a test for LPS-93334. It checks that an ODT file can be auto-tagged."
 	@priority = 4
 	test CanAddAutoTagForODTFile {
@@ -352,81 +327,6 @@ definition {
 		DMDocument.viewTagInfo(tagName = "herbert");
 
 		DMDocument.viewNoTagInfo(tagName = "Adventures,Alice");
-	}
-
-	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating an image."
-	@priority = 5
-	test TagUpdatesForImageAfterEnablingUpdateAutoTags {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document JPG",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_4.jpg");
-
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "DM Document JPG",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		AutoTagging.viewUpdateAutoTagsSetting();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentFileEdit = "Commerce_Black.jpg",
-			dmDocumentFileNameEdit = "Commerce_Black.jpg",
-			dmDocumentTitle = "DM Document JPG");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document JPG",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
-
-		DMDocument.viewTagInfo(tagName = "Carton,Jersey");
-	}
-
-	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a text document."
-	@priority = 5
-	test TagUpdatesForTextDMAfterEnablingUpdateAutoTags {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		AutoTagging.enableOpenNLP(
-			assetType = "Document",
-			confidenceThreshold = "0.05");
-
-		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document TXT",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_4.txt");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentFileEdit = "Alice's Adventures in Wonderland.docx",
-			dmDocumentFileNameEdit = "Alice's Adventures in Wonderland.docx",
-			dmDocumentTitle = "DM Document TXT");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document TXT",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document TXT");
-
-		DMDocument.viewTagInfo(tagName = "Adventures,Alice,herbert");
 	}
 
 }

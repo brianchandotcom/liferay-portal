@@ -17,10 +17,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Carlos Correa
  */
-public class RemovePublishDisplayedContentInStagingConfigurationUpgradeProcess
-	extends UpgradeProcess {
+public class StagingConfigurationUpgradeProcess extends UpgradeProcess {
 
-	public RemovePublishDisplayedContentInStagingConfigurationUpgradeProcess(
+	public StagingConfigurationUpgradeProcess(
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;

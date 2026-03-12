@@ -5,7 +5,7 @@
 
 package com.liferay.portal.lpkg.deployer;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 

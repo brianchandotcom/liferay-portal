@@ -5,13 +5,16 @@
 
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPortletKeys;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,6 +44,11 @@ public class UpdateOAuthClientEntryMVCRenderCommand
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		try {
+			renderRequest.setAttribute(
+				"expandoColumns",
+				_expandoColumnLocalService.getDefaultTableColumns(
+					CompanyThreadLocal.getCompanyId(), User.class.getName()));
+
 			String authServerWellKnownURI = ParamUtil.getString(
 				renderRequest, "authServerWellKnownURI");
 			String clientId = ParamUtil.getString(renderRequest, "clientId");
@@ -70,6 +78,9 @@ public class UpdateOAuthClientEntryMVCRenderCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateOAuthClientEntryMVCRenderCommand.class);
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@Reference
 	private OAuthClientEntryService _oAuthClientEntryService;

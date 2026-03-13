@@ -5,6 +5,7 @@
 
 package com.liferay.site.dsr.site.initializer.internal.portlet.action;
 
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
@@ -93,8 +94,8 @@ public class InviteMemberMVCActionCommand
 			inviteDigitalSalesRoomRoomUserDisplayContext);
 
 		User user = _addUser(
-			actionRequest, ticket.getClassPK(),
-			jsonObject.getString("emailAddress"),
+			actionRequest, jsonObject.getLong("accountEntryId"),
+			ticket.getClassPK(), jsonObject.getString("emailAddress"),
 			jsonObject.getString("roleKey"));
 
 		if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
@@ -114,8 +115,8 @@ public class InviteMemberMVCActionCommand
 	}
 
 	private User _addUser(
-			ActionRequest actionRequest, long digitalSalesRoomId,
-			String emailAddress, String roleKey)
+			ActionRequest actionRequest, long accountEntryId,
+			long digitalSalesRoomId, String emailAddress, String roleKey)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -153,6 +154,11 @@ public class InviteMemberMVCActionCommand
 				User.class.getName(), actionRequest));
 
 		_userLocalService.addGroupUser(digitalSalesRoomId, user.getUserId());
+
+		if (accountEntryId > 0) {
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntryId, user.getUserId());
+		}
 
 		if (Validator.isNotNull(roleKey)) {
 			Role role = _roleLocalService.fetchRole(
@@ -200,6 +206,9 @@ public class InviteMemberMVCActionCommand
 
 		return null;
 	}
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -108,7 +108,7 @@ public class JobCacheUtil {
 			return null;
 		}
 
-		synchronized (_jobJSONObjects) {
+		synchronized (cachedJobS3ObjectPath.intern()) {
 			jobJSONObject = _jobJSONObjects.get(cachedJobS3ObjectPath);
 
 			if (jobJSONObject != null) {

@@ -143,7 +143,7 @@ public class AccountRoleModelResourcePermission
 				(accountEntryId > 0) &&
 				_accountEntryModelResourcePermission.contains(
 					permissionChecker, accountEntryId,
-					ActionKeys.MANAGE_USERS)) {
+					AccountActionKeys.ASSIGN_USERS)) {
 
 				return true;
 			}

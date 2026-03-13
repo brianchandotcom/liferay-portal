@@ -6,6 +6,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.exception.AccountEntryUserRelEmailAddressException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.base.AccountEntryUserRelServiceBaseImpl;
@@ -13,10 +14,11 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -49,8 +51,19 @@ public class AccountEntryUserRelServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_modelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!_modelResourcePermission.contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.ASSIGN_USERS) ||
+			!_modelResourcePermission.contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.CREATE_USERS)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AccountEntry.class.getName(), accountEntryId,
+				AccountActionKeys.ASSIGN_USERS, AccountActionKeys.CREATE_USERS);
+		}
 
 		return accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
@@ -65,7 +78,30 @@ public class AccountEntryUserRelServiceImpl
 		throws PortalException {
 
 		_modelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.ASSIGN_USERS);
+
+		User user = null;
+
+		if (Validator.isNotNull(userExternalReferenceCode)) {
+			user = _userLocalService.fetchUserByExternalReferenceCode(
+				userExternalReferenceCode, serviceContext.getCompanyId());
+		}
+
+		if (user == null) {
+			if (Validator.isNull(emailAddress)) {
+				throw new AccountEntryUserRelEmailAddressException();
+			}
+
+			user = _userLocalService.fetchUserByEmailAddress(
+				serviceContext.getCompanyId(), emailAddress);
+		}
+
+		if (user == null) {
+			_modelResourcePermission.check(
+				getPermissionChecker(), accountEntryId,
+				AccountActionKeys.CREATE_USERS);
+		}
 
 		return accountEntryUserRelLocalService.
 			addAccountEntryUserRelByEmailAddress(
@@ -79,7 +115,8 @@ public class AccountEntryUserRelServiceImpl
 		throws PortalException {
 
 		_modelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.ASSIGN_USERS);
 
 		accountEntryUserRelLocalService.addAccountEntryUserRels(
 			accountEntryId, accountUserIds);
@@ -94,8 +131,19 @@ public class AccountEntryUserRelServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_modelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!_modelResourcePermission.contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.ASSIGN_USERS) ||
+			!_modelResourcePermission.contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.CREATE_USERS)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AccountEntry.class.getName(), accountEntryId,
+				AccountActionKeys.ASSIGN_USERS, AccountActionKeys.CREATE_USERS);
+		}
 
 		return accountEntryUserRelLocalService.addPersonTypeAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
@@ -109,7 +157,8 @@ public class AccountEntryUserRelServiceImpl
 		throws PortalException {
 
 		_modelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.UNASSIGN_USERS);
 
 		accountEntryUserRelLocalService.deleteAccountEntryUserRelByEmailAddress(
 			accountEntryId, emailAddress);
@@ -121,7 +170,8 @@ public class AccountEntryUserRelServiceImpl
 		throws PortalException {
 
 		_modelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.UNASSIGN_USERS);
 
 		accountEntryUserRelLocalService.deleteAccountEntryUserRels(
 			accountEntryId, accountUserIds);
@@ -229,19 +279,9 @@ public class AccountEntryUserRelServiceImpl
 			User inviter, ServiceContext serviceContext)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!(_modelResourcePermission.contains(
-				permissionChecker, accountEntryId,
-				AccountActionKeys.INVITE_USER) ||
-			  _modelResourcePermission.contains(
-				  permissionChecker, accountEntryId,
-				  ActionKeys.MANAGE_USERS))) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, AccountEntry.class.getName(), accountEntryId,
-				AccountActionKeys.INVITE_USER, ActionKeys.MANAGE_USERS);
-		}
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.INVITE_USER);
 
 		accountEntryUserRelLocalService.inviteUser(
 			accountEntryId, accountRoleIds, emailAddress, inviter,
@@ -252,8 +292,20 @@ public class AccountEntryUserRelServiceImpl
 	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
 		throws PortalException {
 
-		_modelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!_modelResourcePermission.contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.ASSIGN_USERS) ||
+			!_modelResourcePermission.contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.UNASSIGN_USERS)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AccountEntry.class.getName(), accountEntryId,
+				AccountActionKeys.ASSIGN_USERS,
+				AccountActionKeys.UNASSIGN_USERS);
+		}
 
 		accountEntryUserRelLocalService.setPersonTypeAccountEntryUser(
 			accountEntryId, userId);
@@ -266,5 +318,8 @@ public class AccountEntryUserRelServiceImpl
 	)
 	private volatile ModelResourcePermission<AccountEntry>
 		_modelResourcePermission;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

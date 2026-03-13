@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountWebKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
@@ -286,26 +287,40 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		throws Exception {
 
 		Map<String, Map<String, String>> actions = _getModelActions(
-			Collections.singletonMap(
-				ActionKeys.MANAGE_USERS,
-				new String[] {
-					"deleteAccountUserAccountByEmailAddress",
-					"deleteAccountUserAccountByExternalReferenceCodeBy" +
-						"EmailAddress",
-					"deleteAccountUserAccountsByEmailAddress",
-					"deleteAccountUserAccountsByExternalReferenceCodeBy" +
-						"EmailAddress",
-					"getAccountUserAccountsByExternalReferenceCodePage",
-					"getAccountUserAccountsPage", "postAccountUserAccount",
-					"postAccountUserAccountBatch",
-					"postAccountUserAccountByEmailAddress",
-					"postAccountUserAccountByExternalReferenceCode",
-					"postAccountUserAccountByExternalReferenceCodeBy" +
-						"EmailAddress",
-					"postAccountUserAccountsByEmailAddress",
-					"postAccountUserAccountsByExternalReferenceCodeBy" +
-						"EmailAddress"
-				}),
+			Collections.unmodifiableMap(
+				HashMapBuilder.put(
+					AccountActionKeys.ASSIGN_USERS,
+					new String[] {
+						"postAccountUserAccountByEmailAddress",
+						"postAccountUserAccountByExternalReferenceCodeBy" +
+							"EmailAddress",
+						"postAccountUserAccountsByEmailAddress",
+						"postAccountUserAccountsByExternalReferenceCodeBy" +
+							"EmailAddress"
+					}
+				).put(
+					AccountActionKeys.CREATE_USERS,
+					new String[] {
+						"postAccountUserAccount", "postAccountUserAccountBatch",
+						"postAccountUserAccountByExternalReferenceCode"
+					}
+				).put(
+					AccountActionKeys.UNASSIGN_USERS,
+					new String[] {
+						"deleteAccountUserAccountByEmailAddress",
+						"deleteAccountUserAccountByExternalReferenceCodeBy" +
+							"EmailAddress",
+						"deleteAccountUserAccountsByEmailAddress",
+						"deleteAccountUserAccountsByExternalReferenceCodeBy" +
+							"EmailAddress"
+					}
+				).put(
+					AccountActionKeys.VIEW_USERS,
+					new String[] {
+						"getAccountUserAccountsByExternalReferenceCodePage",
+						"getAccountUserAccountsPage"
+					}
+				).build()),
 			accountId, _accountEntryModelResourcePermission);
 
 		return SearchUtil.search(

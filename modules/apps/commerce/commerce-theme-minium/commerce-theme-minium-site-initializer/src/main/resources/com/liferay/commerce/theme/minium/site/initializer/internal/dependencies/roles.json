@@ -290,8 +290,13 @@
 		"actions": [
 			{
 				"actionIds": [
+					"ASSIGN_USERS",
+					"CREATE_USERS",
+					"EDIT_USERS",
+					"INVITE_USER",
 					"MANAGE_ORGANIZATIONS",
-					"MANAGE_USERS"
+					"UNASSIGN_USERS",
+					"VIEW_USERS"
 				],
 				"resource": "com.liferay.account.model.AccountEntry"
 			},

@@ -161,7 +161,8 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 		}
 
 		_accountEntryModelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.ASSIGN_USERS);
 
 		accountRoleLocalService.setUserAccountRoles(
 			accountEntryId, accountRoleIds, userId);

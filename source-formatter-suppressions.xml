@@ -18,8 +18,6 @@
 		<suppress checks="CompanyIterationCheck" files="portal-kernel/src/com/liferay/portal/kernel/dao/db/DBInspector\.java" />
 		<suppress checks="CompanyIterationCheck" files="portal-kernel/src/com/liferay/portal/kernel/instance/PortalInstancePool\.java" />
 		<suppress checks="CompanyIterationCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/BaseCompanyIdUpgradeProcess\.java" />
-		<suppress checks="CompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/security/access/control/AccessControlImpl\.java" />
-		<suppress checks="CompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/servlet/filters/secure/BaseAuthFilter\.java" />
 		<suppress checks="CompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/util/PortalInstances\.java" />
 		<suppress checks="CompanyThreadLocalCheck" files="portal-kernel/src/com/liferay/portal/kernel/cluster/ClusterableInvokerUtil\.java" />
 		<suppress checks="CompanyThreadLocalCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/security/auth/CompanyThreadLocalTest\.java" />

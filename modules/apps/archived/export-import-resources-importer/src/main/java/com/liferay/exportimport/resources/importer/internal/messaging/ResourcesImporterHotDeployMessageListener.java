@@ -13,7 +13,6 @@ import com.liferay.exportimport.resources.importer.internal.util.ImporterFactory
 import com.liferay.exportimport.resources.importer.internal.util.PluginPackageProperties;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -113,10 +111,7 @@ public class ResourcesImporterHotDeployMessageListener
 			String messageResponseId)
 		throws Exception {
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
-
+		try {
 			Importer importer = _importerFactory.createImporter(
 				company.getCompanyId(), servletContext,
 				pluginPackageProperties);

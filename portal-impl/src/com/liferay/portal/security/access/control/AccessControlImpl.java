@@ -59,9 +59,8 @@ public class AccessControlImpl implements AccessControl {
 	@Override
 	public void initContextUser(long userId) throws AuthException {
 		try {
-			User user = UserLocalServiceUtil.getUser(userId);
-
-			CompanyThreadLocal.setCompanyId(user.getCompanyId());
+			User user = UserLocalServiceUtil.getUserById(
+				CompanyThreadLocal.getCompanyId(), userId);
 
 			PrincipalThreadLocal.setName(userId);
 

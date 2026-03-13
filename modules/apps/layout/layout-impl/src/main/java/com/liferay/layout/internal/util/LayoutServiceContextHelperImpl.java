@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -156,7 +155,6 @@ public class LayoutServiceContextHelperImpl
 				ServletContextPool.get(_portal.getServletContextName())
 			).build();
 
-			_originalCompanyId = CompanyThreadLocal.getCompanyId();
 			_originalPermissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 			_originalName = PrincipalThreadLocal.getName();
@@ -256,7 +254,6 @@ public class LayoutServiceContextHelperImpl
 
 		@Override
 		public void close() {
-			CompanyThreadLocal.setCompanyId(_originalCompanyId);
 			PermissionThreadLocal.setPermissionChecker(
 				_originalPermissionChecker);
 			PrincipalThreadLocal.setName(_originalName, false);
@@ -458,8 +455,6 @@ public class LayoutServiceContextHelperImpl
 		}
 
 		private void _setCompanyServiceContext() throws PortalException {
-			CompanyThreadLocal.setCompanyId(_company.getCompanyId());
-
 			PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 
 			PrincipalThreadLocal.setName(_user.getUserId(), false);
@@ -562,7 +557,6 @@ public class LayoutServiceContextHelperImpl
 				ProxyFactory.newDummyInstance(HttpSession.class));
 
 		private final Layout _layout;
-		private final long _originalCompanyId;
 		private final HttpServletRequest _originalHttpServletRequest;
 		private final Map<String, Object>
 			_originalHttpServletRequestAttributesMap;

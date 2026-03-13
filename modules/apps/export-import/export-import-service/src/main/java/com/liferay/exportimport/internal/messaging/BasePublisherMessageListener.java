@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -36,9 +35,6 @@ public abstract class BasePublisherMessageListener implements MessageListener {
 		throws PortalException {
 
 		User user = UserLocalServiceUtil.getUserById(userId);
-
-		SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-			user.getCompanyId());
 
 		PrincipalThreadLocal.setName(userId);
 
@@ -87,8 +83,6 @@ public abstract class BasePublisherMessageListener implements MessageListener {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		return () -> {
-			safeCloseable.close();
-
 			PermissionThreadLocal.setPermissionChecker(null);
 			PrincipalThreadLocal.setName(null);
 			ServiceContextThreadLocal.popServiceContext();

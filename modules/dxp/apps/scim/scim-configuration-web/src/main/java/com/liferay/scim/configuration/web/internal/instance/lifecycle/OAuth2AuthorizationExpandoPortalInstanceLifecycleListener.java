@@ -12,11 +12,9 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,35 +29,29 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
+		long classNameId = _classNameLocalService.getClassNameId(
+			OAuth2Authorization.class.getName());
 
-			long classNameId = _classNameLocalService.getClassNameId(
-				OAuth2Authorization.class.getName());
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			company.getCompanyId(), classNameId,
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-			ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+		if (expandoTable == null) {
+			expandoTable = _expandoTableLocalService.addTable(
 				company.getCompanyId(), classNameId,
 				ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-			if (expandoTable == null) {
-				expandoTable = _expandoTableLocalService.addTable(
-					company.getCompanyId(), classNameId,
-					ExpandoTableConstants.DEFAULT_TABLE_NAME);
-			}
-
-			ExpandoColumn expandoColumn =
-				_expandoColumnLocalService.fetchColumn(
-					expandoTable.getTableId(), "lastNotificationDate");
-
-			if (expandoColumn != null) {
-				return;
-			}
-
-			_expandoColumnLocalService.addColumn(
-				expandoTable.getTableId(), "lastNotificationDate",
-				ExpandoColumnConstants.DATE);
 		}
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
+			expandoTable.getTableId(), "lastNotificationDate");
+
+		if (expandoColumn != null) {
+			return;
+		}
+
+		_expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "lastNotificationDate",
+			ExpandoColumnConstants.DATE);
 	}
 
 	@Reference

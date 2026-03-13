@@ -20,7 +20,6 @@ import com.liferay.osb.faro.web.internal.application.ApiApplication;
 import com.liferay.osb.faro.web.internal.controller.api.RecommendationController;
 import com.liferay.osb.faro.web.internal.controller.api.ReportController;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -85,26 +83,20 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_addSAPEntries(company.getCompanyId());
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
+		long classNameId = _classNameLocalService.getClassNameId(
+			OAuth2Authorization.class.getName());
 
-			long classNameId = _classNameLocalService.getClassNameId(
-				OAuth2Authorization.class.getName());
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			company.getCompanyId(), classNameId,
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-			ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+		if (expandoTable == null) {
+			expandoTable = _expandoTableLocalService.addTable(
 				company.getCompanyId(), classNameId,
 				ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-			if (expandoTable == null) {
-				expandoTable = _expandoTableLocalService.addTable(
-					company.getCompanyId(), classNameId,
-					ExpandoTableConstants.DEFAULT_TABLE_NAME);
-			}
-
-			addExpandoColumn(
-				expandoTable, "groupId", ExpandoColumnConstants.LONG);
 		}
+
+		addExpandoColumn(expandoTable, "groupId", ExpandoColumnConstants.LONG);
 	}
 
 	@Override

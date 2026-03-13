@@ -11,6 +11,23 @@ package com.liferay.osb.faro.web.internal.subscription;
 public class FaroSubscriptionPlan {
 
 	public FaroSubscriptionPlan(
+		int apiActivationDailyLimit, int apiActivationMonthlyLimit,
+		String baseSubscriptionPlan, int batchSegmentsLimit,
+		int eventAnalysisLimit, int individualsLimit, String name,
+		int pageViewsLimit, int realTimeSegmentsLimit) {
+
+		_apiActivationDailyLimit = apiActivationDailyLimit;
+		_apiActivationMonthlyLimit = apiActivationMonthlyLimit;
+		_baseSubscriptionPlan = baseSubscriptionPlan;
+		_batchSegmentsLimit = batchSegmentsLimit;
+		_eventAnalysisLimit = eventAnalysisLimit;
+		_individualsLimit = individualsLimit;
+		_name = name;
+		_pageViewsLimit = pageViewsLimit;
+		_realTimeSegmentsLimit = realTimeSegmentsLimit;
+	}
+
+	public FaroSubscriptionPlan(
 		String baseSubscriptionPlan, String name, int individualsLimit,
 		int pageViewsLimit) {
 
@@ -20,8 +37,24 @@ public class FaroSubscriptionPlan {
 		_pageViewsLimit = pageViewsLimit;
 	}
 
+	public int getApiActivationDailyLimit() {
+		return _apiActivationDailyLimit;
+	}
+
+	public int getApiActivationMonthlyLimit() {
+		return _apiActivationMonthlyLimit;
+	}
+
 	public String getBaseSubscriptionPlan() {
 		return _baseSubscriptionPlan;
+	}
+
+	public int getBatchSegmentsLimit() {
+		return _batchSegmentsLimit;
+	}
+
+	public int getEventAnalysisLimit() {
+		return _eventAnalysisLimit;
 	}
 
 	public int getIndividualsLimit() {
@@ -36,8 +69,28 @@ public class FaroSubscriptionPlan {
 		return _pageViewsLimit;
 	}
 
+	public int getRealTimeSegmentsLimit() {
+		return _realTimeSegmentsLimit;
+	}
+
+	public void setApiActivationDailyLimit(int apiActivationDailyLimit) {
+		_apiActivationDailyLimit = apiActivationDailyLimit;
+	}
+
+	public void setApiActivationMonthlyLimit(int apiActivationMonthlyLimit) {
+		_apiActivationMonthlyLimit = apiActivationMonthlyLimit;
+	}
+
 	public void setBaseSubscriptionPlan(String baseSubscriptionPlan) {
 		_baseSubscriptionPlan = baseSubscriptionPlan;
+	}
+
+	public void setBatchSegmentsLimit(int batchSegmentsLimit) {
+		_batchSegmentsLimit = batchSegmentsLimit;
+	}
+
+	public void setEventAnalysisLimit(int eventAnalysisLimit) {
+		_eventAnalysisLimit = eventAnalysisLimit;
 	}
 
 	public void setIndividualsLimit(int individualsLimit) {
@@ -52,9 +105,18 @@ public class FaroSubscriptionPlan {
 		_pageViewsLimit = pageViewsLimit;
 	}
 
+	public void setRealTimeSegmentsLimit(int realTimeSegmentsLimit) {
+		_realTimeSegmentsLimit = realTimeSegmentsLimit;
+	}
+
+	private int _apiActivationDailyLimit = -1;
+	private int _apiActivationMonthlyLimit = -1;
 	private String _baseSubscriptionPlan;
+	private int _batchSegmentsLimit = -1;
+	private int _eventAnalysisLimit = -1;
 	private int _individualsLimit;
 	private String _name;
 	private int _pageViewsLimit;
+	private int _realTimeSegmentsLimit = -1;
 
 }

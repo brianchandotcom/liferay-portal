@@ -69,8 +69,16 @@ public class FaroSubscriptionDisplay {
 			FaroSubscriptionConstants.getFaroSubscriptionPlanByProductEntryId(
 				baseOSBOfferingEntry.getProductEntryId());
 
+		_apiActivationDailyLimit =
+			baseFaroSubscriptionPlan.getApiActivationDailyLimit();
+		_apiActivationMonthlyLimit =
+			baseFaroSubscriptionPlan.getApiActivationMonthlyLimit();
+		_batchSegmentsLimit = baseFaroSubscriptionPlan.getBatchSegmentsLimit();
+		_eventAnalysisLimit = baseFaroSubscriptionPlan.getEventAnalysisLimit();
 		_individualsLimit = baseFaroSubscriptionPlan.getIndividualsLimit();
 		_pageViewsLimit = baseFaroSubscriptionPlan.getPageViewsLimit();
+		_realTimeSegmentsLimit =
+			baseFaroSubscriptionPlan.getRealTimeSegmentsLimit();
 
 		for (OSBOfferingEntry osbOfferingEntry :
 				osbAccountEntry.getOfferingEntries()) {
@@ -87,14 +95,45 @@ public class FaroSubscriptionDisplay {
 
 				_addOns.add(new AddOn(osbOfferingEntry));
 
+				_apiActivationDailyLimit = _computeLimit(
+					faroSubscriptionPlan.getApiActivationDailyLimit(),
+					_apiActivationDailyLimit, osbOfferingEntry.getQuantity());
+				_apiActivationMonthlyLimit = _computeLimit(
+					faroSubscriptionPlan.getApiActivationMonthlyLimit(),
+					_apiActivationMonthlyLimit, osbOfferingEntry.getQuantity());
+				_batchSegmentsLimit = _computeLimit(
+					faroSubscriptionPlan.getBatchSegmentsLimit(),
+					_batchSegmentsLimit, osbOfferingEntry.getQuantity());
+				_eventAnalysisLimit = _computeLimit(
+					faroSubscriptionPlan.getEventAnalysisLimit(),
+					_eventAnalysisLimit, osbOfferingEntry.getQuantity());
 				_individualsLimit = _computeLimit(
 					faroSubscriptionPlan.getIndividualsLimit(),
 					_individualsLimit, osbOfferingEntry.getQuantity());
 				_pageViewsLimit = _computeLimit(
 					faroSubscriptionPlan.getPageViewsLimit(), _pageViewsLimit,
 					osbOfferingEntry.getQuantity());
+				_realTimeSegmentsLimit = _computeLimit(
+					faroSubscriptionPlan.getRealTimeSegmentsLimit(),
+					_realTimeSegmentsLimit, osbOfferingEntry.getQuantity());
 			}
 		}
+	}
+
+	public long getApiActivationDailyLimit() {
+		return _apiActivationDailyLimit;
+	}
+
+	public long getApiActivationMonthlyLimit() {
+		return _apiActivationMonthlyLimit;
+	}
+
+	public long getBatchSegmentsLimit() {
+		return _batchSegmentsLimit;
+	}
+
+	public long getEventAnalysisLimit() {
+		return _eventAnalysisLimit;
 	}
 
 	public long getIndividualsCountSinceLastAnniversary() {
@@ -131,6 +170,10 @@ public class FaroSubscriptionDisplay {
 
 	public int getPageViewsStatus() {
 		return _pageViewsStatus;
+	}
+
+	public long getRealTimeSegmentsLimit() {
+		return _realTimeSegmentsLimit;
 	}
 
 	public Date getStartDate() {
@@ -379,7 +422,11 @@ public class FaroSubscriptionDisplay {
 
 	private boolean _active;
 	private final List<AddOn> _addOns = new ArrayList<>();
+	private long _apiActivationDailyLimit;
+	private long _apiActivationMonthlyLimit;
+	private long _batchSegmentsLimit;
 	private Date _endDate;
+	private long _eventAnalysisLimit;
 	private long _individualsCountSinceLastAnniversary;
 	private long _individualsLimit;
 	private int _individualsStatus;
@@ -388,6 +435,7 @@ public class FaroSubscriptionDisplay {
 	private long _pageViewsCountSinceLastAnniversary;
 	private long _pageViewsLimit;
 	private int _pageViewsStatus;
+	private long _realTimeSegmentsLimit;
 	private Date _startDate;
 	private long _syncedIndividualsCount;
 

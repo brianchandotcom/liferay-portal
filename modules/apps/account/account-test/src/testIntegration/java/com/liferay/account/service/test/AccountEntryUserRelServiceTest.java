@@ -16,7 +16,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -51,9 +50,94 @@ public class AccountEntryUserRelServiceTest {
 	public void setUp() throws Exception {
 		_accountEntry = AccountEntryTestUtil.addAccountEntry();
 
+		_serviceContext = ServiceContextTestUtil.getServiceContext();
+
+		_serviceContext.setRequest(new MockHttpServletRequest());
+
 		_user = UserTestUtil.addUser();
 
 		UserTestUtil.setUser(_user);
+	}
+
+	@Test
+	public void testAssignNewUserByEmailWithCreatePermission()
+		throws Exception {
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId(), _user.getUserId());
+
+		_accountRoleLocalService.associateUser(
+			_accountEntry.getAccountEntryId(), accountRole.getAccountRoleId(),
+			_user.getUserId());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			accountRole.getRoleId(), AccountActionKeys.ASSIGN_USERS);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			accountRole.getRoleId(), AccountActionKeys.CREATE_USERS);
+
+		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			_accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString() + "@liferay.com", new long[0],
+			RandomTestUtil.randomString(), _serviceContext);
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testAssignNewUserByEmailWithoutCreateAssignPermission()
+		throws Exception {
+
+		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			_accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString() + "@liferay.com", new long[0],
+			RandomTestUtil.randomString(), _serviceContext);
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testAssignNewUserByEmailWithoutCreatePermission()
+		throws Exception {
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId(), _user.getUserId());
+
+		_accountRoleLocalService.associateUser(
+			_accountEntry.getAccountEntryId(), accountRole.getAccountRoleId(),
+			_user.getUserId());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			accountRole.getRoleId(), AccountActionKeys.ASSIGN_USERS);
+
+		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			_accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString() + "@liferay.com", new long[0],
+			RandomTestUtil.randomString(), _serviceContext);
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testAssignUserByEmailWithoutAssignPermission()
+		throws Exception {
+
+		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			_accountEntry.getAccountEntryId(), _user.getEmailAddress(),
+			new long[0], _user.getExternalReferenceCode(), _serviceContext);
 	}
 
 	@Test
@@ -61,17 +145,12 @@ public class AccountEntryUserRelServiceTest {
 		_assertInviteUserWithPermissions(AccountActionKeys.INVITE_USER);
 	}
 
-	@Test
-	public void testInviteUserWithManageUsersPermissions() throws Exception {
-		_assertInviteUserWithPermissions(ActionKeys.MANAGE_USERS);
-	}
-
 	@Test(expected = PrincipalException.class)
 	public void testInviteUserWithNoPermissions() throws Exception {
 		_accountEntryUserRelService.inviteUser(
 			_accountEntry.getAccountEntryId(), null,
 			RandomTestUtil.randomString() + "@liferay.com", _user,
-			ServiceContextTestUtil.getServiceContext());
+			_serviceContext);
 	}
 
 	private void _assertInviteUserWithPermissions(String actionId)
@@ -95,15 +174,10 @@ public class AccountEntryUserRelServiceTest {
 			String.valueOf(TestPropsValues.getCompanyId()),
 			accountRole.getRoleId(), actionId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setRequest(new MockHttpServletRequest());
-
 		_accountEntryUserRelService.inviteUser(
 			_accountEntry.getAccountEntryId(), null,
 			RandomTestUtil.randomString() + "@liferay.com", _user,
-			serviceContext);
+			_serviceContext);
 	}
 
 	@DeleteAfterTestRun
@@ -120,6 +194,8 @@ public class AccountEntryUserRelServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch8.internal.sidecar;
 
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.io.Deserializer;
-import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
@@ -28,8 +27,6 @@ import java.net.URLClassLoader;
 
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
-
-import java.util.List;
 
 /**
  * @author Tina Tian
@@ -63,40 +60,31 @@ public class PersistedProcessUtil {
 
 		ProcessChannel<?> processChannel = null;
 
-		for (ProcessCallable<?> processCallable :
-				List.of(
-					persistedProcess.getSidecarMainProcessCallable(),
-					persistedProcess.getStartSidecarProcessCallable())) {
+		try {
+			processChannel = processExecutor.execute(
+				processConfig,
+				persistedProcess.getSidecarMainProcessCallable());
+		}
+		catch (ProcessException processException) {
+			throw new RuntimeException(
+				"Unable to start process " + persistedProcess.getProcessName(),
+				processException);
+		}
 
-			if (processChannel == null) {
-				try {
-					processChannel = processExecutor.execute(
-						processConfig, processCallable);
-				}
-				catch (ProcessException processException) {
-					throw new RuntimeException(
-						"Unable to start process " +
-							persistedProcess.getProcessName(),
-						processException);
-				}
-			}
-			else {
-				NoticeableFuture<?> noticeableFuture = processChannel.write(
-					processCallable);
+		NoticeableFuture<?> noticeableFuture = processChannel.write(
+			persistedProcess.getStartSidecarProcessCallable());
 
-				try {
-					noticeableFuture.get();
-				}
-				catch (Exception exception) {
-					NoticeableFuture<?> processNoticeableFuture =
-						processChannel.getProcessNoticeableFuture();
+		try {
+			noticeableFuture.get();
+		}
+		catch (Exception exception) {
+			NoticeableFuture<?> processNoticeableFuture =
+				processChannel.getProcessNoticeableFuture();
 
-					processNoticeableFuture.cancel(true);
+			processNoticeableFuture.cancel(true);
 
-					throw new RuntimeException(
-						"Unable to execute process callable", exception);
-				}
-			}
+			throw new RuntimeException(
+				"Unable to execute process callable", exception);
 		}
 
 		return (ProcessChannel<T>)processChannel;

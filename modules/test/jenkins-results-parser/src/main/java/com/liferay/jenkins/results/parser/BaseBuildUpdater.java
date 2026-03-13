@@ -69,8 +69,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	}
 
 	protected void runMissing() {
-		_missing = true;
-
 		if (isBuildQueued()) {
 			_build.setStatus("queued");
 
@@ -90,9 +88,11 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		}
 
 		if (!_hasMaximumInvocationCount()) {
-			_build.setStatus("starting");
-
 			_build.reset();
+			
+			reinvoke();
+			
+			_build.setStatus("queued");
 
 			return;
 		}
@@ -166,7 +166,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	protected void runStarting() {
 		Build.Invocation previousInvocation = _build.getPreviousInvocation();
 
-		if ((previousInvocation != null) || _missing) {
+		if (previousInvocation != null) {
 			reinvoke();
 		}
 		else {
@@ -410,7 +410,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			"slack:(?:<@)?(?<slack>[\\w-]+)>?|(?<email>[\\w-]+@[\\w.-]+)");
 
 	private final Build _build;
-	private Boolean _missing = false;
 	private final Map<Build.Invocation, ReinvokeRule> _reinvokeRulesMap =
 		new HashMap<>();
 

@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.internal.upgrade.v1_1_0.SchemaUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_11_2.RoleResourceUpgradeProcess;
+import com.liferay.account.internal.upgrade.v2_12_1.AccountEntryResourcePermissionUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_4_0.AccountGroupResourceUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_5_0.AccountRoleResourceUpgradeProcess;
 import com.liferay.petra.string.StringBundler;
@@ -210,6 +211,11 @@ public class AccountServiceUpgradeStepRegistrator
 			"2.11.2", "2.12.0",
 			UpgradeProcessFactory.addColumns("AccountGroup", "status INTEGER"),
 			UpgradeProcessFactory.runSQL("update AccountGroup set status = 0"));
+
+		registry.register(
+			"2.12.0", "2.12.1",
+			new AccountEntryResourcePermissionUpgradeProcess(
+				_resourceActionLocalService, _resourcePermissionLocalService));
 	}
 
 	@Reference

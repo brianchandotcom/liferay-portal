@@ -6,13 +6,18 @@
 import {test} from '@playwright/test';
 
 import {AuthServerLocalMetadatasPage} from '../pages/oauth-client-administration-web/AuthServerLocalMetadatasPage';
+import {OAuthClientClientsPage} from '../pages/oauth-client-administration-web/OAuthClientClientsPage';
 
-const authServerLocalMetadatasPageTest = test.extend<{
+const oauthClientAdminPagesTest = test.extend<{
 	authServerLocalMetadatasPage: AuthServerLocalMetadatasPage;
+	oauthClientClientsPage: OAuthClientClientsPage;
 }>({
 	authServerLocalMetadatasPage: async ({page}, use) => {
 		await use(new AuthServerLocalMetadatasPage(page));
 	},
+	oauthClientClientsPage: async ({page}, use) => {
+		await use(new OAuthClientClientsPage(page));
+	},
 });
 
-export {authServerLocalMetadatasPageTest};
+export {oauthClientAdminPagesTest};

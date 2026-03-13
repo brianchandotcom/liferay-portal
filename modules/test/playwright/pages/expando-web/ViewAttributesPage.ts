@@ -15,6 +15,7 @@ export class ViewAttributesPage {
 		customFieldName: string
 	) => Promise<Locator>;
 	readonly page: Page;
+	readonly selectAllItemsCheckbox: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
@@ -36,6 +37,9 @@ export class ViewAttributesPage {
 			);
 		};
 		this.page = page;
+		this.selectAllItemsCheckbox = page.getByRole('checkbox', {
+			name: 'Select All Items on the Page',
+		});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);
@@ -66,7 +70,22 @@ export class ViewAttributesPage {
 			trigger: row.locator('.dropdown-toggle'),
 		});
 
-		await expect(await this.successMessage).toBeVisible();
+		await expect(this.successMessage).toBeVisible();
+
+		await this.page.getByLabel('Close').click();
+	}
+
+	async deleteCustomFields(resource: string) {
+		await this.goto(resource);
+
+		await this.addCustomFieldButton.waitFor();
+
+		await this.selectAllItemsCheckbox.check();
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await expect(this.successMessage).toBeVisible();
+
 		await this.page.getByLabel('Close').click();
 	}
 }

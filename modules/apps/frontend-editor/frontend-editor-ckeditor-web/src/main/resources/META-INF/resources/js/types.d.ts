@@ -24,6 +24,9 @@ declare module '@ckeditor/ckeditor5-block-quote/dist/index.js' {
 declare module '@ckeditor/ckeditor5-bookmark/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-bookmark';
 }
+declare module '@ckeditor/ckeditor5-case-change/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-case-change';
+}
 declare module '@ckeditor/ckeditor5-ckbox/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-ckbox';
 }
@@ -41,6 +44,9 @@ declare module '@ckeditor/ckeditor5-code-block/dist/index.js' {
 }
 declare module '@ckeditor/ckeditor5-core/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-core';
+}
+declare module '@ckeditor/ckeditor5-document-outline/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-document-outline';
 }
 declare module '@ckeditor/ckeditor5-easy-image/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-easy-image';
@@ -60,6 +66,9 @@ declare module '@ckeditor/ckeditor5-editor-inline/dist/index.js' {
 declare module '@ckeditor/ckeditor5-editor-multi-root/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-editor-multi-root';
 }
+declare module '@ckeditor/ckeditor5-email/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-email';
+}
 declare module '@ckeditor/ckeditor5-emoji/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-emoji';
 }
@@ -72,11 +81,17 @@ declare module '@ckeditor/ckeditor5-enter/dist/index.js' {
 declare module '@ckeditor/ckeditor5-essentials/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-essentials';
 }
+declare module '@ckeditor/ckeditor5-export-inline-styles/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-export-inline-styles';
+}
 declare module '@ckeditor/ckeditor5-find-and-replace/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-find-and-replace';
 }
 declare module '@ckeditor/ckeditor5-font/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-font';
+}
+declare module '@ckeditor/ckeditor5-format-painter/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-format-painter';
 }
 declare module '@ckeditor/ckeditor5-fullscreen/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-fullscreen';
@@ -108,6 +123,9 @@ declare module '@ckeditor/ckeditor5-indent/dist/index.js' {
 declare module '@ckeditor/ckeditor5-language/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-language';
 }
+declare module '@ckeditor/ckeditor5-line-height/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-line-height';
+}
 declare module '@ckeditor/ckeditor5-link/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-link';
 }
@@ -123,6 +141,9 @@ declare module '@ckeditor/ckeditor5-media-embed/dist/index.js' {
 declare module '@ckeditor/ckeditor5-mention/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-mention';
 }
+declare module '@ckeditor/ckeditor5-merge-fields/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-merge-fields';
+}
 declare module '@ckeditor/ckeditor5-minimap/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-minimap';
 }
@@ -134,6 +155,9 @@ declare module '@ckeditor/ckeditor5-paragraph/dist/index.js' {
 }
 declare module '@ckeditor/ckeditor5-paste-from-office/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-paste-from-office';
+}
+declare module '@ckeditor/ckeditor5-paste-from-office-enhanced/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-paste-from-office-enhanced';
 }
 declare module '@ckeditor/ckeditor5-remove-format/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-remove-format';
@@ -147,8 +171,14 @@ declare module '@ckeditor/ckeditor5-select-all/dist/index.js' {
 declare module '@ckeditor/ckeditor5-show-blocks/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-show-blocks';
 }
+declare module '@ckeditor/ckeditor5-slash-command/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-slash-command';
+}
 declare module '@ckeditor/ckeditor5-source-editing/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-source-editing';
+}
+declare module '@ckeditor/ckeditor5-source-editing-enhanced/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-source-editing-enhanced';
 }
 declare module '@ckeditor/ckeditor5-special-characters/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-special-characters';
@@ -158,6 +188,9 @@ declare module '@ckeditor/ckeditor5-style/dist/index.js' {
 }
 declare module '@ckeditor/ckeditor5-table/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-table';
+}
+declare module '@ckeditor/ckeditor5-template/dist/index.js' {
+	export * from '@ckeditor/ckeditor5-template';
 }
 declare module '@ckeditor/ckeditor5-typing/dist/index.js' {
 	export * from '@ckeditor/ckeditor5-typing';

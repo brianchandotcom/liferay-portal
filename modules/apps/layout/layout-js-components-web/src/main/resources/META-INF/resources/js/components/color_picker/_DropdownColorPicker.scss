@@ -26,9 +26,13 @@ html#{$cadmin-selector} {
 				}
 
 				&__selector {
+					&:hover {
+						background-color: transparent;
+					}
+
 					&.btn {
 						height: 32px;
-						padding-left: 9px;
+						padding-left: 6px;
 						padding-right: 9px;
 					}
 

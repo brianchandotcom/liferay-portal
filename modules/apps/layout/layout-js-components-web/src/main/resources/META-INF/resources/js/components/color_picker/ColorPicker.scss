@@ -6,24 +6,73 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.layout__color-picker:not(.old) {
+			border: 1px solid $cadmin-secondary-l3;
 			display: flex;
 
-			.clay-color-picker {
-				width: 100%;
-			}
+			&:focus-within,
+			&:hover {
+				border-color: $cadmin-secondary-l0;
 
-			.clay-color > .input-group-item > .input-group-text {
-				border-radius: 4px 0 0 4px;
-			}
-
-			&.has-error {
-				.clay-color > .input-group-item > .input-group-text {
-					border-color: $cadmin-danger-l1;
+				.clay-color
+					> .input-group-item
+					> .input-group-inset-item.input-group-inset-item-before {
+					border-color: $cadmin-secondary-l0;
+					transition-duration: 0s;
 				}
 			}
 
-			&.hovered .layout__dropdown-color-picker__selector {
-				background-color: $cadmin-gray-100;
+			&.custom {
+				background-color: $cadmin-light;
+
+				.clay-color-picker {
+					width: 100%;
+				}
+
+				.clay-color {
+					> .input-group-item {
+						> .input-group-text,
+						> .form-control.input-group-inset.input-group-inset-before {
+							border: 0;
+						}
+
+						> .input-group-inset-item.input-group-inset-item-before {
+							border-bottom: 0;
+							border-right: 0;
+							border-top: 0;
+						}
+					}
+				}
+
+				.layout__color-picker__action-button {
+					background-color: transparent;
+
+					&:focus,
+					&:hover {
+						background-color: rgba($cadmin-dark, 0.06);
+					}
+				}
+
+				&.has-error {
+					background-color: $cadmin-danger-l2;
+					border-color: $cadmin-danger-l1;
+
+					.clay-color
+						> .input-group-item
+						> .input-group-inset-item.input-group-inset-item-before {
+						border-color: $cadmin-danger-l1;
+					}
+				}
+			}
+
+			&.hovered {
+				border-color: $cadmin-secondary-l0;
+			}
+
+			.layout__color-picker__action-button {
+				height: 28px;
+				margin: 2px;
+				padding: 4px;
+				width: 28px;
 			}
 
 			&:not(:hover):not(:focus-within):not(.hovered):not(.custom) {

@@ -17,7 +17,6 @@ import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTes
 import {utilityPagesPage} from '../../login-web/main/fixtures/utilityPageTest';
 import {openIdConfig} from './config';
 import {openIdSettingsPagesTest} from './fixtures/openIdSettingsPagesTest';
-import {CustomClaim} from './helpers/CustomClaimHelper';
 
 let providerName: string;
 let resetLoginPrompt: boolean;
@@ -33,7 +32,7 @@ const test = mergeTests(
 
 async function setupOpenIdConnection(
 	openIDInstanceSettingsPage: OpenIdInstanceSettingsPage,
-	customClaim?: CustomClaim,
+	customClaim?: TCustomClaim,
 	matcherField?: string
 ) {
 	await openIDInstanceSettingsPage.goto();
@@ -153,7 +152,7 @@ test.describe('OpenID Connect custom claims', () => {
 
 		await addCustomFieldPage.addCustomField(customField);
 
-		const customClaim: CustomClaim = {
+		const customClaim: TCustomClaim = {
 			expandoColumnName,
 			oidcProviderCustomClaim: getRandomString(),
 		};

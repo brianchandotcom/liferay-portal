@@ -29,14 +29,36 @@ import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author Iván Zaera Avellón
  */
 public abstract class BaseFrontendResourceRequestHandlerTestCase {
 
-	public void mockDeployedFile(
+	protected ConfigurationProvider mockConfigurationProvider(
+			Map<String, ?> configurationProperties)
+		throws Exception {
+
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
+		Class<?> aClass = getClass();
+
+		Mockito.when(
+			configurationProvider.getCompanyConfiguration(
+				FrontendCachingConfiguration.class, COMPANY_ID)
+		).thenReturn(
+			(FrontendCachingConfiguration)ProxyUtil.newProxyInstance(
+				aClass.getClassLoader(),
+				new Class<?>[] {FrontendCachingConfiguration.class},
+				(proxy, method, args) -> configurationProperties.get(
+					method.getName()))
+		);
+
+		return configurationProvider;
+	}
+
+	protected void mockDeployedFile(
 			HashedFilesRegistry hashedFilesRegistry, String uri, String content)
 		throws Exception {
 
@@ -78,29 +100,6 @@ public abstract class BaseFrontendResourceRequestHandlerTestCase {
 		).thenReturn(
 			url
 		);
-	}
-
-	protected ConfigurationProvider mockConfigurationProvider(
-			Map<String, ?> configurationProperties)
-		throws Exception {
-
-		ConfigurationProvider configurationProvider = Mockito.mock(
-			ConfigurationProvider.class);
-
-		Class<?> aClass = getClass();
-
-		Mockito.when(
-			configurationProvider.getCompanyConfiguration(
-				FrontendCachingConfiguration.class, COMPANY_ID)
-		).thenReturn(
-			(FrontendCachingConfiguration)ProxyUtil.newProxyInstance(
-				aClass.getClassLoader(),
-				new Class<?>[] {FrontendCachingConfiguration.class},
-				(proxy, method, args) -> configurationProperties.get(
-					method.getName()))
-		);
-
-		return configurationProvider;
 	}
 
 	protected HttpServletRequest mockHttpServletRequest(
@@ -157,12 +156,8 @@ public abstract class BaseFrontendResourceRequestHandlerTestCase {
 		return portal;
 	}
 
-	protected void resetFrontendJsWebUtil() {
-		ReflectionTestUtils.setField(FrontendJsWebUtil.class, "_baseURL", null);
-		ReflectionTestUtils.setField(
-			FrontendJsWebUtil.class, "_portalContextPath", null);
-		ReflectionTestUtils.setField(
-			FrontendJsWebUtil.class, "_webContextPathIndex", -1);
+	protected void setUp() {
+		FrontendJsWebUtil.clearCache();
 	}
 
 	protected static final long COMPANY_ID = 100;

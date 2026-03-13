@@ -58,7 +58,7 @@ public class LanguageFrontendResourceRequestHandlerTest
 
 	@Before
 	public void setUp() {
-		resetFrontendJsWebUtil();
+		super.setUp();
 	}
 
 	@Test

@@ -72,7 +72,7 @@ public class StyleSheetFrontendResourceRequestHandlerTest
 
 	@Before
 	public void setUp() {
-		resetFrontendJsWebUtil();
+		super.setUp();
 	}
 
 	@Test

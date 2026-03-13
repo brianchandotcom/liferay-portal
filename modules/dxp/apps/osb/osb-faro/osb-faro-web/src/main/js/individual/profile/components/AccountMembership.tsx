@@ -13,13 +13,14 @@ import {Map} from 'immutable';
 import {SectionHeader} from './SectionHeader';
 
 function formatCurrency(
-	currencyCode: string,
 	locale: string,
-	value: string
+	value: number,
+	currencyCode: string
 ): string {
 	return new Intl.NumberFormat(locale, {
-		currency: currencyCode
-	}).format(parseFloat(value));
+		currency: currencyCode,
+		style: 'currency'
+	}).format(value);
 }
 
 const accountMembershipConfig: DataDrivenConfig = [
@@ -31,7 +32,7 @@ const accountMembershipConfig: DataDrivenConfig = [
 				icon: 'order-form',
 				key: 'accountName'
 			},
-			{className: 'col-12 col-md-6', key: 'accountId'},
+			{className: 'col-12 col-md-6', key: 'id'},
 			{className: 'col-12 col-md-6', key: 'industry'},
 			{className: 'col-12 col-md-6', key: 'currencyCode'},
 			{className: 'col-12 col-md-6', key: 'accountType'},
@@ -67,7 +68,6 @@ interface IAccountMembershipProps {
 }
 
 const ACCOUNT_MEMBERSHIP_LABEL_MAP: Record<string, string> = {
-	accountId: 'accountId',
 	accountName: Liferay.Language.get('account-name'),
 	accountType: Liferay.Language.get('account-type'),
 	annualRevenue: Liferay.Language.get('annual-revenue'),
@@ -75,6 +75,7 @@ const ACCOUNT_MEMBERSHIP_LABEL_MAP: Record<string, string> = {
 	createdDate: Liferay.Language.get('created-date'),
 	currencyCode: Liferay.Language.get('currency-code'),
 	customerSince: Liferay.Language.get('customer-since'),
+	id: 'accountId',
 	industry: Liferay.Language.get('industry'),
 	lastActivityDate: Liferay.Language.get('last-activity-date'),
 	numberOfEmployees: Liferay.Language.get('number-of-employees'),
@@ -87,23 +88,29 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 	showEmptyState = false
 }) => {
 	const getValue = (key: string): string | undefined => {
+		const data = accountData?.get(key);
+
+		if (data === undefined || data === null) {
+			return undefined;
+		}
+
 		if (dateKeys.includes(key)) {
-			return accountData?.get(key)
-				? formatUTCDate(accountData.get(key), 'YYYY-MM-DD')
-				: undefined;
+			return formatUTCDate(data, 'YYYY-MM-DD');
 		}
 
 		if (key === 'annualRevenue') {
-			return accountData?.get(key)
-				? formatCurrency(
-						accountData?.get('currencyCode'),
-						accountData?.get('locale'),
-						accountData?.get(key)
-				  )
-				: undefined;
+			const currencyCode = accountData.get('currencyCode');
+			const locale = accountData.get('locale');
+			const numericRevenue = parseFloat(data);
+
+			const canFormat = !isNaN(numericRevenue) && locale && currencyCode;
+
+			return canFormat
+				? formatCurrency(locale, numericRevenue, currencyCode)
+				: data;
 		}
 
-		return accountData?.get(key) || undefined;
+		return data;
 	};
 
 	const sectionContent = accountData ? (

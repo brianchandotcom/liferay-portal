@@ -110,7 +110,7 @@ public class AccountRoleModelResourcePermissionTest {
 		RoleTestUtil.addResourcePermission(
 			permissionAccountRole.getRole(), AccountEntry.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			ActionKeys.MANAGE_USERS);
+			AccountActionKeys.ASSIGN_USERS);
 
 		User userA = UserTestUtil.addUser();
 

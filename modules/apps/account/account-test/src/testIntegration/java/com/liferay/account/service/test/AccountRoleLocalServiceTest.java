@@ -5,6 +5,7 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.NoSuchRoleException;
 import com.liferay.account.model.AccountEntry;
@@ -198,10 +199,39 @@ public class AccountRoleLocalServiceTest {
 		Assert.assertTrue(
 			ArrayUtil.contains(roleIds, defaultAccountRole.getRoleId()));
 
+		_assertHasPermission(user, AccountActionKeys.CREATE_USERS, false);
+		_assertHasPermission(user, AccountActionKeys.EDIT_USERS, false);
+		_assertHasPermission(user, AccountActionKeys.INVITE_USER, false);
+		_assertHasPermission(user, AccountActionKeys.UNASSIGN_USERS, false);
+		_assertHasPermission(user, AccountActionKeys.VIEW_USERS, false);
 		_assertHasPermission(user, ActionKeys.DELETE, false);
-		_assertHasPermission(user, ActionKeys.MANAGE_USERS, false);
 		_assertHasPermission(user, ActionKeys.UPDATE, false);
 
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_accountEntry1.getAccountEntryGroupId()),
+			accountRole.getRoleId(), AccountActionKeys.CREATE_USERS);
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_accountEntry1.getAccountEntryGroupId()),
+			accountRole.getRoleId(), AccountActionKeys.EDIT_USERS);
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_accountEntry1.getAccountEntryGroupId()),
+			accountRole.getRoleId(), AccountActionKeys.INVITE_USER);
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_accountEntry1.getAccountEntryGroupId()),
+			accountRole.getRoleId(), AccountActionKeys.UNASSIGN_USERS);
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_accountEntry1.getAccountEntryGroupId()),
+			accountRole.getRoleId(), AccountActionKeys.VIEW_USERS);
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 			ResourceConstants.SCOPE_COMPANY,
@@ -209,16 +239,15 @@ public class AccountRoleLocalServiceTest {
 			accountRole.getRoleId(), ActionKeys.DELETE);
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
-			ResourceConstants.SCOPE_GROUP,
-			String.valueOf(_accountEntry1.getAccountEntryGroupId()),
-			accountRole.getRoleId(), ActionKeys.MANAGE_USERS);
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 			defaultAccountRole.getRoleId(), ActionKeys.UPDATE);
 
+		_assertHasPermission(user, AccountActionKeys.CREATE_USERS, true);
+		_assertHasPermission(user, AccountActionKeys.EDIT_USERS, true);
+		_assertHasPermission(user, AccountActionKeys.INVITE_USER, true);
+		_assertHasPermission(user, AccountActionKeys.UNASSIGN_USERS, true);
+		_assertHasPermission(user, AccountActionKeys.VIEW_USERS, true);
 		_assertHasPermission(user, ActionKeys.DELETE, true);
-		_assertHasPermission(user, ActionKeys.MANAGE_USERS, true);
 		_assertHasPermission(user, ActionKeys.UPDATE, true);
 
 		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
@@ -226,8 +255,12 @@ public class AccountRoleLocalServiceTest {
 
 		_accountEntryUserRels.remove(accountEntryUserRel);
 
+		_assertHasPermission(user, AccountActionKeys.CREATE_USERS, false);
+		_assertHasPermission(user, AccountActionKeys.EDIT_USERS, false);
+		_assertHasPermission(user, AccountActionKeys.INVITE_USER, false);
+		_assertHasPermission(user, AccountActionKeys.UNASSIGN_USERS, false);
+		_assertHasPermission(user, AccountActionKeys.VIEW_USERS, false);
 		_assertHasPermission(user, ActionKeys.DELETE, false);
-		_assertHasPermission(user, ActionKeys.MANAGE_USERS, false);
 		_assertHasPermission(user, ActionKeys.UPDATE, false);
 
 		_accountRoleLocalService.deleteAccountRole(defaultAccountRole);

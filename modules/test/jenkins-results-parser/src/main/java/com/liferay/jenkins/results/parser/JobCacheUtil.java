@@ -8,8 +8,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,16 +56,14 @@ public class JobCacheUtil {
 			String timeStamp = JenkinsResultsParserUtil.getDistinctTimeStamp();
 
 			jobFile = new File(
-				System.getProperty("java.io.tmpdir"), 
+				System.getProperty("java.io.tmpdir"),
 				JenkinsResultsParserUtil.combine("job-", timeStamp, ".json"));
-
 			jobGzFile = new File(
 				System.getProperty("java.io.tmpdir"),
 				JenkinsResultsParserUtil.combine("job-", timeStamp, ".json.gz"));
 
-			JSONObject jsonObject = job.getJSONObject();
-
-			JenkinsResultsParserUtil.write(jobFile, String.valueOf(jsonObject));
+			JenkinsResultsParserUtil.write(
+				jobFile, String.valueOf(job.getJSONObject()));
 
 			JenkinsResultsParserUtil.gzip(jobFile, jobGzFile);
 
@@ -96,16 +94,30 @@ public class JobCacheUtil {
 		String cachedJobS3ObjectPath = _getCachedJobS3ObjectPath(
 			jobName, portalGitWorkingDirectory, testSuiteName);
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(cachedJobS3ObjectPath)) {
+			return null;
+		}
+
+		JSONObject jobJSONObject = _jobJSONObjects.get(cachedJobS3ObjectPath);
+
+		if (jobJSONObject != null) {
+			return jobJSONObject;
+		}
+
 		if (!CloudBucketUtil.isS3ObjectPathAvailable(cachedJobS3ObjectPath)) {
 			return null;
 		}
 
 		synchronized (_jobJSONObjects) {
+			jobJSONObject = _jobJSONObjects.get(cachedJobS3ObjectPath);
+
+			if (jobJSONObject != null) {
+				return jobJSONObject;
+			}
+
 			File file = new File(
 				System.getProperty("java.io.tmpdir"),
 				JenkinsResultsParserUtil.getDistinctTimeStamp() + ".json.gz");
-
-			JSONObject jobJSONObject = null;
 
 			try {
 				CloudBucketUtil.downloadS3File(file, cachedJobS3ObjectPath);
@@ -121,11 +133,13 @@ public class JobCacheUtil {
 			}
 			finally {
 				JenkinsResultsParserUtil.delete(file);
+			}
 
+			if (jobJSONObject != null) {
 				_jobJSONObjects.put(cachedJobS3ObjectPath, jobJSONObject);
 			}
 
-			return _jobJSONObjects.get(cachedJobS3ObjectPath);
+			return jobJSONObject;
 		}
 	}
 
@@ -193,6 +207,6 @@ public class JobCacheUtil {
 	}
 
 	private static final Map<String, JSONObject> _jobJSONObjects =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 
 }

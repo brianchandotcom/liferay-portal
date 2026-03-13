@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Stefano Motta
  */
-@Component(property = "path=/dsr/edit_room", service = StrutsAction.class)
-public class EditRoomStrutsAction implements StrutsAction {
+@Component(property = "path=/dsr/view_room", service = StrutsAction.class)
+public class ViewRoomStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(
@@ -57,10 +57,18 @@ public class EditRoomStrutsAction implements StrutsAction {
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay, false, false);
 
-		httpServletResponse.sendRedirect(
-			StringBundler.concat(
-				groupFriendlyURL, "?p_l_back_url=", groupFriendlyURL,
-				"&p_l_mode=edit"));
+		if (Objects.equals(
+				ParamUtil.getString(httpServletRequest, "mode", "view"),
+				"edit")) {
+
+			httpServletResponse.sendRedirect(
+				StringBundler.concat(
+					groupFriendlyURL, "?p_l_back_url=", groupFriendlyURL,
+					"&p_l_mode=edit"));
+		}
+		else {
+			httpServletResponse.sendRedirect(groupFriendlyURL);
+		}
 
 		return null;
 	}

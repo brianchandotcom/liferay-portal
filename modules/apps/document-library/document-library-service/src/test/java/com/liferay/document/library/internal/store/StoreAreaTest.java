@@ -50,9 +50,9 @@ public class StoreAreaTest {
 		String path = storeArea.getPath(1, 2, "test");
 
 		Assert.assertEquals(
-			"_deleted/1/2/test", storeArea.relocate(path, StoreArea.DELETED));
-		Assert.assertEquals(
 			"1/2/test", storeArea.relocate(path, StoreArea.LIVE));
+		Assert.assertEquals(
+			"_deleted/1/2/test", storeArea.relocate(path, StoreArea.DELETED));
 		Assert.assertEquals(
 			"_new/1/2/test", storeArea.relocate(path, StoreArea.NEW));
 	}

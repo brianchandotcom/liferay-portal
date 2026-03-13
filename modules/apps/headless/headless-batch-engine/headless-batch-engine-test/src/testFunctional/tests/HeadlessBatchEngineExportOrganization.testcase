@@ -72,7 +72,14 @@ definition {
 		}
 
 		task ("Then the downloaded file includes the testOrganization and its sub_testOrganization") {
+			var downloadDir = PropsUtil.get("output.dir.name");
 			var fileName = selenium.getAttribute("//a[contains(.,'Download file')]@download");
+
+			var crdownloadFileExists = FileUtil.exists("${downloadDir}/${fileName}.crdownload");
+
+			if (${crdownloadFileExists} == "true") {
+				FileUtil.move("${downloadDir}/${fileName}.crdownload", "${downloadDir}/${fileName}");
+			}
 
 			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${fileName}");
 

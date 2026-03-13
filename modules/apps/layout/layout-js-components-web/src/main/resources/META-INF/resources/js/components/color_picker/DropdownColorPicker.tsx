@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import classNames from 'classnames';
 import React, {
@@ -129,51 +129,33 @@ export function DropdownColorPicker({
 	}, [active]);
 
 	return (
-		<div
-			className={classNames('layout__dropdown-color-picker', {
-				'flex-grow-1': showSelector && label,
-				'flex-shrink-0 ml-2': !(showSelector && label),
-			})}
-		>
-			{showSelector && label ? (
-				<ClayButton
-					aria-label={label}
-					className="align-items-center border-0 d-flex font-weight-normal layout__dropdown-color-picker__selector text-body w-100"
-					displayType="secondary"
-					onClick={() => onSetActive((active) => !active)}
-					ref={triggerElementRef}
-					size={small ? 'sm' : undefined}
-				>
-					<span
-						className={classNames(
-							'layout__dropdown-color-picker__selector-splotch rounded-circle',
-							{'lfr-portal-tooltip': fieldLabel}
-						)}
-						data-title={fieldLabel}
-						style={{background: `${value}`}}
-					/>
-
-					<span className="text-truncate">{label}</span>
-
-					{inherited ? (
-						<span
-							className="inherited"
-							title={Liferay.Language.get('inherited-value')}
-						></span>
-					) : null}
-				</ClayButton>
-			) : (
-				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('value-from-stylebook')}
-					className="border-0"
-					displayType="secondary"
-					onClick={() => onSetActive(!active)}
-					ref={triggerElementRef}
-					size={small ? 'sm' : undefined}
-					symbol="theme"
-					title={Liferay.Language.get('value-from-stylebook')}
+		<div className="layout__dropdown-color-picker">
+			<ClayButton
+				aria-label={label}
+				className="align-items-center border-0 d-flex font-weight-normal layout__dropdown-color-picker__selector text-body w-100"
+				displayType="secondary"
+				onClick={() => onSetActive((active) => !active)}
+				ref={triggerElementRef}
+				size={small ? 'sm' : undefined}
+			>
+				<span
+					className={classNames(
+						'layout__dropdown-color-picker__selector-splotch rounded-circle',
+						{'lfr-portal-tooltip': fieldLabel}
+					)}
+					data-title={fieldLabel}
+					style={{background: `${value}`}}
 				/>
-			)}
+
+				<span className="text-truncate">{label}</span>
+
+				{inherited ? (
+					<span
+						className="inherited"
+						title={Liferay.Language.get('inherited-value')}
+					></span>
+				) : null}
+			</ClayButton>
 
 			<DropDown.Menu
 				active={active}

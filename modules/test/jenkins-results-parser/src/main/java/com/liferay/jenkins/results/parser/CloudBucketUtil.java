@@ -292,11 +292,14 @@ public class CloudBucketUtil {
 		try {
 			String listS3Files = listS3Files(s3ObjectPath, true);
 
-			return !JenkinsResultsParserUtil.isNullOrEmpty(listS3Files.trim());
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(listS3Files.trim())) {
+				return true;
+			}
 		}
 		catch (IOException | TimeoutException exception) {
-			return false;
 		}
+
+		return false;
 	}
 
 	public static boolean isS3ObjectRefAvailable(String s3ObjectPath) {
@@ -726,13 +729,17 @@ public class CloudBucketUtil {
 		}
 
 		try {
-			return _isOlderThan(
-				Files.readAttributes(path, BasicFileAttributes.class),
-				ageSeconds);
+			if (_isOlderThan(
+					Files.readAttributes(path, BasicFileAttributes.class),
+					ageSeconds)) {
+
+				return true;
+			}
 		}
 		catch (IOException ioException) {
-			return false;
 		}
+
+		return false;
 	}
 
 	private static boolean _isValidS3ObjectPath(String s3ObjectPath) {

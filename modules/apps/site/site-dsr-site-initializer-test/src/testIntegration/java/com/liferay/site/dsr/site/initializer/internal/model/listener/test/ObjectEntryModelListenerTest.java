@@ -81,14 +81,14 @@ public class ObjectEntryModelListenerTest {
 
 	@Test
 	public void testOnAfterCreate() throws Exception {
-		String randomString1 = StringUtil.toLowerCase(
+		String name = StringUtil.toLowerCase(
 			"A" + RandomTestUtil.randomString());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
-				"name", randomString1
+				"name", name
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				_accountEntry.getAccountEntryId()
@@ -101,12 +101,11 @@ public class ObjectEntryModelListenerTest {
 				_objectDefinition.getClassName()),
 			objectEntry.getObjectEntryId());
 
-		Assert.assertEquals("/" + randomString1, group.getFriendlyURL());
+		Assert.assertEquals("/" + name, group.getFriendlyURL());
 		Assert.assertEquals(
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			group.getMembershipRestriction());
-		Assert.assertEquals(
-			randomString1, group.getName(LocaleUtil.getDefault()));
+		Assert.assertEquals(name, group.getName(LocaleUtil.getDefault()));
 		Assert.assertEquals(
 			GroupConstants.TYPE_SITE_RESTRICTED, group.getType());
 		Assert.assertTrue(group.isManualMembership());
@@ -122,16 +121,16 @@ public class ObjectEntryModelListenerTest {
 			values.get("siteExternalReferenceCode"));
 		Assert.assertEquals(group.getGroupId(), values.get("siteId"));
 
-		String randomString2 = StringUtil.toLowerCase(
+		String friendlyURL = StringUtil.toLowerCase(
 			"A" + RandomTestUtil.randomString());
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
-				"friendlyURL", randomString2
+				"friendlyURL", friendlyURL
 			).put(
-				"name", randomString1
+				"name", name
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				_accountEntry.getAccountEntryId()
@@ -144,9 +143,8 @@ public class ObjectEntryModelListenerTest {
 				_objectDefinition.getClassName()),
 			objectEntry.getObjectEntryId());
 
-		Assert.assertEquals("/" + randomString2, group.getFriendlyURL());
-		Assert.assertEquals(
-			randomString1, group.getName(LocaleUtil.getDefault()));
+		Assert.assertEquals("/" + friendlyURL, group.getFriendlyURL());
+		Assert.assertEquals(name, group.getName(LocaleUtil.getDefault()));
 
 		DSRLayoutTestUtil.assertLayouts(
 			group.getGroupId(),

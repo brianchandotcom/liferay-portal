@@ -442,7 +442,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = ${errorMessage},
-				expected = "java.lang.UnsupportedOperationException: This method needs to be implemented");
+				expected = "This method needs to be implemented");
 		}
 	}
 

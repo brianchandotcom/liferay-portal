@@ -18,7 +18,7 @@ import {
 	useStyleErrors,
 } from '../../contexts/StyleErrorsContext';
 import {Color, ColorCategoryMap} from '../../types/ColorPicker';
-import {DropdownColorPicker} from './DropdownColorPicker';
+import {DropdownColorPicker} from './OldDropdownColorPicker';
 import {oldParseColorValue} from './oldParseColorValue';
 
 import './ColorPicker.scss';
@@ -277,7 +277,7 @@ export default function ColorPicker({
 			</label>
 
 			<div
-				className={classNames('layout__color-picker', {
+				className={classNames('old layout__color-picker', {
 					'custom': !tokenLabel,
 					'has-error': error.value,
 					'hovered': activeColorPicker || activeDropdownColorPicker,

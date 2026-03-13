@@ -5,7 +5,7 @@
 
 html#{$cadmin-selector} {
 	.cadmin {
-		.layout__color-picker {
+		.layout__color-picker:not(.old) {
 			display: flex;
 
 			.clay-color-picker {
@@ -36,6 +36,34 @@ html#{$cadmin-selector} {
 		&.layout__color-picker__dropdown .clay-color-dropdown-menu {
 			padding-left: 0;
 			padding-right: 0;
+		}
+
+		.old.layout__color-picker {
+			display: flex;
+
+			.clay-color-picker {
+				width: 100%;
+			}
+
+			.clay-color > .input-group-item > .input-group-text {
+				border-radius: 4px 0 0 4px;
+			}
+
+			&.has-error {
+				.clay-color > .input-group-item > .input-group-text {
+					border-color: $cadmin-danger-l1;
+				}
+			}
+
+			&.hovered .layout__dropdown-color-picker__selector {
+				background-color: $cadmin-gray-100;
+			}
+
+			&:not(:hover):not(:focus-within):not(.hovered):not(.custom) {
+				.layout__color-picker__action-button {
+					opacity: 0;
+				}
+			}
 		}
 	}
 }

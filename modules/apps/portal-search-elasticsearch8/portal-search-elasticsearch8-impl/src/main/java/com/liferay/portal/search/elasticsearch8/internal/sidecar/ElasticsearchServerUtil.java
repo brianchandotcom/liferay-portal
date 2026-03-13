@@ -91,11 +91,12 @@ public class ElasticsearchServerUtil {
 		_shutdownCountDownLatch.countDown();
 	}
 
-	public static void start() throws ProcessException {
+	public static void start(String settingsString) throws ProcessException {
 		InputStream originalSystemInInputStream = System.in;
 
 		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				new UnsyncByteArrayInputStream(_getSidecarServerArgs())) {
+				new UnsyncByteArrayInputStream(
+					_getSidecarServerArgs(settingsString))) {
 
 			System.setIn(unsyncByteArrayInputStream);
 
@@ -169,7 +170,7 @@ public class ElasticsearchServerUtil {
 		}
 	}
 
-	private static byte[] _getSidecarServerArgs() {
+	private static byte[] _getSidecarServerArgs(String settingsString) {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 			StreamOutput streamOutput = new OutputStreamStreamOutput(
@@ -179,8 +180,7 @@ public class ElasticsearchServerUtil {
 
 			Settings.Builder builder = Settings.builder();
 
-			builder.loadFromSource(
-				System.getProperty("sidecar.settings"), XContentType.JSON);
+			builder.loadFromSource(settingsString, XContentType.JSON);
 
 			Settings settings = builder.build();
 

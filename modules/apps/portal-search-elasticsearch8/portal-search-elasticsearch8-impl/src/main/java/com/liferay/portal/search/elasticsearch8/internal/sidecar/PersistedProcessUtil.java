@@ -23,15 +23,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,25 +39,9 @@ public class PersistedProcessUtil {
 	public static <T extends Serializable> ProcessChannel<T> start(
 		PersistedProcess persistedProcess, ProcessExecutor processExecutor) {
 
-		String[] processCallableClassNames =
-			persistedProcess.getProcessCallableClassNames();
-
-		if (processCallableClassNames.length == 0) {
-			throw new IllegalArgumentException(
-				"No process callable is defined");
-		}
-
 		ClassLoader reactClassLoader = new URLClassLoader(
 			new URL[] {persistedProcess.getBundleURL()},
 			PortalClassLoaderUtil.getClassLoader());
-
-		List<ProcessCallable<?>> processCallables = new ArrayList<>();
-
-		for (String processCallableClassName : processCallableClassNames) {
-			processCallables.add(
-				(ProcessCallable<?>)_getInstance(
-					reactClassLoader, processCallableClassName));
-		}
 
 		ProcessConfig persistedProcessConfig =
 			persistedProcess.getProcessConfig();
@@ -82,7 +63,11 @@ public class PersistedProcessUtil {
 
 		ProcessChannel<?> processChannel = null;
 
-		for (ProcessCallable<?> processCallable : processCallables) {
+		for (ProcessCallable<?> processCallable :
+				List.of(
+					persistedProcess.getSidecarMainProcessCallable(),
+					persistedProcess.getStartSidecarProcessCallable())) {
+
 			if (processChannel == null) {
 				try {
 					processChannel = processExecutor.execute(
@@ -172,22 +157,6 @@ public class PersistedProcessUtil {
 		}
 		else {
 			_log.error(processLog.getMessage(), processLog.getThrowable());
-		}
-	}
-
-	private static Object _getInstance(
-		ClassLoader classLoader, String className) {
-
-		try {
-			Class<?> clazz = classLoader.loadClass(className);
-
-			Constructor<?> constructor = clazz.getConstructor();
-
-			return constructor.newInstance();
-		}
-		catch (Exception exception) {
-			throw new IllegalStateException(
-				"Unable to create instance for " + className, exception);
 		}
 	}
 

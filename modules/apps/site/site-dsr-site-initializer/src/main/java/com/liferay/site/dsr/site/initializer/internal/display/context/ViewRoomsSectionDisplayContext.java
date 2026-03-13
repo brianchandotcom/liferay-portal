@@ -46,7 +46,8 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 			"createRedirectURL",
 			() -> StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-				DSRConstants.DSR_FRIENDLY_URL, "/edit_room?siteId={siteId}")
+				DSRConstants.DSR_FRIENDLY_URL,
+				"/view_room?mode=edit&siteId={siteId}")
 		).put(
 			"siteTemplates",
 			() -> TransformUtil.transform(
@@ -97,8 +98,22 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 			FDSActionDropdownItemBuilder.setHref(
 				() -> StringBundler.concat(
 					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-					DSRConstants.DSR_FRIENDLY_URL, "/edit_room?siteId=",
+					DSRConstants.DSR_FRIENDLY_URL, "/view_room?siteId=",
 					"{embedded.siteId}")
+			).setIcon(
+				"view"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "view")
+			).setPermissionKey(
+				"get"
+			).build(
+				"view"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				() -> StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					DSRConstants.DSR_FRIENDLY_URL,
+					"/view_room?mode=edit&siteId={embedded.siteId}")
 			).setIcon(
 				"pencil"
 			).setLabel(

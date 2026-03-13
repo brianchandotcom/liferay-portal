@@ -264,7 +264,7 @@ function ColorPicker({
 			</label>
 
 			<div
-				className={classNames('layout__color-picker', {
+				className={classNames('layout__color-picker rounded', {
 					'custom': !tokenLabel,
 					'has-error': error.value,
 					'hovered': activeColorPicker || activeDropdownColorPicker,
@@ -317,7 +317,7 @@ function ColorPicker({
 				{tokenLabel && canDetachTokenValues && (
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('detach-style')}
-						className="border-0 flex-shrink-0 layout__color-picker__action-button mb-0 ml-2"
+						className="border-0 flex-shrink-0 layout__color-picker__action-button mb-0 ml-1"
 						displayType="secondary"
 						onClick={() => {
 							if (tokenValues[value]) {

@@ -12,6 +12,7 @@ import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {useProductPurchaseOutletContext} from '../ProductPurchaseOutlet';
 import CreateNewAccount from './CreateNewAccount';
+import {Navigate} from 'react-router-dom';
 
 type ProductPurchaseAccountSelectionProps = {
 	children?: ReactNode;
@@ -31,20 +32,17 @@ const ProductPurchaseAccountSelection: React.FC<
 		setSelectedAccount,
 	} = useProductPurchaseOutletContext();
 
+	const [, nextRoute] = productTypeRoute.routes ?? [];
+
 	const productTypeMetadata = productTypeRoute?.metadata;
 
-	useEffect(() => {
-		if (
-			productTypeMetadata?.skipSingleAccountSelection &&
-			accounts.length === 1
-		) {
-			nextStep();
-		}
-	}, [
-		accounts.length,
-		nextStep,
-		productTypeMetadata?.skipSingleAccountSelection,
-	]);
+	if (
+		productTypeMetadata?.skipSingleAccountSelection &&
+		nextRoute &&
+		accounts.length === 1
+	) {
+		return <Navigate to={nextRoute.path} />;
+	}
 
 	return (
 		<ProductPurchase.Shell

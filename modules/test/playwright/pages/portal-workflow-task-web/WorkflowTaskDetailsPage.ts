@@ -70,7 +70,7 @@ export class WorkflowTaskDetailsPage {
 		this.reviewComment = page.getByRole('textbox', {name: 'Comment'});
 		this.subscribeButton = page.getByLabel('Subscribe to Comments');
 		this.commentsTextbox = page.frameLocator('iframe').getByRole('textbox');
-		this.viewButton = page.getByRole('button',{name: 'View'});
+		this.viewButton = page.getByRole('button', {name: 'View'});
 		this.workflowTasksPage = new WorkflowTasksPage(page);
 	}
 

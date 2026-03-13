@@ -26,131 +26,118 @@ const test = mergeTests(
 	workflowPagesTest
 );
 
-test(
-	'Can preview entry information on My Workflow Tasks',
-	async ({
-		apiHelpers,
-		applicationsMenuPage,
-		configurationTabPage,
-		page,
-		workflowTaskDetailsPage,
-		workflowTasksPage,
-	}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
+test('Can preview entry information on My Workflow Tasks', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	configurationTabPage,
+	page,
+	workflowTaskDetailsPage,
+	workflowTasksPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
 		});
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
+	await applicationsMenuPage.goToProcessBuilder();
+
+	await configurationTabPage.configurationTabLink.click();
+
+	await configurationTabPage.assignWorkflowToAssetType(
+		'Single Approver',
+		objectDefinition.label['en_US']
+	);
+
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+	const textFieldName = objectFields[0].name;
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{[textFieldName]: 'Entry Test'},
+		applicationName
+	);
+
+	await workflowTasksPage.goToAssignedToMyRoles();
+
+	await workflowTaskDetailsPage.selectAsset(objectDefinition.label['en_US']);
+
+	await expect(page.getByText(objectFields[0].label['en_US'])).toHaveValue(
+		'Entry Test'
+	);
+});
+
+test('Can view entry information through View button on My Workflow Tasks', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	configurationTabPage,
+	page,
+	workflowTaskDetailsPage,
+	workflowTasksPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
 		});
 
-		await applicationsMenuPage.goToProcessBuilder();
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
-		await configurationTabPage.configurationTabLink.click();
+	await applicationsMenuPage.goToProcessBuilder();
 
-		await configurationTabPage.assignWorkflowToAssetType(
-			'Single Approver',
-			objectDefinition.label['en_US']
-		);
+	await configurationTabPage.configurationTabLink.click();
 
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const textFieldName = objectFields[0].name;
+	await configurationTabPage.assignWorkflowToAssetType(
+		'Single Approver',
+		objectDefinition.label['en_US']
+	);
 
-		await apiHelpers.objectEntry.postObjectEntry(
-			{[textFieldName]: 'Entry Test'},
-			applicationName
-		);
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+	const textFieldName = objectFields[0].name;
 
-		await workflowTasksPage.goToAssignedToMyRoles();
+	await apiHelpers.objectEntry.postObjectEntry(
+		{[textFieldName]: 'Entry Test'},
+		applicationName
+	);
 
-		await workflowTaskDetailsPage.selectAsset(
-			objectDefinition.label['en_US']
-		);
+	await workflowTasksPage.goToAssignedToMyRoles();
 
-		await expect(
-			page.getByText(objectFields[0].label['en_US'])
-		).toHaveValue('Entry Test');
-	}
-);
+	await workflowTaskDetailsPage.selectAsset(objectDefinition.label['en_US']);
 
-test(
-	'Can view entry information through View button on My Workflow Tasks',
-	async ({
-		apiHelpers,
-		applicationsMenuPage,
-		configurationTabPage,
-		page,
-		workflowTaskDetailsPage,
-		workflowTasksPage,
-	}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
+	await workflowTaskDetailsPage.viewButton.click();
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+	await expect(page.getByText(objectFields[0].label['en_US'])).toHaveValue(
+		'Entry Test'
+	);
+});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+test.skip('Workflow is not triggered for draft entry', async () => {
 
-		await applicationsMenuPage.goToProcessBuilder();
+	// This test requires:
+	// 1. A site-scoped custom object with "Allow Users to Save Entries as Draft" enabled
+	// 2. A content page with a Form Container mapped to the custom object
+	//    and the Form Button configured with "Submitted Entry Status" set to "Draft"
+	// 3. Single Approver workflow assigned to the custom object
+	// 4. Submitting an entry through the form on the content page
+	// 5. Verifying the entry status is "Draft" (workflow not triggered)
+	//
+	// Cannot be implemented because it requires content page Form Container
+	// mapping to custom objects, which depends on page builder fragment
+	// configuration infrastructure not available in the current test fixtures.
 
-		await configurationTabPage.configurationTabLink.click();
-
-		await configurationTabPage.assignWorkflowToAssetType(
-			'Single Approver',
-			objectDefinition.label['en_US']
-		);
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const textFieldName = objectFields[0].name;
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{[textFieldName]: 'Entry Test'},
-			applicationName
-		);
-
-		await workflowTasksPage.goToAssignedToMyRoles();
-
-		await workflowTaskDetailsPage.selectAsset(
-			objectDefinition.label['en_US']
-		);
-
-		await workflowTaskDetailsPage.viewButton.click();
-
-		await expect(
-			page.getByText(objectFields[0].label['en_US'])
-		).toHaveValue('Entry Test');
-	}
-);
-
-test.skip(
-	'Workflow is not triggered for draft entry',
-	async () => {
-		// This test requires:
-		// 1. A site-scoped custom object with "Allow Users to Save Entries as Draft" enabled
-		// 2. A content page with a Form Container mapped to the custom object
-		//    and the Form Button configured with "Submitted Entry Status" set to "Draft"
-		// 3. Single Approver workflow assigned to the custom object
-		// 4. Submitting an entry through the form on the content page
-		// 5. Verifying the entry status is "Draft" (workflow not triggered)
-		//
-		// Cannot be implemented because it requires content page Form Container
-		// mapping to custom objects, which depends on page builder fragment
-		// configuration infrastructure not available in the current test fixtures.
-	}
-);
+});

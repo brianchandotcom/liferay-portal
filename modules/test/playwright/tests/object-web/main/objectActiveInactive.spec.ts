@@ -26,80 +26,79 @@ const test = mergeTests(
 	objectPagesTest
 );
 
-test(
-	'Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated',
-	async ({apiHelpers, applicationsMenuPage, page, viewObjectDefinitionsPage}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
+test('Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	page,
+	viewObjectDefinitionsPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: ['Text'],
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
 		});
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+	// Configure Single Approver workflow for the object
 
-		// Configure Single Approver workflow for the object
+	const configurationTabPage = new ConfigurationTabPage(page);
 
-		const configurationTabPage = new ConfigurationTabPage(page);
+	await applicationsMenuPage.goToProcessBuilder();
 
-		await applicationsMenuPage.goToProcessBuilder();
+	await configurationTabPage.configurationTabLink.click();
 
-		await configurationTabPage.configurationTabLink.click();
+	await configurationTabPage.assignWorkflowToAssetType(
+		'Single Approver',
+		objectDefinition.label['en_US']
+	);
 
-		await configurationTabPage.assignWorkflowToAssetType(
-			'Single Approver',
-			objectDefinition.label['en_US']
-		);
+	// Add an entry via API (will be in pending workflow state)
 
-		// Add an entry via API (will be in pending workflow state)
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+	const fieldName = objectFields[0].name!;
 
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-		const fieldName = objectFields[0].name!;
+	await apiHelpers.objectEntry.postObjectEntry(
+		{[fieldName!]: 'Entry 1'},
+		applicationName
+	);
 
-		await apiHelpers.objectEntry.postObjectEntry(
-			{[fieldName!]: 'Entry 1'},
-			applicationName
-		);
+	// Inactivate the object
 
-		// Inactivate the object
+	await viewObjectDefinitionsPage.goto();
 
-		await viewObjectDefinitionsPage.goto();
+	await viewObjectDefinitionsPage.changeObjectActivateStatus(
+		objectDefinition.name
+	);
 
-		await viewObjectDefinitionsPage.changeObjectActivateStatus(
-			objectDefinition.name
-		);
+	const metricsPage = new MetricsPage(page);
 
-		const metricsPage = new MetricsPage(page);
+	await metricsPage.goTo();
 
-		await metricsPage.goTo();
+	await metricsPage.chooseProcess('Single Approver');
 
-		await metricsPage.chooseProcess('Single Approver');
+	await expect(page.getByText('0', {exact: true}).first()).toBeVisible();
 
-		await expect(
-			page.getByText('0', {exact: true}).first()
-		).toBeVisible();
+	// Reactivate the object and unassign workflow for cleanup
 
-		// Reactivate the object and unassign workflow for cleanup
+	await viewObjectDefinitionsPage.goto();
 
-		await viewObjectDefinitionsPage.goto();
+	await viewObjectDefinitionsPage.changeObjectActivateStatus(
+		objectDefinition.name
+	);
 
-		await viewObjectDefinitionsPage.changeObjectActivateStatus(
-			objectDefinition.name
-		);
+	await applicationsMenuPage.goToProcessBuilder();
 
-		await applicationsMenuPage.goToProcessBuilder();
+	await configurationTabPage.configurationTabLink.click();
 
-		await configurationTabPage.configurationTabLink.click();
-
-		await configurationTabPage.unassignWorkflowFromAssetType(
-			objectDefinition.label['en_US']
-		);
-	}
-);
+	await configurationTabPage.unassignWorkflowFromAssetType(
+		objectDefinition.label['en_US']
+	);
+});

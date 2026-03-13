@@ -25,6 +25,14 @@ variable "gateway_namespace" {
 variable "max_availability_zones" {
 	default=2
 }
+variable "observability_config" {
+	default={}
+	type=object(
+		{
+			enabled=optional(bool, true)
+		}
+	)
+}
 variable "private_subnets" {
 	default=null
 	type=list(string)

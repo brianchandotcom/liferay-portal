@@ -122,8 +122,8 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 						"accountEntryId", _getAccountEntryId()
 					).setParameter(
 						"showCreateButton",
-                        _hasPermission(AccountActionKeys.ASSIGN_USERS) &&
-                            _hasPermission(AccountActionKeys.CREATE_USERS)
+                        _hasPermission(AccountActionKeys.ADD_USER) &&
+                            _hasPermission(AccountActionKeys.ASSIGN_USERS)
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());

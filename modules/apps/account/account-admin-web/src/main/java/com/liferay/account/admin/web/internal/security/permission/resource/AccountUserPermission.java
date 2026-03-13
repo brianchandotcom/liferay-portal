@@ -61,7 +61,7 @@ public class AccountUserPermission {
 				accountUser.getEmailAddress()) &&
 			AccountEntryPermission.contains(
 				permissionChecker, accountEntry.getAccountEntryId(),
-				AccountActionKeys.EDIT_USERS)) {
+				AccountActionKeys.UPDATE_USERS)) {
 
 			return true;
 		}

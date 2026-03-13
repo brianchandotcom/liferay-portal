@@ -421,12 +421,37 @@
 	{
 		"actions": [
 			{
+				"actionId": "ASSIGN_USERS",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 1
+			},
+			{
+				"actionId": "CREATE_USERS",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 1
+			},
+			{
+				"actionId": "EDIT_USERS",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 1
+			},
+			{
+				"actionId": "INVITE_USER",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 1
+			},
+			{
 				"actionId": "MANAGE_ORGANIZATIONS",
 				"resource": "com.liferay.account.model.AccountEntry",
 				"scope": 1
 			},
 			{
-				"actionId": "MANAGE_USERS",
+				"actionId": "UNASSIGN_USERS",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 1
+			},
+			{
+				"actionId": "VIEW_USERS",
 				"resource": "com.liferay.account.model.AccountEntry",
 				"scope": 1
 			},

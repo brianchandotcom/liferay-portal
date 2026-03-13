@@ -20,6 +20,10 @@ public class AccountActionKeys {
 
 	public static final String ASSIGN_USERS = "ASSIGN_USERS";
 
+	public static final String CREATE_USERS = "CREATE_USERS";
+
+	public static final String EDIT_USERS = "EDIT_USERS";
+
 	public static final String INVITE_USER = "INVITE_USER";
 
 	public static final String MANAGE_ACCOUNTS = "MANAGE_ACCOUNTS";
@@ -35,6 +39,8 @@ public class AccountActionKeys {
 
 	public static final String MANAGE_SUBORGANIZATIONS_ACCOUNTS =
 		"MANAGE_SUBORGANIZATIONS_ACCOUNTS";
+
+	public static final String UNASSIGN_USERS = "UNASSIGN_USERS";
 
 	public static final String UPDATE_ORGANIZATIONS = "UPDATE_ORGANIZATIONS";
 

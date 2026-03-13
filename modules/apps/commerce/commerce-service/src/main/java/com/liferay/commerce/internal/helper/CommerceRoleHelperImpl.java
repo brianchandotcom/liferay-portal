@@ -259,9 +259,12 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			groupResourceActionIds.put(
 				AccountEntry.class.getName(),
 				new String[] {
-					ActionKeys.UPDATE, ActionKeys.MANAGE_USERS, ActionKeys.VIEW,
+					ActionKeys.UPDATE, ActionKeys.VIEW,
 					AccountActionKeys.ASSIGN_USERS,
+					AccountActionKeys.CREATE_USERS,
+					AccountActionKeys.EDIT_USERS, AccountActionKeys.INVITE_USER,
 					AccountActionKeys.MANAGE_ADDRESSES,
+					AccountActionKeys.UNASSIGN_USERS,
 					AccountActionKeys.VIEW_ADDRESSES,
 					AccountActionKeys.VIEW_ACCOUNT_ROLES,
 					AccountActionKeys.VIEW_ORGANIZATIONS,
@@ -299,8 +302,12 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			groupResourceActionIds.put(
 				AccountEntry.class.getName(),
 				new String[] {
-					ActionKeys.UPDATE, ActionKeys.MANAGE_USERS, ActionKeys.VIEW,
+					ActionKeys.UPDATE, ActionKeys.VIEW,
+					AccountActionKeys.ASSIGN_USERS,
+					AccountActionKeys.CREATE_USERS,
+					AccountActionKeys.EDIT_USERS, AccountActionKeys.INVITE_USER,
 					AccountActionKeys.MANAGE_ADDRESSES,
+					AccountActionKeys.UNASSIGN_USERS,
 					AccountActionKeys.VIEW_ADDRESSES,
 					AccountActionKeys.VIEW_ACCOUNT_ROLES,
 					AccountActionKeys.VIEW_ORGANIZATIONS,

@@ -27,6 +27,7 @@ resource "google_compute_firewall" "allow_internal" {
 }
 resource "google_compute_global_address" "private_ip_alloc" {
 	address_type="INTERNAL"
+	depends_on=[time_sleep.wait_for_apis]
 	name="${var.deployment_name}-psa-range"
 	network=google_compute_network.vpc.id
 	prefix_length=16
@@ -35,6 +36,7 @@ resource "google_compute_global_address" "private_ip_alloc" {
 }
 resource "google_compute_network" "vpc" {
 	auto_create_subnetworks=false
+	depends_on=[time_sleep.wait_for_apis]
 	name="${var.deployment_name}-vpc"
 	project=var.project_id
 	routing_mode="GLOBAL"

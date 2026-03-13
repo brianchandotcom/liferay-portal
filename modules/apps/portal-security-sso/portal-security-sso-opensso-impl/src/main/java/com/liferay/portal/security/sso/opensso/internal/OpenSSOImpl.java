@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -341,6 +342,29 @@ public class OpenSSOImpl implements OpenSSO {
 	@Override
 	public boolean isValidServiceUrl(String serviceURL) {
 		if (Validator.isNull(serviceURL)) {
+			return false;
+		}
+
+		try {
+			URL url = new URL(serviceURL);
+
+			if (InetAddressUtil.isLocalInetAddress(
+					InetAddressUtil.getInetAddressByName(url.getHost()))) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"URL is not allowed for security reasons: " +
+							serviceURL);
+				}
+
+				return false;
+			}
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			return false;
 		}
 

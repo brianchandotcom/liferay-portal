@@ -60,7 +60,8 @@ public class JobCacheUtil {
 				JenkinsResultsParserUtil.combine("job-", timeStamp, ".json"));
 			jobGzFile = new File(
 				System.getProperty("java.io.tmpdir"),
-				JenkinsResultsParserUtil.combine("job-", timeStamp, ".json.gz"));
+				JenkinsResultsParserUtil.combine(
+					"job-", timeStamp, ".json.gz"));
 
 			JenkinsResultsParserUtil.write(
 				jobFile, String.valueOf(job.getJSONObject()));

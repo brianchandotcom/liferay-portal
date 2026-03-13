@@ -51,6 +51,8 @@ export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
 
 	css += '.lfr-layout-structure-item-row {overflow: hidden;} ';
 	css += '.portlet-borderless .portlet-content {padding: 0;}';
+	css +=
+		'[data-lfr-editable-type="rich-text"] > p:only-child {margin-bottom:0;}';
 
 	if (config.isCMS) {
 		css += '.has-control-menu {--control-menu-height: 0px;}';

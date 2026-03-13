@@ -11,7 +11,7 @@ import {waitForPageToBeLoaded} from '../../utils/waitForPageToBeLoaded';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class SystemSettingsPage {
-	private applicationsMenuPage;
+	private readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
 

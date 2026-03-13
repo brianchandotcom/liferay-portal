@@ -884,7 +884,8 @@ public abstract class BaseSectionDisplayContextTestCase
 			"assetLibraries");
 
 		Assert.assertTrue(
-			assetLibrariesJSONArray.toString(),
+			assetLibrariesJSONArray.toString() + " does not equal " +
+				expectedAssetLibrariesJSONArray.toString(),
 			JSONUtil.equals(
 				expectedAssetLibrariesJSONArray, assetLibrariesJSONArray));
 	}

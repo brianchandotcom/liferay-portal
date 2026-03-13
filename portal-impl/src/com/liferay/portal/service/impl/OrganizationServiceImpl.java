@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.service.base.OrganizationServiceBaseImpl;
@@ -42,6 +44,7 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
@@ -907,10 +910,15 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	private void _checkUserOrganizationsPermission(long[] organizationIds)
 		throws PortalException {
 
-		for (long organizationId : organizationIds) {
-			if (organizationLocalService.hasUserOrganization(
-					getUserId(), organizationId, false, false)) {
+		if (ArrayUtil.isEmpty(organizationIds)) {
+			return;
+		}
 
+		Set<Long> userOrganizationIds = SetUtil.fromArray(
+			organizationLocalService.getUserOrganizationIds(getUserId(), true));
+
+		for (long organizationId : organizationIds) {
+			if (userOrganizationIds.contains(organizationId)) {
 				continue;
 			}
 

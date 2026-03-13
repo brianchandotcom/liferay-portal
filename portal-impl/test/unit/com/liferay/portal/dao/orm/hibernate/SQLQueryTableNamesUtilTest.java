@@ -5,8 +5,8 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.StringUtil;

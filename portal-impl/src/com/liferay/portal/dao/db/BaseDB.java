@@ -7,6 +7,7 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;

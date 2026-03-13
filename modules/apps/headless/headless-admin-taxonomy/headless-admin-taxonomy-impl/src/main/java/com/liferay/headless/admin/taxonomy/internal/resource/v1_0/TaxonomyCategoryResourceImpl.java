@@ -801,6 +801,11 @@ public class TaxonomyCategoryResourceImpl
 
 				return parentAssetCategory.getCategoryId();
 			}
+
+			parentAssetCategory = _assetCategoryService.getOrAddEmptyCategory(
+				parentTaxonomyCategoryExternalReferenceCode, groupId);
+
+			return parentAssetCategory.getCategoryId();
 		}
 
 		if (parentTaxonomyCategory.getId() != null) {
@@ -825,15 +830,7 @@ public class TaxonomyCategoryResourceImpl
 			return parentTaxonomyCategory.getId();
 		}
 
-		if (Validator.isBlank(parentTaxonomyCategoryExternalReferenceCode)) {
-			return AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
-		}
-
-		AssetCategory parentAssetCategory =
-			_assetCategoryService.getOrAddEmptyCategory(
-				parentTaxonomyCategoryExternalReferenceCode, groupId);
-
-		return parentAssetCategory.getCategoryId();
+		return AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 	}
 
 	private long _getParentTaxonomyCategoryId(

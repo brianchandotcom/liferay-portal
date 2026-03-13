@@ -22,6 +22,10 @@ public class Individual {
 		return _accountName;
 	}
 
+	public List<Account> getAccounts() {
+		return _accounts;
+	}
+
 	public Long getActivitiesCount() {
 		return _activitiesCount;
 	}
@@ -95,6 +99,10 @@ public class Individual {
 		_accountName = accountName;
 	}
 
+	public void setAccounts(List<Account> accounts) {
+		_accounts = accounts;
+	}
+
 	public void setActivitiesCount(long activitiesCount) {
 		_activitiesCount = activitiesCount;
 	}
@@ -157,6 +165,131 @@ public class Individual {
 		_profileType = profileType;
 	}
 
+	public static class Account {
+
+		public String getAccountName() {
+			return _accountName;
+		}
+
+		public String getAccountType() {
+			return _accountType;
+		}
+
+		public Double getAnnualRevenue() {
+			return _annualRevenue;
+		}
+
+		public String getCountry() {
+			return _country;
+		}
+
+		public Date getCreatedDate() {
+			if (_createdDate == null) {
+				return null;
+			}
+
+			return new Date(_createdDate.getTime());
+		}
+
+		public String getCurrencyCode() {
+			return _currencyCode;
+		}
+
+		public int getCustomerSince() {
+			return _customerSince;
+		}
+
+		public String getId() {
+			return _id;
+		}
+
+		public String getIndustry() {
+			return _industry;
+		}
+
+		public Date getLastActivityDate() {
+			if (_lastActivityDate == null) {
+				return null;
+			}
+
+			return new Date(_lastActivityDate.getTime());
+		}
+
+		public long getNumberOfEmployees() {
+			return _numberOfEmployees;
+		}
+
+		public String getState() {
+			return _state;
+		}
+
+		public void setAccountName(String accountName) {
+			_accountName = accountName;
+		}
+
+		public void setAccountType(String accountType) {
+			_accountType = accountType;
+		}
+
+		public void setAnnualRevenue(Double annualRevenue) {
+			_annualRevenue = annualRevenue;
+		}
+
+		public void setCountry(String country) {
+			_country = country;
+		}
+
+		public void setCreatedLocalDate(Date createdDate) {
+			if (createdDate != null) {
+				_createdDate = new Date(createdDate.getTime());
+			}
+		}
+
+		public void setCurrencyCode(String currencyCode) {
+			_currencyCode = currencyCode;
+		}
+
+		public void setCustomerSince(int customerSince) {
+			_customerSince = customerSince;
+		}
+
+		public void setId(String id) {
+			_id = id;
+		}
+
+		public void setIndustry(String industry) {
+			_industry = industry;
+		}
+
+		public void setLastActivityDate(Date lastActivityDate) {
+			if (lastActivityDate != null) {
+				_lastActivityDate = new Date(lastActivityDate.getTime());
+			}
+		}
+
+		public void setNumberOfEmployees(long numberOfEmployees) {
+			_numberOfEmployees = numberOfEmployees;
+		}
+
+		public void setState(String state) {
+			_state = state;
+		}
+
+		private String _accountName;
+		private String _accountType;
+		private Double _annualRevenue;
+		private String _country;
+		private Date _createdDate;
+		private String _currencyCode;
+		private int _customerSince;
+		private String _id;
+		private String _industry;
+		private Date _lastActivityDate;
+		private long _numberOfEmployees;
+		private String _state;
+
+	}
+
 	public static class DataSourceIndividualPK {
 
 		public String getDataSourceId() {
@@ -190,6 +323,7 @@ public class Individual {
 	}
 
 	private String _accountName;
+	private List<Account> _accounts;
 	private Long _activitiesCount;
 	private Map<String, String> _context = new HashMap<>();
 	private Map<String, List<Field>> _custom = new HashMap<>();

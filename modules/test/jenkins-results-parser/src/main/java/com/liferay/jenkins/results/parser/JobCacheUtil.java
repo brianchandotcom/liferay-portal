@@ -49,12 +49,22 @@ public class JobCacheUtil {
 			return;
 		}
 
-		File jobFile = new File("job.json");
-		File jobGzFile = new File("job.json.gz");
-
-		JSONObject jsonObject = job.getJSONObject();
+		File jobFile = null;
+		File jobGzFile = null;
 
 		try {
+			String timeStamp = JenkinsResultsParserUtil.getDistinctTimeStamp();
+
+			jobFile = new File(
+				System.getProperty("java.io.tmpdir"), 
+				JenkinsResultsParserUtil.combine("job-", timeStamp, ".json"));
+
+			jobGzFile = new File(
+				System.getProperty("java.io.tmpdir"),
+				JenkinsResultsParserUtil.combine("job-", timeStamp, ".json.gz"));
+
+			JSONObject jsonObject = job.getJSONObject();
+
 			JenkinsResultsParserUtil.write(jobFile, String.valueOf(jsonObject));
 
 			JenkinsResultsParserUtil.gzip(jobFile, jobGzFile);
@@ -63,6 +73,15 @@ public class JobCacheUtil {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
+		}
+		finally {
+			if (jobFile != null) {
+				JenkinsResultsParserUtil.delete(jobFile);
+			}
+
+			if (jobGzFile != null) {
+				JenkinsResultsParserUtil.delete(jobGzFile);
+			}
 		}
 	}
 

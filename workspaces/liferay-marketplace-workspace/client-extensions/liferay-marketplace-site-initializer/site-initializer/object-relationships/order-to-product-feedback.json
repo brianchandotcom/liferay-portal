@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Order To Product Feedback"
+	},
+	"name": "orderToProductFeedback",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CommerceOrder$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:ProductFeedback$]",
+	"objectDefinitionName2": "ProductFeedback",
+	"type": "oneToMany"
+}

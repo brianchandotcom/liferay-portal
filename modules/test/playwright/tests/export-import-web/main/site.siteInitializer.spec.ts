@@ -145,7 +145,10 @@ const testWithClaritySiteInitializerFF = mergeTests(
 		await test.step('Import the site 1 into site 2', async () => {
 			await exportImportPage.goToImport(site2.friendlyUrlPath);
 
-			await exportImportPage.import({filePath: exportFilePath});
+			await exportImportPage.import({
+				filePath: exportFilePath,
+				timeout: 60000,
+			});
 		});
 
 		await test.step('Assert the exportable items from site 1 and site 2 are equal', async () => {

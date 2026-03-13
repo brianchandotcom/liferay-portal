@@ -102,6 +102,7 @@ export default {
 	'batch': 'Batch',
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
+	'beta-product-feedback-form': 'Beta Product Feedback Form',
 	'billing-address': 'Billing Address',
 	'billing-email': 'Billing Email',
 	'browse-catalog': 'Browse Catalog',
@@ -171,6 +172,8 @@ export default {
 	'could-not-find-ssa-account': 'Could not find SSA account',
 	'could-not-upload-the-file-a-package-with-this-filename-already-exists':
 		'Could not upload the file. A package with this filename already exists.',
+	'could-you-elaborate-on-the-reasons-for-your-degree-of-satisfaction':
+		'Could you elaborate on the reasons for your degree of satisfaction?',
 	'country': 'Country',
 	'coupon-code': 'Coupon Code',
 	'create': 'Create',
@@ -335,6 +338,11 @@ export default {
 	'hold-tight-we-re-preparing-your-environment-so-you-can-start-using-your-liferay-data-platform-this-will-only-take-a-moment':
 		'Hold tight. We’re preparing your environment so you can start using your Liferay Data Platform. This will only take a moment!',
 	'host-name': 'Host Name',
+	'how-easy-to-use-is-the-product': 'How easy to use is the product?',
+	'how-satisfied-are-you-with-the-product':
+		'How satisfied are you with the product?',
+	'how-useful-is-the-product-for-your-workflow':
+		'How useful is the product for your workflow?',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
 	'i-have-read-and-agree-to-the-liferay-end-user-agreement':
@@ -346,6 +354,8 @@ export default {
 		'If the app is compatible with different updates of 7.4, please upload multiple packages for each update or update the compatibility range.',
 	'if-you-are-requesting-the-account-on-behalf-of-a-business-,-please-note-the-business-name':
 		'If you are requesting the account on behalf of a business, please note the business name.',
+	'if-you-could-choose-3-top-priorities-for-improvements-what-would-they-be':
+		'If you could choose 3 top priorities for improvements, what would they be?',
 	'important-images-will-be-displayed-following-the-numerical-order-above':
 		'Important: Images will be displayed following the numerical order above.',
 	'in-progress': 'In Progress',
@@ -496,6 +506,7 @@ export default {
 	'order-status': 'Order Status',
 	'orders': 'Orders',
 	'other': 'Other',
+	'overall-experience': 'Overall Experience',
 	'package': 'Package',
 	'paid': 'Paid',
 	'paid-by': 'Paid By',
@@ -585,6 +596,7 @@ export default {
 	'quarter': 'Quarter',
 	'ram': 'RAM',
 	'ram-in-gbs': 'RAM in GBs',
+	'rate-from-1-poor-to-5-excellent': 'Rate from 1 (poor) to 5 (excellent)',
 	'reason': 'Reason',
 	'recent-orders': 'Recent Orders',
 	'recent-published-apps': 'Recent Published Apps',
@@ -681,6 +693,7 @@ export default {
 	'subtotal-discount': 'Subtotal Discount',
 	'success': 'Success',
 	'successfully-removed-roles': 'Successfully removed roles',
+	'suggestions-and-priorities': 'Suggestions & Priorities',
 	'summary': 'Summary',
 	'support': 'Support',
 	'support-and-help': 'Support & Help',
@@ -701,6 +714,8 @@ export default {
 	'text-block': 'Text Block',
 	'text-images-block': 'Text Images Block',
 	'text-video-block': 'Text Video Block',
+	'thank-you-for-trying-the-beta-version-of-this-product-your-feedback-is-essential-to-improve-the-final-release-this-survey-takes-3–5-minutes':
+		'Thank you for trying the beta version of this product! Your feedback is essential to improve the final release. This survey takes ~3–5 minutes.',
 	'thank-you-for-your': 'Thank you for your',
 	'the-app-and-all-its-client-extensions-services-will-be-deleted-and-uninstalled-from-liferay-dxp':
 		'The app and all its client extensions (services) will be deleted and uninstalled from Liferay DXP.',
@@ -802,6 +817,7 @@ export default {
 	'user-account': 'User Account',
 	'user-doesnt-exist': 'User doesn’t exist',
 	'user-email': 'User Email',
+	'user-information': 'User Information',
 	'user-roles-successfully-updated': 'User roles successfully updated',
 	'users-requests-to-become-a-publisher':
 		'Users requests to become a publisher',
@@ -828,6 +844,8 @@ export default {
 	'we-couldnt-set-up-your-environment-please-contact-support':
 		'We couldn’t set up your environment. Please contact support.',
 	'website': 'Website',
+	'what-features-would-you-like-in-the-final-release':
+		'What features would you like in the final release?',
 	'when-adding-app-versions-you-can-use-your-own-numbering-system-but-be-sure-it-is-consistent-and-understandable-by-the-customer':
 		'When adding app versions, you can use your own numbering system, but be sure it is consistent and understandable by the customer.',
 	'workflow-action': 'Workflow Action',

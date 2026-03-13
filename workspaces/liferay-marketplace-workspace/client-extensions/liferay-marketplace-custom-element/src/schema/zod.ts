@@ -329,6 +329,23 @@ const zodSchema = {
 		workspaceName: z.string().min(3),
 		workspaceOwnerEmail: z.string().email(),
 	}),
+	productFeedback: z.object({
+		companyName: z.string().optional(),
+		email: z
+			.string()
+			.email('Invalid email address')
+			.min(1, 'Email is required'),
+		fullName: z.string().min(1, 'Full Name is required'),
+		jobTitle: z.string().optional(),
+		notify: z.boolean().optional(),
+		ratingEaseOfUse: z.number().min(0).max(5).optional(),
+		ratingSatisfaction: z.number().min(0).max(5).optional(),
+		ratingUsefulness: z.number().min(0).max(5).optional(),
+		suggestionFeatures: z.string().optional(),
+		suggestionImprovements: z.string().optional(),
+		suggestionSatisfaction: z.string().optional(),
+	}),
+
 	solutionPublishing: {
 		company: z
 			.object({

@@ -44,7 +44,10 @@ export class DigitalSalesRoomsPage {
 		);
 		this.noResultsFoundMessage = page.getByText('No Results Found');
 		this.page = page;
-		this.roomsLink = page.getByRole('link', {exact: true, name: 'Rooms'});
+		this.roomsLink = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Rooms',
+		});
 		this.saveAsTemplateMenuItem = page.getByRole('menuitem', {
 			name: 'Save as Template',
 		});
@@ -63,5 +66,6 @@ export class DigitalSalesRoomsPage {
 
 	async goto() {
 		await this.applicationsMenuPage.goToDigitalSalesRooms();
+		await this.roomsLink.click();
 	}
 }

@@ -15,6 +15,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetDefaultLocale;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetEqualLocaleForLayoutAndTitle;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -72,28 +73,21 @@ public class DDMFormLayoutValidatorTest {
 		}
 	}
 
-	@Test(expected = InvalidRowSize.class)
+	@Test
 	public void testInvalidRowSize() throws Exception {
-		DDMFormLayoutColumn ddmFormLayoutColumn1 = _createDDMFormLayoutColumn(
-			6, "field1");
+		AssertUtils.assertFailure(
+			InvalidRowSize.class,
+			"The sum of all column sizes of a row must be less than the " +
+				"maximum row size of 12",
+			() -> _ddmFormLayoutValidator.validate(
+				_createDDMFormLayout(
+					_createDDMFormLayoutColumn(6, "field1"),
+					_createDDMFormLayoutColumn(7, "field2"))));
 
-		DDMFormLayoutColumn ddmFormLayoutColumn2 = _createDDMFormLayoutColumn(
-			7, "field2");
-
-		DDMFormLayoutRow ddmFormLayoutRow = _createDDMFormLayoutRow(
-			ddmFormLayoutColumn1);
-
-		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn2);
-
-		LocalizedValue title = _createLocalizedValue("Page1", LocaleUtil.US);
-
-		DDMFormLayoutPage ddmFormLayoutPage = _createDDMFormLayoutPage(
-			ddmFormLayoutRow, title);
-
-		DDMFormLayout ddmFormLayout = _createDDMFormLayout(
-			ddmFormLayoutPage, LocaleUtil.US);
-
-		_ddmFormLayoutValidator.validate(ddmFormLayout);
+		_ddmFormLayoutValidator.validate(
+			_createDDMFormLayout(
+				_createDDMFormLayoutColumn(6, "field1"),
+				_createDDMFormLayoutColumn(7, null)));
 	}
 
 	@Test(expected = MustSetDefaultLocale.class)
@@ -141,6 +135,23 @@ public class DDMFormLayoutValidatorTest {
 			ddmFormLayoutPage, LocaleUtil.BRAZIL);
 
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
+	}
+
+	private DDMFormLayout _createDDMFormLayout(
+		DDMFormLayoutColumn ddmFormLayoutColumn1,
+		DDMFormLayoutColumn ddmFormLayoutColumn2) {
+
+		DDMFormLayoutRow ddmFormLayoutRow = _createDDMFormLayoutRow(
+			ddmFormLayoutColumn1);
+
+		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn2);
+
+		LocalizedValue title = _createLocalizedValue("Page1", LocaleUtil.US);
+
+		DDMFormLayoutPage ddmFormLayoutPage = _createDDMFormLayoutPage(
+			ddmFormLayoutRow, title);
+
+		return _createDDMFormLayout(ddmFormLayoutPage, LocaleUtil.US);
 	}
 
 	private DDMFormLayout _createDDMFormLayout(

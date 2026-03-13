@@ -91,7 +91,8 @@ public class StagingConfigurationUpgradeProcessTest {
 
 	private Configuration _getConfiguration(long companyId) throws Exception {
 		String filterString = StringBundler.concat(
-			"(&(service.factoryPid=", _STAGING_CONFIGURATION, ".scoped)(",
+			"(&(service.factoryPid=com.liferay.staging.configuration.",
+			"StagingConfiguration.scoped)(",
 			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(), "=",
 			companyId, "))");
 
@@ -113,9 +114,6 @@ public class StagingConfigurationUpgradeProcessTest {
 			upgradeProcess.upgrade();
 		}
 	}
-
-	private static final String _STAGING_CONFIGURATION =
-		"com.liferay.staging.configuration.StagingConfiguration";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.staging.internal.upgrade.registry.StagingImplUpgradeStepRegistrator))"

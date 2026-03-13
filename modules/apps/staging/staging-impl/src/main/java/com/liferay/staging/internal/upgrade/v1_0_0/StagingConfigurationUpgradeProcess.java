@@ -28,7 +28,8 @@ public class StagingConfigurationUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format("(%s=%s*)", Constants.SERVICE_PID, _SERVICE_PID));
+			String.format("(%s=%s*)", Constants.SERVICE_PID,
+			"com.liferay.staging.configuration.StagingConfiguration"));
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			return;
@@ -47,9 +48,6 @@ public class StagingConfigurationUpgradeProcess extends UpgradeProcess {
 			configuration.update(properties);
 		}
 	}
-
-	private static final String _SERVICE_PID =
-		"com.liferay.staging.configuration.StagingConfiguration";
 
 	private final ConfigurationAdmin _configurationAdmin;
 

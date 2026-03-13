@@ -11,11 +11,10 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_ACCOUNT_ROLE</action-key>
-				<action-key>ASSIGN_USERS</action-key>
-				<action-key>CREATE_USERS</action-key>
+                <action-key>ADD_USER</action-key>
+                <action-key>ASSIGN_USERS</action-key>
 				<action-key>DEACTIVATE</action-key>
 				<action-key>DELETE</action-key>
-				<action-key>EDIT_USERS</action-key>
 				<action-key>INVITE_USER</action-key>
 				<action-key>MANAGE_ADDRESSES</action-key>
 				<action-key>MANAGE_DOMAINS</action-key>
@@ -23,7 +22,8 @@
 				<action-key>UNASSIGN_USERS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_ORGANIZATIONS</action-key>
-				<action-key>VIEW</action-key>
+                <action-key>UPDATE_USERS</action-key>
+                <action-key>VIEW</action-key>
 				<action-key>VIEW_ACCOUNT_GROUPS</action-key>
 				<action-key>VIEW_ACCOUNT_ROLES</action-key>
 				<action-key>VIEW_ADDRESSES</action-key>

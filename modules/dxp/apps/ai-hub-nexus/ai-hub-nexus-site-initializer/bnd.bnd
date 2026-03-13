@@ -1,0 +1,7 @@
+Bundle-Name: Liferay AI Hub Nexus Site Initializer
+Bundle-SymbolicName: com.liferay.ai.hub.nexus.site.initializer
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Feature-Flag: LPD-62272
+Liferay-Site-Initializer-Name: AI Hub Nexus
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-ai-hub-nexus

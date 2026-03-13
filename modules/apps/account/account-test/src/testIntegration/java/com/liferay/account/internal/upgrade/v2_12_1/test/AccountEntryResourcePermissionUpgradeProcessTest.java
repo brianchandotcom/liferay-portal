@@ -80,25 +80,25 @@ public class AccountEntryResourcePermissionUpgradeProcessTest {
 				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(TestPropsValues.getCompanyId()),
+				role.getRoleId(), AccountActionKeys.ADD_USER));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
 				role.getRoleId(), AccountActionKeys.ASSIGN_USERS));
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
 				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(TestPropsValues.getCompanyId()),
-				role.getRoleId(), AccountActionKeys.CREATE_USERS));
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				role.getRoleId(), AccountActionKeys.EDIT_USERS));
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
 				role.getRoleId(), AccountActionKeys.UNASSIGN_USERS));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				role.getRoleId(), AccountActionKeys.UPDATE_USERS));
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
 				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),

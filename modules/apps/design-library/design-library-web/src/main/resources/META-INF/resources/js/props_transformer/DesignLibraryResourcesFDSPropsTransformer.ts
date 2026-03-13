@@ -5,6 +5,8 @@
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
+import {ActionItem, DesignLibraryItem} from '../types';
+
 export default function DesignLibraryResourcesFDSPropsTransformer(
 	props: IFrontendDataSetProps
 ): IFrontendDataSetProps {
@@ -64,6 +66,18 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 					description: 'dateModified',
 					symbol: '',
 					title: 'title',
+				},
+				setItemComponentProps: ({
+					item,
+					props,
+				}: {
+					item: DesignLibraryItem;
+					props: {actions: ActionItem[]};
+				}) => {
+					return {
+						...props,
+						description: `asdfasdf: ${new Date(item.dateModified).toLocaleString()}`,
+					};
 				},
 				thumbnail: 'cards2',
 			},

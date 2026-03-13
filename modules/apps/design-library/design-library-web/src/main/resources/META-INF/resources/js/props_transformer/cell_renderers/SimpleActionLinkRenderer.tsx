@@ -10,19 +10,7 @@ import {findAction, replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
-interface ActionItem {
-	data: {id: string};
-	href?: string;
-}
-
-interface DesignLibraryItem {
-	creatorUserId: number;
-	dateModified: string;
-	description: string;
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-}
+import {ActionItem, DesignLibraryItem} from '../../types';
 
 export function SimpleActionLinkRenderer({
 	actions,

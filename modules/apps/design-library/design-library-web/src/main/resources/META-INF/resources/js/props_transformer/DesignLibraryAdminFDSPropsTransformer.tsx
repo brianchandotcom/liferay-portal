@@ -5,6 +5,7 @@
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
+import {ActionItem, DesignLibraryItem} from '../types';
 import {SimpleActionLinkRenderer} from './cell_renderers/SimpleActionLinkRenderer';
 
 export default function DesignLibraryAdminFDSPropsTransformer(
@@ -74,6 +75,22 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 					symbol: '',
 					title: 'name',
 				},
+				setItemComponentProps: ({
+					item,
+					props,
+				}: {
+					item: DesignLibraryItem;
+					props: {actions: ActionItem[]};
+				}) => {
+					return {
+						...props,
+						description: `asdfasdf: ${new Date(item.dateModified).toLocaleString()}`,
+						href: props.actions.find(
+							(action) => action.data.id === 'edit'
+						)?.href,
+					};
+				},
+
 				thumbnail: 'cards2',
 			},
 		],

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db;
+package com.liferay.portal.kernel.db;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -17,10 +17,10 @@ import java.net.URL;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.osgi.framework.Bundle;
@@ -29,11 +29,6 @@ import org.osgi.framework.Bundle;
  * @author Mariano Álvaro Sáiz
  */
 public class DBResourceUtilTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetModuleIndexesSQLWithUnixLineSeparator()
@@ -51,15 +46,31 @@ public class DBResourceUtilTest {
 
 	@Test
 	public void testGetPortalTablesPrimaryKeyColumnNames() throws Exception {
-		Map<String, String[]> portalTablesPrimaryKeyColumnNames =
-			DBResourceUtil.getPortalTablesPrimaryKeyColumnNames();
+		try (MockedStatic<StringUtil> stringUtilMockedStatic =
+				Mockito.mockStatic(
+					StringUtil.class, Mockito.CALLS_REAL_METHODS)) {
 
-		Assert.assertArrayEquals(
-			new String[] {"companyId"},
-			portalTablesPrimaryKeyColumnNames.get("Company"));
-		Assert.assertArrayEquals(
-			new String[] {"virtualHostId", "ctCollectionId"},
-			portalTablesPrimaryKeyColumnNames.get("VirtualHost"));
+			stringUtilMockedStatic.when(
+				() -> StringUtil.read(
+					Mockito.nullable(Class.class), Mockito.anyString())
+			).thenReturn(
+				StringBundler.concat(
+					"create table Company (companyId LONG not null primary key",
+					"); create table VirtualHost (ctCollectionId LONG default ",
+					"0 not null, virtualHostId LONG not null, primary key ",
+					"(virtualHostId, ctCollectionId));")
+			);
+
+			Map<String, String[]> portalTablesPrimaryKeyColumnNames =
+				DBResourceUtil.getPortalTablesPrimaryKeyColumnNames();
+
+			Assert.assertArrayEquals(
+				new String[] {"companyId"},
+				portalTablesPrimaryKeyColumnNames.get("Company"));
+			Assert.assertArrayEquals(
+				new String[] {"virtualHostId", "ctCollectionId"},
+				portalTablesPrimaryKeyColumnNames.get("VirtualHost"));
+		}
 	}
 
 	private InputStream _getSQLFileInputStream(String lineSeparator) {
@@ -86,7 +97,7 @@ public class DBResourceUtilTest {
 		Bundle bundle = Mockito.mock(Bundle.class);
 
 		Mockito.when(
-			bundle.getResource(Mockito.anyString())
+			bundle.getResource(ArgumentMatchers.anyString())
 		).thenReturn(
 			url
 		);

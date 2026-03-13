@@ -5,7 +5,6 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {CustomClaim} from '../../tests/openid-link/main/helpers/CustomClaimHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -58,7 +57,7 @@ export class OpenIdInstanceSettingsPage {
 	async addOpenIDConnectProviderConnectionConfiguration(
 		openIdProvider: string,
 		providerName: string,
-		customClaim?: CustomClaim,
+		customClaim?: TCustomClaim,
 		matcherField?: string
 	) {
 		await this.clickOpenIDConnectProviderConnectionMenuItem();

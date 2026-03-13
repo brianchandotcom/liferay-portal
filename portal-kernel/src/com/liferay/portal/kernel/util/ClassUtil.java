@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 
 import java.io.File;
 import java.io.FileReader;

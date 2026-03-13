@@ -35,6 +35,12 @@ public class AsahProject {
 		_startDate = startDate;
 	}
 
+	public AsahProject(String id, Date startDate, String subscription) {
+		_id = id;
+		_startDate = startDate;
+		_subscription = subscription;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -49,7 +55,8 @@ public class AsahProject {
 
 		if (Objects.equals(_asahProjects, project._asahProjects) &&
 			Objects.equals(_id, project._id) &&
-			Objects.equals(_startDate, project._startDate)) {
+			Objects.equals(_startDate, project._startDate) &&
+			Objects.equals(_subscription, project._subscription)) {
 
 			return true;
 		}
@@ -78,9 +85,13 @@ public class AsahProject {
 		return new Date(_startDate.getTime());
 	}
 
+	public String getSubscription() {
+		return _subscription;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(_asahProjects, _id, _startDate);
+		return Objects.hash(_asahProjects, _id, _startDate, _subscription);
 	}
 
 	public void setAsahProjects(Set<AsahProject> asahProjects) {
@@ -97,8 +108,13 @@ public class AsahProject {
 		}
 	}
 
+	public void setSubscription(String subscription) {
+		_subscription = subscription;
+	}
+
 	private Set<AsahProject> _asahProjects;
 	private String _id;
 	private Date _startDate;
+	private String _subscription;
 
 }

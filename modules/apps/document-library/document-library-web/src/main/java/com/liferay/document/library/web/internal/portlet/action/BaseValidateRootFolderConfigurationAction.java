@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -78,7 +80,8 @@ public abstract class BaseValidateRootFolderConfigurationAction
 
 		try {
 			_setPortletPreferences(
-				portletPreferences, rootFolderId, selectedRepositoryId);
+				portletPreferences, portletRequest, rootFolderId,
+				selectedRepositoryId);
 		}
 		catch (ReadOnlyException readOnlyException) {
 			throw new SystemException(readOnlyException);
@@ -101,7 +104,8 @@ public abstract class BaseValidateRootFolderConfigurationAction
 	protected RepositoryLocalService repositoryLocalService;
 
 	private void _setPortletPreferences(
-			PortletPreferences portletPreferences, long rootFolderId,
+			PortletPreferences portletPreferences,
+			PortletRequest portletRequest, long rootFolderId,
 			long selectedRepositoryId)
 		throws PortalException, ReadOnlyException {
 
@@ -132,12 +136,23 @@ public abstract class BaseValidateRootFolderConfigurationAction
 				selectedRepository.getExternalReferenceCode();
 		}
 
-		portletPreferences.setValue(
-			"selectedGroupExternalReferenceCode",
-			selectedGroup.getExternalReferenceCode());
-		portletPreferences.setValue(
-			"selectedRepositoryExternalReferenceCode",
-			selectedRepositoryExternalReferenceCode);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if ((themeDisplay == null) ||
+			(selectedGroup.getGroupId() != themeDisplay.getScopeGroupId())) {
+
+			portletPreferences.setValue(
+				"selectedGroupExternalReferenceCode",
+				selectedGroup.getExternalReferenceCode());
+			portletPreferences.setValue(
+				"selectedRepositoryExternalReferenceCode",
+				selectedRepositoryExternalReferenceCode);
+		}
+		else {
+			portletPreferences.reset("selectedGroupExternalReferenceCode");
+			portletPreferences.reset("selectedRepositoryExternalReferenceCode");
+		}
 
 		portletPreferences.reset("rootFolderId");
 		portletPreferences.reset("selectedRepositoryId");

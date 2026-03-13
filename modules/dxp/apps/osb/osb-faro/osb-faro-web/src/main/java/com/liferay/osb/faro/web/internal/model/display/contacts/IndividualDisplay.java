@@ -34,6 +34,12 @@ public class IndividualDisplay implements FaroEntityDisplay {
 	}
 
 	public IndividualDisplay(Individual individual) {
+		List<Individual.Account> accounts = individual.getAccounts();
+
+		if (accounts != null) {
+			_accounts = accounts;
+		}
+
 		_individual = individual;
 
 		_accountName = individual.getAccountName();
@@ -115,6 +121,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 		"suffix", "userId", "uuid", "worksFor");
 
 	private String _accountName;
+	private List<Individual.Account> _accounts;
 	private Long _activitiesCount;
 
 	@JsonProperty("context")

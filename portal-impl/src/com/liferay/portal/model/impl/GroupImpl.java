@@ -220,7 +220,12 @@ public class GroupImpl extends GroupBaseImpl {
 			Company company = CompanyLocalServiceUtil.getCompany(
 				getCompanyId());
 
-			name = company.getName();
+			if (Objects.equals(company.getName(), "Liferay")) {
+				name = LanguageUtil.get(locale, "liferay-dxp-site");
+			}
+			else {
+				name = company.getName();
+			}
 		}
 		else if (isLayout()) {
 			Layout layout = LayoutLocalServiceUtil.getLayout(getClassPK());

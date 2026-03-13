@@ -131,10 +131,9 @@ export class PageEditorPage {
 
 			await this.page.keyboard.press('Enter');
 
-			await this.page
-				.locator('#content')
-				.getByText(name)
-				.waitFor({timeout});
+			await expect(
+				this.page.locator('#content').getByText(name, {exact: true})
+			).toBeVisible({timeout});
 
 			await this.page.keyboard.press('Enter');
 		}

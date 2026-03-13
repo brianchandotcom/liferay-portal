@@ -130,6 +130,12 @@ export class PageEditorPage {
 			await this.page.getByLabel(`Add ${name}`).focus();
 
 			await this.page.keyboard.press('Enter');
+
+			await this.page
+				.locator('#content')
+				.getByText(name)
+				.waitFor({timeout});
+
 			await this.page.keyboard.press('Enter');
 		}
 

@@ -11,7 +11,7 @@ function get_recovery_point_arn_by_type {
 			"${recovery_points_json}" \
 			| jq --arg resource_type "${resource_type}" "[.[] | select(.ResourceType == \$resource_type)]")
 
-	local filtered_recovery_points_lengths=$(echo "${filtered_recovery_points_json}" | jq "length")
+	local filtered_recovery_points_length=$(echo "${filtered_recovery_points_json}" | jq "length")
 
 	if [ "${filtered_recovery_points_length}" -ne 1 ]
 	then

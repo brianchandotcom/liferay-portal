@@ -15,10 +15,10 @@ import {
 } from './utils/consentManagerConfigurationHelper';
 
 export const test = mergeTests(
-	loginTest(),
 	featureFlagsTest({
 		'LPD-75032': {enabled: true},
 	}),
+	loginTest(),
 	systemSettingsPageTest
 );
 

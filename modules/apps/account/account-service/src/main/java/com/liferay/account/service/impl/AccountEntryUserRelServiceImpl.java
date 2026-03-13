@@ -55,14 +55,14 @@ public class AccountEntryUserRelServiceImpl
 
 		if (!_modelResourcePermission.contains(
 				permissionChecker, accountEntryId,
-				AccountActionKeys.ASSIGN_USERS) ||
+				AccountActionKeys.ADD_USER) ||
 			!_modelResourcePermission.contains(
 				permissionChecker, accountEntryId,
-				AccountActionKeys.CREATE_USERS)) {
+				AccountActionKeys.ASSIGN_USERS)) {
 
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, AccountEntry.class.getName(), accountEntryId,
-				AccountActionKeys.ASSIGN_USERS, AccountActionKeys.CREATE_USERS);
+				AccountActionKeys.ASSIGN_USERS, AccountActionKeys.ADD_USER);
 		}
 
 		return accountEntryUserRelLocalService.addAccountEntryUserRel(
@@ -100,7 +100,7 @@ public class AccountEntryUserRelServiceImpl
 		if (user == null) {
 			_modelResourcePermission.check(
 				getPermissionChecker(), accountEntryId,
-				AccountActionKeys.CREATE_USERS);
+				AccountActionKeys.ADD_USER);
 		}
 
 		return accountEntryUserRelLocalService.
@@ -135,14 +135,14 @@ public class AccountEntryUserRelServiceImpl
 
 		if (!_modelResourcePermission.contains(
 				permissionChecker, accountEntryId,
-				AccountActionKeys.ASSIGN_USERS) ||
+				AccountActionKeys.ADD_USER) ||
 			!_modelResourcePermission.contains(
 				permissionChecker, accountEntryId,
-				AccountActionKeys.CREATE_USERS)) {
+				AccountActionKeys.ASSIGN_USERS)) {
 
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, AccountEntry.class.getName(), accountEntryId,
-				AccountActionKeys.ASSIGN_USERS, AccountActionKeys.CREATE_USERS);
+				AccountActionKeys.ASSIGN_USERS, AccountActionKeys.ADD_USER);
 		}
 
 		return accountEntryUserRelLocalService.addPersonTypeAccountEntryUserRel(

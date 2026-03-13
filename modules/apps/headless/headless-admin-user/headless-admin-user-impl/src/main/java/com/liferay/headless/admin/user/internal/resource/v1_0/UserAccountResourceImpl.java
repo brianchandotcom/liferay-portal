@@ -289,6 +289,12 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		Map<String, Map<String, String>> actions = _getModelActions(
 			Collections.unmodifiableMap(
 				HashMapBuilder.put(
+					AccountActionKeys.ADD_USER,
+					new String[] {
+						"postAccountUserAccount", "postAccountUserAccountBatch",
+						"postAccountUserAccountByExternalReferenceCode"
+					}
+				).put(
 					AccountActionKeys.ASSIGN_USERS,
 					new String[] {
 						"postAccountUserAccountByEmailAddress",
@@ -297,12 +303,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 						"postAccountUserAccountsByEmailAddress",
 						"postAccountUserAccountsByExternalReferenceCodeBy" +
 							"EmailAddress"
-					}
-				).put(
-					AccountActionKeys.CREATE_USERS,
-					new String[] {
-						"postAccountUserAccount", "postAccountUserAccountBatch",
-						"postAccountUserAccountByExternalReferenceCode"
 					}
 				).put(
 					AccountActionKeys.UNASSIGN_USERS,

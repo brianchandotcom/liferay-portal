@@ -5,7 +5,7 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;

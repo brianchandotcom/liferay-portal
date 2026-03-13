@@ -44,15 +44,15 @@ async function postRoleWithAccountAdminPermissions(
 		rolePermissions: [
 			{
 				actionIds: [
+                    'ADD_USER',
 					'ASSIGN_USERS',
-					'CREATE_USERS',
-					'EDIT_USERS',
 					'INVITE_USER',
 					'MANAGE_ADDRESSES',
 					'MANAGE_CHANNEL_DEFAULTS',
 					'MANAGE_ORGANIZATIONS',
 					'UNASSIGN_USERS',
 					'UPDATE',
+                    'UPDATE_USER',
 					'VIEW',
 					'VIEW_ACCOUNT_ROLES',
 					'VIEW_ADDRESSES',
@@ -134,13 +134,13 @@ test.describe('Test for Organization Account visibility depending on Permissions
 				rolePermissions: [
 					{
 						actionIds: [
+                            'ADD_USER',
 							'ASSIGN_USERS',
-							'CREATE_USERS',
-							'EDIT_USERS',
 							'INVITE_USER',
 							'UNASSIGN_USERS',
 							'UPDATE',
 							'UPDATE_ORGANIZATIONS',
+                            'UPDATE_USER',
 							'VIEW',
 							'VIEW_ORGANIZATIONS',
 						],
@@ -244,13 +244,13 @@ test.describe('Test for Organization Account visibility depending on Permissions
 				rolePermissions: [
 					{
 						actionIds: [
+							'ADD_USER',
 							'ASSIGN_USERS',
-							'CREATE_USERS',
-							'EDIT_USERS',
 							'INVITE_USER',
 							'MANAGE_ORGANIZATIONS',
 							'UNASSIGN_USERS',
 							'UPDATE',
+                            'UPDATE_USER',
 							'VIEW',
 							'VIEW_ORGANIZATIONS',
 						],
@@ -355,12 +355,12 @@ test.describe('Test for Organization Account visibility depending on Permissions
 				rolePermissions: [
 					{
 						actionIds: [
+							'ADD_USER',
 							'ASSIGN_USERS',
-							'CREATE_USERS',
-							'EDIT_USERS',
 							'INVITE_USER',
 							'UNASSIGN_USERS',
 							'UPDATE',
+                            'UPDATE_USER',
 							'VIEW',
 							'VIEW_ORGANIZATIONS',
 						],
@@ -2330,8 +2330,8 @@ test(
 			rolePermissions: [
 				{
 					actionIds: [
+                        'ADD_USER',
 						'ASSIGN_USERS',
-						'CREATE_USERS',
 						'INVITE_USER',
 						'MANAGE_ADDRESSES',
 						'UNASSIGN_USERS',

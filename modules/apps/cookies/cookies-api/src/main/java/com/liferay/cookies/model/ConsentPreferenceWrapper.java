@@ -218,6 +218,11 @@ public class ConsentPreferenceWrapper
 		return model.getValue();
 	}
 
+	@Override
+	public void persist() {
+		model.persist();
+	}
+
 	/**
 	 * Sets the company ID of this consent preference.
 	 *

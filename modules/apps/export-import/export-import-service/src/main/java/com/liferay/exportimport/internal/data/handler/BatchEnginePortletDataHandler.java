@@ -130,7 +130,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		List<Registration> activeRegistrations = _getActiveRegistrations(
 			portletDataContext);
 
-		Map<String, List<String>> typedExternalReferenceCodes = new HashMap<>();
+		Map<String, List<String>> typedExternalReferenceCodesMap =
+			new HashMap<>();
 		List<String> untypedExternalReferenceCodes = new ArrayList<>();
 
 		for (SystemEvent systemEvent : systemEvents) {
@@ -147,7 +148,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					untypedExternalReferenceCodes.add(externalReferenceCode);
 				}
 				else {
-					typedExternalReferenceCodes.computeIfAbsent(
+					typedExternalReferenceCodesMap.computeIfAbsent(
 						type, __ -> new ArrayList<>()
 					).add(
 						externalReferenceCode
@@ -171,7 +172,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			}
 
 			List<String> externalReferenceCodes = new ArrayList<>(
-				typedExternalReferenceCodes.getOrDefault(
+				typedExternalReferenceCodesMap.getOrDefault(
 					exportImportDescriptor.getKey(), Collections.emptyList()));
 
 			externalReferenceCodes.addAll(untypedExternalReferenceCodes);

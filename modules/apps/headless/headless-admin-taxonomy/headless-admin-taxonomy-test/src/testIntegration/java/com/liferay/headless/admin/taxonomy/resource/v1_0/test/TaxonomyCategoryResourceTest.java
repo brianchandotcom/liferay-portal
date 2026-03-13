@@ -1794,8 +1794,6 @@ public class TaxonomyCategoryResourceTest
 			ParentTaxonomyCategory putParentTaxonomyCategory =
 				putTaxonomyCategory.getParentTaxonomyCategory();
 
-			Assert.assertNotNull(putParentTaxonomyCategory);
-
 			Assert.assertEquals(
 				putParentTaxonomyCategory.getId(),
 				Long.valueOf(assetCategory.getParentCategoryId()));
@@ -1817,12 +1815,9 @@ public class TaxonomyCategoryResourceTest
 			putParentTaxonomyCategory =
 				putTaxonomyCategory.getParentTaxonomyCategory();
 
-			Assert.assertNotNull(putParentTaxonomyCategory);
-
 			Assert.assertEquals(
 				putParentTaxonomyCategory.getId(),
 				Long.valueOf(assetCategory.getParentCategoryId()));
-
 			Assert.assertEquals(
 				putParentTaxonomyCategory.getExternalReferenceCode(),
 				parentAssetCategory.getExternalReferenceCode());

@@ -111,15 +111,24 @@ function FirstSectionComponent({
 							'show-files-in-cms-library'
 						)}
 						onChange={(event) => {
+							const settings = {
+								...uploadField.settings,
+								showFilesInLibrary: event.target.checked,
+							};
+
+							if (event.target.checked) {
+								settings.storageDLFolderPath =
+									'/' + Liferay.Language.get('new');
+								settings.storageDepotGroup =
+									config.spaceExternalReferenceCode;
+							}
+							else {
+								settings.storageDLFolderPath = undefined;
+								settings.storageDepotGroup = undefined;
+							}
+
 							dispatch({
-								settings: {
-									...uploadField.settings,
-									showFilesInLibrary: event.target.checked,
-									storageDLFolderPath:
-										'/' + Liferay.Language.get('new'),
-									storageDepotGroup:
-										config.spaceExternalReferenceCode,
-								},
+								settings,
 								type: 'update-field',
 								uuid: field.uuid,
 							});

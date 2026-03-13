@@ -24,6 +24,8 @@ import {AssignUsersPage} from '../pages/users-admin-web/AssignUsersPage';
 import {EditOrganizationPage} from '../pages/users-admin-web/EditOrganizationPage';
 import {EditUserPage} from '../pages/users-admin-web/EditUserPage';
 import {OnDemandAdminPage} from '../pages/users-admin-web/OnDemandAdminPage';
+import {PersonalMenuInstanceSettingsPage} from '../pages/users-admin-web/PersonalMenuInstanceSettingsPage';
+import {PersonalMenuPage} from '../pages/users-admin-web/PersonalMenuPage';
 import {OrganizationUsersPage} from '../pages/users-admin-web/OrganizationUsersPage';
 import {SMTPMockServerPage} from '../pages/users-admin-web/SMTPMockServerPage';
 import {ServiceAccountsPage} from '../pages/users-admin-web/ServiceAccountsPage';
@@ -45,6 +47,8 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	notificationsPage: NotificationsPage;
 	onDemandAdminPage: OnDemandAdminPage;
 	organizationUsersPage: OrganizationUsersPage;
+	personalMenuInstanceSettingsPage: PersonalMenuInstanceSettingsPage;
+	personalMenuPage: PersonalMenuPage;
 	personalDataErasurePage: PersonalDataErasurePage;
 	serviceAccountsPage: ServiceAccountsPage;
 	siteConfigurationDetailsPage: SiteConfigurationDetailsPage;
@@ -90,6 +94,12 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	organizationUsersPage: async ({page}, use) => {
 		await use(new OrganizationUsersPage(page));
+	},
+	personalMenuInstanceSettingsPage: async ({page}, use) => {
+		await use(new PersonalMenuInstanceSettingsPage(page));
+	},
+	personalMenuPage: async ({page}, use) => {
+		await use(new PersonalMenuPage(page));
 	},
 	personalDataErasurePage: async ({page}, use) => {
 		await use(new PersonalDataErasurePage(page));

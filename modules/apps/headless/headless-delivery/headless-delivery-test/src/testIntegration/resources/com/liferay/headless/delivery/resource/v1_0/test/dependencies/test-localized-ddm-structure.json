@@ -1,7 +1,8 @@
 {
 	"availableLanguageIds": [
 		"en_US",
-		"es_ES"
+		"es_ES",
+		"fr_FR"
 	],
 	"defaultLanguageId": "en_US",
 	"fields": [
@@ -10,13 +11,15 @@
 			"indexType": "keyword",
 			"label": {
 				"en_US": "TextFieldNameLabel",
-				"es_ES": "NombreEtiquetaDelCampoDeTexto"
+				"es_ES": "NombreEtiquetaDelCampoDeTexto",
+				"fr_FR": "ÉtiquetteDuChampDeTexte"
 			},
 			"localizable": true,
 			"name": "MyText",
 			"predefinedValue": {
 				"en_US": "",
-				"es_ES": ""
+				"es_ES": "",
+				"fr_FR": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
@@ -24,7 +27,8 @@
 			"showLabel": true,
 			"tip": {
 				"en_US": "",
-				"es_ES": ""
+				"es_ES": "",
+				"fr_FR": ""
 			},
 			"type": "text"
 		},
@@ -33,13 +37,15 @@
 			"indexType": "keyword",
 			"label": {
 				"en_US": "DocumentFieldNameLabel",
-				"es_ES": "NombreEtiquetaDelCampoDeDocumentos"
+				"es_ES": "NombreEtiquetaDelCampoDeDocumentos",
+				"fr_FR": "ÉtiquetteDuChampDeDocument"
 			},
 			"localizable": true,
 			"name": "MyDocument",
 			"predefinedValue": {
 				"en_US": "",
-				"es_ES": ""
+				"es_ES": "",
+				"fr_FR": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
@@ -47,7 +53,8 @@
 			"showLabel": true,
 			"tip": {
 				"en_US": "",
-				"es_ES": ""
+				"es_ES": "",
+				"fr_FR": ""
 			},
 			"type": "document_library"
 		},
@@ -56,13 +63,15 @@
 			"indexType": "keyword",
 			"label": {
 				"en_US": "ImageFieldNameLabel",
-				"es_ES": "NombreEtiquetaDelCampoDeImagen"
+				"es_ES": "NombreEtiquetaDelCampoDeImagen",
+				"fr_FR": "NomDuFieldImageLabel"
 			},
 			"localizable": true,
 			"name": "MyImage",
 			"predefinedValue": {
 				"en_US": "",
-				"es_ES": ""
+				"es_ES": "",
+				"fr_FR": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
@@ -70,7 +79,8 @@
 			"showLabel": true,
 			"tip": {
 				"en_US": "",
-				"es_ES": ""
+				"es_ES": "",
+				"fr_FR": ""
 			},
 			"type": "ddm-image"
 		}

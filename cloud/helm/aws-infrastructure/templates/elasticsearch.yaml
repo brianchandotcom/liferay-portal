@@ -40,16 +40,10 @@ spec:
                                 requests:
                                     cpu: 500m
                                     memory: 4Gi
-                            {{- end }}
-                    initContainers:
-                        -   command:
-                                -   sh
-                                -   -c
-                                -   sysctl -w vm.max_map_count={{ $search.maxMapCount }}
-                            name: configure-memory-map
+                                {{- end }}
                             securityContext:
-                                privileged: true
-                                runAsUser: 0
+                                {{- $search.securityContext | toYaml | nindent 32 }}
+                    initContainers:
                         -   command:
                                 -   sh
                                 -   -c
@@ -59,6 +53,10 @@ spec:
                                         --batch \
                                         analysis-{icu,kuromoji,smartcn,stempel}
                             name: install-plugins
+                            securityContext:
+                                {{- $search.securityContext | toYaml | nindent 32 }}
+                    securityContext:
+                        {{- $search.podSecurityContext | toYaml | nindent 24 }}
             volumeClaimTemplates:
                 -   metadata:
                         name: elasticsearch-data
@@ -77,7 +75,6 @@ metadata:
     labels:
         name: {{ $elasticsearchNamespace }}
         pod-security.kubernetes.io/enforce: restricted
-
 ---
 apiVersion: v1
 kind: Secret

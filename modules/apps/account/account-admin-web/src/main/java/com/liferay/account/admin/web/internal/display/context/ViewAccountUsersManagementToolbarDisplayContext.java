@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -58,7 +57,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		if (!_hasManageUsersPermission()) {
+		if (!_hasPermission(AccountActionKeys.UNASSIGN_USERS)) {
 			return null;
 		}
 
@@ -96,8 +95,12 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		if (!isShowCreationMenu()) {
+			return null;
+		}
+
 		return CreationMenuBuilder.addDropdownItem(
-			() -> _hasManageUsersPermission(),
+			() -> _hasPermission(AccountActionKeys.ASSIGN_USERS),
 			dropdownItem -> {
 				dropdownItem.putData("action", "selectAccountUsers");
 				dropdownItem.putData(
@@ -118,7 +121,9 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					).setParameter(
 						"accountEntryId", _getAccountEntryId()
 					).setParameter(
-						"showCreateButton", Boolean.TRUE
+						"showCreateButton",
+                        _hasPermission(AccountActionKeys.ASSIGN_USERS) &&
+                            _hasPermission(AccountActionKeys.CREATE_USERS)
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
@@ -126,7 +131,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "assign-users"));
 			}
 		).addDropdownItem(
-			() -> _hasInviteUserPermission() || _hasManageUsersPermission(),
+			() -> _hasPermission(AccountActionKeys.INVITE_USER),
 			dropdownItem -> {
 				dropdownItem.putData("action", "inviteAccountUsers");
 				dropdownItem.putData(
@@ -205,12 +210,13 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isSelectable() {
-		return _hasManageUsersPermission();
+		return _hasPermission(AccountActionKeys.UNASSIGN_USERS);
 	}
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		return _hasInviteUserPermission() || _hasManageUsersPermission();
+		return _hasPermission(AccountActionKeys.ASSIGN_USERS) ||
+                _hasPermission(AccountActionKeys.INVITE_USER);
 	}
 
 	@Override
@@ -239,25 +245,15 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 		return ParamUtil.getLong(liferayPortletRequest, "accountEntryId");
 	}
 
-	private boolean _hasInviteUserPermission() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+    private boolean _hasPermission(String actionId) {
+        ThemeDisplay themeDisplay =
+            (ThemeDisplay)httpServletRequest.getAttribute(
+                WebKeys.THEME_DISPLAY);
 
-		return AccountEntryPermission.contains(
-			themeDisplay.getPermissionChecker(), _getAccountEntryId(),
-			AccountActionKeys.INVITE_USER);
-	}
-
-	private boolean _hasManageUsersPermission() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return AccountEntryPermission.contains(
-			themeDisplay.getPermissionChecker(), _getAccountEntryId(),
-			ActionKeys.MANAGE_USERS);
-	}
+        return AccountEntryPermission.contains(
+            themeDisplay.getPermissionChecker(), _getAccountEntryId(),
+            actionId);
+    }
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewAccountUsersManagementToolbarDisplayContext.class);

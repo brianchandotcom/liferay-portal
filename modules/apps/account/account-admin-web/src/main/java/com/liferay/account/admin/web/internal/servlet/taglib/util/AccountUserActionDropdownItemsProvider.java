@@ -15,7 +15,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -66,7 +65,7 @@ public class AccountUserActionDropdownItemsProvider {
 				AccountEntryPermission.contains(
 					_permissionChecker,
 					_accountEntryDisplay.getAccountEntryId(),
-					ActionKeys.MANAGE_USERS) &&
+					AccountActionKeys.ASSIGN_USERS) &&
 				AccountEntryPermission.contains(
 					_permissionChecker,
 					_accountEntryDisplay.getAccountEntryId(),
@@ -109,7 +108,7 @@ public class AccountUserActionDropdownItemsProvider {
 		).add(
 			() -> AccountEntryPermission.contains(
 				_permissionChecker, _accountEntryDisplay.getAccountEntryId(),
-				ActionKeys.MANAGE_USERS),
+				AccountActionKeys.UNASSIGN_USERS),
 			dropdownItem -> {
 				dropdownItem.putData("action", "removeAccountUsers");
 				dropdownItem.putData(

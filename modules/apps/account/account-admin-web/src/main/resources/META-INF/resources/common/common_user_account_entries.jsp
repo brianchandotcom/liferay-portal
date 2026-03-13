@@ -115,7 +115,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 				/>
 			</liferay-ui:search-container-column-text>
 
-			<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) && AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">
+			<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) && AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), AccountActionKeys.UNASSIGN_USERS) %>">
 				<liferay-ui:search-container-column-text>
 					<clay:button
 						aria-label='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(accountEntryDisplay.getName())) %>'

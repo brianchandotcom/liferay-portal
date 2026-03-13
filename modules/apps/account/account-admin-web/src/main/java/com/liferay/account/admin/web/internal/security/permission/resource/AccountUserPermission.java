@@ -6,6 +6,7 @@
 package com.liferay.account.admin.web.internal.security.permission.resource;
 
 import com.liferay.account.admin.web.internal.util.AccountEntryEmailAddressValidatorFactoryUtil;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryEmailAddressValidator;
@@ -56,11 +57,11 @@ public class AccountUserPermission {
 			AccountEntryEmailAddressValidatorFactoryUtil.create(
 				accountEntry.getCompanyId(), accountEntry.getDomainsArray());
 
-		if (accountEntryEmailAddressValidator.isValidDomainStrict(
+		if (accountEntryEmailAddressValidator.isValidDomain(
 				accountUser.getEmailAddress()) &&
 			AccountEntryPermission.contains(
 				permissionChecker, accountEntry.getAccountEntryId(),
-				ActionKeys.MANAGE_USERS)) {
+				AccountActionKeys.EDIT_USERS)) {
 
 			return true;
 		}

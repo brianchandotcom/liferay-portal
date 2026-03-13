@@ -7,6 +7,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -89,7 +89,7 @@ public class AccountUserDisplaySearchContainerFactory {
 		if (!AccountEntryPermission.contains(
 				PermissionCheckerFactoryUtil.create(
 					PortalUtil.getUser(liferayPortletRequest)),
-				accountEntryId, ActionKeys.MANAGE_USERS)) {
+				accountEntryId, AccountActionKeys.UNASSIGN_USERS)) {
 
 			searchContainer.setRowChecker(null);
 		}

@@ -17,11 +17,7 @@ import {AccountsPage} from '../../../pages/account-admin-web/AccountsPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {nextPage, setItemsPerPage} from '../../../utils/pagination';
-import {
-	performLoginViaApi,
-	performLogout,
-	userData,
-} from '../../../utils/performLogin';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
@@ -485,8 +481,7 @@ test(
 			organization.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -595,8 +590,7 @@ test(
 			organization4.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -684,8 +678,7 @@ test(
 			}
 		}
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: userAccount.alternateName});
+		await performUserSwitch(page, userAccount.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -754,11 +747,7 @@ test(
 
 		const account2 = await apiHelpers.headlessAdminUser.postAccount();
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -806,11 +795,7 @@ test(
 		const {account, userAccountAdmin} =
 			await initAccountAdministrator(apiHelpers);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -882,11 +867,7 @@ test(
 		const {account, userAccountAdmin} =
 			await initAccountAdministrator(apiHelpers);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		const addresses = [
 			{
@@ -950,11 +931,7 @@ test(
 		const {account, userAccountAdmin} =
 			await initAccountAdministrator(apiHelpers);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		const addresses = [
 			{
@@ -1059,11 +1036,7 @@ test(
 		const {account, userAccountAdmin} =
 			await initAccountAdministrator(apiHelpers);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1142,11 +1115,7 @@ test(
 			[user.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1217,11 +1186,7 @@ test(
 		);
 
 		try {
-			await performLogout(page);
-			await performLoginViaApi({
-				page,
-				screenName: userAccountAdmin.alternateName,
-			});
+			await performUserSwitch(page, userAccountAdmin.alternateName);
 
 			await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1261,8 +1226,7 @@ test(
 			).toHaveCount(0);
 		}
 		finally {
-			await performLogout(page);
-			await performLoginViaApi({page, screenName: 'test'});
+			await performUserSwitch(page, 'test');
 
 			await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
 				false,
@@ -1316,11 +1280,7 @@ test(
 
 		const user3 = await apiHelpers.headlessAdminUser.postUserAccount();
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1388,11 +1348,7 @@ test(
 			[user2.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1565,11 +1521,7 @@ test(
 
 		await waitForAlert(page);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1684,11 +1636,7 @@ test(
 			[user2.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1783,11 +1731,7 @@ test(
 			[user1.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1864,11 +1808,7 @@ test(
 
 		const {accountRole} = await addAccountRole(apiHelpers, account.id, []);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -1952,11 +1892,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2015,11 +1951,7 @@ test(
 		const {account, userAccountAdmin} =
 			await initAccountAdministrator(apiHelpers);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2033,8 +1965,7 @@ test(
 			accountManagementWidgetPage.accountsTable.newButton
 		).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const regularRole = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
@@ -2056,11 +1987,7 @@ test(
 			userAccountAdmin.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2119,11 +2046,7 @@ test(
 		const {account, userAccountAdmin} =
 			await initAccountAdministrator(apiHelpers);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2153,8 +2076,7 @@ test(
 			).toHaveCount(0);
 		}).toPass();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const regularRole = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
@@ -2176,11 +2098,7 @@ test(
 			userAccountAdmin.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2244,11 +2162,7 @@ test(
 		const {account, userAccountAdmin} =
 			await initAccountAdministrator(apiHelpers);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2278,8 +2192,7 @@ test(
 			).toHaveCount(0);
 		}).toPass();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const regularRole = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
@@ -2301,11 +2214,7 @@ test(
 			userAccountAdmin.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2393,11 +2302,7 @@ test(
 			[user.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2419,8 +2324,7 @@ test(
 			await accountUsersPage.usersTable.cellLink(user.name)
 		).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const regularRole = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
@@ -2442,11 +2346,7 @@ test(
 			userAccountAdmin.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccountAdmin.alternateName,
-		});
+		await performUserSwitch(page, userAccountAdmin.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2539,8 +2439,7 @@ test(
 			[user.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2715,8 +2614,7 @@ test(
 			[user.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2831,8 +2729,7 @@ test(
 			[user.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2947,8 +2844,7 @@ test(
 			[user.emailAddress]
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -2961,8 +2857,7 @@ test(
 			)
 		).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const {accountRole} = await addAccountRole(apiHelpers, account.id, [
 			{
@@ -2979,8 +2874,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -3079,8 +2973,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -3132,8 +3025,7 @@ test(
 			surname: user.familyName,
 		};
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
@@ -3144,8 +3036,7 @@ test(
 			accountManagementWidgetPage.accountsTable.cell(account2.name)
 		).toHaveCount(0);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		const regularRole = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
@@ -3167,8 +3058,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 

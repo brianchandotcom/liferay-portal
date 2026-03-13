@@ -17,11 +17,7 @@ import {createCategories} from '../../../helpers/CreateCategories';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import performLogin, {
-	performLoginViaApi,
-	performLogout,
-	userData,
-} from '../../../utils/performLogin';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from '../../asset-categories-admin-web/main/fixtures/assetCategoriesAdminPagesTest';
 
@@ -210,8 +206,7 @@ test(
 			user.id
 		);
 
-		await performLogout(page);
-		await performLogin(page, user.alternateName);
+		await performUserSwitch(page, user.alternateName);
 
 		await page.goto(
 			'/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet'
@@ -792,8 +787,7 @@ test(
 			type: 'organizationUserAccountAssociation',
 		});
 
-		await performLogout(page);
-		await performLogin(page, user.alternateName);
+		await performUserSwitch(page, user.alternateName);
 
 		await usersAndOrganizationsPage.goToOrganizationsWithLimitedAccess();
 
@@ -1056,11 +1050,7 @@ test(
 
 		await waitForAlert(page);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccount1.alternateName,
-		});
+		await performUserSwitch(page, userAccount1.alternateName);
 
 		const document = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
@@ -1093,11 +1083,7 @@ test(
 
 		await waitForAlert(page, 'Success:The item was shared successfully.');
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccount2.alternateName,
-		});
+		await performUserSwitch(page, userAccount2.alternateName);
 
 		await notificationsPage.goto(userAccount2.name);
 
@@ -1191,11 +1177,7 @@ test(
 			userAccount3.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccount1.alternateName,
-		});
+		await performUserSwitch(page, userAccount1.alternateName);
 
 		await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
 
@@ -1210,19 +1192,14 @@ test(
 			)
 		).not.toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: 'test'});
+		await performUserSwitch(page, 'test');
 
 		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
 			role2.externalReferenceCode,
 			userAccount1.id
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccount1.alternateName,
-		});
+		await performUserSwitch(page, userAccount1.alternateName);
 
 		await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
 
@@ -1252,11 +1229,7 @@ test(
 
 		await newPage.close();
 
-		await performLogout(page);
-		await performLoginViaApi({
-			page,
-			screenName: userAccount3.alternateName,
-		});
+		await performUserSwitch(page, userAccount3.alternateName);
 
 		await usersAndOrganizationsPage.goToUsers();
 
@@ -1550,8 +1523,7 @@ test(
 			surname: user.familyName,
 		};
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await accountSettingsPage.goToAccountSettings();
 		await accountSettingsPage.passwordMenuItem.click();
@@ -1571,8 +1543,7 @@ test(
 			surname: user.familyName,
 		};
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(accountSettingsPage.userPersonalMenuButton).toBeVisible();
 	}
@@ -1590,8 +1561,7 @@ test(
 			surname: user.familyName,
 		};
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await accountSettingsPage.goToAccountSettings();
 		await accountSettingsPage.passwordMenuItem.click();
@@ -1615,8 +1585,7 @@ test(
 			)
 		).toBeVisible();
 
-		await performLogout(page);
-		await performLoginViaApi({page, screenName: user.alternateName});
+		await performUserSwitch(page, user.alternateName);
 
 		await expect(accountSettingsPage.userPersonalMenuButton).toBeVisible();
 	}
@@ -1757,11 +1726,10 @@ test(
 			memberUser.emailAddress
 		);
 
-		await performLogout(page);
-		await performLoginViaApi({
+		await performUserSwitch(
 			page,
-			screenName: organizationAdministratorUser.alternateName,
-		});
+			organizationAdministratorUser.alternateName
+		);
 
 		await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
 		await usersAndOrganizationsPage.goToUser(memberUser.alternateName);

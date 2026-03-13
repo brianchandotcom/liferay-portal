@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files;
 
+import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.frontend.js.web.test.util.FrontendJSWebTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
@@ -20,6 +21,7 @@ import java.net.URL;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -33,6 +35,11 @@ public class HashedFilesRegistryImplTest {
 
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		FrontendJsWebUtil.clearCache();
+	}
 
 	@Test
 	public void testGetResource() throws Exception {

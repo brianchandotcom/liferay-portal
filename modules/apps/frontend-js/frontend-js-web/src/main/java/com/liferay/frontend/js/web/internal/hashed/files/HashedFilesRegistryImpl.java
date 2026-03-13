@@ -8,7 +8,6 @@ package com.liferay.frontend.js.web.internal.hashed.files;
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
@@ -28,11 +27,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -56,9 +53,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	public void forEachHashedFileURI(BiConsumer<String, String> biConsumer) {
 		_lazyActivate();
 
-		for (Map.Entry<String, DataBag> entry : _dataBags.entrySet()) {
-			DataBag dataBag = entry.getValue();
-
+		for (DataBag dataBag : _dataBags.values()) {
 			Map<String, String> hashedFileURIs = dataBag._hashedFileURIs;
 
 			for (Map.Entry<String, String> entry2 : hashedFileURIs.entrySet()) {
@@ -73,15 +68,11 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		_lazyActivate();
 
 		for (Map.Entry<String, DataBag> entry : _dataBags.entrySet()) {
-			String servletContextPath = entry.getKey();
-
-			List<String> pathParts = Arrays.asList(
-				servletContextPath.split(StringPool.SLASH));
-
 			DataBag dataBag = entry.getValue();
 
 			biConsumer.accept(
-				pathParts.get(_resourcePathIndex - 1),
+				FrontendJsWebUtil.getServletContextNameFromServletContextPath(
+					_portal, entry.getKey()),
 				dataBag._servletContextHash);
 		}
 	}
@@ -102,12 +93,9 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	public String getHashedFileURI(String unhashedFileURI) {
 		_lazyActivate();
 
-		List<String> pathParts = Arrays.asList(
-			unhashedFileURI.split(StringPool.SLASH));
-
 		DataBag dataBag = _dataBags.get(
-			StringUtil.merge(
-				pathParts.subList(0, _resourcePathIndex), StringPool.SLASH));
+			FrontendJsWebUtil.getServletContextPathFromFileURI(
+				unhashedFileURI, _portal));
 
 		if (dataBag == null) {
 			return null;
@@ -119,37 +107,31 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	}
 
 	@Override
-	public URL getResource(String path) {
+	public URL getResource(String fileURI) {
 		_lazyActivate();
 
-		if (!HashedFilesUtil.containsHash(path)) {
-			String hashedFileURI = getHashedFileURI(path);
+		if (!HashedFilesUtil.containsHash(fileURI)) {
+			String hashedFileURI = getHashedFileURI(fileURI);
 
 			if (hashedFileURI != null) {
-				path = hashedFileURI;
+				fileURI = hashedFileURI;
 			}
 		}
 
-		List<String> pathParts = Arrays.asList(path.split(StringPool.SLASH));
-
 		DataBag dataBag = _dataBags.get(
-			StringUtil.merge(
-				pathParts.subList(0, _resourcePathIndex), StringPool.SLASH));
+			FrontendJsWebUtil.getServletContextPathFromFileURI(
+				fileURI, _portal));
 
 		if (dataBag == null) {
 			return null;
 		}
 
-		String subpath = StringUtil.merge(
-			pathParts.subList(_resourcePathIndex, pathParts.size()),
-			StringPool.SLASH);
-
-		subpath = StringPool.SLASH + subpath;
-
 		try {
 			ServletContext servletContext = dataBag._servletContext;
 
-			return servletContext.getResource(subpath);
+			return servletContext.getResource(
+				FrontendJsWebUtil.getServletContextResourcePathFromFileURI(
+					fileURI, _portal));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -161,9 +143,8 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		_lazyActivate();
 
 		DataBag dataBag = _dataBags.get(
-			StringBundler.concat(
-				_portalContextPath, Portal.PATH_MODULE, StringPool.SLASH,
-				servletContextName));
+			FrontendJsWebUtil.getServletContextPathFromServletContextName(
+				_portal, servletContextName));
 
 		if (dataBag == null) {
 			return null;
@@ -175,14 +156,6 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-
-		_portalContextPath = _portal.getPathContext();
-
-		String proxyPath = _portal.getPathProxy();
-
-		_portalContextPath = _portalContextPath.substring(proxyPath.length());
-
-		_resourcePathIndex = _portalContextPath.isEmpty() ? 3 : 4;
 	}
 
 	@Deactivate
@@ -222,6 +195,15 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 			public Void addingService(
 				ServiceReference<ServletContext> serviceReference) {
 
+				modifiedService(serviceReference, null);
+
+				return null;
+			}
+
+			@Override
+			public void modifiedService(
+				ServiceReference<ServletContext> serviceReference, Void v) {
+
 				ServletContext servletContext = _bundleContext.getService(
 					serviceReference);
 
@@ -230,7 +212,9 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 						servletContext);
 
 					if (hashedFileURIs.isEmpty()) {
-						return null;
+						_dataBags.remove(servletContext.getContextPath());
+
+						return;
 					}
 
 					_dataBags.put(
@@ -242,15 +226,6 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 				finally {
 					_bundleContext.ungetService(serviceReference);
 				}
-
-				return null;
-			}
-
-			@Override
-			public void modifiedService(
-				ServiceReference<ServletContext> serviceReference, Void v) {
-
-				addingService(serviceReference);
 			}
 
 			@Override
@@ -409,8 +384,6 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	@Reference
 	private Portal _portal;
 
-	private String _portalContextPath;
-	private int _resourcePathIndex;
 	private volatile ServiceTracker<ServletContext, Void> _serviceTracker;
 
 }

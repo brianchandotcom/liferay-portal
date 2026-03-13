@@ -133,12 +133,16 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 				long segmentsExperienceId = resultSet.getLong(
 					"segmentsExperienceId");
 
-				preparedStatement3.setLong(1, draftLayoutSegmentsExperienceId);
-				preparedStatement3.setLong(2, ctCollectionId);
-				preparedStatement3.setLong(3, segmentsExperienceId);
-				preparedStatement3.setLong(4, draftLayout.getPlid());
+				if (hasColumn("FragmentEntryLink", "segmentsExperienceId") &&
+					hasColumn("FragmentEntryLink", "ctCollectionId")) {
+					preparedStatement3.setLong(
+						1, draftLayoutSegmentsExperienceId);
+					preparedStatement3.setLong(2, ctCollectionId);
+					preparedStatement3.setLong(3, segmentsExperienceId);
+					preparedStatement3.setLong(4, draftLayout.getPlid());
 
-				preparedStatement3.addBatch();
+					preparedStatement3.addBatch();
+				}
 
 				int index = 1;
 

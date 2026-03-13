@@ -5,7 +5,6 @@
 
 package com.liferay.site.teams.web.internal.display.context;
 
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
@@ -151,8 +150,7 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), userParams));
 
-		userSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(renderResponse));
+		userSearchContainer.setRowChecker(getRowChecker());
 
 		_userSearchContainer = userSearchContainer;
 

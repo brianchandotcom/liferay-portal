@@ -7,11 +7,13 @@ package com.liferay.site.teams.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.site.teams.web.internal.search.EditSiteTeamAssignmentsUserRowChecker;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
@@ -67,6 +69,11 @@ public class EditSiteTeamAssignmentsDisplayContext {
 					LanguageUtil.get(httpServletRequest, "user-groups"));
 			}
 		).build();
+	}
+
+	public RowChecker getRowChecker() {
+		return new EditSiteTeamAssignmentsUserRowChecker(
+			renderResponse, _teamId);
 	}
 
 	public String getTabs1() {

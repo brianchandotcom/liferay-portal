@@ -5,6 +5,9 @@
 
 package com.liferay.headless.dsr.resource.v1_0.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.dsr.client.dto.v1_0.UserAccount;
 import com.liferay.notification.constants.NotificationConstants;
@@ -17,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -63,13 +67,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		DSRTestUtil.getOrAddGroup(UserAccountResourceTest.class);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, TestPropsValues.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, serviceContext);
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_DSR_ROOM", TestPropsValues.getCompanyId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
@@ -78,6 +88,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
 				"name", RandomTestUtil.randomString()
+			).put(
+				"r_accountToDSRRooms_accountEntryId",
+				_accountEntry.getAccountEntryId()
 			).build(),
 			serviceContext);
 	}
@@ -159,6 +172,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		assertEquals(randomUserAccount1, postUserAccount);
 		assertValid(postUserAccount);
+
+		Assert.assertTrue(
+			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), postUserAccount.getId()));
 
 		List<Ticket> tickets = _ticketLocalService.getTickets(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
@@ -260,6 +277,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 									NAME_TO)));
 				}));
 	}
+
+	private AccountEntry _accountEntry;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

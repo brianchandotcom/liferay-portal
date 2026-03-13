@@ -155,11 +155,7 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 
 	@Test
 	public void testWriteGlobalImports() throws Exception {
-		ReflectionTestUtils.setField(FrontendJsWebUtil.class, "_baseURL", null);
-		ReflectionTestUtils.setField(
-			FrontendJsWebUtil.class, "_portalContextPath", null);
-		ReflectionTestUtils.setField(
-			FrontendJsWebUtil.class, "_webContextPathIndex", -1);
+		FrontendJsWebUtil.clearCache();
 
 		FrontendJsWebDynamicJSImportMapsContributor
 			frontendJsWebDynamicJSImportMapsContributor =

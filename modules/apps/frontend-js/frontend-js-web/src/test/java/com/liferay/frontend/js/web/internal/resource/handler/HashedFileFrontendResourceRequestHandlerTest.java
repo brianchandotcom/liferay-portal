@@ -58,6 +58,8 @@ public class HashedFileFrontendResourceRequestHandlerTest
 
 	@Before
 	public void setUp() {
+		super.setUp();
+
 		_fallbackKeysSettingsUtilMockedStatic = Mockito.mockStatic(
 			FallbackKeysSettingsUtil.class);
 
@@ -81,8 +83,6 @@ public class HashedFileFrontendResourceRequestHandlerTest
 		).thenReturn(
 			settings
 		);
-
-		resetFrontendJsWebUtil();
 	}
 
 	@After

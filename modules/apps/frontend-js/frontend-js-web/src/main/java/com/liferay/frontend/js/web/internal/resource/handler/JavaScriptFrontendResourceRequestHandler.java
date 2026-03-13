@@ -262,7 +262,7 @@ public class JavaScriptFrontendResourceRequestHandler
 					StringBundler.concat(
 						FrontendJsWebUtil.getPortalContextPath(_portal),
 						Portal.PATH_MODULE,
-						FrontendJsWebUtil.getWebContextPath(
+						FrontendJsWebUtil.getWebContextPathFromFileURI(
 							_portal, resourceURI),
 						"/language.json"));
 

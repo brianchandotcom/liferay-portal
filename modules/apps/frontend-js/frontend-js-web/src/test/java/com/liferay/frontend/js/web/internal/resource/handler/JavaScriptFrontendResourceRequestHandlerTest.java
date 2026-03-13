@@ -90,6 +90,8 @@ public class JavaScriptFrontendResourceRequestHandlerTest
 
 	@Before
 	public void setUp() {
+		super.setUp();
+
 		_localeUtilMockedStatic = Mockito.mockStatic(LocaleUtil.class);
 
 		_localeUtilMockedStatic.when(
@@ -98,8 +100,6 @@ public class JavaScriptFrontendResourceRequestHandlerTest
 			(Answer<Locale>)invocationOnMock -> new Locale(
 				invocationOnMock.getArgument(0))
 		);
-
-		resetFrontendJsWebUtil();
 	}
 
 	@After

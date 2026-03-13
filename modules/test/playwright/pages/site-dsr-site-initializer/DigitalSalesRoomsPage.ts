@@ -25,6 +25,7 @@ export class DigitalSalesRoomsPage {
 	readonly startFromScratchButton: Locator;
 	readonly startFromTemplateButton: Locator;
 	readonly templatesLink: Locator;
+	readonly viewMenuItem: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
@@ -64,6 +65,13 @@ export class DigitalSalesRoomsPage {
 			exact: true,
 			name: 'Templates',
 		});
+		this.viewMenuItem = page.getByRole('menuitem', {name: 'View'});
+	}
+
+	roomLink(roomName: string): Locator {
+		return this.digitalSalesRoomsTable
+			.cell(roomName, false)
+			.getByRole('link', {name: roomName});
 	}
 
 	async goto() {

@@ -83,7 +83,7 @@ definition {
 
 			// Wait for the import task to finish. Needed for LPD-82599.
 
-			Pause(value1 = 100);
+			Pause(value1 = 500);
 
 			var status = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 		}

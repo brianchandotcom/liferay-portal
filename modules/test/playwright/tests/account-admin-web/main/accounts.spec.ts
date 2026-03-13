@@ -19,10 +19,7 @@ import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
 import {nextPage, setItemsPerPage} from '../../../utils/pagination';
-import performLogin, {
-	performLogout,
-	userData,
-} from '../../../utils/performLogin';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {tagsPagesTest} from '../../asset-tags-admin-web/main/fixtures/tagsAdminPagesTest';
 
@@ -293,8 +290,7 @@ test('LPD-32045 All account entry can be seen by admin user', async ({
 		userAccount.id
 	);
 
-	await performLogout(page);
-	await performLogin(page, userAccount.alternateName);
+	await performUserSwitch(page, userAccount.alternateName);
 
 	try {
 		await accountsPage.goto();
@@ -310,8 +306,7 @@ test('LPD-32045 All account entry can be seen by admin user', async ({
 		).toHaveCount(1);
 	}
 	finally {
-		await performLogout(page);
-		await performLogin(page, 'test');
+		await performUserSwitch(page, 'test');
 	}
 });
 
@@ -1621,8 +1616,7 @@ test('LPD-47589 Check delete and deactivate permissions work independently', asy
 		surname: userAccount.familyName,
 	};
 
-	await performLogout(page);
-	await performLogin(page, userAccount.alternateName);
+	await performUserSwitch(page, userAccount.alternateName);
 
 	await accountsPage.goto();
 

@@ -64,7 +64,7 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
 				BaseAllTablesOrphanReferencesDataCleanupPreupgradeProcess.class.
 					getName(),
-				LoggerTestUtil.WARN)) {
+				LoggerTestUtil.DEBUG)) {
 
 			UnsafeRunnable<Exception> insertDataUnsafeRunnable =
 				getInsertDataUnsafeRunnable();

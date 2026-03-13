@@ -30,15 +30,19 @@ import {stagingPageTest} from './fixtures/stagingPageTest';
 const test = mergeTests(
 	applicationsMenuPageTest,
 	companyExportImportPageTest,
-	exportImportPagesTest,
 	dataApiHelpersTest,
+	exportImportPagesTest,
+	featureFlagsTest({
+		'LPD-35443': {enabled: true},
+		'LPD-45276': {enabled: true},
+	}),
 	loginTest(),
 	stagingPageTest,
 	styleBookPageTest,
 	uiElementsPageTest
 );
 
-const testWithExportImportAtInstanceLevelFF = mergeTests(
+const testWithClaritySiteInitializerFF = mergeTests(
 	test,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
@@ -101,100 +105,84 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 		name: 'com.liferay.site.initializer.welcome',
 	},
 ].forEach(({mask, name}) => {
-	testWithExportImportAtInstanceLevelFF(
-		`Can export and import a site created with the ${name} site initializer`,
-		async ({apiHelpers, exportImportPage, page}) => {
-			let exportFilePath: string;
-			let exportableItems1: Map<string, number>;
-			let exportableItems2: Map<string, number>;
-			let site1: Site;
-			let site2: Site;
+	test(`Can export and import a site created with the ${name} site initializer`, async ({
+		apiHelpers,
+		exportImportPage,
+		page,
+	}) => {
+		let exportFilePath: string;
+		let exportableItems1: Map<string, number>;
+		let exportableItems2: Map<string, number>;
+		let site1: Site;
+		let site2: Site;
 
-			await testWithExportImportAtInstanceLevelFF.step(
-				'Create the site 1 from the template',
-				async () => {
-					site1 = await apiHelpers.headlessSite.createSite({
-						name: getRandomString(),
-						templateKey: name,
-						templateType: 'site-initializer',
-					});
-
-					apiHelpers.data.push({id: site1.id, type: 'site'});
-				}
-			);
-
-			await testWithExportImportAtInstanceLevelFF.step(
-				'Export the site 1',
-				async () => {
-					await exportImportPage.goToExport(site1.friendlyUrlPath);
-
-					exportableItems1 =
-						await exportImportPage.getExportableItems();
-
-					exportFilePath = await exportImportPage.export();
-				}
-			);
-
-			await testWithExportImportAtInstanceLevelFF.step(
-				'Create the site 2',
-				async () => {
-					site2 = await apiHelpers.headlessSite.createSite({
-						name: getRandomString(),
-					});
-
-					apiHelpers.data.push({id: site2.id, type: 'site'});
-				}
-			);
-
-			await testWithExportImportAtInstanceLevelFF.step(
-				'Import the site 1 into site 2',
-				async () => {
-					await exportImportPage.goToImport(site2.friendlyUrlPath);
-
-					await exportImportPage.import({filePath: exportFilePath});
-				}
-			);
-
-			await testWithExportImportAtInstanceLevelFF.step(
-				'Assert the exportable items from site 1 and site 2 are equal',
-				async () => {
-					await exportImportPage.goToExport(site2.friendlyUrlPath);
-
-					exportableItems2 =
-						await exportImportPage.getExportableItems();
-
-					expect(exportableItems1).toEqual(exportableItems2);
-				}
-			);
-
-			await test.step('Assert the home page screenshots from site 1 and site 2 are equal', async () => {
-				const comparator = getComparator('image/png');
-
-				const buffer = comparator(
-					await getSiteHomePageScreenshot(page, site1.name, {
-						mask: mask?.(page),
-					}),
-					await getSiteHomePageScreenshot(page, site2.name, {
-						mask: mask?.(page),
-					})
-				);
-
-				if (buffer !== null && buffer.diff !== undefined) {
-					const diffPath = path.join(
-						getTempDir(),
-						`${site1.name}-diff.png`
-					);
-					await fs.writeFile(diffPath, buffer.diff);
-					throw new Error(
-						`The site 1 and site 2 home pages differ. Check the screenshot diff at "${diffPath}".`
-					);
-				}
+		await test.step('Create the site 1 from the template', async () => {
+			site1 = await apiHelpers.headlessSite.createSite({
+				name: getRandomString(),
+				templateKey: name,
+				templateType: 'site-initializer',
 			});
-		}
-	);
+
+			apiHelpers.data.push({id: site1.id, type: 'site'});
+		});
+
+		await test.step('Export the site 1', async () => {
+			await exportImportPage.goToExport(site1.friendlyUrlPath);
+
+			exportableItems1 = await exportImportPage.getExportableItems();
+
+			exportFilePath = await exportImportPage.export();
+		});
+
+		await test.step('Create the site 2', async () => {
+			site2 = await apiHelpers.headlessSite.createSite({
+				name: getRandomString(),
+			});
+
+			apiHelpers.data.push({id: site2.id, type: 'site'});
+		});
+
+		await test.step('Import the site 1 into site 2', async () => {
+			await exportImportPage.goToImport(site2.friendlyUrlPath);
+
+			await exportImportPage.import({filePath: exportFilePath});
+		});
+
+		await test.step('Assert the exportable items from site 1 and site 2 are equal', async () => {
+			await exportImportPage.goToExport(site2.friendlyUrlPath);
+
+			exportableItems2 = await exportImportPage.getExportableItems();
+
+			expect(exportableItems1).toEqual(exportableItems2);
+		});
+
+		await test.step('Assert the home page screenshots from site 1 and site 2 are equal', async () => {
+			const comparator = getComparator('image/png');
+
+			const buffer = comparator(
+				await getSiteHomePageScreenshot(page, site1.name, {
+					mask: mask?.(page),
+				}),
+				await getSiteHomePageScreenshot(page, site2.name, {
+					mask: mask?.(page),
+				})
+			);
+
+			if (buffer !== null && buffer.diff !== undefined) {
+				const diffPath = path.join(
+					getTempDir(),
+					`${site1.name}-diff.png`
+				);
+				await fs.writeFile(diffPath, buffer.diff);
+				throw new Error(
+					`The site 1 and site 2 home pages differ. Check the screenshot diff at "${diffPath}".`
+				);
+			}
+		});
+	});
 });
 
-testWithExportImportAtInstanceLevelFF(
+testWithClaritySiteInitializerFF(
 	'Can export and import a site created with the Clarity site initializer including all exportable items',
 	{tag: '@LPD-64056'},
 	async ({
@@ -204,7 +192,7 @@ testWithExportImportAtInstanceLevelFF(
 		styleBooksPage,
 		uploadServletRequestSystemSettingsPage,
 	}) => {
-		testWithExportImportAtInstanceLevelFF.setTimeout(300000);
+		testWithClaritySiteInitializerFF.setTimeout(300000);
 
 		let exportFilePath: string;
 		let exportableItems1: Map<string, number>;
@@ -216,7 +204,7 @@ testWithExportImportAtInstanceLevelFF(
 		let site1: Site;
 		let site2: Site;
 
-		await testWithExportImportAtInstanceLevelFF.step(
+		await testWithClaritySiteInitializerFF.step(
 			'Increase the maximum upload request size',
 			async () => {
 				await uploadServletRequestSystemSettingsPage.goto();
@@ -233,7 +221,7 @@ testWithExportImportAtInstanceLevelFF(
 		);
 
 		try {
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Create the Object definitions with 1-M relationship',
 				async () => {
 					const objectFolder =
@@ -298,7 +286,7 @@ testWithExportImportAtInstanceLevelFF(
 				}
 			);
 
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Create the site 1 from the template',
 				async () => {
 					site1 = await apiHelpers.headlessSite.createSite({
@@ -312,7 +300,7 @@ testWithExportImportAtInstanceLevelFF(
 				}
 			);
 
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Add Object entry to the site 1',
 				async () => {
 					await apiHelpers.objectEntry.postObjectEntry(
@@ -329,7 +317,7 @@ testWithExportImportAtInstanceLevelFF(
 				}
 			);
 
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Add a Style Book on the site 1',
 				async () => {
 					await styleBooksPage.goto(site1.friendlyUrlPath);
@@ -338,7 +326,7 @@ testWithExportImportAtInstanceLevelFF(
 				}
 			);
 
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Export the site 1',
 				async () => {
 					await exportImportPage.goToExport(site1.friendlyUrlPath);
@@ -360,7 +348,7 @@ testWithExportImportAtInstanceLevelFF(
 				}
 			);
 
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Create the site 2',
 				async () => {
 					site2 = await apiHelpers.headlessSite.createSite({
@@ -371,7 +359,7 @@ testWithExportImportAtInstanceLevelFF(
 				}
 			);
 
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Import the site 1 into site 2',
 				async () => {
 					await exportImportPage.goToImport(site2.friendlyUrlPath);
@@ -383,7 +371,7 @@ testWithExportImportAtInstanceLevelFF(
 				}
 			);
 
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Assert the exportable items from site 1 and site 2 are equal',
 				async () => {
 					await exportImportPage.goToExport(site2.friendlyUrlPath);
@@ -436,7 +424,7 @@ testWithExportImportAtInstanceLevelFF(
 			});
 		}
 		finally {
-			await testWithExportImportAtInstanceLevelFF.step(
+			await testWithClaritySiteInitializerFF.step(
 				'Restore the initial maximum upload request size',
 				async () => {
 					await uploadServletRequestSystemSettingsPage.goto();

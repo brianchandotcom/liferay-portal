@@ -1,0 +1,34 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Mateus Xavier
+ */
+public class LPD_82354 {
+
+	public void method() {
+		CompanyLocalServiceUtil.getCompanyByMx(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+		CompanyLocalServiceUtil.getCompanyByMx(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+		CompanyServiceUtil.getCompanyByMx(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+		_companyLocalService.getCompanyByMx(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+		_companyService.getCompanyByMx(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CompanyService _companyService;
+
+}

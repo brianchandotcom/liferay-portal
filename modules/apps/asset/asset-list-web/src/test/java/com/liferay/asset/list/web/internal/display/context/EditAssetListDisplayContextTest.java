@@ -8,14 +8,19 @@ package com.liferay.asset.list.web.internal.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
@@ -25,10 +30,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -45,6 +54,7 @@ import jakarta.portlet.PortletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -76,6 +86,15 @@ public class EditAssetListDisplayContextTest {
 
 	@Before
 	public void setUp() {
+		_assetVocabularyGroupRelLocalService = Mockito.mock(
+			AssetVocabularyGroupRelLocalService.class);
+
+		_assetVocabularyService = Mockito.mock(AssetVocabularyService.class);
+
+		_depotEntryService = Mockito.mock(DepotEntryService.class);
+
+		_groupService = Mockito.mock(GroupService.class);
+
 		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
 		_themeDisplay = Mockito.mock(ThemeDisplay.class);
@@ -325,6 +344,168 @@ public class EditAssetListDisplayContextTest {
 	}
 
 	@Test
+	public void testGetReferencedModelsGroupIdsWithConnectedDepots()
+		throws Exception {
+
+		Group scopeGroup = Mockito.mock(Group.class);
+		long scopeGroupId = 1001L;
+
+		Mockito.when(
+			scopeGroup.getGroupId()
+		).thenReturn(
+			scopeGroupId
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroup()
+		).thenReturn(
+			scopeGroup
+		);
+
+		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
+		long connectedDepotGroupId = 2002L;
+
+		Mockito.when(
+			depotEntry.getGroupId()
+		).thenReturn(
+			connectedDepotGroupId
+		);
+
+		Mockito.when(
+			_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
+				Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.anyInt())
+		).thenReturn(
+			Collections.singletonList(depotEntry)
+		);
+
+		try (MockedStatic<PortalUtil> portalUtilMockedStatic =
+				Mockito.mockStatic(PortalUtil.class)) {
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getHttpServletRequest(_portletRequest)
+			).thenReturn(
+				_httpServletRequest
+			);
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					Mockito.any(long[].class), Mockito.anyBoolean())
+			).thenReturn(
+				new long[] {scopeGroupId}
+			);
+
+			EditAssetListDisplayContext displayContext =
+				_getEditAssetListDisplayContext(new UnicodeProperties());
+
+			long[] resultGroupIds =
+				displayContext.getReferencedModelsGroupIds();
+
+			Assert.assertTrue(ArrayUtil.contains(resultGroupIds, scopeGroupId));
+			Assert.assertTrue(
+				ArrayUtil.contains(resultGroupIds, connectedDepotGroupId));
+		}
+	}
+
+	@Test
+	public void testGetResolvedReferencedModelsGroupIds() throws Exception {
+		long siteGroupId = 100L;
+
+		Group siteGroup = Mockito.mock(Group.class);
+
+		Mockito.when(
+			siteGroup.getGroupId()
+		).thenReturn(
+			siteGroupId
+		);
+
+		Mockito.when(
+			siteGroup.isDepot()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			_groupService.getGroup(siteGroupId)
+		).thenReturn(
+			siteGroup
+		);
+
+		Group spaceGroup = Mockito.mock(Group.class);
+		long spaceGroupId = 200L;
+
+		Mockito.when(
+			spaceGroup.getGroupId()
+		).thenReturn(
+			spaceGroupId
+		);
+
+		Mockito.when(
+			spaceGroup.isDepot()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			spaceGroup.getTypeSettingsProperty("depotEntryType")
+		).thenReturn(
+			"1"
+		);
+
+		Mockito.when(
+			_groupService.getGroup(spaceGroupId)
+		).thenReturn(
+			spaceGroup
+		);
+
+		Group cmsGroup = Mockito.mock(Group.class);
+		long cmsGroupId = 300L;
+
+		Mockito.when(
+			cmsGroup.getGroupId()
+		).thenReturn(
+			cmsGroupId
+		);
+
+		Mockito.when(
+			_groupService.getGroup(
+				Mockito.anyLong(), Mockito.eq(GroupConstants.CMS))
+		).thenReturn(
+			cmsGroup
+		);
+
+		try (MockedStatic<PortalUtil> portalUtilMockedStatic =
+				Mockito.mockStatic(PortalUtil.class)) {
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getHttpServletRequest(Mockito.any())
+			).thenReturn(
+				_httpServletRequest
+			);
+
+			EditAssetListDisplayContext displayContext = Mockito.spy(
+				_getEditAssetListDisplayContext(new UnicodeProperties()));
+
+			Mockito.doReturn(
+				new long[] {siteGroupId, spaceGroupId}
+			).when(
+				displayContext
+			).getReferencedModelsGroupIds();
+
+			long[] resolvedGroupIds =
+				displayContext.getResolvedReferencedModelsGroupIds();
+
+			Assert.assertTrue(
+				ArrayUtil.contains(resolvedGroupIds, siteGroupId));
+			Assert.assertTrue(ArrayUtil.contains(resolvedGroupIds, cmsGroupId));
+			Assert.assertFalse(
+				ArrayUtil.contains(resolvedGroupIds, spaceGroupId));
+			Assert.assertEquals(
+				Arrays.toString(resolvedGroupIds), 2, resolvedGroupIds.length);
+		}
+	}
+
+	@Test
 	public void testGetVocabularyIdsWithMissingClassName() throws Exception {
 		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
 
@@ -342,7 +523,9 @@ public class EditAssetListDisplayContextTest {
 			new RuntimeException()
 		);
 
-		long[] groupIds = {RandomTestUtil.randomLong()};
+		long groupId = RandomTestUtil.randomLong();
+
+		long[] groupIds = {groupId};
 
 		Mockito.when(
 			_portal.getCurrentAndAncestorSiteGroupIds(Mockito.any(long[].class))
@@ -357,10 +540,24 @@ public class EditAssetListDisplayContextTest {
 			groupIds
 		);
 
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
 		Mockito.when(
 			_themeDisplay.getScopeGroup()
 		).thenReturn(
-			Mockito.mock(Group.class)
+			group
+		);
+
+		Mockito.when(
+			_groupService.getGroup(groupId)
+		).thenReturn(
+			group
 		);
 
 		try (MockedStatic<AssetVocabularyServiceUtil>
@@ -379,6 +576,115 @@ public class EditAssetListDisplayContextTest {
 				_getEditAssetListDisplayContext(
 					new UnicodeProperties()
 				).getVocabularyIds());
+		}
+	}
+
+	@Test
+	public void testGetVocabularyIdsWithSpaceCMS() throws Exception {
+		long spaceGroupId = 5001L;
+
+		Group spaceGroup = Mockito.mock(Group.class);
+
+		Mockito.when(
+			spaceGroup.getGroupId()
+		).thenReturn(
+			spaceGroupId
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroup()
+		).thenReturn(
+			spaceGroup
+		);
+
+		try (MockedStatic<GroupLocalServiceUtil>
+				groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+					GroupLocalServiceUtil.class);
+			MockedStatic<PortalUtil> portalUtilMockedStatic =
+				Mockito.mockStatic(PortalUtil.class)) {
+
+			groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.getGroups(Mockito.any(long[].class))
+			).thenReturn(
+				Collections.singletonList(spaceGroup)
+			);
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getHttpServletRequest(_portletRequest)
+			).thenReturn(
+				_httpServletRequest
+			);
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					Mockito.any(long[].class))
+			).thenReturn(
+				new long[] {spaceGroupId}
+			);
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					Mockito.any(long[].class), Mockito.anyBoolean())
+			).thenReturn(
+				new long[] {spaceGroupId}
+			);
+
+			AssetVocabularyGroupRel rel = Mockito.mock(
+				AssetVocabularyGroupRel.class);
+
+			long vocabularyId = 999L;
+
+			Mockito.when(
+				rel.getVocabularyId()
+			).thenReturn(
+				vocabularyId
+			);
+
+			Mockito.when(
+				_assetVocabularyGroupRelLocalService.
+					getAssetVocabularyGroupRelsByGroupId(Mockito.anyLong())
+			).thenReturn(
+				Collections.singletonList(rel)
+			);
+
+			AssetVocabulary vocabulary = Mockito.mock(AssetVocabulary.class);
+
+			Mockito.when(
+				vocabulary.getVocabularyId()
+			).thenReturn(
+				vocabularyId
+			);
+
+			Mockito.when(
+				vocabulary.getSelectedClassNameIds()
+			).thenReturn(
+				new long[] {0}
+			);
+
+			Mockito.when(
+				_assetVocabularyService.fetchVocabulary(vocabularyId)
+			).thenReturn(
+				vocabulary
+			);
+
+			Mockito.when(
+				_groupService.getGroup(spaceGroupId)
+			).thenReturn(
+				spaceGroup
+			);
+
+			Mockito.when(
+				spaceGroup.getTypeSettingsProperty("depotEntryType")
+			).thenReturn(
+				"1"
+			);
+
+			EditAssetListDisplayContext displayContext =
+				_getEditAssetListDisplayContext(new UnicodeProperties());
+
+			List<Long> vocabularyIds = displayContext.getVocabularyIds();
+
+			Assert.assertTrue(vocabularyIds.contains(vocabularyId));
 		}
 	}
 
@@ -453,6 +759,8 @@ public class EditAssetListDisplayContextTest {
 
 		return new EditAssetListDisplayContext(
 			assetRendererFactoryClassProvider,
+			_assetVocabularyGroupRelLocalService, _assetVocabularyService,
+			_depotEntryService, _groupService,
 			Mockito.mock(InfoSearchClassMapperRegistry.class),
 			Mockito.mock(ItemSelector.class),
 			Mockito.mock(ObjectDefinitionLocalService.class), _portletRequest,
@@ -611,6 +919,11 @@ public class EditAssetListDisplayContextTest {
 		_assetRendererFactoryRegistryUtilMockedStatic = Mockito.mockStatic(
 			AssetRendererFactoryRegistryUtil.class);
 
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+	private AssetVocabularyService _assetVocabularyService;
+	private DepotEntryService _depotEntryService;
+	private GroupService _groupService;
 	private HttpServletRequest _httpServletRequest;
 	private Portal _portal;
 	private PortletRequest _portletRequest;

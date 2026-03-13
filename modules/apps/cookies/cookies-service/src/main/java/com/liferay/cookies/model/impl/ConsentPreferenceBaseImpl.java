@@ -6,6 +6,7 @@
 package com.liferay.cookies.model.impl;
 
 import com.liferay.cookies.model.ConsentPreference;
+import com.liferay.cookies.service.ConsentPreferenceLocalServiceUtil;
 
 /**
  * The extended model base implementation for the ConsentPreference service. Represents a row in the &quot;ConsentPreference&quot; database table, with each column mapped to a property of this class.
@@ -27,5 +28,14 @@ public abstract class ConsentPreferenceBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a consent preference model instance should use the <code>ConsentPreference</code> interface instead.
 	 */
+	@Override
+	public void persist() {
+		if (this.isNew()) {
+			ConsentPreferenceLocalServiceUtil.addConsentPreference(this);
+		}
+		else {
+			ConsentPreferenceLocalServiceUtil.updateConsentPreference(this);
+		}
+	}
 
 }

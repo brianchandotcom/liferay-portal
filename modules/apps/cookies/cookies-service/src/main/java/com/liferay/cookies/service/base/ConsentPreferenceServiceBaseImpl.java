@@ -108,6 +108,10 @@ public abstract class ConsentPreferenceServiceBaseImpl
 		}
 	}
 
+	@Reference
+	protected com.liferay.cookies.service.ConsentPreferenceLocalService
+		consentPreferenceLocalService;
+
 	protected ConsentPreferenceService consentPreferenceService;
 
 	@Reference

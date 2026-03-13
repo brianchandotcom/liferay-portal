@@ -6,6 +6,7 @@
 package com.liferay.cookies.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -19,7 +20,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ImplementationClassName("com.liferay.cookies.model.impl.ConsentPreferenceImpl")
 @ProviderType
-public interface ConsentPreference extends ConsentPreferenceModel {
+public interface ConsentPreference
+	extends ConsentPreferenceModel, PersistedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

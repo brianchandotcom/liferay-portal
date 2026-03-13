@@ -28,6 +28,8 @@ import java.net.URLClassLoader;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * @author Tina Tian
  */
@@ -77,14 +79,23 @@ public class PersistedProcessUtil {
 		try {
 			noticeableFuture.get();
 		}
-		catch (Exception exception) {
+		catch (Exception exception1) {
 			NoticeableFuture<?> processNoticeableFuture =
 				processChannel.getProcessNoticeableFuture();
 
 			processNoticeableFuture.cancel(true);
 
+			try {
+				processNoticeableFuture.get();
+			}
+			catch (Exception exception2) {
+				if (exception2 instanceof ExecutionException) {
+					exception1.addSuppressed(exception2.getCause());
+				}
+			}
+
 			throw new RuntimeException(
-				"Unable to execute process callable", exception);
+				"Unable to execute process callable", exception1);
 		}
 
 		return (ProcessChannel<T>)processChannel;

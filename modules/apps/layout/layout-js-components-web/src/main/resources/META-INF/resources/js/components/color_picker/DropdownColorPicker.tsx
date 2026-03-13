@@ -129,10 +129,10 @@ export function DropdownColorPicker({
 	}, [active]);
 
 	return (
-		<div className="layout__dropdown-color-picker">
+		<div className="layout__dropdown-color-picker w-100">
 			<ClayButton
 				aria-label={label}
-				className="align-items-center border-0 d-flex font-weight-normal layout__dropdown-color-picker__selector text-body w-100"
+				className="align-items-center border-0 c-focus-inset d-flex font-weight-normal layout__dropdown-color-picker__selector text-body w-100"
 				displayType="secondary"
 				onClick={() => onSetActive((active) => !active)}
 				ref={triggerElementRef}

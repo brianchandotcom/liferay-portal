@@ -7,7 +7,64 @@
 		min-height: 400px;
 	}
 
+	.taglib-icon-help {
+		cursor: pointer;
+	}
+
+	.form-group-autofit {
+		margin-bottom: 0;
+
+		.form-group {
+			margin-bottom: 0;
+		}
+	}
+
+	.lfr-autorow-controls {
+		bottom: auto;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.lfr-form-row {
+		counter-increment: line-number;
+		padding: 0;
+
+		&:hover {
+			border-top: none;
+		}
+
+		&:not(:nth-last-child(2)) {
+			border: none;
+		}
+	}
+
+	.lfr-form-rows {
+		counter-reset: line-number;
+	}
+
 	.request-parameters-textarea {
 		min-height: 200px;
+	}
+
+	.toolbar-content {
+		display: flex;
+		gap: 4px;
+
+		button {
+			border-radius: 10px;
+			height: 20px;
+			padding: 0;
+			width: 20px;
+
+			&[disabled] {
+				display: none;
+			}
+
+			.lexicon-icon {
+				height: 10px;
+				width: 10px;
+			}
+		}
 	}
 }

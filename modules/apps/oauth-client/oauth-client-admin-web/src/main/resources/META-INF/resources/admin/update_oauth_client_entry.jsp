@@ -119,16 +119,97 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-oidc-specific-configurations" /></h3>
 
+				<%
+				String matcherField = (oAuthClientEntry != null) ? oAuthClientEntry.getMatcherField() : "email";
+				%>
+
+				<aui:select helpMessage="matcher-field-help" label="matcher-field" name="matcherField" required="<%= true %>" type="text">
+					<aui:option label="email" selected='<%= Objects.equals(matcherField, "email") %>' value="email" />
+					<aui:option label="screen-name" selected='<%= Objects.equals(matcherField, "screenName") %>' value="screenName" />
+				</aui:select>
+
 				<aui:input cssClass="info-mapper-textarea" helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="OIDCUserInfoMapperJSON" type="textarea" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" />
 
-				<aui:button-row>
-					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
-					<aui:button href="<%= redirect %>" type="cancel" />
-				</aui:button-row>
+				<div class="lfr-form-rows" id="<portlet:namespace />customClaimsContentBox">
+					<label class="c-mb-1 c-mt-2 font-weight-semi-bold text-4">
+						<liferay-ui:message key="custom-claims" />
+
+						<span class="c-ml-1 lfr-portal-tooltip taglib-icon-help" tabindex="0" title="<%= LanguageUtil.get(request, "custom-claims-help") %>">
+							<clay:icon
+								symbol="question-circle-full"
+							/>
+						</span>
+					</label>
+
+					<%
+					JSONObject customClaimsJSONObject = null;
+
+					if (oAuthClientEntry != null) {
+						customClaimsJSONObject = JSONFactoryUtil.createJSONObject(oAuthClientEntry.getCustomClaimsJSON());
+					}
+
+					if ((customClaimsJSONObject == null) || (customClaimsJSONObject.length() < 1)) {
+						customClaimsJSONObject = JSONUtil.put("", "");
+					}
+
+					int index = 0;
+
+					for (String key : customClaimsJSONObject.keySet()) {
+						String customClaimsKeyId = "customClaimsKey-" + index;
+						String customClaimsValueId = "customClaimsValue-" + index;
+
+						index++;
+					%>
+
+						<div class="lfr-form-row">
+							<div class="form-group">
+								<div class="form-group-autofit">
+									<div class="form-group-item">
+										<aui:select fieldParam="<%= customClaimsKeyId %>" id="<%= customClaimsKeyId %>" inlineField="<%= true %>" label="user-custom-fields" name="<%= customClaimsKeyId %>" showEmptyOption="<%= true %>">
+
+											<%
+											for (ExpandoColumn expandoColumn : (List<ExpandoColumn>)request.getAttribute("expandoColumns")) {
+											%>
+
+												<aui:option label="<%= expandoColumn.getName() %>" selected="<%= Objects.equals(expandoColumn.getName(), key) %>" value="<%= expandoColumn.getName() %>"></aui:option>
+
+											<%
+											}
+											%>
+
+										</aui:select>
+									</div>
+
+									<div class="form-group-item">
+										<aui:input fieldParam="<%= customClaimsValueId %>" id="<%= customClaimsValueId %>" label="custom-claim" name="<%= customClaimsValueId %>" type="text" value="<%= customClaimsJSONObject.get(key) %>" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+					<%
+					}
+					%>
+
+					<aui:input name="customClaimsIndexes" type="hidden" />
+				</div>
 			</aui:fieldset>
+
+			<aui:button-row>
+				<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</aui:button-row>
 		</div>
 	</clay:container-fluid>
 </aui:form>
+
+<aui:script use="liferay-auto-fields">
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />customClaimsContentBox',
+		fieldIndexes: '<portlet:namespace />customClaimsIndexes',
+		namespace: '<portlet:namespace />',
+	}).render();
+</aui:script>
 
 <aui:script>
 	<portlet:namespace />init();
@@ -190,13 +271,28 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			'<portlet:namespace />tokenRequestParametersJSON'
 		).value = tokenRequestParametersJSON;
 
-		var oidcUserInfoMapperJSON = document.getElementById(
-			'<portlet:namespace />OIDCUserInfoMapperJSON'
+		var oidcUserInfoMapperJSON = JSON.parse(
+			document.getElementById('<portlet:namespace />OIDCUserInfoMapperJSON')
+				.value
+		);
+
+		var matcherFieldValue = document.getElementById(
+			'<portlet:namespace />matcherField'
 		).value;
+
+		if (
+			matcherFieldValue == 'screenName' &&
+			!oidcUserInfoMapperJSON.user.screenName
+		) {
+			alert(
+				'Missing screenName value at OpenId Connect User Information Mapper JSON'
+			);
+			return;
+		}
 
 		try {
 			oidcUserInfoMapperJSON = JSON.stringify(
-				JSON.parse(oidcUserInfoMapperJSON),
+				oidcUserInfoMapperJSON,
 				null,
 				0
 			);

@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.cookies">
 	<namespace>Cookies</namespace>
-	<entity local-service="false" name="ConsentPreference" remote-service="true">
+	<entity local-service="true" name="ConsentPreference" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -13,7 +13,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 
 		<!-- Other fields -->
 

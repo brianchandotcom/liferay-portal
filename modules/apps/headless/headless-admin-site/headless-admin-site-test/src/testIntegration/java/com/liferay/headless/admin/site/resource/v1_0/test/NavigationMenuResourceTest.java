@@ -43,6 +43,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -79,6 +80,7 @@ import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.io.Serializable;
 
@@ -168,6 +170,8 @@ public class NavigationMenuResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_companyGroup = testCompany.getGroup();
+
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -181,6 +185,14 @@ public class NavigationMenuResourceTest
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			_depotEntry.getDepotEntryId(), testGroup.getGroupId());
+	}
+
+	@Override
+	@Test
+	public void testDeleteSiteNavigationMenu() throws Exception {
+		super.testDeleteSiteNavigationMenu();
+
+		_testDeleteSiteNavigationMenuWithCompanyGroup();
 	}
 
 	@Override
@@ -248,6 +260,7 @@ public class NavigationMenuResourceTest
 			JournalArticle.class.getName(), false);
 
 		_testGetNavigationMenuWithChildNavigationMenusAndNavigationMenuItems();
+		_testGetNavigationMenuWithCompanyGroup();
 		_testGetNavigationMenuWithNestedFields();
 		_testGetNavigationMenuWithoutNestedFields();
 	}
@@ -316,6 +329,7 @@ public class NavigationMenuResourceTest
 			JournalArticle.class.getName(), journalArticle.getTitle(),
 			JournalArticle.class.getName(), true);
 
+		_testGetSiteNavigationMenusPageWithCompanyGroup();
 		_testGetSiteNavigationMenusPageWithSearch();
 	}
 
@@ -325,6 +339,7 @@ public class NavigationMenuResourceTest
 		super.testPostSiteNavigationMenu();
 
 		_testPostSiteNavigationMenuBatchWithInvalidItemModel();
+		_testPostSiteNavigationMenuWithCompanyGroup();
 		_testPostSiteNavigationMenuWithInvalidItemModel();
 		_testPostSiteNavigationMenuWithNavigationType();
 		_testPostSiteNavigationMenuWithPermissions();
@@ -335,6 +350,7 @@ public class NavigationMenuResourceTest
 	public void testPutSiteNavigationMenu() throws Exception {
 		super.testPutSiteNavigationMenu();
 
+		_testPutSiteNavigationMenuWithCompanyGroup();
 		_testPutSiteNavigationMenuWithPermissions();
 	}
 
@@ -771,6 +787,29 @@ public class NavigationMenuResourceTest
 		};
 	}
 
+	private void _testDeleteSiteNavigationMenuWithCompanyGroup()
+		throws Exception {
+
+		NavigationMenu navigationMenu = _randomNavigationMenu(false);
+
+		navigationMenu.setSiteExternalReferenceCode(
+			_companyGroup.getExternalReferenceCode());
+
+		NavigationMenu postNavigationMenu =
+			navigationMenuResource.postSiteNavigationMenu(
+				_companyGroup.getExternalReferenceCode(), navigationMenu);
+
+		navigationMenuResource.deleteSiteNavigationMenu(
+			_companyGroup.getExternalReferenceCode(),
+			postNavigationMenu.getExternalReferenceCode());
+
+		Assert.assertNull(
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					postNavigationMenu.getExternalReferenceCode(),
+					_companyGroup.getGroupId()));
+	}
+
 	private void _testGetNavigationMenu(
 			long classPK, long classTypeId, Class<?> clazz,
 			String displayPageType, String title, String type,
@@ -921,6 +960,24 @@ public class NavigationMenuResourceTest
 				LocaleUtil.US.toLanguageTag(), layoutNameMap2.get(LocaleUtil.US)
 			).build(),
 			getNavigationMenu.getNavigationMenuItems()[4], "layout", false);
+	}
+
+	private void _testGetNavigationMenuWithCompanyGroup() throws Exception {
+		NavigationMenu navigationMenu = _randomNavigationMenu(false);
+
+		navigationMenu.setSiteExternalReferenceCode(
+			_companyGroup.getExternalReferenceCode());
+
+		NavigationMenu postNavigationMenu =
+			navigationMenuResource.postSiteNavigationMenu(
+				_companyGroup.getExternalReferenceCode(), navigationMenu);
+
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getSiteNavigationMenu(
+				_companyGroup.getExternalReferenceCode(),
+				postNavigationMenu.getExternalReferenceCode());
+
+		assertEquals(postNavigationMenu, getNavigationMenu);
 	}
 
 	private void _testGetNavigationMenuWithNestedFields() throws Exception {
@@ -1093,6 +1150,27 @@ public class NavigationMenuResourceTest
 			postNavigationMenu.getExternalReferenceCode());
 	}
 
+	private void _testGetSiteNavigationMenusPageWithCompanyGroup()
+		throws Exception {
+
+		NavigationMenu navigationMenu = _randomNavigationMenu(false);
+
+		navigationMenu.setSiteExternalReferenceCode(
+			_companyGroup.getExternalReferenceCode());
+
+		NavigationMenu postNavigationMenu =
+			navigationMenuResource.postSiteNavigationMenu(
+				_companyGroup.getExternalReferenceCode(), navigationMenu);
+
+		Page<NavigationMenu> page =
+			navigationMenuResource.getSiteNavigationMenusPage(
+				_companyGroup.getExternalReferenceCode(), null, null,
+				Pagination.of(1, 10), null);
+
+		assertContains(
+			postNavigationMenu, (List<NavigationMenu>)page.getItems());
+	}
+
 	private void _testGetSiteNavigationMenusPageWithSearch() throws Exception {
 		NavigationMenu randomNavigationMenu = randomNavigationMenu();
 
@@ -1164,6 +1242,21 @@ public class NavigationMenuResourceTest
 		String typeSettings = siteNavigationMenuItem.getTypeSettings();
 
 		Assert.assertTrue(typeSettings.contains(modelExternalReferenceCode));
+	}
+
+	private void _testPostSiteNavigationMenuWithCompanyGroup()
+		throws Exception {
+
+		NavigationMenu navigationMenu = _randomNavigationMenu(false);
+
+		navigationMenu.setSiteExternalReferenceCode(
+			_companyGroup.getExternalReferenceCode());
+
+		NavigationMenu postNavigationMenu =
+			navigationMenuResource.postSiteNavigationMenu(
+				_companyGroup.getExternalReferenceCode(), navigationMenu);
+
+		assertEquals(navigationMenu, postNavigationMenu);
 	}
 
 	private void _testPostSiteNavigationMenuWithInvalidItemModel()
@@ -1267,6 +1360,25 @@ public class NavigationMenuResourceTest
 				}));
 	}
 
+	private void _testPutSiteNavigationMenuWithCompanyGroup() throws Exception {
+		NavigationMenu postNavigationMenu =
+			navigationMenuResource.postSiteNavigationMenu(
+				_companyGroup.getExternalReferenceCode(),
+				_randomNavigationMenu(false));
+
+		NavigationMenu navigationMenu = _randomNavigationMenu(false);
+
+		navigationMenu.setSiteExternalReferenceCode(
+			_companyGroup.getExternalReferenceCode());
+
+		NavigationMenu putNavigationMenu =
+			navigationMenuResource.putSiteNavigationMenu(
+				_companyGroup.getExternalReferenceCode(),
+				postNavigationMenu.getExternalReferenceCode(), navigationMenu);
+
+		assertEquals(navigationMenu, putNavigationMenu);
+	}
+
 	private void _testPutSiteNavigationMenuWithPermissions() throws Exception {
 		NavigationMenu postNavigationMenu =
 			testPutSiteNavigationMenu_addNavigationMenu();
@@ -1331,6 +1443,7 @@ public class NavigationMenuResourceTest
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
+	private Group _companyGroup;
 	private DepotEntry _depotEntry;
 
 	@Inject
@@ -1360,5 +1473,8 @@ public class NavigationMenuResourceTest
 	@Inject
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
+
+	@Inject
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

@@ -42,6 +42,7 @@ import {
 	Sizes
 } from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
+import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
 import {useQuery} from '@apollo/react-hooks';
 import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
@@ -68,6 +69,7 @@ interface IProfileCardProps extends React.HTMLAttributes<HTMLElement> {
 	delta: number;
 	entity: Individual;
 	interval: Interval;
+	groupId: string;
 	onChangeInterval: (interval: Interval) => void;
 	onDeltaChange: (delta: number) => void;
 	onPageChange: (page: number) => void;
@@ -85,6 +87,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 	channelId,
 	delta,
 	entity: {id: entityId},
+	groupId,
 	interval,
 	onChangeInterval,
 	onDeltaChange,
@@ -99,6 +102,8 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 }) => {
 	const {hasSelectedPoint, onPointSelect, selectedPoint} = useSelectedPoint();
 	const [searchValue, setSearchValue] = useState<string>('');
+
+	const LDPEnabled = useLDPEnabled({groupId});
 
 	const activityResponse = useQuery<EventMetricsData, EventMetricsVariables>(
 		EventMetricQuery,
@@ -338,6 +343,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 						hasSelectedPoint={hasSelectedPoint}
 						history={activityHistory}
 						interval={interval}
+						LDPEnabled={LDPEnabled}
 						onPointSelect={handleChangeSelection}
 						rangeSelectors={rangeSelectors}
 						selectedPoint={selectedPoint}

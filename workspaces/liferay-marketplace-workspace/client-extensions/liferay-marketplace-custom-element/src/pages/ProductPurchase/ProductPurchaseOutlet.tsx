@@ -180,6 +180,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		marketplaceDeliveryProduct,
 		product,
 		productPurchaseCart,
+		productTypeRoute,
 		routes: steps,
 		selectedAccount,
 		setAlert,

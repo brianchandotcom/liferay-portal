@@ -33,7 +33,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Stefano Motta
  */
-public class EditRoomStrutsActionTest {
+public class ViewRoomStrutsActionTest {
 
 	@ClassRule
 	@Rule
@@ -103,7 +103,7 @@ public class EditRoomStrutsActionTest {
 			new MockHttpServletResponse();
 
 		Assert.assertNull(
-			_editRoomStrutsAction.execute(
+			_viewRoomStrutsAction.execute(
 				mockHttpServletRequest, mockHttpServletResponse));
 
 		Assert.assertEquals(200, mockHttpServletResponse.getStatus());
@@ -114,12 +114,29 @@ public class EditRoomStrutsActionTest {
 		mockHttpServletResponse = new MockHttpServletResponse();
 
 		Assert.assertNull(
-			_editRoomStrutsAction.execute(
+			_viewRoomStrutsAction.execute(
 				mockHttpServletRequest, mockHttpServletResponse));
 
 		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
 
 		String redirectedURL = mockHttpServletResponse.getRedirectedUrl();
+
+		Assert.assertEquals(
+			redirectedURL, redirectedURL, "/web/" + _group.getFriendlyURL());
+
+		mockHttpServletRequest.setParameter("mode", "edit");
+		mockHttpServletRequest.setParameter(
+			"siteId", String.valueOf(RandomTestUtil.randomLong()));
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		Assert.assertNull(
+			_viewRoomStrutsAction.execute(
+				mockHttpServletRequest, mockHttpServletResponse));
+
+		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
+
+		redirectedURL = mockHttpServletResponse.getRedirectedUrl();
 
 		Assert.assertEquals(
 			redirectedURL, redirectedURL,
@@ -138,9 +155,6 @@ public class EditRoomStrutsActionTest {
 		return mockHttpServletRequest;
 	}
 
-	@InjectMocks
-	private EditRoomStrutsAction _editRoomStrutsAction;
-
 	private final Group _group = Mockito.mock(Group.class);
 	private final GroupService _groupService = Mockito.mock(GroupService.class);
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
@@ -149,5 +163,8 @@ public class EditRoomStrutsActionTest {
 		Mockito.mock(ObjectDefinitionLocalService.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+	@InjectMocks
+	private ViewRoomStrutsAction _viewRoomStrutsAction;
 
 }

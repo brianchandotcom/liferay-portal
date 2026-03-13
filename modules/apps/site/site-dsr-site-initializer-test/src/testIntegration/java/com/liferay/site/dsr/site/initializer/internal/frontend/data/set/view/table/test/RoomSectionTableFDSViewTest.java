@@ -32,7 +32,7 @@ public class RoomSectionTableFDSViewTest
 	@Test
 	public void testGetFDSTableSchema() throws Exception {
 		assertFDSTableSchemaField(
-			"actionLink", "roomNameTableCellRenderer", "name", "embedded.name");
+			"view", "roomNameTableCellRenderer", "name", "embedded.name");
 		assertFDSTableSchemaField(
 			null, "dateTime", "creation-date", "embedded.dateCreated");
 		assertFDSTableSchemaField(

@@ -93,6 +93,13 @@ public class ViewRoomsSectionDisplayContextTest {
 			"Share"
 		);
 
+		_languageUtilMockedStatic.when(
+			() -> LanguageUtil.get(
+				Mockito.any(HttpServletRequest.class), Mockito.eq("view"))
+		).thenReturn(
+			"View"
+		);
+
 		_layoutSetPrototypeLocalServiceUtilMockedStatic.when(
 			() -> LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypes(
 				Mockito.anyLong())
@@ -178,9 +185,8 @@ public class ViewRoomsSectionDisplayContextTest {
 			viewRoomsSectionDisplayContext.getAdditionalProps(),
 			HashMapBuilder.<String, Object>put(
 				"createRedirectURL",
-				StringBundler.concat(
-					DSRConstants.DSR_FRIENDLY_URL, "/edit_room?siteId=",
-					"{siteId}")
+				DSRConstants.DSR_FRIENDLY_URL +
+					"/view_room?mode=edit&siteId={siteId}"
 			).put(
 				"siteTemplates",
 				ListUtil.fromCollection(
@@ -274,21 +280,27 @@ public class ViewRoomsSectionDisplayContextTest {
 			viewRoomsSectionDisplayContext.getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 3,
+			fdsActionDropdownItems.toString(), 4,
 			fdsActionDropdownItems.size());
 
 		_assertFDSActionDropdownItem(
 			StringBundler.concat(
-				DSRConstants.DSR_FRIENDLY_URL, "/edit_room?siteId=",
+				DSRConstants.DSR_FRIENDLY_URL, "/view_room?siteId=",
 				"{embedded.siteId}"),
-			"pencil", "edit", "Edit", null, "update", null,
+			"view", "view", "View", null, "get", null,
 			fdsActionDropdownItems.get(0));
 		_assertFDSActionDropdownItem(
-			"#", "share", "share", "Share", null, "update", null,
+			StringBundler.concat(
+				DSRConstants.DSR_FRIENDLY_URL, "/view_room?mode=edit&siteId=",
+				"{embedded.siteId}"),
+			"pencil", "edit", "Edit", null, "update", null,
 			fdsActionDropdownItems.get(1));
 		_assertFDSActionDropdownItem(
-			"#", "trash", "delete", "Delete", "delete", "delete", null,
+			"#", "share", "share", "Share", null, "update", null,
 			fdsActionDropdownItems.get(2));
+		_assertFDSActionDropdownItem(
+			"#", "trash", "delete", "Delete", "delete", "delete", null,
+			fdsActionDropdownItems.get(3));
 	}
 
 	private void _assertEquals(

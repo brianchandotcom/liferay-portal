@@ -652,6 +652,79 @@ test.describe('Manage object fields through Model Builder', () => {
 		await expect(page.getByText(dateFieldName)).not.toBeVisible();
 	});
 
+	test(
+		'can update custom object field',
+		{tag: '@LPD-16778'},
+		async ({
+			apiHelpers,
+			modelBuilderDiagramPage,
+			modelBuilderLeftSidebarPage,
+			modelBuilderObjectDefinitionNodePage,
+			page,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await test.step('Show all fields in the object definition node', async () => {
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: 'Default',
+				});
+
+				await modelBuilderLeftSidebarPage.clickSideBarItem(
+					objectDefinition.label['en_US']
+				);
+
+				await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+					objectDefinition.label['en_US'],
+					modelBuilderDiagramPage.objectDefinitionNodes
+				);
+			});
+
+			const objectFieldLabel = objectFields[0].label['en_US'];
+
+			const updatedFieldLabel = 'UpdatedField' + getRandomInt();
+
+			await test.step('Update the field label', async () => {
+				await modelBuilderDiagramPage.objectDefinitionNodes
+					.filter({hasText: objectDefinition.label['en_US']})
+					.getByText(objectFieldLabel, {exact: true})
+					.click();
+
+				await page.getByText('LabelMandatory').fill(updatedFieldLabel);
+
+				await modelBuilderLeftSidebarPage.clickSideBarItem(
+					objectDefinition.label['en_US']
+				);
+			});
+
+			await test.step('Verify the updated label is visible in the node and the old label is not', async () => {
+				await expect(
+					modelBuilderDiagramPage.objectDefinitionNodes
+						.filter({hasText: objectDefinition.label['en_US']})
+						.getByText(updatedFieldLabel, {exact: true})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderDiagramPage.objectDefinitionNodes
+						.filter({hasText: objectDefinition.label['en_US']})
+						.getByText(objectFieldLabel, {exact: true})
+				).toBeHidden();
+			});
+		}
+	);
+
 	test('cannot delete an objectField that belongs to a unique composite key validation through Model Builder', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,

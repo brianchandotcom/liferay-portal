@@ -882,6 +882,221 @@ test.describe('Manage object relationships through Model Builder', () => {
 	});
 
 	test(
+		'can search for object definition with relationship in model builder view',
+		{tag: '@LPS-185676'},
+		async ({
+			apiHelpers,
+			modelBuilderDiagramPage,
+			modelBuilderLeftSidebarPage,
+			page,
+		}) => {
+			const objectFolder =
+				await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+			apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
+
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode:
+						objectFolder.externalReferenceCode,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
+			});
+
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode,
+					{
+						label: {
+							en_US: 'objectRelationshipLabel' + getRandomInt(),
+						},
+						name:
+							'objectRelationshipName' +
+							Math.floor(Math.random() * 99),
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: 'oneToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await test.step('Search for the object definition that is on the other folder', async () => {
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: 'Default',
+				});
+
+				const searchInput = page.getByPlaceholder('Search');
+
+				await searchInput.fill(objectDefinition2.label.en_US);
+			});
+
+			await test.step('Verify both folders are present and the linked object appears twice on the sidebar', async () => {
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: 'Default',
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: objectFolder.label.en_US,
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: objectDefinition2.label.en_US,
+					})
+				).toHaveCount(2);
+			});
+
+			await test.step('Verify the searched object and the linked one are visible in the diagram', async () => {
+				await expect(
+					modelBuilderDiagramPage.objectDefinitionNodes.filter({
+						hasText: objectDefinition1.label.en_US,
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderDiagramPage.objectDefinitionNodes.filter({
+						hasText: objectDefinition2.label.en_US,
+					})
+				).toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'can view nodes cards after relationship deletion',
+		{tag: '@LPS-185676'},
+		async ({apiHelpers, modelBuilderDiagramPage, page}) => {
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
+			});
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipLabel =
+				'objectRelationshipLabel' + getRandomInt();
+			const objectRelationshipName =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode,
+					{
+						label: {
+							en_US: objectRelationshipLabel,
+						},
+						name: objectRelationshipName,
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: 'oneToMany',
+					}
+				);
+
+			await test.step('Verify both nodes and the relationship edge are visible', async () => {
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: 'Default',
+				});
+
+				await expect(
+					modelBuilderDiagramPage.objectDefinitionNodes.filter({
+						hasText: objectDefinition1.label['en_US'],
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderDiagramPage.objectDefinitionNodes.filter({
+						hasText: objectDefinition2.label['en_US'],
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderDiagramPage.objectRelationshipEdges.filter({
+						hasText: objectRelationshipLabel,
+					})
+				).toBeVisible();
+			});
+
+			await test.step('Delete the relationship via API', async () => {
+				await objectRelationshipAPIClient.deleteObjectRelationship(
+					objectRelationship.id
+				);
+			});
+
+			await test.step('Reload page to reflect the deletion and assert it', async () => {
+				await page.reload();
+
+				await expect(
+					modelBuilderDiagramPage.objectRelationshipEdges.filter({
+						hasText: objectRelationshipLabel,
+					})
+				).not.toBeVisible();
+
+				await expect(
+					modelBuilderDiagramPage.objectDefinitionNodes.filter({
+						hasText: objectDefinition1.label['en_US'],
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderDiagramPage.objectDefinitionNodes.filter({
+						hasText: objectDefinition2.label['en_US'],
+					})
+				).toBeVisible();
+			});
+		}
+	);
+
+	test(
 		'does not allow to create relationship between Postal Address system object and objects without an one-to-many relationship with Account object',
 		{tag: '@LPD-26481'},
 		async ({

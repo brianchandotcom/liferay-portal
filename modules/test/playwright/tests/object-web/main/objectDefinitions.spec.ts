@@ -358,6 +358,198 @@ test.describe('Manage object definitions through Model Builder', () => {
 		).toBeHidden();
 	});
 
+	test(
+		'can publish multiple object definitions',
+		{tag: '@LPD-16778'},
+		async ({apiHelpers, modelBuilderDiagramPage, page}) => {
+			await test.step('Create five draft object definitions with fields', async () => {
+				for (let i = 0; i < 5; i++) {
+					const objectDefinition =
+						await apiHelpers.objectAdmin.postRandomObjectDefinition(
+							{
+								objectFields: generateObjectFields({
+									objectFieldBusinessTypes: ['Text'],
+								}),
+								status: {code: 2},
+							}
+						);
+
+					apiHelpers.data.push({
+						id: objectDefinition.id,
+						type: 'objectDefinition',
+					});
+				}
+			});
+
+			await test.step('Go to model builder and click to publish all definitions at once', async () => {
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: 'Default',
+				});
+
+				await page.getByRole('button', {name: 'Publish'}).click();
+
+				await page.getByRole('button', {name: 'Select All'}).click();
+
+				await page
+					.getByRole('button', {name: 'Publish Objects'})
+					.click();
+			});
+
+			await test.step('Verify that definitions were published', async () => {
+				await expect(
+					page.getByRole('heading', {name: 'Successfully published.'})
+				).toBeVisible();
+
+				await expect(page.locator('.lexicon-icon-check')).toHaveCount(
+					5
+				);
+			});
+		}
+	);
+
+	test(
+		'can search for object definition in model builder view',
+		{tag: '@LPD-16778'},
+		async ({
+			apiHelpers,
+			modelBuilderDiagramPage,
+			modelBuilderLeftSidebarPage,
+			page,
+		}) => {
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
+			});
+
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			await test.step('Verify both objects appear in the sidebar before searching', async () => {
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: 'Default',
+				});
+
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: objectDefinition1.label['en_US'],
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: objectDefinition2.label['en_US'],
+					})
+				).toBeVisible();
+			});
+
+			const searchInput = page.getByPlaceholder('Search');
+
+			await test.step('Search for the first object definition and verify the other is hidden', async () => {
+				await searchInput.fill(objectDefinition1.label['en_US']);
+
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: objectDefinition1.label['en_US'],
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: objectDefinition2.label['en_US'],
+					})
+				).toBeHidden();
+			});
+
+			await test.step('Clear search and verify both definitions appear again', async () => {
+				await searchInput.clear();
+
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: objectDefinition1.label['en_US'],
+					})
+				).toBeVisible();
+
+				await expect(
+					modelBuilderLeftSidebarPage.sidebarItems.filter({
+						hasText: objectDefinition2.label['en_US'],
+					})
+				).toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'cannot publish an invalid definition',
+		{tag: '@LPD-16778'},
+		async ({apiHelpers, modelBuilderDiagramPage, page}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinitionWithField =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 2},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinitionWithField.id,
+				type: 'objectDefinition',
+			});
+
+			const objectDefinitionWithoutField =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [],
+					status: {code: 2},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinitionWithoutField.id,
+				type: 'objectDefinition',
+			});
+
+			await test.step('Attempt to publish all definitions', async () => {
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: 'Default',
+				});
+
+				await page.getByRole('button', {name: 'Publish'}).click();
+
+				await page.getByRole('button', {name: 'Select All'}).click();
+
+				await page
+					.getByRole('button', {name: 'Publish Objects'})
+					.click();
+			});
+
+			await test.step('Only the valid defintion is published and an error message is displayed', async () => {
+				await expect(
+					page.getByRole('heading', {name: 'Published with Errors'})
+				).toBeVisible();
+
+				await expect(
+					page.getByText('At least one object field must be added.')
+				).toBeVisible();
+
+				await expect(page.locator('.lexicon-icon-check')).toHaveCount(
+					1
+				);
+			});
+		}
+	);
+
 	test('hidden system object definitions are not displayed', async ({
 		modelBuilderDiagramPage,
 		page,

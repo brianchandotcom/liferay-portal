@@ -21,7 +21,6 @@ export const test = mergeTests(
 	searchPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-17564': {enabled: true}, // CMS 2.0
 		'LPS-178052': {enabled: true},
 	}),
 	pageEditorPagesTest

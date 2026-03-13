@@ -159,53 +159,50 @@ export default function DateFilter({
 
 	const validation = useMemo(() => {
 		const errors: {fromDate?: string; toDate?: string} = {};
-		let isValid = true;
 
-		if (editing.filterType === FilterType.Range) {
-			const {fromDate, toDate} = editing;
-
-			if (!fromDate && !toDate) {
-				isValid = false;
-			}
-
-			const isFromValid = !fromDate || dateUtils.isValid(fromDate);
-			const isToValid = !toDate || dateUtils.isValid(toDate);
-
-			if (!isFromValid || !isToValid) {
-				isValid = false;
-			}
-			else {
-				const fromDateObj = fromDate ? new Date(fromDate) : null;
-				const now = new Date();
-				const toDateObj = toDate ? new Date(toDate) : null;
-
-				if (fromDateObj && fromDateObj > now) {
-					errors.fromDate = Liferay.Language.get(
-						'dates-must-not-be-in-the-future'
-					);
-					isValid = false;
-				}
-
-				if (toDateObj && toDateObj > now) {
-					errors.toDate = Liferay.Language.get(
-						'dates-must-not-be-in-the-future'
-					);
-					isValid = false;
-				}
-
-				if (fromDateObj && toDateObj && fromDateObj > toDateObj) {
-					errors.fromDate = Liferay.Language.get(
-						'date-range-is-invalid'
-					);
-					errors.toDate = Liferay.Language.get(
-						'date-range-is-invalid'
-					);
-					isValid = false;
-				}
-			}
+		if (editing.filterType !== FilterType.Range) {
+			return {errors, isValid: true};
 		}
 
-		return {errors, isValid};
+		const {fromDate, toDate} = editing;
+
+		if (!fromDate && !toDate) {
+			return {errors, isValid: false};
+		}
+
+		const isFromValid = !fromDate || dateUtils.isValid(fromDate);
+		const isToValid = !toDate || dateUtils.isValid(toDate);
+
+		if (!isFromValid || !isToValid) {
+			return {errors, isValid: false};
+		}
+
+		const fromDateObj = fromDate ? new Date(fromDate) : null;
+		const toDateObj = toDate ? new Date(toDate) : null;
+
+		if (fromDateObj && fromDateObj > new Date()) {
+			errors.fromDate = Liferay.Language.get(
+				'dates-must-not-be-in-the-future'
+			);
+		}
+
+		if (toDateObj && toDateObj > new Date()) {
+			errors.toDate = Liferay.Language.get(
+				'dates-must-not-be-in-the-future'
+			);
+		}
+
+		if (fromDateObj && toDateObj && fromDateObj > toDateObj) {
+			const rangeError = Liferay.Language.get('date-range-is-invalid');
+
+			errors.fromDate = rangeError;
+			errors.toDate = rangeError;
+		}
+
+		return {
+			errors,
+			isValid: !Object.keys(errors).length,
+		};
 	}, [editing]);
 
 	const isDirty = useMemo(() => {

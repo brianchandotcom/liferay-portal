@@ -7,10 +7,10 @@ package com.liferay.portal.db.migration.schema.exporter.internal.sql.provider;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactory;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.ServletContextPool;

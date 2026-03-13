@@ -6,10 +6,10 @@
 package com.liferay.portal.scheduler.quartz.internal.upgrade.release;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.upgrade.release.SchemaCreator;

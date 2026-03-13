@@ -19,6 +19,7 @@ import com.liferay.site.cms.site.initializer.bulk.selection.BaseObjectBulkSelect
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +43,7 @@ public class AssignStructureDefaultWorkflowBulkSelectionAction
 		if (object instanceof ObjectDefinition) {
 			ObjectDefinition objectDefinition = (ObjectDefinition)object;
 
-			ArrayList<WorkflowDefinitionLink> workflowDefinitionLinkList =
+			List<WorkflowDefinitionLink> workflowDefinitionLinkList =
 				new ArrayList<>(
 					_workflowDefinitionLinkLocalService.
 						getWorkflowDefinitionLinks(

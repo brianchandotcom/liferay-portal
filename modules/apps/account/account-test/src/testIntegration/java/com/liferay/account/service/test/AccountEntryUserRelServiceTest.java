@@ -79,13 +79,13 @@ public class AccountEntryUserRelServiceTest {
 			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
-			accountRole.getRoleId(), AccountActionKeys.ASSIGN_USERS);
+			accountRole.getRoleId(), AccountActionKeys.ADD_USER);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
-			accountRole.getRoleId(), AccountActionKeys.CREATE_USERS);
+			accountRole.getRoleId(), AccountActionKeys.ASSIGN_USERS);
 
 		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
 			_accountEntry.getAccountEntryId(),

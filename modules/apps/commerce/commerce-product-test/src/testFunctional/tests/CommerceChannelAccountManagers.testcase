@@ -951,7 +951,7 @@ definition {
 		}
 
 		task ("And Manage Available Accounts is the only permission for the Sales Agent role") {
-			for (var permissions : list "MANAGE_ORGANIZATIONS,MANAGE_USERS") {
+			for (var permissions : list "ASSIGN_USERS,CREATE_USERS,EDIT_USERS,INVITE_USER,MANAGE_ORGANIZATIONS,UNASSIGN_USERS,VIEW_USERS") {
 				Permissions.removePermissionViaAPI(
 					resourceAction = ${permissions},
 					resourceName = "com.liferay.account.model.AccountEntry",

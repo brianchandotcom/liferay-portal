@@ -58,9 +58,13 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 		rolePermissions: [
 			{
 				actionIds: [
+					'ASSIGN_USERS',
+					'CREATE_USERS',
+					'EDIT_USERS',
+					'INVITE_USER',
 					'MANAGE_ORGANIZATIONS',
-					'MANAGE_USERS',
 					'MANAGE_CHANNEL_DEFAULTS',
+					'UNASSIGN_USERS',
 					'UPDATE',
 				],
 				primaryKey: companyId,

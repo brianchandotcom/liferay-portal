@@ -45,10 +45,13 @@ async function postRoleWithAccountAdminPermissions(
 			{
 				actionIds: [
 					'ASSIGN_USERS',
+					'CREATE_USERS',
+					'EDIT_USERS',
+					'INVITE_USER',
 					'MANAGE_ADDRESSES',
 					'MANAGE_CHANNEL_DEFAULTS',
 					'MANAGE_ORGANIZATIONS',
-					'MANAGE_USERS',
+					'UNASSIGN_USERS',
 					'UPDATE',
 					'VIEW',
 					'VIEW_ACCOUNT_ROLES',
@@ -131,7 +134,11 @@ test.describe('Test for Organization Account visibility depending on Permissions
 				rolePermissions: [
 					{
 						actionIds: [
-							'MANAGE_USERS',
+							'ASSIGN_USERS',
+							'CREATE_USERS',
+							'EDIT_USERS',
+							'INVITE_USER',
+							'UNASSIGN_USERS',
 							'UPDATE',
 							'UPDATE_ORGANIZATIONS',
 							'VIEW',
@@ -237,8 +244,12 @@ test.describe('Test for Organization Account visibility depending on Permissions
 				rolePermissions: [
 					{
 						actionIds: [
+							'ASSIGN_USERS',
+							'CREATE_USERS',
+							'EDIT_USERS',
+							'INVITE_USER',
 							'MANAGE_ORGANIZATIONS',
-							'MANAGE_USERS',
+							'UNASSIGN_USERS',
 							'UPDATE',
 							'VIEW',
 							'VIEW_ORGANIZATIONS',
@@ -344,7 +355,11 @@ test.describe('Test for Organization Account visibility depending on Permissions
 				rolePermissions: [
 					{
 						actionIds: [
-							'MANAGE_USERS',
+							'ASSIGN_USERS',
+							'CREATE_USERS',
+							'EDIT_USERS',
+							'INVITE_USER',
+							'UNASSIGN_USERS',
 							'UPDATE',
 							'VIEW',
 							'VIEW_ORGANIZATIONS',
@@ -2292,8 +2307,57 @@ test(
 			title: getRandomString(),
 		});
 
-		const {account, userAccountAdmin} =
-			await initAccountAdministrator(apiHelpers);
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const userAccountAdmin =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccountAdmin.alternateName] = {
+			name: userAccountAdmin.givenName,
+			password: 'test',
+			surname: userAccountAdmin.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[userAccountAdmin.emailAddress]
+		);
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: [
+						'ASSIGN_USERS',
+						'CREATE_USERS',
+						'INVITE_USER',
+						'MANAGE_ADDRESSES',
+						'UNASSIGN_USERS',
+						'UPDATE',
+						'VIEW',
+						'VIEW_USERS',
+					],
+					primaryKey: '0',
+					resourceName: 'com.liferay.account.model.AccountEntry',
+					scope: 3,
+				},
+			],
+			roleType: 'account',
+		});
+
+		const accountRole =
+			await apiHelpers.headlessAdminUser.getAccountRolesByRoleName(
+				0,
+				role.name
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountRole(
+			account.id,
+			accountRole.items[0].id,
+			userAccountAdmin.id
+		);
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 

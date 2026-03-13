@@ -5,7 +5,7 @@
 
 package com.liferay.words.internal;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.jazzy.InvalidWord;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

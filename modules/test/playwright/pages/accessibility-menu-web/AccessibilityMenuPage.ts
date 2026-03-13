@@ -37,6 +37,8 @@ export class AccessibilityMenuPage {
 	}
 
 	async enableAccessibilityMenu() {
+		await expect(this.enableAccessibilityMenuCheckbox).toBeVisible();
+
 		if (!(await this.enableAccessibilityMenuCheckbox.isChecked())) {
 			await this.enableAccessibilityMenuCheckbox.check();
 
@@ -47,6 +49,8 @@ export class AccessibilityMenuPage {
 	}
 
 	async disableAccessibilityMenu() {
+		await expect(this.enableAccessibilityMenuCheckbox).toBeVisible();
+
 		if (await this.enableAccessibilityMenuCheckbox.isChecked()) {
 			await this.enableAccessibilityMenuCheckbox.uncheck();
 

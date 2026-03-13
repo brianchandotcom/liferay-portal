@@ -71,7 +71,7 @@ export class PageEditorPage {
 		this.experienceSelector = page.locator(
 			'.page-editor__experience-selector'
 		);
-		this.dropZone = page.locator('.page-editor__no-fragments-state');
+		this.dropZone = page.locator('#page-editor');
 		this.languageSelector = page
 			.locator('.page-editor__toolbar')
 			.getByLabel('Select a language');

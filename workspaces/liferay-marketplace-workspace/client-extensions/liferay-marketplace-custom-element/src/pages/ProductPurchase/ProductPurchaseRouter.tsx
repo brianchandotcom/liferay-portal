@@ -33,6 +33,7 @@ import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm/Activati
 import LDPProvisioning from './pages/LiferayProduct/LDPProvisioningForm';
 import OrderSummary from './pages/LiferayProduct/OrderSummary';
 import ProjectSelection from './pages/LiferayProduct/Project';
+import LiferayCMPForm from './pages/LiferayService/LiferayCMP/LiferayCMPForm';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
 
@@ -106,6 +107,20 @@ export const productTypeRoutes = {
 					},
 				];
 			}
+			if (solutionType === SolutionTypes.CMP) {
+				return [
+					{
+						element: ProductPurchaseAccountSelection,
+						index: true,
+						title: i18n.translate('account'),
+					},
+					{
+						element: LiferayCMPForm,
+						path: 'activation-key-form',
+						title: i18n.translate('activation-key'),
+					},
+				];
+			}
 
 			if (solutionType === SolutionTypes.LIFERAY_DATA_PLATFORM) {
 				return [
@@ -114,7 +129,6 @@ export const productTypeRoutes = {
 						index: true,
 						title: i18n.translate('account'),
 					},
-
 					{
 						element: ProjectSelection,
 						path: 'project',

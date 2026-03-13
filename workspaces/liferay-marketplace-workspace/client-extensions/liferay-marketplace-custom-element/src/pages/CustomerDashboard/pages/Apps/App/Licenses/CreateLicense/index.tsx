@@ -140,8 +140,11 @@ const CreateLicense = () => {
 						licenseEntry: {
 							description: form.description,
 							hostName: form.hostname,
-							ipAddresses: form.ipAddress.replaceAll('\n', ','),
-							macAddresses: form.macAddress.replaceAll('\n', ','),
+							ipAddresses: form.ipAddress?.replaceAll('\n', ','),
+							macAddresses: form.macAddress?.replaceAll(
+								'\n',
+								','
+							),
 							orderId: orderId as string,
 							productId:
 								marketplaceProduct.specificationValues

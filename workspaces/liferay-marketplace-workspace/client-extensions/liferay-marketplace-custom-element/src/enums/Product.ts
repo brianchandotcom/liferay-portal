@@ -151,6 +151,7 @@ export enum SkuOptions {
 
 export enum SolutionTypes {
 	ANALYTICS = 'analytics',
+	CMP = 'cmp_beta',
 	DXP = 'dxp',
 	LIFERAY_DATA_PLATFORM = 'liferay-data-platform',
 	PRE_BUILT_TRIAL = 'pre-built-trial',

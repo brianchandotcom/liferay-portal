@@ -28,7 +28,7 @@ const LicenseDetails = ({inputProps}: InputPropsLicense) => (
 		<FormInput
 			{...inputProps}
 			boldLabel
-			className="custom-input text-capitalize"
+			className="custom-input"
 			helpMessage="Include a description to uniquely identify this environment. This cannot be edited later."
 			label="Description"
 			name="description"

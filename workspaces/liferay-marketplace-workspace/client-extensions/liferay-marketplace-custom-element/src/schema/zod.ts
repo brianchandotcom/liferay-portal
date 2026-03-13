@@ -246,20 +246,38 @@ const zodSchema = {
 			.max(90, 'Please enter a valid number (1-90)'),
 		reason: z.string().min(3),
 	}),
-	generateLicenseKey: z.object({
-		description: z.string().max(100, {message: 'Invalid license name'}),
-		hostname: z.string(),
-		ipAddress: z.string(),
-		macAddress: z.string(),
-		subscription: z
-			.object({
-				name: z.string(),
-				productPurchasedKey: z.string(),
-				productVersion: z.string(),
-				skuId: z.number(),
-			})
-			.optional(),
-	}),
+	generateLicenseKey: z
+		.object({
+			description: z
+				.string()
+				.min(3)
+				.max(100, {message: 'Invalid license name'}),
+			hostname: z.string().optional().or(z.literal('')),
+			ipAddress: z.string().optional().or(z.literal('')),
+			macAddress: z.string().optional().or(z.literal('')),
+			subscription: z
+				.object({
+					name: z.string(),
+					productPurchasedKey: z.string(),
+					productVersion: z.string(),
+					skuId: z.number(),
+				})
+				.optional(),
+		})
+		.superRefine((data, ctx) => {
+			if (!data.hostname && !data.ipAddress && !data.macAddress) {
+				const message =
+					'At least one identifier (Hostname, IP, or MAC) must be provided.';
+
+				['hostname', 'ipAddress', 'macAddress'].forEach((path) => {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message,
+						path: [path],
+					});
+				});
+			}
+		}),
 	installProductSchema: z.object({
 		environment: z.object({
 			isExtensionEnvironment: z.boolean(),

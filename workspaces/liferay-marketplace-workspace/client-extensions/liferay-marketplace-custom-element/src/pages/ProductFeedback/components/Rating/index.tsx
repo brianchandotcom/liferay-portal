@@ -1,21 +1,26 @@
-import {forwardRef, useState} from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import classNames from 'classnames';
+import {forwardRef, useState} from 'react';
 
 import './index.scss';
 
 type RatingProps = {
-	name?: string;
-	value?: number;
 	label?: string;
-	onChange?: (event: any) => void;
+	name?: string;
 	onBlur?: (event: any) => void;
+	onChange?: (event: any) => void;
 	size?: number;
+	value?: number;
 };
 
 const items = [1, 2, 3, 4, 5];
 
 export const Rating = forwardRef<HTMLInputElement, RatingProps>(
-	({name, value = 0, label, onChange, onBlur, size = 44}, ref) => {
+	({label, name, onBlur, onChange, size = 44, value = 0}, ref) => {
 		const [selected, setSelected] = useState<number>(value);
 
 		const handleSelect = (num: number) => {
@@ -36,25 +41,25 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>(
 				{label && <label className="rating-title">{label}</label>}
 				<div className="rating">
 					<input
-						type="hidden"
 						name={name}
-						ref={ref}
-						value={selected}
 						onBlur={onBlur}
 						readOnly
+						ref={ref}
+						type="hidden"
+						value={selected}
 					/>
 
 					{items.map((num, index) => (
 						<div
-							key={num}
 							className="rating-item"
+							key={num}
 							onClick={() => handleSelect(num)}
 						>
 							<div
 								className={classNames('rating-circle', {
 									'rating-circle--selected': selected === num,
 								})}
-								style={{width: size, height: size}}
+								style={{height: size, width: size}}
 							>
 								{num}
 							</div>

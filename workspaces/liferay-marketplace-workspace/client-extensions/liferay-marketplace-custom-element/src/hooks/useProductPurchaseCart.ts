@@ -125,7 +125,14 @@ const useProductPurchaseCart = (
 
 			setCartItems(cartItems);
 		})();
-	}, [accountId, product?.productId, removeCart, setCart, setCartItems]);
+	}, [
+		accountId,
+		product,
+		product?.productId,
+		removeCart,
+		setCart,
+		setCartItems,
+	]);
 
 	return {
 		addCart,

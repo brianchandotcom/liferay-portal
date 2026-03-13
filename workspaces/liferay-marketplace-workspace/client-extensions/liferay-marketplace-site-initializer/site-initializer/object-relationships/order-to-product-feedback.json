@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Order To Product Feedback"
+		"en_US": "Order to Product Feedback"
 	},
 	"name": "orderToProductFeedback",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CommerceOrder$]",

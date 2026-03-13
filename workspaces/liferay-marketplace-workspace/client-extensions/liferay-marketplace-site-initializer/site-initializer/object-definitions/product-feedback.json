@@ -55,7 +55,7 @@
 		},
 		{
 			"DBType": "Integer",
-			"businessType": "Text",
+			"businessType": "Integer",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -67,7 +67,7 @@
 		},
 		{
 			"DBType": "Integer",
-			"businessType": "Text",
+			"businessType": "Integer",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -79,7 +79,7 @@
 		},
 		{
 			"DBType": "Integer",
-			"businessType": "Text",
+			"businessType": "Integer",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

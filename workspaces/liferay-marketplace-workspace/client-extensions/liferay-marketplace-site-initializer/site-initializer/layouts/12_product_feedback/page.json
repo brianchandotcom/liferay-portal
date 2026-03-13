@@ -9,12 +9,9 @@
 	},
 	"permissions": [
 		{
-			"actionIds": [],
-			"roleName": "Guest",
-			"scope": 4
-		},
-		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "User",
 			"scope": 4
 		}

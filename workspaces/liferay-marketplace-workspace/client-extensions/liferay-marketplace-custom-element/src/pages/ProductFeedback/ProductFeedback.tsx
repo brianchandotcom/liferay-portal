@@ -3,25 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useState} from 'react';
+import {z} from 'zod';
+
+import Loading from '../../components/Loading';
 import ProductPurchase from '../../components/ProductPurchase';
+import ProductPurchaseFeedback from '../../components/ProductPurchase/Feedback';
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import withProviders from '../../hoc/withProviders';
 import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
 import useProductPurchaseCart from '../../hooks/useProductPurchaseCart';
-import ProductPurchasePrice from '../ProductPurchase/ProductPurchasePrice';
-import ProductPurchaseApp from '../ProductPurchase/services/ProductPurchaseApp';
-import Loading from '../../components/Loading';
-
-import ProductFeedbackForm from './ProductFeedbackForm';
 import i18n from '../../i18n';
-import useAccounts from '../ProductPurchase/hooks/useAccounts';
-import withProviders from '../../hoc/withProviders';
-import {z} from 'zod';
+import {Liferay} from '../../liferay/liferay';
 import zodSchema from '../../schema/zod';
 import HeadlessProductFeedback from '../../services/rest/HeadlessProductFeedback';
-import {Liferay} from '../../liferay/liferay';
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
-import {useState} from 'react';
-import ProductPurchaseFeedback from '../../components/ProductPurchase/Feedback';
 import {getSiteURL} from '../../utils/site';
+import ProductPurchasePrice from '../ProductPurchase/ProductPurchasePrice';
+import useAccounts from '../ProductPurchase/hooks/useAccounts';
+import ProductPurchaseApp from '../ProductPurchase/services/ProductPurchaseApp';
+import ProductFeedbackForm from './ProductFeedbackForm';
 
 export function ProductFeedback() {
 	const searchParams = new URLSearchParams(window.location.search);
@@ -112,14 +112,15 @@ export function ProductFeedback() {
 						productPurchaseCart={productPurchaseCart}
 					/>
 				}
-			></ProductPurchase.Header>
+			/>
+
 			<ProductFeedbackForm
-				title={i18n.translate('beta-product-feedback-form')}
+				isSubmitting={isSubmitting}
+				onSubmit={onSubmit}
 				subtitle={i18n.translate(
 					'thank-you-for-trying-the-beta-version-of-this-product-your-feedback-is-essential-to-improve-the-final-release-this-survey-takes-3–5-minutes'
 				)}
-				onSubmit={onSubmit}
-				isSubmitting={isSubmitting}
+				title={i18n.translate('beta-product-feedback-form')}
 			/>
 		</ProductPurchase>
 	);

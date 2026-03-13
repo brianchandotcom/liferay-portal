@@ -47,7 +47,7 @@ const isLicenseExpired = (expirationDate: string) =>
 	!isBefore(new Date(), new Date(expirationDate));
 
 type LicensesProps = {
-	actions: (
+	actions?: (
 		row: any,
 		licenseActions: ReturnType<typeof useLicenseActions>
 	) => React.ReactNode;

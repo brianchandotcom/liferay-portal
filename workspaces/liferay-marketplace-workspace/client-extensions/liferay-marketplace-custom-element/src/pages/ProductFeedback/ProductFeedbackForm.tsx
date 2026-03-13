@@ -1,27 +1,32 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {zodResolver} from '@hookform/resolvers/zod';
+import classNames from 'classnames';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
 import {Input} from '../../components/Input/Input';
 import i18n from '../../i18n';
 import zodSchema from '../../schema/zod';
-import classNames from 'classnames';
 import {Rating} from './components/Rating';
 
 type ProductFeedbackFormProps = {
+	isSubmitting?: boolean;
+	onSubmit: (form: z.infer<typeof zodSchema.productFeedback>) => void;
 	subtitle?: string;
 	title: string;
-	onSubmit: (form: z.infer<typeof zodSchema.productFeedback>) => void;
-	isSubmitting?: boolean;
 };
 
 const ProductFeedbackForm = ({
-	title,
-	subtitle,
-	onSubmit,
 	isSubmitting = false,
+	onSubmit,
+	subtitle,
+	title,
 }: ProductFeedbackFormProps) => {
 	const {formState, handleSubmit, register} = useForm<
 		z.infer<typeof zodSchema.productFeedback>
@@ -32,8 +37,8 @@ const ProductFeedbackForm = ({
 			fullName: '',
 			jobTitle: '',
 			notify: false,
-			ratingSatisfaction: 0,
 			ratingEaseOfUse: 0,
+			ratingSatisfaction: 0,
 			ratingUsefulness: 0,
 			suggestionFeatures: '',
 			suggestionImprovements: '',
@@ -44,7 +49,7 @@ const ProductFeedbackForm = ({
 	});
 
 	return (
-		<div className="border rounded-lg my-7 p-7">
+		<div className="border my-7 p-7 rounded-lg">
 			<div className="mb-6 product-purchase-shell-heading">
 				<h1 className="my-4 text-center">{title}</h1>
 
@@ -103,8 +108,8 @@ const ProductFeedbackForm = ({
 			<hr />
 
 			<div
-				style={{gap: 24}}
 				className="d-flex flex-direction-column py-2"
+				style={{gap: 24}}
 			>
 				<Rating
 					{...register('ratingSatisfaction')}
@@ -203,8 +208,8 @@ const ProductFeedbackForm = ({
 			</ClayForm.Group>
 
 			<ClayButton
-				disabled={!formState.isValid || isSubmitting}
 				className="w-100"
+				disabled={!formState.isValid || isSubmitting}
 				onClick={handleSubmit(onSubmit)}
 				type="submit"
 			>

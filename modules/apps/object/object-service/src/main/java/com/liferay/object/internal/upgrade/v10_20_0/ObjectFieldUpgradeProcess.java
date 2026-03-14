@@ -40,12 +40,12 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 					StringBundler.concat(
 						"select ObjectDefinition.objectDefinitionId, ",
 						"ObjectDefinition.companyId, ObjectDefinition.userId, ",
-						"ObjectDefinition.userName from ObjectDefinition where ",
-						"ObjectDefinition.objectDefinitionId not in (select ",
-						"distinct ObjectField.objectDefinitionId from ObjectField ",
-						"where ObjectField.name in ('displaydate', ",
-						"'expirationDate','reviewdate')) and ObjectDefinition.",
-						"modifiable = [$TRUE$]")));
+						"ObjectDefinition.userName from ObjectDefinition ",
+						"where ObjectDefinition.objectDefinitionId not in (",
+						"select distinct ObjectField.objectDefinitionId from ",
+						"ObjectField where ObjectField.name in ('displaydate'",
+						", 'expirationDate','reviewdate')) and ",
+						"ObjectDefinition.modifiable = [$TRUE$]")));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -55,12 +55,12 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 						"userId, userName, createDate, modifiedDate, ",
 						"listTypeDefinitionId, objectDefinitionId, ",
 						"businessType, dbColumnName, dbTableName, dbType, ",
-						"indexed, indexedAsKeyword, indexedLanguageId, ",
-						"label, localized, name, readOnly, ",
+						"indexed, indexedAsKeyword, indexedLanguageId, label, ",
+						"localized, name, readOnly, ",
 						"readOnlyConditionExpression, relationshipType,",
-						"required, state_, system_) values (",
+						"required, state_, system_) values (?, ?, ?, ?, ?, ?, ",
 						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
+						"?, ?, ?, ?)"));
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

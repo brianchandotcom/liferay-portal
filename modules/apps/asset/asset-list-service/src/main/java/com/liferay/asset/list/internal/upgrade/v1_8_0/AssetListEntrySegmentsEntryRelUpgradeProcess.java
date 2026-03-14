@@ -5,6 +5,7 @@
 
 package com.liferay.asset.list.internal.upgrade.v1_8_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -20,14 +21,16 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select ctCollectionId, alEntrySegmentsEntryRelId, " +
-					"assetListEntryId from AssetListEntrySegmentsEntryRel order by " +
-						"assetListEntryId asc, priority asc, createDate desc");
+				StringBundler.concat(
+					"select ctCollectionId, alEntrySegmentsEntryRelId, ",
+					"assetListEntryId from AssetListEntrySegmentsEntryRel ",
+					"order by assetListEntryId asc, priority asc, createDate ",
+					"desc"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update AssetListEntrySegmentsEntryRel set priority " +
-						"= ? where ctCollectionId = ? and " +
+					"update AssetListEntrySegmentsEntryRel set priority = ? " +
+						"where ctCollectionId = ? and " +
 							"alEntrySegmentsEntryRelId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 

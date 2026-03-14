@@ -35,9 +35,10 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				SQLTransformer.transform(
 					StringBundler.concat(
 						"select ObjectDefinition.objectDefinitionId, ",
-						"ObjectDefinition.companyId, ObjectDefinition.userName, ",
-						"ObjectDefinition.userId from ObjectDefinition where ",
-						"ObjectDefinition.system_ = [$FALSE$]")));
+						"ObjectDefinition.companyId, ObjectDefinition.",
+						"userName, ObjectDefinition.userId from ",
+						"ObjectDefinition where ObjectDefinition.system_ = [$",
+						"FALSE$]")));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -49,9 +50,9 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 						"businessType, dbColumnName, dbTableName, dbType, ",
 						"defaultValue, indexed, indexedAsKeyWord, ",
 						"indexedLanguageId, label, name, relationshipType, ",
-						"required, state_, system_) values (?, ?, ?, ?, ?, ",
+						"required, state_, system_) values (?, ?, ?, ?, ?, ?, ",
 						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-						"?, ?, ?)"));
+						"?, ?)"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

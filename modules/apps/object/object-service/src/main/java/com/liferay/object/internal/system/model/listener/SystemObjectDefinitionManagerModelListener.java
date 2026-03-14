@@ -9,6 +9,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.entry.util.ObjectEntryPayloadUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -37,6 +39,7 @@ import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -145,20 +148,35 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 				return;
 			}
 
+			long primaryKey = _getPrimaryKey(baseModel);
+
+			long groupId = 0;
+
+			if (Objects.equals(
+					ObjectDefinitionConstants.SCOPE_SITE,
+					objectDefinition.getScope()) &&
+				(baseModel instanceof GroupedModel)) {
+
+				GroupedModel groupedModel = (GroupedModel)baseModel;
+
+				groupId = groupedModel.getGroupId();
+			}
+
+			_objectEntryLocalService.deleteRelatedObjectEntries(
+				groupId, objectDefinition.getObjectDefinitionId(), primaryKey);
+
 			EntityExtensionThreadLocal.setExtendedProperties(
 				HashMapBuilder.putAll(
 					_objectEntryLocalService.
 						getExtensionDynamicObjectDefinitionTableValues(
-							objectDefinition,
-							GetterUtil.getLong(baseModel.getPrimaryKeyObj()))
+							objectDefinition, primaryKey)
 				).putAll(
 					EntityExtensionThreadLocal.getExtendedProperties()
 				).build());
 
 			_objectEntryLocalService.
 				deleteExtensionDynamicObjectDefinitionTableValues(
-					objectDefinition,
-					GetterUtil.getLong(baseModel.getPrimaryKeyObj()));
+					objectDefinition, primaryKey);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -213,6 +231,25 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 		if (function == null) {
 			throw new IllegalArgumentException(
 				"Base model does not have a company ID column");
+		}
+
+		return (Long)function.apply(baseModel);
+	}
+
+	private long _getPrimaryKey(T baseModel) {
+		Map<String, Function<Object, Object>> functions =
+			(Map<String, Function<Object, Object>>)
+				(Map<String, ?>)baseModel.getAttributeGetterFunctions();
+
+		String primaryKeyColumnName =
+			_systemObjectDefinitionManager.getPrimaryKeyColumn(
+			).getName();
+
+		Function<Object, Object> function = functions.get(primaryKeyColumnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"Base model does not have a column: " + primaryKeyColumnName);
 		}
 
 		return (Long)function.apply(baseModel);

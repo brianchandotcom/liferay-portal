@@ -30,10 +30,6 @@ definition {
 
 		var assertConfirmation = "false";
 
-		if (IsChecked(key_fieldName = "Enabled", locator1 = "FormFields#CHECKBOX")) {
-			var assertConfirmation = "true";
-		}
-
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
 		CookiePreferenceHandlingAdmin.saveConfiguration(assertConfirmation = ${assertConfirmation});
@@ -46,10 +42,6 @@ definition {
 
 		var assertConfirmation = "false";
 
-		if (IsChecked(key_fieldName = "Enabled", locator1 = "FormFields#CHECKBOX")) {
-			var assertConfirmation = "true";
-		}
-
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
 		CookiePreferenceHandlingAdmin.saveConfiguration(assertConfirmation = ${assertConfirmation});
@@ -61,10 +53,6 @@ definition {
 		CookieNavigator.gotoInstanceSettings(portlet = "Preference Handling");
 
 		var assertConfirmation = "false";
-
-		if (IsChecked(key_fieldName = "Enabled", locator1 = "FormFields#CHECKBOX")) {
-			var assertConfirmation = "true";
-		}
 
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
@@ -83,10 +71,6 @@ definition {
 
 		var assertConfirmation = "false";
 
-		if (IsChecked(key_fieldName = "Enabled", locator1 = "FormFields#CHECKBOX")) {
-			var assertConfirmation = "true";
-		}
-
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
 		FormFields.enableCheckbox(fieldName = "Explicit Cookie Consent Mode");
@@ -101,10 +85,6 @@ definition {
 
 		var assertConfirmation = "false";
 
-		if (IsChecked(key_fieldName = "Enabled", locator1 = "FormFields#CHECKBOX")) {
-			var assertConfirmation = "true";
-		}
-
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
 		FormFields.disableCheckbox(fieldName = "Explicit Cookie Consent Mode");
@@ -118,10 +98,6 @@ definition {
 		CookieNavigator.gotoInstanceSettings(portlet = "Preference Handling");
 
 		var assertConfirmation = "false";
-
-		if (IsChecked(key_fieldName = "Enabled", locator1 = "FormFields#CHECKBOX")) {
-			var assertConfirmation = "true";
-		}
 
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
@@ -139,10 +115,6 @@ definition {
 			siteURLKey = ${siteURLKey});
 
 		var assertConfirmation = "false";
-
-		if (IsChecked(key_fieldName = "Enabled", locator1 = "FormFields#CHECKBOX")) {
-			var assertConfirmation = "true";
-		}
 
 		FormFields.enableCheckbox(fieldName = "Enabled");
 

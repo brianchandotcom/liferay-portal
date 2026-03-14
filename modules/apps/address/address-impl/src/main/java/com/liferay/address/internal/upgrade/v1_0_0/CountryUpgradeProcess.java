@@ -171,6 +171,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
 					"select max(", columnName, ") as maxColumnName from ",

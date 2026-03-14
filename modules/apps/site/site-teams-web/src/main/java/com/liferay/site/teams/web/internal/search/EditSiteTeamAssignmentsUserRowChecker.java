@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import jakarta.portlet.PortletResponse;
 
@@ -34,9 +33,7 @@ public class EditSiteTeamAssignmentsUserRowChecker
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String primaryKey) {
 
-		User user = UserLocalServiceUtil.fetchUser(Long.valueOf(primaryKey));
-
-		if ((user == null) || isDisabled(user)) {
+		if (disabled) {
 			return StringPool.BLANK;
 		}
 

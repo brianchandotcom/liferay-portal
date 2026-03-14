@@ -926,14 +926,14 @@ test(
 	'Checkbox is hidden and user is not selected if user membership is due to inheritance',
 	{tag: ['@LPD-82647']},
 	async ({
-			   apiHelpers,
-			   page,
-			   selectUserGroupPage,
-			   site,
-			   teamsPage,
-			   userGroupsPage,
-			   usersPage,
-		   }) => {
+		apiHelpers,
+		page,
+		selectUserGroupPage,
+		site,
+		teamsPage,
+		userGroupsPage,
+		usersPage,
+	}) => {
 		page.on('dialog', (dialog) => dialog.accept());
 
 		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();

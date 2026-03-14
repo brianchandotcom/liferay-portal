@@ -6,6 +6,7 @@
 package com.liferay.portal.bootstrap;
 
 import com.liferay.petra.io.BigEndianCodec;
+import com.liferay.petra.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -17,7 +18,6 @@ import com.liferay.portal.bootstrap.log.PortalSynchronousLogListener;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

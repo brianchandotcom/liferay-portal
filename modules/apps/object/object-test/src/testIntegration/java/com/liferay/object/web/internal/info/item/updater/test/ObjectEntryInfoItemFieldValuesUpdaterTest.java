@@ -86,6 +86,16 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 		assertObjectEntryValues(name1, name2);
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testUpdateFromInfoItemFieldValuesWithAttachmentField()
+		throws Exception {
+
+		_testUpdateFromInfoItemFieldValuesWithAttachmentField(false);
+
+		_testUpdateFromInfoItemFieldValuesWithAttachmentField(true);
+	}
+
 	@Test
 	public void testUpdateFromInfoItemFieldValuesWithLocalizedObjectField()
 		throws Exception {
@@ -146,22 +156,6 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 		Assert.assertEquals(ptValue, localizedValues.get("pt_BR"));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-	}
-
-	@FeatureFlag("LPD-17564")
-	@Test
-	public void testUpdateFromInfoItemFieldValuesWithoutShowFilesInLibrary()
-		throws Exception {
-
-		_testUpdateFromInfoItemFieldValuesWithShowFilesInLibrary(false);
-	}
-
-	@FeatureFlag("LPD-17564")
-	@Test
-	public void testUpdateFromInfoItemFieldValuesWithShowFilesInLibrary()
-		throws Exception {
-
-		_testUpdateFromInfoItemFieldValuesWithShowFilesInLibrary(true);
 	}
 
 	private ObjectDefinition _addCMSObjectDefinition(
@@ -291,7 +285,7 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 				title, MapUtil.getString(curObjectEntry.getValues(), "title")));
 	}
 
-	private void _testUpdateFromInfoItemFieldValuesWithShowFilesInLibrary(
+	private void _testUpdateFromInfoItemFieldValuesWithAttachmentField(
 			boolean showFilesInLibrary)
 		throws Exception {
 

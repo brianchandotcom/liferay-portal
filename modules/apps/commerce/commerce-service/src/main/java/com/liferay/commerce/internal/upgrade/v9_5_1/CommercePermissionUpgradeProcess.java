@@ -41,8 +41,8 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select companyId, resourcePermissionId, roleId from ",
-					"ResourcePermission where name = 'com.liferay.commerce.order' ",
-					"and scope = 1"));
+					"ResourcePermission where name = 'com.liferay.commerce.",
+					"order' and scope = 1"));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

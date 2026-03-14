@@ -25,13 +25,9 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.model.PublisherAssetLink;
-import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningService;
-import com.liferay.marketplace.service.SalesforceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
-import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -241,197 +237,6 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 
 		return ResponseEntity.ok(account);
-	}
-
-	@PostMapping("cmp-beta-license-key")
-	public AppLicenseKey postCMPBetaLicenseKey(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
-		throws Exception {
-
-		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(json);
-
-		if (Objects.equals(appLicenseKey.getHostName(), null) &&
-			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
-			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
-
-			throw new ResponseStatusException(
-				HttpStatus.BAD_REQUEST);
-		}
-
-		Order order = _marketplaceService.getOrder(
-			GetterUtil.getLong(appLicenseKey.getOrderId()));
-
-		Map<String, String> productSpecificationsMap =
-			_marketplaceService.getProductSpecificationsMap(
-				_marketplaceService.getOrderProductId(order));
-
-		_marketplaceService.updateOrder(
-			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
-
-		ProductPurchase[] productPurchases = _setUpProductEntitlements(
-			jwt, productSpecificationsMap.get("license-type"), order);
-
-		ProductPurchase productPurchase = productPurchases[0];
-
-		if (productPurchase == null) {
-			return null;
-		}
-
-		appLicenseKey.setProductPurchaseKey(productPurchase.getKey());
-
-		return _provisioningService.postAppLicenseKey(appLicenseKey, jwt);
-	}
-
-	@PostMapping("product/purchase")
-	public void postProductPurchase(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST product purchase " + json);
-		}
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		JSONObject commerceOrderJSONObject = jsonObject.getJSONObject(
-			"commerceOrder");
-
-		String paymentMethod = commerceOrderJSONObject.getString(
-			"paymentMethod");
-		int paymentStatus = commerceOrderJSONObject.getInt("paymentStatus");
-
-		Order order = _marketplaceService.getOrder(
-			commerceOrderJSONObject.getLong("id"));
-
-		if ((Objects.equals(
-				paymentMethod,
-				MarketplaceConstants.ORDER_PAYMENT_METHOD_MONEY_ORDER) &&
-			 (paymentStatus ==
-				 MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING)) ||
-			(Objects.equals(
-				paymentMethod,
-				MarketplaceConstants.ORDER_PAYMENT_METHOD_PAYPAL) &&
-			 (paymentStatus ==
-				 MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED))) {
-
-			_sendOrderPurchasedNotification(order);
-		}
-
-		_sendNotification(order, json);
-
-		if ((paymentStatus !=
-				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED) &&
-			(paymentStatus !=
-				MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED)) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Skipping POST product purchase for order " +
-						commerceOrderJSONObject.getLong("id") +
-							" because payment status is not completed");
-			}
-
-			return;
-		}
-
-		_marketplaceService.updateOrder(
-			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
-
-		String orderTypeExternalReferenceCode =
-			order.getOrderTypeExternalReferenceCode();
-		Map<String, String> productSpecificationsMap =
-			_marketplaceService.getProductSpecificationsMap(
-				_marketplaceService.getOrderProductId(order));
-
-		if (Objects.equals(orderTypeExternalReferenceCode, "ADDONS")) {
-			_setUpAddOns(jwt, order, productSpecificationsMap);
-
-			_marketplaceService.updateOrder(
-				null, order.getId(),
-				MarketplaceConstants.ORDER_STATUS_COMPLETED);
-		}
-
-		if (Objects.equals(orderTypeExternalReferenceCode, "CLOUD_APP") ||
-			Objects.equals(orderTypeExternalReferenceCode, "COMPOSITE_APP") ||
-			Objects.equals(
-				orderTypeExternalReferenceCode, "LOW_CODE_CONFIGURATION") ||
-			Objects.equals(orderTypeExternalReferenceCode, "OTHER")) {
-
-			_marketplaceService.updateOrder(
-				null, order.getId(),
-				MarketplaceConstants.ORDER_STATUS_COMPLETED);
-		}
-
-		if (Objects.equals(
-				orderTypeExternalReferenceCode, "CLIENT_EXTENSION") ||
-			Objects.equals(
-				order.getOrderTypeExternalReferenceCode(), "DXP_APP")) {
-
-			if (Objects.equals(
-					productSpecificationsMap.get("price-model"), "Free")) {
-
-				_marketplaceService.updateOrder(
-					null, order.getId(),
-					MarketplaceConstants.ORDER_STATUS_COMPLETED);
-
-				return;
-			}
-
-			_setUpProductEntitlements(
-				jwt, productSpecificationsMap.get("license-type"), order);
-		}
-	}
-
-	@PostMapping("product/submit")
-	public void postProductSubmit(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST product submit " + json);
-		}
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
-			"modelCPDefinition");
-
-		Product product = _marketplaceService.getProduct(
-			modelCPDefinitionJSONObject.getLong("CProductId"));
-
-		_marketplaceService.postNotificationQueueEntry(
-			null, "MARKETPLACE-PRODUCT-SUBMIT-TEMPLATE",
-			new HashMapBuilder<String, Object>().put(
-				"[%CPDEFINITION_NAME%]",
-				product.getName(
-				).get(
-					modelCPDefinitionJSONObject.getString("defaultLanguageId")
-				)
-			).put(
-				"[%CPDEFINITION_THUMBNAIL%]",
-				new URL(
-					"http://" + lxcDXPMainDomain + product.getThumbnail()
-				).toString()
-			).put(
-				"[%CPDEFINITION_DEVELOPER_NAME%]",
-				_marketplaceService.getCatalog(
-					product.getCatalogId()
-				).getName()
-			).put(
-				"[%CPDEFINITION_URL%]",
-				new URL(
-					StringBundler.concat(
-						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-						"/web/marketplace/administrator-dashboard#/apps/",
-						modelCPDefinitionJSONObject.getLong("CProductId"))
-				).toString()
-			).put(
-				"[%CPDEFINITION_CREATEDATE%]", _format(product.getCreateDate())
-			).put(
-				"[%CPDEFINITION_ID%]",
-				String.valueOf(
-					modelCPDefinitionJSONObject.getLong("CPDefinitionId"))
-			).build());
 	}
 
 	@PostMapping("/tax-calculate/{orderId}")
@@ -726,15 +531,9 @@ public class MarketplaceRestController extends BaseRestController {
 		"SE", "SI", "SK");
 
 	@Autowired
-	private KoroneikiService _koroneikiService;
-
-	@Autowired
 	private MarketplaceService _marketplaceService;
 
 	@Autowired
 	private ProvisioningService _provisioningService;
-
-	@Autowired
-	private SalesforceService _salesforceService;
 
 }

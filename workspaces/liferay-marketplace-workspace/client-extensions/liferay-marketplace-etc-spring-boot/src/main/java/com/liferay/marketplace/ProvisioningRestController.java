@@ -7,15 +7,22 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningService;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
 import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
 import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Pagination;
 import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -131,6 +138,51 @@ public class ProvisioningRestController extends BaseRestController {
 			Pagination.of(page, pageSize), "");
 	}
 
+	@PostMapping("cmp-beta-license-key")
+	public AppLicenseKey postCMPBetaLicenseKey(
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
+		throws Exception {
+
+		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(json);
+
+		if (Objects.equals(appLicenseKey.getHostName(), null) &&
+			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
+			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
+
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
+
+		Order order = _marketplaceService.getOrder(
+			GetterUtil.getLong(appLicenseKey.getOrderId()));
+
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				_marketplaceService.getOrderProductId(order));
+
+		_marketplaceService.updateOrder(
+			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
+
+		ProductPurchase[] productPurchases =
+			_marketplaceService.setUpProductEntitlements(
+				jwt, productSpecificationsMap.get("license-type"), order);
+
+		ProductPurchase productPurchase = productPurchases[0];
+
+		if (productPurchase == null) {
+			return null;
+		}
+
+		appLicenseKey.setProductPurchaseKey(productPurchase.getKey());
+
+		appLicenseKey = _provisioningService.postAppLicenseKey(
+			appLicenseKey, jwt);
+
+		_marketplaceService.updateOrder(
+			null, order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
+
+		return appLicenseKey;
+	}
+
 	@PostMapping("license-keys")
 	public AppLicenseKey postLicenseKeys(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
@@ -160,6 +212,9 @@ public class ProvisioningRestController extends BaseRestController {
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	@Autowired
+	private MarketplaceService _marketplaceService;
 
 	@Autowired
 	private ProvisioningService _provisioningService;

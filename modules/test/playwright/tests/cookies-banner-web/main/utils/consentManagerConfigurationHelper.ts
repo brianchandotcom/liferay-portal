@@ -179,7 +179,13 @@ export async function updateConsentManagerConfiguration(
 		}
 
 		if (storeConsent !== undefined) {
-			await page.getByLabel('Store Consent').setChecked(storeConsent);
+			const systemSettingsPageLocator = await page.locator(
+				'[id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_fm"]'
+			);
+
+			await systemSettingsPageLocator
+				.getByLabel('Store Consent')
+				.setChecked(storeConsent);
 		}
 	}
 

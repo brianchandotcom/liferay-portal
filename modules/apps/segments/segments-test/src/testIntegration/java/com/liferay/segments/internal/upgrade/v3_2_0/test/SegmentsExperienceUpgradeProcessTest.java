@@ -118,12 +118,12 @@ public class SegmentsExperienceUpgradeProcessTest
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try {
-			_addOrDropSegmentsEntryIdColumn("add");
+			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
 
 			runUpgrade();
 		}
 		finally {
-			_addOrDropSegmentsEntryIdColumn("drop");
+			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
 		}
 
 		_assertSegmentsExperiences();
@@ -138,7 +138,7 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_addOrDropSegmentsEntryIdColumn("add");
+			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
 
 			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
 			_renameColumn("plid", "plid2", "FragmentEntryLink");
@@ -146,7 +146,7 @@ public class SegmentsExperienceUpgradeProcessTest
 			runUpgrade();
 		}
 		finally {
-			_addOrDropSegmentsEntryIdColumn("drop");
+			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
 
 			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
 			_renameColumn("plid2", "plid", "FragmentEntryLink");
@@ -162,14 +162,14 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_addOrDropSegmentsEntryIdColumn("add");
+			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
 
 			_renameColumn("plid", "plid2", "FragmentEntryLink");
 
 			runUpgrade();
 		}
 		finally {
-			_addOrDropSegmentsEntryIdColumn("drop");
+			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
 
 			_renameColumn("plid2", "plid", "FragmentEntryLink");
 		}
@@ -184,14 +184,14 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_addOrDropSegmentsEntryIdColumn("add");
+			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
 
 			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
 
 			runUpgrade();
 		}
 		finally {
-			_addOrDropSegmentsEntryIdColumn("drop");
+			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
 
 			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
 		}
@@ -236,7 +236,8 @@ public class SegmentsExperienceUpgradeProcessTest
 			segmentsExperience);
 	}
 
-	private void _addOrDropSegmentsEntryIdColumn(String statement)
+	private void _addOrDropColumn(
+			String columnName, String statement, String tableName)
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection()) {
@@ -244,12 +245,10 @@ public class SegmentsExperienceUpgradeProcessTest
 
 			if (statement.equals("add")) {
 				db.alterTableAddColumn(
-					connection, "SegmentsExperience", "segmentsEntryId",
-					"LONG");
+					connection, tableName, columnName, "LONG");
 			}
 			else if (statement.equals("drop")) {
-				db.alterTableDropColumn(
-					connection, "SegmentsExperience", "segmentsEntryId");
+				db.alterTableDropColumn(connection, tableName, columnName);
 			}
 		}
 	}

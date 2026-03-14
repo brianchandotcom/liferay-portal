@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -64,6 +65,22 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
+	@Test
+	public void testDeleteSystemObjectWithRelatedCustomObjectEntries()
+		throws Exception {
+
+		_testDeleteSystemObjectWithRelatedCustomObjectEntries(0);
+
+		_objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		_testDeleteSystemObjectWithRelatedCustomObjectEntries(
+			TestPropsValues.getGroupId());
 	}
 
 	@Test
@@ -160,6 +177,106 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 
 	@Inject
 	protected ObjectRelationshipLocalService objectRelationshipLocalService;
+
+	private void _testDeleteSystemObjectWithRelatedCustomObjectEntries(
+			long groupId)
+		throws Exception {
+
+		long[] primaryKeys = addBaseModels(2);
+
+		// Create 1-to-M: systemObject (1) → customObject (Many)
+
+		addObjectRelationship(
+			_systemObjectDefinition, _objectDefinition,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		// Create custom object entries related to the system objects
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				_relationshipObjectField.getName(), primaryKeys[0]
+			).build());
+
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				_relationshipObjectField.getName(), primaryKeys[0]
+			).build());
+
+		// Object relationship deletion type prevent
+
+		try {
+			deleteBaseModel(primaryKeys[0]);
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			Throwable throwable = modelListenerException.getCause();
+
+			Assert.assertTrue(
+				throwable instanceof RequiredObjectRelationshipException);
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Object relationship ",
+					_objectRelationship.getObjectRelationshipId(),
+					" does not allow deletes"),
+				throwable.getMessage());
+		}
+
+		Assert.assertNotNull(fetchBaseModel(primaryKeys[0]));
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry1.getObjectEntryId()));
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry2.getObjectEntryId()));
+
+		// Object relationship deletion type disassociate
+
+		ObjectRelationshipTestUtil.updateObjectRelationship(
+			_objectRelationship.getExternalReferenceCode(),
+			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			_objectRelationship.getLabelMap());
+
+		deleteBaseModel(primaryKeys[0]);
+
+		assertFailure(primaryKeys[0]);
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry1.getObjectEntryId()));
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry2.getObjectEntryId()));
+
+		// Object relationship deletion type cascade
+
+		ObjectRelationshipTestUtil.updateObjectRelationship(
+			_objectRelationship.getExternalReferenceCode(),
+			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			_objectRelationship.getLabelMap());
+
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				_relationshipObjectField.getName(), primaryKeys[1]
+			).build());
+
+		deleteBaseModel(primaryKeys[1]);
+
+		assertFailure(primaryKeys[1]);
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry3.getObjectEntryId()));
+
+		objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship);
+	}
 
 	private void _testSystemObjectEntry1toMObjectRelatedModels(long groupId)
 		throws Exception {

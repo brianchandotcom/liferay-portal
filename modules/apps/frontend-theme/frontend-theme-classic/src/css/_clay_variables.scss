@@ -747,7 +747,7 @@ $border-theme-colors: map-deep-merge(
 			border-color: var(--light, $light) !important,
 		),
 		'lighter': (
-			border-color: var(-gray-100, $gray-100) !important,
+			border-color: var(--gray-100, $gray-100) !important,
 		),
 		'primary': (
 			border-color: var(--primary, $primary) !important,

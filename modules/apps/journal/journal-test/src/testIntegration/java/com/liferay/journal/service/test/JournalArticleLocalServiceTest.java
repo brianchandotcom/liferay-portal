@@ -1845,196 +1845,74 @@ public class JournalArticleLocalServiceTest {
 	public void testGetDocumentByLocaleReturnsDefaultLocaleForUnavailableLocale()
 		throws Exception {
 
-		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
-			LocaleUtil.BRAZIL, LocaleUtil.US);
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			availableLocales, LocaleUtil.US);
-
-		DDMFormTestUtil.addTextDDMFormFields(ddmForm, "name");
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
-
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			HashMapBuilder.put(
-				LocaleUtil.BRAZIL, "Nome Brasileiro"
+				LocaleUtil.BRAZIL, RandomTestUtil.randomString()
 			).put(
-				LocaleUtil.US, "English Name"
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			LocaleUtil.US.toString());
 
-		JournalArticle journalArticle =
-			JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, content,
-				ddmStructure.getStructureKey(), null, LocaleUtil.US);
-
-		Document document = journalArticle.getDocumentByLocale(
-			LocaleUtil.toLanguageId(LocaleUtil.FRENCH));
-
-		List<Element> dynamicElementElements = document.getRootElement(
-		).elements(
-			"dynamic-element"
-		);
+		List<Element> rootDynamicElements = _getRootDynamicElements(
+			content, LocaleUtil.US, new String[] {"name"},
+			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}, LocaleUtil.FRANCE);
 
 		Assert.assertEquals(
-			dynamicElementElements.toString(), 1,
-			dynamicElementElements.size());
+			rootDynamicElements.toString(), 1, rootDynamicElements.size());
 
-		List<Element> dynamicContentElements = dynamicElementElements.get(
-			0
-		).elements(
-			"dynamic-content"
-		);
-
-		Assert.assertEquals(
-			dynamicContentElements.toString(), 1,
-			dynamicContentElements.size());
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.US),
-			dynamicContentElements.get(
-				0
-			).attributeValue(
-				"language-id"
-			));
+		_assertDynamicContentElementLanguageId(
+			rootDynamicElements.get(0), LocaleUtil.US);
 	}
 
 	@Test
 	public void testGetDocumentByLocaleReturnsDefaultLocaleWhenRequestingDefaultLocale()
 		throws Exception {
 
-		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
-			LocaleUtil.BRAZIL, LocaleUtil.US);
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			availableLocales, LocaleUtil.US);
-
-		DDMFormTestUtil.addTextDDMFormFields(ddmForm, "name");
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
-
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			HashMapBuilder.put(
-				LocaleUtil.BRAZIL, "Nome Brasileiro"
+				LocaleUtil.BRAZIL, RandomTestUtil.randomString()
 			).put(
-				LocaleUtil.US, "English Name"
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			LocaleUtil.US.toString());
 
-		JournalArticle journalArticle =
-			JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, content,
-				ddmStructure.getStructureKey(), null, LocaleUtil.US);
-
-		Document document = journalArticle.getDocumentByLocale(
-			LocaleUtil.toLanguageId(LocaleUtil.US));
-
-		List<Element> dynamicElementElements = document.getRootElement(
-		).elements(
-			"dynamic-element"
-		);
+		List<Element> rootDynamicElements = _getRootDynamicElements(
+			content, LocaleUtil.US, new String[] {"name"},
+			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}, LocaleUtil.US);
 
 		Assert.assertEquals(
-			dynamicElementElements.toString(), 1,
-			dynamicElementElements.size());
+			rootDynamicElements.toString(), 1, rootDynamicElements.size());
 
-		List<Element> dynamicContentElements = dynamicElementElements.get(
-			0
-		).elements(
-			"dynamic-content"
-		);
-
-		Assert.assertEquals(
-			dynamicContentElements.toString(), 1,
-			dynamicContentElements.size());
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.US),
-			dynamicContentElements.get(
-				0
-			).attributeValue(
-				"language-id"
-			));
+		_assertDynamicContentElementLanguageId(
+			rootDynamicElements.get(0), LocaleUtil.US);
 	}
 
 	@Test
 	public void testGetDocumentByLocaleReturnsSingleLocaleForTranslatedContent()
 		throws Exception {
 
-		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
-			LocaleUtil.BRAZIL, LocaleUtil.US);
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			availableLocales, LocaleUtil.US);
-
-		DDMFormTestUtil.addTextDDMFormFields(ddmForm, "name");
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
-
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			HashMapBuilder.put(
-				LocaleUtil.BRAZIL, "Nome Brasileiro"
+				LocaleUtil.BRAZIL, RandomTestUtil.randomString()
 			).put(
-				LocaleUtil.US, "English Name"
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			LocaleUtil.US.toString());
 
-		JournalArticle journalArticle =
-			JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, content,
-				ddmStructure.getStructureKey(), null, LocaleUtil.US);
-
-		Document document = journalArticle.getDocumentByLocale(
-			LocaleUtil.toLanguageId(LocaleUtil.BRAZIL));
-
-		List<Element> dynamicElementElements = document.getRootElement(
-		).elements(
-			"dynamic-element"
-		);
+		List<Element> rootDynamicElements = _getRootDynamicElements(
+			content, LocaleUtil.US, new String[] {"name"},
+			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}, LocaleUtil.BRAZIL);
 
 		Assert.assertEquals(
-			dynamicElementElements.toString(), 1,
-			dynamicElementElements.size());
+			rootDynamicElements.toString(), 1, rootDynamicElements.size());
 
-		List<Element> dynamicContentElements = dynamicElementElements.get(
-			0
-		).elements(
-			"dynamic-content"
-		);
-
-		Assert.assertEquals(
-			dynamicContentElements.toString(), 1,
-			dynamicContentElements.size());
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
-			dynamicContentElements.get(
-				0
-			).attributeValue(
-				"language-id"
-			));
+		_assertDynamicContentElementLanguageId(
+			rootDynamicElements.get(0), LocaleUtil.BRAZIL);
 	}
 
 	@Test
 	public void testGetDocumentByLocaleWithPartiallyTranslatedContent()
 		throws Exception {
-
-		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
-			LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US);
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			availableLocales, LocaleUtil.US);
-
-		DDMFormTestUtil.addTextDDMFormFields(ddmForm, "field1", "field2");
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
 
 		String content = StringBundler.concat(
 			"<?xml version=\"1.0\"?>",
@@ -2054,56 +1932,18 @@ public class JournalArticleLocalServiceTest {
 			"<![CDATA[Campo 2 BR]]></dynamic-content></dynamic-element>",
 			"</root>");
 
-		JournalArticle journalArticle =
-			JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, content,
-				ddmStructure.getStructureKey(), null, LocaleUtil.US);
-
-		Document document = journalArticle.getDocumentByLocale(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
-
-		List<Element> dynamicElementElements = document.getRootElement(
-		).elements(
-			"dynamic-element"
-		);
+		List<Element> rootDynamicElements = _getRootDynamicElements(
+			content, LocaleUtil.US, new String[] {"field1", "field2"},
+			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US},
+			LocaleUtil.SPAIN);
 
 		Assert.assertEquals(
-			dynamicElementElements.toString(), 2,
-			dynamicElementElements.size());
+			rootDynamicElements.toString(), 2, rootDynamicElements.size());
 
-		List<Element> field1ContentElements = dynamicElementElements.get(
-			0
-		).elements(
-			"dynamic-content"
-		);
-
-		Assert.assertEquals(
-			field1ContentElements.toString(), 1, field1ContentElements.size());
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			field1ContentElements.get(
-				0
-			).attributeValue(
-				"language-id"
-			));
-
-		List<Element> field2ContentElements = dynamicElementElements.get(
-			1
-		).elements(
-			"dynamic-content"
-		);
-
-		Assert.assertEquals(
-			field2ContentElements.toString(), 1, field2ContentElements.size());
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.US),
-			field2ContentElements.get(
-				0
-			).attributeValue(
-				"language-id"
-			));
+		_assertDynamicContentElementLanguageId(
+			rootDynamicElements.get(0), LocaleUtil.SPAIN);
+		_assertDynamicContentElementLanguageId(
+			rootDynamicElements.get(1), LocaleUtil.US);
 	}
 
 	@Test(expected = PortalException.class)
@@ -2775,6 +2615,23 @@ public class JournalArticleLocalServiceTest {
 		Assert.assertEquals(assetTagId, assetTag.getTagId());
 	}
 
+	private void _assertDynamicContentElementLanguageId(
+		Element dynamicElement, Locale locale) {
+
+		List<Element> dynamicContentElements = dynamicElement.elements(
+			"dynamic-content");
+
+		Assert.assertEquals(
+			dynamicContentElements.toString(), 1,
+			dynamicContentElements.size());
+
+		Element dymanicContentElement = dynamicContentElements.get(0);
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(locale),
+			dymanicContentElement.attributeValue("language-id"));
+	}
+
 	private Tuple _createJournalArticleWithPredefinedValues(long groupId)
 		throws Exception {
 
@@ -2869,6 +2726,37 @@ public class JournalArticleLocalServiceTest {
 			title, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
 			_language.get(LocaleUtil.getSiteDefault(), "copy"),
 			StringPool.CLOSE_PARENTHESIS);
+	}
+
+	private List<Element> _getRootDynamicElements(
+			String content, Locale defaultLocale, String[] ddmFields,
+			Locale[] locales, Locale requestedLocale)
+		throws Exception {
+
+		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
+			locales);
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			availableLocales, defaultLocale);
+
+		DDMFormTestUtil.addTextDDMFormFields(ddmForm, ddmFields);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, content,
+				ddmStructure.getStructureKey(), null, defaultLocale);
+
+		Document document = journalArticle.getDocumentByLocale(
+			LocaleUtil.toLanguageId(requestedLocale));
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.elements("dynamic-element");
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

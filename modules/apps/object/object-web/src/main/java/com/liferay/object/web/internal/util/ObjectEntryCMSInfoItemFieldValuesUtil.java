@@ -99,7 +99,6 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			tempFileEntryId);
-
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =

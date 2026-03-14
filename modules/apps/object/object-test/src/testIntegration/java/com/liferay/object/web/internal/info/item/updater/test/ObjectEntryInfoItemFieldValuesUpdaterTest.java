@@ -91,9 +91,8 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 	public void testUpdateFromInfoItemFieldValuesWithAttachmentField()
 		throws Exception {
 
-		_testUpdateFromInfoItemFieldValuesWithAttachmentField(false);
-
-		_testUpdateFromInfoItemFieldValuesWithAttachmentField(true);
+		_testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(false);
+		_testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(true);
 	}
 
 	@Test
@@ -285,7 +284,7 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 				title, MapUtil.getString(curObjectEntry.getValues(), "title")));
 	}
 
-	private void _testUpdateFromInfoItemFieldValuesWithAttachmentField(
+	private void _testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(
 			boolean showFilesInLibrary)
 		throws Exception {
 

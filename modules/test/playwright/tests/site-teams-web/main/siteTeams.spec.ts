@@ -921,3 +921,117 @@ test(
 		});
 	}
 );
+
+test(
+	'Checkbox is hidden and user is not selected if user membership is due to inheritance',
+	{tag: ['@LPD-82647']},
+	async ({
+			   apiHelpers,
+			   page,
+			   selectUserGroupPage,
+			   site,
+			   teamsPage,
+			   userGroupsPage,
+			   usersPage,
+		   }) => {
+		page.on('dialog', (dialog) => dialog.accept());
+
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await apiHelpers.jsonWebServicesUserGroup.assignUserGroupsToGroup(
+			site.id,
+			String(userGroup.id)
+		);
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			userGroup.id,
+			[user1.id]
+		);
+
+		const newTeam = {
+			teamDescription: getRandomString(),
+			teamName: getRandomString(),
+		};
+
+		await teamsPage.goTo(site.friendlyUrlPath);
+
+		await teamsPage.newTeamButton.click();
+		await teamsPage.newTeam(newTeam);
+
+		await expect(
+			await teamsPage.teamsTable.cellLink(newTeam.teamName)
+		).toBeVisible();
+
+		const team = await apiHelpers.jsonWebServicesTeam.getTeam(
+			site.id,
+			newTeam.teamName
+		);
+
+		await apiHelpers.jsonWebServicesUser.addTeamUsers(team.teamId, [
+			user2.id,
+		]);
+
+		await (await teamsPage.teamsTable.cellLink(newTeam.teamName)).click();
+		await teamsPage.userGroupTab.click();
+
+		await expect(userGroupsPage.userGroupsTable.searchInput).toBeEnabled();
+
+		await userGroupsPage.userGroupsTable.changeView('Table');
+
+		await expect(userGroupsPage.noUserGroupsMessage).toBeVisible();
+
+		await expect(async () => {
+			await userGroupsPage.newButton.click();
+
+			await expect(selectUserGroupPage.addButton).toBeVisible({
+				timeout: 2000,
+			});
+		}).toPass({timeout: 5000});
+
+		await selectUserGroupPage.userGroupsTable.changeView('Table');
+
+		await (
+			await selectUserGroupPage.userGroupsTable.rowCheckbox(
+				userGroup.name
+			)
+		).click();
+		await selectUserGroupPage.addButton.click();
+
+		await expect(
+			userGroupsPage.userGroupsTable.cell(userGroup.name)
+		).toBeVisible();
+
+		await teamsPage.usersTab.click();
+
+		await expect(usersPage.usersTable.searchInput).toBeEnabled();
+
+		await usersPage.usersTable.changeView('Table');
+
+		await expect(usersPage.usersTable.cell(user1.name)).toBeVisible();
+		await expect(usersPage.usersTable.cell(user2.name)).toBeVisible();
+
+		await expect(
+			await usersPage.usersTable.rowCheckbox(user1.name)
+		).toBeDisabled();
+		await expect(
+			await usersPage.usersTable.rowCheckbox(user2.name)
+		).toBeVisible();
+
+		await usersPage.usersTable.selectAllItemsCheckbox.check();
+
+		await expect(page.getByText('Items Selected')).toContainText('1 of 2');
+
+		await expect(async () => {
+			await expect(usersPage.deleteButton).toBeVisible({timeout: 200});
+			await usersPage.deleteButton.click();
+
+			await waitForAlert(page);
+		}).toPass({timeout: 1000});
+
+		await expect(usersPage.usersTable.cell(user1.name)).toBeVisible();
+		await expect(usersPage.usersTable.cell(user2.name)).toHaveCount(0);
+	}
+);

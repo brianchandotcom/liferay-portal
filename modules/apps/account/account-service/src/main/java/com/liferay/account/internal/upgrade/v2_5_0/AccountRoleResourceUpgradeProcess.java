@@ -31,6 +31,7 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 					"select AccountRole.accountRoleId, Role_.companyId, ",
 					"Role_.userId from AccountRole inner join Role_ on ",
 					"AccountRole.roleId = Role_.roleId"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

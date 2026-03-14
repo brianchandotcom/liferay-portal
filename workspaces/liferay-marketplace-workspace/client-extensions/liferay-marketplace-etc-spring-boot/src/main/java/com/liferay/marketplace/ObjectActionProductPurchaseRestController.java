@@ -8,7 +8,6 @@ package com.liferay.marketplace;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
-import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
@@ -125,8 +124,12 @@ public class ObjectActionProductPurchaseRestController
 				return;
 			}
 
-			_setUpProductEntitlements(
+			_marketplaceService.setUpProductEntitlements(
 				jwt, productSpecificationsMap.get("license-type"), order);
+
+			_marketplaceService.updateOrder(
+				null, order.getId(),
+				MarketplaceConstants.ORDER_STATUS_COMPLETED);
 		}
 	}
 
@@ -527,49 +530,6 @@ public class ObjectActionProductPurchaseRestController
 		_salesforceService.postSalesforceOpportunity(
 			new SalesforceOpportunity(
 				licenseType, order, orderItem, product, userAccount));
-	}
-
-	private void _setUpProductEntitlements(
-			Jwt jwt, String licenseType, Order order)
-		throws Exception {
-
-		String accountExternalReferenceCode =
-			order.getAccountExternalReferenceCode();
-
-		if (!accountExternalReferenceCode.startsWith("KOR-")) {
-			AccountResource accountResource =
-				_marketplaceService.getAccountResource();
-
-			Account account = accountResource.getAccount(order.getAccountId());
-
-			accountResource.patchAccount(
-				account.getId(),
-				new Account() {
-					{
-						setExternalReferenceCode(
-							() -> _koroneikiService.postKoroneikiAccount(
-								account, jwt
-							).getKey());
-					}
-				});
-		}
-
-		try {
-			for (OrderItem orderItem : order.getOrderItems()) {
-				_koroneikiService.postAccountAccountKeyProductPurchase(
-					accountExternalReferenceCode, jwt, licenseType,
-					MarketplaceUtil.getSkuOptionValue(
-						"license-usage-type", orderItem.getOptions()),
-					orderItem);
-			}
-
-			_marketplaceService.updateOrder(
-				null, order.getId(),
-				MarketplaceConstants.ORDER_STATUS_COMPLETED);
-		}
-		catch (Exception exception) {
-			_log.error("Unable to create account product purchase", exception);
-		}
 	}
 
 	private static final Log _log = LogFactory.getLog(

@@ -117,7 +117,14 @@ public class SegmentsExperienceUpgradeProcessTest
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		runUpgrade();
+		try {
+			_addOrDropSegmentsEntryIdColumn("add");
+
+			runUpgrade();
+		}
+		finally {
+			_addOrDropSegmentsEntryIdColumn("drop");
+		}
 
 		_assertSegmentsExperiences();
 
@@ -131,12 +138,16 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
+			_addOrDropSegmentsEntryIdColumn("add");
+
 			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
 			_renameColumn("plid", "plid2", "FragmentEntryLink");
 
 			runUpgrade();
 		}
 		finally {
+			_addOrDropSegmentsEntryIdColumn("drop");
+
 			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
 			_renameColumn("plid2", "plid", "FragmentEntryLink");
 		}
@@ -151,11 +162,15 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
+			_addOrDropSegmentsEntryIdColumn("add");
+
 			_renameColumn("plid", "plid2", "FragmentEntryLink");
 
 			runUpgrade();
 		}
 		finally {
+			_addOrDropSegmentsEntryIdColumn("drop");
+
 			_renameColumn("plid2", "plid", "FragmentEntryLink");
 		}
 
@@ -169,11 +184,15 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
+			_addOrDropSegmentsEntryIdColumn("add");
+
 			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
 
 			runUpgrade();
 		}
 		finally {
+			_addOrDropSegmentsEntryIdColumn("drop");
+
 			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
 		}
 
@@ -215,6 +234,24 @@ public class SegmentsExperienceUpgradeProcessTest
 
 		return _segmentsExperienceLocalService.updateSegmentsExperience(
 			segmentsExperience);
+	}
+
+	private void _addOrDropSegmentsEntryIdColumn(String statement)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DB db = DBManagerUtil.getDB();
+
+			if (statement.equals("add")) {
+				db.alterTableAddColumn(
+					connection, "SegmentsExperience", "segmentsEntryId",
+					"LONG");
+			}
+			else if (statement.equals("drop")) {
+				db.alterTableDropColumn(
+					connection, "SegmentsExperience", "segmentsEntryId");
+			}
+		}
 	}
 
 	private void _assertFragmentEntryLinks(

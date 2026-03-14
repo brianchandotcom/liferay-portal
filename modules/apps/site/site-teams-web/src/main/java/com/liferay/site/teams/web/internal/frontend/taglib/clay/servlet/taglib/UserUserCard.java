@@ -9,7 +9,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.BaseUserCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.site.teams.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider;
 import com.liferay.taglib.util.LexiconUtil;
 
@@ -49,7 +48,7 @@ public class UserUserCard extends BaseUserCard {
 
 	@Override
 	public boolean isSelectable() {
-		return TeamLocalServiceUtil.hasUserTeam(user.getUserId(), _teamId);
+		return !rowChecker.isDisabled(user);
 	}
 
 	private final RenderResponse _renderResponse;

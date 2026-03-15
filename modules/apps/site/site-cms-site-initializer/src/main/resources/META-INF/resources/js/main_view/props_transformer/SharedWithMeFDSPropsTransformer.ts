@@ -13,6 +13,10 @@ import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SharedItemRenderer from './cell_renderers/SharedItemRenderer';
 import VisibleRenderer from './cell_renderers/VisibleRenderer';
+import {
+	setSharedWithMeAdditionalProps,
+	transformSharedItem,
+} from './utils/openSharedItemViewModal';
 
 export default function SharedWithMeFDSPropsTransformer({
 	additionalProps,
@@ -23,6 +27,8 @@ export default function SharedWithMeFDSPropsTransformer({
 	itemsActions?: any[];
 	otherProps: any;
 }) {
+	setSharedWithMeAdditionalProps(additionalProps);
+
 	return {
 		...otherProps,
 		customRenderers: {
@@ -153,15 +159,7 @@ export default function SharedWithMeFDSPropsTransformer({
 					(item: any) => item.id === itemData.id
 				);
 
-				const transformedItems = filteredItems.map((item: any) => ({
-					...item,
-					embedded: {
-						file: item.file ?? undefined,
-						id: item.classPK,
-						title: item.title,
-					},
-					entryClassName: item.className,
-				}));
+				const transformedItems = filteredItems.map(transformSharedItem);
 
 				openCMSModal({
 					contentComponent: () =>

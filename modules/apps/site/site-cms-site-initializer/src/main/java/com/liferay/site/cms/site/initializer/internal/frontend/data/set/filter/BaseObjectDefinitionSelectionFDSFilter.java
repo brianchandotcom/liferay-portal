@@ -7,38 +7,22 @@ package com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
-import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
  */
-@Component(
-	property = {
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_RELATED_ASSETS_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.RECYCLE_BIN_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_CONTENTS_FOLDER,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_FILES_FOLDER,
-		"service.ranking:Integer=100"
-	},
-	service = FDSFilter.class
-)
-public class ObjectDefinitionSelectionFDSFilter extends BaseSelectionFDSFilter {
+public abstract class BaseObjectDefinitionSelectionFDSFilter
+	extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
@@ -63,13 +47,9 @@ public class ObjectDefinitionSelectionFDSFilter extends BaseSelectionFDSFilter {
 			new ArrayList<>();
 
 		List<ObjectDefinition> objectDefinitions =
-			_objectDefinitionService.getCMSObjectDefinitions(
+			objectDefinitionService.getCMSObjectDefinitions(
 				CompanyThreadLocal.getCompanyId(),
-				new String[] {
-					ObjectFolderConstants.
-						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
-				});
+				getObjectFolderExternalReferenceCodes());
 
 		if (objectDefinitions.isEmpty()) {
 			return selectionFDSFilterItems;
@@ -87,7 +67,9 @@ public class ObjectDefinitionSelectionFDSFilter extends BaseSelectionFDSFilter {
 		return selectionFDSFilterItems;
 	}
 
+	protected abstract String[] getObjectFolderExternalReferenceCodes();
+
 	@Reference
-	private ObjectDefinitionService _objectDefinitionService;
+	protected ObjectDefinitionService objectDefinitionService;
 
 }

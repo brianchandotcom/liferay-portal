@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ComponentProps, ReactNode, useEffect} from 'react';
+import {ComponentProps, ReactNode} from 'react';
+import {Navigate} from 'react-router-dom';
 
 import AccountSelection from '../../../components/Checkout/AccountSelection';
 import ProductPurchase from '../../../components/ProductPurchase';
@@ -12,7 +13,6 @@ import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {useProductPurchaseOutletContext} from '../ProductPurchaseOutlet';
 import CreateNewAccount from './CreateNewAccount';
-import {Navigate} from 'react-router-dom';
 
 type ProductPurchaseAccountSelectionProps = {
 	children?: ReactNode;

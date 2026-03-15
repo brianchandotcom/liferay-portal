@@ -31,7 +31,7 @@ type BaseOutletProps = {
 	actionButtons?: ReactNode | ((data: ProductAndOrderPayload) => ReactNode);
 	backTitle: string;
 	backURL?: string;
-	description?: string;
+	description?: string | ((data: ProductAndOrderPayload) => string);
 	routes:
 		| NavbarProps['routes']
 		| ((data: ProductAndOrderPayload) => NavbarProps['routes']);
@@ -84,7 +84,11 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 						)}
 					</div>
 
-					<p className="app-details-description">{description}</p>
+					<p className="app-details-description">
+						{typeof description === 'function'
+							? description(data as ProductAndOrderPayload)
+							: description}
+					</p>
 				</div>
 
 				{showActions && (

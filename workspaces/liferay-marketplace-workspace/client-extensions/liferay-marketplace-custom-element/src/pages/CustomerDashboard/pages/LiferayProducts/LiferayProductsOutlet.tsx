@@ -44,26 +44,55 @@ const getTabs = (data: ProductAndOrderPayload): NavbarProps['routes'] => {
 
 const LiferayProductsOutlet = () => (
 	<BaseOutlet
-		actionButtons={(props) =>
-			[OrderTypes.CMP, OrderTypes.DXP].includes(
-				props?.placedOrder?.orderTypeExternalReferenceCode as OrderTypes
-			) && (
-				<ClayButton
-					className="mt-6 new-license-button"
-					onClick={() => {
-						Liferay.Util.navigate(
-							`${getSiteURL()}/product-purchase?productId=${props?.product?.productId}#/activation-key-form`
-						);
-					}}
-					outline
-				>
-					{i18n.translate('new-activation-key')}
-				</ClayButton>
-			)
-		}
+		actionButtons={(props) => {
+			const appBeta =
+				props.marketplaceDeliveryProduct.specificationValues.APP_BETA;
+
+			if (
+				[OrderTypes.CMP, OrderTypes.DXP].includes(
+					props?.placedOrder
+						?.orderTypeExternalReferenceCode as OrderTypes
+				)
+			) {
+				return (
+					<div className="mt-6">
+						{appBeta && (
+							<ClayButton
+								className="mr-2"
+								displayType="secondary"
+								onClick={() => {
+									Liferay.Util.navigate(
+										`${getSiteURL()}/product-feedback?orderId=${String(props?.placedOrder?.id)}`
+									);
+								}}
+								outline
+								size="sm"
+							>
+								{i18n.translate('share-beta-feedback')}
+							</ClayButton>
+						)}
+
+						<ClayButton
+							displayType="primary"
+							onClick={() => {
+								Liferay.Util.navigate(
+									`${getSiteURL()}/product-purchase?productId=${props?.product?.productId}#/activation-key-form`
+								);
+							}}
+							outline
+							size={appBeta ? 'sm' : 'regular'}
+						>
+							{i18n.translate('new-activation-key')}
+						</ClayButton>
+					</div>
+				);
+			}
+		}}
 		backTitle={i18n.translate('back-to-my-products')}
 		backURL="../../products"
-		description="Manage your service by downloading software bundles, retrieving specific activation keys, and renewing your free plan directly when it nears expiration at no additional cost."
+		description={(props) => {
+			return props?.product?.shortDescription;
+		}}
 		routes={getTabs}
 		showActions={false}
 	/>

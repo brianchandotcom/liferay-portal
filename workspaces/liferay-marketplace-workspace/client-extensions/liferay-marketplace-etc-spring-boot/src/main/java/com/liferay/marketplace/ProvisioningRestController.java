@@ -50,7 +50,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class ProvisioningRestController extends BaseRestController {
 
 	@PostMapping("app-license-keys/{id}/deactivate")
-	public void deactivateAppLicenseKeys(
+	public void appLicenseKeysDeactivate(
 			@AuthenticationPrincipal Jwt jwt, @PathVariable("id") long id)
 		throws Exception {
 

@@ -19,7 +19,7 @@ type InputPropsLicense = {
 
 const LicenseDetails = ({inputProps}: InputPropsLicense) => (
 	<div className="license-details-form">
-		<div className="h5">
+		<div className="h4">
 			Environment Details <RequiredMask />
 		</div>
 
@@ -34,9 +34,11 @@ const LicenseDetails = ({inputProps}: InputPropsLicense) => (
 			name="description"
 		/>
 
-		<div className="h5 mt-7">
-			Activation Key Server Details <RequiredMask />
-		</div>
+		<div className="h4 mt-7">Activation Key Server Details</div>
+
+		<small>
+			At least one of the following pieces of information is required.
+		</small>
 
 		<hr className="mt-2" />
 

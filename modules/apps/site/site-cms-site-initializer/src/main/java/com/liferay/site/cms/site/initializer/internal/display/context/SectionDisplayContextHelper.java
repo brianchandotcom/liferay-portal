@@ -398,10 +398,12 @@ public class SectionDisplayContextHelper {
 				null, "update", null),
 			new FDSActionDropdownItem(
 				null, "copy", "copy",
-				_language.get(httpServletRequest, "copy-to"), null, null, null),
+				_language.get(httpServletRequest, "copy-to"), null, "update",
+				null),
 			new FDSActionDropdownItem(
 				null, "move-folder", "move",
-				_language.get(httpServletRequest, "move"), null, null, null),
+				_language.get(httpServletRequest, "move"), null, "update",
+				null),
 			_getPermissionsFDSActionDropdownItem(
 				httpServletRequest, themeDisplay),
 			new FDSActionDropdownItem(

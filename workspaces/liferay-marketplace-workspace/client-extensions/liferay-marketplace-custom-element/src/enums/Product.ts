@@ -48,6 +48,7 @@ export enum ProductPriceModel {
 }
 
 export enum ProductSpecificationKey {
+	APP_BETA = 'app-beta',
 	APP_BUILD_NUMBER_OF_CPUS = 'cpu',
 	APP_BUILD_RAM_IN_GBS = 'ram',
 	APP_DEVELOPER_NAME = 'developer-name',

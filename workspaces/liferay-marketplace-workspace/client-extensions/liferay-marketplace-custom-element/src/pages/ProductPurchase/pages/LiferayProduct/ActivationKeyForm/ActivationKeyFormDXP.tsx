@@ -13,10 +13,12 @@ import classNames from 'classnames';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
+import {RequiredMask} from '../../../../../components/FieldBase';
 import {Input} from '../../../../../components/Input/Input';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import i18n from '../../../../../i18n';
 import zodSchema, {z} from '../../../../../schema/zod';
+import {productAgreements} from '../../../../../utils/agreements';
 import {phones} from '../../../../../utils/phones';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import ProductPurchaseDXPTypeFree from '../../../services/ProductPurchaseDXPTypeFree';
@@ -24,7 +26,7 @@ import {PURPOSE_OPTIONS} from './constants';
 
 import './ActivationKeyForm.scss';
 
-const ActivationKeyForm = () => {
+const ActivationKeyFormDXP = () => {
 	const [active, setActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -297,7 +299,7 @@ const ActivationKeyForm = () => {
 					/>
 				)}
 
-				<label className="align-items-center cursor-pointer d-flex flex-row font-weight-normal justify-content-between mt-2">
+				<div>
 					<ClayCheckbox
 						checked={notifyMeAboutProducts}
 						onChange={(event) => {
@@ -308,12 +310,17 @@ const ActivationKeyForm = () => {
 						}}
 					/>
 
-					<p className="activation-key-form-notify-me-check-box mb-1 ml-2 w-100">
-						{i18n.translate(
-							'notify-me-about-products-services-and-events'
-						)}
-					</p>
-				</label>
+					<label
+						className="align-items-center cursor-pointer d-flex flex-row font-weight-normal justify-content-between mt-2"
+						htmlFor="notifyMeAboutProducts"
+					>
+						<p className="activation-key-form-notify-me-check-box mb-1 ml-2 w-100">
+							{i18n.translate(
+								'notify-me-about-products-services-and-events'
+							)}
+						</p>
+					</label>
+				</div>
 
 				<span>
 					<p className="activation-key-form-purpose-helper-text mb-6">
@@ -324,7 +331,7 @@ const ActivationKeyForm = () => {
 						to
 						<a
 							className="ml-1"
-							href="https://www.liferay.com/privacy-policy"
+							href="mailto:dataprotection@liferay.com"
 						>
 							dataprotection@liferay.com
 						</a>
@@ -364,34 +371,14 @@ const ActivationKeyForm = () => {
 						the Liferay End User License Agreement set forth at
 					</span>
 
-					<a
-						className="ml-1"
-						href="https://www.liferay.com/documents/d/guest/Liferay-EULA-2102602_GL"
-					>
-						https://www.liferay.com/documents/d/guest/Liferay-EULA-2102602_GL
+					<a className="ml-1" href={productAgreements.links.eula}>
+						{productAgreements.links.eula}
 					</a>
 
-					<span className="ml-1">
-						(these terms and the eula together form the
-						&quot;agreement&quot;). Please read these terms and the
-						Liferay End User License Agreement carefully before
-						accessing, downloading, installing or in any way using
-						the software. By clicking your assent or accessing,
-						downloading, installing or in any way using the
-						software, you signify your assent to and acceptance of
-						the agreement and acknowledge that you have read and you
-						understand terms of the agreement. If you are an
-						individual acting on behalf of an entity, you represent
-						that you have the authority to enter into this agreement
-						on behalf of that entity. If you do not accept the terms
-						of this agreement, then you must not access, download,
-						install or in any way use the software. I have read and
-						agree to all the terms and conditions below (check all
-						boxes).
-					</span>
+					<span className="ml-1">{productAgreements.agreement}</span>
 				</p>
 
-				<label className="cursor-pointer d-flex font-weight-normal w-100">
+				<div className="d-flex flex-row">
 					<ClayCheckbox
 						checked={termsAndConditions}
 						className="activation-key-form-fail"
@@ -404,61 +391,48 @@ const ActivationKeyForm = () => {
 						required
 					/>
 
-					<span className="activation-key-form-aggreements-check-box align-items-center d-flex justify-content-center mb-0 ml-2">
-						<p
-							className={classNames(
-								'align-items-center d-flex justify-content-center mb-1',
-								{
-									'text-red':
-										errors.termsAndConditions?.message,
-								}
-							)}
-						>
-							{i18n.translate(
-								'i-have-read-and-agree-to-the-terms-and-conditions-above'
-							)}
-						</p>
+					<label
+						className={classNames('font-weight-normal px-1', {
+							'text-red': isValid && !termsAndConditions,
+						})}
+						htmlFor="terms-and-conditions"
+					>
+						{i18n.translate(
+							'i-have-read-and-agree-to-the-terms-and-conditions-above'
+						)}
 
-						<span className="font-weight-bold text-red">*</span>
-					</span>
-				</label>
+						<RequiredMask />
+					</label>
+				</div>
 
-				<label className="cursor-pointer d-flex font-weight-normal">
+				<div className="d-flex flex-row">
 					<ClayCheckbox
 						checked={userAgreement}
+						id="user-agreement"
 						onChange={(event) => {
 							setValue('userAgreement', event.target.checked);
 						}}
 						required
 					/>
 
-					<span className="activation-key-form-aggreements-check-box align-items-center d-flex justify-content-center mb-0 ml-2">
-						<p
-							className={classNames(
-								'align-items-center d-flex justify-content-center mb-1',
-								{
-									'text-red': errors.userAgreement?.message,
-								}
-							)}
+					<label
+						className={classNames('font-weight-normal px-1', {
+							'text-red': isValid && !userAgreement,
+						})}
+						htmlFor="user-agreement"
+					>
+						I have read and agree to the{' '}
+						<a
+							href={productAgreements.links.userAgreement}
+							onClick={(event) => event.stopPropagation()}
+							rel="noopener noreferrer"
+							target="_blank"
 						>
-							{i18n.translate(
-								'i-have-read-and-agree-to-the-liferay-end-user-agreement'
-							)}
-
-							<a
-								className="ml-1"
-								onClick={(event) => event.stopPropagation()}
-								rel="noopener noreferrer"
-								target="_blank"
-							>
-								{i18n.translate('liferay-end-user-agreement')}
-							</a>
-						</p>
-						<p className="align-items-center d-flex font-weight-bold justify-content-center mb-1 text-red">
-							*
-						</p>
-					</span>
-				</label>
+							{i18n.translate('liferay-end-user-agreement')}
+						</a>
+						<RequiredMask />
+					</label>
+				</div>
 			</ClayForm.Group>
 
 			<ClayButton
@@ -478,4 +452,4 @@ const ActivationKeyForm = () => {
 	);
 };
 
-export default ActivationKeyForm;
+export default ActivationKeyFormDXP;

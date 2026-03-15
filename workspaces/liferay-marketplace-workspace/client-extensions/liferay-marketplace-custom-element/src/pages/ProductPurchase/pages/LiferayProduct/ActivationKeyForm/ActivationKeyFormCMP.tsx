@@ -9,17 +9,18 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
 
+import {RequiredMask} from '../../../../../components/FieldBase';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import i18n from '../../../../../i18n';
 import zodSchema, {z, zodResolver} from '../../../../../schema/zod';
+import {productAgreements} from '../../../../../utils/agreements';
 import LicenseDetails from '../../../../CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/LicenseDetails';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {ProductPurchaseCMP} from '../../../services/ProductPurchaseCMP';
-import {RequiredMask} from '../../../../../components/FieldBase';
 
 type LicenseKeyForm = z.infer<typeof zodSchema.generateLicenseKey>;
 
-const LiferayCMPForm = () => {
+const ActivationKeyFormCMP = () => {
 	const [loading, setLoading] = useState(false);
 	const [termsAndConditions, setTermsAndConditions] = useState(false);
 	const [userAgreement, setUserAgreement] = useState(false);
@@ -69,14 +70,15 @@ const LiferayCMPForm = () => {
 		<ProductPurchase.Shell
 			className="activation-key-form"
 			footerProps={{
+				backButtonProps: {
+					onClick: () => navigate('/'),
+				},
 				continueButtonProps: {
+					children: 'Try Beta',
 					disabled:
 						loading ||
 						!(isValid && termsAndConditions && userAgreement),
 					onClick: handleSubmit((data) => onSubmit(data)),
-				},
-				backButtonProps: {
-					onClick: () => navigate('/'),
 				},
 			}}
 			title={i18n.translate('activation-key-creation')}
@@ -95,29 +97,11 @@ const LiferayCMPForm = () => {
 					Liferay End User License Agreement set forth at
 				</span>
 
-				<a
-					className="ml-1"
-					href="https://www.liferay.com/documents/d/guest/Liferay-EULA-2102602_GL"
-				>
-					https://www.liferay.com/documents/d/guest/Liferay-EULA-2102602_GL
+				<a className="ml-1" href={productAgreements.links.eula}>
+					{productAgreements.links.eula}
 				</a>
 
-				<span className="ml-1">
-					(these terms and the eula together form the "agreement").
-					Please read these terms and the Liferay End User License
-					Agreement carefully before accessing, downloading,
-					installing or in any way using the software. By clicking
-					your assent or accessing, downloading, installing or in any
-					way using the software, you signify your assent to and
-					acceptance of the agreement and acknowledge that you have
-					read and you understand terms of the agreement. If you are
-					an individual acting on behalf of an entity, you represent
-					that you have the authority to enter into this agreement on
-					behalf of that entity. If you do not accept the terms of
-					this agreement, then you must not access, download, install
-					or in any way use the software. I have read and agree to all
-					the terms and conditions below (check all boxes).
-				</span>
+				<span className="ml-1">{productAgreements.agreement}</span>
 			</p>
 
 			<div className="d-flex flex-row">
@@ -130,10 +114,10 @@ const LiferayCMPForm = () => {
 				/>
 
 				<label
-					htmlFor="terms-and-conditions"
 					className={classNames('font-weight-normal px-1', {
 						'text-red': isValid && !termsAndConditions,
 					})}
+					htmlFor="terms-and-conditions"
 				>
 					{i18n.translate(
 						'i-have-read-and-agree-to-the-terms-and-conditions-above'
@@ -145,8 +129,8 @@ const LiferayCMPForm = () => {
 
 			<div className="d-flex flex-row">
 				<ClayCheckbox
-					id="user-agreement"
 					checked={userAgreement}
+					id="user-agreement"
 					onChange={() => setUserAgreement(!userAgreement)}
 					required
 				/>
@@ -157,19 +141,15 @@ const LiferayCMPForm = () => {
 					})}
 					htmlFor="user-agreement"
 				>
-					{i18n.translate(
-						'i-have-read-and-agree-to-the-liferay-end-user-agreement'
-					)}
-
+					I have read and agree to the{' '}
 					<a
-						className="ml-1"
+						href={productAgreements.links.userAgreement}
 						onClick={(event) => event.stopPropagation()}
 						rel="noopener noreferrer"
 						target="_blank"
 					>
 						{i18n.translate('liferay-end-user-agreement')}
 					</a>
-
 					<RequiredMask />
 				</label>
 			</div>
@@ -177,4 +157,4 @@ const LiferayCMPForm = () => {
 	);
 };
 
-export default LiferayCMPForm;
+export default ActivationKeyFormCMP;

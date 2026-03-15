@@ -29,11 +29,10 @@ import ContactSalesPage from './pages/App/InsuficientResources/ContactSales';
 import ContactSalesForm from './pages/App/InsuficientResources/ContactSalesForm';
 import License from './pages/App/License';
 import PaymentMethod from './pages/App/PaymentMethod';
-import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm/ActivationKeyForm';
+import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm';
 import LDPProvisioning from './pages/LiferayProduct/LDPProvisioningForm';
 import OrderSummary from './pages/LiferayProduct/OrderSummary';
 import ProjectSelection from './pages/LiferayProduct/Project';
-import LiferayCMPForm from './pages/LiferayService/LiferayCMP/LiferayCMPForm';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
 
@@ -93,7 +92,11 @@ export const productTypeRoutes = {
 			const solutionType =
 				marketplaceDeliveryProduct.specificationValues.SOLUTION_TYPE;
 
-			if (solutionType === SolutionTypes.DXP) {
+			if (
+				[SolutionTypes.CMP, SolutionTypes.DXP].includes(
+					solutionType as SolutionTypes
+				)
+			) {
 				return [
 					{
 						element: ProductPurchaseAccountSelection,
@@ -102,20 +105,6 @@ export const productTypeRoutes = {
 					},
 					{
 						element: ActivationKeyForm,
-						path: 'activation-key-form',
-						title: i18n.translate('activation-key'),
-					},
-				];
-			}
-			if (solutionType === SolutionTypes.CMP) {
-				return [
-					{
-						element: ProductPurchaseAccountSelection,
-						index: true,
-						title: i18n.translate('account'),
-					},
-					{
-						element: LiferayCMPForm,
 						path: 'activation-key-form',
 						title: i18n.translate('activation-key'),
 					},

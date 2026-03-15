@@ -259,7 +259,6 @@ public class DepotEntryLocalServiceTest {
 				depotEntry6, depotEntry7, depotEntry8, depotEntry9,
 				depotEntry10, depotEntry11),
 			user, false);
-
 		_testGetDepotEntryGroupIdsByUser(
 			List.of(
 				depotEntry1, depotEntry2, depotEntry5, depotEntry6, depotEntry8,
@@ -542,13 +541,11 @@ public class DepotEntryLocalServiceTest {
 			_depotEntryLocalService.getDepotEntryGroupIds(
 				user.getCompanyId(), user.getUserId(), DepotConstants.TYPE_ANY,
 				dynamicInheritanceOnly));
-
 		AssertUtils.assertEquals(
 			assetLibraryGroupIds,
 			_depotEntryLocalService.getDepotEntryGroupIds(
 				user.getCompanyId(), user.getUserId(),
 				DepotConstants.TYPE_ASSET_LIBRARY, dynamicInheritanceOnly));
-
 		AssertUtils.assertEquals(
 			spaceGroupIds,
 			_depotEntryLocalService.getDepotEntryGroupIds(

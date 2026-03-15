@@ -22,6 +22,7 @@ export default function SimpleActionLinkRenderer({
 	actions,
 	additionalProps,
 	itemData,
+	onViewClick,
 	options,
 	value,
 }: {
@@ -33,6 +34,7 @@ export default function SimpleActionLinkRenderer({
 		objectDefinitionIcons: Record<string, string>;
 	};
 	itemData: any;
+	onViewClick?: (itemData: any) => void;
 	options: {actionId: string};
 	value: string;
 }) {
@@ -40,70 +42,108 @@ export default function SimpleActionLinkRenderer({
 	const title =
 		value && value !== '' ? value : Liferay.Language.get('untitled-asset');
 
-	if (!actions.length || !actionId) {
-		return <>{title}</>;
-	}
-
 	const isFolder =
 		itemData?.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
 
-	const resolvedActionId = isFolder ? `${actionId}Folder` : actionId;
+	const hasUpdatePermission = Boolean(itemData?.actions?.update);
 
-	const selectedAction = findAction(actions, resolvedActionId);
+	let formattedHref = null;
+	let shouldOpenModal = false;
 
-	if (!selectedAction?.href) {
+	if (actions.length && actionId) {
+		if (!isFolder && hasUpdatePermission) {
+			const selectedAction = findAction(actions, actionId);
+
+			if (selectedAction?.href) {
+				formattedHref = replaceTokens(selectedAction.href, itemData);
+			}
+		}
+		else if (isFolder) {
+			const selectedAction = findAction(actions, `${actionId}Folder`);
+
+			if (selectedAction?.href) {
+				formattedHref = replaceTokens(selectedAction.href, itemData);
+			}
+		}
+		else if (onViewClick) {
+			shouldOpenModal = true;
+		}
+	}
+
+	const stickerElement = additionalProps && (
+		<ClaySticker
+			className={classNames(
+				'c-mr-2',
+				'flex-shrink-0',
+				'inline-item',
+				'inline-item-before',
+				isFolder
+					? 'file-icon-color-0'
+					: getFileMimeTypeObjectDefinitionStickerValue(
+							additionalProps.fileMimeTypeCssClasses,
+							additionalProps.objectDefinitionCssClasses,
+							itemData
+						)
+			)}
+		>
+			<ClayIcon
+				symbol={
+					isFolder
+						? 'folder'
+						: getFileMimeTypeObjectDefinitionStickerValue(
+								additionalProps.fileMimeTypeIcons,
+								additionalProps.objectDefinitionIcons,
+								itemData
+							)
+				}
+			/>
+		</ClaySticker>
+	);
+
+	const systemIcon = itemData.system && (
+		<ClayIcon
+			aria-label={Liferay.Language.get('system-default-structure')}
+			className="c-ml-2 lfr-portal-tooltip text-secondary"
+			data-title={Liferay.Language.get('system-default-structure')}
+			symbol="lock"
+		/>
+	);
+
+	if (shouldOpenModal) {
+		return (
+			<div className="align-items-center d-flex table-list-title">
+				{stickerElement}
+
+				<ClayLink
+					aria-label={title}
+					data-senna-off
+					href="#"
+					onClick={(event: React.MouseEvent) => {
+						event.preventDefault();
+
+						onViewClick!(itemData);
+					}}
+				>
+					{title}
+
+					{systemIcon}
+				</ClayLink>
+			</div>
+		);
+	}
+
+	if (!formattedHref) {
 		return <>{title}</>;
 	}
 
-	const formattedHref = replaceTokens(selectedAction.href, itemData);
-
 	return (
 		<div className="align-items-center d-flex table-list-title">
-			{additionalProps && (
-				<ClaySticker
-					className={classNames(
-						'c-mr-2',
-						'flex-shrink-0',
-						'inline-item',
-						'inline-item-before',
-						isFolder
-							? 'file-icon-color-0'
-							: getFileMimeTypeObjectDefinitionStickerValue(
-									additionalProps.fileMimeTypeCssClasses,
-									additionalProps.objectDefinitionCssClasses,
-									itemData
-								)
-					)}
-				>
-					<ClayIcon
-						symbol={
-							isFolder
-								? 'folder'
-								: getFileMimeTypeObjectDefinitionStickerValue(
-										additionalProps.fileMimeTypeIcons,
-										additionalProps.objectDefinitionIcons,
-										itemData
-									)
-						}
-					/>
-				</ClaySticker>
-			)}
+			{stickerElement}
 
 			<ClayLink aria-label={title} data-senna-off href={formattedHref}>
 				{title}
 
-				{itemData.system && (
-					<ClayIcon
-						aria-label={Liferay.Language.get(
-							'system-default-structure'
-						)}
-						className="c-ml-2 lfr-portal-tooltip text-secondary"
-						data-title={Liferay.Language.get(
-							'system-default-structure'
-						)}
-						symbol="lock"
-					/>
-				)}
+				{systemIcon}
 			</ClayLink>
 		</div>
 	);

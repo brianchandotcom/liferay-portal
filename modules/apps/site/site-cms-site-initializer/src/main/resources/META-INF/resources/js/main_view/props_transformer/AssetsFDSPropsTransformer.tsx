@@ -137,6 +137,19 @@ export default function AssetsFDSPropsTransformer({
 								actions={actions}
 								additionalProps={additionalProps}
 								itemData={itemData}
+								onViewClick={(item) => {
+									openCMSModal({
+										contentComponent: () =>
+											AssetNavigationModalContent({
+												additionalProps,
+												contentViewURL:
+													additionalProps.contentViewURL,
+												currentIndex: 0,
+												items: [item],
+											}),
+										size: 'full-screen',
+									});
+								}}
 								options={options}
 								value={value}
 							/>

@@ -46,8 +46,8 @@ export class ProductPurchaseCMP extends ProductPurchase {
 		await marketplaceOAuth2.provisionCMPBeta({
 			description: this.form.description,
 			hostName: this.form.hostname,
-			ipAddresses: this.form.ipAddress,
-			macAddresses: this.form.macAddress,
+			ipAddresses: this.form.ipAddress?.replaceAll('\n', ','),
+			macAddresses: this.form.macAddress?.replaceAll('\n', ','),
 			orderId: order.id,
 			productId: this.product.id,
 		});
@@ -60,6 +60,6 @@ export class ProductPurchaseCMP extends ProductPurchase {
 			return super.getNextStepsLink(cart);
 		}
 
-		return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products/${cart.id}/activation-keys`;
+		return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products/${cart.id}/activation-keys?next-steps`;
 	}
 }

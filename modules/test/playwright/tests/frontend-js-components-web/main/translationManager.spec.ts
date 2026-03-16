@@ -110,7 +110,7 @@ test(
 test(
 	'Assert that clicking on cancel closes the translation manager and discards the changes',
 	{tag: ['@LPD-47235', '@LPD-78957']},
-	async ({page,translationManagerPage}) => {
+	async ({page, translationManagerPage}) => {
 		const {
 			cancelButton,
 			catalanChoice,

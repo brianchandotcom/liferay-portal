@@ -107,10 +107,7 @@ const ProductFeedbackForm = ({
 			</small>
 			<hr />
 
-			<div
-				className="d-flex flex-direction-column py-2"
-				style={{gap: 24}}
-			>
+			<div className="d-flex flex-column py-2" style={{gap: 24}}>
 				<Rating
 					{...register('ratingSatisfaction')}
 					label={i18n.translate(

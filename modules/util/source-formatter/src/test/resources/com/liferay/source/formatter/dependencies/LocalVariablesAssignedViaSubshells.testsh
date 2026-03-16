@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function test {
+	local bar="BAR"
+	local foo="FOO"
+
+	local varable1=\"${foo}/${bar}\"
+	local varable2="Today is $(date)"
+	local varable3=`ls`
+	local varable4=$(ls)
+	local varable5='Do not $(ls) this'
+	local varable6=\"/tmp/$(date +%Y)\"
+}
+
+test

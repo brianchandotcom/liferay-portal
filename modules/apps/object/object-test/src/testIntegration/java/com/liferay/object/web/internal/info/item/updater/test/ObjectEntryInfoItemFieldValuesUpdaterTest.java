@@ -27,14 +27,17 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.web.internal.info.item.BaseObjectEntryInfoItemTestCase;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -50,6 +53,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -91,8 +95,12 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 	public void testUpdateFromInfoItemFieldValuesWithAttachmentField()
 		throws Exception {
 
-		_testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(false);
-		_testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(true);
+		_testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(
+			false, null);
+		_testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(
+			true, StringPool.FORWARD_SLASH);
+		_testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(
+			true, "/new/folder");
 	}
 
 	@Test
@@ -158,7 +166,8 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 	}
 
 	private ObjectDefinition _addCMSObjectDefinition(
-			long storageDepotGroupId, boolean showFilesInLibrary)
+			long storageDepotGroupId, boolean showFilesInLibrary,
+			String storageDLFolderPath)
 		throws Exception {
 
 		Group group = CMSTestUtil.getOrAddGroup(getClass());
@@ -208,7 +217,7 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 				).name(
 					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH
 				).value(
-					"Documents"
+					storageDLFolderPath
 				).build());
 		}
 
@@ -284,8 +293,44 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 				title, MapUtil.getString(curObjectEntry.getValues(), "title")));
 	}
 
+	private ObjectEntryFolder _getExpectedObjectEntryFolder(
+			ObjectEntry objectEntry, String storageDLFolderPath)
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+					objectEntry.getGroupId(), objectEntry.getCompanyId());
+
+		for (String name :
+				StringUtil.split(storageDLFolderPath, CharPool.FORWARD_SLASH)) {
+
+			if (Validator.isNull(name)) {
+				continue;
+			}
+
+			objectEntryFolder =
+				_objectEntryFolderLocalService.fetchObjectEntryFolder(
+					objectEntry.getGroupId(), objectEntry.getCompanyId(),
+					objectEntryFolder.getObjectEntryFolderId(), name);
+
+			Assert.assertNotNull(name, objectEntryFolder);
+		}
+
+		return objectEntryFolder;
+	}
+
+	private int _getObjectEntryFoldersCount(
+		ObjectEntryFolder objectEntryFolder) {
+
+		return _objectEntryFolderLocalService.getObjectEntryFoldersCount(
+			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
+			objectEntryFolder.getObjectEntryFolderId());
+	}
+
 	private void _testUpdateFromInfoItemFieldValuesWithAttachmentObjectField(
-			boolean showFilesInLibrary)
+			boolean showFilesInLibrary, String storageDLFolderPath)
 		throws Exception {
 
 		Group group = CMSTestUtil.getOrAddGroup(getClass());
@@ -301,7 +346,7 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectDefinition objectDefinition = _addCMSObjectDefinition(
-			depotEntry.getGroupId(), showFilesInLibrary);
+			depotEntry.getGroupId(), showFilesInLibrary, storageDLFolderPath);
 
 		ObjectDefinition cmsBasicDocumentObjectDefinition =
 			_objectDefinitionLocalService.
@@ -340,6 +385,8 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 			objectEntry.getObjectEntryId());
 
 		if (showFilesInLibrary) {
+			long expectedObjectEntryFolderId = 0;
+
 			String expectedTitle = TempFileEntryUtil.getOriginalTempFileName(
 				tempFileEntry.getFileName());
 
@@ -373,6 +420,39 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 				MapUtil.getString(
 					cmsBasicDocumentObjectEntry.getValues(), "title"));
 
+			if (Validator.isNotNull(storageDLFolderPath)) {
+				ObjectEntryFolder filesObjectEntryFolder =
+					_objectEntryFolderLocalService.
+						getObjectEntryFolderByExternalReferenceCode(
+							ObjectEntryFolderConstants.
+								EXTERNAL_REFERENCE_CODE_FILES,
+							objectEntry.getGroupId(),
+							objectEntry.getCompanyId());
+
+				ObjectEntryFolder expectedObjectEntryFolder =
+					_getExpectedObjectEntryFolder(
+						objectEntry, storageDLFolderPath);
+
+				expectedObjectEntryFolderId =
+					expectedObjectEntryFolder.getObjectEntryFolderId();
+
+				Assert.assertEquals(
+					expectedObjectEntryFolderId,
+					cmsBasicDocumentObjectEntry.getObjectEntryFolderId());
+
+				if (StringUtil.equals(
+						storageDLFolderPath, StringPool.FORWARD_SLASH)) {
+
+					int objectEntryFoldersCount = _getObjectEntryFoldersCount(
+						filesObjectEntryFolder);
+
+					Assert.assertEquals(
+						expectedObjectEntryFolderId,
+						filesObjectEntryFolder.getObjectEntryFolderId());
+					Assert.assertEquals(0, objectEntryFoldersCount);
+				}
+			}
+
 			_updateFromInfoItemFieldValues(
 				InfoItemFieldValues.builder(
 				).infoFieldValue(
@@ -393,6 +473,32 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 				objectEntriesCount + 1,
 				objectEntryLocalService.getObjectEntriesCount(
 					cmsBasicDocumentObjectDefinition.getObjectDefinitionId()));
+
+			if (Validator.isNotNull(storageDLFolderPath)) {
+				Assert.assertEquals(
+					expectedObjectEntryFolderId,
+					_getExpectedObjectEntryFolder(
+						objectEntry, storageDLFolderPath
+					).getObjectEntryFolderId());
+
+				if (StringUtil.equals(
+						storageDLFolderPath, StringPool.FORWARD_SLASH)) {
+
+					ObjectEntryFolder filesObjectEntryFolder =
+						_objectEntryFolderLocalService.
+							getObjectEntryFolderByExternalReferenceCode(
+								ObjectEntryFolderConstants.
+									EXTERNAL_REFERENCE_CODE_FILES,
+								objectEntry.getGroupId(),
+								objectEntry.getCompanyId());
+
+					Assert.assertEquals(
+						expectedObjectEntryFolderId,
+						filesObjectEntryFolder.getObjectEntryFolderId());
+					Assert.assertEquals(
+						0, _getObjectEntryFoldersCount(filesObjectEntryFolder));
+				}
+			}
 		}
 		else {
 			Assert.assertEquals(
@@ -423,6 +529,9 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Inject
 	private ObjectFolderLocalService _objectFolderLocalService;

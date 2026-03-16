@@ -641,11 +641,13 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		_addObjectDefinition(objectField);
 
+		String content = "test\n" + RandomTestUtil.randomString();
+
 		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			_objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName("document.txt"),
-			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			FileUtil.createTempFile(content.getBytes()),
 			ContentTypes.TEXT_PLAIN);
 
 		_addObjectEntry(

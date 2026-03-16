@@ -4,7 +4,7 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import TranslationAdminContent, {Translations} from './TranslationAdminContent';
 
@@ -34,19 +34,37 @@ export default function TranslationAdminModal({
 	);
 	const [visible, setVisible] = useState(initialVisible);
 
+	const cancelRef = useRef(false);
+
+	const handleModalClose = useCallback(() => {
+		setVisible(false);
+
+		if (cancelRef.current) {
+			onClose([...initialActiveLanguageIds]);
+			cancelRef.current = false;
+		}
+		else {
+			onClose([...activeLanguageIds]);
+		}
+	}, [activeLanguageIds, initialActiveLanguageIds, onClose]);
+
 	const handleAddLocale = (localeId: Liferay.Language.Locale) => {
 		setActiveLanguageIds([...activeLanguageIds, localeId]);
 	};
 
+	const {observer, onClose: closeModal} = useModal({
+		onClose: handleModalClose,
+	});
+
 	const handleCancel = () => {
-		setVisible(false);
+		cancelRef.current = true;
 		setActiveLanguageIds([...initialActiveLanguageIds]);
-		onClose([...initialActiveLanguageIds]);
+
+		closeModal();
 	};
 
 	const handleDone = () => {
-		setVisible(false);
-		onClose([...activeLanguageIds]);
+		closeModal();
 	};
 
 	const handleRemoveLocale = (localeId: Liferay.Language.Locale) => {
@@ -54,10 +72,6 @@ export default function TranslationAdminModal({
 		newActiveLanguageIds.splice(activeLanguageIds.indexOf(localeId), 1);
 		setActiveLanguageIds(newActiveLanguageIds);
 	};
-
-	const {observer} = useModal({
-		onClose: handleCancel,
-	});
 
 	useEffect(() => {
 		setActiveLanguageIds(initialActiveLanguageIds);

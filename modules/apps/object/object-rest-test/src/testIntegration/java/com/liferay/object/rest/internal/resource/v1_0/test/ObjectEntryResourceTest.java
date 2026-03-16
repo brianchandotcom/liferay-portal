@@ -7402,10 +7402,9 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testGetObjectEntryWithAttachmentObjectField() throws Exception {
-		String content = RandomTestUtil.randomString();
-
 		FileEntry fileEntry = _addTempFileEntry(
-			content, _objectDefinition1, RandomTestUtil.randomString());
+			_getRandomFileContent(8), _objectDefinition1,
+			RandomTestUtil.randomString());
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -7433,7 +7432,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1),
 			scopeJSONObject);
 
-		content = RandomTestUtil.randomString();
+		String content = _getRandomFileContent(8);
 
 		fileEntry = _addTempFileEntry(
 			content, _objectDefinition1, RandomTestUtil.randomString());
@@ -7486,7 +7485,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1),
 			scopeJSONObject);
 
-		content = RandomTestUtil.randomString();
+		content = _getRandomFileContent(8);
 
 		DLFileEntry dlFileEntry = _addDLFileEntry(
 			content, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -7748,7 +7747,7 @@ public class ObjectEntryResourceTest {
 						"upload",
 						() -> {
 							FileEntry fileEntry = _addTempFileEntry(
-								RandomTestUtil.randomString(), objectDefinition,
+								_getRandomFileContent(8), objectDefinition,
 								"Old Testament");
 
 							return fileEntry.getFileEntryId();
@@ -7773,7 +7772,7 @@ public class ObjectEntryResourceTest {
 					"upload",
 					() -> {
 						FileEntry fileEntry = _addTempFileEntry(
-							RandomTestUtil.randomString(), objectDefinition,
+							_getRandomFileContent(8), objectDefinition,
 							"New Testament");
 
 						return fileEntry.getFileEntryId();
@@ -9584,7 +9583,7 @@ public class ObjectEntryResourceTest {
 				JSONFactoryUtil.createJSONObject(
 					String.valueOf(
 						_toFileEntry(
-							Base64::encode, RandomTestUtil.randomString(),
+							Base64::encode, _getRandomFileContent(8),
 							RandomTestUtil.randomString() + ".txt", null, null,
 							ContentTypes.TEXT_PLAIN)))
 			).toString(),
@@ -12173,7 +12172,7 @@ public class ObjectEntryResourceTest {
 			String.valueOf(_jsonFactory.createJSONObject()),
 			objectDefinition.getRESTContextPath(), Http.Method.POST);
 
-		String fileContent1 = RandomTestUtil.randomString();
+		String fileContent1 = _getRandomFileContent(8);
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry1 = _toFileEntry(
 			Base64::encode, fileContent1,
@@ -12186,7 +12185,7 @@ public class ObjectEntryResourceTest {
 
 		fileEntry1.setScope(scope);
 
-		String fileContent2 = RandomTestUtil.randomString();
+		String fileContent2 = _getRandomFileContent(8);
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry2 = _toFileEntry(
 			Base64::encode, fileContent2,
@@ -16666,6 +16665,15 @@ public class ObjectEntryResourceTest {
 		);
 	}
 
+	private String _getRandomFileContent(int size) {
+		String firstLine = "test\n";
+
+		String randomContent = RandomTestUtil.randomString(
+			size - firstLine.length());
+
+		return firstLine + randomContent;
+	}
+
 	private JSONObject _getRelatedJSONObject(
 		JSONObject jsonObject, String nestedFieldName, Type type) {
 
@@ -18163,7 +18171,10 @@ public class ObjectEntryResourceTest {
 			StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
 				StringUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			FileUtil.createTempFile(
+				_getRandomFileContent(
+					8
+				).getBytes()),
 			ContentTypes.TEXT_PLAIN);
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -18179,7 +18190,7 @@ public class ObjectEntryResourceTest {
 					fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null,
 				depotEntry.getGroupId(), customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18197,7 +18208,7 @@ public class ObjectEntryResourceTest {
 					dlFolder1, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder1.getExternalReferenceCode(), dlFolder1.getGroupId(),
 				customFileEntry1.getMimeType()),
@@ -18214,7 +18225,7 @@ public class ObjectEntryResourceTest {
 					dlFolder2, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder2.getExternalReferenceCode(), dlFolder2.getGroupId(),
 				customFileEntry1.getMimeType()),
@@ -18229,7 +18240,7 @@ public class ObjectEntryResourceTest {
 					null, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18242,7 +18253,7 @@ public class ObjectEntryResourceTest {
 					null, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null,
 				_group.getGroupId(), customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18255,7 +18266,7 @@ public class ObjectEntryResourceTest {
 					null, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, _testGroupId,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18268,7 +18279,7 @@ public class ObjectEntryResourceTest {
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), _testGroupId,
 				customFileEntry1.getMimeType()),
@@ -18276,7 +18287,7 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
 
-		String fileContent = RandomTestUtil.randomString();
+		String fileContent = _getRandomFileContent(8);
 
 		com.liferay.portal.kernel.repository.model.Folder existingFolder =
 			_dlAppLocalService.addFolder(
@@ -18315,7 +18326,7 @@ public class ObjectEntryResourceTest {
 			useExternalReferenceCode);
 
 		testFileEntry = _toFileEntry(
-			content -> null, RandomTestUtil.randomString(),
+			content -> null, _getRandomFileContent(8),
 			RandomTestUtil.randomString() + ".txt", null, null,
 			customFileEntry1.getMimeType());
 
@@ -18385,7 +18396,7 @@ public class ObjectEntryResourceTest {
 					));
 			},
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder1.getExternalReferenceCode(), dlFolder1.getGroupId(),
 				customFileEntry1.getMimeType()),
@@ -18423,11 +18434,9 @@ public class ObjectEntryResourceTest {
 					role.getRoleId(), new String[] {ActionKeys.ADD_DOCUMENT});
 
 				_testPatchPutCustomObjectEntryWithAttachmentField(
-					fileEntry -> JSONUtil.put(
-						"status", "FORBIDDEN"
-					),
+					fileEntry -> JSONUtil.put("status", "FORBIDDEN"),
 					_toFileEntry(
-						Base64::encode, RandomTestUtil.randomString(),
+						Base64::encode, _getRandomFileContent(8),
 						RandomTestUtil.randomString() + ".txt",
 						dlFolder.getExternalReferenceCode(),
 						dlFolder.getGroupId(), customFileEntry1.getMimeType()),
@@ -18449,7 +18458,7 @@ public class ObjectEntryResourceTest {
 							dlFolder, fileEntry, objectDefinition,
 							_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 					_toFileEntry(
-						Base64::encode, RandomTestUtil.randomString(),
+						Base64::encode, _getRandomFileContent(8),
 						RandomTestUtil.randomString() + ".txt",
 						dlFolder.getExternalReferenceCode(),
 						dlFolder.getGroupId(), customFileEntry1.getMimeType()),
@@ -18583,7 +18592,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18604,8 +18613,7 @@ public class ObjectEntryResourceTest {
 			),
 			_toFileEntry(
 				Base64::encode,
-				RandomTestUtil.randomString(
-					(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
+				_getRandomFileContent((_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18618,7 +18626,7 @@ public class ObjectEntryResourceTest {
 				"title", "File name is null"
 			),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(), null, null, null,
+				Base64::encode, _getRandomFileContent(8), null, null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
@@ -18630,7 +18638,7 @@ public class ObjectEntryResourceTest {
 				"title", "Invalid file extension for " + fileEntry.getName()
 			),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".err", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18643,7 +18651,7 @@ public class ObjectEntryResourceTest {
 				"title", "Unable to decode Base64 file"
 			),
 			_toFileEntry(
-				String::new, "$" + RandomTestUtil.randomString(7),
+				String::new, "$" + _getRandomFileContent(7),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18658,7 +18666,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18672,7 +18680,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 				customFileEntry1.getMimeType()),
@@ -18687,7 +18695,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -18701,7 +18709,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 				customFileEntry1.getMimeType()),
@@ -18713,7 +18721,7 @@ public class ObjectEntryResourceTest {
 		// existing name
 
 		testFileEntry = _toFileEntry(
-			Base64::encode, RandomTestUtil.randomString(),
+			Base64::encode, _getRandomFileContent(8),
 			RandomTestUtil.randomString() + ".txt", null, null,
 			customFileEntry1.getMimeType());
 
@@ -18745,7 +18753,7 @@ public class ObjectEntryResourceTest {
 			useExternalReferenceCode);
 
 		testFileEntry = _toFileEntry(
-			Base64::encode, RandomTestUtil.randomString(),
+			Base64::encode, _getRandomFileContent(8),
 			RandomTestUtil.randomString() + ".txt", null, null,
 			customFileEntry1.getMimeType());
 
@@ -18792,7 +18800,7 @@ public class ObjectEntryResourceTest {
 						"fileBase64", fileEntry.getFileBase64());
 				}),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, "fileBase64,folder", objectDefinition,
@@ -18811,7 +18819,7 @@ public class ObjectEntryResourceTest {
 						"fileBase64", fileEntry.getFileBase64());
 				}),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, "fileBase64,folder", objectDefinition,
@@ -18835,7 +18843,7 @@ public class ObjectEntryResourceTest {
 			).put(
 				objectFieldName,
 				_toFileEntryJSONObject(
-					RandomTestUtil.randomString(),
+					_getRandomFileContent(8),
 					RandomTestUtil.randomString() + ".txt",
 					fileEntry.getFolder(), ContentTypes.TEXT_PLAIN,
 					objectFieldName)
@@ -19126,7 +19134,10 @@ public class ObjectEntryResourceTest {
 			StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
 				StringUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			FileUtil.createTempFile(
+				_getRandomFileContent(
+					8
+				).getBytes()),
 			ContentTypes.TEXT_PLAIN);
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -19142,7 +19153,7 @@ public class ObjectEntryResourceTest {
 					fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null,
 				depotEntry.getGroupId(), customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19159,7 +19170,7 @@ public class ObjectEntryResourceTest {
 					dlFolder1, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder1.getExternalReferenceCode(), dlFolder1.getGroupId(),
 				customFileEntry1.getMimeType()),
@@ -19175,7 +19186,7 @@ public class ObjectEntryResourceTest {
 					dlFolder2, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder2.getExternalReferenceCode(), dlFolder2.getGroupId(),
 				customFileEntry1.getMimeType()),
@@ -19189,7 +19200,7 @@ public class ObjectEntryResourceTest {
 					null, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19201,7 +19212,7 @@ public class ObjectEntryResourceTest {
 					null, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null,
 				_group.getGroupId(), customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19213,7 +19224,7 @@ public class ObjectEntryResourceTest {
 					null, fileEntry, objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, _testGroupId,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19225,14 +19236,14 @@ public class ObjectEntryResourceTest {
 		_testPostCustomObjectEntryWithAttachmentObjectField(
 			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), _testGroupId,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
-		String fileContent = RandomTestUtil.randomString();
+		String fileContent = _getRandomFileContent(8);
 
 		com.liferay.portal.kernel.repository.model.Folder existingFolder =
 			_dlAppLocalService.addFolder(
@@ -19270,7 +19281,7 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
 		testFileEntry = _toFileEntry(
-			content -> null, RandomTestUtil.randomString(),
+			content -> null, _getRandomFileContent(8),
 			RandomTestUtil.randomString() + ".txt", null, null,
 			customFileEntry1.getMimeType());
 
@@ -19339,7 +19350,7 @@ public class ObjectEntryResourceTest {
 					));
 			},
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder1.getExternalReferenceCode(), dlFolder1.getGroupId(),
 				customFileEntry1.getMimeType()),
@@ -19371,11 +19382,9 @@ public class ObjectEntryResourceTest {
 					objectDefinition.getResourceName(), role);
 
 				_testPostCustomObjectEntryWithAttachmentObjectField(
-					fileEntry -> JSONUtil.put(
-						"status", "FORBIDDEN"
-					),
+					fileEntry -> JSONUtil.put("status", "FORBIDDEN"),
 					_toFileEntry(
-						Base64::encode, RandomTestUtil.randomString(),
+						Base64::encode, _getRandomFileContent(8),
 						RandomTestUtil.randomString() + ".txt",
 						dlFolder.getExternalReferenceCode(),
 						dlFolder.getGroupId(), customFileEntry1.getMimeType()),
@@ -19396,7 +19405,7 @@ public class ObjectEntryResourceTest {
 							dlFolder, fileEntry, objectDefinition,
 							_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 					_toFileEntry(
-						Base64::encode, RandomTestUtil.randomString(),
+						Base64::encode, _getRandomFileContent(8),
 						RandomTestUtil.randomString() + ".txt",
 						dlFolder.getExternalReferenceCode(),
 						dlFolder.getGroupId(), customFileEntry1.getMimeType()),
@@ -19553,7 +19562,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT_SOURCE)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19573,8 +19582,7 @@ public class ObjectEntryResourceTest {
 			),
 			_toFileEntry(
 				Base64::encode,
-				RandomTestUtil.randomString(
-					(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
+				_getRandomFileContent((_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19586,7 +19594,7 @@ public class ObjectEntryResourceTest {
 				"title", "File name is null"
 			),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(), null, null, null,
+				Base64::encode, _getRandomFileContent(8), null, null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2);
@@ -19597,7 +19605,7 @@ public class ObjectEntryResourceTest {
 				"title", "Invalid file extension for " + fileEntry.getName()
 			),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".err", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19609,7 +19617,7 @@ public class ObjectEntryResourceTest {
 				"title", "Unable to decode Base64 file"
 			),
 			_toFileEntry(
-				String::new, "$" + RandomTestUtil.randomString(7),
+				String::new, "$" + _getRandomFileContent(7),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19623,7 +19631,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19636,7 +19644,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 				customFileEntry1.getMimeType()),
@@ -19650,7 +19658,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -19663,7 +19671,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition,
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2)),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 				customFileEntry1.getMimeType()),
@@ -19674,7 +19682,7 @@ public class ObjectEntryResourceTest {
 		// existing name
 
 		testFileEntry = _toFileEntry(
-			Base64::encode, RandomTestUtil.randomString(),
+			Base64::encode, _getRandomFileContent(8),
 			RandomTestUtil.randomString() + ".txt", null, null,
 			customFileEntry1.getMimeType());
 
@@ -19704,7 +19712,7 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1);
 
 		testFileEntry = _toFileEntry(
-			Base64::encode, RandomTestUtil.randomString(),
+			Base64::encode, _getRandomFileContent(8),
 			RandomTestUtil.randomString() + ".txt", null, null,
 			customFileEntry1.getMimeType());
 
@@ -19736,7 +19744,7 @@ public class ObjectEntryResourceTest {
 		// User computer to documents and media source, file from Base64 with
 		// external reference code
 
-		fileContent = RandomTestUtil.randomString();
+		fileContent = _getRandomFileContent(8);
 
 		existingDLFileEntry = _addDLFileEntry(
 			fileContent, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -19768,7 +19776,7 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2);
 
 		testFileEntry = _toFileEntry(
-			content -> null, RandomTestUtil.randomString(),
+			content -> null, _getRandomFileContent(8),
 			RandomTestUtil.randomString() + ".txt", null, null,
 			customFileEntry1.getMimeType());
 
@@ -19820,7 +19828,7 @@ public class ObjectEntryResourceTest {
 						"fileBase64", fileEntry.getFileBase64());
 				}),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			"fileBase64,folder", objectDefinition,
@@ -19838,7 +19846,7 @@ public class ObjectEntryResourceTest {
 						"fileBase64", fileEntry.getFileBase64());
 				}),
 			_toFileEntry(
-				Base64::encode, RandomTestUtil.randomString(),
+				Base64::encode, _getRandomFileContent(8),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			"fileBase64,folder", objectDefinition,
@@ -20389,7 +20397,7 @@ public class ObjectEntryResourceTest {
 				objectDefinition.getPortletId(),
 				TempFileEntryUtil.getTempFileName("foo.pdf"),
 				FileUtil.createTempFile(
-					RandomTestUtil.randomString(
+					_getRandomFileContent(
 						(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1
 					).getBytes()),
 				ContentTypes.TEXT_PLAIN);

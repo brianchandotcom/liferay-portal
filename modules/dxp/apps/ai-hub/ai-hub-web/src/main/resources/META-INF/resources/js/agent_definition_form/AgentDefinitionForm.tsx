@@ -23,7 +23,10 @@ import {
 	getAgentDefinition,
 	putAgentDefinition,
 } from './services/AgentDefinitionService';
-import {getWorkflowDefinitions} from './services/WorkflowDefinitionService';
+import {
+	getWorkflowDefinition,
+	getWorkflowDefinitions,
+} from './services/WorkflowDefinitionService';
 import {AgentDefinition} from './types/AgentDefinition';
 import {WorkflowDefinition} from './types/WorkflowDefinition';
 
@@ -142,8 +145,21 @@ export default function AgentDefinitionForm({
 			}
 		}
 
+		fetchFormData();
+	}, [accountEntryExternalReferenceCode, externalReferenceCode, readonly]);
+
+	useEffect(() => {
 		async function fetchWorkflowDefinitions() {
 			try {
+				if (readonly) {
+					const response = await getWorkflowDefinition(
+						formData.workflowDefinitionName
+					);
+
+					setWorkflowDefinitions([response]);
+
+					return;
+				}
 				const response = await getWorkflowDefinitions();
 
 				setWorkflowDefinitions(response.items || []);
@@ -160,9 +176,8 @@ export default function AgentDefinitionForm({
 			}
 		}
 
-		fetchFormData();
 		fetchWorkflowDefinitions();
-	}, [accountEntryExternalReferenceCode, externalReferenceCode]);
+	}, [formData, readonly]);
 
 	return (
 		<>
@@ -373,6 +388,8 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<Picker
+											className="agent-workflow-definition"
+											disabled={readonly}
 											items={workflowDefinitions.map(
 												(workflowDefinition) => ({
 													label: workflowDefinition.title,
@@ -391,8 +408,7 @@ export default function AgentDefinitionForm({
 											)}
 											required={true}
 											selectedKey={
-												formData.workflowDefinitionName ??
-												null
+												formData.workflowDefinitionName
 											}
 										>
 											{({label, value}) => (

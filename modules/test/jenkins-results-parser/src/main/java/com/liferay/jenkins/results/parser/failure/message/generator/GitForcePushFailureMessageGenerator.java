@@ -50,12 +50,10 @@ public class GitForcePushFailureMessageGenerator
 			Dom4JUtil.getNewElement(
 				"p", null, "Please check if ",
 				Dom4JUtil.getNewElement(
-					"strong", null, "branch was forced push"),
-				" on ",
-				Dom4JUtil.getNewElement(
 					"strong", null,
 					getBaseBranchAnchorElement(build.getTopLevelBuild())),
-				messageElement));
+				Dom4JUtil.getNewElement("strong", null, " was force pushed.")),
+			messageElement);
 	}
 
 	private static final Pattern _unableToCreateLocalBranchPattern =

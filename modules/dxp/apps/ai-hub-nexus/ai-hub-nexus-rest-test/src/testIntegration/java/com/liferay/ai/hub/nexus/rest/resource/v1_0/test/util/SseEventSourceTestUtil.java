@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.resource.v1_0.test.util;
+package com.liferay.ai.hub.nexus.rest.resource.v1_0.test.util;
 
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -69,7 +69,8 @@ public class SseEventSourceTestUtil {
 				).header(
 					"Authorization", authorization
 				).uri(
-					URI.create("http://localhost:8080/o/ai-hub/v1.0/" + uri)
+					URI.create(
+						"http://localhost:8080/o/ai-hub-nexus/v1.0/" + uri)
 				).GET(
 				).build(),
 				HttpResponse.BodyHandlers.ofInputStream());

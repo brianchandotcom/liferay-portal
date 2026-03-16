@@ -149,7 +149,10 @@ public class ProvisioningRestController extends BaseRestController {
 			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
 			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
 
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+			throw new ResponseStatusException(
+				HttpStatus.BAD_REQUEST,
+				"At least one of the following fields is required: host " +
+					"name, IP addresses, or MAC addresses");
 		}
 
 		Order order = _marketplaceService.getOrder(

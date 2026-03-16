@@ -34,18 +34,19 @@ export default function TranslationAdminModal({
 	);
 	const [visible, setVisible] = useState(initialVisible);
 
-	const cancelRef = useRef(false);
+	const savedRef = useRef(false);
 
 	const handleModalClose = useCallback(() => {
 		setVisible(false);
 
-		if (cancelRef.current) {
-			onClose([...initialActiveLanguageIds]);
-			cancelRef.current = false;
-		}
-		else {
+		if (savedRef.current) {
 			onClose([...activeLanguageIds]);
 		}
+		else {
+			setActiveLanguageIds([...initialActiveLanguageIds]);
+			onClose([...initialActiveLanguageIds]);
+		}
+		savedRef.current = false;
 	}, [activeLanguageIds, initialActiveLanguageIds, onClose]);
 
 	const handleAddLocale = (localeId: Liferay.Language.Locale) => {
@@ -57,13 +58,12 @@ export default function TranslationAdminModal({
 	});
 
 	const handleCancel = () => {
-		cancelRef.current = true;
-		setActiveLanguageIds([...initialActiveLanguageIds]);
-
 		closeModal();
 	};
 
 	const handleDone = () => {
+		savedRef.current = true;
+
 		closeModal();
 	};
 

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,7 +56,6 @@ import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,10 +98,10 @@ public class AssetPermissionActionResourceTest
 	}
 
 	private void _assertHasActionIds(
-		List<String> actionIds, ResourcePermission resourcePermission) {
+		ResourcePermission resourcePermission, String... actionIds) {
 
 		for (String actionId : _ACTION_IDS) {
-			if (actionIds.contains(actionId)) {
+			if (ArrayUtil.contains(actionIds, actionId)) {
 				Assert.assertTrue(
 					"Action " + actionId + " should be granted.",
 					resourcePermission.hasActionId(actionId));
@@ -244,7 +244,7 @@ public class AssetPermissionActionResourceTest
 				_cmsAdministratorRole.getRoleId());
 
 		_assertHasActionIds(
-			List.of(ActionKeys.UPDATE, ActionKeys.VIEW), resourcePermission);
+			resourcePermission, ActionKeys.UPDATE, ActionKeys.VIEW);
 
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.
@@ -326,8 +326,7 @@ public class AssetPermissionActionResourceTest
 				_cmsAdministratorRole.getRoleId());
 
 		_assertHasActionIds(
-			List.of(ActionKeys.DELETE, ActionKeys.PERMISSIONS),
-			resourcePermission);
+			resourcePermission, ActionKeys.DELETE, ActionKeys.PERMISSIONS);
 
 		ObjectEntryFolder objectEntryFolder3 =
 			_objectEntryFolderLocalService.addObjectEntryFolder(
@@ -365,10 +364,8 @@ public class AssetPermissionActionResourceTest
 				_cmsAdministratorRole.getRoleId());
 
 		_assertHasActionIds(
-			List.of(
-				ActionKeys.ADD_ENTRY, ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
-				ActionKeys.SUBSCRIBE),
-			resourcePermission);
+			resourcePermission, ActionKeys.ADD_ENTRY,
+			ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, ActionKeys.SUBSCRIBE);
 	}
 
 	private static final String[] _ACTION_IDS = {

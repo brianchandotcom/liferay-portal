@@ -17,6 +17,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.display.context.ObjectEntryDisplayContextFactory;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -32,9 +33,9 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -177,13 +178,15 @@ public class ObjectEntryAssetRenderer
 		}
 
 		try {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-				MapUtil.getLong(
-					_objectEntry.getValues(), objectField.getName()));
-
-			return _dlURLHelper.getDownloadURL(
-				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK);
+			return ObjectFieldUtil.getAttachmentDownloadURL(
+				_dlURLHelper,
+				_dlAppLocalService.getFileEntry(
+					MapUtil.getLong(
+						_objectEntry.getValues(), objectField.getName())),
+				_objectEntry.getGroupId(),
+				_objectDefinition.getExternalReferenceCode(), _objectEntry,
+				_objectEntryService, objectField,
+				_getPermissionChecker(themeDisplay), themeDisplay);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -380,6 +383,17 @@ public class ObjectEntryAssetRenderer
 	@Override
 	public boolean isCommentable() {
 		return _objectDefinition.isEnableComments();
+	}
+
+	private PermissionChecker _getPermissionChecker(ThemeDisplay themeDisplay) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			permissionChecker = themeDisplay.getPermissionChecker();
+		}
+
+		return permissionChecker;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

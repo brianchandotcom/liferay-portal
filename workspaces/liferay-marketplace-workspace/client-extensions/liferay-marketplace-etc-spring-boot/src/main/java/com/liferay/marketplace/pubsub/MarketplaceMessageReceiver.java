@@ -27,6 +27,7 @@ import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResou
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.service.ProvisioningHubService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
@@ -51,11 +52,12 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	public MarketplaceMessageReceiver(
 		KoroneikiService koroneikiService,
 		MarketplaceService marketplaceService, List<String> productKeys,
-		String topicName) {
+		ProvisioningHubService provisioningHubService, String topicName) {
 
 		_koroneikiService = koroneikiService;
 		_marketplaceService = marketplaceService;
 		_productKeys = productKeys;
+		_provisioningHubService = provisioningHubService;
 		_topicName = topicName;
 	}
 
@@ -418,6 +420,9 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				});
 		}
 
+		_provisioningHubService.provision(order, productPurchase);
+	}
+
 	private static final String _LIFERAY_DATA_PLATFORM =
 		"Liferay Data Platform";
 
@@ -432,6 +437,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	private final KoroneikiService _koroneikiService;
 	private final MarketplaceService _marketplaceService;
 	private final List<String> _productKeys;
+	private final ProvisioningHubService _provisioningHubService;
 	private final String _topicName;
 
 }

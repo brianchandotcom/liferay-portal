@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -37,7 +37,7 @@ public class AnalyticsForm {
 			jsonObject.getString("corpProjectName"),
 			jsonObject.getString("corpProjectUuid"),
 			emailAddresses.toArray(new String[0]), jsonObject.getString("name"),
-			jsonObject.getString("serverLocation"),
+			jsonObject.optString("serverLocation"),
 			jsonObject.getString("ownerEmailAddress"));
 	}
 

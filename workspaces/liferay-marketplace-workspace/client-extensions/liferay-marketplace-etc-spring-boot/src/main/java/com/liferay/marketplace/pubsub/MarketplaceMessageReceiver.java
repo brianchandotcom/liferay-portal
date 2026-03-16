@@ -354,8 +354,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			return;
 		}
 
-		String finalOpportunityId = opportunityId;
-
 		String accountKey = productPurchase.getAccountKey();
 
 		if (Objects.equals(
@@ -369,13 +367,11 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			accountKey = account.getParentAccountKey();
 		}
 
-		String finalAccountKey = accountKey;
-
 		OrderResource orderResource = _marketplaceService.getOrderResource();
 
 		com.liferay.headless.commerce.admin.order.client.pagination.Page<Order>
 			ordersPage = orderResource.getOrdersPage(
-				"", "externalReferenceCode eq '" + finalOpportunityId + "'",
+				"", "externalReferenceCode eq '" + opportunityId + "'",
 				com.liferay.headless.commerce.admin.order.client.pagination.
 					Pagination.of(1, 1),
 				"");
@@ -383,6 +379,9 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		Order order = ordersPage.fetchFirstItem();
 
 		if (order == null) {
+			String finalAccountKey = accountKey;
+			String finalOpportunityId = opportunityId;
+
 			order = orderResource.postOrder(
 				new Order() {
 					{

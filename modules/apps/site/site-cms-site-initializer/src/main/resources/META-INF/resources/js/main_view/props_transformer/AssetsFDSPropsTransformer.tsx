@@ -174,7 +174,16 @@ export default function AssetsFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: ({value}) => StatusLabel(value),
+					component: ({itemData, value}) => {
+						if (
+							itemData?.entryClassName ===
+							OBJECT_ENTRY_FOLDER_CLASS_NAME
+						) {
+							return '--';
+						}
+
+						return StatusLabel(value);
+					},
 					name: 'statusTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

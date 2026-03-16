@@ -1078,6 +1078,59 @@ test.describe('Paragraph Fragment', () => {
 			).toBeInViewport();
 		}
 	);
+
+	test(
+		'Can edit text editable with special characters',
+		{tag: ['@LPD-17788', '@LPD-79331']},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create page with a paragraph fragment and go to edit mode
+
+			const fragmentId = getRandomString();
+
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-paragraph',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Check paragraph editable can be edited
+
+			await pageEditorPage.editTextEditable(
+				fragmentId,
+				'element-text',
+				'New editable "fragment" text'
+			);
+
+			// Publish the page
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Check that the text is displayed
+
+			await expect(
+				page.getByText('New editable "fragment" text')
+			).toBeAttached();
+
+			// Check that the <p> does not have the default margin-bottom
+
+			expect(page.locator('.component-paragraph p')).toHaveCSS(
+				'margin-bottom',
+				'0px'
+			);
+		}
+	);
 });
 
 test.describe('Slider Fragment', () => {

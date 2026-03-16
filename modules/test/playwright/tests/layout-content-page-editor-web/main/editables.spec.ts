@@ -610,7 +610,7 @@ test(
 			fragmentId: paragraphId,
 		});
 
-		await expect(richTexteditable.locator('p')).toHaveCount(0);
+		await expect(richTexteditable.locator('p')).toHaveCount(1);
 
 		await richTexteditable.click();
 

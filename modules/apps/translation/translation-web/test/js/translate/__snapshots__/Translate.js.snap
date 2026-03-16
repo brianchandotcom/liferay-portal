@@ -55,7 +55,6 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-23"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
@@ -93,7 +92,6 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-24"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
@@ -674,7 +672,6 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-1"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
@@ -712,7 +709,6 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-2"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
@@ -1568,7 +1564,6 @@ exports[`Translate renders with experiences selector 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-3"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
@@ -1606,7 +1601,6 @@ exports[`Translate renders with experiences selector 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-4"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"

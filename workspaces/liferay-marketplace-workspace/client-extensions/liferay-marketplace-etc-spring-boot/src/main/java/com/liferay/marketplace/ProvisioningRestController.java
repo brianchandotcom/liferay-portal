@@ -28,10 +28,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,21 +151,14 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		try {
-			AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
-				new JSONObject(
-					json
-				).getJSONObject(
-					"licenseEntry"
-				).toString());
+		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
+			new JSONObject(
+				json
+			).getJSONObject(
+				"licenseEntry"
+			).toString());
 
-			return _provisioningService.postAppLicenseKey(appLicenseKey, jwt);
-		}
-		catch (JSONException jsonException) {
-			throw new ResponseStatusException(
-				HttpStatus.BAD_REQUEST,
-				"Invalid JSON or missing 'licenseEntry' field", jsonException);
-		}
+		return _provisioningService.postAppLicenseKey(appLicenseKey, jwt);
 	}
 
 	@PostMapping("app-license-keys/{id}/deactivate")
@@ -182,10 +171,6 @@ public class ProvisioningRestController extends BaseRestController {
 
 		appLicenseKeyResource.putAppLicenseKeyDeactivate(
 			jwt.getClaim("username"), jwt.getClaim("sub"), new Long[] {id});
-
-		if (_log.isInfoEnabled()) {
-			_log.info("License key " + id + " deactivated");
-		}
 	}
 
 	@PostMapping("cmp-beta-license-key")
@@ -238,21 +223,12 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		AppLicenseKey appLicenseKey;
-
-		try {
-			appLicenseKey = AppLicenseKey.toDTO(
-				new JSONObject(
-					json
-				).getJSONObject(
-					"licenseEntry"
-				).toString());
-		}
-		catch (JSONException jsonException) {
-			throw new ResponseStatusException(
-				HttpStatus.BAD_REQUEST,
-				"Invalid JSON or missing 'licenseEntry' field", jsonException);
-		}
+		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
+			new JSONObject(
+				json
+			).getJSONObject(
+				"licenseEntry"
+			).toString());
 
 		return _provisioningService.postAppLicenseKey(appLicenseKey, jwt);
 	}
@@ -264,16 +240,8 @@ public class ProvisioningRestController extends BaseRestController {
 		LicenseKeyResource licenseKeyResource =
 			_provisioningService.getLicenseKeyResource();
 
-		LicenseKey licenseKey = licenseKeyResource.postLicenseKeyTypeFree(
+		return licenseKeyResource.postLicenseKeyTypeFree(
 			LicenseKey.toDTO(json));
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Created License Key for order " +
-					licenseKey.getAssetReceiptLicenseUuid());
-		}
-
-		return licenseKey;
 	}
 
 	@PostMapping("license-key-type-free/{id}/renew")
@@ -304,12 +272,6 @@ public class ProvisioningRestController extends BaseRestController {
 					setOwner(licenseKey.getOwner());
 				}
 			});
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Renewed License Key for order" +
-					licenseKey.getAssetReceiptLicenseUuid());
-		}
 	}
 
 	private ResponseEntity<byte[]> _licenseKeyDownloadResponse(
@@ -344,9 +306,6 @@ public class ProvisioningRestController extends BaseRestController {
 
 		return new ResponseEntity<>(content, httpHeaders, HttpStatus.OK);
 	}
-
-	private static final Log _log = LogFactory.getLog(
-		ProvisioningRestController.class);
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

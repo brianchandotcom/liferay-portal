@@ -20,11 +20,12 @@ import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLic
 import com.liferay.osb.provisioning.rest.client.dto.v1_0.LicenseKey;
 import com.liferay.osb.provisioning.rest.client.resource.v1_0.LicenseKeyResource;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -201,7 +202,7 @@ public class ProvisioningRestController extends BaseRestController {
 			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
 		ProductPurchase[] productPurchases =
-			_koroneikiService.setUpProductPurchaseEntitlements(
+			_koroneikiService.postAccountProductPurchases(
 				jwt, productSpecificationsMap.get("license-type"), order);
 
 		ProductPurchase productPurchase = productPurchases[0];
@@ -256,13 +257,11 @@ public class ProvisioningRestController extends BaseRestController {
 
 		LicenseKey licenseKey = licenseKeyResource.getLicenseKey(id);
 
-		ZonedDateTime expirationDate = licenseKey.getExpirationDate(
-		).toInstant(
-		).atZone(
-			ZoneOffset.UTC
-		);
+		Date expirationDate = licenseKey.getExpirationDate();
 
-		if (expirationDate.isAfter(ZonedDateTime.now(ZoneOffset.UTC))) {
+		Instant instant = expirationDate.toInstant();
+
+		if (instant.isAfter(Instant.now())) {
 			return;
 		}
 
@@ -298,12 +297,12 @@ public class ProvisioningRestController extends BaseRestController {
 		sb.append(hostName);
 		sb.append(".xml");
 
-		String fileName = sb.toString(
-		).replaceAll(
-			" ", "-"
-		).toLowerCase();
+		String fileName = sb.toString();
 
-		httpHeaders.setContentDispositionFormData("attachment", fileName);
+		fileName = fileName.replaceAll(" ", "-");
+
+		httpHeaders.setContentDispositionFormData(
+			"attachment", StringUtil.toLowerCase(fileName));
 
 		httpHeaders.setContentType(MediaType.TEXT_XML);
 

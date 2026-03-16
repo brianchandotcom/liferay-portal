@@ -6,10 +6,10 @@
 package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
@@ -124,7 +124,7 @@ public class ObjectActionProductPurchaseRestController
 				return;
 			}
 
-			_koroneikiService.setUpProductPurchaseEntitlements(
+			_koroneikiService.postAccountProductPurchases(
 				jwt, productSpecificationsMap.get("license-type"), order);
 
 			_marketplaceService.updateOrder(
@@ -156,8 +156,7 @@ public class ObjectActionProductPurchaseRestController
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
 
-		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
-			account = order.getAccount();
+		Account account = order.getAccount();
 
 		BillingAddress billingAddress = order.getBillingAddress();
 

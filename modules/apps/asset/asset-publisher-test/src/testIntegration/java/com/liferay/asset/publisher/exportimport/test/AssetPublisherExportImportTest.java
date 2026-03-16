@@ -83,7 +83,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1166,34 +1165,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			serviceContext);
 	}
 
-	protected void assertAssetEntries(
-		List<AssetEntry> expectedAssetEntries,
-		List<AssetEntry> actualAssetEntries) {
-
-		Assert.assertEquals(
-			actualAssetEntries.toString(), expectedAssetEntries.size(),
-			actualAssetEntries.size());
-
-		Iterator<AssetEntry> expectedAssetEntriesIterator =
-			expectedAssetEntries.iterator();
-		Iterator<AssetEntry> actualAssetEntriesIterator =
-			actualAssetEntries.iterator();
-
-		while (expectedAssetEntriesIterator.hasNext() &&
-			   actualAssetEntriesIterator.hasNext()) {
-
-			AssetEntry expectedAssetEntry = expectedAssetEntriesIterator.next();
-			AssetEntry actualAssetEntry = actualAssetEntriesIterator.next();
-
-			Assert.assertEquals(
-				expectedAssetEntry.getClassName(),
-				actualAssetEntry.getClassName());
-			Assert.assertEquals(
-				expectedAssetEntry.getClassUuid(),
-				actualAssetEntry.getClassUuid());
-		}
-	}
-
 	protected String[] getAssetEntriesXmls(List<AssetEntry> assetEntries) {
 		String[] assetEntriesXmls = new String[assetEntries.size()];
 
@@ -1289,7 +1260,8 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			actualAssetEntries.addAll(assetEntryResult.getAssetEntries());
 		}
 
-		assertAssetEntries(expectedAssetEntries, actualAssetEntries);
+		AssetPublisherTestUtil.assertAssetEntries(
+			expectedAssetEntries, actualAssetEntries);
 	}
 
 	protected void testExportImportAssetEntries(Group scopeGroup)
@@ -1349,7 +1321,8 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 				new MockPortletRequest(), importedPortletPreferences,
 				_permissionChecker, selectedGroupIds, false, false);
 
-		assertAssetEntries(assetEntries, actualAssetEntries);
+		AssetPublisherTestUtil.assertAssetEntries(
+			assetEntries, actualAssetEntries);
 	}
 
 	protected void testSortByAssetVocabulary(boolean globalVocabulary)

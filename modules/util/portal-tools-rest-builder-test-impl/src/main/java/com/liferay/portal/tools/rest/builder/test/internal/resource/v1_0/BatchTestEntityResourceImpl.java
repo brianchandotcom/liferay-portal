@@ -311,8 +311,24 @@ public class BatchTestEntityResourceImpl
 	private BatchTestEntity _toBatchTestEntity(
 		BatchTestEntity originalBatchTestEntity) {
 
+		if (contextAcceptLanguage.isAcceptAllLanguages()) {
+			originalBatchTestEntity.setAcceptAllLanguagesProperty(true);
+		}
+
 		return new BatchTestEntity() {
 			{
+				setAcceptAllLanguagesProperty(
+					() -> {
+						Boolean originalAcceptAllLanguagesProperty =
+							originalBatchTestEntity.
+								getAcceptAllLanguagesProperty();
+
+						if (originalAcceptAllLanguagesProperty != null) {
+							return originalAcceptAllLanguagesProperty;
+						}
+
+						return contextAcceptLanguage.isAcceptAllLanguages();
+					});
 				setCustomFields(
 					() -> transform(
 						originalBatchTestEntity.getCustomFields(),

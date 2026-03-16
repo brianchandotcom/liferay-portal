@@ -21,6 +21,8 @@ components:
                     type: array
         BatchTestEntity:
             properties:
+                acceptAllLanguagesProperty:
+                    type: boolean
                 customFields:
                     items:
                         type: customField

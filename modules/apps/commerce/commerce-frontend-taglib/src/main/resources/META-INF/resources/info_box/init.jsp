@@ -19,6 +19,8 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.Map" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <%

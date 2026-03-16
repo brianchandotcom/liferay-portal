@@ -49,6 +49,51 @@ public class BatchTestEntity implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getAcceptAllLanguagesProperty() {
+		if (_acceptAllLanguagesPropertySupplier != null) {
+			acceptAllLanguagesProperty =
+				_acceptAllLanguagesPropertySupplier.get();
+
+			_acceptAllLanguagesPropertySupplier = null;
+		}
+
+		return acceptAllLanguagesProperty;
+	}
+
+	public void setAcceptAllLanguagesProperty(
+		Boolean acceptAllLanguagesProperty) {
+
+		this.acceptAllLanguagesProperty = acceptAllLanguagesProperty;
+
+		_acceptAllLanguagesPropertySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAcceptAllLanguagesProperty(
+		UnsafeSupplier<Boolean, Exception>
+			acceptAllLanguagesPropertyUnsafeSupplier) {
+
+		_acceptAllLanguagesPropertySupplier = () -> {
+			try {
+				return acceptAllLanguagesPropertyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean acceptAllLanguagesProperty;
+
+	@JsonIgnore
+	private Supplier<Boolean> _acceptAllLanguagesPropertySupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public com.liferay.portal.vulcan.custom.field.CustomField[]
 		getCustomFields() {
@@ -328,6 +373,18 @@ public class BatchTestEntity implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Boolean acceptAllLanguagesProperty = getAcceptAllLanguagesProperty();
+
+		if (acceptAllLanguagesProperty != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"acceptAllLanguagesProperty\": ");
+
+			sb.append(acceptAllLanguagesProperty);
+		}
 
 		com.liferay.portal.vulcan.custom.field.CustomField[] customFields =
 			getCustomFields();

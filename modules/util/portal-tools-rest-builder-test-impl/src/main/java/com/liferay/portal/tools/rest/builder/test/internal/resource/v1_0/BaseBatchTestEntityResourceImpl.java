@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -254,7 +255,7 @@ public abstract class BaseBatchTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/batch-test-entities' -d $'{"customFields": ___, "externalReferenceCode": ___, "name": ___, "nestedField": ___, "relatedCompanyTestEntity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/batch-test-entities' -d $'{"acceptAllLanguagesProperty": ___, "customFields": ___, "externalReferenceCode": ___, "name": ___, "nestedField": ___, "relatedCompanyTestEntity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -321,7 +322,7 @@ public abstract class BaseBatchTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "externalReferenceCode": ___, "name": ___, "nestedField": ___, "relatedCompanyTestEntity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/batch-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"acceptAllLanguagesProperty": ___, "customFields": ___, "externalReferenceCode": ___, "name": ___, "nestedField": ___, "relatedCompanyTestEntity": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -497,6 +498,15 @@ public abstract class BaseBatchTestEntityResourceImpl
 			@Override
 			public Locale getPreferredLocale() {
 				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+			@Override
+			public boolean isAcceptAllLanguages() {
+				if (ExportImportThreadLocal.isExportInProcess()) {
+					return true;
+				}
+
+				return AcceptLanguage.super.isAcceptAllLanguages();
 			}
 
 		};

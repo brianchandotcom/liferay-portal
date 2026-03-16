@@ -1257,6 +1257,16 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"acceptAllLanguagesProperty", additionalAssertFieldName)) {
+
+				if (batchTestEntity.getAcceptAllLanguagesProperty() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (batchTestEntity.getCustomFields() == null) {
 					valid = false;
@@ -1424,6 +1434,19 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"acceptAllLanguagesProperty", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						batchTestEntity1.getAcceptAllLanguagesProperty(),
+						batchTestEntity2.getAcceptAllLanguagesProperty())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1601,6 +1624,11 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("acceptAllLanguagesProperty")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
@@ -1800,6 +1828,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 	protected BatchTestEntity randomBatchTestEntity() throws Exception {
 		return new BatchTestEntity() {
 			{
+				acceptAllLanguagesProperty = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

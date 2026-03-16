@@ -184,14 +184,10 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 
 		long[] primaryKeys = addBaseModels(2);
 
-		// Create 1-to-M: systemObject (1) → customObject (Many)
-
 		addObjectRelationship(
 			_systemObjectDefinition, _objectDefinition,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		// Create custom object entries related to the system objects
 
 		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, _objectDefinition.getObjectDefinitionId(),

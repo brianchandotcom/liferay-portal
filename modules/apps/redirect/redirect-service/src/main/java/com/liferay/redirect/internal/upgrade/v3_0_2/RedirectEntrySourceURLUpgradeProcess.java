@@ -43,9 +43,9 @@ public class RedirectEntrySourceURLUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				long redirectEntryId = resultSet.getLong(1);
-				long groupId = resultSet.getLong(2);
-				String sourceURL = resultSet.getString(3);
+				long redirectEntryId = resultSet.getLong("redirectEntryId");
+				long groupId = resultSet.getLong("groupId");
+				String sourceURL = resultSet.getString("sourceURL");
 
 				Map<String, Long> redirectEntryIds =
 					redirectEntryIdsMap.computeIfAbsent(

@@ -328,8 +328,8 @@ public int countBy${entityFinder.name}(
 
 		if (count == null) {
 			try {
-				if ((databaseInMaxParameters > 0) && (<#list entityFinderArrayableColsList as arrayablefinderCol>
-							(${arrayablefinderCol.pluralName}.length > databaseInMaxParameters)
+				if ((${databaseInMaxParameters} > 0) && (<#list entityFinderArrayableColsList as arrayablefinderCol>
+							(${arrayablefinderCol.pluralName}.length > ${databaseInMaxParameters})
 
 							<#if arrayablefinderCol_has_next>
 								||
@@ -338,7 +338,7 @@ public int countBy${entityFinder.name}(
 						count = Long.valueOf(0);
 
 						<#list entityFinderArrayableColsList as arrayablefinderCol>
-							${arrayablefinderCol.type}[][] ${arrayablefinderCol.pluralName}Pages = (${arrayablefinderCol.type}[][])ArrayUtil.split(${arrayablefinderCol.pluralName}, databaseInMaxParameters);
+							${arrayablefinderCol.type}[][] ${arrayablefinderCol.pluralName}Pages = (${arrayablefinderCol.type}[][])<#if serviceBuilder.isVersionGTE_7_1_0()>ArrayUtil.split<#else>_split</#if>(${arrayablefinderCol.pluralName}, ${databaseInMaxParameters});
 						</#list>
 
 						<#list entityFinderArrayableColsList as arrayablefinderCol>

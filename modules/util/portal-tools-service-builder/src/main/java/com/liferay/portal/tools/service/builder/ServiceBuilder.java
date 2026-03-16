@@ -1103,6 +1103,12 @@ public class ServiceBuilder {
 				"java.class.name[", key, StringPool.CLOSE_BRACKET));
 	}
 
+	public String getCompatJavaFieldName(String key) {
+		return _compatProperties.getProperty(
+			StringBundler.concat(
+				"java.field.name[", key, StringPool.CLOSE_BRACKET));
+	}
+
 	public String getCreateMappingTableSQL(EntityMapping entityMapping)
 		throws Exception {
 
@@ -3504,6 +3510,9 @@ public class ServiceBuilder {
 
 			context.put("cacheFields", _getCacheFields(modelImplJavaClass));
 
+			context.put(
+				"databaseInMaxParameters",
+				getCompatJavaFieldName("databaseInMaxParameters"));
 			context.put("entity", entity);
 			context.put("persistence", Boolean.TRUE);
 			context.put("referenceEntities", _mergeReferenceEntities(entity));

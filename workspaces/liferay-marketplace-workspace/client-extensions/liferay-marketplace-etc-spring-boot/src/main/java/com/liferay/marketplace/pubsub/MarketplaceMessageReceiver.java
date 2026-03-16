@@ -317,45 +317,27 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			return;
 		}
 
-		ChannelResource channelResource =
-			_marketplaceService.getChannelResource();
+		if (_channelId == null) {
+			synchronized (this) {
+				if (_channelId == null) {
+					ChannelResource channelResource =
+						_marketplaceService.getChannelResource();
 
-		Order order = new Order() {
-			{
-				setAccountExternalReferenceCode(productPurchase::getAccountKey);
-				setCurrencyCode(() -> "USD");
-				setExternalReferenceCode(productPurchase::getKey);
-				setOrderItems(
-					() -> new OrderItem[] {
-						new OrderItem() {
-							{
-								setQuantity(
-									() -> new BigDecimal(
-										productPurchase.getQuantity()));
-								setSkuExternalReferenceCode(
-									productPurchase::getProductKey);
-							}
-						}
-					});
-				setOrderStatus(
-					() -> MarketplaceConstants.ORDER_STATUS_COMPLETED);
-				setOrderTypeExternalReferenceCode(() -> "SALESFORCE-ORDER");
-				setPaymentStatus(
-					() -> MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED);
+					Channel channel =
+						channelResource.getChannelByExternalReferenceCode(
+							_MARKETPLACE_CHANNEL);
+
+					_channelId = channel.getId();
+				}
 			}
-		};
+		}
 
-		Channel channel = channelResource.getChannelByExternalReferenceCode(
-			"MARKETPLACE-CHANNEL");
-
-		order.setChannelId(channel::getId);
-
-		_marketplaceService.postOrder(order);
-	}
+	private static final String _MARKETPLACE_CHANNEL = "MARKETPLACE-CHANNEL";
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceMessageReceiver.class);
 
+	private volatile Long _channelId;
 	private final KoroneikiService _koroneikiService;
 	private final MarketplaceService _marketplaceService;
 	private final List<String> _productKeys;

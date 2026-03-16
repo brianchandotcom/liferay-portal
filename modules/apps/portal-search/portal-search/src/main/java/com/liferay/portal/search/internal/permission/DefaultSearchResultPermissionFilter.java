@@ -55,8 +55,10 @@ import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -134,6 +136,12 @@ public class DefaultSearchResultPermissionFilter
 			new SlidingWindowSearcher();
 
 		return slidingWindowSearcher.search(start, end, searchContext);
+	}
+
+	private boolean _classWithDynamicInheritanceChecking(
+		String entryClassName) {
+
+		return _classesWithDynamicInheritanceChecking.contains(entryClassName);
 	}
 
 	private int _filterHits(
@@ -291,12 +299,16 @@ public class DefaultSearchResultPermissionFilter
 
 		String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
 
-		boolean hasCompanyScopeViewPermission =
-			companyScopeViewPermissions.computeIfAbsent(
-				entryClassName, this::_hasCompanyScopeViewPermission);
+		if (!_classWithDynamicInheritanceChecking(entryClassName) ||
+			!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
-		if (hasCompanyScopeViewPermission) {
-			return true;
+			boolean hasCompanyScopeViewPermission =
+				companyScopeViewPermissions.computeIfAbsent(
+					entryClassName, this::_hasCompanyScopeViewPermission);
+
+			if (hasCompanyScopeViewPermission) {
+				return true;
+			}
 		}
 
 		Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
@@ -389,6 +401,18 @@ public class DefaultSearchResultPermissionFilter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSearchResultPermissionFilter.class);
+
+	private static final Set<String> _classesWithDynamicInheritanceChecking =
+		new HashSet<>(
+			Arrays.asList(
+				"com.liferay.bookmarks.model.BookmarksEntry",
+				"com.liferay.bookmarks.model.BookmarksFolder",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				"com.liferay.document.library.kernel.model.DLFolder",
+				"com.liferay.journal.model.JournalArticle",
+				"com.liferay.journal.model.JournalFolder",
+				"com.liferay.message.boards.model.impl.MBCategoryImpl",
+				"com.liferay.message.boards.model.impl.MBMessageImpl"));
 
 	private final int _accurateCountThreshold;
 	private final FacetPostProcessor _facetPostProcessor;

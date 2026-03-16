@@ -317,7 +317,7 @@ public class KoroneikiService {
 			jwt.getClaim("username"), jwt.getClaim("sub"), koroneikiAccount);
 	}
 
-	public ProductPurchase[] setUpProductEntitlements(
+	public ProductPurchase[] setUpProductPurchaseEntitlements(
 			Jwt jwt, String licenseType, Order order)
 		throws Exception {
 

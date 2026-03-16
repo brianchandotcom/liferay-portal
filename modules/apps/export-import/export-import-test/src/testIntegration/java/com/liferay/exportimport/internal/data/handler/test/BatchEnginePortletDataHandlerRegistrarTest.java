@@ -453,15 +453,15 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				Assert.assertEquals(
 					logEntries.toString(), 1, logEntries.size());
 
+				LogEntry logEntry = logEntries.get(0);
+
 				Assert.assertEquals(
 					StringBundler.concat(
 						"ExportImportDescriptor with key ", key3,
 						"  declares shared model class ", className,
 						" but does not implement ",
 						"getApplicableModelFunction()"),
-					logEntries.get(
-						0
-					).getMessage());
+					logEntry.getMessage());
 			}
 		}
 	}

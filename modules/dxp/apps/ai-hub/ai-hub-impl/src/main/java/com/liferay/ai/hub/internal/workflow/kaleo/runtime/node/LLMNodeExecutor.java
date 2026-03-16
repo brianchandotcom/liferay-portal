@@ -49,6 +49,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -111,6 +113,20 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
+		AtomicReference<ChatResponse> chatResponseAtomicReference =
+			new AtomicReference<>();
+
+		Callable<Void> completeResponseCallable =
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					_completeResponse(
+						chatResponseAtomicReference.get(), executionContext,
+						currentKaleoNode, kaleoNodeSettingValues, prompt,
+						userMessage);
+
+					return null;
+				});
+
 		AssistantHandlerUtil.handle(
 			AssistantHandlerContext.builder(
 			).contentRetriever(
@@ -127,10 +143,19 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			).memoryId(
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponseConsumer(
-				response -> _completeResponse(
-					response, executionContext, currentKaleoNode,
-					kaleoNodeSettingValues, prompt, userMessage,
-					vertexAiGeminiStreamingChatModel)
+				response -> {
+					chatResponseAtomicReference.set(response);
+
+					try {
+						completeResponseCallable.call();
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
+					finally {
+						vertexAiGeminiStreamingChatModel.close();
+					}
+				}
 			).onErrorConsumer(
 				throwable -> {
 					vertexAiGeminiStreamingChatModel.close();
@@ -181,65 +206,51 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 	private void _completeResponse(
 		ChatResponse chatResponse, ExecutionContext executionContext,
 		KaleoNode kaleoNode, Map<String, String> kaleoNodeSettingValues,
-		String prompt, String userMessage,
-		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel) {
+		String prompt, String userMessage) {
+
+		Map<String, Serializable> workflowContext =
+			executionContext.getWorkflowContext();
+
+		AiMessage aiMessage = chatResponse.aiMessage();
+
+		JSONArray jsonArray = VariablesUtil.getVariablesJSONArray(
+			"outputVariables", kaleoNodeSettingValues);
+
+		if ((jsonArray != null) && (jsonArray.length() > 0)) {
+			JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+			workflowContext.put(jsonObject.getString("name"), aiMessage.text());
+		}
+
+		workflowContext.put("output", aiMessage.text());
+
+		SseUtil.send(
+			aiMessage.text(),
+			GetterUtil.getString(workflowContext.get("outBoundEventName")),
+			kaleoNode.getName(),
+			GetterUtil.getString(workflowContext.get("sseEventSinkKey")));
+
+		KaleoInstanceToken kaleoInstanceToken =
+			executionContext.getKaleoInstanceToken();
+
+		KaleoLogUtil.addNodeUsageKaleoLog(
+			chatResponse, kaleoInstanceToken, aiMessage.text(), prompt,
+			executionContext.getServiceContext(), userMessage);
+
+		List<KaleoTransition> kaleoTransitions =
+			kaleoNode.getKaleoTransitions();
+
+		KaleoTransition kaleoTransition = kaleoTransitions.get(0);
 
 		try {
-			new CompanyInheritableThreadLocalCallable<>(
-				() -> {
-					Map<String, Serializable> workflowContext =
-						executionContext.getWorkflowContext();
-
-					AiMessage aiMessage = chatResponse.aiMessage();
-
-					JSONArray jsonArray = VariablesUtil.getVariablesJSONArray(
-						"outputVariables", kaleoNodeSettingValues);
-
-					if ((jsonArray != null) && (jsonArray.length() > 0)) {
-						JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-						workflowContext.put(
-							jsonObject.getString("name"), aiMessage.text());
-					}
-
-					workflowContext.put("output", aiMessage.text());
-
-					SseUtil.send(
-						aiMessage.text(),
-						GetterUtil.getString(
-							workflowContext.get("outBoundEventName")),
-						kaleoNode.getName(),
-						GetterUtil.getString(
-							workflowContext.get("sseEventSinkKey")));
-
-					KaleoInstanceToken kaleoInstanceToken =
-						executionContext.getKaleoInstanceToken();
-
-					KaleoLogUtil.addNodeUsageKaleoLog(
-						chatResponse, kaleoInstanceToken, aiMessage.text(),
-						prompt, executionContext.getServiceContext(),
-						userMessage);
-
-					List<KaleoTransition> kaleoTransitions =
-						kaleoNode.getKaleoTransitions();
-
-					KaleoTransition kaleoTransition = kaleoTransitions.get(0);
-
-					_workflowNodeManager.completeWorkflowNode(
-						kaleoInstanceToken.getCompanyId(),
-						kaleoInstanceToken.getUserId(),
-						kaleoInstanceToken.getKaleoInstanceTokenId(),
-						kaleoTransition.getName(), workflowContext, false);
-
-					return null;
-				}
-			).call();
+			_workflowNodeManager.completeWorkflowNode(
+				kaleoInstanceToken.getCompanyId(),
+				kaleoInstanceToken.getUserId(),
+				kaleoInstanceToken.getKaleoInstanceTokenId(),
+				kaleoTransition.getName(), workflowContext, false);
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-		finally {
-			vertexAiGeminiStreamingChatModel.close();
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

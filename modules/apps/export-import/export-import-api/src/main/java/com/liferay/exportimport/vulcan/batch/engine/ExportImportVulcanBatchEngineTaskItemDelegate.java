@@ -42,7 +42,9 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		public Class<T> getModelClass();
 
 		public default String getModelClassName() {
-			return getModelClass().getName();
+			Class<T> modelClass = getModelClass();
+
+			return modelClass.getName();
 		}
 
 		public default List<String> getNestedFields() {

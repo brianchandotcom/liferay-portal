@@ -385,11 +385,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		while (iterator.hasNext()) {
 			Registration registration = iterator.next();
 
-			if (StringUtil.equals(
-					key,
-					registration.getExportImportDescriptor(
-					).getKey())) {
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					registration.getExportImportDescriptor();
 
+			if (StringUtil.equals(key, exportImportDescriptor.getKey())) {
 				iterator.remove();
 
 				_updateDeletionSystemEventStagedModelTypes();
@@ -398,7 +398,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				_updateSystemEventExtraDataContributor(
 					bundleContext, companyId);
 
-				return registration.getExportImportDescriptor();
+				return exportImportDescriptor;
 			}
 		}
 
@@ -921,8 +921,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		Set<String> sharedClassNames = new HashSet<>();
 
 		for (Registration registration : _registrations) {
-			String modelClassName = registration.getExportImportDescriptor(
-			).getModelClassName();
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					registration.getExportImportDescriptor();
+
+			String modelClassName = exportImportDescriptor.getModelClassName();
 
 			if (!classNames.add(modelClassName)) {
 				sharedClassNames.add(modelClassName);

@@ -15,6 +15,8 @@ import com.liferay.info.field.type.ActionInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.info.type.WebImage;
@@ -379,6 +381,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 			try {
 				Object downloadURLInfoFieldValue = null;
 				Object fileNameInfoFieldValue = null;
+				Object fileURLInfoFieldValue = null;
 				Object mimeTypeInfoFieldValue = null;
 				Object previewURLInfoFieldValue = null;
 				Object sizeInfoFieldValue = null;
@@ -392,9 +395,27 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 					downloadURLInfoFieldValue = dlURLHelper.getDownloadURL(
 						fileEntry, fileEntry.getFileVersion(), themeDisplay,
 						StringPool.BLANK);
-
 					fileNameInfoFieldValue = fileEntry.getFileName();
-					mimeTypeInfoFieldValue = fileEntry.getMimeType();
+
+					String mimeType = fileEntry.getMimeType();
+
+					mimeTypeInfoFieldValue = mimeType;
+
+					if (mimeType.startsWith("image")) {
+						WebImage fileURLWebImage = new WebImage(
+							dlURLHelper.getPreviewURL(
+								fileEntry, fileEntry.getFileVersion(),
+								themeDisplay, StringPool.BLANK),
+							new InfoItemReference(
+								FileEntry.class.getName(),
+								new ClassPKInfoItemIdentifier(
+									fileEntry.getFileEntryId())));
+
+						fileURLWebImage.setAlt(fileEntry.getDescription());
+
+						fileURLInfoFieldValue = fileURLWebImage;
+					}
+
 					previewURLInfoFieldValue = dlURLHelper.getPreviewURL(
 						fileEntry, fileEntry.getFileVersion(), themeDisplay,
 						StringPool.BLANK);
@@ -403,12 +424,16 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 				else if (infoFieldValue instanceof InfoLocalizedValue) {
 					InfoLocalizedValue<Object> infoLocalizedValue =
 						(InfoLocalizedValue<Object>)infoFieldValue;
+					boolean hasImage = false;
 
 					InfoLocalizedValue.Builder<Object>
 						downloadURLInfoFieldValueBuilder =
 							InfoLocalizedValue.builder();
 					InfoLocalizedValue.Builder<Object>
 						fileNameInfoFieldValueBuilder =
+							InfoLocalizedValue.builder();
+					InfoLocalizedValue.Builder<Object>
+						fileURLInfoFieldValueBuilder =
 							InfoLocalizedValue.builder();
 					InfoLocalizedValue.Builder<Object>
 						mimeTypeInfoFieldValueBuilder =
@@ -435,8 +460,30 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 								themeDisplay, StringPool.BLANK));
 						fileNameInfoFieldValueBuilder.value(
 							entry.getKey(), fileEntry.getFileName());
+
+						String mimeType = fileEntry.getMimeType();
+
 						mimeTypeInfoFieldValueBuilder.value(
 							entry.getKey(), fileEntry.getMimeType());
+
+						if (mimeType.startsWith("image")) {
+							WebImage fileURLWebImage = new WebImage(
+								dlURLHelper.getPreviewURL(
+									fileEntry, fileEntry.getFileVersion(),
+									themeDisplay, StringPool.BLANK),
+								new InfoItemReference(
+									FileEntry.class.getName(),
+									new ClassPKInfoItemIdentifier(
+										fileEntry.getFileEntryId())));
+
+							fileURLWebImage.setAlt(fileEntry.getDescription());
+
+							fileURLInfoFieldValueBuilder.value(
+								entry.getKey(), fileURLWebImage);
+
+							hasImage = true;
+						}
+
 						previewURLInfoFieldValueBuilder.value(
 							entry.getKey(),
 							dlURLHelper.getPreviewURL(
@@ -451,11 +498,34 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 
 					fileNameInfoFieldValue =
 						fileNameInfoFieldValueBuilder.build();
+
+					if (hasImage) {
+						fileURLInfoFieldValue =
+							fileURLInfoFieldValueBuilder.build();
+					}
+
 					mimeTypeInfoFieldValue =
 						mimeTypeInfoFieldValueBuilder.build();
 					previewURLInfoFieldValue =
 						previewURLInfoFieldValueBuilder.build();
 					sizeInfoFieldValue = sizeInfoFieldValueBuilder.build();
+				}
+
+				if (fileURLInfoFieldValue != null) {
+					infoFieldValues.add(
+						new InfoFieldValue<>(
+							InfoField.builder(
+							).infoFieldType(
+								ImageInfoFieldType.INSTANCE
+							).namespace(
+								objectFieldNamespace
+							).name(
+								objectField.getObjectFieldId() + "#fileURL"
+							).labelInfoLocalizedValue(
+								InfoLocalizedValue.localize(
+									ObjectEntryInfoItemFields.class, "file-url")
+							).build(),
+							fileURLInfoFieldValue));
 				}
 
 				infoFieldValues.add(

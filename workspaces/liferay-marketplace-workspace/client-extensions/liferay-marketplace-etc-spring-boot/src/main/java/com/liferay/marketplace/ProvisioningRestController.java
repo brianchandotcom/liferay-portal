@@ -216,7 +216,7 @@ public class ProvisioningRestController extends BaseRestController {
 			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
 		ProductPurchase[] productPurchases =
-			_marketplaceService.setUpProductEntitlements(
+			_koroneikiService.setUpProductEntitlements(
 				jwt, productSpecificationsMap.get("license-type"), order);
 
 		ProductPurchase productPurchase = productPurchases[0];

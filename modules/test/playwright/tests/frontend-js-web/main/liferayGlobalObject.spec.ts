@@ -55,7 +55,7 @@ test(
 				await expect(
 					page
 						.locator(
-							'script[src^="http://127.0.0.1/o/js/-/frontend-js-web"]'
+							'script[src^="http://127.0.0.1/o/frontend-js-web"]'
 						)
 						.and(page.locator('script[src$="/Liferay.js"]'))
 				).toHaveAttribute('crossorigin', '');
@@ -68,7 +68,7 @@ test(
 		await test.step('Check crossorigin attribute is missing', async () => {
 			await expect(
 				page
-					.locator('script[src^="/o/js/-/frontend-js-web"]')
+					.locator('script[src^="/o/frontend-js-web"]')
 					.and(page.locator('script[src$="/Liferay.js"]'))
 			).not.toHaveAttribute('crossorigin', '');
 		});

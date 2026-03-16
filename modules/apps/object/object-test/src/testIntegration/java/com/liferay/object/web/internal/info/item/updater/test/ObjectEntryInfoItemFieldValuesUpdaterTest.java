@@ -270,12 +270,12 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 	}
 
 	private FileEntry _addTempFileEntry(long groupId) throws Exception {
+		String content = "test\n" + RandomTestUtil.randomString();
+
 		return TempFileEntryUtil.addTempFileEntry(
 			groupId, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			TempFileEntryUtil.getTempFileName("document.txt"),
-			FileUtil.createTempFile(
-				StringUtil.randomString(
-				).getBytes()),
+			FileUtil.createTempFile(content.getBytes()),
 			ContentTypes.TEXT_PLAIN);
 	}
 

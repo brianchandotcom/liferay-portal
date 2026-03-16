@@ -15,14 +15,13 @@ import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUti
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -78,7 +77,6 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			List<PathElement> remainingPathElements)
 		throws PortalException {
 
-		long companyId = CompanyThreadLocal.getCompanyId();
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
@@ -130,7 +128,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponseConsumer(
 				response -> _completeResponse(
-					response, companyId, executionContext, currentKaleoNode,
+					response, executionContext, currentKaleoNode,
 					kaleoNodeSettingValues, prompt, userMessage,
 					vertexAiGeminiStreamingChatModel)
 			).onErrorConsumer(
@@ -181,55 +179,61 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 	}
 
 	private void _completeResponse(
-		ChatResponse chatResponse, long companyId,
-		ExecutionContext executionContext, KaleoNode kaleoNode,
-		Map<String, String> kaleoNodeSettingValues, String prompt,
-		String userMessage,
+		ChatResponse chatResponse, ExecutionContext executionContext,
+		KaleoNode kaleoNode, Map<String, String> kaleoNodeSettingValues,
+		String prompt, String userMessage,
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel) {
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+		try {
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					Map<String, Serializable> workflowContext =
+						executionContext.getWorkflowContext();
 
-			Map<String, Serializable> workflowContext =
-				executionContext.getWorkflowContext();
+					AiMessage aiMessage = chatResponse.aiMessage();
 
-			AiMessage aiMessage = chatResponse.aiMessage();
+					JSONArray jsonArray = VariablesUtil.getVariablesJSONArray(
+						"outputVariables", kaleoNodeSettingValues);
 
-			JSONArray jsonArray = VariablesUtil.getVariablesJSONArray(
-				"outputVariables", kaleoNodeSettingValues);
+					if ((jsonArray != null) && (jsonArray.length() > 0)) {
+						JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-			if ((jsonArray != null) && (jsonArray.length() > 0)) {
-				JSONObject jsonObject = jsonArray.getJSONObject(0);
+						workflowContext.put(
+							jsonObject.getString("name"), aiMessage.text());
+					}
 
-				workflowContext.put(
-					jsonObject.getString("name"), aiMessage.text());
-			}
+					workflowContext.put("output", aiMessage.text());
 
-			workflowContext.put("output", aiMessage.text());
+					SseUtil.send(
+						aiMessage.text(),
+						GetterUtil.getString(
+							workflowContext.get("outBoundEventName")),
+						kaleoNode.getName(),
+						GetterUtil.getString(
+							workflowContext.get("sseEventSinkKey")));
 
-			SseUtil.send(
-				aiMessage.text(),
-				GetterUtil.getString(workflowContext.get("outBoundEventName")),
-				kaleoNode.getName(),
-				GetterUtil.getString(workflowContext.get("sseEventSinkKey")));
+					KaleoInstanceToken kaleoInstanceToken =
+						executionContext.getKaleoInstanceToken();
 
-			KaleoInstanceToken kaleoInstanceToken =
-				executionContext.getKaleoInstanceToken();
+					KaleoLogUtil.addNodeUsageKaleoLog(
+						chatResponse, kaleoInstanceToken, aiMessage.text(),
+						prompt, executionContext.getServiceContext(),
+						userMessage);
 
-			KaleoLogUtil.addNodeUsageKaleoLog(
-				chatResponse, kaleoInstanceToken, aiMessage.text(), prompt,
-				executionContext.getServiceContext(), userMessage);
+					List<KaleoTransition> kaleoTransitions =
+						kaleoNode.getKaleoTransitions();
 
-			List<KaleoTransition> kaleoTransitions =
-				kaleoNode.getKaleoTransitions();
+					KaleoTransition kaleoTransition = kaleoTransitions.get(0);
 
-			KaleoTransition kaleoTransition = kaleoTransitions.get(0);
+					_workflowNodeManager.completeWorkflowNode(
+						kaleoInstanceToken.getCompanyId(),
+						kaleoInstanceToken.getUserId(),
+						kaleoInstanceToken.getKaleoInstanceTokenId(),
+						kaleoTransition.getName(), workflowContext, false);
 
-			_workflowNodeManager.completeWorkflowNode(
-				kaleoInstanceToken.getCompanyId(),
-				kaleoInstanceToken.getUserId(),
-				kaleoInstanceToken.getKaleoInstanceTokenId(),
-				kaleoTransition.getName(), workflowContext, false);
+					return null;
+				}
+			).call();
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

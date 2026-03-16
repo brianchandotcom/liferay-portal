@@ -84,9 +84,9 @@ public class DDMDataProviderInvokerImplTest {
 
 		DDMDataProviderInvokeCommand ddmDataProviderInvokeCommand =
 			new DDMDataProviderInvokeCommand(
-				"ddmDataProviderInstanceName", ddmDataProvider,
-				ddmDataProviderRequest,
-				Mockito.mock(DDMRESTDataProviderSettings.class));
+				() -> ddmDataProvider.getData(ddmDataProviderRequest),
+				Mockito.mock(DDMRESTDataProviderSettings.class),
+				"ddmDataProviderInstanceName");
 
 		DDMDataProviderResponse ddmDataProviderResponse =
 			ddmDataProviderInvokeCommand.run();
@@ -494,9 +494,9 @@ public class DDMDataProviderInvokerImplTest {
 
 		DDMDataProviderInvokeCommand ddmDataProviderInvokeCommand =
 			new DDMDataProviderInvokeCommand(
-				"ddmDataProviderInstanceName", ddmDataProvider,
-				ddmDataProviderRequest,
-				_createDDMRESTDataProviderSettingsWithTimeout(timeout));
+				() -> ddmDataProvider.getData(ddmDataProviderRequest),
+				_createDDMRESTDataProviderSettingsWithTimeout(timeout),
+				"ddmDataProviderInstanceName");
 
 		Assert.assertEquals(
 			timeout,
@@ -505,9 +505,9 @@ public class DDMDataProviderInvokerImplTest {
 		timeout = 15000;
 
 		ddmDataProviderInvokeCommand = new DDMDataProviderInvokeCommand(
-			"ddmDataProviderInstanceName", ddmDataProvider,
-			ddmDataProviderRequest,
-			_createDDMRESTDataProviderSettingsWithTimeout(timeout));
+			() -> ddmDataProvider.getData(ddmDataProviderRequest),
+			_createDDMRESTDataProviderSettingsWithTimeout(timeout),
+			"ddmDataProviderInstanceName");
 
 		Assert.assertEquals(
 			timeout,

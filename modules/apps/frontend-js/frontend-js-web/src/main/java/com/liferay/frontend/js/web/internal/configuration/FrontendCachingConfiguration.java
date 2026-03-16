@@ -24,8 +24,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FrontendCachingConfiguration {
 
 	@Meta.AD(
-		deflt = "use-one-hash-per-web-context",
-		description = "caching-strategy-help", name = "caching-strategy",
+		deflt = "do-not-use-hashes", description = "caching-strategy-help",
+		name = "caching-strategy",
 		optionLabels = {
 			"do-not-use-hashes", "use-one-hash-per-file",
 			"use-one-hash-per-web-context"

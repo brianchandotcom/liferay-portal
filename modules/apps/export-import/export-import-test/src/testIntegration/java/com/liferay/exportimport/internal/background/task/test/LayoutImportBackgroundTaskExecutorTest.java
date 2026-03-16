@@ -330,11 +330,13 @@ public class LayoutImportBackgroundTaskExecutorTest {
 			ObjectDefinition objectDefinition, String tempFileName)
 		throws Exception {
 
+		String content = "test\n" + tempFileName;
+
 		return TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(tempFileName + ".txt"),
-			FileUtil.createTempFile(tempFileName.getBytes()),
+			FileUtil.createTempFile(content.getBytes()),
 			ContentTypes.TEXT_PLAIN);
 	}
 

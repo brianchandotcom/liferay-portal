@@ -1716,12 +1716,14 @@ public class ObjectFieldLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"upload",
 				() -> {
+					String content = "test\n" + RandomTestUtil.randomString();
+
 					FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 						TestPropsValues.getGroupId(),
 						TestPropsValues.getUserId(), StringUtil.randomString(),
 						TempFileEntryUtil.getTempFileName(
 							StringUtil.randomString() + ".txt"),
-						FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+						FileUtil.createTempFile(content.getBytes()),
 						ContentTypes.TEXT_PLAIN);
 
 					return fileEntry.getFileEntryId();

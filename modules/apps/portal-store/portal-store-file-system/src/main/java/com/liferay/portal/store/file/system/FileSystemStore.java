@@ -267,16 +267,18 @@ public class FileSystemStore implements Store {
 		for (File storeDir : storeDirs) {
 			long storeCompanyId = GetterUtil.getLong(storeDir.getName());
 
-			if ((storeCompanyId != 0) &&
-				!ArrayUtil.contains(companyIds, storeCompanyId)) {
+			if ((storeCompanyId == 0) ||
+				ArrayUtil.contains(companyIds, storeCompanyId)) {
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Manually remove unused store ", storeCompanyId,
-							" that belongs to company ", storeCompanyId,
-							" if it is no longer used anywhere else"));
-				}
+				continue;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Manually remove unused store ", storeCompanyId,
+						" that belongs to company ", storeCompanyId,
+						" if it is no longer used anywhere else"));
 			}
 		}
 	}

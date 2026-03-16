@@ -251,30 +251,33 @@ public class AzureStore implements Store {
 				_blobContainerClient.listBlobsByHierarchy(StringPool.BLANK);
 
 			for (BlobItem blobItem : blobs) {
-				if (Boolean.TRUE.equals(blobItem.isPrefix())) {
-					String folderName = blobItem.getName();
+				if (!Boolean.TRUE.equals(blobItem.isPrefix())) {
+					continue;
+				}
 
-					if (folderName.endsWith(StringPool.SLASH)) {
-						folderName = folderName.substring(
-							0, folderName.length() - 1);
-					}
+				String folderName = blobItem.getName();
 
-					if (Validator.isNumber(folderName)) {
-						long storeCompanyId = GetterUtil.getLong(folderName);
+				if (folderName.endsWith(StringPool.SLASH)) {
+					folderName = folderName.substring(
+						0, folderName.length() - 1);
+				}
 
-						if (!ArrayUtil.contains(companyIds, storeCompanyId)) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									StringBundler.concat(
-										"Manually remove unused store ",
-										storeCompanyId,
-										" that belongs to company ",
-										storeCompanyId,
-										" if it is no longer used anywhere ",
-										"else"));
-							}
-						}
-					}
+				if (!Validator.isNumber(folderName)) {
+					continue;
+				}
+
+				long storeCompanyId = GetterUtil.getLong(folderName);
+
+				if (ArrayUtil.contains(companyIds, storeCompanyId)) {
+					continue;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Manually remove unused store ", storeCompanyId,
+							" that belongs to company ", storeCompanyId,
+							" if it is no longer used anywhere else"));
 				}
 			}
 		}

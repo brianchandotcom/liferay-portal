@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.staging.internal.upgrade.v1_0_0;
+package com.liferay.staging.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -17,9 +17,10 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Carlos Correa
  */
-public class StagingConfigurationUpgradeProcess extends UpgradeProcess {
+public abstract class BaseStagingConfigurationUpgradeProcess
+	extends UpgradeProcess {
 
-	public StagingConfigurationUpgradeProcess(
+	public BaseStagingConfigurationUpgradeProcess(
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;
@@ -44,11 +45,13 @@ public class StagingConfigurationUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			properties.remove("publishDisplayedContent");
+			properties.remove(getStagingConfigurationName());
 
 			configuration.update(properties);
 		}
 	}
+
+	protected abstract String getStagingConfigurationName();
 
 	private final ConfigurationAdmin _configurationAdmin;
 

@@ -35,7 +35,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Carlos Correa
  */
 @RunWith(Arquillian.class)
-public class StagingConfigurationUpgradeProcessTest {
+public class PublishDisplayedContentStagingConfigurationUpgradeProcessTest {
 
 	@ClassRule
 	@Rule

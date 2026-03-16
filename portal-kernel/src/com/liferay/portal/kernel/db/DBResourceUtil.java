@@ -30,6 +30,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -101,7 +102,13 @@ public class DBResourceUtil {
 	public static Map<String, String[]> getModuleTablesPrimaryKeyColumnNames(
 		Bundle bundle) {
 
-		return _getTablesPrimaryKeyColumnNames(getModuleTablesSQL(bundle));
+		String sql = getModuleTablesSQL(bundle);
+
+		if (sql == null) {
+			return Collections.emptyMap();
+		}
+
+		return _getTablesPrimaryKeyColumnNames(sql);
 	}
 
 	public static String getModuleTablesSQL(Bundle bundle) {

@@ -121,8 +121,8 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 				}
 
 				return DateUtil.getDate(
-					displayDate, "yyyy-MM-dd'T'HH:mm",
-					themeDisplay.getLocale());
+					displayDate, "yyyy-MM-dd'T'HH:mm", themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
 			}
 		).put(
 			"hasWorkflow",

@@ -20,6 +20,7 @@ import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLic
 import com.liferay.osb.provisioning.rest.client.dto.v1_0.LicenseKey;
 import com.liferay.osb.provisioning.rest.client.resource.v1_0.LicenseKeyResource;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -295,12 +296,12 @@ public class ProvisioningRestController extends BaseRestController {
 		sb.append(hostName);
 		sb.append(".xml");
 
-		String fileName = sb.toString(
-		).replaceAll(
-			" ", "-"
-		).toLowerCase();
+		String fileName = sb.toString();
 
-		httpHeaders.setContentDispositionFormData("attachment", fileName);
+		fileName = fileName.replaceAll(" ", "-");
+
+		httpHeaders.setContentDispositionFormData(
+			"attachment", StringUtil.toLowerCase(fileName));
 
 		httpHeaders.setContentType(MediaType.TEXT_XML);
 

@@ -84,6 +84,45 @@ export async function resetConsentManagerConfiguration(systemSettingsPage) {
 	await resetConfiguration(true, systemSettingsPage);
 }
 
+export async function saveOrUpdateConfiguration(dialog: boolean, page) {
+	if (dialog) {
+		page.once('dialog', async (dialogWindow) => {
+			await dialogWindow.accept();
+		});
+	}
+
+	const saveButton = page.getByRole('button', {
+		name: 'Save',
+	});
+
+	const updateButton = page.getByRole('button', {
+		name: 'Update',
+	});
+
+	if (await saveButton.isVisible()) {
+		await saveButton.dispatchEvent('click');
+	}
+	else if (await updateButton.isVisible()) {
+		await updateButton.dispatchEvent('click');
+	}
+
+	try {
+		await waitForAlert(page, undefined, {timeout: 5000});
+	}
+	catch (error) {
+		if (page.getByRole('heading', {name: '500'})) {
+			await reloadUntilVisible({
+				maxAttempts: 1,
+				myLocator: updateButton,
+				page,
+			});
+		}
+		else {
+			throw error;
+		}
+	}
+}
+
 export async function updateConsentManagerConfiguration(
 	page,
 	{
@@ -144,43 +183,4 @@ export async function updateConsentManagerConfiguration(
 	}
 
 	await saveOrUpdateConfiguration(dialog, page);
-}
-
-async function saveOrUpdateConfiguration(dialog: boolean, page) {
-	if (dialog) {
-		page.once('dialog', async (dialogWindow) => {
-			await dialogWindow.accept();
-		});
-	}
-
-	const saveButton = page.getByRole('button', {
-		name: 'Save',
-	});
-
-	const updateButton = page.getByRole('button', {
-		name: 'Update',
-	});
-
-	if (await saveButton.isVisible()) {
-		await saveButton.dispatchEvent('click');
-	}
-	else if (await updateButton.isVisible()) {
-		await updateButton.dispatchEvent('click');
-	}
-
-	try {
-		await waitForAlert(page, undefined, {timeout: 5000});
-	}
-	catch (error) {
-		if (page.getByRole('heading', {name: '500'})) {
-			await reloadUntilVisible({
-				maxAttempts: 1,
-				myLocator: updateButton,
-				page,
-			});
-		}
-		else {
-			throw error;
-		}
-	}
 }

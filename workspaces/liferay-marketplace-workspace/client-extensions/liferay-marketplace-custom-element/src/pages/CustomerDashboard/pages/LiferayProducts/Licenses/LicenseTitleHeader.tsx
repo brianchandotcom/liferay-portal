@@ -19,7 +19,7 @@ type LicenseTitleHeaderProps = {
 function getAlert(isNewActivationKey: boolean, isToBeRenewed: boolean) {
 	if (isNewActivationKey) {
 		return {
-			className: 'new-license',
+			className: 'text-success',
 			icon: (
 				<svg
 					className="mr-1"

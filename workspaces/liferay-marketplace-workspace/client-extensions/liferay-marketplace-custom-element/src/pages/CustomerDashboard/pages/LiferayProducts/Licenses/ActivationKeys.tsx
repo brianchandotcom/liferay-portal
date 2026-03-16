@@ -9,12 +9,13 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {differenceInDays, format, isBefore, subMonths} from 'date-fns';
 import {Fragment, useEffect} from 'react';
 import {useLocation, useOutletContext, useParams} from 'react-router-dom';
-import useSWR, {KeyedMutator} from 'swr';
+import useSWR from 'swr';
 
 import {breadcrumbStore} from '../../../../../components/Breadcrumb/BreadcrumbStore';
 import EmptyState from '../../../../../components/EmptyState';
 import StatusCell from '../../../../../components/Table/StatusCell';
 import Table from '../../../../../components/Table/Table';
+import {OrderTypes} from '../../../../../enums/Order';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
 import provisioningOAuth2 from '../../../../../services/oauth/Provisioning';
@@ -22,6 +23,7 @@ import {LicenseKey} from '../../../../../services/oauth/types';
 import TitleSubtitleHeader from '../../../components/TitleSubtitleHeader';
 import ActivationKeyAlert from './LicenseAlert';
 import LicenseTitleHeader from './LicenseTitleHeader';
+import Licenses from '../../Apps/App/Licenses/Licenses';
 
 import './Licenses.scss';
 
@@ -52,14 +54,22 @@ const isRenewalAvailable = (licenseKey: LicenseKey) => {
 const isLicenseExpired = (expirationDate: string) =>
 	!isBefore(new Date(), new Date(expirationDate));
 
-const ActivationKeysTable = ({
-	licenseKeysResponse,
-	mutate,
-}: {
-	licenseKeysResponse: APIResponse<LicenseKey>;
-	mutate: KeyedMutator<APIResponse<LicenseKey>>;
-}) => {
-	if (licenseKeysResponse.totalCount === 0) {
+const ActivationKeysDXP = () => {
+	const {orderId} = useParams();
+
+	const {
+		data: licenseKeysResponse,
+		isLoading,
+		mutate,
+	} = useSWR(`/order-license-keys/${orderId}`, () =>
+		provisioningOAuth2.getOrderLicenseKeys(orderId as string)
+	);
+
+	if (isLoading) {
+		return <ClayLoadingIndicator />;
+	}
+
+	if (licenseKeysResponse?.totalCount === 0) {
 		return <EmptyState title="No Activation Keys" />;
 	}
 
@@ -104,7 +114,8 @@ const ActivationKeysTable = ({
 							</ClayButton>
 
 							<ClayButton
-								className="license-download-btn px-3 rounded"
+								className="px-3 rounded"
+								size="sm"
 								disabled={expired}
 								displayType="secondary"
 								onClick={() => {
@@ -123,13 +134,13 @@ const ActivationKeysTable = ({
 				{
 					bodyClass: 'border-0 cursor-pointer text-capitalize',
 					expanded: true,
-					key: 'licenseType',
+					key: 'description',
 					noWrap: true,
-					render: (_, row) => (
+					render: (description, row) => (
 						<LicenseTitleHeader
 							isNewActivationKey={isNewActivationKey(row)}
 							isToBeRenewed={isRenewalAvailable(row)}
-							title={row.productName}
+							title={description}
 						/>
 					),
 					title: (
@@ -142,20 +153,19 @@ const ActivationKeysTable = ({
 					bodyClass: 'border-0 cursor-pointer',
 					key: 'domains',
 					render: (domains: string) => (
-						<ul className="list-unstyled">
-							{domains.split(',').map((domain) => (
-								<li
-									className="description-title font-weight-bold mt-2"
-									key={domain}
-								>
-									{domain}
-								</li>
-							))}
-						</ul>
+						<TitleSubtitleHeader
+							subtitle={
+								domains
+									? domains
+											.split(',')
+											.map((domain) => (
+												<div key={domain}>{domain}</div>
+											))
+									: '-'
+							}
+						/>
 					),
-					title: (
-						<TitleSubtitleHeader title={i18n.translate('domain')} />
-					),
+					title: <TitleSubtitleHeader title="Domain" />,
 				},
 				{
 					bodyClass: 'border-0 cursor-pointer',
@@ -212,7 +222,7 @@ const ActivationKeysTable = ({
 			hasKebabButton
 			hasPagination
 			kebabClassName="border-0"
-			rows={licenseKeysResponse.items ?? []}
+			rows={licenseKeysResponse?.items ?? []}
 		/>
 	);
 };
@@ -225,13 +235,8 @@ export default function ActivationKeys() {
 
 	const product = outletContext?.product;
 
-	const {
-		data: licenseKeysResponse,
-		isLoading,
-		mutate,
-	} = useSWR(`/order-free-dxp-license-keys/${orderId}`, () =>
-		provisioningOAuth2.getOrderLicenseKeys(orderId as string)
-	);
+	const orderTypeExternalReferenceCode =
+		outletContext?.placedOrder.orderTypeExternalReferenceCode;
 
 	useEffect(() => {
 		breadcrumbStore.send({
@@ -240,9 +245,25 @@ export default function ActivationKeys() {
 		});
 	}, [orderId, product?.name]);
 
-	if (isLoading) {
-		return <ClayLoadingIndicator />;
-	}
+	const ActivationKeysComponent =
+		orderTypeExternalReferenceCode === OrderTypes.DXP
+			? ActivationKeysDXP
+			: () => (
+					<Licenses
+						actions={(row, licenseActions) => (
+							<ClayButton
+								displayType="secondary"
+								size="sm"
+								onClick={() =>
+									licenseActions.onDownloadLicenseKey(row)
+								}
+							>
+								{i18n.translate('download')}
+							</ClayButton>
+						)}
+						canDeactivate={false}
+					/>
+				);
 
 	return (
 		<div className="mt-5">
@@ -259,12 +280,7 @@ export default function ActivationKeys() {
 			)}
 
 			<div className="licenses mb-9">
-				<ActivationKeysTable
-					licenseKeysResponse={
-						licenseKeysResponse as APIResponse<LicenseKey>
-					}
-					mutate={mutate}
-				/>
+				<ActivationKeysComponent />
 			</div>
 		</div>
 	);

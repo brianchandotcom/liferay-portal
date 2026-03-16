@@ -5,7 +5,7 @@
 	}
 
 	&-aggreements-check-box,
-	&-notify-me-check-box,
+	&-label-check-box,
 	&-purpose-helper-text {
 		font-size: 11px;
 	}
@@ -26,19 +26,19 @@
 		}
 	}
 
+	.dropdown-menu {
+		border-radius: 10px !important;
+		max-width: none !important;
+		padding: 8px !important;
+		transition: all 0.3s ease-in-out !important;
+		width: 525px;
+
+		.dropdown-item:hover {
+			color: #0053f0;
+		}
+	}
+
 	.loading-animation {
 		margin: 0px !important;
-	}
-}
-
-.dropdown-menu {
-	border-radius: 10px !important;
-	max-width: none !important;
-	padding: 8px !important;
-	transition: all 0.3s ease-in-out !important;
-	width: 525px;
-
-	.dropdown-item:hover {
-		color: #0053f0;
 	}
 }

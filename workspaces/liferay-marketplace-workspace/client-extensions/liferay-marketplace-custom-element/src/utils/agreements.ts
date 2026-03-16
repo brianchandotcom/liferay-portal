@@ -4,7 +4,7 @@
  */
 
 export const productAgreements = {
- agreement: `
+	agreement: `
         (these terms and the eula together form the "agreement"). 
         Please read these terms and the
         Liferay End User License Agreement carefully before

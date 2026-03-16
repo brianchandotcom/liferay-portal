@@ -69,27 +69,52 @@ const LiferayProductsListView = () => {
 										`${getViewDetailsPath(String(row.id), row.orderTypeExternalReferenceCode)}`
 									),
 							},
+							{
+								disabled: true,
+								name: i18n.translate('share-your-feedback'),
+							},
 						],
 						columns: [
 							{
 								clickable: true,
 								id: 'placedOrderItems',
 								name: i18n.translate('name'),
-								render: (placedOrderItems) => {
+								render: (
+									placedOrderItems,
+									{orderTypeExternalReferenceCode}
+								) => {
 									const placedOrderItem =
 										placedOrderItems[0] || [];
 
 									return (
-										<div style={{width: 200}}>
-											<img
-												alt="App Image"
-												className="order-details-publisher-table-icon"
-												src={placedOrderItem?.thumbnail}
-											/>
+										<div style={{width: 300}}>
+											<div className="d-flex">
+												<img
+													alt="App Image"
+													className="order-details-publisher-table-icon"
+													src={
+														placedOrderItem?.thumbnail
+													}
+												/>
 
-											<span className="font-weight-semi-bold ml-2">
-												{placedOrderItem?.name}
-											</span>
+												<div className="d-flex flex-column ml-1">
+													<span className="align-items-center d-flex font-weight-semi-bold">
+														{placedOrderItem?.name}
+
+														{orderTypeExternalReferenceCode.includes(
+															'BETA'
+														) && (
+															<span className="beta-badge-label ml-2">
+																Beta
+															</span>
+														)}
+													</span>
+
+													<span className="text-black-50">
+														By Liferay
+													</span>
+												</div>
+											</div>
 										</div>
 									);
 								},

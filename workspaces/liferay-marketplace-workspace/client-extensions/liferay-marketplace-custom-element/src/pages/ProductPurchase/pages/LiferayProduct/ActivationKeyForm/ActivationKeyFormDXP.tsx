@@ -97,7 +97,7 @@ const ActivationKeyFormDXP = () => {
 				)}
 			</p>
 
-			<p className="h3 mb-0">
+			<p className="h4 mb-0">
 				{i18n.translate('personal-information-purpose')}
 			</p>
 
@@ -167,7 +167,7 @@ const ActivationKeyFormDXP = () => {
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 
-				<p className="h3">{i18n.translate('phone')}</p>
+				<p className="h4">{i18n.translate('phone')}</p>
 
 				<ClayForm.Group>
 					<div className="d-flex justify-content-between purchased-solutions-phone">
@@ -247,7 +247,7 @@ const ActivationKeyFormDXP = () => {
 					</div>
 				</ClayForm.Group>
 
-				<p className="h3">{i18n.translate('purpose')}</p>
+				<p className="h4">{i18n.translate('purpose')}</p>
 
 				<ClayDropDown
 					active={active}
@@ -299,9 +299,10 @@ const ActivationKeyFormDXP = () => {
 					/>
 				)}
 
-				<div>
+				<div className="align-items-center d-flex mt-2">
 					<ClayCheckbox
 						checked={notifyMeAboutProducts}
+						id="notifyMeAboutProducts"
 						onChange={(event) => {
 							setValue(
 								'notifyMeAboutProducts',
@@ -311,14 +312,12 @@ const ActivationKeyFormDXP = () => {
 					/>
 
 					<label
-						className="align-items-center cursor-pointer d-flex flex-row font-weight-normal justify-content-between mt-2"
+						className="activation-key-form-label-check-box cursor-pointer font-weight-normal ml-2"
 						htmlFor="notifyMeAboutProducts"
 					>
-						<p className="activation-key-form-notify-me-check-box mb-1 ml-2 w-100">
-							{i18n.translate(
-								'notify-me-about-products-services-and-events'
-							)}
-						</p>
+						{i18n.translate(
+							'notify-me-about-products-services-and-events'
+						)}
 					</label>
 				</div>
 
@@ -343,7 +342,7 @@ const ActivationKeyFormDXP = () => {
 					</p>
 				</span>
 
-				<p className="h3">
+				<p className="h4">
 					{i18n.translate('activation-key-server-details')}
 				</p>
 

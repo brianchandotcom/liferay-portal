@@ -77,6 +77,21 @@ body {
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
 }
 
+.beta-badge-label {
+	align-items: center;
+	background-color: #d1ecfa;
+	border-radius: 4px;
+	color: #166e9e;
+	display: flex;
+	font-size: 13px;
+	font-weight: 600;
+	justify-content: center;
+	line-height: 16px;
+	padding: 4px 8px;
+	text-align: center;
+	vertical-align: middle;
+}
+
 /* ---------- Cards ---------- */
 .card.main-image {
 	border-radius: 10px !important;

@@ -142,7 +142,6 @@ public class LayoutPageTemplatePortletDataHandlerTest {
 					"_deletions"),
 				_group.getGroupId(), larFile
 			).toString());
-
 		Assert.assertEquals(
 			JSONFactoryUtil.createJSONArray(
 			).put(

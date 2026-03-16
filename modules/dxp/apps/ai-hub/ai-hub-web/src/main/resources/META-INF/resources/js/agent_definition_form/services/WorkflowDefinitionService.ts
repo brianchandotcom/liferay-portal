@@ -19,4 +19,15 @@ async function getWorkflowDefinitions() {
 	return response.json();
 }
 
-export {getWorkflowDefinitions};
+async function getWorkflowDefinition(workflowDefinitionName: string) {
+	const response = await fetch(
+		`${WORKFLOW_DEFINITION_BASE_URI}/by-name/${workflowDefinitionName}`,
+		{
+			method: 'GET',
+		}
+	);
+
+	return response.json();
+}
+
+export {getWorkflowDefinitions, getWorkflowDefinition};

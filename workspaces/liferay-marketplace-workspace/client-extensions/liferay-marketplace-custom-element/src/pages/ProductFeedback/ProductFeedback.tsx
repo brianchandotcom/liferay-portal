@@ -5,6 +5,7 @@
 
 import {useState} from 'react';
 import {z} from 'zod';
+import ClayButton from '@clayui/button';
 
 import Loading from '../../components/Loading';
 import ProductPurchase from '../../components/ProductPurchase';
@@ -87,17 +88,30 @@ export function ProductFeedback() {
 	if (isSubmitted) {
 		return (
 			<ProductPurchaseFeedback
-				className="my-7"
+				className="my-9"
 				description="Thank you for submitting your feedback."
 				title="Feedback Submitted"
 			>
-				<a
-					href={`${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}`}
-					rel="noopener noreferrer"
-				>
-					Click here
-				</a>{' '}
-				to go back to marketplace.
+				<div className="d-flex">
+					<ClayButton
+						displayType="secondary"
+						onClick={() => Liferay.Util.navigate(getSiteURL())}
+					>
+						Return to Marketplace
+					</ClayButton>
+
+					<ClayButton
+						className="ml-4"
+						displayType="primary"
+						onClick={() =>
+							Liferay.Util.navigate(
+								getSiteURL() + '/customer-dashboard/#/products'
+							)
+						}
+					>
+						Go Dashboard
+					</ClayButton>
+				</div>
 			</ProductPurchaseFeedback>
 		);
 	}

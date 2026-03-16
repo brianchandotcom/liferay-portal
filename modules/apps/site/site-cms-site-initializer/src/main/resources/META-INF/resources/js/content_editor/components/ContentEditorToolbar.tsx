@@ -10,8 +10,8 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayLink from '@clayui/link';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
-import {sub} from 'frontend-js-web';
-import React, {useEffect, useId, useState} from 'react';
+import {sessionStorage, sub} from 'frontend-js-web';
+import React, {useCallback, useEffect, useId, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
 import AIAssistantChat from './AIAssistantChat/AIAssistantChat';
@@ -49,12 +49,51 @@ export default function ContentEditorToolbar({
 			: sub(Liferay.Language.get('publish-x'), type)
 	);
 
-	useEffect(() => {
+	const getForm = useCallback((): HTMLFormElement => {
 		let form = document.querySelector('.lfr-main-form-container');
 
 		if (!form) {
 			form = document.querySelector('.lfr-layout-structure-item-form');
 		}
+
+		return form as HTMLFormElement;
+	}, []);
+
+	const setSuccessMessage = useCallback(
+		(message: string) => {
+			const form = getForm();
+
+			if (form?.checkValidity?.()) {
+				const titleInput = form.querySelector(
+					'[name^="ObjectField_title"]'
+				) as HTMLInputElement;
+
+				const value = titleInput ? titleInput.value : headerTitle;
+
+				sessionStorage.setItem(
+					'com.liferay.site.cms.site.initializer.successMessage',
+					sub(message, `<strong>${value}</strong>`),
+					sessionStorage.TYPES.NECESSARY
+				);
+			}
+		},
+		[getForm, headerTitle]
+	);
+
+	const handleSaveSuccessMessage = useCallback(() => {
+		setSuccessMessage(Liferay.Language.get('x-was-saved-successfully'));
+	}, [setSuccessMessage]);
+
+	const handlePublishSuccessMessage = useCallback(() => {
+		setSuccessMessage(
+			hasWorkflow
+				? Liferay.Language.get('x-was-submitted-for-workflow')
+				: Liferay.Language.get('x-was-published-successfully')
+		);
+	}, [hasWorkflow, setSuccessMessage]);
+
+	useEffect(() => {
+		const form = getForm();
 
 		if (form) {
 			setFormId(form.id);
@@ -65,7 +104,9 @@ export default function ContentEditorToolbar({
 					event.key === 'Enter' &&
 					isCtrlOrMeta(event)
 				) {
-					(form as HTMLFormElement).submit();
+					handlePublishSuccessMessage();
+
+					form.submit();
 				}
 			};
 
@@ -74,7 +115,7 @@ export default function ContentEditorToolbar({
 			return () =>
 				window.removeEventListener('keydown', handlePublishShortcut);
 		}
-	}, []);
+	}, [getForm, handlePublishSuccessMessage]);
 
 	return (
 		<Toolbar
@@ -118,6 +159,7 @@ export default function ContentEditorToolbar({
 					displayType="secondary"
 					form={formId}
 					name="status"
+					onClick={handleSaveSuccessMessage}
 					size="sm"
 					type="submit"
 					value={STATUS_DRAFT_CODE}
@@ -134,6 +176,8 @@ export default function ContentEditorToolbar({
 						data-title-set-as-html
 						form={formId}
 						onClick={(event) => {
+							handlePublishSuccessMessage();
+
 							Liferay.fire(EVENT_VALIDATE_FORM, {event});
 						}}
 						size="sm"

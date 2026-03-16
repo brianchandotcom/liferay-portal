@@ -10,6 +10,7 @@ function test {
 	local varable4=$(ls)
 	local varable5='Do not $(ls) this'
 	local varable6=\"/tmp/$(date +%Y)\"
+	local varable7=$((1 + 1))
 }
 
 test

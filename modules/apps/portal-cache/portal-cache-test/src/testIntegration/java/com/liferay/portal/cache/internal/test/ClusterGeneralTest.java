@@ -669,23 +669,20 @@ public class ClusterGeneralTest implements Serializable {
 			long groupId, String fileName)
 		throws Exception {
 
-		long fileEntryId = tomcatNode1.syncExecute(
-			() -> {
-				FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-					null, userId, groupId,
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-					ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-					null, null, null,
-					ServiceContextTestUtil.getServiceContext(groupId, userId));
-
-				return fileEntry.getFileEntryId();
-			});
+		FileEntry fileEntry = tomcatNode1.syncExecute(
+			() -> DLAppLocalServiceUtil.addFileEntry(
+				null, userId, groupId,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+				ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
+				null, null, null,
+				ServiceContextTestUtil.getServiceContext(groupId, userId)));
 
 		FileEntry syncedFileEntry = tomcatNode2.syncExecute(
-			() -> DLAppLocalServiceUtil.getFileEntry(fileEntryId));
+			() -> DLAppLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId()));
 
 		Assert.assertNotNull(syncedFileEntry);
-		Assert.assertEquals(fileName, syncedFileEntry.getFileName());
+		Assert.assertEquals(fileEntry, syncedFileEntry);
 	}
 
 	private static transient TomcatNode _tomcatNode1;

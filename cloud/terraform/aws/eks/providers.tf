@@ -6,6 +6,10 @@ provider "aws" {
 	}
 	region=var.region
 }
+provider "grafana" {
+	auth=module.observability[0].grafana_workspace_api_key
+	url="https://${module.observability[0].grafana_workspace_endpoint}"
+}
 provider "helm" {
 	kubernetes={
 		cluster_ca_certificate=base64decode(module.eks.cluster_certificate_authority_data)
@@ -45,6 +49,10 @@ terraform {
 		aws={
 			source="hashicorp/aws"
 			version="~> 6.30.0"
+		}
+		grafana={
+			source="grafana/grafana"
+			version="~> 3.15.2"
 		}
 		helm={
 			source="hashicorp/helm"

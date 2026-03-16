@@ -1,3 +1,6 @@
+output "grafana_workspace_api_key" {
+	value=aws_grafana_workspace_api_key.amg_api_key.key
+}
 output "grafana_workspace_endpoint" {
 	value=aws_grafana_workspace.amg.endpoint
 }

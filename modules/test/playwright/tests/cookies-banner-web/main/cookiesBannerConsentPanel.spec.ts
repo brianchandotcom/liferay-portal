@@ -13,6 +13,7 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
 	resetAllConsentManagerConfigurations,
+	saveOrUpdateConfiguration,
 	updateConsentManagerConfiguration,
 } from './utils/consentManagerConfigurationHelper';
 
@@ -123,6 +124,78 @@ test(
 			.click();
 
 		await expect(controlPanelIcon).toBeChecked();
+	}
+);
+
+test(
+	'Floating icon use',
+	{tag: '@LPD-78593'},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
+		});
+
+		await acceptAllButton.click();
+
+		await expect(acceptAllButton).not.toBeVisible();
+
+		const floatingIconButton = page.locator(
+			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton'
+		);
+
+		await expect(floatingIconButton).toBeVisible();
+
+		await floatingIconButton.click();
+
+		const dialog = page.getByRole('dialog', {name: 'Cookie Configuration'});
+
+		await expect(dialog).toBeVisible();
+
+		await page.getByRole('button', {name: 'Accept Selected'}).click();
+
+		await expect(dialog).not.toBeVisible();
+	}
+);
+
+test(
+	'selected floating icon appears in button',
+	{tag: '@LPD-78593'},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
+
+		const controlPanelIcon = page.locator('label[for$="control-panel"]');
+
+		await expect(controlPanelIcon).toBeVisible();
+
+		const acceptAllButton = systemSettingsPage.page.getByRole('button', {
+			name: 'Accept All',
+		});
+
+		await acceptAllButton.click();
+
+		await expect(acceptAllButton).not.toBeVisible();
+
+		await controlPanelIcon.click();
+
+		await saveOrUpdateConfiguration(true, systemSettingsPage.page);
+
+		await expect(controlPanelIcon).toBeChecked();
+
+		const floatingIconButton = page.locator(
+			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton svg'
+		);
+
+		await expect(floatingIconButton).toHaveClass(
+			/lexicon-icon-control-panel/
+		);
 	}
 );
 

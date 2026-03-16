@@ -146,7 +146,7 @@ export async function updateConsentManagerConfiguration(
 	await saveOrUpdateConfiguration(dialog, page);
 }
 
-async function saveOrUpdateConfiguration(dialog: boolean, page) {
+export async function saveOrUpdateConfiguration(dialog: boolean, page) {
 	if (dialog) {
 		page.once('dialog', async (dialogWindow) => {
 			await dialogWindow.accept();

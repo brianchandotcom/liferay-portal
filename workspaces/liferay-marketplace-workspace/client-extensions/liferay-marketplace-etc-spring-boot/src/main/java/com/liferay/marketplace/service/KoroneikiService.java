@@ -6,6 +6,7 @@
 package com.liferay.marketplace.service;
 
 import com.liferay.headless.admin.user.client.custom.field.CustomField;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
@@ -312,6 +313,53 @@ public class KoroneikiService {
 
 		return accountResource.postAccount(
 			jwt.getClaim("username"), jwt.getClaim("sub"), koroneikiAccount);
+	}
+
+	public ProductPurchase[] setUpProductEntitlements(
+			Jwt jwt, String licenseType, Order order)
+		throws Exception {
+
+		String accountExternalReferenceCode =
+			order.getAccountExternalReferenceCode();
+
+		if (!accountExternalReferenceCode.startsWith("KOR-")) {
+			com.liferay.headless.admin.user.client.resource.v1_0.AccountResource
+				accountResource = _marketplaceService.getAccountResource();
+
+			com.liferay.headless.admin.user.client.dto.v1_0.Account account =
+				accountResource.getAccount(order.getAccountId());
+
+			accountResource.patchAccount(
+				account.getId(),
+				new com.liferay.headless.admin.user.client.dto.v1_0.Account() {
+					{
+						setExternalReferenceCode(
+							() -> postKoroneikiAccount(
+								account, jwt
+							).getKey());
+					}
+				});
+		}
+
+		List<ProductPurchase> productPurchases = new ArrayList<>();
+
+		try {
+			for (OrderItem orderItem : order.getOrderItems()) {
+				ProductPurchase productPurchase =
+					postAccountAccountKeyProductPurchase(
+						accountExternalReferenceCode, jwt, licenseType,
+						MarketplaceUtil.getSkuOptionValue(
+							"license-usage-type", orderItem.getOptions()),
+						orderItem);
+
+				productPurchases.add(productPurchase);
+			}
+		}
+		catch (Exception exception) {
+			_log.error("Unable to create account product purchase", exception);
+		}
+
+		return productPurchases.toArray(new ProductPurchase[0]);
 	}
 
 	private static final Log _log = LogFactory.getLog(KoroneikiService.class);

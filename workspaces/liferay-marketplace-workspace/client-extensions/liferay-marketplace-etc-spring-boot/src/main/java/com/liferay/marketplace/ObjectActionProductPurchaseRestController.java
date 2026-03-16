@@ -124,7 +124,7 @@ public class ObjectActionProductPurchaseRestController
 				return;
 			}
 
-			_marketplaceService.setUpProductEntitlements(
+			_koroneikiService.setUpProductEntitlements(
 				jwt, productSpecificationsMap.get("license-type"), order);
 
 			_marketplaceService.updateOrder(

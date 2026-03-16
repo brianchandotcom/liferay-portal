@@ -7,7 +7,6 @@ package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
-import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
@@ -44,7 +43,6 @@ import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateResource;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,11 +61,9 @@ import java.net.http.HttpResponse;
 
 import java.nio.file.Files;
 
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -697,51 +693,6 @@ public class MarketplaceService extends BaseService {
 				).build());
 	}
 
-	public ProductPurchase[] setUpProductEntitlements(
-			Jwt jwt, String licenseType, Order order)
-		throws Exception {
-
-		String accountExternalReferenceCode =
-			order.getAccountExternalReferenceCode();
-
-		if (!accountExternalReferenceCode.startsWith("KOR-")) {
-			AccountResource accountResource = getAccountResource();
-
-			Account account = accountResource.getAccount(order.getAccountId());
-
-			accountResource.patchAccount(
-				account.getId(),
-				new Account() {
-					{
-						setExternalReferenceCode(
-							() -> _koroneikiService.postKoroneikiAccount(
-								account, jwt
-							).getKey());
-					}
-				});
-		}
-
-		List<ProductPurchase> productPurchases = new ArrayList<>();
-
-		try {
-			for (OrderItem orderItem : order.getOrderItems()) {
-				ProductPurchase productPurchase =
-					_koroneikiService.postAccountAccountKeyProductPurchase(
-						accountExternalReferenceCode, jwt, licenseType,
-						MarketplaceUtil.getSkuOptionValue(
-							"license-usage-type", orderItem.getOptions()),
-						orderItem);
-
-				productPurchases.add(productPurchase);
-			}
-		}
-		catch (Exception exception) {
-			_log.error("Unable to create account product purchase", exception);
-		}
-
-		return productPurchases.toArray(new ProductPurchase[0]);
-	}
-
 	public void updateOrder(
 			Map<String, ?> customFields, long orderId, int orderStatus)
 		throws Exception {
@@ -843,9 +794,6 @@ public class MarketplaceService extends BaseService {
 
 	@Autowired
 	private ConsoleService _consoleService;
-
-	@Autowired
-	private KoroneikiService _koroneikiService;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

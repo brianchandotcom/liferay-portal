@@ -62,6 +62,7 @@ export interface ModalProps {
 		onEvent: EventHandler;
 	}[];
 	disableAutoClose?: boolean;
+	disableButtonsOnLoading?: boolean;
 	disableHeader?: boolean;
 	footerCssClass?: string;
 	headerCssClass?: string;
@@ -95,6 +96,7 @@ export default function Modal({
 	customEvents,
 	disableAutoClose,
 	disableHeader,
+	disableButtonsOnLoading = false,
 	footerCssClass,
 	headerCssClass,
 	headerHTML,
@@ -278,7 +280,15 @@ export default function Modal({
 			}
 		});
 
-		eventHandlers.push(closeEventHandler);
+		const loadingEventHandler = Liferay.on('isLoadingModal', (event) => {
+			if (event.id && id && event.id !== id) {
+				return;
+			}
+
+			setLoading(event.loading);
+		});
+
+		eventHandlers.push(closeEventHandler, loadingEventHandler);
 
 		return () => {
 			eventHandlers.forEach((eventHandler) => {
@@ -397,6 +407,10 @@ export default function Modal({
 													index
 												) => (
 													<ClayButton
+														disabled={
+															disableButtonsOnLoading &&
+															loading
+														}
 														displayType={
 															displayType
 														}

@@ -25,6 +25,7 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import {localizationPagesTest} from '../../site-admin-web/main/fixtures/localizationPagesTest';
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
@@ -35,6 +36,7 @@ const test = mergeTests(
 	}),
 	fragmentsPagesTest,
 	isolatedSiteTest,
+	localizationPagesTest,
 	loginTest(),
 	objectPagesTest,
 	pageEditorPagesTest
@@ -1101,6 +1103,57 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		).toBeVisible();
 
 		await expect(editObjectDetailsPage.publishButton).toBeEnabled();
+	});
+
+	test('cannot save an object definition without a translation after changing the default language', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		localizationInstanceSettingsPage,
+		page,
+	}) => {
+		try {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+	
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+	
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+	
+			await localizationInstanceSettingsPage.goto('Language', false);
+	
+			await localizationInstanceSettingsPage.setDefaultLanguage('pt_BR');
+	
+			await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+	
+			await editObjectDetailsPage.goToDetailsTab();
+	
+			await editObjectDetailsPage.labelInput.fill(getRandomString());
+	
+			await editObjectDetailsPage.saveButton.click();
+	
+			const pluralLabelFormGroup = page.locator('.form-group', {
+				has: page.getByLabel('Plural Label'),
+			});
+	
+			await expect(pluralLabelFormGroup).toHaveClass(/has-error/);
+	
+			await expect(
+				pluralLabelFormGroup.locator('.form-feedback-item')
+			).toHaveText('Required');
+		}
+		finally {
+			await localizationInstanceSettingsPage.goto('Language', false);
+	
+			await localizationInstanceSettingsPage.setDefaultLanguage('en_US');
+		}
 	});
 });
 

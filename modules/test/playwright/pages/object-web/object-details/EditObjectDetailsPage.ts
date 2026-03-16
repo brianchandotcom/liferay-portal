@@ -11,7 +11,9 @@ export class EditObjectDetailsPage {
 	readonly accountRestrictionToggle: Locator;
 	readonly detailsTabItem: Locator;
 	readonly friendlyURLSeparator: Locator;
+	readonly labelInput: Locator;
 	readonly page: Page;
+	readonly pluralLabelFormGroup: Locator;
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
@@ -26,6 +28,10 @@ export class EditObjectDetailsPage {
 			'Object Entry URL Separator',
 			{exact: true}
 		);
+		this.labelInput = page.getByRole('textbox', {
+			exact: true,
+			name: 'Label Mandatory',
+		});
 		this.page = page;
 		this.publishButton = page.getByRole('button', {
 			exact: true,

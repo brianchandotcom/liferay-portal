@@ -23,6 +23,7 @@ import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {getRandomDouble} from '../../../utils/getRandomDouble';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {generateObjectFields} from './utils/generateObjectFields';
 import {postListTypeDefinitionListTypeEntries} from './utils/postListTypeDefinitionListTypeEntries';
@@ -1622,6 +1623,91 @@ test.describe('Required localized object fields', () => {
 
 		listTypeEntries.forEach((item) => {
 			expect(page.getByRole('option', {name: item.name})).toBeVisible();
+		});
+	});
+});
+
+test.describe('Unique localized object fields', () => {
+	test('verify that unique values constraints are enforced when creating an object entry', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFieldLabel = 'textField';
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'Text',
+					label: {en_US: objectFieldLabel},
+					localized: true,
+					objectFieldSettings: [
+						{
+							name: 'uniqueValues',
+							value: true,
+						},
+					],
+					unique: true,
+				},
+			],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await test.step('Create a object entry with a translation', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldLabel,
+				objectFieldValue: 'UniqueTranslatableValue',
+			});
+
+			await page.getByRole('button', {name: 'en-us'}).click();
+
+			await page.getByRole('menuitem', {name: 'português (Brasil)'}).click();
+
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldLabel,
+				objectFieldValue: getRandomString(),
+			});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(page);
+
+			await viewObjectEntriesPage.backButton.click();
+		});
+
+		await test.step('Verify that creating a new object entry with the same value fails.', async () => {
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldLabel,
+				objectFieldValue: 'UniqueTranslatableValue',
+			});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await waitForAlert(
+				page,
+				'Error:The textField is already in use. Please enter a unique textField.',
+				{type: 'danger'}
+			);
 		});
 	});
 });

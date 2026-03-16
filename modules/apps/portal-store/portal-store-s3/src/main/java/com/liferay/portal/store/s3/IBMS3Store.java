@@ -347,9 +347,9 @@ public class IBMS3Store implements Store {
 
 	@Override
 	public void verifyCompanyStores() throws PortalException {
-		long[] companyIds = PortalInstancePool.getCompanyIds();
-
 		try {
+			long[] companyIds = PortalInstancePool.getCompanyIds();
+			boolean hasNext = true;
 			ListObjectsV2Request listObjectsV2Request =
 				new ListObjectsV2Request(
 				).withBucketName(
@@ -357,8 +357,6 @@ public class IBMS3Store implements Store {
 				).withDelimiter(
 					StringPool.SLASH
 				);
-
-			boolean hasNext = true;
 
 			while (hasNext) {
 				ListObjectsV2Result listObjectsV2Result =

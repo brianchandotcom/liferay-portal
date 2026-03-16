@@ -418,12 +418,12 @@ public class S3Store implements Store {
 
 	@Override
 	public void verifyCompanyStores() {
-		long[] companyIds = PortalInstancePool.getCompanyIds();
-
-		String continuationToken = null;
-		boolean hasNext = true;
-
 		try {
+			long[] companyIds = PortalInstancePool.getCompanyIds();
+			String continuationToken = null;
+
+			boolean hasNext = true;
+
 			while (hasNext) {
 				String currentToken = continuationToken;
 

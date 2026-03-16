@@ -227,11 +227,11 @@ public class GCSStore implements Store {
 	}
 
 	public void verifyCompanyStores() throws PortalException {
-		long[] companyIds = PortalInstancePool.getCompanyIds();
-
-		String prefix = StoreArea.getCurrentStoreAreaPath();
-
 		try {
+			long[] companyIds = PortalInstancePool.getCompanyIds();
+
+			String prefix = StoreArea.getCurrentStoreAreaPath();
+
 			Page<Blob> blobPage = _gcsStore.list(
 				_gcsStoreConfiguration.bucketName(),
 				Storage.BlobListOption.prefix(prefix),

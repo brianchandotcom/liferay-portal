@@ -19,6 +19,8 @@ const ExternalReferenceCodeButtonPropsTransformer = ({
 			'p_p_id'
 		)}_fm`;
 
+		let isLoaded = false;
+
 		openModal({
 			buttons: [
 				{
@@ -45,12 +47,15 @@ const ExternalReferenceCodeButtonPropsTransformer = ({
 					`#${formId}`
 				);
 
-				if (formElement) {
-					formElement.addEventListener('submit', () => {
-						Liferay.fire('closeModal', {
-							id: EDIT_ERC_MODAL_ID,
-						});
+				if (formElement && isLoaded) {
+					isLoaded = false;
+
+					Liferay.fire('closeModal', {
+						id: EDIT_ERC_MODAL_ID,
 					});
+				}
+				else {
+					isLoaded = true;
 				}
 			},
 			size: 'md',

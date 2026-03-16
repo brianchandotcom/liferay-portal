@@ -82,6 +82,7 @@ module.exports = {
 		'@ckeditor/ckeditor5-widget/dist/index.js',
 		'@ckeditor/ckeditor5-word-count/dist/index.js',
 		'ckeditor5/ckeditor5.css',
+		'ckeditor5-premium-features/ckeditor5-premium-features.css',
 		'eventsource',
 	],
 	main: './src/main/resources/META-INF/resources/js/index.ts',

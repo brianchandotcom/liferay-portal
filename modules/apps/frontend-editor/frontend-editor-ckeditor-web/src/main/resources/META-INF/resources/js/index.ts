@@ -7,6 +7,8 @@
 
 import 'ckeditor5/ckeditor5.css';
 
+import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
+
 export {default as BalloonEditor} from './ckeditor4/BalloonEditor';
 export {default as ClassicEditor} from './ckeditor4/ClassicEditor';
 export {Editor} from './ckeditor4/Editor';

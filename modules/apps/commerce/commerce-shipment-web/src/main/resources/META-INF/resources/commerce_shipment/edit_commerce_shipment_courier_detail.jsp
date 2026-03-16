@@ -18,6 +18,8 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 
 	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="carrierDetails" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="requestProcessed" type="hidden" value='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>' />
 
 		<aui:model-context bean="<%= commerceShipmentDisplayContext.getCommerceShipment() %>" model="<%= CommerceShipment.class %>" />
 

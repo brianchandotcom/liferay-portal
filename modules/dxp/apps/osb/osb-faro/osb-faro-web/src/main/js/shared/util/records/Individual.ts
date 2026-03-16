@@ -1,8 +1,9 @@
 import {EntityTypes} from '../constants';
-import {Map, Record} from 'immutable';
+import {List, Map, Record} from 'immutable';
 
 interface IIndividual {
 	accountName: string | null;
+	accounts: List<Map<string, any>>;
 	activitiesCount: number;
 	context: Map<string, any>;
 	dateCreated: string;
@@ -19,6 +20,7 @@ interface IIndividual {
 export default class Individual
 	extends Record({
 		accountName: null,
+		accounts: List(),
 		activitiesCount: 0,
 		context: Map(),
 		dateCreated: null,
@@ -33,6 +35,7 @@ export default class Individual
 	})
 	implements IIndividual {
 	accountName: string | null;
+	accounts: List<Map<string, any>>;
 	activitiesCount: number;
 	context: Map<string, any>;
 	dateCreated: string;

@@ -7,14 +7,14 @@ jest.unmock('react-dom');
 
 describe('Account Membership', () => {
 	const mockData = {
-		accountId: '001xx000003DGbYAAW',
 		accountName: 'Acme Corporation',
 		accountType: 'Customer',
 		annualRevenue: '1000000',
 		country: 'United States',
-		createdDate: '2020-01-01T00:00:00.000Z',
+		createDate: '2020-01-01T00:00:00.000Z',
 		currencyCode: 'USD',
 		customerSince: '2015-06-15T00:00:00.000Z',
+		id: '001xx000003DGbYAAW',
 		industry: 'Manufacturing',
 		lastActivityDate: '2021-12-01T00:00:00.000Z',
 		numberOfEmployees: '500',

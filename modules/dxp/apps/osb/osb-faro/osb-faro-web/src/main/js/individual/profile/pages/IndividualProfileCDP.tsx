@@ -167,7 +167,7 @@ const IndividualProfileCDP: React.FC<IIndividualProfileCDPProps> = ({
 			</IndividualAttributesCDP>
 
 			<AccountMembership
-				accountData={individual.get('account')}
+				accountData={individual.getIn(['accounts', 0])}
 				showEmptyState={showEmptyState}
 			>
 				<ProfileCDPEmptyState

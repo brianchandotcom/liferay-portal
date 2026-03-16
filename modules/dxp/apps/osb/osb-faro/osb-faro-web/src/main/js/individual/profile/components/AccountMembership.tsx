@@ -12,15 +12,10 @@ import {formatUTCDate} from 'shared/util/date';
 import {Map} from 'immutable';
 import {SectionHeader} from './SectionHeader';
 
-function formatCurrency(
-	locale: string,
-	value: number,
-	currencyCode: string
-): string {
-	return new Intl.NumberFormat(locale, {
-		currency: currencyCode,
-		style: 'currency'
-	}).format(value);
+function formatCurrency(currencyCode: string, value: string): string {
+	return new Intl.NumberFormat(undefined, {
+		currency: currencyCode
+	}).format(parseFloat(value));
 }
 
 const accountMembershipConfig: DataDrivenConfig = [
@@ -46,7 +41,7 @@ const accountMembershipConfig: DataDrivenConfig = [
 		items: [
 			{className: 'col-12', icon: 'heart', key: 'customerSince'},
 			{className: 'col-12', key: 'lastActivityDate'},
-			{className: 'col-12', key: 'createdDate'}
+			{className: 'col-12', key: 'createDate'}
 		],
 		title: Liferay.Language.get('account-relationship-details')
 	},
@@ -60,7 +55,7 @@ const accountMembershipConfig: DataDrivenConfig = [
 	}
 ];
 
-const dateKeys = ['createdDate', 'customerSince', 'lastActivityDate'];
+const dateKeys = ['createDate', 'customerSince', 'lastActivityDate'];
 
 interface IAccountMembershipProps {
 	accountData?: Map<string, any>;
@@ -72,7 +67,7 @@ const ACCOUNT_MEMBERSHIP_LABEL_MAP: Record<string, string> = {
 	accountType: Liferay.Language.get('account-type'),
 	annualRevenue: Liferay.Language.get('annual-revenue'),
 	country: Liferay.Language.get('country'),
-	createdDate: Liferay.Language.get('created-date'),
+	createDate: Liferay.Language.get('created-date'),
 	currencyCode: Liferay.Language.get('currency-code'),
 	customerSince: Liferay.Language.get('customer-since'),
 	id: 'accountId',
@@ -99,15 +94,12 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 		}
 
 		if (key === 'annualRevenue') {
-			const currencyCode = accountData.get('currencyCode');
-			const locale = accountData.get('locale');
-			const numericRevenue = parseFloat(data);
-
-			const canFormat = !isNaN(numericRevenue) && locale && currencyCode;
-
-			return canFormat
-				? formatCurrency(locale, numericRevenue, currencyCode)
-				: data;
+			return accountData?.get(key)
+				? formatCurrency(
+						accountData?.get('currencyCode'),
+						accountData?.get(key)
+				  )
+				: undefined;
 		}
 
 		return data;

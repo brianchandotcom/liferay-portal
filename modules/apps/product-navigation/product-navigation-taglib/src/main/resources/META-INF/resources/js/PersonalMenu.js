@@ -45,11 +45,15 @@ function mapItemsOnClick(items) {
 
 const defaultItems = [
 	{
-		'aria-label': Liferay.Language.get('loading'),
-		'aria-valuemax': 100,
-		'aria-valuemin': 0,
-		'label': <ClayLoadingIndicator />,
-		'roleItem': 'progressbar',
+		label: (
+			<div
+				aria-label={Liferay.Language.get('loading')}
+				className="d-flex justify-content-center"
+				role="progressbar"
+			>
+				<ClayLoadingIndicator />
+			</div>
+		),
 	},
 ];
 

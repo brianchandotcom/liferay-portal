@@ -239,7 +239,7 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 
 				return DateUtil.getDate(
 					expirationDate, "yyyy-MM-dd'T'HH:mm",
-					themeDisplay.getLocale());
+					themeDisplay.getLocale(), themeDisplay.getTimeZone());
 			}
 		).put(
 			"hasUpdatePermission",
@@ -269,7 +269,8 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				}
 
 				return DateUtil.getDate(
-					reviewDate, "yyyy-MM-dd'T'HH:mm", themeDisplay.getLocale());
+					reviewDate, "yyyy-MM-dd'T'HH:mm", themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
 			}
 		).put(
 			"subscribeURL",

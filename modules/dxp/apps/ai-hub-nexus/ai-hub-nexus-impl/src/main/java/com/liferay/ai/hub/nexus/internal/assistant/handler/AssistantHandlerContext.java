@@ -1,0 +1,185 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.ai.hub.nexus.internal.assistant.handler;
+
+import dev.langchain4j.invocation.InvocationParameters;
+import dev.langchain4j.model.chat.response.ChatResponse;
+import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
+import dev.langchain4j.rag.content.retriever.ContentRetriever;
+import dev.langchain4j.service.tool.ToolProvider;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+/**
+ * @author Feliphe Marinho
+ */
+public class AssistantHandlerContext {
+
+	public static AssistantHandlerContext.Builder builder() {
+		return new AssistantHandlerContext.Builder();
+	}
+
+	public AssistantHandlerContext(AssistantHandlerContext.Builder builder) {
+		_contentRetriever = builder._contentRetriever;
+		_invocationParameters = builder._invocationParameters;
+		_memoryId = builder._memoryId;
+		_onCompleteResponseConsumer = builder._onCompleteResponseConsumer;
+		_onErrorConsumer = builder._onErrorConsumer;
+		_systemMessageProviderFunction = builder._systemMessageProviderFunction;
+		_tools = builder._tools;
+		_toolProvider = builder._toolProvider;
+		_userMessage = builder._userMessage;
+		_vertexAiGeminiStreamingChatModel =
+			builder._vertexAiGeminiStreamingChatModel;
+	}
+
+	public ContentRetriever getContentRetriever() {
+		return _contentRetriever;
+	}
+
+	public InvocationParameters getInvocationParameters() {
+		return _invocationParameters;
+	}
+
+	public String getMemoryId() {
+		return _memoryId;
+	}
+
+	public Consumer<ChatResponse> getOnCompleteResponseConsumer() {
+		return _onCompleteResponseConsumer;
+	}
+
+	public Consumer<Throwable> getOnErrorConsumer() {
+		return _onErrorConsumer;
+	}
+
+	public Function<Object, String> getSystemMessageProviderFunction() {
+		return _systemMessageProviderFunction;
+	}
+
+	public ToolProvider getToolProvider() {
+		return _toolProvider;
+	}
+
+	public Object[] getTools() {
+		return _tools;
+	}
+
+	public String getUserMessage() {
+		return _userMessage;
+	}
+
+	public VertexAiGeminiStreamingChatModel
+		getVertexAiGeminiStreamingChatModel() {
+
+		return _vertexAiGeminiStreamingChatModel;
+	}
+
+	public static class Builder {
+
+		public AssistantHandlerContext build() {
+			return new AssistantHandlerContext(this);
+		}
+
+		public Builder contentRetriever(ContentRetriever contentRetriever) {
+			_contentRetriever = contentRetriever;
+
+			return this;
+		}
+
+		public Builder invocationParameters(
+			InvocationParameters invocationParameters) {
+
+			_invocationParameters = invocationParameters;
+
+			return this;
+		}
+
+		public Builder memoryId(String memoryId) {
+			_memoryId = memoryId;
+
+			return this;
+		}
+
+		public Builder onCompleteResponseConsumer(
+			Consumer<ChatResponse> onCompleteResponseConsumer) {
+
+			_onCompleteResponseConsumer = onCompleteResponseConsumer;
+
+			return this;
+		}
+
+		public Builder onErrorConsumer(Consumer<Throwable> onErrorConsumer) {
+			_onErrorConsumer = onErrorConsumer;
+
+			return this;
+		}
+
+		public Builder systemMessageProviderFunction(
+			Function<Object, String> systemMessageProviderFunction) {
+
+			_systemMessageProviderFunction = systemMessageProviderFunction;
+
+			return this;
+		}
+
+		public Builder toolProvider(ToolProvider toolProvider) {
+			if (toolProvider != null) {
+				_toolProvider = toolProvider;
+			}
+
+			return this;
+		}
+
+		public Builder tools(Object... tools) {
+			_tools = tools;
+
+			return this;
+		}
+
+		public Builder userMessage(String userMessage) {
+			_userMessage = userMessage;
+
+			return this;
+		}
+
+		public Builder vertexAiGeminiStreamingChatModel(
+			VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel) {
+
+			_vertexAiGeminiStreamingChatModel =
+				vertexAiGeminiStreamingChatModel;
+
+			return this;
+		}
+
+		private ContentRetriever _contentRetriever;
+		private InvocationParameters _invocationParameters;
+		private String _memoryId;
+		private Consumer<ChatResponse> _onCompleteResponseConsumer;
+		private Consumer<Throwable> _onErrorConsumer;
+		private Function<Object, String> _systemMessageProviderFunction;
+		private ToolProvider _toolProvider;
+		private Object[] _tools = new Object[0];
+		private String _userMessage;
+		private VertexAiGeminiStreamingChatModel
+			_vertexAiGeminiStreamingChatModel;
+
+	}
+
+	private final ContentRetriever _contentRetriever;
+	private final InvocationParameters _invocationParameters;
+	private final String _memoryId;
+	private final Consumer<ChatResponse> _onCompleteResponseConsumer;
+	private final Consumer<Throwable> _onErrorConsumer;
+	private final Function<Object, String> _systemMessageProviderFunction;
+	private final ToolProvider _toolProvider;
+	private final Object[] _tools;
+	private final String _userMessage;
+	private final VertexAiGeminiStreamingChatModel
+		_vertexAiGeminiStreamingChatModel;
+
+}

@@ -1,0 +1,18 @@
+Bundle-Name: Liferay AI Hub Nexus Implementation
+Bundle-SymbolicName: com.liferay.ai.hub.nexus.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.fasterxml.jackson.datatype.*,\
+	\
+	!org.bouncycastle.jsse.*,\
+	\
+	!org.conscrypt.*,\
+	\
+	!org.openjsse.javax.net.ssl.*,\
+	!org.openjsse.net.ssl.*,\
+	\
+	android.*;resolution:=optional,\
+	\
+	*
+-dsannotations-options: inherit
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

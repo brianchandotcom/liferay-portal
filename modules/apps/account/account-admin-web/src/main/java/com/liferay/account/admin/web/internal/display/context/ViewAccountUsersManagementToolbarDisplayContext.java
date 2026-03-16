@@ -122,8 +122,8 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 						"accountEntryId", _getAccountEntryId()
 					).setParameter(
 						"showCreateButton",
-                        _hasPermission(AccountActionKeys.ADD_USER) &&
-                            _hasPermission(AccountActionKeys.ASSIGN_USERS)
+						_hasPermission(AccountActionKeys.ADD_USER) &&
+						_hasPermission(AccountActionKeys.ASSIGN_USERS)
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
@@ -216,7 +216,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	@Override
 	public Boolean isShowCreationMenu() {
 		return _hasPermission(AccountActionKeys.ASSIGN_USERS) ||
-                _hasPermission(AccountActionKeys.INVITE_USER);
+			   _hasPermission(AccountActionKeys.INVITE_USER);
 	}
 
 	@Override
@@ -245,15 +245,15 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 		return ParamUtil.getLong(liferayPortletRequest, "accountEntryId");
 	}
 
-    private boolean _hasPermission(String actionId) {
-        ThemeDisplay themeDisplay =
-            (ThemeDisplay)httpServletRequest.getAttribute(
-                WebKeys.THEME_DISPLAY);
+	private boolean _hasPermission(String actionId) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-        return AccountEntryPermission.contains(
-            themeDisplay.getPermissionChecker(), _getAccountEntryId(),
-            actionId);
-    }
+		return AccountEntryPermission.contains(
+			themeDisplay.getPermissionChecker(), _getAccountEntryId(),
+			actionId);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewAccountUsersManagementToolbarDisplayContext.class);

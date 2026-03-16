@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.COMMERCE,
-		"panel.category.order:Integer=300"
+		"panel.category.order:Integer=360"
 	},
 	service = PanelCategory.class
 )

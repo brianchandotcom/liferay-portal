@@ -20,6 +20,7 @@ CommerceReturn commerceReturn = commerceReturnEditDisplayContext.getCommerceRetu
 		<aui:model-context bean="<%= commerceReturn.getObjectEntry() %>" model="<%= ObjectEntry.class %>" />
 
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="requestProcessed" type="hidden" value='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>' />
 		<aui:input name="primaryKey" type="hidden" />
 
 		<aui:input name="note" type="textarea" value="<%= commerceReturn.getNote() %>" wrapperCssClass="form-group-item" />

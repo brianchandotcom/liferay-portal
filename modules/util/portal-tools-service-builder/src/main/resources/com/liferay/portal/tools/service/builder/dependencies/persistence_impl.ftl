@@ -75,6 +75,8 @@ import com.liferay.portal.kernel.configuration.Configuration;
 	import com.liferay.portal.kernel.configuration.Filter;
 	import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 	import com.liferay.portal.kernel.dao.db.DBType;
+
+	import java.lang.reflect.Array;
 </#if>
 
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
@@ -255,6 +257,44 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	<#if !serviceBuilder.isVersionGTE_7_1_0()>
+		private static Object _split(Object array, int splitSize) {
+			int length = Array.getLength(array);
+
+			int pageCount = length / splitSize;
+
+			if ((length % splitSize) > 0) {
+				pageCount++;
+			}
+
+			Class<?> clazz = array.getClass();
+
+			Class<?> componentType = clazz.getComponentType();
+
+			Object newArray = Array.newInstance(
+				componentType, pageCount, splitSize);
+
+			if (pageCount == 1) {
+				Array.set(newArray, 0, array);
+
+				return newArray;
+			}
+
+			for (int i = 0; i < pageCount; i++) {
+				int end = Math.min(length, splitSize * (i + 1));
+				int start = splitSize * i;
+
+				int elementLength = end - start;
+
+				Object element = Array.newInstance(componentType, elementLength);
+
+				System.arraycopy(array, start, element, 0, elementLength);
+
+				Array.set(newArray, i, element);
+			}
+
+			return newArray;
+		}
+
 		private int _databaseInMaxParameters;
 	</#if>
 
@@ -1355,39 +1395,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					return map;
 				}
 
-				<#if serviceBuilder.isVersionGTE_7_1_0()>
-					if ((databaseInMaxParameters > 0) && (primaryKeys.size() > databaseInMaxParameters)) {
-						Iterator<Serializable> iterator = primaryKeys.iterator();
+				if ((${databaseInMaxParameters} > 0) && (primaryKeys.size() > ${databaseInMaxParameters})) {
+					Iterator<Serializable> iterator = primaryKeys.iterator();
 
-						while (iterator.hasNext()) {
-							Set<Serializable> page = new HashSet<>();
+					while (iterator.hasNext()) {
+						Set<Serializable> page = new HashSet<>();
 
-							for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-								page.add(iterator.next());
-							}
-
-							map.putAll(fetchByPrimaryKeys(page));
+						for (int i = 0; (i < ${databaseInMaxParameters}) && iterator.hasNext(); i++) {
+							page.add(iterator.next());
 						}
 
-						return map;
+						map.putAll(fetchByPrimaryKeys(page));
 					}
-				<#else>
-					if ((_databaseInMaxParameters > 0) && (primaryKeys.size() > _databaseInMaxParameters)) {
-						Iterator<Serializable> iterator = primaryKeys.iterator();
 
-						while (iterator.hasNext()) {
-							Set<Serializable> page = new HashSet<>();
-
-							for (int i = 0; (i < _databaseInMaxParameters) && iterator.hasNext(); i++) {
-								page.add(iterator.next());
-							}
-
-							map.putAll(fetchByPrimaryKeys(page));
-						}
-
-						return map;
-					}
-				</#if>
+					return map;
+				}
 
 				Set<Serializable> uncachedPrimaryKeys = null;
 
@@ -1526,13 +1548,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				return map;
 			}
 
-			if ((databaseInMaxParameters > 0) && (primaryKeys.size() > databaseInMaxParameters)) {
+			if ((${databaseInMaxParameters} > 0) && (primaryKeys.size() > ${databaseInMaxParameters})) {
 				Iterator<Serializable> iterator = primaryKeys.iterator();
 
 				while (iterator.hasNext()) {
 					Set<Serializable> page = new HashSet<>();
 
-					for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext();i++) {
+					for (int i = 0; (i < ${databaseInMaxParameters}) && iterator.hasNext();i++) {
 						page.add(iterator.next());
 					}
 

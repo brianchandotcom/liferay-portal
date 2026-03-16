@@ -3,5 +3,20 @@ locals {
 		"app.kubernetes.io/managed-by"=local.terraform_manager_name
 		"environment"="internal"
 	}
+	default_crossplane_container_security_context={
+		allowPrivilegeEscalation=false
+		capabilities={
+			drop=["ALL"]
+		}
+		readOnlyRootFilesystem=true
+		runAsGroup=65532
+		runAsUser=65532
+	}
+	default_crossplane_pod_security_context={
+		runAsNonRoot=true
+		seccompProfile={
+			type="RuntimeDefault"
+		}
+	}
 	terraform_manager_name="liferay-cloud-native-terraform"
 }

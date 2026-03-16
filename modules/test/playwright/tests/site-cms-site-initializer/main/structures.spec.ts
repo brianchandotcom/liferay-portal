@@ -13,6 +13,7 @@ import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden'
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import postSingleApproverCopy from '../../portal-workflow-kaleo-designer-web/main/utils/postSingleApproverCopy';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -206,6 +207,157 @@ test(
 		expect(
 			page.getByRole('menuitem', {exact: true, name: 'Delete'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Bulk assign default workflow modal',
+	{tag: '@LPD-76635'},
+	async ({apiHelpers, page, structuresPage}) => {
+		const workflowDefinition = await postSingleApproverCopy(apiHelpers);
+
+		await test.step('Check if the modal show the correct value default value', async () => {
+			await structuresPage.goto();
+
+			await page.getByRole('link', {name: 'Basic Document'}).click();
+
+			await page.getByRole('tab', {name: 'Workflow'}).click();
+
+			await page
+				.getByLabel('Select Workflow')
+				.selectOption(workflowDefinition.name);
+
+			await page.getByRole('button', {name: 'Publish'}).click();
+
+			await expect(
+				page
+					.getByRole('alert')
+					.locator('div')
+					.filter({hasText: 'Success:'})
+					.first()
+			).toBeVisible();
+
+			await structuresPage.goto();
+
+			await page
+				.getByRole('checkbox', {name: 'Select Basic Document'})
+				.click();
+
+			await page
+				.getByRole('button', {name: 'Assign Default Workflow'})
+				.click();
+
+			await page
+				.getByLabel('Default Workflow', {exact: true})
+				.isVisible();
+
+			await expect(
+				page.getByLabel('Default Workflow', {exact: true})
+			).toHaveValue('');
+		});
+
+		await test.step('Check if the scoped workflow settings persist', async () => {
+			await page
+				.getByLabel('Default Workflow', {exact: true})
+				.selectOption('Single Approver');
+
+			await page
+				.getByLabel('Assign Default Workflow to')
+				.getByRole('button', {name: 'Assign Workflow'})
+				.click();
+
+			await expect(
+				page
+					.getByRole('alert')
+					.locator('div')
+					.filter({hasText: 'Success:'})
+					.first()
+			).toBeVisible();
+
+			await page.getByRole('link', {name: 'Basic Document'}).click();
+
+			await page.getByRole('tab', {name: 'Workflow'}).click();
+
+			await expect(page.getByLabel('Default Workflow')).toHaveValue(
+				'Single Approver'
+			);
+
+			await expect(page.getByLabel('Select Workflow')).toHaveValue(
+				workflowDefinition.name
+			);
+		});
+
+		await test.step('Check if the modal can detect mixed workflow options', async () => {
+			await structuresPage.goto();
+
+			await page
+				.getByRole('checkbox', {name: 'Select Basic Document'})
+				.click();
+
+			await page
+				.getByRole('checkbox', {name: 'Select Basic Web Content'})
+				.click();
+
+			await page
+				.getByRole('button', {name: 'Assign Default Workflow'})
+				.click();
+
+			await page
+				.getByLabel('Default Workflow', {exact: true})
+				.isVisible();
+
+			await expect(
+				page.getByLabel('Default Workflow', {exact: true})
+			).toHaveValue('Mixed Workflows');
+
+			await expect(
+				page
+					.getByLabel('Assign Workflow')
+					.getByRole('button', {name: 'Assign Workflow'})
+			).toBeDisabled();
+		});
+
+		await test.step('Check if the Bulk action can update multiple structures', async () => {
+			await page
+				.getByLabel('Default Workflow', {exact: true})
+				.selectOption(workflowDefinition.name);
+
+			await expect(
+				page.getByRole('button', {name: 'Assign Workflow'})
+			).not.toBeDisabled();
+
+			await page.getByRole('button', {name: 'Assign Workflow'}).click();
+
+			await expect(
+				page
+					.getByRole('alert')
+					.locator('div')
+					.filter({hasText: 'Success:'})
+					.first()
+			).toBeVisible();
+
+			await page.getByRole('link', {name: 'Basic Document'}).click();
+
+			await page.getByRole('tab', {name: 'Workflow'}).click();
+
+			await page.getByLabel('Default Workflow').isVisible();
+
+			await expect(page.getByLabel('Default Workflow')).toHaveValue(
+				workflowDefinition.name
+			);
+
+			await structuresPage.goto();
+
+			await page.getByRole('link', {name: 'Basic Web Content'}).click();
+
+			await page.getByRole('tab', {name: 'Workflow'}).click();
+
+			await page.getByLabel('Default Workflow').isVisible();
+
+			await expect(page.getByLabel('Default Workflow')).toHaveValue(
+				workflowDefinition.name
+			);
+		});
 	}
 );
 

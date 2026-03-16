@@ -154,8 +154,8 @@ public class AccountEntryModelResourcePermission
 	}
 
 	private static final List<String> _permissions = Arrays.asList(
-		"MANAGE_ADDRESSES", "ADD_USER", "ASSIGN_USERS",
-		"INVITE_USER", "UNASSIGN_USERS", "UPDATE", "UPDATE_USER", "VIEW",
+		"MANAGE_ADDRESSES", "ADD_USER", "ASSIGN_USERS", "INVITE_USER",
+		"UNASSIGN_USERS", "UPDATE", "UPDATE_USERS", "VIEW",
 		"VIEW_ACCOUNT_GROUPS", "VIEW_ACCOUNT_ROLES", "VIEW_ADDRESSES",
 		"VIEW_USERS");
 

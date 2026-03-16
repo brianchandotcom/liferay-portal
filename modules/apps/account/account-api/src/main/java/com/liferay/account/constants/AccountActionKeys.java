@@ -16,9 +16,9 @@ public class AccountActionKeys {
 
 	public static final String ADD_ACCOUNT_ROLE = "ADD_ACCOUNT_ROLE";
 
-	public static final String ASSIGN_ACCOUNTS = "ASSIGN_ACCOUNTS";
-
 	public static final String ADD_USER = "ADD_USER";
+
+	public static final String ASSIGN_ACCOUNTS = "ASSIGN_ACCOUNTS";
 
 	public static final String ASSIGN_USERS = "ASSIGN_USERS";
 
@@ -45,7 +45,7 @@ public class AccountActionKeys {
 	public static final String UPDATE_SUBORGANIZATIONS_ACCOUNTS =
 		"UPDATE_SUBORGANIZATIONS_ACCOUNTS";
 
-    public static final String UPDATE_USERS = "UPDATE_USERS";
+	public static final String UPDATE_USERS = "UPDATE_USERS";
 
 	public static final String VIEW_ACCOUNT_GROUPS = "VIEW_ACCOUNT_GROUPS";
 

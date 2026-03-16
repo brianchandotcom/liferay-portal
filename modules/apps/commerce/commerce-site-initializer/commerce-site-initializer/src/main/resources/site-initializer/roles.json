@@ -420,11 +420,11 @@
 	},
 	{
 		"actions": [
-            {
-                "actionId": "ADD_USER",
-                "resource": "com.liferay.account.model.AccountEntry",
-                "scope": 1
-            },
+			{
+				"actionId": "ADD_USER",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 1
+			},
 			{
 				"actionId": "ASSIGN_USERS",
 				"resource": "com.liferay.account.model.AccountEntry",
@@ -445,12 +445,12 @@
 				"resource": "com.liferay.account.model.AccountEntry",
 				"scope": 1
 			},
-            {
-                "actionId": "UPDATE_USERS",
-                "resource": "com.liferay.account.model.AccountEntry",
-                "scope": 1
-            },
-            {
+			{
+				"actionId": "UPDATE_USERS",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 1
+			},
+			{
 				"actionId": "VIEW_USERS",
 				"resource": "com.liferay.account.model.AccountEntry",
 				"scope": 1

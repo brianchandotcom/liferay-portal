@@ -6,7 +6,6 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.exception.AccountEntryUserRelEmailAddressException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.base.AccountEntryUserRelServiceBaseImpl;
@@ -89,10 +88,6 @@ public class AccountEntryUserRelServiceImpl
 		}
 
 		if (user == null) {
-			if (Validator.isNull(emailAddress)) {
-				throw new AccountEntryUserRelEmailAddressException();
-			}
-
 			user = _userLocalService.fetchUserByEmailAddress(
 				serviceContext.getCompanyId(), emailAddress);
 		}

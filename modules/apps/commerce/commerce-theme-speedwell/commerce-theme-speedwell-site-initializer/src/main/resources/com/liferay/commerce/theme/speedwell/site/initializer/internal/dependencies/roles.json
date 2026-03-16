@@ -9,12 +9,12 @@
 			},
 			{
 				"actionIds": [
-                    "ADD_USER",
+					"ADD_USER",
 					"ASSIGN_USERS",
 					"INVITE_USER",
 					"UNASSIGN_USERS",
-                    "UPDATE_USERS",
-                    "VIEW_USERS"
+					"UPDATE_USERS",
+					"VIEW_USERS"
 				],
 				"resource": "com.liferay.account.model.AccountEntry"
 			},

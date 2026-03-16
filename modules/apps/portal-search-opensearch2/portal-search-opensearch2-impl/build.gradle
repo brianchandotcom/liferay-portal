@@ -10,7 +10,7 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents.core5", name: "httpcore5-h2", version: "5.3.4"
 	compileInclude group: "org.eclipse", name: "yasson", version: "2.0.4"
 	compileInclude group: "org.eclipse.parsson", name: "parsson", version: "1.1.7"
-	compileInclude group: "org.opensearch.client", name: "opensearch-java", version: "2.12.0"
+	compileInclude group: "org.opensearch.client", name: "opensearch-java", version: "2.19.0"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.3"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.18.6"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"

@@ -6,7 +6,7 @@
 import {EventSource} from 'eventsource';
 import {fetch} from 'frontend-js-web';
 
-const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
+const AI_HUB_NEXUS_ENDPOINT = '/o/ai-hub-nexus/v1.0';
 
 export async function createEventSource() {
 	const token = await postToken();
@@ -16,7 +16,7 @@ export async function createEventSource() {
 	}
 
 	return new EventSource(
-		`${token.serviceURL}${AI_HUB_ENDPOINT}/chats/subscribe`,
+		`${token.serviceURL}${AI_HUB_NEXUS_ENDPOINT}/chats/subscribe`,
 		{
 			fetch: (input, init) =>
 				fetch(input as RequestInfo, {
@@ -33,7 +33,7 @@ export async function createEventSource() {
 
 async function postToken() {
 	try {
-		const response = await fetch(`${AI_HUB_ENDPOINT}/tokens`, {
+		const response = await fetch('/o/ai-hub-cell/v1.0/tokens', {
 			method: 'POST',
 		});
 
@@ -75,7 +75,7 @@ export async function postChatByExternalReferenceCodeMessage(
 	}
 
 	return await fetch(
-		`${token.serviceURL}${AI_HUB_ENDPOINT}/chats/by-external-reference-code/${eventSourceReference}/messages`,
+		`${token.serviceURL}${AI_HUB_NEXUS_ENDPOINT}/chats/by-external-reference-code/${eventSourceReference}/messages`,
 		{
 			body: JSON.stringify({
 				context: {

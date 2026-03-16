@@ -645,6 +645,8 @@ export default {
 	'set-the-users-role-ssa-users-can-create-trials-while-ssa-admins-can-manage-users-roles-and-trials':
 		'Set the user’s role: SSA Users can create trials, while SSA Admins can manage users, roles, and trials.',
 	'setting-up-your-free-version-ldp': 'Setting up your Free Version LDP 🚀',
+	'share-beta-feedback': 'Share Beta Feedback',
+	'share-your-feedback': 'Share Your Feedback',
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',
 	'sign-in-with-a-different-account': 'Sign in with a Different Account',
 	'site-initializer': 'Site Initializer',

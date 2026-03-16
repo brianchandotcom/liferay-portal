@@ -21,9 +21,9 @@ import i18n from '../../../../../i18n';
 import provisioningOAuth2 from '../../../../../services/oauth/Provisioning';
 import {LicenseKey} from '../../../../../services/oauth/types';
 import TitleSubtitleHeader from '../../../components/TitleSubtitleHeader';
+import Licenses from '../../Apps/App/Licenses/Licenses';
 import ActivationKeyAlert from './LicenseAlert';
 import LicenseTitleHeader from './LicenseTitleHeader';
-import Licenses from '../../Apps/App/Licenses/Licenses';
 
 import './Licenses.scss';
 
@@ -115,7 +115,6 @@ const ActivationKeysDXP = () => {
 
 							<ClayButton
 								className="px-3 rounded"
-								size="sm"
 								disabled={expired}
 								displayType="secondary"
 								onClick={() => {
@@ -123,6 +122,7 @@ const ActivationKeysDXP = () => {
 										row.id
 									);
 								}}
+								size="sm"
 							>
 								{i18n.translate('download')}
 							</ClayButton>
@@ -253,10 +253,10 @@ export default function ActivationKeys() {
 						actions={(row, licenseActions) => (
 							<ClayButton
 								displayType="secondary"
-								size="sm"
 								onClick={() =>
 									licenseActions.onDownloadLicenseKey(row)
 								}
+								size="sm"
 							>
 								{i18n.translate('download')}
 							</ClayButton>

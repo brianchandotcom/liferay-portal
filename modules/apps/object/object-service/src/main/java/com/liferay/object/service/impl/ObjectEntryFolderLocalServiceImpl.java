@@ -296,6 +296,16 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntryFolder fetchObjectEntryFolder(
+		long groupId, long companyId, long parentObjectEntryFolderId,
+		String name) {
+
+		return objectEntryFolderPersistence.fetchByG_C_P_N_NotS_First(
+			groupId, companyId, parentObjectEntryFolderId, name,
+			WorkflowConstants.STATUS_IN_TRASH, null);
+	}
+
+	@Override
 	public ObjectEntryFolder fetchObjectEntryFolderByExternalReferenceCode(
 		String externalReferenceCode, long groupId, long companyId) {
 

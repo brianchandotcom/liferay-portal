@@ -99,11 +99,15 @@ public abstract class BaseLicenseTestCase {
 			bundleSymbolicNames.containsAll(SetUtil.fromArray(bundleNames)));
 	}
 
-	public void assertLicenseInvalid(String response) {
+	public void assertLicenseInvalid() throws Exception {
+		String response = _hitHomePage("localhost", 8080);
+
 		Assert.assertTrue(response.contains(_INVALID_LICENSE_KEY));
 	}
 
-	public void assertLicenseNotRegistered(String response) {
+	public void assertLicenseNotRegistered() throws Exception {
+		String response = _hitHomePage("localhost", 8080);
+
 		Assert.assertTrue(response.contains(_NOT_REGISTERED_LICENSE_KEY));
 	}
 
@@ -123,7 +127,9 @@ public abstract class BaseLicenseTestCase {
 			licenseProperties.toString(), licenseProperties.isEmpty());
 	}
 
-	public void assertLicenseRegistered(String response) {
+	public void assertLicenseRegistered() throws Exception {
+		String response = _hitHomePage("localhost", 8080);
+
 		Assert.assertFalse(response.contains(_LICENSE_PAGE_KEY));
 	}
 
@@ -159,16 +165,6 @@ public abstract class BaseLicenseTestCase {
 		return _buildBinaryFile(
 			getPortalProductId(), _FREE_TIER_ACCOUNT_NAME,
 			_FREE_TIER_PRODUCT_NAME, _FREE_TIER_LICENSE_TYPE);
-	}
-
-	public String hitHomePage(String host, int port) throws Exception {
-		Http.Options options = new Http.Options();
-
-		options.setCookieSpec(Http.CookieSpec.IGNORE_COOKIES);
-		options.setLocation(String.format("http://%s:%d/", host, port));
-		options.setMethod(Http.Method.GET);
-
-		return HttpUtil.URLtoString(options);
 	}
 
 	public void resetCheckInterval() throws Exception {
@@ -356,6 +352,16 @@ public abstract class BaseLicenseTestCase {
 		}
 
 		return bundleSymbolicNames;
+	}
+
+	private String _hitHomePage(String host, int port) throws Exception {
+		Http.Options options = new Http.Options();
+
+		options.setCookieSpec(Http.CookieSpec.IGNORE_COOKIES);
+		options.setLocation(String.format("http://%s:%d/", host, port));
+		options.setMethod(Http.Method.GET);
+
+		return HttpUtil.URLtoString(options);
 	}
 
 	private static final DateFormat _DATE_FORMAT = new SimpleDateFormat(

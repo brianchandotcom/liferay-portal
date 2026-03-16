@@ -164,7 +164,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 						company.getCompanyId());
 
 			_sites.updateLayoutSetPrototypesLinks(
-				group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+				group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, false,
 				false);
 
 			_setResourcePermissions(objectEntry);

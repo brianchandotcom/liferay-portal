@@ -171,6 +171,40 @@ public class BatchTestEntityExportImportTest {
 	}
 
 	@Test
+	public void testAcceptAllLanguagesDefaultsToTrueInExportImport()
+		throws Exception {
+
+		BatchTestEntity batchTestEntity =
+			_batchTestEntityResource.postBatchTestEntity(
+				new BatchTestEntity() {
+					{
+						externalReferenceCode = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						name = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						nestedField = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+					}
+				});
+
+		Assert.assertFalse(batchTestEntity.getAcceptAllLanguagesProperty());
+
+		File larFile = _exportLayout(false);
+
+		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
+			batchTestEntity.getExternalReferenceCode());
+
+		_importLayout(false, larFile);
+
+		BatchTestEntity importedBatchTestEntity =
+			_batchTestEntityResource.getBatchTestEntityByExternalReferenceCode(
+				batchTestEntity.getExternalReferenceCode());
+
+		Assert.assertTrue(
+			importedBatchTestEntity.getAcceptAllLanguagesProperty());
+	}
+
+	@Test
 	public void testExportImport() throws Exception {
 		Page<BatchTestEntity> batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();

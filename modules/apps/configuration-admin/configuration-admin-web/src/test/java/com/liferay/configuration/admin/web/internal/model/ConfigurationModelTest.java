@@ -34,13 +34,11 @@ public class ConfigurationModelTest extends Mockito {
 			ReflectionTestUtil.<String[]>invoke(
 				configurationModel, "_split",
 				new Class<?>[] {String.class, String.class}, null, null));
-
 		Assert.assertArrayEquals(
 			new String[] {"argument"},
 			ReflectionTestUtil.<String[]>invoke(
 				configurationModel, "_split",
 				new Class<?>[] {String.class, String.class}, "argument", null));
-
 		Assert.assertArrayEquals(
 			new String[] {"argument1", "argument2"},
 			ReflectionTestUtil.<String[]>invoke(

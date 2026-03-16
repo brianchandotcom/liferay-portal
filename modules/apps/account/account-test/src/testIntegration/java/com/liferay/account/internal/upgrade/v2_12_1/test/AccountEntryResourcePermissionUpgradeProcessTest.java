@@ -51,9 +51,9 @@ public class AccountEntryResourcePermissionUpgradeProcessTest {
 
 	@Test
 	public void testRoleResourceUpgradeProcess() throws Exception {
-        Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-        _resourceActionLocalService.checkResourceActions(
+		_resourceActionLocalService.checkResourceActions(
 			AccountEntry.class.getName(),
 			Collections.singletonList(ActionKeys.MANAGE_USERS));
 
@@ -135,4 +135,5 @@ public class AccountEntryResourcePermissionUpgradeProcessTest {
 
 	@Inject
 	private FinderCache _finderCache;
+
 }

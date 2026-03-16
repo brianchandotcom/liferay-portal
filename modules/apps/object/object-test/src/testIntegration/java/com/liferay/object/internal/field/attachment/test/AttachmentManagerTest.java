@@ -109,9 +109,8 @@ public class AttachmentManagerTest {
 	@Test
 	public void testGetOrAddFileEntry() throws Exception {
 		FileEntry tempFileEntry = _addTempFileEntry(
-			RandomTestUtil.randomString(), ".txt",
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			_objectDefinition);
+			_getRandomFileContent(8), ".txt", RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, _objectDefinition);
 
 		Folder folder = tempFileEntry.getFolder();
 
@@ -192,9 +191,8 @@ public class AttachmentManagerTest {
 					).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				RandomTestUtil.randomString(), ".txt",
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-				_objectDefinition);
+				_getRandomFileContent(8), ".txt", RandomTestUtil.randomString(),
+				ContentTypes.TEXT_PLAIN, _objectDefinition);
 
 			folder = tempFileEntry.getFolder();
 
@@ -221,9 +219,8 @@ public class AttachmentManagerTest {
 						).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				RandomTestUtil.randomString(), ".txt",
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-				_objectDefinition);
+				_getRandomFileContent(8), ".txt", RandomTestUtil.randomString(),
+				ContentTypes.TEXT_PLAIN, _objectDefinition);
 
 			folder = tempFileEntry.getFolder();
 
@@ -249,7 +246,7 @@ public class AttachmentManagerTest {
 					).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				RandomTestUtil.randomString(1000), ".txt",
+				_getRandomFileContent(1000), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 				_objectDefinition);
 
@@ -316,6 +313,15 @@ public class AttachmentManagerTest {
 			objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(fileName + extension),
 			FileUtil.createTempFile(content.getBytes()), mimeType);
+	}
+
+	private String _getRandomFileContent(int size) {
+		String firstLine = "test\n";
+
+		String randomContent = RandomTestUtil.randomString(
+			size - firstLine.length());
+
+		return firstLine + randomContent;
 	}
 
 	@Inject

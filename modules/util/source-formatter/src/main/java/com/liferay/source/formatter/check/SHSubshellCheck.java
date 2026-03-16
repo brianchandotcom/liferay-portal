@@ -53,25 +53,22 @@ public class SHSubshellCheck extends BaseFileCheck {
 
 				s = s.replaceAll("'.*?'", "''");
 
-				matcher = _subshellPattern.matcher(s);
+				if (s.contains("`") ||
+					(s.contains("$(") && !s.contains("$(("))) {
 
-				if (!matcher.find()) {
-					continue;
+					addMessage(
+						fileName,
+						"Do not assign subshell outputs directly to 'local' " +
+							"variables, extract the subshell call into a " +
+								"separate assignment",
+						lineNumber);
 				}
-
-				addMessage(
-					fileName,
-					"Do not assign subshell outputs directly to 'local' " +
-						"variables, extract the subshell call into a " +
-							"separate assignment",
-					lineNumber);
 			}
 		}
 
 		return content;
 	}
 
-	private static final Pattern _subshellPattern = Pattern.compile("\\$\\(|`");
 	private static final Pattern _variableDefinitionPattern = Pattern.compile(
 		"local \\w+=(.*)");
 

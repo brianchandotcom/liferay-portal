@@ -199,6 +199,56 @@ public class SegmentsExperienceUpgradeProcessTest
 		_assertSegmentsExperiences();
 	}
 
+	@Test
+	public void testUpgradeWithoutCtCollectionIdColumn() throws Exception {
+		_deleteSegmentsExperiences();
+
+		try {
+			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
+			_addOrDropColumn(
+				"ctCollectionId", "drop", "LayoutPageTemplateStructureRel");
+
+			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
+
+			runUpgrade();
+		}
+		finally {
+			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
+			_addOrDropColumn(
+				"ctCollectionId", "add", "LayoutPageTemplateStructureRel");
+
+			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
+		}
+
+		_assertSegmentsExperiences();
+	}
+
+	@Test
+	public void testUpgradeWithoutCtCollectionIdAndSegmentsExperienceIdColumns()
+		throws Exception {
+
+		_deleteSegmentsExperiences();
+
+		try {
+			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
+			_addOrDropColumn(
+				"segmentsExperienceId", "drop", "FragmentEntryLink");
+
+			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
+
+			runUpgrade();
+		}
+		finally {
+			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
+			_addOrDropColumn(
+				"segmentsExperienceId", "add", "FragmentEntryLink");
+
+			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
+		}
+
+		_assertSegmentsExperiences();
+	}
+
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return SegmentsTestUtil.addSegmentsExperience(

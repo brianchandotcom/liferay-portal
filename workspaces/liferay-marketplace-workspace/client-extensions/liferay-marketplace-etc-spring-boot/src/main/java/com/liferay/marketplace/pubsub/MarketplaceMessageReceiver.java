@@ -23,10 +23,12 @@ import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.client.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -332,7 +334,96 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			}
 		}
 
+		String opportunityId = null;
+
+		for (ExternalLink externalLink : productPurchase.getExternalLinks()) {
+			if (Objects.equals(externalLink.getEntityName(), _OPPORTUNITY)) {
+				opportunityId = externalLink.getEntityId();
+
+				break;
+			}
+		}
+
+		if (opportunityId == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Skipping product purchase: missing opportunity Id");
+			}
+
+			return;
+		}
+
+		String accountKey = productPurchase.getAccountKey();
+
+		if (Objects.equals(
+				productPurchase.getProduct(
+				).getName(),
+				_LIFERAY_DATA_PLATFORM)) {
+
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+				account = _koroneikiService.getKoroneikiAccount(accountKey);
+
+			accountKey = account.getParentAccountKey();
+		}
+
+		OrderResource orderResource = _marketplaceService.getOrderResource();
+
+		com.liferay.headless.commerce.admin.order.client.pagination.Page<Order>
+			ordersPage = orderResource.getOrdersPage(
+				"", "externalReferenceCode eq '" + opportunityId + "'",
+				com.liferay.headless.commerce.admin.order.client.pagination.
+					Pagination.of(1, 1),
+				"");
+
+		Order order = ordersPage.fetchFirstItem();
+
+		if (order == null) {
+			order = orderResource.postOrder(
+				new Order() {
+					{
+						setAccountExternalReferenceCode(() -> accountKey);
+						setChannelId(() -> _channelId);
+						setCurrencyCode(() -> "USD");
+						setExternalReferenceCode(() -> opportunityId);
+						setOrderItems(
+							() -> new OrderItem[] {
+								new OrderItem() {
+									{
+										setQuantity(
+											() -> new BigDecimal(
+												productPurchase.getQuantity()));
+										setSkuExternalReferenceCode(
+											productPurchase::getProductKey);
+									}
+								}
+							});
+						setOrderStatus(
+							() -> MarketplaceConstants.ORDER_STATUS_COMPLETED);
+						setOrderTypeExternalReferenceCode(
+							() -> "SALESFORCE-ORDER");
+						setPaymentStatus(
+							() ->
+								MarketplaceConstants.
+									ORDER_PAYMENT_STATUS_COMPLETED);
+					}
+				});
+		}
+		else {
+			orderResource.patchOrder(
+				order.getId(),
+				new Order() {
+					{
+						setOrderStatus(
+							() -> MarketplaceConstants.ORDER_STATUS_COMPLETED);
+					}
+				});
+		}
+
+	private static final String _LIFERAY_DATA_PLATFORM =
+		"Liferay Data Platform";
+
 	private static final String _MARKETPLACE_CHANNEL = "MARKETPLACE-CHANNEL";
+
+	private static final String _OPPORTUNITY = "opportunity";
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceMessageReceiver.class);

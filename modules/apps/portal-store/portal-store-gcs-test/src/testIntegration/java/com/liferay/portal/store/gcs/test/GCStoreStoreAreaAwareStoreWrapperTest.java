@@ -61,8 +61,8 @@ public class GCStoreStoreAreaAwareStoreWrapperTest {
 		Assume.assumeTrue(
 			StringBundler.concat(
 				"Property \"", PropsKeys.DL_STORE_IMPL, "\" is not set to \"",
-				_CLASS_NAME_GCSSTORE, "\""),
-			dlStoreImpl.equals(_CLASS_NAME_GCSSTORE));
+				_CLASS_NAME_GCS_STORE, "\""),
+			dlStoreImpl.equals(_CLASS_NAME_GCS_STORE));
 	}
 
 	@Before
@@ -105,14 +105,13 @@ public class GCStoreStoreAreaAwareStoreWrapperTest {
 	@Test
 	public void testVerifyCompanyStores() throws Exception {
 		String fileName = RandomTestUtil.randomString();
-
 		String warnMessage = StringBundler.concat(
 			"Manually remove unused store ", _company.getCompanyId(),
 			" that belongs to company ", _company.getCompanyId(),
 			" if it is no longer used anywhere else");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME_GCSSTORE, LoggerTestUtil.WARN)) {
+				_CLASS_NAME_GCS_STORE, LoggerTestUtil.WARN)) {
 
 			_wrappedStore.addFile(
 				_company.getCompanyId(), _company.getGroupId(), fileName,
@@ -147,7 +146,7 @@ public class GCStoreStoreAreaAwareStoreWrapperTest {
 		}
 	}
 
-	private static final String _CLASS_NAME_GCSSTORE =
+	private static final String _CLASS_NAME_GCS_STORE =
 		"com.liferay.portal.store.gcs.GCSStore";
 
 	@Inject

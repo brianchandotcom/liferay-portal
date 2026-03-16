@@ -169,37 +169,10 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 	public List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
-			PermissionChecker permissionChecker, long[] groupIds,
-			boolean deleteMissingAssetEntries, boolean checkPermission)
-		throws Exception {
-
-		return getAssetEntries(
-			portletRequest, portletPreferences, permissionChecker, groupIds,
-			deleteMissingAssetEntries, checkPermission, false);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences,
-			PermissionChecker permissionChecker, long[] groupIds,
-			boolean deleteMissingAssetEntries, boolean checkPermission,
-			boolean includeNonvisibleAssets)
-		throws Exception {
-
-		return getAssetEntries(
-			portletRequest, portletPreferences, permissionChecker, groupIds,
-			deleteMissingAssetEntries, checkPermission, includeNonvisibleAssets,
-			AssetRendererFactory.TYPE_LATEST_APPROVED);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences,
-			PermissionChecker permissionChecker, long[] groupIds,
-			boolean deleteMissingAssetEntries, boolean checkPermission,
-			boolean includeNonvisibleAssets, int type)
+			PermissionChecker permissionChecker, long companyId,
+			long[] groupIds, boolean checkPermission,
+			boolean deleteMissingAssetEntries, boolean includeNonvisibleAssets,
+			int type)
 		throws Exception {
 
 		List<AssetEntry> assetEntries = new ArrayList<>();
@@ -264,9 +237,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 					getAssetRendererFactoryByClassName(
 						assetEntry.getClassName());
 
-			if (!assetRendererFactory.isActive(
-					permissionChecker.getCompanyId())) {
-
+			if (!assetRendererFactory.isActive(companyId)) {
 				if (deleteMissingAssetEntries) {
 					missingAssetEntryUuids.add(assetEntryUuid);
 				}
@@ -303,13 +274,68 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				missingAssetEntryUuids, portletPreferences);
 
 			if (!missingAssetEntryUuids.isEmpty()) {
-				SessionMessages.add(
-					portletRequest, "deletedMissingAssetEntries",
-					missingAssetEntryUuids);
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"The selected asset(s) have been removed from the ",
+							"list because they do not belong in the scope of ",
+							"this widget. : ", missingAssetEntryUuids));
+				}
+
+				if (portletRequest != null) {
+					SessionMessages.add(
+						portletRequest, "deletedMissingAssetEntries",
+						missingAssetEntryUuids);
+				}
 			}
 		}
 
 		return assetEntries;
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			boolean deleteMissingAssetEntries, boolean checkPermission)
+		throws Exception {
+
+		return getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			deleteMissingAssetEntries, checkPermission, false);
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			boolean deleteMissingAssetEntries, boolean checkPermission,
+			boolean includeNonvisibleAssets)
+		throws Exception {
+
+		return getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			deleteMissingAssetEntries, checkPermission, includeNonvisibleAssets,
+			AssetRendererFactory.TYPE_LATEST_APPROVED);
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			boolean deleteMissingAssetEntries, boolean checkPermission,
+			boolean includeNonvisibleAssets, int type)
+		throws Exception {
+
+		long companyId = permissionChecker.getCompanyId();
+
+		return getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, companyId,
+			groupIds, checkPermission, deleteMissingAssetEntries,
+			includeNonvisibleAssets, type);
 	}
 
 	@Override

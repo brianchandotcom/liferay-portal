@@ -60,6 +60,15 @@ public interface AssetPublisherHelper {
 	public List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long companyId,
+			long[] groupIds, boolean checkPermission,
+			boolean deleteMissingAssetEntries, boolean includeNonvisibleAssets,
+			int type)
+		throws Exception;
+
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
 			boolean deleteMissingAssetEntries, boolean checkPermission)
 		throws Exception;

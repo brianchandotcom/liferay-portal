@@ -13,7 +13,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-11"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -81,7 +80,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       class="dropdown"
     >
       <div
-        aria-controls="clay-dropdown-menu-12"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
@@ -124,7 +122,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       class="dropdown"
     >
       <div
-        aria-controls="clay-dropdown-menu-13"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
@@ -164,7 +161,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-14"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -217,7 +213,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-15"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -285,7 +280,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       class="dropdown"
     >
       <div
-        aria-controls="clay-dropdown-menu-16"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
@@ -328,7 +322,6 @@ exports[`ValidationDate shows date range validation 1`] = `
       class="dropdown"
     >
       <div
-        aria-controls="clay-dropdown-menu-17"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
@@ -368,7 +361,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-18"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -421,7 +413,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-19"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -486,7 +477,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-1"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -548,7 +538,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
       class="dropdown"
     >
       <div
-        aria-controls="clay-dropdown-menu-2"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
@@ -591,7 +580,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
       class="dropdown"
     >
       <div
-        aria-controls="clay-dropdown-menu-3"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
@@ -631,7 +619,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-4"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -684,7 +671,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-5"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -749,7 +735,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-6"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -811,7 +796,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
       class="dropdown"
     >
       <div
-        aria-controls="clay-dropdown-menu-7"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
@@ -854,7 +838,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
       class="dropdown"
     >
       <div
-        aria-controls="clay-dropdown-menu-8"
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
@@ -894,7 +877,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-9"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
@@ -947,7 +929,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
         class="dropdown"
       >
         <div
-          aria-controls="clay-dropdown-menu-10"
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"

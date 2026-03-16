@@ -422,10 +422,6 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 					sizeInfoFieldValue = fileEntry.getSize();
 				}
 				else if (infoFieldValue instanceof InfoLocalizedValue) {
-					InfoLocalizedValue<Object> infoLocalizedValue =
-						(InfoLocalizedValue<Object>)infoFieldValue;
-					boolean hasImage = false;
-
 					InfoLocalizedValue.Builder<Object>
 						downloadURLInfoFieldValueBuilder =
 							InfoLocalizedValue.builder();
@@ -435,6 +431,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 					InfoLocalizedValue.Builder<Object>
 						fileURLInfoFieldValueBuilder =
 							InfoLocalizedValue.builder();
+					boolean hasImage = false;
 					InfoLocalizedValue.Builder<Object>
 						mimeTypeInfoFieldValueBuilder =
 							InfoLocalizedValue.builder();
@@ -444,6 +441,9 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 					InfoLocalizedValue.Builder<Object>
 						sizeInfoFieldValueBuilder =
 							InfoLocalizedValue.builder();
+
+					InfoLocalizedValue<Object> infoLocalizedValue =
+						(InfoLocalizedValue<Object>)infoFieldValue;
 
 					Map<Locale, Object> values = infoLocalizedValue.getValues();
 
@@ -460,11 +460,10 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 								themeDisplay, StringPool.BLANK));
 						fileNameInfoFieldValueBuilder.value(
 							entry.getKey(), fileEntry.getFileName());
-
-						String mimeType = fileEntry.getMimeType();
-
 						mimeTypeInfoFieldValueBuilder.value(
 							entry.getKey(), fileEntry.getMimeType());
+
+						String mimeType = fileEntry.getMimeType();
 
 						if (mimeType.startsWith("image")) {
 							WebImage fileURLWebImage = new WebImage(

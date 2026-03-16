@@ -109,8 +109,8 @@ test(
 
 test(
 	'Assert that clicking on cancel closes the translation manager and discards the changes',
-	{tag: '@LPD-47235'},
-	async ({translationManagerPage}) => {
+	{tag: ['@LPD-47235', '@LPD-78957']},
+	async ({page,translationManagerPage}) => {
 		const {
 			cancelButton,
 			catalanChoice,
@@ -146,6 +146,8 @@ test(
 			await cancelButton.click();
 
 			await expect(dialog).not.toBeVisible();
+
+			await expect(page.locator('body')).not.toHaveClass(/modal-open/);
 		});
 
 		await test.step('Assert the translation was not deleted', async () => {
@@ -270,8 +272,8 @@ test(
 
 test(
 	'Assert that a language can be deleted from the translation manager',
-	{tag: '@LPD-47235'},
-	async ({translationManagerPage}) => {
+	{tag: ['@LPD-47235', '@LPD-78957']},
+	async ({page, translationManagerPage}) => {
 		const {
 			dialog,
 			doneButton,
@@ -309,6 +311,8 @@ test(
 			await doneButton.click();
 
 			await expect(dialog).not.toBeVisible();
+
+			await expect(page.locator('body')).not.toHaveClass(/modal-open/);
 		});
 	}
 );

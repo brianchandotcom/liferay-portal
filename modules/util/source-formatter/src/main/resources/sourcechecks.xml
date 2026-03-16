@@ -1788,6 +1788,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="SHSourceProcessor">
+		<check name="SHSubshellCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that local variables are not assigned via subshells." />
+		</check>
 		<check name="WhitespaceCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace." />

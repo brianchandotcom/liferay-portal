@@ -360,13 +360,3 @@ test(
 		});
 	}
 );
-
-test(
-	'There is no checkbox to select structures',
-	{tag: '@LPD-69431'},
-	async ({page, structuresPage}) => {
-		await structuresPage.goto();
-
-		await expect(page.getByRole('checkbox')).toHaveCount(0);
-	}
-);

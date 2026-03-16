@@ -286,14 +286,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		for (String actionId : _ACTION_IDS) {
 			if (ArrayUtil.contains(actionIds, actionId)) {
-				Assert.assertTrue(
-					"Action " + actionId + " should be granted.",
-					resourcePermission.hasActionId(actionId));
+				Assert.assertTrue(resourcePermission.hasActionId(actionId));
 			}
 			else {
-				Assert.assertFalse(
-					"Action " + actionId + " should not be granted.",
-					resourcePermission.hasActionId(actionId));
+				Assert.assertFalse(resourcePermission.hasActionId(actionId));
 			}
 		}
 	}

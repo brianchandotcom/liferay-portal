@@ -27,6 +27,8 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 	<aui:form action="<%= editCommerceOrderBillingAddressActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= (billingAddress == null) ? "addBillingAddress" : "updateBillingAddress" %>' />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="requestProcessed" type="hidden" value='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>' />
 
 		<aui:model-context bean="<%= billingAddress %>" model="<%= CommerceAddress.class %>" />
 

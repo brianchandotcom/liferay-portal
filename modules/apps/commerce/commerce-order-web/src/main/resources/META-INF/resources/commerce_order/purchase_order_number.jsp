@@ -18,6 +18,8 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 <aui:form action="<%= editCommerceOrderPurchaseOrderNumberActionURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="purchaseOrderNumber" />
 	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="requestProcessed" type="hidden" value='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>' />
 
 	<liferay-ui:error exception="<%= CommerceOrderPurchaseOrderNumberException.class %>" message="please-enter-a-valid-purchase-order-number" />
 

@@ -50,6 +50,8 @@ long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 			<aui:form action="<%= editCommerceOrderPaymentTermsActionURL %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updatePaymentTerms" />
 				<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="requestProcessed" type="hidden" value='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>' />
 
 				<aui:select label='<%= LanguageUtil.get(request, "title") %>' name="commercePaymentTermId" showEmptyOption="<%= true %>">
 

@@ -6,7 +6,6 @@
 package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -33,13 +32,8 @@ public class DesignLibraryDashboardDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return StringBundler.concat(
-			"/o/search/v1.0/search?page=1&pageSize=20&emptySearch=true",
-			"&filter=cmsRoot eq true and cmsSection eq 'files' and status in ",
-			"(0, 2, 3, 1, 7)&nestedFields=embedded,embeddedTaxonomyCategory,",
-			"file.metadata,file.previewURL,file.thumbnailURL,",
-			"numberOfObjectEntries,numberOfObjectEntryFolders,",
-			"systemProperties.objectDefinitionBrief");
+		return "/o/search/v1.0/search?page=1&pageSize=20&emptySearch=true&" +
+			"filter=error eq true&nestedFields=embedded";
 	}
 
 	public Map<String, Object> getEmptyState() {

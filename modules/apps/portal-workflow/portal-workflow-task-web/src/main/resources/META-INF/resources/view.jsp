@@ -31,14 +31,14 @@ else {
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("assigned-to-me"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/view.jsp", "tabs1", "assigned-to-me");
+						navigationItem.setHref(renderResponse.createRenderURL(), "backURL", backURL, "mvcPath", "/view.jsp", "redirect", redirect, "tabs1", "assigned-to-me");
 						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "assigned-to-me"));
 					});
 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("assigned-to-my-roles"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/view.jsp", "tabs1", "assigned-to-my-roles");
+						navigationItem.setHref(renderResponse.createRenderURL(), "backURL", backURL, "mvcPath", "/view.jsp", "redirect", redirect, "tabs1", "assigned-to-my-roles");
 						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "assigned-to-my-roles"));
 					});
 			}

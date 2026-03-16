@@ -980,7 +980,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 							exportImportDescriptor.getKey(),
 							"  declares shared model class ", modelClassName,
 							" but does not implement ",
-							"getApplicableModelFunction()"));
+							"getApplicableModelFunction"));
 				}
 
 				continue;

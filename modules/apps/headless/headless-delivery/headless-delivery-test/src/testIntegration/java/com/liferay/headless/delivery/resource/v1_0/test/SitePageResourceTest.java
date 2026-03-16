@@ -93,6 +93,8 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -133,6 +135,11 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import jakarta.portlet.PortletPreferences;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.PathSegment;
@@ -162,6 +169,11 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -307,6 +319,98 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertTrue(pageHTML, pageHTML.contains("<body"));
 		Assert.assertTrue(pageHTML, pageHTML.contains("</body>"));
 		Assert.assertTrue(pageHTML, pageHTML.contains("</html>"));
+	}
+
+	@Test
+	@TestInfo("LPD-80347")
+	public void testGetSiteSitePageRenderedPageWithDynamicInclude()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		Bundle bundle = FrameworkUtil.getBundle(SitePageResourceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String dynamicIncludeContent =
+			"<!-- " + RandomTestUtil.randomString() + " -->";
+
+		DynamicInclude dynamicInclude = new DynamicInclude() {
+
+			@Override
+			public void include(
+				HttpServletRequest httpServletRequest,
+				HttpServletResponse httpServletResponse, String key) {
+
+				if (key.equals("/html/common/themes/bottom.jsp#pre")) {
+					ServletContext servletContext = ServletContextPool.get(
+						StringPool.BLANK);
+
+					if (servletContext == null) {
+						return;
+					}
+
+					RequestDispatcher requestDispatcher =
+						servletContext.getRequestDispatcher(
+							"/html/common/themes/body_top.jsp");
+
+					if (requestDispatcher == null) {
+						return;
+					}
+
+					try {
+						requestDispatcher.include(
+							httpServletRequest, httpServletResponse);
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
+				}
+				else if (key.equals("/html/common/themes/top_head.jsp#post")) {
+					try {
+						httpServletResponse.getWriter(
+						).write(
+							dynamicIncludeContent
+						);
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
+				}
+			}
+
+			@Override
+			public void register(
+				DynamicIncludeRegistry dynamicIncludeRegistry) {
+
+				dynamicIncludeRegistry.register(
+					"/html/common/themes/bottom.jsp#pre");
+				dynamicIncludeRegistry.register(
+					"/html/common/themes/top_head.jsp#post");
+			}
+
+		};
+
+		ServiceRegistration<DynamicInclude> serviceRegistration =
+			bundleContext.registerService(
+				DynamicInclude.class, dynamicInclude, null);
+
+		try {
+			String friendlyURL = layout.getFriendlyURL();
+
+			String pageHTML = sitePageResource.getSiteSitePageRenderedPage(
+				layout.getGroupId(), friendlyURL.substring(1));
+
+			Assert.assertTrue(
+				pageHTML, pageHTML.contains(dynamicIncludeContent));
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Ignore

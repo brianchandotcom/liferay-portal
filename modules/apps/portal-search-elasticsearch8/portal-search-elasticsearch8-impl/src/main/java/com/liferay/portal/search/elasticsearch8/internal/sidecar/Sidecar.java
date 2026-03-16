@@ -110,10 +110,10 @@ public class Sidecar {
 				_elasticsearchConfigurationWrapper.sidecarHeartbeatInterval()),
 			new StartSidecarProcessCallable(
 				StringBundler.concat(
-					"logger.bootstrapchecks.name=org.elasticsearch.bootstrap.",
-					"BootstrapChecks\nlogger.bootstrapchecks.level=error\n",
-					"logger.deprecation.name=org.elasticsearch.deprecation\n",
-					"logger.deprecation.level=error\n",
+					"logger.bootstrapchecks.level=error\nlogger.",
+					"bootstrapchecks.name=org.elasticsearch.bootstrap.",
+					"BootstrapChecks\nlogger.deprecation.level=error\nlogger.",
+					"deprecation.name=org.elasticsearch.deprecation\n",
 					ResourceUtil.getResourceAsString(
 						Sidecar.class, "dependencies/log4j2.properties")),
 				_getSettings()));

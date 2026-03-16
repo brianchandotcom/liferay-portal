@@ -168,6 +168,7 @@ const Licenses = ({actions, canDeactivate = true}: LicensesProps) => {
 			),
 		}),
 		[
+			canDeactivate,
 			deactivateLicenseModal,
 			licenseKeyModal,
 			modalData,

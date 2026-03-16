@@ -21,7 +21,7 @@ import Licenses from './pages/Apps/App/Licenses/Licenses';
 import Support from './pages/Apps/App/Support/Support';
 import Connections from './pages/Connections';
 import LiferayProductsBundles from './pages/LiferayProducts/Bundles/Bundles';
-import LiferayProductsLicenses from './pages/LiferayProducts/Licenses/Licenses';
+import ActivationKeys from './pages/LiferayProducts/Licenses/ActivationKeys';
 import LiferayProduct from './pages/LiferayProducts/LiferayProduct';
 import LiferayProductsOutlet from './pages/LiferayProducts/LiferayProductsOutlet';
 import LiferayProductsListView from './pages/LiferayProducts/index';
@@ -61,7 +61,7 @@ const CustomerDashboardRouter = () => {
 					<Route element={<LiferayProduct />} index />
 
 					<Route
-						element={<LiferayProductsLicenses />}
+						element={<ActivationKeys />}
 						path="activation-keys"
 					/>
 

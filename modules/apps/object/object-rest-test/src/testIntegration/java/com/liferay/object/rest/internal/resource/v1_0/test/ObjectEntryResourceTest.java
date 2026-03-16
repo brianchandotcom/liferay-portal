@@ -7229,7 +7229,7 @@ public class ObjectEntryResourceTest {
 					Http.Method.PUT);
 
 				Assert.assertNotEquals(
-					jsonObject.getString("title"), "FORBIDDEN",
+					jsonObject.getString("status"), "FORBIDDEN",
 					jsonObject.getString("status"));
 			}
 		);
@@ -18425,8 +18425,6 @@ public class ObjectEntryResourceTest {
 				_testPatchPutCustomObjectEntryWithAttachmentField(
 					fileEntry -> JSONUtil.put(
 						"status", "FORBIDDEN"
-					).put(
-						"title", "Forbidden"
 					),
 					_toFileEntry(
 						Base64::encode, RandomTestUtil.randomString(),
@@ -19375,8 +19373,6 @@ public class ObjectEntryResourceTest {
 				_testPostCustomObjectEntryWithAttachmentObjectField(
 					fileEntry -> JSONUtil.put(
 						"status", "FORBIDDEN"
-					).put(
-						"title", "Forbidden"
 					),
 					_toFileEntry(
 						Base64::encode, RandomTestUtil.randomString(),

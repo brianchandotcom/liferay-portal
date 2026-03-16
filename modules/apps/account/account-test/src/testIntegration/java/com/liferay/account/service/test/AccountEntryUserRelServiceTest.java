@@ -59,8 +59,17 @@ public class AccountEntryUserRelServiceTest {
 		UserTestUtil.setUser(_user);
 	}
 
+	@Test(expected = PrincipalException.class)
+	public void testAssignAccountByEmailAddressToExistingUserWithoutPermissions()
+		throws Exception {
+
+		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			_accountEntry.getAccountEntryId(), _user.getEmailAddress(),
+			new long[0], _user.getExternalReferenceCode(), _serviceContext);
+	}
+
 	@Test
-	public void testAssignNewUserByEmailWithCreatePermission()
+	public void testAssignAccountByEmailAddressToNewUserWithAddUserAndAssignUsersPermissions()
 		throws Exception {
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
@@ -94,17 +103,7 @@ public class AccountEntryUserRelServiceTest {
 	}
 
 	@Test(expected = PrincipalException.class)
-	public void testAssignNewUserByEmailWithoutCreateAssignPermission()
-		throws Exception {
-
-		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
-			_accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString() + "@liferay.com", new long[0],
-			RandomTestUtil.randomString(), _serviceContext);
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testAssignNewUserByEmailWithoutCreatePermission()
+	public void testAssignAccountByEmailAddressToNewUserWithAssignPermission()
 		throws Exception {
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
@@ -132,12 +131,13 @@ public class AccountEntryUserRelServiceTest {
 	}
 
 	@Test(expected = PrincipalException.class)
-	public void testAssignUserByEmailWithoutAssignPermission()
+	public void testAssignAccountByEmailAddressToNewUserWithoutPermissions()
 		throws Exception {
 
 		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
-			_accountEntry.getAccountEntryId(), _user.getEmailAddress(),
-			new long[0], _user.getExternalReferenceCode(), _serviceContext);
+			_accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString() + "@liferay.com", new long[0],
+			RandomTestUtil.randomString(), _serviceContext);
 	}
 
 	@Test

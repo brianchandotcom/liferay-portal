@@ -18,6 +18,7 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.bag.ObjectFieldBag;
@@ -26,7 +27,9 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -36,6 +39,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
@@ -82,6 +87,7 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 
 	private static long _createCMSBasicDocumentFileEntryId(
 			ObjectEntryManagerRegistry objectEntryManagerRegistry,
+			ObjectField objectField,
 			ObjectScopeProviderRegistry objectScopeProviderRegistry,
 			ObjectEntry sourceObjectEntry, ServiceContext serviceContext,
 			long tempFileEntryId)
@@ -110,9 +116,9 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 				new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
 					{
 						setObjectEntryFolderExternalReferenceCode(
-							() ->
-								ObjectEntryFolderConstants.
-									EXTERNAL_REFERENCE_CODE_FILES);
+							() -> _getObjectEntryFolderExternalReferenceCode(
+								sourceObjectEntry, objectField,
+								serviceContext));
 						setProperties(
 							() -> HashMapBuilder.<String, Object>put(
 								"file", tempFileEntryId
@@ -144,6 +150,54 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 				GetterUtil.getLong(objectEntry.getId()));
 
 		return GetterUtil.getLong(values.get("file"));
+	}
+
+	private static String _getObjectEntryFolderExternalReferenceCode(
+			ObjectEntry objectEntry, ObjectField objectField,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String storageDLFolderPath = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+			objectField.getObjectFieldSettings());
+
+		if (Validator.isNull(storageDLFolderPath)) {
+			return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
+		}
+
+		long companyId = objectEntry.getCompanyId();
+		long groupId = objectEntry.getGroupId();
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderLocalServiceUtil.getOrAddEmptyObjectEntryFolder(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
+				groupId, companyId, objectEntry.getUserId(), serviceContext);
+
+		for (String name :
+				StringUtil.split(storageDLFolderPath, CharPool.FORWARD_SLASH)) {
+
+			if (Validator.isNull(name)) {
+				continue;
+			}
+
+			ObjectEntryFolder childObjectEntryFolder =
+				ObjectEntryFolderLocalServiceUtil.fetchObjectEntryFolder(
+					groupId, companyId,
+					objectEntryFolder.getObjectEntryFolderId(), name);
+
+			if (childObjectEntryFolder == null) {
+				childObjectEntryFolder =
+					ObjectEntryFolderLocalServiceUtil.addObjectEntryFolder(
+						PortalUUIDUtil.generate(), groupId,
+						serviceContext.getUserId(),
+						objectEntryFolder.getObjectEntryFolderId(),
+						StringPool.BLANK, null, name, serviceContext);
+			}
+
+			objectEntryFolder = childObjectEntryFolder;
+		}
+
+		return objectEntryFolder.getExternalReferenceCode();
 	}
 
 	private static ObjectField _getObjectField(
@@ -230,8 +284,9 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 				builder.value(
 					entry.getKey(),
 					_createCMSBasicDocumentFileEntryId(
-						objectEntryManagerRegistry, objectScopeProviderRegistry,
-						objectEntry, serviceContext, tempFileEntryId));
+						objectEntryManagerRegistry, objectField,
+						objectScopeProviderRegistry, objectEntry,
+						serviceContext, tempFileEntryId));
 			}
 
 			return builder.build();
@@ -244,8 +299,9 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 		}
 
 		return _createCMSBasicDocumentFileEntryId(
-			objectEntryManagerRegistry, objectScopeProviderRegistry,
-			objectEntry, serviceContext, tempFileEntryId);
+			objectEntryManagerRegistry, objectField,
+			objectScopeProviderRegistry, objectEntry, serviceContext,
+			tempFileEntryId);
 	}
 
 	private static InfoFieldValue<Object> _normalizeInfoFieldValue(

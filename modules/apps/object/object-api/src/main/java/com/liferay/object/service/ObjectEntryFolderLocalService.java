@@ -221,6 +221,11 @@ public interface ObjectEntryFolderLocalService
 	public ObjectEntryFolder fetchObjectEntryFolder(long objectEntryFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntryFolder fetchObjectEntryFolder(
+		long groupId, long companyId, long parentObjectEntryFolderId,
+		String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntryFolder fetchObjectEntryFolderByExternalReferenceCode(
 		String externalReferenceCode, long groupId, long companyId);
 

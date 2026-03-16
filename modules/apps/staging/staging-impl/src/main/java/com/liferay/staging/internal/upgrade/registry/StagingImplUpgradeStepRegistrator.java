@@ -6,7 +6,8 @@
 package com.liferay.staging.internal.upgrade.registry;
 
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.staging.internal.upgrade.v1_0_0.StagingConfigurationUpgradeProcess;
+import com.liferay.staging.internal.upgrade.v1_0_0.PublishDisplayedContentStagingConfigurationUpgradeProcess;
+import com.liferay.staging.internal.upgrade.v1_1_0.PublishParentLayoutsByDefaultStagingConfigurationUpgradeProcess;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -25,7 +26,13 @@ public class StagingImplUpgradeStepRegistrator
 
 		registry.register(
 			"0.0.1", "1.0.0",
-			new StagingConfigurationUpgradeProcess(_configurationAdmin));
+			new PublishDisplayedContentStagingConfigurationUpgradeProcess(
+				_configurationAdmin));
+
+		registry.register(
+			"1.0.0", "1.1.0",
+			new PublishParentLayoutsByDefaultStagingConfigurationUpgradeProcess(
+				_configurationAdmin));
 	}
 
 	@Reference

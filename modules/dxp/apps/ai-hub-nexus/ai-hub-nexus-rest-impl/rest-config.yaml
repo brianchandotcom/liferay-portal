@@ -1,0 +1,13 @@
+apiDir: ../ai-hub-nexus-rest-api/src/main/java
+apiPackagePath: com.liferay.ai.hub.nexus.rest
+application:
+    baseURI: /ai-hub-nexus
+    className: AIHubNexusRESTApplication
+    name: Liferay.AI.Hub.Nexus.REST
+author: Feliphe Marinho
+clientDir: ../ai-hub-nexus-rest-client/src/main/java
+compatibilityVersion: 13
+forcePredictableOperationId: true
+generateGraphQL: false
+javaEEPackage: jakarta
+testDir: ../ai-hub-nexus-rest-test/src/testIntegration/java

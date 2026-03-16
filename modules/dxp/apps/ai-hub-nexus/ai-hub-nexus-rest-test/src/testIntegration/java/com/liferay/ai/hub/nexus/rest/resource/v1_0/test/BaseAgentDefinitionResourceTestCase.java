@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.resource.v1_0.test;
+package com.liferay.ai.hub.nexus.rest.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,12 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.AgentDefinition;
-import com.liferay.ai.hub.rest.client.http.HttpInvoker;
-import com.liferay.ai.hub.rest.client.pagination.Page;
-import com.liferay.ai.hub.rest.client.pagination.Pagination;
-import com.liferay.ai.hub.rest.client.resource.v1_0.AgentDefinitionResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.AgentDefinitionSerDes;
+import com.liferay.ai.hub.nexus.rest.client.dto.v1_0.AgentDefinition;
+import com.liferay.ai.hub.nexus.rest.client.http.HttpInvoker;
+import com.liferay.ai.hub.nexus.rest.client.pagination.Page;
+import com.liferay.ai.hub.nexus.rest.client.pagination.Pagination;
+import com.liferay.ai.hub.nexus.rest.client.resource.v1_0.AgentDefinitionResource;
+import com.liferay.ai.hub.nexus.rest.client.serdes.v1_0.AgentDefinitionSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
@@ -661,8 +661,8 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 
 		HttpResponse httpResponse =
 			importTaskResource.deleteImportTaskHttpResponse(
-				"com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition", null, null,
-				null, null,
+				"com.liferay.ai.hub.nexus.rest.dto.v1_0.AgentDefinition", null,
+				null, null, null,
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"externalReferenceCode", () -> externalReferenceCode)));
@@ -912,7 +912,8 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition.class)) {
+					com.liferay.ai.hub.nexus.rest.dto.v1_0.AgentDefinition.
+						class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -1723,7 +1724,7 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.AgentDefinitionResource
+	private com.liferay.ai.hub.nexus.rest.resource.v1_0.AgentDefinitionResource
 		_agentDefinitionResource;
 
 }

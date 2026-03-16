@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.resource.v1_0.test;
+package com.liferay.ai.hub.nexus.rest.resource.v1_0.test;
 
-import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
-import com.liferay.ai.hub.security.JWTTokenUtil;
+import com.liferay.ai.hub.cell.security.JWTTokenUtil;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
+import com.liferay.ai.hub.nexus.rest.resource.v1_0.util.SseUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -65,7 +65,7 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer(
-				"com.liferay.ai.hub.site.initializer");
+				"com.liferay.ai.hub.nexus.site.initializer");
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 	}
@@ -102,8 +102,8 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 			JSONUtil.put(
 				"text", "Expand the following text: " + text
 			).toString(),
-			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
-				"/messages",
+			"ai-hub-nexus/v1.0/chats/by-external-reference-code/" +
+				sseEventSinkKey + "/messages",
 			HashMapBuilder.put(
 				"Liferay-AI-Hub-On-Behalf-Of",
 				_generateToken(TestPropsValues.getUserId())
@@ -128,8 +128,8 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 			JSONUtil.put(
 				"text", "What was the first message that I sent in this chat?"
 			).toString(),
-			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
-				"/messages",
+			"ai-hub-nexus/v1.0/chats/by-external-reference-code/" +
+				sseEventSinkKey + "/messages",
 			HashMapBuilder.put(
 				"Liferay-AI-Hub-On-Behalf-Of",
 				_generateToken(TestPropsValues.getUserId())

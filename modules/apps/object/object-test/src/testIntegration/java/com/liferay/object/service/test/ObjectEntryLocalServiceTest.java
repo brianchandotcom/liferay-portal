@@ -1396,10 +1396,10 @@ public class ObjectEntryLocalServiceTest {
 		CMSTestUtil.getOrAddGroup(ObjectEntryLocalServiceTest.class);
 
 		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
+			_objectFolderLocalService.getOrAddEmptyObjectFolder(
 				ObjectFolderConstants.
 					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-				TestPropsValues.getCompanyId());
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(

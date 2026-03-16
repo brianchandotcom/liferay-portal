@@ -226,6 +226,7 @@ public class GCSStore implements Store {
 		return filesFoundIterator.hasNext();
 	}
 
+	@Override
 	public void verifyCompanyStores() throws PortalException {
 		try {
 			long[] companyIds = PortalInstancePool.getCompanyIds();

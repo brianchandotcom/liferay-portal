@@ -10,6 +10,7 @@ import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
+import com.liferay.osb.provisioning.rest.client.resource.v1_0.LicenseKeyResource;
 
 import java.net.URL;
 
@@ -33,6 +34,17 @@ public class ProvisioningService extends BaseService {
 
 	public AppLicenseKeyResource getAppLicenseKeyResource() throws Exception {
 		return AppLicenseKeyResource.builder(
+		).header(
+			"Authorization",
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"external-provisioning")
+		).endpoint(
+			_externalProvisioningHomePageURL
+		).build();
+	}
+
+	public LicenseKeyResource getLicenseKeyResource() throws Exception {
+		return LicenseKeyResource.builder(
 		).header(
 			"Authorization",
 			_liferayOAuth2AccessTokenManager.getAuthorization(

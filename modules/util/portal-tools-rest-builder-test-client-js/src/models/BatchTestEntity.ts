@@ -11,6 +11,7 @@
  */
 
 	export class BatchTestEntity {
+			"acceptAllLanguagesProperty"?: boolean;
 			"customFields"?: Array<any>;
 			"externalReferenceCode"?: string;
 			"id"?: number;
@@ -25,6 +26,11 @@
 		name: string;
 		type: string;
 	}> = [
+		{
+			baseName: "acceptAllLanguagesProperty",
+			name: "acceptAllLanguagesProperty",
+			type: "boolean",
+		},
 		{
 			baseName: "customFields",
 			name: "customFields",

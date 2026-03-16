@@ -46,6 +46,16 @@ public class BatchTestEntitySerDes {
 
 		sb.append("{");
 
+		if (batchTestEntity.getAcceptAllLanguagesProperty() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"acceptAllLanguagesProperty\": ");
+
+			sb.append(batchTestEntity.getAcceptAllLanguagesProperty());
+		}
+
 		if (batchTestEntity.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -148,6 +158,16 @@ public class BatchTestEntitySerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (batchTestEntity.getAcceptAllLanguagesProperty() == null) {
+			map.put("acceptAllLanguagesProperty", null);
+		}
+		else {
+			map.put(
+				"acceptAllLanguagesProperty",
+				String.valueOf(
+					batchTestEntity.getAcceptAllLanguagesProperty()));
+		}
+
 		if (batchTestEntity.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -216,7 +236,12 @@ public class BatchTestEntitySerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "customFields")) {
+			if (Objects.equals(
+					jsonParserFieldName, "acceptAllLanguagesProperty")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -247,7 +272,15 @@ public class BatchTestEntitySerDes {
 			BatchTestEntity batchTestEntity, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "customFields")) {
+			if (Objects.equals(
+					jsonParserFieldName, "acceptAllLanguagesProperty")) {
+
+				if (jsonParserFieldValue != null) {
+					batchTestEntity.setAcceptAllLanguagesProperty(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;

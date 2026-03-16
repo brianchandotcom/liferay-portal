@@ -138,22 +138,24 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			String externalReferenceCode =
 				systemEvent.getClassExternalReferenceCode();
 
-			if (externalReferenceCode != null) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					systemEvent.getExtraData());
+			if (externalReferenceCode == null) {
+				continue;
+			}
 
-				String type = jsonObject.getString("type");
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				systemEvent.getExtraData());
 
-				if (Validator.isNull(type)) {
-					untypedExternalReferenceCodes.add(externalReferenceCode);
-				}
-				else {
-					typedExternalReferenceCodesMap.computeIfAbsent(
-						type, __ -> new ArrayList<>()
-					).add(
-						externalReferenceCode
-					);
-				}
+			String type = jsonObject.getString("type");
+
+			if (Validator.isNull(type)) {
+				untypedExternalReferenceCodes.add(externalReferenceCode);
+			}
+			else {
+				typedExternalReferenceCodesMap.computeIfAbsent(
+					type, __ -> new ArrayList<>()
+				).add(
+					externalReferenceCode
+				);
 			}
 		}
 

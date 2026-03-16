@@ -8,6 +8,7 @@ package com.liferay.marketplace;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
@@ -17,7 +18,6 @@ import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
 import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Pagination;
 import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.osb.provisioning.rest.client.dto.v1_0.LicenseKey;
-import com.liferay.osb.provisioning.rest.client.http.HttpInvoker;
 import com.liferay.osb.provisioning.rest.client.resource.v1_0.LicenseKeyResource;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -56,22 +56,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/provisioning")
 @RestController
 public class ProvisioningRestController extends BaseRestController {
-
-	@PostMapping("app-license-keys/{id}/deactivate")
-	public void appLicenseKeysDeactivate(
-			@AuthenticationPrincipal Jwt jwt, @PathVariable("id") long id)
-		throws Exception {
-
-		AppLicenseKeyResource appLicenseKeyResource =
-			_provisioningService.getAppLicenseKeyResource();
-
-		appLicenseKeyResource.putAppLicenseKeyDeactivate(
-			jwt.getClaim("username"), jwt.getClaim("sub"), new Long[] {id});
-
-		if (_log.isInfoEnabled()) {
-			_log.info("License key " + id + " deactivated");
-		}
-	}
 
 	@GetMapping("app-license-keys/{id}")
 	public AppLicenseKey getAppLicenseKeys(@PathVariable("id") long id)
@@ -123,8 +107,8 @@ public class ProvisioningRestController extends BaseRestController {
 
 		LicenseKey licenseKey = licenseKeyResource.getLicenseKey(id);
 
-		HttpInvoker.HttpResponse httpResponse =
-			licenseKeyResource.getLicenseKeyDownloadHttpResponse(
+		com.liferay.osb.provisioning.rest.client.http.HttpInvoker.HttpResponse
+			httpResponse = licenseKeyResource.getLicenseKeyDownloadHttpResponse(
 				licenseKey.getId());
 
 		return _licenseKeyDownloadResponse(
@@ -185,6 +169,22 @@ public class ProvisioningRestController extends BaseRestController {
 			throw new ResponseStatusException(
 				HttpStatus.BAD_REQUEST,
 				"Invalid JSON or missing 'licenseEntry' field", jsonException);
+		}
+	}
+
+	@PostMapping("app-license-keys/{id}/deactivate")
+	public void postAppLicenseKeysDeactivate(
+			@AuthenticationPrincipal Jwt jwt, @PathVariable("id") long id)
+		throws Exception {
+
+		AppLicenseKeyResource appLicenseKeyResource =
+			_provisioningService.getAppLicenseKeyResource();
+
+		appLicenseKeyResource.putAppLicenseKeyDeactivate(
+			jwt.getClaim("username"), jwt.getClaim("sub"), new Long[] {id});
+
+		if (_log.isInfoEnabled()) {
+			_log.info("License key " + id + " deactivated");
 		}
 	}
 
@@ -350,6 +350,9 @@ public class ProvisioningRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		ProvisioningRestController.class);
+
+	@Autowired
+	private KoroneikiService _koroneikiService;
 
 	@Autowired
 	private MarketplaceService _marketplaceService;

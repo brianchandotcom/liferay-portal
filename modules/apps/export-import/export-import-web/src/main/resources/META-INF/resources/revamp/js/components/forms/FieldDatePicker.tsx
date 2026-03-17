@@ -50,14 +50,11 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 	const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
 		const val = event.target.value;
 
-		if (val && !dateUtils.isValid(val)) {
-			setInternalErrorMessage(
-				Liferay.Language.get('the-field-value-is-invalid')
-			);
-		}
-		else {
-			setInternalErrorMessage('');
-		}
+		setInternalErrorMessage(
+			val && !dateUtils.isValid(val)
+				? Liferay.Language.get('the-field-value-is-invalid')
+				: ''
+		);
 
 		onBlur?.(event);
 	};

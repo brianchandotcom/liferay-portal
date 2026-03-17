@@ -560,3 +560,4 @@ public class NotificationTemplateAttachmentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-324407106

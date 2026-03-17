@@ -346,3 +346,4 @@ public interface DDMStorageLinkLocalService
 		throws E;
 
 }
+// SB-Hash:91971588

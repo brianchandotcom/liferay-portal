@@ -250,3 +250,4 @@ public interface CommerceDiscountService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:571526413

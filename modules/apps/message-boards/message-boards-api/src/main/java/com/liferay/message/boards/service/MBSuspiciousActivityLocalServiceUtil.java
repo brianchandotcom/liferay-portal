@@ -428,3 +428,4 @@ public class MBSuspiciousActivityLocalServiceUtil {
 			MBSuspiciousActivityLocalService.class);
 
 }
+// SB-Hash:-932988296

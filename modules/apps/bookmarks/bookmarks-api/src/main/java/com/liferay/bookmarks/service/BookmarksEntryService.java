@@ -139,3 +139,4 @@ public interface BookmarksEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1531533966

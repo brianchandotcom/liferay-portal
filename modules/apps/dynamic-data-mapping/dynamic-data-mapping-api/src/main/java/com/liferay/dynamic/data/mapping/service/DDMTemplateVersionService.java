@@ -70,3 +70,4 @@ public interface DDMTemplateVersionService extends BaseService {
 	public int getTemplateVersionsCount(long templateId) throws PortalException;
 
 }
+// SB-Hash:-1009668242

@@ -45,3 +45,4 @@ public class ObjectViewColumnServiceUtil {
 			ObjectViewColumnServiceUtil.class, ObjectViewColumnService.class);
 
 }
+// SB-Hash:29247635

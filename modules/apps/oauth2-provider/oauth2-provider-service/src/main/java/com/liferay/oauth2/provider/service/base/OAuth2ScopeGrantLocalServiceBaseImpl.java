@@ -640,3 +640,4 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 		OAuth2ScopeGrantLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1684977716

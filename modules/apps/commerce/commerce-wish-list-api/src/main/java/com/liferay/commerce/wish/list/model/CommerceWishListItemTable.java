@@ -67,3 +67,4 @@ public class CommerceWishListItemTable
 	}
 
 }
+// SB-Hash:564782012

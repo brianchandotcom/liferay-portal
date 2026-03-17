@@ -553,3 +553,4 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 		WorkflowInstanceLinkLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:860622301

@@ -866,3 +866,4 @@ public interface CommerceOrderTypeRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:746400979

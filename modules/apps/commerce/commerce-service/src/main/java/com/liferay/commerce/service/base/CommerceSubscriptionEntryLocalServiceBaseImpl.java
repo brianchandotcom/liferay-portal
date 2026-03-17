@@ -635,3 +635,4 @@ public abstract class CommerceSubscriptionEntryLocalServiceBaseImpl
 		CommerceSubscriptionEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1160421896

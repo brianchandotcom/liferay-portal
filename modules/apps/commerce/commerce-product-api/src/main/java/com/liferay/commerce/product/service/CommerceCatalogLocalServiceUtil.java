@@ -466,3 +466,4 @@ public class CommerceCatalogLocalServiceUtil {
 			CommerceCatalogLocalService.class);
 
 }
+// SB-Hash:-225914854

@@ -257,3 +257,4 @@ public interface RSVEntryLocalService
 	public RSVEntry updateRSVEntry(RSVEntry rsvEntry);
 
 }
+// SB-Hash:1796599501

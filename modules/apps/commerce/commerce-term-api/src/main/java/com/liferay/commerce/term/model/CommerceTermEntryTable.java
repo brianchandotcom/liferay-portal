@@ -90,3 +90,4 @@ public class CommerceTermEntryTable extends BaseTable<CommerceTermEntryTable> {
 	}
 
 }
+// SB-Hash:-650843250

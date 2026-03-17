@@ -326,3 +326,4 @@ public class SamlSpMessageLocalServiceUtil {
 			SamlSpMessageLocalService.class);
 
 }
+// SB-Hash:1352081650

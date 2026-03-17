@@ -789,3 +789,4 @@ public class CommerceCurrencyServiceHttp {
 		new Class[] {};
 
 }
+// SB-Hash:-523762257

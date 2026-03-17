@@ -2327,3 +2327,4 @@ public interface CPInstancePersistence
 	public int countAll();
 
 }
+// SB-Hash:-1442656807

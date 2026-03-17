@@ -989,3 +989,4 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private MBBan _escapedModel;
 
 }
+// SB-Hash:905952407

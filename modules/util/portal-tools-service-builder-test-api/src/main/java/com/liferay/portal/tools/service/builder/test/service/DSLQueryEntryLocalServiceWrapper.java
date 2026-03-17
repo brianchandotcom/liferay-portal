@@ -349,3 +349,4 @@ public class DSLQueryEntryLocalServiceWrapper
 	private DSLQueryEntryLocalService _dslQueryEntryLocalService;
 
 }
+// SB-Hash:-948571629

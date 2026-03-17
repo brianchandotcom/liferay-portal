@@ -132,3 +132,4 @@ public abstract class CommerceMLForecastAlertEntryServiceBaseImpl
 		CommerceMLForecastAlertEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:-1966783840

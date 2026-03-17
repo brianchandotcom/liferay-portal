@@ -61,3 +61,4 @@ public class MBBanServiceUtil {
 		new Snapshot<>(MBBanServiceUtil.class, MBBanService.class);
 
 }
+// SB-Hash:-2065686365

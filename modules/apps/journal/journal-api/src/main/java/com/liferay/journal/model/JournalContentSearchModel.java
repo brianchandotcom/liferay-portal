@@ -200,3 +200,4 @@ public interface JournalContentSearchModel
 	}
 
 }
+// SB-Hash:-851360170

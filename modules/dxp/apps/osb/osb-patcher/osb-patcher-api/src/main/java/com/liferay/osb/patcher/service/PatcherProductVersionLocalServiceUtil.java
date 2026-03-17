@@ -342,3 +342,4 @@ public class PatcherProductVersionLocalServiceUtil {
 			PatcherProductVersionLocalService.class);
 
 }
+// SB-Hash:1037765099

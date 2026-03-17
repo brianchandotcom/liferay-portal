@@ -1295,3 +1295,4 @@ public class CommerceChannelModelImpl
 	private CommerceChannel _escapedModel;
 
 }
+// SB-Hash:50634852

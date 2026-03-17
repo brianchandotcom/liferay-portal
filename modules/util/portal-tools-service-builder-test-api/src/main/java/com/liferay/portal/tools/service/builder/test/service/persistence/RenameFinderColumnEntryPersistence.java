@@ -202,3 +202,4 @@ public interface RenameFinderColumnEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1827172996

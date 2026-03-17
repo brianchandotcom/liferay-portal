@@ -649,3 +649,4 @@ public interface CommercePaymentMethodGroupRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1786100742

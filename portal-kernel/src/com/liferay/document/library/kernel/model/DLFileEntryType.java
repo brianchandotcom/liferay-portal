@@ -65,3 +65,4 @@ public interface DLFileEntryType extends DLFileEntryTypeModel, PersistedModel {
 	public boolean isExportable();
 
 }
+// SB-Hash:570431168

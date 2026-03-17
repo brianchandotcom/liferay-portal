@@ -530,3 +530,4 @@ public class ModulePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1040776441

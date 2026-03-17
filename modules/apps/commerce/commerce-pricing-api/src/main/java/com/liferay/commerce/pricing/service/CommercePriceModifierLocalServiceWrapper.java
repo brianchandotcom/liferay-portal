@@ -674,3 +674,4 @@ public class CommercePriceModifierLocalServiceWrapper
 		_commercePriceModifierLocalService;
 
 }
+// SB-Hash:487713344

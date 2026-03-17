@@ -61,3 +61,4 @@ public class AppServiceUtil {
 		AppServiceUtil.class, AppService.class);
 
 }
+// SB-Hash:1109222097

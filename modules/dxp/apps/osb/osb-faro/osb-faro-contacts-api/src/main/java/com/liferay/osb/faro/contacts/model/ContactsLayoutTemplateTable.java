@@ -65,3 +65,4 @@ public class ContactsLayoutTemplateTable
 	}
 
 }
+// SB-Hash:103692992

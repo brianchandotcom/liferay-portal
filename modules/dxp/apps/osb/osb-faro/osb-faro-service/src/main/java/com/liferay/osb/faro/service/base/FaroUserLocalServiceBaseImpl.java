@@ -448,3 +448,4 @@ public abstract class FaroUserLocalServiceBaseImpl
 		FaroUserLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-214910743

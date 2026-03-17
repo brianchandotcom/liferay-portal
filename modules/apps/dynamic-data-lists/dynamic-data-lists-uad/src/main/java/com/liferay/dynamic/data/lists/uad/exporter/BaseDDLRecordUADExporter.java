@@ -53,12 +53,12 @@ public abstract class BaseDDLRecordUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
-		sb.append(ddlRecord.getVersionUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(ddlRecord.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
+		sb.append(ddlRecord.getVersionUserName());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -70,3 +70,4 @@ public abstract class BaseDDLRecordUADExporter
 	protected DDLRecordLocalService ddlRecordLocalService;
 
 }
+// SB-Hash:-1323357587

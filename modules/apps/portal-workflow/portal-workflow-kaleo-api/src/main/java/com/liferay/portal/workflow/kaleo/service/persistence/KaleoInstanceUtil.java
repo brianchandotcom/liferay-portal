@@ -1722,3 +1722,4 @@ public class KaleoInstanceUtil {
 	private static volatile KaleoInstancePersistence _persistence;
 
 }
+// SB-Hash:795473882

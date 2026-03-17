@@ -405,3 +405,4 @@ public class DepotEntryPinLocalServiceUtil {
 			DepotEntryPinLocalService.class);
 
 }
+// SB-Hash:-1853741407

@@ -2692,3 +2692,4 @@ public class PatcherFixPackUtil {
 	private static volatile PatcherFixPackPersistence _persistence;
 
 }
+// SB-Hash:1168100027

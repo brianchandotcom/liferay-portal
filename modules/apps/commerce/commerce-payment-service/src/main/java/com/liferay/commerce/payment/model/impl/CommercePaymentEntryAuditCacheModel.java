@@ -249,3 +249,4 @@ public class CommercePaymentEntryAuditCacheModel
 	public String logTypeSettings;
 
 }
+// SB-Hash:30329954

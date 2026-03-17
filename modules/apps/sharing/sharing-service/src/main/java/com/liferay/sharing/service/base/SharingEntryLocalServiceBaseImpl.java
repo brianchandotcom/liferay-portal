@@ -635,3 +635,4 @@ public abstract class SharingEntryLocalServiceBaseImpl
 		SharingEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1040736563

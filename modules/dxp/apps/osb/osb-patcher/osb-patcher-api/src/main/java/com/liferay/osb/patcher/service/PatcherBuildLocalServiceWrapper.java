@@ -848,3 +848,4 @@ public class PatcherBuildLocalServiceWrapper
 	private PatcherBuildLocalService _patcherBuildLocalService;
 
 }
+// SB-Hash:-815333689

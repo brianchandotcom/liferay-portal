@@ -40,3 +40,4 @@ public abstract class ContactsCardTemplateBaseImpl
 	}
 
 }
+// SB-Hash:-1791963982

@@ -46,3 +46,4 @@ public class WikiPageResourceTable extends BaseTable<WikiPageResourceTable> {
 	}
 
 }
+// SB-Hash:-1206355805

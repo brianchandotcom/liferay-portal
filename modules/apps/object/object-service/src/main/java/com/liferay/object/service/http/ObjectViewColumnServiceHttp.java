@@ -33,3 +33,4 @@ package com.liferay.object.service.http;
  */
 public class ObjectViewColumnServiceHttp {
 }
+// SB-Hash:1922847821

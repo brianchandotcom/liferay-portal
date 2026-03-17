@@ -427,3 +427,4 @@ public class CPAttachmentFileEntryCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:1917982199

@@ -358,3 +358,4 @@ public interface CTRemotePersistence extends BasePersistence<CTRemote> {
 	public int countAll();
 
 }
+// SB-Hash:1765188235

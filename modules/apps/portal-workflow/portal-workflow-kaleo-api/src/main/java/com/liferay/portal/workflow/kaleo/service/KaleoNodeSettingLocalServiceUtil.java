@@ -320,3 +320,4 @@ public class KaleoNodeSettingLocalServiceUtil {
 			KaleoNodeSettingLocalService.class);
 
 }
+// SB-Hash:1072817743

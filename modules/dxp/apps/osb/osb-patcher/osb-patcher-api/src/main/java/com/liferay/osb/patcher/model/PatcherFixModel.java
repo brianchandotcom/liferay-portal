@@ -629,3 +629,4 @@ public interface PatcherFixModel
 	}
 
 }
+// SB-Hash:1968019025

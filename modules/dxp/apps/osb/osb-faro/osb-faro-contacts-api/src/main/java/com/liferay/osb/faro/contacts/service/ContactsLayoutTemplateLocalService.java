@@ -282,3 +282,4 @@ public interface ContactsLayoutTemplateLocalService
 		throws PortalException;
 
 }
+// SB-Hash:1369943827

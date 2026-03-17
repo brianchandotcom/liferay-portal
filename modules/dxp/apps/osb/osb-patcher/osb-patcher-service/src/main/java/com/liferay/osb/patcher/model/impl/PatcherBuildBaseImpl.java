@@ -39,3 +39,4 @@ public abstract class PatcherBuildBaseImpl
 	}
 
 }
+// SB-Hash:35772581

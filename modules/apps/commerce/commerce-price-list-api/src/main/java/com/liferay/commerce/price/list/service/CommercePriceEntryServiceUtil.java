@@ -267,3 +267,4 @@ public class CommercePriceEntryServiceUtil {
 			CommercePriceEntryService.class);
 
 }
+// SB-Hash:904667307

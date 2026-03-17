@@ -642,3 +642,4 @@ public class UndefinedDefaultOrderEntryModelImpl
 	private UndefinedDefaultOrderEntry _escapedModel;
 
 }
+// SB-Hash:1879008523

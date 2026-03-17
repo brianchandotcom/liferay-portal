@@ -53,12 +53,12 @@ public abstract class BaseBookmarksFolderUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(bookmarksFolder.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(bookmarksFolder.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(bookmarksFolder.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>treePath</column-name><column-value><![CDATA[");
@@ -82,3 +82,4 @@ public abstract class BaseBookmarksFolderUADExporter
 	protected BookmarksFolderLocalService bookmarksFolderLocalService;
 
 }
+// SB-Hash:-1193853249

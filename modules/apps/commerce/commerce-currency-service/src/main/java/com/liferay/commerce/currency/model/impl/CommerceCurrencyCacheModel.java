@@ -363,3 +363,4 @@ public class CommerceCurrencyCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:2018564782

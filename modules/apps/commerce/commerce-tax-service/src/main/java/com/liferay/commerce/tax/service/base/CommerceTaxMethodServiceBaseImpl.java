@@ -125,3 +125,4 @@ public abstract class CommerceTaxMethodServiceBaseImpl
 		CommerceTaxMethodServiceBaseImpl.class);
 
 }
+// SB-Hash:1645486001

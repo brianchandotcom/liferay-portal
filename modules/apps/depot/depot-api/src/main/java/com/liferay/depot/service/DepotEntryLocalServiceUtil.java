@@ -463,3 +463,4 @@ public class DepotEntryLocalServiceUtil {
 			DepotEntryLocalServiceUtil.class, DepotEntryLocalService.class);
 
 }
+// SB-Hash:239845251

@@ -316,3 +316,4 @@ public class UndefinedDefaultOrderEntryLocalServiceUtil {
 	private static volatile UndefinedDefaultOrderEntryLocalService _service;
 
 }
+// SB-Hash:-247975014

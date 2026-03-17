@@ -72,3 +72,4 @@ public interface PermissionService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:-1891119235

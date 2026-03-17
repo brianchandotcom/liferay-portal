@@ -49,3 +49,4 @@ public class AkismetEntryTable extends BaseTable<AkismetEntryTable> {
 	}
 
 }
+// SB-Hash:1032254825

@@ -50,3 +50,4 @@ public interface PatcherAccount extends PatcherAccountModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-104860590

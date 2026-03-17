@@ -390,3 +390,4 @@ public interface CommerceCurrencyLocalService
 	public void updateExchangeRates() throws PortalException;
 
 }
+// SB-Hash:-252999236

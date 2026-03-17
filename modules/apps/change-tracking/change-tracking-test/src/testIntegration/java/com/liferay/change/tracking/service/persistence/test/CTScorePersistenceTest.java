@@ -457,3 +457,4 @@ public class CTScorePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:592054589

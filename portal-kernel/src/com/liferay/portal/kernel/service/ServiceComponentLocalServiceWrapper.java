@@ -387,3 +387,4 @@ public class ServiceComponentLocalServiceWrapper
 	private ServiceComponentLocalService _serviceComponentLocalService;
 
 }
+// SB-Hash:-719625736

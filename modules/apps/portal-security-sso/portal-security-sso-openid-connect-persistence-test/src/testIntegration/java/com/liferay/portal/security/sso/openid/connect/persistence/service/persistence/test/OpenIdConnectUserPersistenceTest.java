@@ -522,3 +522,4 @@ public class OpenIdConnectUserPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1565983818

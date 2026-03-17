@@ -488,3 +488,4 @@ public abstract class OAuth2ApplicationScopeAliasesLocalServiceBaseImpl
 		OAuth2ApplicationScopeAliasesLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:74360296

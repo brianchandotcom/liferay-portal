@@ -314,3 +314,4 @@ public class PatcherTicketHintLocalServiceUtil {
 			PatcherTicketHintLocalService.class);
 
 }
+// SB-Hash:988332818

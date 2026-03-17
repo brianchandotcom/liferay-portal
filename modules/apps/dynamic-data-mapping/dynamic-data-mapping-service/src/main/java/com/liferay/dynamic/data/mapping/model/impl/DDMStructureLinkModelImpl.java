@@ -769,3 +769,4 @@ public class DDMStructureLinkModelImpl
 	private DDMStructureLink _escapedModel;
 
 }
+// SB-Hash:-117832188

@@ -597,3 +597,4 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:1730835883

@@ -1452,3 +1452,4 @@ public class CommerceShippingMethodModelImpl
 	private CommerceShippingMethod _escapedModel;
 
 }
+// SB-Hash:-66219734

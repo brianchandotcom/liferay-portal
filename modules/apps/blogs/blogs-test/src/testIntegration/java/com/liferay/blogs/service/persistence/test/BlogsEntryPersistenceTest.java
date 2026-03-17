@@ -966,3 +966,4 @@ public class BlogsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1975118783

@@ -1014,3 +1014,4 @@ public class ObjectDefinitionSettingModelImpl
 	private ObjectDefinitionSetting _escapedModel;
 
 }
+// SB-Hash:-437364477

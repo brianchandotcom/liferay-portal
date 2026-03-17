@@ -127,3 +127,4 @@ public abstract class MBSuspiciousActivityServiceBaseImpl
 		MBSuspiciousActivityServiceBaseImpl.class);
 
 }
+// SB-Hash:-1145627243

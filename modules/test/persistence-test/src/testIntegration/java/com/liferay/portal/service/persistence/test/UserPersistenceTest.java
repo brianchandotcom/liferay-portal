@@ -907,3 +907,4 @@ public class UserPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1750387226

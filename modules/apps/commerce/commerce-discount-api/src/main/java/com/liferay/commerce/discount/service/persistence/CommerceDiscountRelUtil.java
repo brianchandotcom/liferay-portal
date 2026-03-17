@@ -1061,3 +1061,4 @@ public class CommerceDiscountRelUtil {
 	private static volatile CommerceDiscountRelPersistence _persistence;
 
 }
+// SB-Hash:1688766060

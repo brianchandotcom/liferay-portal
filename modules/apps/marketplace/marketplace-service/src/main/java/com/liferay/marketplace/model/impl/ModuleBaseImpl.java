@@ -38,3 +38,4 @@ public abstract class ModuleBaseImpl extends ModuleModelImpl implements Module {
 	}
 
 }
+// SB-Hash:-1522903663

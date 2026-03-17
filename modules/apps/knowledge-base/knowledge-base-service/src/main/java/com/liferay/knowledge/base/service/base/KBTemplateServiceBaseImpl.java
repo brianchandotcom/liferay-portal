@@ -125,3 +125,4 @@ public abstract class KBTemplateServiceBaseImpl
 		KBTemplateServiceBaseImpl.class);
 
 }
+// SB-Hash:-788212067

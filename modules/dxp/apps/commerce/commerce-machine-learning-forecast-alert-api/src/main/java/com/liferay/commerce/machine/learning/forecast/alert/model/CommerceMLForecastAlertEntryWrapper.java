@@ -469,3 +469,4 @@ public class CommerceMLForecastAlertEntryWrapper
 	}
 
 }
+// SB-Hash:1012892379

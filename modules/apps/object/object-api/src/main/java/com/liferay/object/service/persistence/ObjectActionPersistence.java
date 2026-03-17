@@ -1276,3 +1276,4 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 	public int countAll();
 
 }
+// SB-Hash:1908738542

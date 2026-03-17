@@ -905,3 +905,4 @@ public interface DDMFieldAttributePersistence
 	public int countAll();
 
 }
+// SB-Hash:1946103791

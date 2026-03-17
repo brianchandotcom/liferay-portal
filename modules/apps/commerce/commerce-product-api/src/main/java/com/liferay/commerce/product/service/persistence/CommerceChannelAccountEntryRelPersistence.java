@@ -1351,3 +1351,4 @@ public interface CommerceChannelAccountEntryRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:1937925986

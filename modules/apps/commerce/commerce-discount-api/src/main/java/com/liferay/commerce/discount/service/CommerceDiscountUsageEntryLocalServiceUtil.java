@@ -374,3 +374,4 @@ public class CommerceDiscountUsageEntryLocalServiceUtil {
 			CommerceDiscountUsageEntryLocalService.class);
 
 }
+// SB-Hash:1848025534

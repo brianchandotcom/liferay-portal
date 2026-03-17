@@ -594,3 +594,4 @@ public interface AssetEntryLocalService
 		throws E;
 
 }
+// SB-Hash:1355060775

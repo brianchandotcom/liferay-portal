@@ -1283,3 +1283,4 @@ public interface CPInstanceUnitOfMeasurePersistence
 	public int countAll();
 
 }
+// SB-Hash:-589990206

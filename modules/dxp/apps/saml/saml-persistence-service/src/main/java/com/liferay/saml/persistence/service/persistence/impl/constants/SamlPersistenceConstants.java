@@ -21,3 +21,4 @@ public class SamlPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// SB-Hash:1318094764

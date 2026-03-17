@@ -238,3 +238,4 @@ public interface MBCategoryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1563292615

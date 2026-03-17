@@ -445,3 +445,4 @@ public interface KaleoDefinitionLocalService
 		throws E;
 
 }
+// SB-Hash:-1195255495

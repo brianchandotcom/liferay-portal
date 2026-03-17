@@ -69,3 +69,4 @@ public interface CommerceTaxFixedRateAddressRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-151608278

@@ -1102,3 +1102,4 @@ public class CommerceMLForecastAlertEntryModelImpl
 	private CommerceMLForecastAlertEntry _escapedModel;
 
 }
+// SB-Hash:1115234506

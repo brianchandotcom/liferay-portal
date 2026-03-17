@@ -62,3 +62,4 @@ public class ObjectFolderItemTable extends BaseTable<ObjectFolderItemTable> {
 	}
 
 }
+// SB-Hash:1470759306

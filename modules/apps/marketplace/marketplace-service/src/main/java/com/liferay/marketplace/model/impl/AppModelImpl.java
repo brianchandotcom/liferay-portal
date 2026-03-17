@@ -1059,3 +1059,4 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	private App _escapedModel;
 
 }
+// SB-Hash:-1044348596

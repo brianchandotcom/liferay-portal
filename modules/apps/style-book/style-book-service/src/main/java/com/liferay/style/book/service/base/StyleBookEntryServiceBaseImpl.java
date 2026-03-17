@@ -129,3 +129,4 @@ public abstract class StyleBookEntryServiceBaseImpl
 		StyleBookEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:276567896

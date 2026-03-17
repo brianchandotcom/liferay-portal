@@ -39,3 +39,4 @@ public abstract class RepositoryBaseImpl
 	}
 
 }
+// SB-Hash:1891303841

@@ -1314,3 +1314,4 @@ public interface KaleoInstancePersistence
 	public int countAll();
 
 }
+// SB-Hash:1293765856

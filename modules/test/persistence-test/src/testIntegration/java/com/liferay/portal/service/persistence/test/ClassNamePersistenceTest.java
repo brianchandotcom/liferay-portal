@@ -454,3 +454,4 @@ public class ClassNamePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-176859445

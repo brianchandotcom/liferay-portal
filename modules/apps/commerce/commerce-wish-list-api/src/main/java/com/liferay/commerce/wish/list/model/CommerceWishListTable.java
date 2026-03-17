@@ -57,3 +57,4 @@ public class CommerceWishListTable extends BaseTable<CommerceWishListTable> {
 	}
 
 }
+// SB-Hash:16811736

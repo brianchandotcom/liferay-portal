@@ -569,3 +569,4 @@ public class SegmentsEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-192272848

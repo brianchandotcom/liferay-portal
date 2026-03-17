@@ -388,3 +388,4 @@ public interface CommercePriceListCommerceAccountGroupRelLocalService
 		throws E;
 
 }
+// SB-Hash:1580959373

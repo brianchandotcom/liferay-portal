@@ -276,3 +276,4 @@ public interface SamlSpMessageLocalService
 	public SamlSpMessage updateSamlSpMessage(SamlSpMessage samlSpMessage);
 
 }
+// SB-Hash:1000820939

@@ -48,3 +48,4 @@ public interface ListTypeEntry extends ListTypeEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1262920866

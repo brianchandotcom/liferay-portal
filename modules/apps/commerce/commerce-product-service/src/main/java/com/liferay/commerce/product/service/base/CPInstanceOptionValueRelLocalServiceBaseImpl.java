@@ -652,3 +652,4 @@ public abstract class CPInstanceOptionValueRelLocalServiceBaseImpl
 		CPInstanceOptionValueRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1316854646

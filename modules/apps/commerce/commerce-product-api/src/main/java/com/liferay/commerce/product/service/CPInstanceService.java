@@ -229,3 +229,4 @@ public interface CPInstanceService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1754607640

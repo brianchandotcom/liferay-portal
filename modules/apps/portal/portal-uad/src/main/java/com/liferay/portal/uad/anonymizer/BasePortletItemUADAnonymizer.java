@@ -92,3 +92,4 @@ public abstract class BasePortletItemUADAnonymizer
 	protected PortletItemLocalService portletItemLocalService;
 
 }
+// SB-Hash:-1812553173

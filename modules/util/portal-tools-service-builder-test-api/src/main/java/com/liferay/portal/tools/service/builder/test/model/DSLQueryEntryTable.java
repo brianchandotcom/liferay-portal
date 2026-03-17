@@ -32,3 +32,4 @@ public class DSLQueryEntryTable extends BaseTable<DSLQueryEntryTable> {
 	}
 
 }
+// SB-Hash:208875066

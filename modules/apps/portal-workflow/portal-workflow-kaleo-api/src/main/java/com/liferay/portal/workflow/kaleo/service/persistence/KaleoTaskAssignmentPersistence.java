@@ -772,3 +772,4 @@ public interface KaleoTaskAssignmentPersistence
 	public int countAll();
 
 }
+// SB-Hash:-315920362

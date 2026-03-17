@@ -1140,3 +1140,4 @@ public interface SocialActivitySetPersistence
 	public int countAll();
 
 }
+// SB-Hash:-795426572

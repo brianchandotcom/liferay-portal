@@ -591,3 +591,4 @@ public class CommerceVirtualOrderItemLocalServiceWrapper
 		_commerceVirtualOrderItemLocalService;
 
 }
+// SB-Hash:2091342337

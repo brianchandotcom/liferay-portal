@@ -62,3 +62,4 @@ public interface CommerceDiscountRel
 			typeSettingsUnicodeProperties);
 
 }
+// SB-Hash:1345762274

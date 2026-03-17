@@ -377,3 +377,4 @@ public interface KBTemplateLocalService
 		throws E;
 
 }
+// SB-Hash:-2057919214

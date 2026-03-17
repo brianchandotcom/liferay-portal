@@ -586,3 +586,4 @@ public abstract class ObjectStateTransitionLocalServiceBaseImpl
 		ObjectStateTransitionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1289469013

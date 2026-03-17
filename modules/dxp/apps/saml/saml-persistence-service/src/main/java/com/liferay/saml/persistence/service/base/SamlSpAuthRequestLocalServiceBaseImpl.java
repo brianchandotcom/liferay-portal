@@ -466,3 +466,4 @@ public abstract class SamlSpAuthRequestLocalServiceBaseImpl
 		SamlSpAuthRequestLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:796393987

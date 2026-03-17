@@ -125,3 +125,4 @@ public abstract class WikiNodeServiceBaseImpl
 		WikiNodeServiceBaseImpl.class);
 
 }
+// SB-Hash:1290538263

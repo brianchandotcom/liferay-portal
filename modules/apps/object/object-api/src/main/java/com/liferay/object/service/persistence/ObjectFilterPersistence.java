@@ -593,3 +593,4 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	public int countAll();
 
 }
+// SB-Hash:1397265739

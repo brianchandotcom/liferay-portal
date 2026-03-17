@@ -374,3 +374,4 @@ public interface LayoutPageTemplateStructureLocalService
 		throws E;
 
 }
+// SB-Hash:654035636

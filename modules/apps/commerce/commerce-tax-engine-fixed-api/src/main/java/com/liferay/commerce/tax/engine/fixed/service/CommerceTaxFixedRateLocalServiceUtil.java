@@ -379,3 +379,4 @@ public class CommerceTaxFixedRateLocalServiceUtil {
 			CommerceTaxFixedRateLocalService.class);
 
 }
+// SB-Hash:-774754814

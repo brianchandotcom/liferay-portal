@@ -2350,3 +2350,4 @@ public class BookmarksFolderUtil {
 	private static volatile BookmarksFolderPersistence _persistence;
 
 }
+// SB-Hash:219630136

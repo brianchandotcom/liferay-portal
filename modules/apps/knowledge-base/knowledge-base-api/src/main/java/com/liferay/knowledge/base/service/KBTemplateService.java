@@ -90,3 +90,4 @@ public interface KBTemplateService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1682489290

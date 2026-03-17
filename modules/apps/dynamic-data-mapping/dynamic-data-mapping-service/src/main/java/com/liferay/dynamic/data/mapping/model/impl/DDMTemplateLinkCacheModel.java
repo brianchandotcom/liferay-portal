@@ -147,3 +147,4 @@ public class DDMTemplateLinkCacheModel
 	public long templateId;
 
 }
+// SB-Hash:-674948798

@@ -49,3 +49,4 @@ public class COREntryRelTable extends BaseTable<COREntryRelTable> {
 	}
 
 }
+// SB-Hash:-519273477

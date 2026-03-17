@@ -160,3 +160,4 @@ public class UserFinderUtil {
 	private static UserFinder _finder;
 
 }
+// SB-Hash:219689774

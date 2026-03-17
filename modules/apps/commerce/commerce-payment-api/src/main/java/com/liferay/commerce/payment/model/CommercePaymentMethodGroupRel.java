@@ -62,3 +62,4 @@ public interface CommercePaymentMethodGroupRel
 		getTypeSettingsUnicodeProperties();
 
 }
+// SB-Hash:-64929974

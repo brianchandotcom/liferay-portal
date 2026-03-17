@@ -188,3 +188,4 @@ public interface CTAutoResolutionInfoModel
 	}
 
 }
+// SB-Hash:509525122

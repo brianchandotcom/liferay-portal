@@ -410,3 +410,4 @@ public interface PatcherProductVersionPersistence
 	public int countAll();
 
 }
+// SB-Hash:274441825

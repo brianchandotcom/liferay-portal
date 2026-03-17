@@ -411,3 +411,4 @@ public class BlogsEntryServiceWrapper
 	private BlogsEntryService _blogsEntryService;
 
 }
+// SB-Hash:1063801881

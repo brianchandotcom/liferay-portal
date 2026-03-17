@@ -53,12 +53,12 @@ public abstract class BaseBookmarksEntryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(bookmarksEntry.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(bookmarksEntry.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(bookmarksEntry.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -82,3 +82,4 @@ public abstract class BaseBookmarksEntryUADExporter
 	protected BookmarksEntryLocalService bookmarksEntryLocalService;
 
 }
+// SB-Hash:-1300391003

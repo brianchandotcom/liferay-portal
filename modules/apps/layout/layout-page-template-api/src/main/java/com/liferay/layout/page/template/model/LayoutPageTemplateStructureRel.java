@@ -58,3 +58,4 @@ public interface LayoutPageTemplateStructureRel
 	public com.liferay.portal.kernel.json.JSONObject getDataJSONObject();
 
 }
+// SB-Hash:661540433

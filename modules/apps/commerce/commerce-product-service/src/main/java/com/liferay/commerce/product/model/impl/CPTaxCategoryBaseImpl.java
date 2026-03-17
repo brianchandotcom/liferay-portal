@@ -39,3 +39,4 @@ public abstract class CPTaxCategoryBaseImpl
 	}
 
 }
+// SB-Hash:1063278085

@@ -50,3 +50,4 @@ public interface CTScore extends CTScoreModel, PersistedModel {
 	public String getSizeClassification();
 
 }
+// SB-Hash:1088207382

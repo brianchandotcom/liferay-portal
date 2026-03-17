@@ -568,3 +568,4 @@ public class CommerceSubscriptionEntryServiceHttp {
 		new Class[] {long.class, int.class};
 
 }
+// SB-Hash:763593275

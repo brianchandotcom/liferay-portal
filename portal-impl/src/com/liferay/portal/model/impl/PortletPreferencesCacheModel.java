@@ -167,3 +167,4 @@ public class PortletPreferencesCacheModel
 	public String portletId;
 
 }
+// SB-Hash:1078454477

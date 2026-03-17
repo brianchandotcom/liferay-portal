@@ -319,3 +319,4 @@ public class OAuth2AuthorizationCacheModel
 	public String rememberDeviceContent;
 
 }
+// SB-Hash:-1014306663

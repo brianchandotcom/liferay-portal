@@ -239,3 +239,4 @@ public interface ResourcePermissionModel
 	}
 
 }
+// SB-Hash:-503164027

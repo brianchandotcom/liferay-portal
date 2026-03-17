@@ -407,3 +407,4 @@ public interface CTCollectionLocalService
 		throws PortalException;
 
 }
+// SB-Hash:-1836415612

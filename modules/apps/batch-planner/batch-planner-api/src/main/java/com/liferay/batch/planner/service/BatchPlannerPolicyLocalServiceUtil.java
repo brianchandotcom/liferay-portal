@@ -355,3 +355,4 @@ public class BatchPlannerPolicyLocalServiceUtil {
 			BatchPlannerPolicyLocalService.class);
 
 }
+// SB-Hash:1787093338

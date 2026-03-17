@@ -30,3 +30,4 @@ public abstract class FriendlyURLEntryMappingBaseImpl
 	 */
 
 }
+// SB-Hash:289511573

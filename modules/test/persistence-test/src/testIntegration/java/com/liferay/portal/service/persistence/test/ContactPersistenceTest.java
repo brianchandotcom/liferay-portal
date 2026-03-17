@@ -574,3 +574,4 @@ public class ContactPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1784686000

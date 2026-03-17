@@ -557,3 +557,4 @@ public class CommerceDiscountRelLocalServiceWrapper
 	private CommerceDiscountRelLocalService _commerceDiscountRelLocalService;
 
 }
+// SB-Hash:1351545835

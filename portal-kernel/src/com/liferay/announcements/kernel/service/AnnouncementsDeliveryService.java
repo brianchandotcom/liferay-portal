@@ -54,3 +54,4 @@ public interface AnnouncementsDeliveryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-484285696

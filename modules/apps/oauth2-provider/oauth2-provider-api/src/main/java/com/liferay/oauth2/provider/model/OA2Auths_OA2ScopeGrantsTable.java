@@ -41,3 +41,4 @@ public class OA2Auths_OA2ScopeGrantsTable
 	}
 
 }
+// SB-Hash:1226004507

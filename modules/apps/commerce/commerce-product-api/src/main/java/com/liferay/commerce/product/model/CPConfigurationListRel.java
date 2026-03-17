@@ -52,3 +52,4 @@ public interface CPConfigurationListRel
 			};
 
 }
+// SB-Hash:-43123511

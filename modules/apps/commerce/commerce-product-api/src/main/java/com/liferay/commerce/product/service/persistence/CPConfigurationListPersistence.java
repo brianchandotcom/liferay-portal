@@ -1898,3 +1898,4 @@ public interface CPConfigurationListPersistence
 	public int countAll();
 
 }
+// SB-Hash:-2003886762

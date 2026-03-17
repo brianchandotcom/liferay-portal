@@ -396,3 +396,4 @@ public class FaroPreferencesLocalServiceWrapper
 	private FaroPreferencesLocalService _faroPreferencesLocalService;
 
 }
+// SB-Hash:-1714061713

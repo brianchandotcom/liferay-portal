@@ -39,3 +39,4 @@ public abstract class TemplateEntryBaseImpl
 	}
 
 }
+// SB-Hash:-272316138

@@ -355,3 +355,4 @@ public class MBSuspiciousActivityServiceHttp {
 		new Class[] {long.class};
 
 }
+// SB-Hash:1633664974

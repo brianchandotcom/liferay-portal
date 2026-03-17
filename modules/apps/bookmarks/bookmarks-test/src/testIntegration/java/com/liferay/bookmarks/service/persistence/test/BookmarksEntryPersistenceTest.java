@@ -725,3 +725,4 @@ public class BookmarksEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1883497496

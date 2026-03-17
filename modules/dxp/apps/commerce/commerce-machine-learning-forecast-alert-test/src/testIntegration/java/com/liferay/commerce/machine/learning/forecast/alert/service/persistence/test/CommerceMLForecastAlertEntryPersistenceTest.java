@@ -692,3 +692,4 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1283772574

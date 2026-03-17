@@ -620,3 +620,4 @@ public abstract class ObjectEntryVersionLocalServiceBaseImpl
 		ObjectEntryVersionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1694593595

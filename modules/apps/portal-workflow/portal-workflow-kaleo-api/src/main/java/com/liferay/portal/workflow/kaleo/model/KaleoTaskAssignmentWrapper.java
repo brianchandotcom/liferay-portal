@@ -668,3 +668,4 @@ public class KaleoTaskAssignmentWrapper
 	}
 
 }
+// SB-Hash:167315308

@@ -400,3 +400,4 @@ public class ContactLocalServiceWrapper
 	private ContactLocalService _contactLocalService;
 
 }
+// SB-Hash:-1134206522

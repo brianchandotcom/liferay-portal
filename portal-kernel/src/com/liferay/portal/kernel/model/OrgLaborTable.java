@@ -65,3 +65,4 @@ public class OrgLaborTable extends BaseTable<OrgLaborTable> {
 	}
 
 }
+// SB-Hash:-154097955

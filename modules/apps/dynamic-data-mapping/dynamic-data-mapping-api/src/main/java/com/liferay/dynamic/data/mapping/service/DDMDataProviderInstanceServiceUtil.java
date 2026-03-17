@@ -157,3 +157,4 @@ public class DDMDataProviderInstanceServiceUtil {
 			DDMDataProviderInstanceService.class);
 
 }
+// SB-Hash:2014720941

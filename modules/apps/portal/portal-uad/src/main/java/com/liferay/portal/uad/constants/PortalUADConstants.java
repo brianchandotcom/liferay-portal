@@ -22,3 +22,4 @@ public class PortalUADConstants {
 	public static final String[] USER_ID_FIELD_NAMES_SYSTEM_EVENT = {"userId"};
 
 }
+// SB-Hash:216355041

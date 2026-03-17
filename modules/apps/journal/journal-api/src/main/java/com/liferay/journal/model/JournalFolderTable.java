@@ -79,3 +79,4 @@ public class JournalFolderTable extends BaseTable<JournalFolderTable> {
 	}
 
 }
+// SB-Hash:-47692359

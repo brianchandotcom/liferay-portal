@@ -75,3 +75,4 @@ public abstract class BaseKBFolderUADDisplay
 	protected KBFolderLocalService kbFolderLocalService;
 
 }
+// SB-Hash:-1248072141

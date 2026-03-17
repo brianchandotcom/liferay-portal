@@ -425,3 +425,4 @@ public class CommerceTaxFixedRateServiceHttp {
 		new Class[] {long.class, double.class};
 
 }
+// SB-Hash:1570287042

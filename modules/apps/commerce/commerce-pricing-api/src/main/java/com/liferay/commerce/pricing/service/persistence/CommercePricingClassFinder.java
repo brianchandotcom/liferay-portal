@@ -31,3 +31,4 @@ public interface CommercePricingClassFinder {
 				boolean inlineSQLHelper);
 
 }
+// SB-Hash:169629713

@@ -196,3 +196,4 @@ public class AssetLinkCacheModel
 	public int weight;
 
 }
+// SB-Hash:679864235

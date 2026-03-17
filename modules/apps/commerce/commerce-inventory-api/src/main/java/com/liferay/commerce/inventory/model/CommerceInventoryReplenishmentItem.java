@@ -61,3 +61,4 @@ public interface CommerceInventoryReplenishmentItem
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-854775857

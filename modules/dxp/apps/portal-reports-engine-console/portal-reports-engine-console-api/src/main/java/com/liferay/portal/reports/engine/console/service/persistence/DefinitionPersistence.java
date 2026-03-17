@@ -849,3 +849,4 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	public int countAll();
 
 }
+// SB-Hash:373179404

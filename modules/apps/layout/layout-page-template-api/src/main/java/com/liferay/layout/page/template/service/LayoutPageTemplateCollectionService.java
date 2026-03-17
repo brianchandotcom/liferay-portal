@@ -143,3 +143,4 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1894793653

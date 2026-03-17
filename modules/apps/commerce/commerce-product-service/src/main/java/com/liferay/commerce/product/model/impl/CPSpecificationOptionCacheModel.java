@@ -319,3 +319,4 @@ public class CPSpecificationOptionCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-1885152135

@@ -565,3 +565,4 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 		UserGroupGroupRoleLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1211267134

@@ -1187,3 +1187,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
+// SB-Hash:1545120284

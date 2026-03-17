@@ -1325,3 +1325,4 @@ public class KaleoNotificationModelImpl
 	private KaleoNotification _escapedModel;
 
 }
+// SB-Hash:-1850823869

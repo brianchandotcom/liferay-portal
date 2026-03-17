@@ -204,3 +204,4 @@ public class MemberRequestCacheModel
 	public int status;
 
 }
+// SB-Hash:1056552084

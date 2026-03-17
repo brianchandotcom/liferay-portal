@@ -751,3 +751,4 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 	public int countAll();
 
 }
+// SB-Hash:880738889

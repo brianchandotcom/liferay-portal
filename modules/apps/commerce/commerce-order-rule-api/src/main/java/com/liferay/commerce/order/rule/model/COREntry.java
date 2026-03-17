@@ -54,3 +54,4 @@ public interface COREntry extends COREntryModel, PersistedModel {
 			typeSettingsUnicodeProperties);
 
 }
+// SB-Hash:-1104492781

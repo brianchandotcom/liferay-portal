@@ -567,3 +567,4 @@ public class PatcherBuildCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:981762015

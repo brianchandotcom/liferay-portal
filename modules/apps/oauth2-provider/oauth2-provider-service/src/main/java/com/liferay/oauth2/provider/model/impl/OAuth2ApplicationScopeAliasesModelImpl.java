@@ -773,3 +773,4 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	private OAuth2ApplicationScopeAliases _escapedModel;
 
 }
+// SB-Hash:2045064648

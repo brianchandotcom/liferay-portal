@@ -95,3 +95,4 @@ public interface CommerceTaxFixedRateService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-413384969

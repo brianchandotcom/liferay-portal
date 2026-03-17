@@ -87,3 +87,4 @@ public interface ContactService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1046106180

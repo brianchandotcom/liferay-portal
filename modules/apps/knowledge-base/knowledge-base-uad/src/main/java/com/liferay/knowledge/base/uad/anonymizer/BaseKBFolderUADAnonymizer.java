@@ -97,3 +97,4 @@ public abstract class BaseKBFolderUADAnonymizer
 	protected KBFolderLocalService kbFolderLocalService;
 
 }
+// SB-Hash:210316012

@@ -67,3 +67,4 @@ public class CSDiagramEntryTable extends BaseTable<CSDiagramEntryTable> {
 	}
 
 }
+// SB-Hash:1434255301

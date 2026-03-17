@@ -1599,3 +1599,4 @@ public class SegmentsEntryModelImpl
 	private SegmentsEntry _escapedModel;
 
 }
+// SB-Hash:897123193

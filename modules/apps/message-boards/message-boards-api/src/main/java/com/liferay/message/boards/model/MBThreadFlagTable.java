@@ -53,3 +53,4 @@ public class MBThreadFlagTable extends BaseTable<MBThreadFlagTable> {
 	}
 
 }
+// SB-Hash:-1469406796

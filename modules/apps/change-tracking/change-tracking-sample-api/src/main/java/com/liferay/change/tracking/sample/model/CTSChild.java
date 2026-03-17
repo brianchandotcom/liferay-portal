@@ -50,3 +50,4 @@ public interface CTSChild extends CTSChildModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-472051526

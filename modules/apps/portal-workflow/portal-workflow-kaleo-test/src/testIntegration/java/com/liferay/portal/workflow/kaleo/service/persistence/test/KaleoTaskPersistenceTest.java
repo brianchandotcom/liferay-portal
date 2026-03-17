@@ -543,3 +543,4 @@ public class KaleoTaskPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1065866244

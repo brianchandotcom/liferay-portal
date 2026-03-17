@@ -648,3 +648,4 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 		FragmentCollectionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1705430762

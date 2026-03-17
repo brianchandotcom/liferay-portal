@@ -533,3 +533,4 @@ public interface CPSpecificationOptionListTypeDefinitionRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:1865418798

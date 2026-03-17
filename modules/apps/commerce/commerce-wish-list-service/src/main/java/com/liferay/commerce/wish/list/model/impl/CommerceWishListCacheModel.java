@@ -223,3 +223,4 @@ public class CommerceWishListCacheModel
 	public boolean defaultWishList;
 
 }
+// SB-Hash:-221289357

@@ -299,3 +299,4 @@ public class RoleFinderUtil {
 	private static RoleFinder _finder;
 
 }
+// SB-Hash:100601961

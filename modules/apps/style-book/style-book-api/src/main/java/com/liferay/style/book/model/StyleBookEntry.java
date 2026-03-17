@@ -55,3 +55,4 @@ public interface StyleBookEntry extends PersistedModel, StyleBookEntryModel {
 		throws Exception;
 
 }
+// SB-Hash:1136805504

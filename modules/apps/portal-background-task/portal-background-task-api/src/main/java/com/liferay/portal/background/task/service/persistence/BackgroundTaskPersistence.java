@@ -2412,3 +2412,4 @@ public interface BackgroundTaskPersistence
 	public int countAll();
 
 }
+// SB-Hash:425800961

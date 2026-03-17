@@ -58,3 +58,4 @@ public interface CommercePriceList
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-1363707485

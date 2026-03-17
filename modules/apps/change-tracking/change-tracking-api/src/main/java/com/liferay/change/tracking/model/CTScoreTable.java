@@ -37,3 +37,4 @@ public class CTScoreTable extends BaseTable<CTScoreTable> {
 	}
 
 }
+// SB-Hash:-131246946

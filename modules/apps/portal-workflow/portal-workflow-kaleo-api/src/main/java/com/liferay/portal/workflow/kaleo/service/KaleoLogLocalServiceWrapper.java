@@ -581,3 +581,4 @@ public class KaleoLogLocalServiceWrapper
 	private KaleoLogLocalService _kaleoLogLocalService;
 
 }
+// SB-Hash:-747663136

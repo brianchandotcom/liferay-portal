@@ -480,3 +480,4 @@ public class MBBanLocalServiceWrapper
 	private MBBanLocalService _mbBanLocalService;
 
 }
+// SB-Hash:-1614046261

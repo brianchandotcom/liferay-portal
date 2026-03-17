@@ -821,3 +821,4 @@ public class AssetAutoTaggerEntryModelImpl
 	private AssetAutoTaggerEntry _escapedModel;
 
 }
+// SB-Hash:2145614207

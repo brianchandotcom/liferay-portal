@@ -521,3 +521,4 @@ public abstract class SystemEventLocalServiceBaseImpl
 		SystemEventLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1227232611

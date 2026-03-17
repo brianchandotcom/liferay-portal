@@ -478,3 +478,4 @@ public abstract class CommerceTermEntryRelLocalServiceBaseImpl
 		CommerceTermEntryRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-399121143

@@ -21,3 +21,4 @@ public class MBPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// SB-Hash:2120350433

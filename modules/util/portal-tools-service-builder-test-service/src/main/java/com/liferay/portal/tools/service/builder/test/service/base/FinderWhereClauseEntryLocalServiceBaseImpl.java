@@ -542,3 +542,4 @@ public abstract class FinderWhereClauseEntryLocalServiceBaseImpl
 		FinderWhereClauseEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1021457078

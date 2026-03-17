@@ -652,3 +652,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:978512940

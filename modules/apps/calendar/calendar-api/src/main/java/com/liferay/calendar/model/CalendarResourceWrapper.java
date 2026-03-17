@@ -940,3 +940,4 @@ public class CalendarResourceWrapper
 	}
 
 }
+// SB-Hash:1378778486

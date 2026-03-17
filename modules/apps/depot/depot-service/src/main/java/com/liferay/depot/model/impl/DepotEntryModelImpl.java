@@ -942,3 +942,4 @@ public class DepotEntryModelImpl
 	private DepotEntry _escapedModel;
 
 }
+// SB-Hash:1152247172

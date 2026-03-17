@@ -1563,3 +1563,4 @@ public class PatcherProjectVersionUtil {
 	private static volatile PatcherProjectVersionPersistence _persistence;
 
 }
+// SB-Hash:-2125427332

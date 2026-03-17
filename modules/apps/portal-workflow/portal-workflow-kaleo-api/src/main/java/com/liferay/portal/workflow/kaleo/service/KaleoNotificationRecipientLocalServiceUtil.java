@@ -345,3 +345,4 @@ public class KaleoNotificationRecipientLocalServiceUtil {
 			KaleoNotificationRecipientLocalService.class);
 
 }
+// SB-Hash:-1730370441

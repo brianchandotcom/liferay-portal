@@ -142,3 +142,4 @@ public class CommercePriceListChannelRelModelArgumentsResolver
 	}
 
 }
+// SB-Hash:1552441982

@@ -806,3 +806,4 @@ public interface CPDVirtualSettingFileEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-652808559

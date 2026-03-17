@@ -440,3 +440,4 @@ public class CommerceShippingMethodLocalServiceUtil {
 			CommerceShippingMethodLocalService.class);
 
 }
+// SB-Hash:1697821901

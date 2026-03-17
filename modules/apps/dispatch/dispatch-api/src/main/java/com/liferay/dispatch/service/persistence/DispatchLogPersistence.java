@@ -450,3 +450,4 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 	public int countAll();
 
 }
+// SB-Hash:-951857021

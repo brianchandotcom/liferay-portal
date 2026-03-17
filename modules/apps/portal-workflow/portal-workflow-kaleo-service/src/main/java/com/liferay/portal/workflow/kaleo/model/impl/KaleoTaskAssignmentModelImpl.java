@@ -1331,3 +1331,4 @@ public class KaleoTaskAssignmentModelImpl
 	private KaleoTaskAssignment _escapedModel;
 
 }
+// SB-Hash:-1192406966

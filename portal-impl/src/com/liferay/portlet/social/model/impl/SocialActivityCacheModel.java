@@ -230,3 +230,4 @@ public class SocialActivityCacheModel
 	public long receiverUserId;
 
 }
+// SB-Hash:714501771

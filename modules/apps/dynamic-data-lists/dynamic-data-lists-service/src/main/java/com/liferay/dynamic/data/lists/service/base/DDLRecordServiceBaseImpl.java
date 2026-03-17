@@ -129,3 +129,4 @@ public abstract class DDLRecordServiceBaseImpl
 		DDLRecordServiceBaseImpl.class);
 
 }
+// SB-Hash:1524807275

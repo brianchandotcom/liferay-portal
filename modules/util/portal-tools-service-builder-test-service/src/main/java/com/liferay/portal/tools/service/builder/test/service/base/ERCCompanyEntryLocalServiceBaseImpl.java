@@ -559,3 +559,4 @@ public abstract class ERCCompanyEntryLocalServiceBaseImpl
 		ERCCompanyEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1404347765

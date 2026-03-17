@@ -534,3 +534,4 @@ public class SharepointOAuth2TokenEntryUtil {
 	private static volatile SharepointOAuth2TokenEntryPersistence _persistence;
 
 }
+// SB-Hash:-1982617516

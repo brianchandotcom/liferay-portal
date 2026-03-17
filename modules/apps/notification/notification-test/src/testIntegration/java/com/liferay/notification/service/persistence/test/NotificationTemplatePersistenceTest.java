@@ -669,3 +669,4 @@ public class NotificationTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1768484062

@@ -137,3 +137,4 @@ public class AssetAutoTaggerEntryModelArgumentsResolver
 	}
 
 }
+// SB-Hash:-1495282870

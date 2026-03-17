@@ -438,3 +438,4 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 			CommerceShippingFixedOptionRelLocalService.class);
 
 }
+// SB-Hash:900554004

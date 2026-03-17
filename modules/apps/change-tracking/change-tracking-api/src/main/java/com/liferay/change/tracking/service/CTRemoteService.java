@@ -73,3 +73,4 @@ public interface CTRemoteService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1447900201

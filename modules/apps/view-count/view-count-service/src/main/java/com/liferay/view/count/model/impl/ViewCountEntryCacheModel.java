@@ -115,3 +115,4 @@ public class ViewCountEntryCacheModel
 	public transient ViewCountEntryPK viewCountEntryPK;
 
 }
+// SB-Hash:1497281291

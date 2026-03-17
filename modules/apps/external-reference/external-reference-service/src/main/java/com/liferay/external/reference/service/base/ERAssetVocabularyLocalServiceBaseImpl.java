@@ -110,3 +110,4 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 		ERAssetVocabularyLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-2114396464

@@ -425,3 +425,4 @@ public class ImageUtil {
 	private static volatile ImagePersistence _persistence;
 
 }
+// SB-Hash:176042173

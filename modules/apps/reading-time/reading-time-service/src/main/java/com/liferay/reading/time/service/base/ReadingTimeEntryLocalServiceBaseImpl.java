@@ -642,3 +642,4 @@ public abstract class ReadingTimeEntryLocalServiceBaseImpl
 		ReadingTimeEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1759605376

@@ -50,3 +50,4 @@ public class SamlIbSloMessageTable extends BaseTable<SamlIbSloMessageTable> {
 	}
 
 }
+// SB-Hash:-678815613

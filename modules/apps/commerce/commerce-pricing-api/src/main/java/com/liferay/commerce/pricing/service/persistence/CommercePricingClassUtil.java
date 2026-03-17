@@ -1135,3 +1135,4 @@ public class CommercePricingClassUtil {
 	private static volatile CommercePricingClassPersistence _persistence;
 
 }
+// SB-Hash:-2068311409

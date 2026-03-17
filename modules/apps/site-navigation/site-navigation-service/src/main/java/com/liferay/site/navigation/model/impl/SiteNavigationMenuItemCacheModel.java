@@ -322,3 +322,4 @@ public class SiteNavigationMenuItemCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:657172680

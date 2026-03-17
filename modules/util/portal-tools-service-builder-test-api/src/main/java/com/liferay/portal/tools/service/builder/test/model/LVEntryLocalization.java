@@ -50,3 +50,4 @@ public interface LVEntryLocalization extends LVEntryLocalizationModel {
 			};
 
 }
+// SB-Hash:-112738507

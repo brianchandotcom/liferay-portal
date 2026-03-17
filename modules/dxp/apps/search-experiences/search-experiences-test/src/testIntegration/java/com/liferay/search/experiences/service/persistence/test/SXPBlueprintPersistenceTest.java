@@ -625,3 +625,4 @@ public class SXPBlueprintPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1216472529

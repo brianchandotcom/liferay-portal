@@ -160,3 +160,4 @@ public class DepotAppCustomizationCacheModel
 	public String portletId;
 
 }
+// SB-Hash:1252333787

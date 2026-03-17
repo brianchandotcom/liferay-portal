@@ -54,12 +54,12 @@ public abstract class BaseDDMFormInstanceRecordUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
-		sb.append(ddmFormInstanceRecord.getVersionUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(ddmFormInstanceRecord.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
+		sb.append(ddmFormInstanceRecord.getVersionUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>version</column-name><column-value><![CDATA[");
@@ -76,3 +76,4 @@ public abstract class BaseDDMFormInstanceRecordUADExporter
 		ddmFormInstanceRecordLocalService;
 
 }
+// SB-Hash:221653759

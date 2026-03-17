@@ -62,3 +62,4 @@ public class ObjectDefinitionSettingTable
 	}
 
 }
+// SB-Hash:-1641430322

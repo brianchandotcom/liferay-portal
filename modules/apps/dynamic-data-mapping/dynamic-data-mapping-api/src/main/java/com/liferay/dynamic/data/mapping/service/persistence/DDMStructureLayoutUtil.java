@@ -1603,3 +1603,4 @@ public class DDMStructureLayoutUtil {
 	private static volatile DDMStructureLayoutPersistence _persistence;
 
 }
+// SB-Hash:181796097

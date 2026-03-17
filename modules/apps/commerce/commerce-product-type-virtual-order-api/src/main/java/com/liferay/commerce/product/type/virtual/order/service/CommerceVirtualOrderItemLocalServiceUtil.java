@@ -487,3 +487,4 @@ public class CommerceVirtualOrderItemLocalServiceUtil {
 			CommerceVirtualOrderItemLocalService.class);
 
 }
+// SB-Hash:956614246

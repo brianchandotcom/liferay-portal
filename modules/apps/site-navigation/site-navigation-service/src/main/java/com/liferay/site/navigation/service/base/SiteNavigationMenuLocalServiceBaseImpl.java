@@ -648,3 +648,4 @@ public abstract class SiteNavigationMenuLocalServiceBaseImpl
 		SiteNavigationMenuLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:2016107037

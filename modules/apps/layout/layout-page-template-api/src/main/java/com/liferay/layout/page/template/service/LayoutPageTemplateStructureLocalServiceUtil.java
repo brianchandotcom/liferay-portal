@@ -430,3 +430,4 @@ public class LayoutPageTemplateStructureLocalServiceUtil {
 			LayoutPageTemplateStructureLocalService.class);
 
 }
+// SB-Hash:-27369927

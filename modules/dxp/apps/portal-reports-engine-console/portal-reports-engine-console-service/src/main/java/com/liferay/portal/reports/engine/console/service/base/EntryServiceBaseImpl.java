@@ -130,3 +130,4 @@ public abstract class EntryServiceBaseImpl
 		EntryServiceBaseImpl.class);
 
 }
+// SB-Hash:121046908

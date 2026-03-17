@@ -665,3 +665,4 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 		RepositoryEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-693036083

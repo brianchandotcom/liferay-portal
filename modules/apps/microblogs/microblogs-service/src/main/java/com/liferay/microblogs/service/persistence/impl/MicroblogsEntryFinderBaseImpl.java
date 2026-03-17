@@ -77,3 +77,4 @@ public abstract class MicroblogsEntryFinderBaseImpl
 		MicroblogsEntryFinderBaseImpl.class);
 
 }
+// SB-Hash:665527586

@@ -602,3 +602,4 @@ public abstract class CommerceDiscountAccountRelLocalServiceBaseImpl
 		CommerceDiscountAccountRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-516197615

@@ -547,3 +547,4 @@ public abstract class RenameFinderColumnEntryLocalServiceBaseImpl
 		RenameFinderColumnEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1630291890

@@ -593,3 +593,4 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	public int countAll();
 
 }
+// SB-Hash:-1460142805

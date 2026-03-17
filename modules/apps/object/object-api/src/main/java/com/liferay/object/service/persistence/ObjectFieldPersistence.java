@@ -2576,3 +2576,4 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	public int countAll();
 
 }
+// SB-Hash:890382920

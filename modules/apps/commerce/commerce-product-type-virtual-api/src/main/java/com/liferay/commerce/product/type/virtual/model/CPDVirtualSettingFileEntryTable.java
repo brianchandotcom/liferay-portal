@@ -69,3 +69,4 @@ public class CPDVirtualSettingFileEntryTable
 	}
 
 }
+// SB-Hash:-77659241

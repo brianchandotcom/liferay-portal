@@ -235,3 +235,4 @@ public class CommerceWishListItemCacheModel
 	public String json;
 
 }
+// SB-Hash:-976634679

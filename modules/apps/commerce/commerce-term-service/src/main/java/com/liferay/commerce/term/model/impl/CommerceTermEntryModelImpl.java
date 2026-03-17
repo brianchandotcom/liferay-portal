@@ -1781,3 +1781,4 @@ public class CommerceTermEntryModelImpl
 	private CommerceTermEntry _escapedModel;
 
 }
+// SB-Hash:158141131

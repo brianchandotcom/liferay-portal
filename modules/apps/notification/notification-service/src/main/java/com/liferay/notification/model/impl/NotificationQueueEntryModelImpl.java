@@ -1210,3 +1210,4 @@ public class NotificationQueueEntryModelImpl
 	private NotificationQueueEntry _escapedModel;
 
 }
+// SB-Hash:-834519068

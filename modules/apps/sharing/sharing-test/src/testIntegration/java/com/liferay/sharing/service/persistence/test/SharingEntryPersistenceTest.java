@@ -705,3 +705,4 @@ public class SharingEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-332387036

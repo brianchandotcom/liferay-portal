@@ -946,3 +946,4 @@ public class KaleoTransitionUtil {
 	private static volatile KaleoTransitionPersistence _persistence;
 
 }
+// SB-Hash:1976673025

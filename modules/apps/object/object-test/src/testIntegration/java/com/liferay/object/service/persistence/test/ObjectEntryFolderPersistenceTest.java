@@ -652,3 +652,4 @@ public class ObjectEntryFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:409986258

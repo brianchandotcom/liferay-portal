@@ -270,3 +270,4 @@ public class TestEntityUtil {
 	private static volatile TestEntityPersistence _persistence;
 
 }
+// SB-Hash:-1765080221

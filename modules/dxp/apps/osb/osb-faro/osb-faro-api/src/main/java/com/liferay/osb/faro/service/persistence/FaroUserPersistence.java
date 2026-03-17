@@ -1195,3 +1195,4 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 	public int countAll();
 
 }
+// SB-Hash:1934608315

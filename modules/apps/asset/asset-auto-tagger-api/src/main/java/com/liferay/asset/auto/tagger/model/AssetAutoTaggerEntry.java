@@ -52,3 +52,4 @@ public interface AssetAutoTaggerEntry
 			};
 
 }
+// SB-Hash:1385949697

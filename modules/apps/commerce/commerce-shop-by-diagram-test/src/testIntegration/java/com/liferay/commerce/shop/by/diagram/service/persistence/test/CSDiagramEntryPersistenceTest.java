@@ -628,3 +628,4 @@ public class CSDiagramEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-2120872262

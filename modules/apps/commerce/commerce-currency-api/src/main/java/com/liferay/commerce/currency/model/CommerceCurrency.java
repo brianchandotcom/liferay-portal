@@ -55,3 +55,4 @@ public interface CommerceCurrency
 	public java.math.BigDecimal round(java.math.BigDecimal value);
 
 }
+// SB-Hash:2134054864

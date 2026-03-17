@@ -399,3 +399,4 @@ public class ChangesetEntryLocalServiceUtil {
 			ChangesetEntryLocalService.class);
 
 }
+// SB-Hash:811917661

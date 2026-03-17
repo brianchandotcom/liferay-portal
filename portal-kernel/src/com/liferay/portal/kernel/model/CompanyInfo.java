@@ -47,3 +47,4 @@ public interface CompanyInfo extends CompanyInfoModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1708359741

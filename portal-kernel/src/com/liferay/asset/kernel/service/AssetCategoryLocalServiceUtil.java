@@ -704,3 +704,4 @@ public class AssetCategoryLocalServiceUtil {
 	private static volatile AssetCategoryLocalService _service;
 
 }
+// SB-Hash:939750165

@@ -344,3 +344,4 @@ public interface AssetCategoryPropertyLocalService
 		throws E;
 
 }
+// SB-Hash:-646304349

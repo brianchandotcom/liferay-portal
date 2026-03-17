@@ -297,3 +297,4 @@ public interface ViewCountEntryLocalService
 	public ViewCountEntry updateViewCountEntry(ViewCountEntry viewCountEntry);
 
 }
+// SB-Hash:258927105

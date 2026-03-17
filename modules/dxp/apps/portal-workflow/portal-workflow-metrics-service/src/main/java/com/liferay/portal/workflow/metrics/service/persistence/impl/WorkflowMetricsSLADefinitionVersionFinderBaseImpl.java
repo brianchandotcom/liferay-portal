@@ -85,3 +85,4 @@ public abstract class WorkflowMetricsSLADefinitionVersionFinderBaseImpl
 		WorkflowMetricsSLADefinitionVersionFinderBaseImpl.class);
 
 }
+// SB-Hash:-1863702358

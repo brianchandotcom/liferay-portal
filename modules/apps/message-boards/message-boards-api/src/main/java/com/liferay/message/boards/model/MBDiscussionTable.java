@@ -57,3 +57,4 @@ public class MBDiscussionTable extends BaseTable<MBDiscussionTable> {
 	}
 
 }
+// SB-Hash:-2070618188

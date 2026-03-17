@@ -399,3 +399,4 @@ public class MBThreadFlagLocalServiceUtil {
 			MBThreadFlagLocalServiceUtil.class, MBThreadFlagLocalService.class);
 
 }
+// SB-Hash:2070684054

@@ -53,3 +53,4 @@ public interface FriendlyURLEntryMapping extends FriendlyURLEntryMappingModel {
 			};
 
 }
+// SB-Hash:1443917931

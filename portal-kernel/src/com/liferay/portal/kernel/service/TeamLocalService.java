@@ -472,3 +472,4 @@ public interface TeamLocalService
 		throws E;
 
 }
+// SB-Hash:950825642

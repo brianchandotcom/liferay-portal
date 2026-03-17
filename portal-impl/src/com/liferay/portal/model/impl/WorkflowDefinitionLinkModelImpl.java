@@ -1282,3 +1282,4 @@ public class WorkflowDefinitionLinkModelImpl
 	private WorkflowDefinitionLink _escapedModel;
 
 }
+// SB-Hash:549009066

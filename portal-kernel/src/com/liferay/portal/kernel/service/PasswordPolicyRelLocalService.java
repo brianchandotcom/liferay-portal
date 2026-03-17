@@ -299,3 +299,4 @@ public interface PasswordPolicyRelLocalService
 		PasswordPolicyRel passwordPolicyRel);
 
 }
+// SB-Hash:2013137645

@@ -137,3 +137,4 @@ public interface DLFileEntryTypeService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:474814721

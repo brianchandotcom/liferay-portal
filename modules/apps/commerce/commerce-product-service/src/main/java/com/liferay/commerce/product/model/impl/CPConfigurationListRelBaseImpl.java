@@ -41,3 +41,4 @@ public abstract class CPConfigurationListRelBaseImpl
 	}
 
 }
+// SB-Hash:1329900611

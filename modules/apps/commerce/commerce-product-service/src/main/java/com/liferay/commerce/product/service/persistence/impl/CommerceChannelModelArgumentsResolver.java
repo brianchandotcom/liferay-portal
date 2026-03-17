@@ -134,3 +134,4 @@ public class CommerceChannelModelArgumentsResolver
 	}
 
 }
+// SB-Hash:1033893316

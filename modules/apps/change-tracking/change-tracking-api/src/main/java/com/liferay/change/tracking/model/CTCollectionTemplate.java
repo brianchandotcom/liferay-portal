@@ -64,3 +64,4 @@ public interface CTCollectionTemplate
 	public String getUserName();
 
 }
+// SB-Hash:-490555087

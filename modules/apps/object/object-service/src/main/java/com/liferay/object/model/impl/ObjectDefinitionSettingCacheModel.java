@@ -235,3 +235,4 @@ public class ObjectDefinitionSettingCacheModel
 	public String value;
 
 }
+// SB-Hash:-1150486650

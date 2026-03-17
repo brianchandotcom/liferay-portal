@@ -61,3 +61,4 @@ public class KBCommentTable extends BaseTable<KBCommentTable> {
 	}
 
 }
+// SB-Hash:1921504570

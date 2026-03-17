@@ -502,3 +502,4 @@ public class KBArticleCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:-1657824979

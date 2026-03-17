@@ -1720,3 +1720,4 @@ public class DDMStructureVersionModelImpl
 	private DDMStructureVersion _escapedModel;
 
 }
+// SB-Hash:1158972010

@@ -2275,3 +2275,4 @@ public class JournalArticleModelImpl
 	private JournalArticle _escapedModel;
 
 }
+// SB-Hash:328684597

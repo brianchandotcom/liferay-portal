@@ -586,3 +586,4 @@ public class StyleBookEntryLocalServiceUtil {
 			StyleBookEntryLocalService.class);
 
 }
+// SB-Hash:-1778702003

@@ -382,3 +382,4 @@ public interface KaleoTaskAssignmentModel
 	}
 
 }
+// SB-Hash:2110588455

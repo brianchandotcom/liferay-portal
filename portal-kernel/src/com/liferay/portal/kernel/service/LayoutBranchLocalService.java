@@ -299,3 +299,4 @@ public interface LayoutBranchLocalService
 		throws PortalException;
 
 }
+// SB-Hash:767938684

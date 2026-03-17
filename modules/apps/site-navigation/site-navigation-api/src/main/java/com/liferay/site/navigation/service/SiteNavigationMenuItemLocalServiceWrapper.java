@@ -636,3 +636,4 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		_siteNavigationMenuItemLocalService;
 
 }
+// SB-Hash:560411459

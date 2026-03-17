@@ -865,3 +865,4 @@ public class PatcherBuildPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:519705364

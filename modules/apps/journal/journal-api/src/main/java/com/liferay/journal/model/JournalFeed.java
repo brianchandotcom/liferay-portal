@@ -48,3 +48,4 @@ public interface JournalFeed extends JournalFeedModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1601238273

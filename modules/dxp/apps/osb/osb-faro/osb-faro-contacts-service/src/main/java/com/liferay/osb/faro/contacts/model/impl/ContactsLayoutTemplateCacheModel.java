@@ -233,3 +233,4 @@ public class ContactsLayoutTemplateCacheModel
 	public int type;
 
 }
+// SB-Hash:515028399

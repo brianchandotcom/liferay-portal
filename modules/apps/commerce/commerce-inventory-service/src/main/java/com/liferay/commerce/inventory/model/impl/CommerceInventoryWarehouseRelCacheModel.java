@@ -203,3 +203,4 @@ public class CommerceInventoryWarehouseRelCacheModel
 	public long commerceInventoryWarehouseId;
 
 }
+// SB-Hash:63090527

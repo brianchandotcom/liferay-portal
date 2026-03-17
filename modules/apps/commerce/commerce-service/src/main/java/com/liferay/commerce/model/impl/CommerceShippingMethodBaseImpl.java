@@ -41,3 +41,4 @@ public abstract class CommerceShippingMethodBaseImpl
 	}
 
 }
+// SB-Hash:-607492134

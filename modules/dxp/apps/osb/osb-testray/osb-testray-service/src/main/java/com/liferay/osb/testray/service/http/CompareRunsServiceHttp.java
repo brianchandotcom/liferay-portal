@@ -33,3 +33,4 @@ package com.liferay.osb.testray.service.http;
  */
 public class CompareRunsServiceHttp {
 }
+// SB-Hash:-535521426

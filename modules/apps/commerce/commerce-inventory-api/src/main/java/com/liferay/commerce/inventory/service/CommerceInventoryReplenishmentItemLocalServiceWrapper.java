@@ -596,3 +596,4 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 		_commerceInventoryReplenishmentItemLocalService;
 
 }
+// SB-Hash:1365321228

@@ -108,3 +108,4 @@ public interface MBMessage extends MBMessageModel, PersistedModel, TreeModel {
 	public void setAttachmentsFolderId(long attachmentsFolderId);
 
 }
+// SB-Hash:-671626065

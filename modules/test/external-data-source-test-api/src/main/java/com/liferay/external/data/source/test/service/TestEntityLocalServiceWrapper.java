@@ -343,3 +343,4 @@ public class TestEntityLocalServiceWrapper
 	private TestEntityLocalService _testEntityLocalService;
 
 }
+// SB-Hash:-632260185

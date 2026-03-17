@@ -479,3 +479,4 @@ public abstract class KaleoNodeSettingLocalServiceBaseImpl
 		KaleoNodeSettingLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:950340721

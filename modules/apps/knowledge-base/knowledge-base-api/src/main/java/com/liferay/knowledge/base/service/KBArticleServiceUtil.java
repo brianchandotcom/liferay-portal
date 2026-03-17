@@ -457,3 +457,4 @@ public class KBArticleServiceUtil {
 		new Snapshot<>(KBArticleServiceUtil.class, KBArticleService.class);
 
 }
+// SB-Hash:-526496934

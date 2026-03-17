@@ -77,3 +77,4 @@ public abstract class BlogsEntryFinderBaseImpl
 		BlogsEntryFinderBaseImpl.class);
 
 }
+// SB-Hash:104514656

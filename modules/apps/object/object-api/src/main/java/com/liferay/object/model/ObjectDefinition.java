@@ -114,3 +114,4 @@ public interface ObjectDefinition
 	public void setObjectFolder(ObjectFolder objectFolder);
 
 }
+// SB-Hash:1332771215

@@ -65,3 +65,4 @@ public interface CalendarResource
 	public boolean isUser();
 
 }
+// SB-Hash:641399552

@@ -33,3 +33,4 @@ public class RSVEntryTable extends BaseTable<RSVEntryTable> {
 	}
 
 }
+// SB-Hash:1220795147

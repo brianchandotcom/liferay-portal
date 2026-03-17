@@ -207,3 +207,4 @@ public class BookmarksFolderServiceUtil {
 			BookmarksFolderServiceUtil.class, BookmarksFolderService.class);
 
 }
+// SB-Hash:2125137373

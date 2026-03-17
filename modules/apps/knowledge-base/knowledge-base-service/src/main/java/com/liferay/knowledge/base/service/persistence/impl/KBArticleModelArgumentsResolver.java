@@ -131,3 +131,4 @@ public class KBArticleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// SB-Hash:1210464125

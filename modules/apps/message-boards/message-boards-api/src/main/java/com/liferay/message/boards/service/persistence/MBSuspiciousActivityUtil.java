@@ -1193,3 +1193,4 @@ public class MBSuspiciousActivityUtil {
 	private static volatile MBSuspiciousActivityPersistence _persistence;
 
 }
+// SB-Hash:-1296171409

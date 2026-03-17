@@ -50,3 +50,4 @@ public interface SamlSpSession extends PersistedModel, SamlSpSessionModel {
 		};
 
 }
+// SB-Hash:1052650416

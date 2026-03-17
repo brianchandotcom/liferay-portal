@@ -1067,3 +1067,4 @@ public class MBMessageLocalServiceUtil {
 			MBMessageLocalServiceUtil.class, MBMessageLocalService.class);
 
 }
+// SB-Hash:-846832070

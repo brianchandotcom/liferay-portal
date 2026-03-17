@@ -889,3 +889,4 @@ public class CommerceOrderItemLocalServiceUtil {
 			CommerceOrderItemLocalService.class);
 
 }
+// SB-Hash:1990702472

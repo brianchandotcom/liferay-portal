@@ -55,3 +55,4 @@ public interface CommerceDiscountUsageEntry
 			};
 
 }
+// SB-Hash:1563146583

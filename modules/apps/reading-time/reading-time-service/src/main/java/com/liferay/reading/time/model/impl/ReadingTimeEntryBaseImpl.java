@@ -39,3 +39,4 @@ public abstract class ReadingTimeEntryBaseImpl
 	}
 
 }
+// SB-Hash:-270285922

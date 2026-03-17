@@ -469,3 +469,4 @@ public abstract class KaleoTaskFormLocalServiceBaseImpl
 		KaleoTaskFormLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-574328064

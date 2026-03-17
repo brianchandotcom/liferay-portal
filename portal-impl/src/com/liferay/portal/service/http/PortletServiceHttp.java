@@ -156,3 +156,4 @@ public class PortletServiceHttp {
 		new Class[] {long.class, String.class, String.class, boolean.class};
 
 }
+// SB-Hash:1065321144

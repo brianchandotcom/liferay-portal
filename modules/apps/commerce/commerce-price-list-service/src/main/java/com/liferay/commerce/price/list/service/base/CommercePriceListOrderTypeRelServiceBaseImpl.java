@@ -132,3 +132,4 @@ public abstract class CommercePriceListOrderTypeRelServiceBaseImpl
 		CommercePriceListOrderTypeRelServiceBaseImpl.class);
 
 }
+// SB-Hash:536047954

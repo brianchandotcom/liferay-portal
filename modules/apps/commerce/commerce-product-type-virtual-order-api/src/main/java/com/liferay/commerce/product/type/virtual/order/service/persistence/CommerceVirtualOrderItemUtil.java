@@ -787,3 +787,4 @@ public class CommerceVirtualOrderItemUtil {
 	private static volatile CommerceVirtualOrderItemPersistence _persistence;
 
 }
+// SB-Hash:1717954586

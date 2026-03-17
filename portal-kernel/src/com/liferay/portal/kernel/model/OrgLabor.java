@@ -50,3 +50,4 @@ public interface OrgLabor extends OrgLaborModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-2085453631

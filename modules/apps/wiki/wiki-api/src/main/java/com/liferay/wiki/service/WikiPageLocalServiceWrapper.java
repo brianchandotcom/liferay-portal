@@ -1287,3 +1287,4 @@ public class WikiPageLocalServiceWrapper
 	private WikiPageLocalService _wikiPageLocalService;
 
 }
+// SB-Hash:1924662821

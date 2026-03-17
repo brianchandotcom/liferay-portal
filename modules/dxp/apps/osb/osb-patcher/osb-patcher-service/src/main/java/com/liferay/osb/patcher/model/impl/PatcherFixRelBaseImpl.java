@@ -39,3 +39,4 @@ public abstract class PatcherFixRelBaseImpl
 	}
 
 }
+// SB-Hash:1954985581

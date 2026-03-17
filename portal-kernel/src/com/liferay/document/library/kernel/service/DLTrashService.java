@@ -140,3 +140,4 @@ public interface DLTrashService extends BaseService {
 	public void restoreFolderFromTrash(long folderId) throws PortalException;
 
 }
+// SB-Hash:-283371888

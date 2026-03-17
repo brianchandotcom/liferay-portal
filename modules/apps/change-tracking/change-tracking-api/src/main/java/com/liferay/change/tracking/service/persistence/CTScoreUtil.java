@@ -327,3 +327,4 @@ public class CTScoreUtil {
 	private static volatile CTScorePersistence _persistence;
 
 }
+// SB-Hash:99505047

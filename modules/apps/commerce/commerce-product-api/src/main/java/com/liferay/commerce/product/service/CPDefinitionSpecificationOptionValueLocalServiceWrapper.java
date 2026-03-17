@@ -698,3 +698,4 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 		_cpDefinitionSpecificationOptionValueLocalService;
 
 }
+// SB-Hash:-169789520

@@ -76,3 +76,4 @@ public abstract class SourceFinderBaseImpl extends BasePersistenceImpl<Source> {
 		SourceFinderBaseImpl.class);
 
 }
+// SB-Hash:-219705584

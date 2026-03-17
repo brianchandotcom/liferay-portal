@@ -592,3 +592,4 @@ public abstract class MBBanLocalServiceBaseImpl
 		MBBanLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-194429813

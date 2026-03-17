@@ -448,3 +448,4 @@ public abstract class AuditEventLocalServiceBaseImpl
 		AuditEventLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-635336410

@@ -300,3 +300,4 @@ public class AssetCategoryPropertyServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 
 }
+// SB-Hash:2117244463

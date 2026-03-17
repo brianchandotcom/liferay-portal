@@ -289,3 +289,4 @@ public class TestEntityLocalServiceUtil {
 	private static volatile TestEntityLocalService _service;
 
 }
+// SB-Hash:1950656236

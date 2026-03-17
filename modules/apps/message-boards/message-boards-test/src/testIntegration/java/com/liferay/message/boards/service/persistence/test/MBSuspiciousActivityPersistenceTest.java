@@ -658,3 +658,4 @@ public class MBSuspiciousActivityPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:373848649

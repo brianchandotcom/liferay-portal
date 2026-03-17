@@ -595,3 +595,4 @@ public interface ObjectLayoutRowPersistence
 	public int countAll();
 
 }
+// SB-Hash:1530928500

@@ -761,3 +761,4 @@ public interface AssetTagLocalService
 		throws E;
 
 }
+// SB-Hash:1779770499

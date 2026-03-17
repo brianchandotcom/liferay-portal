@@ -130,3 +130,4 @@ public abstract class CommerceInventoryAuditServiceBaseImpl
 		CommerceInventoryAuditServiceBaseImpl.class);
 
 }
+// SB-Hash:-1148018115

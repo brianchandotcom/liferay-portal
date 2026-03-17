@@ -184,3 +184,4 @@ public class IndexEntryCacheModel
 	public String portletId;
 
 }
+// SB-Hash:1051324344

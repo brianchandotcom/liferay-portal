@@ -150,3 +150,4 @@ public class CalendarResourceServiceWrapper
 	private CalendarResourceService _calendarResourceService;
 
 }
+// SB-Hash:-600275184

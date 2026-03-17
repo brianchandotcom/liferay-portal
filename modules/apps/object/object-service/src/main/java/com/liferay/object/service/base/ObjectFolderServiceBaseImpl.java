@@ -125,3 +125,4 @@ public abstract class ObjectFolderServiceBaseImpl
 		ObjectFolderServiceBaseImpl.class);
 
 }
+// SB-Hash:-801442459

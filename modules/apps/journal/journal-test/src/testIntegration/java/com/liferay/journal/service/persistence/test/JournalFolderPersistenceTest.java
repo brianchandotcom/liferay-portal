@@ -783,3 +783,4 @@ public class JournalFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-2035807229

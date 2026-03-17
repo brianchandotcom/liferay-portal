@@ -154,3 +154,4 @@ public class CommerceNotificationTemplateServiceUtil {
 			CommerceNotificationTemplateService.class);
 
 }
+// SB-Hash:1373076700

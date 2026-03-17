@@ -457,3 +457,4 @@ public interface CommercePriceModifierLocalService
 		throws E;
 
 }
+// SB-Hash:1174545161

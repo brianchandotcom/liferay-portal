@@ -758,3 +758,4 @@ public interface JournalArticleModel
 	}
 
 }
+// SB-Hash:-1064711209

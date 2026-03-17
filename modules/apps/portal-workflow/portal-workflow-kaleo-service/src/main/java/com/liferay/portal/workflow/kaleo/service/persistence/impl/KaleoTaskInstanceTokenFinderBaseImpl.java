@@ -58,3 +58,4 @@ public abstract class KaleoTaskInstanceTokenFinderBaseImpl
 		kaleoTaskInstanceTokenPersistence;
 
 }
+// SB-Hash:-215734200

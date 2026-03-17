@@ -84,3 +84,4 @@ public class NotificationTemplateTable
 	}
 
 }
+// SB-Hash:124161914

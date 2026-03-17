@@ -517,3 +517,4 @@ public class CSDiagramSettingWrapper
 	}
 
 }
+// SB-Hash:668422017

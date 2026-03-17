@@ -309,3 +309,4 @@ public interface DDMTemplateVersionLocalService
 		throws E;
 
 }
+// SB-Hash:310547269

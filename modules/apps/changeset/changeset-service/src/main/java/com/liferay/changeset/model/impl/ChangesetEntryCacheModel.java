@@ -198,3 +198,4 @@ public class ChangesetEntryCacheModel
 	public long classPK;
 
 }
+// SB-Hash:831236302

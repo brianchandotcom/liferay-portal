@@ -5682,3 +5682,4 @@ public interface MBMessagePersistence
 	public int countAll();
 
 }
+// SB-Hash:296450091

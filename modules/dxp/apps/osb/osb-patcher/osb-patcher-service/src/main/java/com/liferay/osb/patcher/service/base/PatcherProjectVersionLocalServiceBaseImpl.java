@@ -478,3 +478,4 @@ public abstract class PatcherProjectVersionLocalServiceBaseImpl
 		PatcherProjectVersionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1664534607

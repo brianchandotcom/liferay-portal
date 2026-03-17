@@ -147,3 +147,4 @@ public interface CPConfigurationListRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:-1628827279

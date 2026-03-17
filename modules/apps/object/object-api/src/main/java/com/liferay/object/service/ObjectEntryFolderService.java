@@ -134,3 +134,4 @@ public interface ObjectEntryFolderService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1105096765

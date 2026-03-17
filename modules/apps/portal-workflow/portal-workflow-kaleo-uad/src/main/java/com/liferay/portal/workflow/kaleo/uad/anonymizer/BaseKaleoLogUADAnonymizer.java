@@ -92,3 +92,4 @@ public abstract class BaseKaleoLogUADAnonymizer
 	protected KaleoLogLocalService kaleoLogLocalService;
 
 }
+// SB-Hash:1402751262

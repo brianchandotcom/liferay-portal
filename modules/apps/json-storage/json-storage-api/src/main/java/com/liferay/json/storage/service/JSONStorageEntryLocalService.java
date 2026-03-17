@@ -321,3 +321,4 @@ public interface JSONStorageEntryLocalService
 		throws E;
 
 }
+// SB-Hash:1362213364

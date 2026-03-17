@@ -85,3 +85,4 @@ public interface UserGroupFinder {
 				<com.liferay.portal.kernel.model.UserGroup> orderByComparator);
 
 }
+// SB-Hash:-551003547

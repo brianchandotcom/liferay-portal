@@ -59,3 +59,4 @@ public interface CSDiagramSetting
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-1220424738

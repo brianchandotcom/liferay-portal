@@ -124,3 +124,4 @@ public interface CPConfigurationListService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:743808298

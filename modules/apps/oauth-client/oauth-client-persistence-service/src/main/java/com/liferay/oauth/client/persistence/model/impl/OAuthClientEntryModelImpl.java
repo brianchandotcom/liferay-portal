@@ -1219,3 +1219,4 @@ public class OAuthClientEntryModelImpl
 	private OAuthClientEntry _escapedModel;
 
 }
+// SB-Hash:-109112300

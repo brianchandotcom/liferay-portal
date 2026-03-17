@@ -499,3 +499,4 @@ public class KBTemplateLocalServiceWrapper
 	private KBTemplateLocalService _kbTemplateLocalService;
 
 }
+// SB-Hash:1852310273

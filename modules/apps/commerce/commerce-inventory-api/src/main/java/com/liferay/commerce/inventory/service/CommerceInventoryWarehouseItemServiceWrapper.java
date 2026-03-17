@@ -310,3 +310,4 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 		_commerceInventoryWarehouseItemService;
 
 }
+// SB-Hash:-403027325

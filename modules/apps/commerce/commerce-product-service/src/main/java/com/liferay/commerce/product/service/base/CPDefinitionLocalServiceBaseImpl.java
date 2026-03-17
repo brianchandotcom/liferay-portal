@@ -943,3 +943,4 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 		CPDefinitionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-333298322

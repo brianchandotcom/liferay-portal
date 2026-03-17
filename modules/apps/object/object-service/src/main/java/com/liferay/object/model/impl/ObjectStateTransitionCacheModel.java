@@ -215,3 +215,4 @@ public class ObjectStateTransitionCacheModel
 	public long targetObjectStateId;
 
 }
+// SB-Hash:1377472336

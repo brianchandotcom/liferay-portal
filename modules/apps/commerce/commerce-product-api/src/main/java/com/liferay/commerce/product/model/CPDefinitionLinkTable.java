@@ -83,3 +83,4 @@ public class CPDefinitionLinkTable extends BaseTable<CPDefinitionLinkTable> {
 	}
 
 }
+// SB-Hash:1248007075

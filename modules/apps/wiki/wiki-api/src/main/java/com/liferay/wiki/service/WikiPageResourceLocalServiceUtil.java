@@ -403,3 +403,4 @@ public class WikiPageResourceLocalServiceUtil {
 			WikiPageResourceLocalService.class);
 
 }
+// SB-Hash:-1418645120

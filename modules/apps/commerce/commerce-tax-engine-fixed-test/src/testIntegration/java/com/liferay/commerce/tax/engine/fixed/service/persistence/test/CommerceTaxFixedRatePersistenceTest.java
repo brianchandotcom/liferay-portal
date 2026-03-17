@@ -581,3 +581,4 @@ public class CommerceTaxFixedRatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1035003197

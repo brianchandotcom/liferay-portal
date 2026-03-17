@@ -507,3 +507,4 @@ public class VersionedEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1276707714

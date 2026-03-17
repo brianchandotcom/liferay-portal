@@ -3386,3 +3386,4 @@ public class RoleUtil {
 	private static volatile RolePersistence _persistence;
 
 }
+// SB-Hash:1213684746

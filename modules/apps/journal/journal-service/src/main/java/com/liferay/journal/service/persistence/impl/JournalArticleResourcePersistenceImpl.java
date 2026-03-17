@@ -3197,3 +3197,4 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 }
+// SB-Hash:1099442707

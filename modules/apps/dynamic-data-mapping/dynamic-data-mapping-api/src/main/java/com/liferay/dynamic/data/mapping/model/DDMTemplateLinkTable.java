@@ -44,3 +44,4 @@ public class DDMTemplateLinkTable extends BaseTable<DDMTemplateLinkTable> {
 	}
 
 }
+// SB-Hash:1979922418

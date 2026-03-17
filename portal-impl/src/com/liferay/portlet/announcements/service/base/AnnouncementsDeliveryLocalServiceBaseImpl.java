@@ -543,3 +543,4 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 		AnnouncementsDeliveryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1520584961

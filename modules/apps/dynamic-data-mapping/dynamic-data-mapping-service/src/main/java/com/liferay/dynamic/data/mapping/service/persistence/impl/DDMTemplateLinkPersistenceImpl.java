@@ -1693,3 +1693,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
+// SB-Hash:1672691876

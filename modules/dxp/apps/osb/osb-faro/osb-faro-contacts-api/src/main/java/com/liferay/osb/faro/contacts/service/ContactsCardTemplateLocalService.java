@@ -280,3 +280,4 @@ public interface ContactsCardTemplateLocalService
 		throws PortalException;
 
 }
+// SB-Hash:-1818612800

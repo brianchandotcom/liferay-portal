@@ -64,3 +64,4 @@ public class CommercePriceModifierRelTable
 	}
 
 }
+// SB-Hash:1368435395

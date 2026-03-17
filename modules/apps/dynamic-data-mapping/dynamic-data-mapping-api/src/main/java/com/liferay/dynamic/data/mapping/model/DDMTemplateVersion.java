@@ -55,3 +55,4 @@ public interface DDMTemplateVersion
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-326203260

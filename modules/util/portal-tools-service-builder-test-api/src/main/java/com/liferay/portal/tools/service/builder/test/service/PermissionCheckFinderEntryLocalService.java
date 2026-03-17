@@ -282,3 +282,4 @@ public interface PermissionCheckFinderEntryLocalService
 		PermissionCheckFinderEntry permissionCheckFinderEntry);
 
 }
+// SB-Hash:-1438824039

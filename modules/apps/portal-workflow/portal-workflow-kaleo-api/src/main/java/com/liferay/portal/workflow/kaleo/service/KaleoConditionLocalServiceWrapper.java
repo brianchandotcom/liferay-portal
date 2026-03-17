@@ -390,3 +390,4 @@ public class KaleoConditionLocalServiceWrapper
 	private KaleoConditionLocalService _kaleoConditionLocalService;
 
 }
+// SB-Hash:1296648991

@@ -64,3 +64,4 @@ public class CommercePricingClassCPDefinitionRelTable
 	}
 
 }
+// SB-Hash:87080741

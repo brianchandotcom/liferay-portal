@@ -1281,3 +1281,4 @@ public interface CommerceCatalogPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1418554860

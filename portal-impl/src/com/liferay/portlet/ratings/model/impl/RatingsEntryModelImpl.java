@@ -1041,3 +1041,4 @@ public class RatingsEntryModelImpl
 	private RatingsEntry _escapedModel;
 
 }
+// SB-Hash:1610783164

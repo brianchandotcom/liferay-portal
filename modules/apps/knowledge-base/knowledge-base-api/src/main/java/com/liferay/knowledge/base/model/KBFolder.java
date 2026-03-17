@@ -67,3 +67,4 @@ public interface KBFolder extends KBFolderModel, PersistedModel {
 	public boolean isRoot();
 
 }
+// SB-Hash:-794113330

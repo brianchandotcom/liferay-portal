@@ -38,3 +38,4 @@ public class Groups_OrgsTable extends BaseTable<Groups_OrgsTable> {
 	}
 
 }
+// SB-Hash:354970072

@@ -125,3 +125,4 @@ public abstract class COREntryRelServiceBaseImpl
 		COREntryRelServiceBaseImpl.class);
 
 }
+// SB-Hash:1226867026

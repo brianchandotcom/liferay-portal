@@ -91,3 +91,4 @@ public interface PluginSetting extends PersistedModel, PluginSettingModel {
 	public void setRolesArray(String[] rolesArray);
 
 }
+// SB-Hash:1762184584

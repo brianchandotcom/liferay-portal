@@ -1449,3 +1449,4 @@ public class DDMTemplateLocalServiceUtil {
 			DDMTemplateLocalServiceUtil.class, DDMTemplateLocalService.class);
 
 }
+// SB-Hash:-545185545

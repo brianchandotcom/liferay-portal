@@ -363,3 +363,4 @@ public interface CProductLocalService
 		throws E;
 
 }
+// SB-Hash:-1010658560

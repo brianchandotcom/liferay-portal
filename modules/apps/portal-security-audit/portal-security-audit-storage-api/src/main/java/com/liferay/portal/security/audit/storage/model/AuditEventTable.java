@@ -62,3 +62,4 @@ public class AuditEventTable extends BaseTable<AuditEventTable> {
 	}
 
 }
+// SB-Hash:-842353748

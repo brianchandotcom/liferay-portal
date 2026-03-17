@@ -58,3 +58,4 @@ public interface CommerceDiscountOrderTypeRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:233315861

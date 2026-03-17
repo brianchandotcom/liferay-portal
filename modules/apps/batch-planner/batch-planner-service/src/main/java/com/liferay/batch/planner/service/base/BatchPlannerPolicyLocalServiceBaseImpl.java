@@ -473,3 +473,4 @@ public abstract class BatchPlannerPolicyLocalServiceBaseImpl
 		BatchPlannerPolicyLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:717099989

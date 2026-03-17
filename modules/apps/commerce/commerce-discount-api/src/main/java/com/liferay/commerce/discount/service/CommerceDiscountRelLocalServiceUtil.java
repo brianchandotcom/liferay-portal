@@ -457,3 +457,4 @@ public class CommerceDiscountRelLocalServiceUtil {
 			CommerceDiscountRelLocalService.class);
 
 }
+// SB-Hash:1079605628

@@ -1849,3 +1849,4 @@ public interface CommerceDiscountPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1725055312

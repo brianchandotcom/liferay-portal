@@ -988,3 +988,4 @@ public class CommercePriceListLocalServiceWrapper
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
 }
+// SB-Hash:739610185

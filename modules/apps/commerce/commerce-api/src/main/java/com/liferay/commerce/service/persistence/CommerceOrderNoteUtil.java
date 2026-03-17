@@ -1126,3 +1126,4 @@ public class CommerceOrderNoteUtil {
 	private static volatile CommerceOrderNotePersistence _persistence;
 
 }
+// SB-Hash:-1727113238

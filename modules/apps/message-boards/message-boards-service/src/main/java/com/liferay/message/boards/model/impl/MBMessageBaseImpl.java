@@ -81,3 +81,4 @@ public abstract class MBMessageBaseImpl
 	}
 
 }
+// SB-Hash:575015587

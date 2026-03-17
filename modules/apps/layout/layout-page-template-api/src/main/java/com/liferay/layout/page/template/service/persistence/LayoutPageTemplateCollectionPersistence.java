@@ -2102,3 +2102,4 @@ public interface LayoutPageTemplateCollectionPersistence
 	public int countAll();
 
 }
+// SB-Hash:2062240544

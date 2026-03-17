@@ -937,3 +937,4 @@ public interface CommerceNotificationQueueEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:1024573672

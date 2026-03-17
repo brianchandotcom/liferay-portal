@@ -39,3 +39,4 @@ public abstract class CSDiagramSettingBaseImpl
 	}
 
 }
+// SB-Hash:-1512749232

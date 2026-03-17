@@ -2252,3 +2252,4 @@ public class SharingEntryUtil {
 	private static volatile SharingEntryPersistence _persistence;
 
 }
+// SB-Hash:335059165

@@ -347,3 +347,4 @@ public interface DDMTemplateLinkPersistence
 	public int countAll();
 
 }
+// SB-Hash:68140832

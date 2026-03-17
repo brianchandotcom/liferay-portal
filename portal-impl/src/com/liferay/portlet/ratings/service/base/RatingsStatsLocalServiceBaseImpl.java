@@ -519,3 +519,4 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 		RatingsStatsLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:447388383

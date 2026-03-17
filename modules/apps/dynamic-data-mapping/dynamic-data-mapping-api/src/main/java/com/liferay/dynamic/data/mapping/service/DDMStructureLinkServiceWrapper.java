@@ -75,3 +75,4 @@ public class DDMStructureLinkServiceWrapper
 	private DDMStructureLinkService _ddmStructureLinkService;
 
 }
+// SB-Hash:24415512

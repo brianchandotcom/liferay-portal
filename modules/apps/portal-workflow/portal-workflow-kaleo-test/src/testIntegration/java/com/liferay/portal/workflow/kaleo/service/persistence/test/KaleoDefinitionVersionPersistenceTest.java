@@ -664,3 +664,4 @@ public class KaleoDefinitionVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1480478202

@@ -828,3 +828,4 @@ public class WikiPageResourceModelImpl
 	private WikiPageResource _escapedModel;
 
 }
+// SB-Hash:2102643199

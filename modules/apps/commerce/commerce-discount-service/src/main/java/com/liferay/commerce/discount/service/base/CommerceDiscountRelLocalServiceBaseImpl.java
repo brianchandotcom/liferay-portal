@@ -476,3 +476,4 @@ public abstract class CommerceDiscountRelLocalServiceBaseImpl
 		CommerceDiscountRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:378768475

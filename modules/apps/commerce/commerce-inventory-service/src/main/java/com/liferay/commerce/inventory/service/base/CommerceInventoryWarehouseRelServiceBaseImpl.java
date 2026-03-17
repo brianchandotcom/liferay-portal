@@ -132,3 +132,4 @@ public abstract class CommerceInventoryWarehouseRelServiceBaseImpl
 		CommerceInventoryWarehouseRelServiceBaseImpl.class);
 
 }
+// SB-Hash:-1115238378

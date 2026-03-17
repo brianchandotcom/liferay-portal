@@ -69,3 +69,4 @@ public class KaleoConditionTable extends BaseTable<KaleoConditionTable> {
 	}
 
 }
+// SB-Hash:-725757301

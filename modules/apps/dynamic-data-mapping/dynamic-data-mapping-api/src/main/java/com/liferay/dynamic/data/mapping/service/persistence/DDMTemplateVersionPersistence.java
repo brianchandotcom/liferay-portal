@@ -504,3 +504,4 @@ public interface DDMTemplateVersionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-58232155

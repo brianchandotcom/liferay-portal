@@ -33,3 +33,4 @@ package com.liferay.object.service.http;
  */
 public class ObjectLayoutTabServiceHttp {
 }
+// SB-Hash:-1916581355

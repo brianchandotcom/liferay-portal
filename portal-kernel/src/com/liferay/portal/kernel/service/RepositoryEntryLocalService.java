@@ -369,3 +369,4 @@ public interface RepositoryEntryLocalService
 		throws E;
 
 }
+// SB-Hash:122052757

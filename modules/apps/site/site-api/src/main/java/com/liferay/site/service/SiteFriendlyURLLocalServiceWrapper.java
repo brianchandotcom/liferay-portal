@@ -515,3 +515,4 @@ public class SiteFriendlyURLLocalServiceWrapper
 	private SiteFriendlyURLLocalService _siteFriendlyURLLocalService;
 
 }
+// SB-Hash:477137480

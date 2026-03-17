@@ -341,3 +341,4 @@ public interface CommerceMLForecastAlertEntryLocalService
 		throws PortalException;
 
 }
+// SB-Hash:-707763007

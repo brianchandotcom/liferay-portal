@@ -5900,3 +5900,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
+// SB-Hash:561176606

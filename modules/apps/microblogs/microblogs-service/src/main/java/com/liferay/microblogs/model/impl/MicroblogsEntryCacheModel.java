@@ -205,3 +205,4 @@ public class MicroblogsEntryCacheModel
 	public int socialRelationType;
 
 }
+// SB-Hash:-840879113

@@ -1296,3 +1296,4 @@ public class AssetListEntryModelImpl
 	private AssetListEntry _escapedModel;
 
 }
+// SB-Hash:578385816

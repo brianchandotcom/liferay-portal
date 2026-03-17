@@ -569,3 +569,4 @@ public class CommercePricingClassLocalServiceWrapper
 	private CommercePricingClassLocalService _commercePricingClassLocalService;
 
 }
+// SB-Hash:-1225449575

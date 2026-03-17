@@ -21,3 +21,4 @@ public class CTPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// SB-Hash:-774486813

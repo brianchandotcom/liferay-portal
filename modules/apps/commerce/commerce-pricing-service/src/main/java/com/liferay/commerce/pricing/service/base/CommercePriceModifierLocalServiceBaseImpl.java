@@ -733,3 +733,4 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 		CommercePriceModifierLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1496313455

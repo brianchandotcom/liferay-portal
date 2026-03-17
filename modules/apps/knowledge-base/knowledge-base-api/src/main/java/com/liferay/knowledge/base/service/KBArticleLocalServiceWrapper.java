@@ -1113,3 +1113,4 @@ public class KBArticleLocalServiceWrapper
 	private KBArticleLocalService _kbArticleLocalService;
 
 }
+// SB-Hash:-2135641997

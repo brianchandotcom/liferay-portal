@@ -477,3 +477,4 @@ public class CommerceDiscountCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:1478521995

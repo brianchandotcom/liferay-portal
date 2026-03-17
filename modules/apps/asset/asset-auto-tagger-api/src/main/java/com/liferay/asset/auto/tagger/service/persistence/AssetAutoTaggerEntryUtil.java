@@ -698,3 +698,4 @@ public class AssetAutoTaggerEntryUtil {
 	private static volatile AssetAutoTaggerEntryPersistence _persistence;
 
 }
+// SB-Hash:1080194925

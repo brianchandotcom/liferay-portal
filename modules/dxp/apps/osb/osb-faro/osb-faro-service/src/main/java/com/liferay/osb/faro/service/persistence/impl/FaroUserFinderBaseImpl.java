@@ -77,3 +77,4 @@ public abstract class FaroUserFinderBaseImpl
 		FaroUserFinderBaseImpl.class);
 
 }
+// SB-Hash:1563366292

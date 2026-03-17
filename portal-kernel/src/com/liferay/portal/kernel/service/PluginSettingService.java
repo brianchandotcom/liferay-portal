@@ -52,3 +52,4 @@ public interface PluginSettingService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:2018446123

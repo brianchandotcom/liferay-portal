@@ -378,3 +378,4 @@ public class UserGroupServiceUtil {
 	private static volatile UserGroupService _service;
 
 }
+// SB-Hash:-956657497

@@ -113,3 +113,4 @@ public class KaleoDefinitionServiceUtil {
 			KaleoDefinitionServiceUtil.class, KaleoDefinitionService.class);
 
 }
+// SB-Hash:1564946146

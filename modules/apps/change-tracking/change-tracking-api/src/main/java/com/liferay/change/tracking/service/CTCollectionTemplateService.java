@@ -72,3 +72,4 @@ public interface CTCollectionTemplateService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1229693388

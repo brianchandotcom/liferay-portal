@@ -683,3 +683,4 @@ public abstract class WikiPageLocalServiceBaseImpl
 		WikiPageLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-2101495994

@@ -259,3 +259,4 @@ public class AssetTagCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-973751218

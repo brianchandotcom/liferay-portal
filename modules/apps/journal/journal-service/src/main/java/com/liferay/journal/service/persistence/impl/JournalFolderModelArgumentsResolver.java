@@ -135,3 +135,4 @@ public class JournalFolderModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// SB-Hash:1714534311

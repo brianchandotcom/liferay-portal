@@ -50,3 +50,4 @@ public interface CPTaxCategory extends CPTaxCategoryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:2093474072

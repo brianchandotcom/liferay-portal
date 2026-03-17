@@ -486,3 +486,4 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 		DLOpenerFileEntryReferenceLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1315047406

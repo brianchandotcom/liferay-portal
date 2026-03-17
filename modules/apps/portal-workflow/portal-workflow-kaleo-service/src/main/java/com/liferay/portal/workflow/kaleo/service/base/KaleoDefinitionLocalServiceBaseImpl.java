@@ -627,3 +627,4 @@ public abstract class KaleoDefinitionLocalServiceBaseImpl
 		KaleoDefinitionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1763627404

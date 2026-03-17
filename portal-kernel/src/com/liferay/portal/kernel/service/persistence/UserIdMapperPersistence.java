@@ -394,3 +394,4 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	public int countAll();
 
 }
+// SB-Hash:-620022076

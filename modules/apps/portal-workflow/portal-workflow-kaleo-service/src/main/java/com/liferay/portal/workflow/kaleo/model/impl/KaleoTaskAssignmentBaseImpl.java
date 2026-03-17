@@ -39,3 +39,4 @@ public abstract class KaleoTaskAssignmentBaseImpl
 	}
 
 }
+// SB-Hash:2091927892

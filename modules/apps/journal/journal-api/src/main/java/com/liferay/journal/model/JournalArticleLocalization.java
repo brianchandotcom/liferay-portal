@@ -54,3 +54,4 @@ public interface JournalArticleLocalization
 			};
 
 }
+// SB-Hash:-461703826

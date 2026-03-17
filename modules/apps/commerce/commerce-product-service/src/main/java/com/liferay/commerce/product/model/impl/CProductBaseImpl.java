@@ -39,3 +39,4 @@ public abstract class CProductBaseImpl
 	}
 
 }
+// SB-Hash:705484381

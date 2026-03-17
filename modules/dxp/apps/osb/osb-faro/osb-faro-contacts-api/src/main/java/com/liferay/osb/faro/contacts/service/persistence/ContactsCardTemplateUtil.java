@@ -457,3 +457,4 @@ public class ContactsCardTemplateUtil {
 	private static volatile ContactsCardTemplatePersistence _persistence;
 
 }
+// SB-Hash:-317074361

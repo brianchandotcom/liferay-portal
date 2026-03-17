@@ -461,3 +461,4 @@ public interface BookmarksEntryLocalService
 		throws E;
 
 }
+// SB-Hash:1219861158

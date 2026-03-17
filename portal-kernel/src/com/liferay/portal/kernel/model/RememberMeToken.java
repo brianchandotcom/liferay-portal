@@ -49,3 +49,4 @@ public interface RememberMeToken extends PersistedModel, RememberMeTokenModel {
 	public boolean isExpired();
 
 }
+// SB-Hash:1538038680

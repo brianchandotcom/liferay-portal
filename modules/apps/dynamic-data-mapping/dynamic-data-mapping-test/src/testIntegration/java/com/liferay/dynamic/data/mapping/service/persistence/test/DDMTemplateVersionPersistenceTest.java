@@ -621,3 +621,4 @@ public class DDMTemplateVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1089550963

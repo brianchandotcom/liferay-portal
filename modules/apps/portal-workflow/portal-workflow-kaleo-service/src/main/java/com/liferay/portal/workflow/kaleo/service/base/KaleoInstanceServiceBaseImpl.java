@@ -126,3 +126,4 @@ public abstract class KaleoInstanceServiceBaseImpl
 		KaleoInstanceServiceBaseImpl.class);
 
 }
+// SB-Hash:1806203505

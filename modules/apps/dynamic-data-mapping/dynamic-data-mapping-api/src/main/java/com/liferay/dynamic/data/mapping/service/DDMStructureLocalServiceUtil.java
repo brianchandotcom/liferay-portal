@@ -1288,3 +1288,4 @@ public class DDMStructureLocalServiceUtil {
 			DDMStructureLocalServiceUtil.class, DDMStructureLocalService.class);
 
 }
+// SB-Hash:-1460275120

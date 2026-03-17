@@ -2477,3 +2477,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
+// SB-Hash:-997879274

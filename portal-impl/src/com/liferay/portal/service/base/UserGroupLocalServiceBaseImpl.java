@@ -1073,3 +1073,4 @@ public abstract class UserGroupLocalServiceBaseImpl
 		UserGroupLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:2075578392

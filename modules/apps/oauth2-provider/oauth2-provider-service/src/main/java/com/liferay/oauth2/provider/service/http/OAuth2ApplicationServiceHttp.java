@@ -522,3 +522,4 @@ public class OAuth2ApplicationServiceHttp {
 		new Class[] {long.class, java.util.List.class};
 
 }
+// SB-Hash:-471470981

@@ -207,3 +207,4 @@ public abstract class RatingsEntryServiceBaseImpl
 		RatingsEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:1842026128

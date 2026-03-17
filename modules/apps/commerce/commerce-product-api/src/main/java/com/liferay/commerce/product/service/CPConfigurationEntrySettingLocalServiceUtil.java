@@ -404,3 +404,4 @@ public class CPConfigurationEntrySettingLocalServiceUtil {
 			CPConfigurationEntrySettingLocalService.class);
 
 }
+// SB-Hash:1723863365

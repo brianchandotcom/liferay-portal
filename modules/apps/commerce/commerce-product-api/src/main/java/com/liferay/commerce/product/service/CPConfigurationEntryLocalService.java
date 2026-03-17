@@ -427,3 +427,4 @@ public interface CPConfigurationEntryLocalService
 		throws E;
 
 }
+// SB-Hash:5397948

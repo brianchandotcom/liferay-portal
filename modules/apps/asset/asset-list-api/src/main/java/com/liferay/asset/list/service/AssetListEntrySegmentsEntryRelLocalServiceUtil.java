@@ -521,3 +521,4 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 			AssetListEntrySegmentsEntryRelLocalService.class);
 
 }
+// SB-Hash:-923458522

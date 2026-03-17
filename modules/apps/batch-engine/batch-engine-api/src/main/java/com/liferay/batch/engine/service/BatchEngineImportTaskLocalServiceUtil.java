@@ -438,3 +438,4 @@ public class BatchEngineImportTaskLocalServiceUtil {
 			BatchEngineImportTaskLocalService.class);
 
 }
+// SB-Hash:1570142290

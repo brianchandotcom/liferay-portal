@@ -541,3 +541,4 @@ public class TemplateEntryLocalServiceWrapper
 	private TemplateEntryLocalService _templateEntryLocalService;
 
 }
+// SB-Hash:-2105821859

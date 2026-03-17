@@ -1691,3 +1691,4 @@ public class CommerceCurrencyModelImpl
 	private CommerceCurrency _escapedModel;
 
 }
+// SB-Hash:851162293

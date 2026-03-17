@@ -642,3 +642,4 @@ public class TranslationEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:348115286

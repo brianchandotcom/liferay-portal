@@ -55,3 +55,4 @@ public interface SamlSpIdpConnection
 		throws java.io.IOException;
 
 }
+// SB-Hash:-1084357497

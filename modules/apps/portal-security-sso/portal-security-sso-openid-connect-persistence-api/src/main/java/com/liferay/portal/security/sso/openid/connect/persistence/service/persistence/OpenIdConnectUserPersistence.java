@@ -367,3 +367,4 @@ public interface OpenIdConnectUserPersistence
 	public int countAll();
 
 }
+// SB-Hash:980887247

@@ -116,3 +116,4 @@ public class CalendarBookingTable extends BaseTable<CalendarBookingTable> {
 	}
 
 }
+// SB-Hash:-2036579086

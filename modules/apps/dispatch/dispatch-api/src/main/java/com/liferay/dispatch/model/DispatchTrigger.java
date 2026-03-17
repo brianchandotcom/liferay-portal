@@ -64,3 +64,4 @@ public interface DispatchTrigger extends DispatchTriggerModel, PersistedModel {
 			dispatchTaskSettingsUnicodeProperties);
 
 }
+// SB-Hash:87323755

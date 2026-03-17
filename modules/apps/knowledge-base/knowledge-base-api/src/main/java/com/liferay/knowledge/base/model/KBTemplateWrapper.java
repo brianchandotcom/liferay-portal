@@ -474,3 +474,4 @@ public class KBTemplateWrapper
 	}
 
 }
+// SB-Hash:1700714717

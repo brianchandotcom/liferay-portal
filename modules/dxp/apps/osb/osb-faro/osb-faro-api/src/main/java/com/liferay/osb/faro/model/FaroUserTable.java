@@ -53,3 +53,4 @@ public class FaroUserTable extends BaseTable<FaroUserTable> {
 	}
 
 }
+// SB-Hash:673986360

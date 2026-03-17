@@ -572,3 +572,4 @@ public class CalendarLocalServiceWrapper
 	private CalendarLocalService _calendarLocalService;
 
 }
+// SB-Hash:-2125196338

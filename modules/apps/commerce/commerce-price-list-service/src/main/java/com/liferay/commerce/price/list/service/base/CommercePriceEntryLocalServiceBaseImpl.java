@@ -659,3 +659,4 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 		CommercePriceEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:204724712

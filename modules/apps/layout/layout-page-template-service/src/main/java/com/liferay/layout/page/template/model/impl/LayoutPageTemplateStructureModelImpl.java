@@ -999,3 +999,4 @@ public class LayoutPageTemplateStructureModelImpl
 	private LayoutPageTemplateStructure _escapedModel;
 
 }
+// SB-Hash:975478099

@@ -504,3 +504,4 @@ public interface AssetVocabularyLocalService
 		throws E;
 
 }
+// SB-Hash:1095472505

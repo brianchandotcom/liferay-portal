@@ -1182,3 +1182,4 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private Phone _escapedModel;
 
 }
+// SB-Hash:-1897643459

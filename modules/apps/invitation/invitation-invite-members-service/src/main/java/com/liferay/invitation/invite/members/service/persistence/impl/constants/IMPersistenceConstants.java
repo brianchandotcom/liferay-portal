@@ -21,3 +21,4 @@ public class IMPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// SB-Hash:-345378800

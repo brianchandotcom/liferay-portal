@@ -518,3 +518,4 @@ public class CTermEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:62480043

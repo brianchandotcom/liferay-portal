@@ -56,3 +56,4 @@ public class CPTaxCategoryTable extends BaseTable<CPTaxCategoryTable> {
 	}
 
 }
+// SB-Hash:-312593471

@@ -346,3 +346,4 @@ public class LocalizedEntryLocalServiceUtil {
 	private static volatile LocalizedEntryLocalService _service;
 
 }
+// SB-Hash:1516670927

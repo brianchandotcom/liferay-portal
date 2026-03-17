@@ -506,3 +506,4 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 		AssetEntryAssetCategoryRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1921966018

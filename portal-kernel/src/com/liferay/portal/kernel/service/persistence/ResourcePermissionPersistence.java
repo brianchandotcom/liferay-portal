@@ -2071,3 +2071,4 @@ public interface ResourcePermissionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-673804853

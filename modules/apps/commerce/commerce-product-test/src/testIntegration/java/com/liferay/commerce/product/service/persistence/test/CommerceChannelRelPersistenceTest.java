@@ -563,3 +563,4 @@ public class CommerceChannelRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:734255101

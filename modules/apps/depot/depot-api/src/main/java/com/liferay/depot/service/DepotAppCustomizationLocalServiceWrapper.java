@@ -413,3 +413,4 @@ public class DepotAppCustomizationLocalServiceWrapper
 		_depotAppCustomizationLocalService;
 
 }
+// SB-Hash:1406847594

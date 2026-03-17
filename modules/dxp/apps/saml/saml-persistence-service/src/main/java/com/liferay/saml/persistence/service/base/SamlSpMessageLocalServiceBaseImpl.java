@@ -451,3 +451,4 @@ public abstract class SamlSpMessageLocalServiceBaseImpl
 		SamlSpMessageLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:2069466701

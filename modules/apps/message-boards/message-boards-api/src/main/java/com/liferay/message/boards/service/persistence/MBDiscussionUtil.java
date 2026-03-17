@@ -801,3 +801,4 @@ public class MBDiscussionUtil {
 	private static volatile MBDiscussionPersistence _persistence;
 
 }
+// SB-Hash:927211247

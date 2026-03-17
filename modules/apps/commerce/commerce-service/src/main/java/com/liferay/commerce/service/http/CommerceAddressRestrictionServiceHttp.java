@@ -33,3 +33,4 @@ package com.liferay.commerce.service.http;
  */
 public class CommerceAddressRestrictionServiceHttp {
 }
+// SB-Hash:-2009333682

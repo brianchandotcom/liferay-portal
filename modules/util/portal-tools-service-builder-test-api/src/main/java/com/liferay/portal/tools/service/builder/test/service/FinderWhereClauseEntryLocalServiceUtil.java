@@ -312,3 +312,4 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	private static volatile FinderWhereClauseEntryLocalService _service;
 
 }
+// SB-Hash:1051151947

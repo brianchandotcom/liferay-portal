@@ -294,3 +294,4 @@ public interface TrashVersionLocalService
 		throws E;
 
 }
+// SB-Hash:711633769

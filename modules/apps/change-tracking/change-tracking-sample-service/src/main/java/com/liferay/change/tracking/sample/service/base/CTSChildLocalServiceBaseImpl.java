@@ -461,3 +461,4 @@ public abstract class CTSChildLocalServiceBaseImpl
 		CTSChildLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:942589017

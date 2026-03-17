@@ -273,3 +273,4 @@ public interface DSLQueryStatusEntryLocalService
 		DSLQueryStatusEntry dslQueryStatusEntry);
 
 }
+// SB-Hash:1476108015

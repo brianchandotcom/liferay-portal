@@ -1122,3 +1122,4 @@ public interface OAuth2ApplicationPersistence
 	public int countAll();
 
 }
+// SB-Hash:593978559

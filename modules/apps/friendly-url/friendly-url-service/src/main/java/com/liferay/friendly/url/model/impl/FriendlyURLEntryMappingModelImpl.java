@@ -761,3 +761,4 @@ public class FriendlyURLEntryMappingModelImpl
 	private FriendlyURLEntryMapping _escapedModel;
 
 }
+// SB-Hash:1004053780

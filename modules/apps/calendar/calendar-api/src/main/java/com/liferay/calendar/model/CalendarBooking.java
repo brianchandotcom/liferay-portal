@@ -83,3 +83,4 @@ public interface CalendarBooking extends CalendarBookingModel, PersistedModel {
 	public void setInstanceIndex(int instanceIndex);
 
 }
+// SB-Hash:1123395436

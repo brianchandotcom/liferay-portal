@@ -207,3 +207,4 @@ public class NotificationRecipientCacheModel
 	public long classPK;
 
 }
+// SB-Hash:-230561563

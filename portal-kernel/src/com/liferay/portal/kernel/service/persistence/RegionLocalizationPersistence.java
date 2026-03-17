@@ -351,3 +351,4 @@ public interface RegionLocalizationPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1750174351

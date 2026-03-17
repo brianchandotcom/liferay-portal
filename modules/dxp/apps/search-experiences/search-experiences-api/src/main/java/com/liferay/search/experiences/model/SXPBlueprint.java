@@ -50,3 +50,4 @@ public interface SXPBlueprint extends PersistedModel, SXPBlueprintModel {
 		};
 
 }
+// SB-Hash:1210842473

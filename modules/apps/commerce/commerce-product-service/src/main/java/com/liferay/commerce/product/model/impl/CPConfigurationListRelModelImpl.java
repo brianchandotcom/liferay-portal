@@ -968,3 +968,4 @@ public class CPConfigurationListRelModelImpl
 	private CPConfigurationListRel _escapedModel;
 
 }
+// SB-Hash:1334525878

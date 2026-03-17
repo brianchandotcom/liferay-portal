@@ -3979,3 +3979,4 @@ public class MBCategoryUtil {
 	private static volatile MBCategoryPersistence _persistence;
 
 }
+// SB-Hash:872010104

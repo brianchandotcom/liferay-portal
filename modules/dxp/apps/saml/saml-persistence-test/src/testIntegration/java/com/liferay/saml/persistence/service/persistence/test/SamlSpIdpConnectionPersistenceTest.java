@@ -646,3 +646,4 @@ public class SamlSpIdpConnectionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:678910405

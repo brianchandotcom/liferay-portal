@@ -53,12 +53,12 @@ public abstract class BaseDLFolderUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(dlFolder.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(dlFolder.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(dlFolder.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -78,3 +78,4 @@ public abstract class BaseDLFolderUADExporter
 	protected DLFolderLocalService dlFolderLocalService;
 
 }
+// SB-Hash:1087345096

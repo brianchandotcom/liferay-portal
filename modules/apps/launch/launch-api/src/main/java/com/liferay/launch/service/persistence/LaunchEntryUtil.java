@@ -934,3 +934,4 @@ public class LaunchEntryUtil {
 	private static volatile LaunchEntryPersistence _persistence;
 
 }
+// SB-Hash:479587046

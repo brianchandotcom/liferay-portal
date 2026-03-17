@@ -376,3 +376,4 @@ public class NestedSetsTreeEntryLocalServiceWrapper
 	private NestedSetsTreeEntryLocalService _nestedSetsTreeEntryLocalService;
 
 }
+// SB-Hash:-1024704378

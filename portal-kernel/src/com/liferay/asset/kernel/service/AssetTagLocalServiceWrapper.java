@@ -1021,3 +1021,4 @@ public class AssetTagLocalServiceWrapper
 	private AssetTagLocalService _assetTagLocalService;
 
 }
+// SB-Hash:690280147

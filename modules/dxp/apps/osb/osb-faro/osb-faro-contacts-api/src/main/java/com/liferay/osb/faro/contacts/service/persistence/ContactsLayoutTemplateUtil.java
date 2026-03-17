@@ -650,3 +650,4 @@ public class ContactsLayoutTemplateUtil {
 	private static volatile ContactsLayoutTemplatePersistence _persistence;
 
 }
+// SB-Hash:-1733568016

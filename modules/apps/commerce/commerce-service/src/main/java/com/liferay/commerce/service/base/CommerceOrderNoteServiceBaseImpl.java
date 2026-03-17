@@ -125,3 +125,4 @@ public abstract class CommerceOrderNoteServiceBaseImpl
 		CommerceOrderNoteServiceBaseImpl.class);
 
 }
+// SB-Hash:53871423

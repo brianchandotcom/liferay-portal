@@ -469,3 +469,4 @@ public abstract class ModuleLocalServiceBaseImpl
 		ModuleLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-285030134

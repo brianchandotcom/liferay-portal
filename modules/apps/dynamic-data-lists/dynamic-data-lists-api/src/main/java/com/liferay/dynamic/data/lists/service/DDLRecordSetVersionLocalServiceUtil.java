@@ -350,3 +350,4 @@ public class DDLRecordSetVersionLocalServiceUtil {
 			DDLRecordSetVersionLocalService.class);
 
 }
+// SB-Hash:686195003

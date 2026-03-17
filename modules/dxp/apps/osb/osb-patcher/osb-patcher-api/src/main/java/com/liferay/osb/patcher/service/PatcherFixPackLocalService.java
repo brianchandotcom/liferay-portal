@@ -363,3 +363,4 @@ public interface PatcherFixPackLocalService
 	public PatcherFixPack updatePatcherFixPack(PatcherFixPack patcherFixPack);
 
 }
+// SB-Hash:2046055605

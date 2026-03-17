@@ -374,3 +374,4 @@ public class AppLocalServiceUtil {
 		new Snapshot<>(AppLocalServiceUtil.class, AppLocalService.class);
 
 }
+// SB-Hash:2001836979

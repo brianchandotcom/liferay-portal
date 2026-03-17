@@ -1048,3 +1048,4 @@ public class DDMTemplateVersionWrapper
 	}
 
 }
+// SB-Hash:1416488822

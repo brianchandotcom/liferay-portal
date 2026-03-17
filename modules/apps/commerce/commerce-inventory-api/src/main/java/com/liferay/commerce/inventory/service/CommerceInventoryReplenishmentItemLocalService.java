@@ -379,3 +379,4 @@ public interface CommerceInventoryReplenishmentItemLocalService
 		throws PortalException;
 
 }
+// SB-Hash:-1243238929

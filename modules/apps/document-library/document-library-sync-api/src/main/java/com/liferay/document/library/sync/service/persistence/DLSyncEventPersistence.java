@@ -336,3 +336,4 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	public int countAll();
 
 }
+// SB-Hash:-1378268017

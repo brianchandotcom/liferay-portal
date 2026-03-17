@@ -141,3 +141,4 @@ public class NotificationQueueEntryAttachmentCacheModel
 	public long notificationQueueEntryId;
 
 }
+// SB-Hash:78784167

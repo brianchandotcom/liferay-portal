@@ -40,3 +40,4 @@ public abstract class AssetAutoTaggerEntryBaseImpl
 	}
 
 }
+// SB-Hash:-1270751952

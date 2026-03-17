@@ -40,3 +40,4 @@ public abstract class WorkflowInstanceLinkBaseImpl
 	}
 
 }
+// SB-Hash:360097543

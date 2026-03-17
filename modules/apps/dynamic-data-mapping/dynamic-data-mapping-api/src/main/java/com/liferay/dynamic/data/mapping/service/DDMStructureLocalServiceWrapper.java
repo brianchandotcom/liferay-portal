@@ -1442,3 +1442,4 @@ public class DDMStructureLocalServiceWrapper
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }
+// SB-Hash:1016351825

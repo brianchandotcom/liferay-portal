@@ -507,3 +507,4 @@ public class CommercePriceListChannelRelLocalServiceWrapper
 		_commercePriceListChannelRelLocalService;
 
 }
+// SB-Hash:-1119793640

@@ -97,3 +97,4 @@ public abstract class BaseWikiPageUADAnonymizer
 	protected WikiPageLocalService wikiPageLocalService;
 
 }
+// SB-Hash:-728775384

@@ -576,3 +576,4 @@ public class CommercePricingClassCPDefinitionRelServiceHttp {
 		};
 
 }
+// SB-Hash:1518612000

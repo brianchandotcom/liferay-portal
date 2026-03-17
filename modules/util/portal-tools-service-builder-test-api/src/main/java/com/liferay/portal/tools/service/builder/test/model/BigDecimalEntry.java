@@ -49,3 +49,4 @@ public interface BigDecimalEntry extends BigDecimalEntryModel {
 		};
 
 }
+// SB-Hash:-664083809

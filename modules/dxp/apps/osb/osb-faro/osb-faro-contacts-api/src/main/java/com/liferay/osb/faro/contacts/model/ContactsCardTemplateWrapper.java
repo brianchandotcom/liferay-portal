@@ -402,3 +402,4 @@ public class ContactsCardTemplateWrapper
 	}
 
 }
+// SB-Hash:1982598346

@@ -119,3 +119,4 @@ public interface Company extends CompanyModel, PersistedModel {
 	public void setVirtualHostname(String virtualHostname);
 
 }
+// SB-Hash:1558084506

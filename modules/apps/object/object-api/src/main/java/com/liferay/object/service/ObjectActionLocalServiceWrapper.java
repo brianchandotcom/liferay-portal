@@ -533,3 +533,4 @@ public class ObjectActionLocalServiceWrapper
 	private ObjectActionLocalService _objectActionLocalService;
 
 }
+// SB-Hash:1907125171

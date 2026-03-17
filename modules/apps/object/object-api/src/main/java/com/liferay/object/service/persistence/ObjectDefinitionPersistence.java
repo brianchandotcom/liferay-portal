@@ -3545,3 +3545,4 @@ public interface ObjectDefinitionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-556166100

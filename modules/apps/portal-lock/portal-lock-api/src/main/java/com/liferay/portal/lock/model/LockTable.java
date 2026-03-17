@@ -53,3 +53,4 @@ public class LockTable extends BaseTable<LockTable> {
 	}
 
 }
+// SB-Hash:2037422667

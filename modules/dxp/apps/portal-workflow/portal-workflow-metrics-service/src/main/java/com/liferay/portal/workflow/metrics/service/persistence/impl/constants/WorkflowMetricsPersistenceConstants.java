@@ -21,3 +21,4 @@ public class WorkflowMetricsPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// SB-Hash:1634545256

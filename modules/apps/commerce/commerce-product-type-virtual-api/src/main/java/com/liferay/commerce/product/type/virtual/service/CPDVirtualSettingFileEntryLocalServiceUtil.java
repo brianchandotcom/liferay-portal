@@ -454,3 +454,4 @@ public class CPDVirtualSettingFileEntryLocalServiceUtil {
 			CPDVirtualSettingFileEntryLocalService.class);
 
 }
+// SB-Hash:749144857

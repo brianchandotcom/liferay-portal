@@ -885,3 +885,4 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1509502477

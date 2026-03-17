@@ -660,3 +660,4 @@ public class CommerceShippingFixedOptionQualifierServiceHttp {
 			new Class[] {long.class, String.class};
 
 }
+// SB-Hash:-127648764

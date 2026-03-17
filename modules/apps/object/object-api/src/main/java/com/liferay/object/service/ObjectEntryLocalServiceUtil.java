@@ -894,3 +894,4 @@ public class ObjectEntryLocalServiceUtil {
 			ObjectEntryLocalServiceUtil.class, ObjectEntryLocalService.class);
 
 }
+// SB-Hash:233544416

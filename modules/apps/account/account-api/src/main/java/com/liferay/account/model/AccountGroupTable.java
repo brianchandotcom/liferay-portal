@@ -61,3 +61,4 @@ public class AccountGroupTable extends BaseTable<AccountGroupTable> {
 	}
 
 }
+// SB-Hash:57231479

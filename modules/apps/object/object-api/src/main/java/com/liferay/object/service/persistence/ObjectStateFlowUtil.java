@@ -679,3 +679,4 @@ public class ObjectStateFlowUtil {
 	private static volatile ObjectStateFlowPersistence _persistence;
 
 }
+// SB-Hash:870348687

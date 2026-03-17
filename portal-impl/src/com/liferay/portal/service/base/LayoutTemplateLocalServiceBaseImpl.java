@@ -146,3 +146,4 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 		LayoutTemplateLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1926604950

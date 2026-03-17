@@ -2071,3 +2071,4 @@ public class CalendarBookingUtil {
 	private static volatile CalendarBookingPersistence _persistence;
 
 }
+// SB-Hash:-607335367

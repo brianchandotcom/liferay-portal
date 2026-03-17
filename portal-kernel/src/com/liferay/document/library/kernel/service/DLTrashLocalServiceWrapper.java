@@ -79,3 +79,4 @@ public class DLTrashLocalServiceWrapper
 	private DLTrashLocalService _dlTrashLocalService;
 
 }
+// SB-Hash:1231523835

@@ -101,3 +101,4 @@ public interface WikiPageFinder {
 			<com.liferay.wiki.model.WikiPage> queryDefinition);
 
 }
+// SB-Hash:-2080839892

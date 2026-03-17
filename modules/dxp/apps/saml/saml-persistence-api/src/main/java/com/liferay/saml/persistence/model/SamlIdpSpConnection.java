@@ -52,3 +52,4 @@ public interface SamlIdpSpConnection
 			};
 
 }
+// SB-Hash:-1989738675

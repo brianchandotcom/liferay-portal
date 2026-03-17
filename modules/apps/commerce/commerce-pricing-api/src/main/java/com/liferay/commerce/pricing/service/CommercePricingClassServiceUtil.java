@@ -172,3 +172,4 @@ public class CommercePricingClassServiceUtil {
 			CommercePricingClassService.class);
 
 }
+// SB-Hash:-1270743306

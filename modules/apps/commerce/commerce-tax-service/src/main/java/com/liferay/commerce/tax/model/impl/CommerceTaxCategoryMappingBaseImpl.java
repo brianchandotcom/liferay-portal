@@ -42,3 +42,4 @@ public abstract class CommerceTaxCategoryMappingBaseImpl
 	}
 
 }
+// SB-Hash:-1280485304

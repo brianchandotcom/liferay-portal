@@ -1675,3 +1675,4 @@ public class NotificationTemplateModelImpl
 	private NotificationTemplate _escapedModel;
 
 }
+// SB-Hash:407777000

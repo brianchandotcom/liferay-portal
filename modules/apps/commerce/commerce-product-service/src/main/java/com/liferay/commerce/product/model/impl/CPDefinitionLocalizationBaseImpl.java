@@ -30,3 +30,4 @@ public abstract class CPDefinitionLocalizationBaseImpl
 	 */
 
 }
+// SB-Hash:-109521035

@@ -52,3 +52,4 @@ public interface OpenIdConnectUser
 			};
 
 }
+// SB-Hash:942854455

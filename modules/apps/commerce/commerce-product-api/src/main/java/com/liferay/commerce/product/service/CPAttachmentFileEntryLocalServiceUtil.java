@@ -588,3 +588,4 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 			CPAttachmentFileEntryLocalService.class);
 
 }
+// SB-Hash:1423879644

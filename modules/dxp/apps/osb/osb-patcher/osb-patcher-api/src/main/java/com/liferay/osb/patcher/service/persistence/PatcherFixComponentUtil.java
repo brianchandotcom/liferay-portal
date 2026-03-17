@@ -344,3 +344,4 @@ public class PatcherFixComponentUtil {
 	private static volatile PatcherFixComponentPersistence _persistence;
 
 }
+// SB-Hash:658701515

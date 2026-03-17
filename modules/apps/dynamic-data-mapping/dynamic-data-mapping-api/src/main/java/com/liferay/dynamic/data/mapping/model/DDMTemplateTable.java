@@ -94,3 +94,4 @@ public class DDMTemplateTable extends BaseTable<DDMTemplateTable> {
 	}
 
 }
+// SB-Hash:1073998791

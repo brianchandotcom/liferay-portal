@@ -669,3 +669,4 @@ public class COREntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1036019686

@@ -587,3 +587,4 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		_cpDefinitionVirtualSettingLocalService;
 
 }
+// SB-Hash:-723309112

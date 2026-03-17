@@ -285,3 +285,4 @@ public interface ChangesetCollectionLocalService
 		ChangesetCollection changesetCollection);
 
 }
+// SB-Hash:2053056870

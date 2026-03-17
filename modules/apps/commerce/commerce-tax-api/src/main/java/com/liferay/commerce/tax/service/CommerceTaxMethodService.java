@@ -107,3 +107,4 @@ public interface CommerceTaxMethodService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:2010855232

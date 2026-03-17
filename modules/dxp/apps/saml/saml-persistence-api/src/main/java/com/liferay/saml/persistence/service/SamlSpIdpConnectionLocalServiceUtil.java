@@ -382,3 +382,4 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 			SamlSpIdpConnectionLocalService.class);
 
 }
+// SB-Hash:1752018783

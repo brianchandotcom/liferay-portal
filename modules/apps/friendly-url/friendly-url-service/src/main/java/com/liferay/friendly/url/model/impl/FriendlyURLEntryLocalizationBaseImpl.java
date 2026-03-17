@@ -30,3 +30,4 @@ public abstract class FriendlyURLEntryLocalizationBaseImpl
 	 */
 
 }
+// SB-Hash:1423321902

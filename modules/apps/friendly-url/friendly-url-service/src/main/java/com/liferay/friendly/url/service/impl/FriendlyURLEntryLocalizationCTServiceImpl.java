@@ -50,3 +50,4 @@ public class FriendlyURLEntryLocalizationCTServiceImpl
 		_friendlyURLEntryLocalizationPersistence;
 
 }
+// SB-Hash:-1710815040

@@ -1752,3 +1752,4 @@ public interface CommercePriceEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1101274178

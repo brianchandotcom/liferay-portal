@@ -804,3 +804,4 @@ public interface CommerceDiscountLocalService
 		throws PortalException;
 
 }
+// SB-Hash:1425144291

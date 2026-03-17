@@ -83,3 +83,4 @@ public interface AccountEntry extends AccountEntryModel, PersistedModel {
 	public boolean isPersonalAccount();
 
 }
+// SB-Hash:606530163

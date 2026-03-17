@@ -796,3 +796,4 @@ public class SpringEntryUtil {
 	private static volatile SpringEntryPersistence _persistence;
 
 }
+// SB-Hash:695574158

@@ -711,3 +711,4 @@ public class MFAFIDO2CredentialEntryUtil {
 	private static volatile MFAFIDO2CredentialEntryPersistence _persistence;
 
 }
+// SB-Hash:-1055781901

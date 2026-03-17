@@ -39,3 +39,4 @@ public abstract class DDMTemplateBaseImpl
 	}
 
 }
+// SB-Hash:242175652

@@ -533,3 +533,4 @@ public class KaleoTaskAssignmentInstanceLocalServiceWrapper
 		_kaleoTaskAssignmentInstanceLocalService;
 
 }
+// SB-Hash:1786329632

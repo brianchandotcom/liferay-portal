@@ -195,3 +195,4 @@ public class KBCommentServiceWrapper
 	private KBCommentService _kbCommentService;
 
 }
+// SB-Hash:448269014

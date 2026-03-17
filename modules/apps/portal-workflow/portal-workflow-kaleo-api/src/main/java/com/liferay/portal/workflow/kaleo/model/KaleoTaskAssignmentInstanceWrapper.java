@@ -683,3 +683,4 @@ public class KaleoTaskAssignmentInstanceWrapper
 	}
 
 }
+// SB-Hash:-233588983

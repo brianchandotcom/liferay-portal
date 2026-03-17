@@ -511,3 +511,4 @@ public class CTEntryLocalServiceWrapper
 	private CTEntryLocalService _ctEntryLocalService;
 
 }
+// SB-Hash:981117985

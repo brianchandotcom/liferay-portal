@@ -415,3 +415,4 @@ public class ObjectDefinitionSettingWrapper
 	}
 
 }
+// SB-Hash:1178761479

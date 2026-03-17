@@ -252,3 +252,4 @@ public class CommerceOrderNoteCacheModel
 	public boolean restricted;
 
 }
+// SB-Hash:2086113969

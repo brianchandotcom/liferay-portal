@@ -1185,3 +1185,4 @@ public class ObjectFolderModelImpl
 	private ObjectFolder _escapedModel;
 
 }
+// SB-Hash:909209920

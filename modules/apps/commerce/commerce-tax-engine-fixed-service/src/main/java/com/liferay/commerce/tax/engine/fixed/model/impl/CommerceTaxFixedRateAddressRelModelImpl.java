@@ -1086,3 +1086,4 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	private CommerceTaxFixedRateAddressRel _escapedModel;
 
 }
+// SB-Hash:-650695092

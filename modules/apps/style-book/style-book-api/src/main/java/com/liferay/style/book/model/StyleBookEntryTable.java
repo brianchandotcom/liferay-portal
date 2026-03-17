@@ -81,3 +81,4 @@ public class StyleBookEntryTable extends BaseTable<StyleBookEntryTable> {
 	}
 
 }
+// SB-Hash:2145648431

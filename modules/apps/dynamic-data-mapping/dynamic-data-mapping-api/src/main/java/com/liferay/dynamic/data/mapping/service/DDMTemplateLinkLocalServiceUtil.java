@@ -370,3 +370,4 @@ public class DDMTemplateLinkLocalServiceUtil {
 			DDMTemplateLinkLocalService.class);
 
 }
+// SB-Hash:1951611433

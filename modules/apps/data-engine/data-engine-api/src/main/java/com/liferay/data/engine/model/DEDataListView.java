@@ -50,3 +50,4 @@ public interface DEDataListView extends DEDataListViewModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-326242612

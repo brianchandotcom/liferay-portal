@@ -1941,3 +1941,4 @@ public class JournalArticleServiceWrapper
 	private JournalArticleService _journalArticleService;
 
 }
+// SB-Hash:-1607457853

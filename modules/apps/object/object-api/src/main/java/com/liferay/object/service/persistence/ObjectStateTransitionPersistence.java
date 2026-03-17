@@ -886,3 +886,4 @@ public interface ObjectStateTransitionPersistence
 	public int countAll();
 
 }
+// SB-Hash:240256330

@@ -440,3 +440,4 @@ public class OAuth2ApplicationScopeAliasesLocalServiceWrapper
 		_oAuth2ApplicationScopeAliasesLocalService;
 
 }
+// SB-Hash:2037416644

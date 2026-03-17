@@ -1348,3 +1348,4 @@ public interface CommerceMLForecastAlertEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1433043210

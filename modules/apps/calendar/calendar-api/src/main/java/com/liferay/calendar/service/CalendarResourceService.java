@@ -104,3 +104,4 @@ public interface CalendarResourceService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1734637001

@@ -512,3 +512,4 @@ public abstract class CommerceChannelAccountEntryRelLocalServiceBaseImpl
 		CommerceChannelAccountEntryRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-980081466

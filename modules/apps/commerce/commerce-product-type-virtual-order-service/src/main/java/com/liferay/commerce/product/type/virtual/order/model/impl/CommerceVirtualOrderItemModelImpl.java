@@ -1175,3 +1175,4 @@ public class CommerceVirtualOrderItemModelImpl
 	private CommerceVirtualOrderItem _escapedModel;
 
 }
+// SB-Hash:1651818466

@@ -314,3 +314,4 @@ public interface CalendarBookingService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1280854130

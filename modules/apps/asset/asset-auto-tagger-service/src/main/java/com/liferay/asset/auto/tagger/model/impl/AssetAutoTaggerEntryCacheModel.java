@@ -177,3 +177,4 @@ public class AssetAutoTaggerEntryCacheModel
 	public long assetTagId;
 
 }
+// SB-Hash:-1419347101

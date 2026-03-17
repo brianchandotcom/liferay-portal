@@ -545,3 +545,4 @@ public class CommerceAvailabilityEstimatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1800479216

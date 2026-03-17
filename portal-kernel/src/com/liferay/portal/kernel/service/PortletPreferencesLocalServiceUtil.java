@@ -542,3 +542,4 @@ public class PortletPreferencesLocalServiceUtil {
 	private static volatile PortletPreferencesLocalService _service;
 
 }
+// SB-Hash:793609999

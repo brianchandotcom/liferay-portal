@@ -590,3 +590,4 @@ public abstract class ObjectViewFilterColumnLocalServiceBaseImpl
 		ObjectViewFilterColumnLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:552454207

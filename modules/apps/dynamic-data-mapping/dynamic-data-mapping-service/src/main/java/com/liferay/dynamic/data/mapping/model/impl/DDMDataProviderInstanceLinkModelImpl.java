@@ -718,3 +718,4 @@ public class DDMDataProviderInstanceLinkModelImpl
 	private DDMDataProviderInstanceLink _escapedModel;
 
 }
+// SB-Hash:533025508

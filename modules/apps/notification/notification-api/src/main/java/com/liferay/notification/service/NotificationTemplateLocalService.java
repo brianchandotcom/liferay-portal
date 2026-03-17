@@ -335,3 +335,4 @@ public interface NotificationTemplateLocalService
 		NotificationTemplate notificationTemplate);
 
 }
+// SB-Hash:283385007

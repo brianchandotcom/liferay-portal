@@ -109,3 +109,4 @@ public interface CPDefinitionGroupedEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-24766602

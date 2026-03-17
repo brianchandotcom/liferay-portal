@@ -39,3 +39,4 @@ public abstract class SharingEntryBaseImpl
 	}
 
 }
+// SB-Hash:2016901140

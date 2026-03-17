@@ -534,3 +534,4 @@ public interface DLFileEntryTypeLocalService
 		throws E;
 
 }
+// SB-Hash:1111403122

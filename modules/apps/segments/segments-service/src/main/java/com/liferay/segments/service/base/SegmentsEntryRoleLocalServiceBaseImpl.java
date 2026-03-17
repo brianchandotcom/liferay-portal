@@ -480,3 +480,4 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 		SegmentsEntryRoleLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:479528485

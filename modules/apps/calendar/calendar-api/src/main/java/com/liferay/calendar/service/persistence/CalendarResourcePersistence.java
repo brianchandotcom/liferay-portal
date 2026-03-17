@@ -1652,3 +1652,4 @@ public interface CalendarResourcePersistence
 	public int countAll();
 
 }
+// SB-Hash:-2086880604

@@ -274,3 +274,4 @@ public interface NestedSetsTreeEntryLocalService
 		NestedSetsTreeEntry nestedSetsTreeEntry);
 
 }
+// SB-Hash:1034568500

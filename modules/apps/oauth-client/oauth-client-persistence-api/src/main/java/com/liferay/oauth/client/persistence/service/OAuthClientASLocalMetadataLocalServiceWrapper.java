@@ -522,3 +522,4 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 		_oAuthClientASLocalMetadataLocalService;
 
 }
+// SB-Hash:-642137486

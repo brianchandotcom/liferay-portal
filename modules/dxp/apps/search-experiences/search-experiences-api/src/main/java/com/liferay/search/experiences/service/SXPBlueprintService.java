@@ -87,3 +87,4 @@ public interface SXPBlueprintService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1582790632

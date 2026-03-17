@@ -588,3 +588,4 @@ public class BookmarksFolderLocalServiceUtil {
 			BookmarksFolderLocalService.class);
 
 }
+// SB-Hash:153036870

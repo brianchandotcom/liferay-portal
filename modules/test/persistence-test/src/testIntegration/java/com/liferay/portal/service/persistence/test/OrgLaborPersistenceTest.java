@@ -491,3 +491,4 @@ public class OrgLaborPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:2015083101

@@ -519,3 +519,4 @@ public class DDMStructureLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-947171339

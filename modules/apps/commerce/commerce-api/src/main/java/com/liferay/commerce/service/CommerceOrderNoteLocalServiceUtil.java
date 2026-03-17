@@ -475,3 +475,4 @@ public class CommerceOrderNoteLocalServiceUtil {
 			CommerceOrderNoteLocalService.class);
 
 }
+// SB-Hash:1562273404

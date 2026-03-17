@@ -430,3 +430,4 @@ public class MBMailingListLocalServiceUtil {
 			MBMailingListLocalService.class);
 
 }
+// SB-Hash:168786760

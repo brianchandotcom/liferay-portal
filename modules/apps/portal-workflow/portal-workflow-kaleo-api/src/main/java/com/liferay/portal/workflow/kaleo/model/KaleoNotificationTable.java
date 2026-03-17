@@ -88,3 +88,4 @@ public class KaleoNotificationTable extends BaseTable<KaleoNotificationTable> {
 	}
 
 }
+// SB-Hash:-2018133128

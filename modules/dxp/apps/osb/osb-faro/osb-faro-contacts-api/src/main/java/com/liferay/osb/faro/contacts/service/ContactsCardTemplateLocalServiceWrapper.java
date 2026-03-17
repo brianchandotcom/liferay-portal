@@ -397,3 +397,4 @@ public class ContactsCardTemplateLocalServiceWrapper
 	private ContactsCardTemplateLocalService _contactsCardTemplateLocalService;
 
 }
+// SB-Hash:-481347876

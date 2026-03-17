@@ -533,3 +533,4 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 			DDMFormInstanceRecordLocalService.class);
 
 }
+// SB-Hash:512484366

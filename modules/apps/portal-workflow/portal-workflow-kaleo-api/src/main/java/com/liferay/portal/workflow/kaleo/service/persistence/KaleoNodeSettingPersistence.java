@@ -347,3 +347,4 @@ public interface KaleoNodeSettingPersistence
 	public int countAll();
 
 }
+// SB-Hash:552981433

@@ -360,3 +360,4 @@ public interface SiteFriendlyURLLocalService
 		throws PortalException;
 
 }
+// SB-Hash:352524180

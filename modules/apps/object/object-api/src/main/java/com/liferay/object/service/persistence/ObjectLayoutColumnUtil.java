@@ -983,3 +983,4 @@ public class ObjectLayoutColumnUtil {
 	private static volatile ObjectLayoutColumnPersistence _persistence;
 
 }
+// SB-Hash:-342806467

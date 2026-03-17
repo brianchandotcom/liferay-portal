@@ -353,3 +353,4 @@ public class JournalFolderCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:-1147138014

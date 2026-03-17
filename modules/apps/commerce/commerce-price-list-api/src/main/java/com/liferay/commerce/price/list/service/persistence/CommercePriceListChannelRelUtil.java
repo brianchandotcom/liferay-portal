@@ -914,3 +914,4 @@ public class CommercePriceListChannelRelUtil {
 	private static volatile CommercePriceListChannelRelPersistence _persistence;
 
 }
+// SB-Hash:2023099710

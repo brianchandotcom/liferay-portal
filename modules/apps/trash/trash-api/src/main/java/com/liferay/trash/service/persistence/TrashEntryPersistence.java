@@ -956,3 +956,4 @@ public interface TrashEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-139497810

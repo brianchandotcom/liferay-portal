@@ -415,3 +415,4 @@ public class NotificationQueueEntryAttachmentLocalServiceWrapper
 		_notificationQueueEntryAttachmentLocalService;
 
 }
+// SB-Hash:477297666

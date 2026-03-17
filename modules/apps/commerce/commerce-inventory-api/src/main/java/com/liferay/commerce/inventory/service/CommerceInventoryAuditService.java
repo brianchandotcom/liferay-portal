@@ -61,3 +61,4 @@ public interface CommerceInventoryAuditService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:346333063

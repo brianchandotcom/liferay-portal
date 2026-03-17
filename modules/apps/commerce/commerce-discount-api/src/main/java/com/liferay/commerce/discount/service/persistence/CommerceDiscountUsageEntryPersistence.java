@@ -791,3 +791,4 @@ public interface CommerceDiscountUsageEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:883383269

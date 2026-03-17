@@ -937,3 +937,4 @@ public interface RegionPersistence
 	public int countAll();
 
 }
+// SB-Hash:1217917932

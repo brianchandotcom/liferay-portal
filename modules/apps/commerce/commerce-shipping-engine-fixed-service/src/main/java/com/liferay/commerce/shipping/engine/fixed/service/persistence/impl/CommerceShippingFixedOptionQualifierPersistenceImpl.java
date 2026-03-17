@@ -2261,3 +2261,4 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	}
 
 }
+// SB-Hash:54291455

@@ -131,3 +131,4 @@ public abstract class CommerceDiscountRuleServiceBaseImpl
 		CommerceDiscountRuleServiceBaseImpl.class);
 
 }
+// SB-Hash:771367667

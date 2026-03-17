@@ -484,3 +484,4 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 		CommerceShippingMethodLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:638168838

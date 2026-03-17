@@ -1105,3 +1105,4 @@ public class WikiPageLocalServiceUtil {
 			WikiPageLocalServiceUtil.class, WikiPageLocalService.class);
 
 }
+// SB-Hash:-2131732958

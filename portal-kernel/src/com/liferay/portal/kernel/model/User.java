@@ -406,3 +406,4 @@ public interface User extends PersistedModel, UserModel {
 	public void setUserGroupIds(long[] userGroupIds);
 
 }
+// SB-Hash:900785891

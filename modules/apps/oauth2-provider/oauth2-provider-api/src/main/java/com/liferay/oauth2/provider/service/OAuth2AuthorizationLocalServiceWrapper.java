@@ -680,3 +680,4 @@ public class OAuth2AuthorizationLocalServiceWrapper
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 }
+// SB-Hash:731460654

@@ -3186,3 +3186,4 @@ public class CommerceOrderItemModelImpl
 	private CommerceOrderItem _escapedModel;
 
 }
+// SB-Hash:2085744151

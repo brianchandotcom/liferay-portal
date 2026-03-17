@@ -81,3 +81,4 @@ public class KaleoInstanceTable extends BaseTable<KaleoInstanceTable> {
 	}
 
 }
+// SB-Hash:927051381

@@ -78,3 +78,4 @@ public class BookmarksEntryTable extends BaseTable<BookmarksEntryTable> {
 	}
 
 }
+// SB-Hash:-1306672575

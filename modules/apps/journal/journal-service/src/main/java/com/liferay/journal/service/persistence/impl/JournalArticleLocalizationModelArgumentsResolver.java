@@ -122,3 +122,4 @@ public class JournalArticleLocalizationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// SB-Hash:1730466326

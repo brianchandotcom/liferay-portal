@@ -129,3 +129,4 @@ public abstract class MicroblogsEntryServiceBaseImpl
 		MicroblogsEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:-1535525058

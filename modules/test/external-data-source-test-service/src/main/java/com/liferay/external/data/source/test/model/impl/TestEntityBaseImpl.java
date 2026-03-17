@@ -39,3 +39,4 @@ public abstract class TestEntityBaseImpl
 	}
 
 }
+// SB-Hash:1716135352

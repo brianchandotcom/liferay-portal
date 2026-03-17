@@ -517,3 +517,4 @@ public class KBArticleServiceWrapper
 	private KBArticleService _kbArticleService;
 
 }
+// SB-Hash:1379065792

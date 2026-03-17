@@ -1143,3 +1143,4 @@ public class UserGroupLocalServiceWrapper
 	private UserGroupLocalService _userGroupLocalService;
 
 }
+// SB-Hash:-1614385933

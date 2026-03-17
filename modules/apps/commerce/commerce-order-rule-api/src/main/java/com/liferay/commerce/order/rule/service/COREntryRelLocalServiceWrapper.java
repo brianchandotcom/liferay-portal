@@ -466,3 +466,4 @@ public class COREntryRelLocalServiceWrapper
 	private COREntryRelLocalService _corEntryRelLocalService;
 
 }
+// SB-Hash:1160037955

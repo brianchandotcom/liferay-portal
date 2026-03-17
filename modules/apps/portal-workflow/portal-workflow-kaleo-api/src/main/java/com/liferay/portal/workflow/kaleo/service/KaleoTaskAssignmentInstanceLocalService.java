@@ -352,3 +352,4 @@ public interface KaleoTaskAssignmentInstanceLocalService
 		throws E;
 
 }
+// SB-Hash:1204674996

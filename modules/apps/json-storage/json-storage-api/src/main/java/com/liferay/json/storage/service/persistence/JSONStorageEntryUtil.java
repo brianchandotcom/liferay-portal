@@ -1042,3 +1042,4 @@ public class JSONStorageEntryUtil {
 	private static volatile JSONStorageEntryPersistence _persistence;
 
 }
+// SB-Hash:1510952065

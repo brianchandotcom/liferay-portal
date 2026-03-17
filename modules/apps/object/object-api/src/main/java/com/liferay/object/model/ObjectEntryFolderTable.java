@@ -71,3 +71,4 @@ public class ObjectEntryFolderTable extends BaseTable<ObjectEntryFolderTable> {
 	}
 
 }
+// SB-Hash:382805328

@@ -685,3 +685,4 @@ public class JournalFeedPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-251138223

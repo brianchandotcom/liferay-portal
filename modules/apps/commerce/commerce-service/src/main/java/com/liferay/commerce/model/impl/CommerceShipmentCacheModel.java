@@ -349,3 +349,4 @@ public class CommerceShipmentCacheModel
 	public int status;
 
 }
+// SB-Hash:2049386162

@@ -39,3 +39,4 @@ public abstract class CommerceChannelBaseImpl
 	}
 
 }
+// SB-Hash:1351988557

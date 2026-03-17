@@ -892,3 +892,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
+// SB-Hash:972008747

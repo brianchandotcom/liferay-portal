@@ -504,3 +504,4 @@ public abstract class CommerceShippingOptionAccountEntryRelLocalServiceBaseImpl
 		CommerceShippingOptionAccountEntryRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:701727636

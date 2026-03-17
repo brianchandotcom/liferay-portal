@@ -903,3 +903,4 @@ public class CommerceInventoryWarehouseRelServiceHttp {
 			new Class[] {long.class, String.class};
 
 }
+// SB-Hash:-1333389167

@@ -563,3 +563,4 @@ public interface OAuth2ScopeGrantPersistence
 			oAuth2Authorizations);
 
 }
+// SB-Hash:-2095601459

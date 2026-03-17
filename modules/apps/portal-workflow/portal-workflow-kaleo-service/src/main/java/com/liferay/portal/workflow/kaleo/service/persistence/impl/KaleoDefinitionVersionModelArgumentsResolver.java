@@ -119,3 +119,4 @@ public class KaleoDefinitionVersionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// SB-Hash:1965714682

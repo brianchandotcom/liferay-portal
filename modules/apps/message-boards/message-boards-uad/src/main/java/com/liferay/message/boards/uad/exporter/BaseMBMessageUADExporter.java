@@ -53,12 +53,12 @@ public abstract class BaseMBMessageUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(mbMessage.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(mbMessage.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(mbMessage.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>subject</column-name><column-value><![CDATA[");
@@ -82,3 +82,4 @@ public abstract class BaseMBMessageUADExporter
 	protected MBMessageLocalService mbMessageLocalService;
 
 }
+// SB-Hash:-1175613295

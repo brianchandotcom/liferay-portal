@@ -77,3 +77,4 @@ public interface ObjectValidationRuleService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1141882422

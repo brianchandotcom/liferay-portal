@@ -559,3 +559,4 @@ public interface CTAutoResolutionInfoPersistence
 	public int countAll();
 
 }
+// SB-Hash:1706895148

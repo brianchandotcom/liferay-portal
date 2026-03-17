@@ -41,3 +41,4 @@ public abstract class SocialActivitySettingBaseImpl
 	}
 
 }
+// SB-Hash:-1873086741

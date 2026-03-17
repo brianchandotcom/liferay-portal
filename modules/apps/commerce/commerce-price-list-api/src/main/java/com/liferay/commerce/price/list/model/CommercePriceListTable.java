@@ -101,3 +101,4 @@ public class CommercePriceListTable extends BaseTable<CommercePriceListTable> {
 	}
 
 }
+// SB-Hash:270303438

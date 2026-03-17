@@ -122,3 +122,4 @@ public abstract class AppServiceBaseImpl
 		AppServiceBaseImpl.class);
 
 }
+// SB-Hash:-830202280

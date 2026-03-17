@@ -40,3 +40,4 @@ public abstract class CommerceTaxFixedRateBaseImpl
 	}
 
 }
+// SB-Hash:-1192974372

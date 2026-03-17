@@ -49,3 +49,4 @@ public interface ReadingTimeEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:1267050358

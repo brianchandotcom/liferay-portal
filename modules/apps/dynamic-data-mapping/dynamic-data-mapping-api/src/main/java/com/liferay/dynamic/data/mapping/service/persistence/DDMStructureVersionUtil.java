@@ -720,3 +720,4 @@ public class DDMStructureVersionUtil {
 	private static volatile DDMStructureVersionPersistence _persistence;
 
 }
+// SB-Hash:1652395053

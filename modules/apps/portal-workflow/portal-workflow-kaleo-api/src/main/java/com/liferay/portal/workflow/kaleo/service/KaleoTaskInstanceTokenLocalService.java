@@ -522,3 +522,4 @@ public interface KaleoTaskInstanceTokenLocalService
 		throws E;
 
 }
+// SB-Hash:-2012318238

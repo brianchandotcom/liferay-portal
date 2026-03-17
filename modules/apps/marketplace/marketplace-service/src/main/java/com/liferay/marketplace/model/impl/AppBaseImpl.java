@@ -38,3 +38,4 @@ public abstract class AppBaseImpl extends AppModelImpl implements App {
 	}
 
 }
+// SB-Hash:1796977361

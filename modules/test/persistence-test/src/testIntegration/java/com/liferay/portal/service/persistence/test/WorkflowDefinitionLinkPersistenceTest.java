@@ -741,3 +741,4 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:484497332

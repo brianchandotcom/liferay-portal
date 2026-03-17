@@ -2059,3 +2059,4 @@ public class CalendarResourceUtil {
 	private static volatile CalendarResourcePersistence _persistence;
 
 }
+// SB-Hash:97606876

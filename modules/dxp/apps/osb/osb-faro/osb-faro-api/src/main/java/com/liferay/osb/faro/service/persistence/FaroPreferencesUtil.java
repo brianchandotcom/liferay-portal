@@ -499,3 +499,4 @@ public class FaroPreferencesUtil {
 	private static volatile FaroPreferencesPersistence _persistence;
 
 }
+// SB-Hash:-1629989768

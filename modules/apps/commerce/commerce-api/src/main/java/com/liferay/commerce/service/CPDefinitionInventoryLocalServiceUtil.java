@@ -437,3 +437,4 @@ public class CPDefinitionInventoryLocalServiceUtil {
 			CPDefinitionInventoryLocalService.class);
 
 }
+// SB-Hash:548016879

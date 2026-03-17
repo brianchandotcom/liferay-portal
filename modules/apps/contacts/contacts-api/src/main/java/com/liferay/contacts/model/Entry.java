@@ -48,3 +48,4 @@ public interface Entry extends EntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:2118242312

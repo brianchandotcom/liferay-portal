@@ -923,3 +923,4 @@ public abstract class TeamLocalServiceBaseImpl
 		TeamLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:28014100

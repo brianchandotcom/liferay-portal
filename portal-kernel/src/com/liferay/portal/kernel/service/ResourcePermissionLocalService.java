@@ -991,3 +991,4 @@ public interface ResourcePermissionLocalService
 		throws E;
 
 }
+// SB-Hash:1363758634

@@ -668,3 +668,4 @@ public abstract class MBThreadLocalServiceBaseImpl
 		MBThreadLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-638218600

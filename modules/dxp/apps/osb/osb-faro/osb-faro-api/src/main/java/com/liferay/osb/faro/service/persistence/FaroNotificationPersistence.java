@@ -1190,3 +1190,4 @@ public interface FaroNotificationPersistence
 	public int countAll();
 
 }
+// SB-Hash:1238324754

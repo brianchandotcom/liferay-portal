@@ -207,3 +207,4 @@ public abstract class AssetCategoryServiceBaseImpl
 		AssetCategoryServiceBaseImpl.class);
 
 }
+// SB-Hash:431641138

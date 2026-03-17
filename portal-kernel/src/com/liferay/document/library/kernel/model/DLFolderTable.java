@@ -85,3 +85,4 @@ public class DLFolderTable extends BaseTable<DLFolderTable> {
 	}
 
 }
+// SB-Hash:1082821979

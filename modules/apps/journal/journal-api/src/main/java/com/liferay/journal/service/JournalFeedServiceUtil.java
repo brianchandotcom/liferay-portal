@@ -99,3 +99,4 @@ public class JournalFeedServiceUtil {
 		new Snapshot<>(JournalFeedServiceUtil.class, JournalFeedService.class);
 
 }
+// SB-Hash:-462974570

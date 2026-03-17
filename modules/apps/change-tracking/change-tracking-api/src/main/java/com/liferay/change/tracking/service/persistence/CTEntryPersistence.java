@@ -1257,3 +1257,4 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	public int countAll();
 
 }
+// SB-Hash:-1909718159

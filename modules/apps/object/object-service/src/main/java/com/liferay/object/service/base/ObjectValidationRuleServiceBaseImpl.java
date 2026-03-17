@@ -126,3 +126,4 @@ public abstract class ObjectValidationRuleServiceBaseImpl
 		ObjectValidationRuleServiceBaseImpl.class);
 
 }
+// SB-Hash:45754575

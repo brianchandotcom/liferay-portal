@@ -33,3 +33,4 @@ package com.liferay.portal.tools.service.builder.test.service.http;
  */
 public class LazyBlobEntryServiceHttp {
 }
+// SB-Hash:1072710442

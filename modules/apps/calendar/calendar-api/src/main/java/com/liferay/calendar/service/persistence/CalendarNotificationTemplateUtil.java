@@ -991,3 +991,4 @@ public class CalendarNotificationTemplateUtil {
 		_persistence;
 
 }
+// SB-Hash:763287386

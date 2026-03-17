@@ -524,3 +524,4 @@ public interface SocialRelationLocalService
 		throws E;
 
 }
+// SB-Hash:1275409254

@@ -598,3 +598,4 @@ public interface KaleoNotificationRecipientPersistence
 	public int countAll();
 
 }
+// SB-Hash:596185686

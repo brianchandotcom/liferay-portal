@@ -444,3 +444,4 @@ public class DDMStructureLinkLocalServiceUtil {
 			DDMStructureLinkLocalService.class);
 
 }
+// SB-Hash:-665775855

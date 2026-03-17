@@ -1267,3 +1267,4 @@ public interface CommerceWishListPersistence
 	public int countAll();
 
 }
+// SB-Hash:-750080124

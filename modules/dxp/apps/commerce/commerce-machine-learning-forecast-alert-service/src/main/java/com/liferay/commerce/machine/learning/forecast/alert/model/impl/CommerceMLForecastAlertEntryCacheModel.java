@@ -227,3 +227,4 @@ public class CommerceMLForecastAlertEntryCacheModel
 	public int status;
 
 }
+// SB-Hash:539140269

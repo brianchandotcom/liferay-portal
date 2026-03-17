@@ -249,3 +249,4 @@ public class MBSuspiciousActivityCacheModel
 	public boolean validated;
 
 }
+// SB-Hash:1202266621

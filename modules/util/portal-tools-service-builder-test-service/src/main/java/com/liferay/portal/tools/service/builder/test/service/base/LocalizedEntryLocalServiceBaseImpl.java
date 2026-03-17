@@ -704,3 +704,4 @@ public abstract class LocalizedEntryLocalServiceBaseImpl
 		LocalizedEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1033473168

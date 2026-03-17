@@ -113,3 +113,4 @@ public abstract class CompareRunsServiceBaseImpl
 		CompareRunsServiceBaseImpl.class);
 
 }
+// SB-Hash:-999213709

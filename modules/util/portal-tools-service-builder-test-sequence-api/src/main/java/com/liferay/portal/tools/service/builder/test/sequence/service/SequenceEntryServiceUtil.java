@@ -45,3 +45,4 @@ public class SequenceEntryServiceUtil {
 			SequenceEntryServiceUtil.class, SequenceEntryService.class);
 
 }
+// SB-Hash:-1399992748

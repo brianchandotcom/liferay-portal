@@ -211,3 +211,4 @@ public class ExpandoColumnCacheModel
 	public String typeSettings;
 
 }
+// SB-Hash:-1198845414

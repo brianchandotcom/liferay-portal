@@ -427,3 +427,4 @@ public interface CommerceShipmentItemLocalService
 		throws PortalException;
 
 }
+// SB-Hash:578224339

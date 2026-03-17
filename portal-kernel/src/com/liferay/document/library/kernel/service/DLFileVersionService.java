@@ -73,3 +73,4 @@ public interface DLFileVersionService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:1005928410

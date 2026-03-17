@@ -889,3 +889,4 @@ public class SharepointOAuth2TokenEntryModelImpl
 	private SharepointOAuth2TokenEntry _escapedModel;
 
 }
+// SB-Hash:816001327

@@ -620,3 +620,4 @@ public class CPDefinitionCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:116785197

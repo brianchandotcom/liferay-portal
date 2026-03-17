@@ -39,3 +39,4 @@ public abstract class BlogsEntryBaseImpl
 	}
 
 }
+// SB-Hash:-89273314

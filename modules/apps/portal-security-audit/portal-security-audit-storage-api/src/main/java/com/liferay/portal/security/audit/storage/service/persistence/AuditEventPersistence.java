@@ -294,3 +294,4 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	public int countAll();
 
 }
+// SB-Hash:-2032316797

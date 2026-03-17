@@ -244,3 +244,4 @@ public interface CommerceTaxFixedRateModel
 	}
 
 }
+// SB-Hash:537273825

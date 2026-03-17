@@ -579,3 +579,4 @@ public abstract class ObjectRelationshipLocalServiceBaseImpl
 		ObjectRelationshipLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:823978659

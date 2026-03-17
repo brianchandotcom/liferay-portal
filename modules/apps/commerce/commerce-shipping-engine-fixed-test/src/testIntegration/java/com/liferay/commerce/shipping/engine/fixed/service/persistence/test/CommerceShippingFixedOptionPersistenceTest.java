@@ -633,3 +633,4 @@ public class CommerceShippingFixedOptionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:626314550

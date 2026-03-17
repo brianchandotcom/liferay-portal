@@ -77,3 +77,4 @@ public class DDMTemplateVersionServiceUtil {
 			DDMTemplateVersionService.class);
 
 }
+// SB-Hash:1006525666

@@ -793,3 +793,4 @@ public class UserNotificationEventLocalServiceUtil {
 	private static volatile UserNotificationEventLocalService _service;
 
 }
+// SB-Hash:1363579989

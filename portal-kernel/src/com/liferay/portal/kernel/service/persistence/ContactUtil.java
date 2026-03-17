@@ -965,3 +965,4 @@ public class ContactUtil {
 	private static volatile ContactPersistence _persistence;
 
 }
+// SB-Hash:530704471

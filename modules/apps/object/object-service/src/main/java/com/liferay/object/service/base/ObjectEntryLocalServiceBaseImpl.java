@@ -658,3 +658,4 @@ public abstract class ObjectEntryLocalServiceBaseImpl
 		ObjectEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-828502922

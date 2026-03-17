@@ -1149,3 +1149,4 @@ public class MBSuspiciousActivityModelImpl
 	private MBSuspiciousActivity _escapedModel;
 
 }
+// SB-Hash:1934836908

@@ -687,3 +687,4 @@ public interface KaleoTransitionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1238465780

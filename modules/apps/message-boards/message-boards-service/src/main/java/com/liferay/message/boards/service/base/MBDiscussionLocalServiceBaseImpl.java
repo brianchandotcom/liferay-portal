@@ -635,3 +635,4 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 		MBDiscussionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:76412190

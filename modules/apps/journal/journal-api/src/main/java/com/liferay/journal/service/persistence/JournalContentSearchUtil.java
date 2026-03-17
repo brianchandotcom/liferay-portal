@@ -1903,3 +1903,4 @@ public class JournalContentSearchUtil {
 	private static volatile JournalContentSearchPersistence _persistence;
 
 }
+// SB-Hash:1128580534

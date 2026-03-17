@@ -71,3 +71,4 @@ public interface DDLRecordSetVersionService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1512657043

@@ -1685,3 +1685,4 @@ public class JournalFolderServiceHttp {
 		};
 
 }
+// SB-Hash:-1402209764

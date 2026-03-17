@@ -1415,3 +1415,4 @@ public class StyleBookEntryVersionModelImpl
 	private StyleBookEntryVersion _escapedModel;
 
 }
+// SB-Hash:-1503704769

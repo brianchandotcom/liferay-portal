@@ -625,3 +625,4 @@ public class CommerceShippingMethodPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:562401485

@@ -40,3 +40,4 @@ public interface DDLRecordFinder {
 			long maxRecordId);
 
 }
+// SB-Hash:1798432322

@@ -137,3 +137,4 @@ public class CommercePricingClassModelArgumentsResolver
 	}
 
 }
+// SB-Hash:1395056563

@@ -675,3 +675,4 @@ public class WikiNodeLocalServiceWrapper
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 }
+// SB-Hash:1044527331

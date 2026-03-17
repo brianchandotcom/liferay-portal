@@ -299,3 +299,4 @@ public interface CommerceOrderPaymentPersistence
 	public int countAll();
 
 }
+// SB-Hash:33045619

@@ -129,3 +129,4 @@ public abstract class WikiPageServiceBaseImpl
 		WikiPageServiceBaseImpl.class);
 
 }
+// SB-Hash:1340365325

@@ -139,3 +139,4 @@ public class CommercePriceListModelArgumentsResolver
 	}
 
 }
+// SB-Hash:1013979545

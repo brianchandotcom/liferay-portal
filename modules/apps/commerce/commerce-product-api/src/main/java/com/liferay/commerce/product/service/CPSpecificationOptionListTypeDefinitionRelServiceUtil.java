@@ -67,3 +67,4 @@ public class CPSpecificationOptionListTypeDefinitionRelServiceUtil {
 				CPSpecificationOptionListTypeDefinitionRelService.class);
 
 }
+// SB-Hash:55874887

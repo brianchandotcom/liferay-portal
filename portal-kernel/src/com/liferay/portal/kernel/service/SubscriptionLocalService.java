@@ -456,3 +456,4 @@ public interface SubscriptionLocalService
 	public Subscription updateSubscription(Subscription subscription);
 
 }
+// SB-Hash:1827749673

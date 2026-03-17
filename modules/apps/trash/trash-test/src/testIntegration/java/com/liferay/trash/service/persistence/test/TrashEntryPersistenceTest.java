@@ -560,3 +560,4 @@ public class TrashEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:242075505

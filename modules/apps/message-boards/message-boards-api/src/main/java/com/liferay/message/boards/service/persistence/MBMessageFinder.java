@@ -80,3 +80,4 @@ public interface MBMessageFinder {
 		int status, int start, int end);
 
 }
+// SB-Hash:-1896185529

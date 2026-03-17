@@ -535,3 +535,4 @@ public interface CommerceInventoryWarehouseRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:-573333944

@@ -666,3 +666,4 @@ public class CommercePaymentMethodGroupRelQualifierServiceHttp {
 			new Class[] {long.class, String.class};
 
 }
+// SB-Hash:60329700

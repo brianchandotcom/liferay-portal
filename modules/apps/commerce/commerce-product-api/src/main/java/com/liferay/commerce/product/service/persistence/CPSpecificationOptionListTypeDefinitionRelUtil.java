@@ -795,3 +795,4 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 		CPSpecificationOptionListTypeDefinitionRelPersistence _persistence;
 
 }
+// SB-Hash:-1544132368

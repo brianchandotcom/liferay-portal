@@ -54,3 +54,4 @@ public class PatcherFixComponentTable
 	}
 
 }
+// SB-Hash:2010385307

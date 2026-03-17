@@ -38,3 +38,4 @@ public class Users_OrgsTable extends BaseTable<Users_OrgsTable> {
 	}
 
 }
+// SB-Hash:-733764966

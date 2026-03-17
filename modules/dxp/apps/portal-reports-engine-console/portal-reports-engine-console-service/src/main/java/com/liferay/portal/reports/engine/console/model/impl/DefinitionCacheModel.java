@@ -268,3 +268,4 @@ public class DefinitionCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-1283284713

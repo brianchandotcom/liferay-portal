@@ -204,3 +204,4 @@ public class CommerceTaxFixedRateCacheModel
 	public double rate;
 
 }
+// SB-Hash:1037067331

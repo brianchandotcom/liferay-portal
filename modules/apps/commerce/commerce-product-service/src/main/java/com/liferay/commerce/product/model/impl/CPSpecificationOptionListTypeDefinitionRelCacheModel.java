@@ -156,3 +156,4 @@ public class CPSpecificationOptionListTypeDefinitionRelCacheModel
 	public long listTypeDefinitionId;
 
 }
+// SB-Hash:-924020810

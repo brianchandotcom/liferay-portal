@@ -444,3 +444,4 @@ public class ObjectViewLocalServiceWrapper
 	private ObjectViewLocalService _objectViewLocalService;
 
 }
+// SB-Hash:1053337436

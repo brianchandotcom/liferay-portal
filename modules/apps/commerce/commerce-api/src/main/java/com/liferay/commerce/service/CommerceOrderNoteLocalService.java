@@ -374,3 +374,4 @@ public interface CommerceOrderNoteLocalService
 		throws PortalException;
 
 }
+// SB-Hash:1049343353

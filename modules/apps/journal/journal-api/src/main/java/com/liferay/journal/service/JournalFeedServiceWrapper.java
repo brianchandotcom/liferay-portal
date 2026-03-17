@@ -113,3 +113,4 @@ public class JournalFeedServiceWrapper
 	private JournalFeedService _journalFeedService;
 
 }
+// SB-Hash:1171689216

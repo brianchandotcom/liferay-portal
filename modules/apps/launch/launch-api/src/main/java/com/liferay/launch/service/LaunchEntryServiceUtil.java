@@ -44,3 +44,4 @@ public class LaunchEntryServiceUtil {
 		new Snapshot<>(LaunchEntryServiceUtil.class, LaunchEntryService.class);
 
 }
+// SB-Hash:-401727678

@@ -22,3 +22,4 @@ public interface CPInstanceFinder {
 					queryDefinition);
 
 }
+// SB-Hash:-349613029

@@ -249,3 +249,4 @@ public class CPTaxCategoryCacheModel
 	public String description;
 
 }
+// SB-Hash:1007105850

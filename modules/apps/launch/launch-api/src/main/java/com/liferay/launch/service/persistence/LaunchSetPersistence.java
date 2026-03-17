@@ -1027,3 +1027,4 @@ public interface LaunchSetPersistence extends BasePersistence<LaunchSet> {
 	public int countAll();
 
 }
+// SB-Hash:-933488049

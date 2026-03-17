@@ -574,3 +574,4 @@ public class CPMeasurementUnitLocalServiceWrapper
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 }
+// SB-Hash:-926071469

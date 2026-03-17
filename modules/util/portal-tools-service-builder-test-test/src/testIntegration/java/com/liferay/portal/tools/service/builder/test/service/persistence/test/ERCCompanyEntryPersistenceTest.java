@@ -542,3 +542,4 @@ public class ERCCompanyEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1236063282

@@ -380,3 +380,4 @@ public class FaroProjectLocalServiceUtil {
 			FaroProjectLocalServiceUtil.class, FaroProjectLocalService.class);
 
 }
+// SB-Hash:-1167403344

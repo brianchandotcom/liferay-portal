@@ -188,3 +188,4 @@ public class CommerceDiscountRelServiceUtil {
 			CommerceDiscountRelService.class);
 
 }
+// SB-Hash:981426397

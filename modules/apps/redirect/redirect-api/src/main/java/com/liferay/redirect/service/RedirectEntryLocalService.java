@@ -375,3 +375,4 @@ public interface RedirectEntryLocalService
 	public RedirectEntry updateRedirectEntry(RedirectEntry redirectEntry);
 
 }
+// SB-Hash:1396390387

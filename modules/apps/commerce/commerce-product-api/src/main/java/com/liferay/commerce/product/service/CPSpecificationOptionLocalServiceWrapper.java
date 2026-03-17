@@ -523,3 +523,4 @@ public class CPSpecificationOptionLocalServiceWrapper
 		_cpSpecificationOptionLocalService;
 
 }
+// SB-Hash:1029373219

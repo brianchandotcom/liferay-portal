@@ -850,3 +850,4 @@ public class ManyColumnsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:446199874

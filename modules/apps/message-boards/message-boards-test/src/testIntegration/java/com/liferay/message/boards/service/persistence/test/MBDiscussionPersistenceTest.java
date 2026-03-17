@@ -592,3 +592,4 @@ public class MBDiscussionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1826027859

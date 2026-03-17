@@ -52,3 +52,4 @@ public class OAuth2ScopeGrantTable extends BaseTable<OAuth2ScopeGrantTable> {
 	}
 
 }
+// SB-Hash:-1974332273

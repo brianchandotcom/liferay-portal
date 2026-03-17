@@ -559,3 +559,4 @@ public abstract class ListTypeEntryLocalServiceBaseImpl
 		ListTypeEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:765140116

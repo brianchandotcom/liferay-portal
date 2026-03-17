@@ -205,3 +205,4 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public String comments;
 
 }
+// SB-Hash:-1380697228

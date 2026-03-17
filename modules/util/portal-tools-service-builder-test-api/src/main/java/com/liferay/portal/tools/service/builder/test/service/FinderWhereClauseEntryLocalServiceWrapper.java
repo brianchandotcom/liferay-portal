@@ -378,3 +378,4 @@ public class FinderWhereClauseEntryLocalServiceWrapper
 		_finderWhereClauseEntryLocalService;
 
 }
+// SB-Hash:-1750090517

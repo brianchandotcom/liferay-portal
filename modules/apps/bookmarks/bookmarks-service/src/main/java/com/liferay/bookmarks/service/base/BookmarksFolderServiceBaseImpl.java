@@ -129,3 +129,4 @@ public abstract class BookmarksFolderServiceBaseImpl
 		BookmarksFolderServiceBaseImpl.class);
 
 }
+// SB-Hash:-1765942794

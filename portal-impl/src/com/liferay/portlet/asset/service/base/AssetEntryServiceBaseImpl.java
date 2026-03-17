@@ -231,3 +231,4 @@ public abstract class AssetEntryServiceBaseImpl
 		AssetEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:61957075

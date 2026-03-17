@@ -320,3 +320,4 @@ public class OAuth2AuthorizationServiceHttp {
 		new Class[] {long.class};
 
 }
+// SB-Hash:-470102935

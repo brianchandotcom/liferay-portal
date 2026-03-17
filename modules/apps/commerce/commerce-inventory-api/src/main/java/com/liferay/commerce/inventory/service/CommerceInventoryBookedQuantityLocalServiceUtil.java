@@ -465,3 +465,4 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 			CommerceInventoryBookedQuantityLocalService.class);
 
 }
+// SB-Hash:718652775

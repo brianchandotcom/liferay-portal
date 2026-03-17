@@ -76,3 +76,4 @@ public class CommercePriceListCommerceAccountGroupRelTable
 	}
 
 }
+// SB-Hash:249097670

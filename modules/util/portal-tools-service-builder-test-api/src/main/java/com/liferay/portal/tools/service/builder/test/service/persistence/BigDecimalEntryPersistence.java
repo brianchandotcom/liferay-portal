@@ -774,3 +774,4 @@ public interface BigDecimalEntryPersistence
 				lvEntries);
 
 }
+// SB-Hash:1151872593

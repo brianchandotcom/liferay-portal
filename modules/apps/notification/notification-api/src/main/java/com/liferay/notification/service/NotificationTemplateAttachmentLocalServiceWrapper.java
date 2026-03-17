@@ -401,3 +401,4 @@ public class NotificationTemplateAttachmentLocalServiceWrapper
 		_notificationTemplateAttachmentLocalService;
 
 }
+// SB-Hash:384130406

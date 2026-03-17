@@ -279,3 +279,4 @@ public interface PatcherBuildRelLocalService
 		PatcherBuildRel patcherBuildRel);
 
 }
+// SB-Hash:-1596219446

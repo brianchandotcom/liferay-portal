@@ -282,3 +282,4 @@ public interface RecentLayoutSetBranchLocalService
 		RecentLayoutSetBranch recentLayoutSetBranch);
 
 }
+// SB-Hash:475754838

@@ -122,3 +122,4 @@ public interface KBFolderService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1089701947

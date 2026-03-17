@@ -361,3 +361,4 @@ public interface CommerceOrderTypeLocalService
 		throws PortalException;
 
 }
+// SB-Hash:-1137267983

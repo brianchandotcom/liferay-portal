@@ -357,3 +357,4 @@ public interface CPDefinitionLocalizationPersistence
 	public int countAll();
 
 }
+// SB-Hash:1362386248

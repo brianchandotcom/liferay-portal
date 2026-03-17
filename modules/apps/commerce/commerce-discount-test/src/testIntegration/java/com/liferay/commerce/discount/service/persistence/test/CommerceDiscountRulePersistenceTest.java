@@ -492,3 +492,4 @@ public class CommerceDiscountRulePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:229702863

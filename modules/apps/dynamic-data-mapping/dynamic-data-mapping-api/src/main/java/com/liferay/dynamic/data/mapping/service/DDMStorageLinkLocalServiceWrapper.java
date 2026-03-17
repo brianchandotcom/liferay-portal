@@ -471,3 +471,4 @@ public class DDMStorageLinkLocalServiceWrapper
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 
 }
+// SB-Hash:-357765659

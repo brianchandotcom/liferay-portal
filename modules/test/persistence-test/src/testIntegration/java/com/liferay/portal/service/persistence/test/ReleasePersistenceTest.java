@@ -508,3 +508,4 @@ public class ReleasePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:356339734

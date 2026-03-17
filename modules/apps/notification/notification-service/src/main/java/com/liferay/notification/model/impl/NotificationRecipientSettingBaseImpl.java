@@ -42,3 +42,4 @@ public abstract class NotificationRecipientSettingBaseImpl
 	}
 
 }
+// SB-Hash:84422511

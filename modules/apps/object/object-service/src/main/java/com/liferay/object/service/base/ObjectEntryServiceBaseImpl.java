@@ -125,3 +125,4 @@ public abstract class ObjectEntryServiceBaseImpl
 		ObjectEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:-1319842218

@@ -64,3 +64,4 @@ public class RepositoryEntryTable extends BaseTable<RepositoryEntryTable> {
 	}
 
 }
+// SB-Hash:-1359444159

@@ -8617,3 +8617,4 @@ public interface JournalArticlePersistence
 	public int countAll();
 
 }
+// SB-Hash:1773423395

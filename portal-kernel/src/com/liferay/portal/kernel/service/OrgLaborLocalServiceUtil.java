@@ -320,3 +320,4 @@ public class OrgLaborLocalServiceUtil {
 	private static volatile OrgLaborLocalService _service;
 
 }
+// SB-Hash:-546473359

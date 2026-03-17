@@ -389,3 +389,4 @@ public class CTSGrandParentLocalServiceWrapper
 	private CTSGrandParentLocalService _ctsGrandParentLocalService;
 
 }
+// SB-Hash:602947995

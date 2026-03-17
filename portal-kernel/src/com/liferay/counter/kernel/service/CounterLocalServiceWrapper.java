@@ -88,3 +88,4 @@ public class CounterLocalServiceWrapper
 	private CounterLocalService _counterLocalService;
 
 }
+// SB-Hash:481797444

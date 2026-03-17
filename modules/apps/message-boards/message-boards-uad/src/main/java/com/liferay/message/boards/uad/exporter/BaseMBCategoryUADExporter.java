@@ -53,12 +53,12 @@ public abstract class BaseMBCategoryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(mbCategory.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(mbCategory.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(mbCategory.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -78,3 +78,4 @@ public abstract class BaseMBCategoryUADExporter
 	protected MBCategoryLocalService mbCategoryLocalService;
 
 }
+// SB-Hash:1066786285

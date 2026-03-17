@@ -1520,3 +1520,4 @@ public class DLFileShortcutModelImpl
 	private DLFileShortcut _escapedModel;
 
 }
+// SB-Hash:685103644

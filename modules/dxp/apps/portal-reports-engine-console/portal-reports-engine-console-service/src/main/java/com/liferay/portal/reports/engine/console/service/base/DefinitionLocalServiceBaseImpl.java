@@ -593,3 +593,4 @@ public abstract class DefinitionLocalServiceBaseImpl
 		DefinitionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1892152399

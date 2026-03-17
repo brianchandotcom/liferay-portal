@@ -663,3 +663,4 @@ public abstract class AssetListEntryUsageLocalServiceBaseImpl
 		AssetListEntryUsageLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-668935980

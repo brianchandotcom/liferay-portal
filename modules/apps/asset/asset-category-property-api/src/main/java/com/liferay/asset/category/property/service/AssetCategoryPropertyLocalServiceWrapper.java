@@ -493,3 +493,4 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		_assetCategoryPropertyLocalService;
 
 }
+// SB-Hash:640427223

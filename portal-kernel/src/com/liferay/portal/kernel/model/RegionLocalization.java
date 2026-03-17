@@ -48,3 +48,4 @@ public interface RegionLocalization extends RegionLocalizationModel {
 			};
 
 }
+// SB-Hash:-25200840

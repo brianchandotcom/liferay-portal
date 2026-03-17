@@ -551,3 +551,4 @@ public class ObjectEntryFolderLocalServiceUtil {
 			ObjectEntryFolderLocalService.class);
 
 }
+// SB-Hash:-446673031

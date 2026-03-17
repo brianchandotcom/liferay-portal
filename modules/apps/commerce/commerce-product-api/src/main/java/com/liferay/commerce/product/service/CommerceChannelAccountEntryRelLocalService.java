@@ -350,3 +350,4 @@ public interface CommerceChannelAccountEntryRelLocalService
 		throws E;
 
 }
+// SB-Hash:1244808646

@@ -691,3 +691,4 @@ public class MBMailingListPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:527015549

@@ -195,3 +195,4 @@ public class TranslationEntryServiceHttp {
 		new Class[] {long.class};
 
 }
+// SB-Hash:1489942510

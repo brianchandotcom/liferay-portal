@@ -612,3 +612,4 @@ public abstract class CProductLocalServiceBaseImpl
 		CProductLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:2138689958

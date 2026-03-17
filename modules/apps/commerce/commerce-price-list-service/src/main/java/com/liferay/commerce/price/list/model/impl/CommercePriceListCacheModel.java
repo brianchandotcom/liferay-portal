@@ -397,3 +397,4 @@ public class CommercePriceListCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:496545221

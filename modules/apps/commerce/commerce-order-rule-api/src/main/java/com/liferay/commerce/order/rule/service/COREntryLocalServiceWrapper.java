@@ -614,3 +614,4 @@ public class COREntryLocalServiceWrapper
 	private COREntryLocalService _corEntryLocalService;
 
 }
+// SB-Hash:-1959666797

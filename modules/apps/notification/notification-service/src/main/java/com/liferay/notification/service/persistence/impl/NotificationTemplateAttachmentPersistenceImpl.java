@@ -1523,3 +1523,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
+// SB-Hash:1100287359

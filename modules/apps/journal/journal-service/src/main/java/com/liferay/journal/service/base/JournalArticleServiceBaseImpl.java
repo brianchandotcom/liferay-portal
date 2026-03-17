@@ -129,3 +129,4 @@ public abstract class JournalArticleServiceBaseImpl
 		JournalArticleServiceBaseImpl.class);
 
 }
+// SB-Hash:-834499254

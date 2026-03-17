@@ -1484,3 +1484,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
+// SB-Hash:1250454198

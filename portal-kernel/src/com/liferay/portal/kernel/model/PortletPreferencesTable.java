@@ -51,3 +51,4 @@ public class PortletPreferencesTable
 	}
 
 }
+// SB-Hash:-372878987

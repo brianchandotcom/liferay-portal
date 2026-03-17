@@ -90,3 +90,4 @@ public interface SocialActivityInterpreterLocalService
 	public void updateActivitySet(long activityId) throws PortalException;
 
 }
+// SB-Hash:1376182475

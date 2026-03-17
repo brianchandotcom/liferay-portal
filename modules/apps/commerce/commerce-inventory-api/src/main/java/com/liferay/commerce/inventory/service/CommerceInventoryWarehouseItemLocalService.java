@@ -433,3 +433,4 @@ public interface CommerceInventoryWarehouseItemLocalService
 		throws PortalException;
 
 }
+// SB-Hash:-1463630278

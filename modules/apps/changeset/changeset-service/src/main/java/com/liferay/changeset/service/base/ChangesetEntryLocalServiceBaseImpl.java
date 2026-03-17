@@ -451,3 +451,4 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 		ChangesetEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1476898739

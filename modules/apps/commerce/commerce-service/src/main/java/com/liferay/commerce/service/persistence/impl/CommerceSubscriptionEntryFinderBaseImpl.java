@@ -80,3 +80,4 @@ public abstract class CommerceSubscriptionEntryFinderBaseImpl
 		CommerceSubscriptionEntryFinderBaseImpl.class);
 
 }
+// SB-Hash:-683180184

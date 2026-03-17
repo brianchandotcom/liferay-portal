@@ -158,3 +158,4 @@ public class PermissionCheckFinderEntryCacheModel
 	public String type;
 
 }
+// SB-Hash:141145897

@@ -234,3 +234,4 @@ public class CommerceOrderTypeRelCacheModel
 	public long commerceOrderTypeId;
 
 }
+// SB-Hash:1831298130

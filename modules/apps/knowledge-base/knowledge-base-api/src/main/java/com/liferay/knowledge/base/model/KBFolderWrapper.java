@@ -879,3 +879,4 @@ public class KBFolderWrapper
 	}
 
 }
+// SB-Hash:664769560

@@ -106,3 +106,4 @@ public class KBArticleTable extends BaseTable<KBArticleTable> {
 	}
 
 }
+// SB-Hash:922988090

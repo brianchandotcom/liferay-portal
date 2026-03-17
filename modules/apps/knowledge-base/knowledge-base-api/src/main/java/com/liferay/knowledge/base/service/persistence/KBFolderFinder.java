@@ -31,3 +31,4 @@ public interface KBFolderFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 }
+// SB-Hash:-364205896

@@ -101,3 +101,4 @@ public class CSDiagramPinServiceUtil {
 			CSDiagramPinServiceUtil.class, CSDiagramPinService.class);
 
 }
+// SB-Hash:724520009

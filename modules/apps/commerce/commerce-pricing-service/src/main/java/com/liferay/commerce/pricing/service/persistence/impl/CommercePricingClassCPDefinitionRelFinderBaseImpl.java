@@ -81,3 +81,4 @@ public abstract class CommercePricingClassCPDefinitionRelFinderBaseImpl
 		CommercePricingClassCPDefinitionRelFinderBaseImpl.class);
 
 }
+// SB-Hash:-1827650768

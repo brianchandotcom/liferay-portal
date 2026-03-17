@@ -505,3 +505,4 @@ public abstract class PluginSettingLocalServiceBaseImpl
 		PluginSettingLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-712963154

@@ -115,3 +115,4 @@ public class NotificationTemplateServiceWrapper
 	private NotificationTemplateService _notificationTemplateService;
 
 }
+// SB-Hash:-2032659278

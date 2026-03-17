@@ -838,3 +838,4 @@ public class CalendarBookingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-911885977

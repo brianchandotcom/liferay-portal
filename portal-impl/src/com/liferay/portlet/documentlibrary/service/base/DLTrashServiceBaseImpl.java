@@ -172,3 +172,4 @@ public abstract class DLTrashServiceBaseImpl
 		DLTrashServiceBaseImpl.class);
 
 }
+// SB-Hash:-939840685

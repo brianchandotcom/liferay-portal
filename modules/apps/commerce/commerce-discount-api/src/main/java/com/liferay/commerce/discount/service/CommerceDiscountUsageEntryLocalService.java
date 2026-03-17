@@ -297,3 +297,4 @@ public interface CommerceDiscountUsageEntryLocalService
 		throws PortalException;
 
 }
+// SB-Hash:748811070

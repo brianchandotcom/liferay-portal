@@ -497,3 +497,4 @@ public interface CSDiagramSettingPersistence
 	public int countAll();
 
 }
+// SB-Hash:1220499233

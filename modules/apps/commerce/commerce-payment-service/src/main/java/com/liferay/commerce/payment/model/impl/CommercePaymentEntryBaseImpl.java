@@ -40,3 +40,4 @@ public abstract class CommercePaymentEntryBaseImpl
 	}
 
 }
+// SB-Hash:1040432955

@@ -451,3 +451,4 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 		AkismetEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:916205576

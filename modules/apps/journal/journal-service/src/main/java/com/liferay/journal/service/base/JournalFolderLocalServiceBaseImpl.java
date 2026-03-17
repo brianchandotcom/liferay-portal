@@ -695,3 +695,4 @@ public abstract class JournalFolderLocalServiceBaseImpl
 		JournalFolderLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1006798966

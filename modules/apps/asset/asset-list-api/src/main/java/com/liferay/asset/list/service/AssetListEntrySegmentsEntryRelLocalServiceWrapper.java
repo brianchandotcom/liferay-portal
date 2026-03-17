@@ -621,3 +621,4 @@ public class AssetListEntrySegmentsEntryRelLocalServiceWrapper
 		_assetListEntrySegmentsEntryRelLocalService;
 
 }
+// SB-Hash:428162851

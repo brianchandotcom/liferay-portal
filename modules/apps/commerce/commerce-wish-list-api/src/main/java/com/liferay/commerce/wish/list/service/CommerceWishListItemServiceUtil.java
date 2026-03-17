@@ -138,3 +138,4 @@ public class CommerceWishListItemServiceUtil {
 			CommerceWishListItemService.class);
 
 }
+// SB-Hash:615729815

@@ -368,3 +368,4 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 			OAuth2ApplicationScopeAliasesLocalService.class);
 
 }
+// SB-Hash:-1000544962

@@ -1650,3 +1650,4 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	public int countAll();
 
 }
+// SB-Hash:-1622687873

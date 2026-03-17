@@ -677,3 +677,4 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 		AssetCategoryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:4797064

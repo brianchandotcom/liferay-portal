@@ -151,3 +151,4 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	public int countAll();
 
 }
+// SB-Hash:-1241678113

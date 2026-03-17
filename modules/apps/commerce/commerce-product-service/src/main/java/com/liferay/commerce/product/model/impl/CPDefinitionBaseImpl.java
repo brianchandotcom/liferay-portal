@@ -39,3 +39,4 @@ public abstract class CPDefinitionBaseImpl
 	}
 
 }
+// SB-Hash:-376100147

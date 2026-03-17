@@ -132,3 +132,4 @@ public abstract class CommerceAddressRestrictionServiceBaseImpl
 		CommerceAddressRestrictionServiceBaseImpl.class);
 
 }
+// SB-Hash:1150721005

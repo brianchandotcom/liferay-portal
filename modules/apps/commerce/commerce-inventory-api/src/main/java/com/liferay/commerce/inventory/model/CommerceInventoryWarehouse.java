@@ -60,3 +60,4 @@ public interface CommerceInventoryWarehouse
 	public boolean isGeolocated();
 
 }
+// SB-Hash:-1131368859

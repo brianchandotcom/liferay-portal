@@ -50,3 +50,4 @@ public interface UADPartialEntry extends PersistedModel, UADPartialEntryModel {
 		};
 
 }
+// SB-Hash:2125745000

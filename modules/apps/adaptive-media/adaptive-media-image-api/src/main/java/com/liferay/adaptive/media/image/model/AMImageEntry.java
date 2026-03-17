@@ -50,3 +50,4 @@ public interface AMImageEntry extends AMImageEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:275725380

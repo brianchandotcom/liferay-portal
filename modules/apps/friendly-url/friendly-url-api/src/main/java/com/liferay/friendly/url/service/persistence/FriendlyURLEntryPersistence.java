@@ -980,3 +980,4 @@ public interface FriendlyURLEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-190267596

@@ -593,3 +593,4 @@ public class DDMStructureServiceWrapper
 	private DDMStructureService _ddmStructureService;
 
 }
+// SB-Hash:307019417

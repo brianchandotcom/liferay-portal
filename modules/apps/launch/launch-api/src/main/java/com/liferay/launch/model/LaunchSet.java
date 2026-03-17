@@ -48,3 +48,4 @@ public interface LaunchSet extends LaunchSetModel, PersistedModel {
 		};
 
 }
+// SB-Hash:371930059

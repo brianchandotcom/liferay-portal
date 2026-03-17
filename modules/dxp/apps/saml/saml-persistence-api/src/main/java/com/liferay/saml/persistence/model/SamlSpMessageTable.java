@@ -46,3 +46,4 @@ public class SamlSpMessageTable extends BaseTable<SamlSpMessageTable> {
 	}
 
 }
+// SB-Hash:1758575018

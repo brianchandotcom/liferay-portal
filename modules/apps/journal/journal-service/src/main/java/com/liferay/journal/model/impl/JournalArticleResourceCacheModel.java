@@ -170,3 +170,4 @@ public class JournalArticleResourceCacheModel
 	public String articleId;
 
 }
+// SB-Hash:698529226

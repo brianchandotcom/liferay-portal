@@ -129,3 +129,4 @@ public abstract class CPConfigurationListRelServiceBaseImpl
 		CPConfigurationListRelServiceBaseImpl.class);
 
 }
+// SB-Hash:1482911738

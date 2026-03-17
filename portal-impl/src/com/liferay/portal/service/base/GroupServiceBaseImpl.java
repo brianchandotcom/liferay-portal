@@ -239,3 +239,4 @@ public abstract class GroupServiceBaseImpl
 		GroupServiceBaseImpl.class);
 
 }
+// SB-Hash:-286840872

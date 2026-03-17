@@ -39,3 +39,4 @@ public abstract class JournalFeedBaseImpl
 	}
 
 }
+// SB-Hash:418893682

@@ -683,3 +683,4 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 		_workflowDefinitionLinkLocalService;
 
 }
+// SB-Hash:-1883201204

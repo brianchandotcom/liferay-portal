@@ -1063,3 +1063,4 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public int countAll();
 
 }
+// SB-Hash:-217793512

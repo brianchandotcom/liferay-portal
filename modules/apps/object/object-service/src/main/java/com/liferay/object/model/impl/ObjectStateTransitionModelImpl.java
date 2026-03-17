@@ -999,3 +999,4 @@ public class ObjectStateTransitionModelImpl
 	private ObjectStateTransition _escapedModel;
 
 }
+// SB-Hash:1482669156

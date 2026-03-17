@@ -69,3 +69,4 @@ public interface Team extends PersistedModel, TeamModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:1893236239

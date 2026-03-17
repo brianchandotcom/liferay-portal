@@ -56,3 +56,4 @@ public class DDMContentTable extends BaseTable<DDMContentTable> {
 	}
 
 }
+// SB-Hash:1131741549

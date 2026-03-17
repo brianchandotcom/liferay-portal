@@ -74,3 +74,4 @@ public class BlogsStatsUserLocalServiceUtil {
 			BlogsStatsUserLocalService.class);
 
 }
+// SB-Hash:1093861939

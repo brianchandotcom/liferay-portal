@@ -41,3 +41,4 @@ public abstract class UserNotificationEventBaseImpl
 	}
 
 }
+// SB-Hash:-1235049665

@@ -612,3 +612,4 @@ public class AssetListEntryLocalServiceWrapper
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 }
+// SB-Hash:1443961050

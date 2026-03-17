@@ -75,3 +75,4 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 	public void setImagePreviewURL(String imagePreviewURL);
 
 }
+// SB-Hash:1320415919

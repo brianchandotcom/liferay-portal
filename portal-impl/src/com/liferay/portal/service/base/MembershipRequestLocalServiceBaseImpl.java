@@ -516,3 +516,4 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 		MembershipRequestLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1284926806

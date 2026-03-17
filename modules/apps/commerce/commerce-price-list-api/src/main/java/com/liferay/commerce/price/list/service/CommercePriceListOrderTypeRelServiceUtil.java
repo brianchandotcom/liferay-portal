@@ -106,3 +106,4 @@ public class CommercePriceListOrderTypeRelServiceUtil {
 			CommercePriceListOrderTypeRelService.class);
 
 }
+// SB-Hash:-36602760

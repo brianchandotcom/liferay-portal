@@ -582,3 +582,4 @@ public class KBTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:2016453872

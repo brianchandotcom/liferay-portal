@@ -633,3 +633,4 @@ public abstract class CommerceVirtualOrderItemLocalServiceBaseImpl
 		CommerceVirtualOrderItemLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1662766719

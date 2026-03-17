@@ -629,3 +629,4 @@ public abstract class CPDefinitionGroupedEntryLocalServiceBaseImpl
 		CPDefinitionGroupedEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1436688970

@@ -41,3 +41,4 @@ public class BigDecimalEntries_LVEntriesTable
 	}
 
 }
+// SB-Hash:1378915643

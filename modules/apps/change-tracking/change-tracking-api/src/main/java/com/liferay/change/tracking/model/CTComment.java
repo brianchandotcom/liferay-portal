@@ -50,3 +50,4 @@ public interface CTComment extends CTCommentModel, PersistedModel {
 	public boolean isEdited();
 
 }
+// SB-Hash:-890519605

@@ -48,3 +48,4 @@ public interface CProduct extends CProductModel, PersistedModel {
 		};
 
 }
+// SB-Hash:2105964985

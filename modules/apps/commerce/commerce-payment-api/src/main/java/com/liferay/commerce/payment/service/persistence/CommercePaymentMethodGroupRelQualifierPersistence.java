@@ -543,3 +543,4 @@ public interface CommercePaymentMethodGroupRelQualifierPersistence
 	public int countAll();
 
 }
+// SB-Hash:944540174

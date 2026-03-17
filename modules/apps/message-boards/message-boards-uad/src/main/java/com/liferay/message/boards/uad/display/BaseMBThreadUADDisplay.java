@@ -75,3 +75,4 @@ public abstract class BaseMBThreadUADDisplay
 	protected MBThreadLocalService mbThreadLocalService;
 
 }
+// SB-Hash:662022644

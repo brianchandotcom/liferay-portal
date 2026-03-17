@@ -109,3 +109,4 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 		MBStatsUserLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:148890145

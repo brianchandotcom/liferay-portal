@@ -309,3 +309,4 @@ public interface AssetAutoTaggerEntryLocalService
 		throws E;
 
 }
+// SB-Hash:-495753100

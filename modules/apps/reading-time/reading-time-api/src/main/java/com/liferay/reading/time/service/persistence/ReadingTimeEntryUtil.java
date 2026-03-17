@@ -760,3 +760,4 @@ public class ReadingTimeEntryUtil {
 	private static volatile ReadingTimeEntryPersistence _persistence;
 
 }
+// SB-Hash:-2047706104

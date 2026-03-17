@@ -479,3 +479,4 @@ public interface CommerceShippingFixedOptionModel
 	}
 
 }
+// SB-Hash:531390283

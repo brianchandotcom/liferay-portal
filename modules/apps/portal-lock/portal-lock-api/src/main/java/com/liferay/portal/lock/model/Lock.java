@@ -54,3 +54,4 @@ public interface Lock extends LockModel, PersistedModel {
 	public boolean isNeverExpires();
 
 }
+// SB-Hash:662129561

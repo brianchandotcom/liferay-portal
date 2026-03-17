@@ -807,3 +807,4 @@ public class AssetVocabularyGroupRelModelImpl
 	private AssetVocabularyGroupRel _escapedModel;
 
 }
+// SB-Hash:1572002339

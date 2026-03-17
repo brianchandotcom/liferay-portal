@@ -38,3 +38,4 @@ public abstract class SourceBaseImpl extends SourceModelImpl implements Source {
 	}
 
 }
+// SB-Hash:1257331666

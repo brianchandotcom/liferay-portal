@@ -551,3 +551,4 @@ public interface CPDefinitionInventoryPersistence
 	public int countAll();
 
 }
+// SB-Hash:7854281

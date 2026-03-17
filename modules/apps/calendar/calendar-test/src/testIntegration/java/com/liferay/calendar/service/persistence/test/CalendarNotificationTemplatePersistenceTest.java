@@ -704,3 +704,4 @@ public class CalendarNotificationTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-129455837

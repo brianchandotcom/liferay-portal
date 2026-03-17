@@ -627,3 +627,4 @@ public interface CommerceShippingFixedOptionRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:748858041

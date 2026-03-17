@@ -578,3 +578,4 @@ public class SocialRelationLocalServiceUtil {
 	private static volatile SocialRelationLocalService _service;
 
 }
+// SB-Hash:-1054660295

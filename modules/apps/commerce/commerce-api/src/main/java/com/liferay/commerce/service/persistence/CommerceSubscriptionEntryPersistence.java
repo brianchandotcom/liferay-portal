@@ -1369,3 +1369,4 @@ public interface CommerceSubscriptionEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:826393845

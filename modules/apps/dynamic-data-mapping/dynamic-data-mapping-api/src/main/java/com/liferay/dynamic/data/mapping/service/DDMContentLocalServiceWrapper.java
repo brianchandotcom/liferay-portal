@@ -485,3 +485,4 @@ public class DDMContentLocalServiceWrapper
 	private DDMContentLocalService _ddmContentLocalService;
 
 }
+// SB-Hash:-1484047661

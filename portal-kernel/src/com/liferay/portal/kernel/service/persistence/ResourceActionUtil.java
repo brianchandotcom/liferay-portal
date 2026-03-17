@@ -503,3 +503,4 @@ public class ResourceActionUtil {
 	private static volatile ResourceActionPersistence _persistence;
 
 }
+// SB-Hash:1459938001

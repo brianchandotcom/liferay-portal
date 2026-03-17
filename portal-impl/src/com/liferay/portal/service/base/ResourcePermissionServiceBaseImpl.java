@@ -231,3 +231,4 @@ public abstract class ResourcePermissionServiceBaseImpl
 		ResourcePermissionServiceBaseImpl.class);
 
 }
+// SB-Hash:-353967758

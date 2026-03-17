@@ -79,3 +79,4 @@ public abstract class CommerceTaxFixedRateAddressRelFinderBaseImpl
 		CommerceTaxFixedRateAddressRelFinderBaseImpl.class);
 
 }
+// SB-Hash:-1236704541

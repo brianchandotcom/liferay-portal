@@ -75,3 +75,4 @@ public class DDLRecordVersionTable extends BaseTable<DDLRecordVersionTable> {
 	}
 
 }
+// SB-Hash:2000430902

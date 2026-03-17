@@ -201,3 +201,4 @@ public interface JournalArticle
 	public void setTitleMap(java.util.Map<java.util.Locale, String> titleMap);
 
 }
+// SB-Hash:-908451758

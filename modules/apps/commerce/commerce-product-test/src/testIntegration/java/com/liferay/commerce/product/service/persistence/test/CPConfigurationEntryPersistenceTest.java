@@ -891,3 +891,4 @@ public class CPConfigurationEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1105522151

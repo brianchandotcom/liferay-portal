@@ -696,3 +696,4 @@ public interface DepotEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:243420845

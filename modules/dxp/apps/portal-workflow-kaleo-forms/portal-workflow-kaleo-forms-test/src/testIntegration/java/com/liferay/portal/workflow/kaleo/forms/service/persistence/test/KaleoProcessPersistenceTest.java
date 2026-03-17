@@ -598,3 +598,4 @@ public class KaleoProcessPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1447641047

@@ -61,3 +61,4 @@ public class ERAssetVocabularyLocalServiceUtil {
 			ERAssetVocabularyLocalService.class);
 
 }
+// SB-Hash:-5486421

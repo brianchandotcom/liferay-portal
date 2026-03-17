@@ -683,3 +683,4 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 		BookmarksFolderLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:451403275

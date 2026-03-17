@@ -112,3 +112,4 @@ public interface SiteNavigationMenuItemService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1393147094

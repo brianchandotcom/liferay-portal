@@ -75,3 +75,4 @@ public class BatchPlannerPlanTable extends BaseTable<BatchPlannerPlanTable> {
 	}
 
 }
+// SB-Hash:317273271

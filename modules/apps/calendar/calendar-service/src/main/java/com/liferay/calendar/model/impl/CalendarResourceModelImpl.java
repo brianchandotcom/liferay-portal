@@ -1584,3 +1584,4 @@ public class CalendarResourceModelImpl
 	private CalendarResource _escapedModel;
 
 }
+// SB-Hash:-753676533

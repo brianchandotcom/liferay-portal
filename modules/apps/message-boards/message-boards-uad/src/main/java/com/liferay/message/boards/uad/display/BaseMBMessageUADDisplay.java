@@ -75,3 +75,4 @@ public abstract class BaseMBMessageUADDisplay
 	protected MBMessageLocalService mbMessageLocalService;
 
 }
+// SB-Hash:-971059393

@@ -47,3 +47,4 @@ public interface VirtualHost extends PersistedModel, VirtualHostModel {
 		};
 
 }
+// SB-Hash:-1164707855

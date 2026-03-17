@@ -757,3 +757,4 @@ public class DDMTemplateLinkModelImpl
 	private DDMTemplateLink _escapedModel;
 
 }
+// SB-Hash:-1435860153

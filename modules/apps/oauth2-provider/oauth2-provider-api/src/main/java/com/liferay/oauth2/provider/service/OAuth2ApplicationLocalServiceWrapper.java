@@ -637,3 +637,4 @@ public class OAuth2ApplicationLocalServiceWrapper
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 }
+// SB-Hash:682669637

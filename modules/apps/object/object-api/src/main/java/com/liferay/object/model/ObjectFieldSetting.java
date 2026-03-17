@@ -60,3 +60,4 @@ public interface ObjectFieldSetting
 	public void setObjectStateFlow(ObjectStateFlow objectStateFlow);
 
 }
+// SB-Hash:-227505178

@@ -118,3 +118,4 @@ public class NotificationTemplateModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// SB-Hash:673525305

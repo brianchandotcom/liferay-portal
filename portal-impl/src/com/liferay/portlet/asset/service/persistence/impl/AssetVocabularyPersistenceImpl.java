@@ -7545,3 +7545,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
+// SB-Hash:1466531230

@@ -51,3 +51,4 @@ public class PortletItemTable extends BaseTable<PortletItemTable> {
 	}
 
 }
+// SB-Hash:1672418745

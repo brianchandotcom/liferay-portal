@@ -482,3 +482,4 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 		CommerceDiscountRuleLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:154948961

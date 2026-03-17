@@ -1175,3 +1175,4 @@ public interface CommerceCurrencyPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1970372108

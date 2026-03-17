@@ -78,3 +78,4 @@ public class CommerceChannelAccountEntryRelTable
 	}
 
 }
+// SB-Hash:42791327

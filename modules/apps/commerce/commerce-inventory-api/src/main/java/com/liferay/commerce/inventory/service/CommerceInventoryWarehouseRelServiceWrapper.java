@@ -267,3 +267,4 @@ public class CommerceInventoryWarehouseRelServiceWrapper
 		_commerceInventoryWarehouseRelService;
 
 }
+// SB-Hash:337341689

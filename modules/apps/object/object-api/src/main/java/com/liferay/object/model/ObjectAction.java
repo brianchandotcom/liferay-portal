@@ -51,3 +51,4 @@ public interface ObjectAction extends ObjectActionModel, PersistedModel {
 		getParametersUnicodeProperties();
 
 }
+// SB-Hash:-434551933

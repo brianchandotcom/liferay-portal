@@ -203,3 +203,4 @@ public class CommerceChannelRelCacheModel
 	public long commerceChannelId;
 
 }
+// SB-Hash:1055747060

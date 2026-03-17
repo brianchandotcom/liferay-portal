@@ -841,3 +841,4 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 		_layoutPageTemplateEntryLocalService;
 
 }
+// SB-Hash:-774049713

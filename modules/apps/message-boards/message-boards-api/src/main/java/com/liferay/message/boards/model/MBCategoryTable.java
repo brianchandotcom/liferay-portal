@@ -75,3 +75,4 @@ public class MBCategoryTable extends BaseTable<MBCategoryTable> {
 	}
 
 }
+// SB-Hash:1704565529

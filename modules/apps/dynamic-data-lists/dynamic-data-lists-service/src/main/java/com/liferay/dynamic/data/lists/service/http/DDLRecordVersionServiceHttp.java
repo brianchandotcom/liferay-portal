@@ -273,3 +273,4 @@ public class DDLRecordVersionServiceHttp {
 		new Class[] {long.class};
 
 }
+// SB-Hash:1608611602

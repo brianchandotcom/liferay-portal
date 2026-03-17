@@ -77,3 +77,4 @@ public abstract class CommerceDiscountRuleFinderBaseImpl
 		CommerceDiscountRuleFinderBaseImpl.class);
 
 }
+// SB-Hash:-1417716469

@@ -486,3 +486,4 @@ public abstract class BatchEngineImportTaskErrorLocalServiceBaseImpl
 		BatchEngineImportTaskErrorLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:381120189

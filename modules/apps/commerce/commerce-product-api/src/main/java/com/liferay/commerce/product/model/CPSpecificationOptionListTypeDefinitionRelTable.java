@@ -52,3 +52,4 @@ public class CPSpecificationOptionListTypeDefinitionRelTable
 	}
 
 }
+// SB-Hash:1529616941

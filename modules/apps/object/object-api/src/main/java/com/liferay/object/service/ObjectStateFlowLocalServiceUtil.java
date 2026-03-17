@@ -386,3 +386,4 @@ public class ObjectStateFlowLocalServiceUtil {
 			ObjectStateFlowLocalService.class);
 
 }
+// SB-Hash:1060259943

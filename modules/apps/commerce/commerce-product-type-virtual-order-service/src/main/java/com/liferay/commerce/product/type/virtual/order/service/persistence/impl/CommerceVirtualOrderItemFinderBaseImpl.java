@@ -79,3 +79,4 @@ public abstract class CommerceVirtualOrderItemFinderBaseImpl
 		CommerceVirtualOrderItemFinderBaseImpl.class);
 
 }
+// SB-Hash:1576790994

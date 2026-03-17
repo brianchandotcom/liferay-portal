@@ -137,3 +137,4 @@ public class StyleBookEntryVersionModelArgumentsResolver
 	}
 
 }
+// SB-Hash:1775890255

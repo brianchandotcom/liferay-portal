@@ -1547,3 +1547,4 @@ public interface FragmentCollectionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1432137430

@@ -130,3 +130,4 @@ public class AssetLinkModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// SB-Hash:-1338743670

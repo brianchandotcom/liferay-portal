@@ -126,3 +126,4 @@ public interface CommerceShippingFixedOptionQualifierService
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:-869221883

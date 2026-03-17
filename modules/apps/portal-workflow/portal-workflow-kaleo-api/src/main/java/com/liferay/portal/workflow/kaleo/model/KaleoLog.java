@@ -50,3 +50,4 @@ public interface KaleoLog extends KaleoLogModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1840980917

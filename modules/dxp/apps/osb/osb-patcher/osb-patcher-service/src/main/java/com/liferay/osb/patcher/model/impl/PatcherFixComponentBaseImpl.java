@@ -39,3 +39,4 @@ public abstract class PatcherFixComponentBaseImpl
 	}
 
 }
+// SB-Hash:399651493

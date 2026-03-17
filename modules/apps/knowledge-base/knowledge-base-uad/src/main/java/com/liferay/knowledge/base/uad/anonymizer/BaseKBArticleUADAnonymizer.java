@@ -97,3 +97,4 @@ public abstract class BaseKBArticleUADAnonymizer
 	protected KBArticleLocalService kbArticleLocalService;
 
 }
+// SB-Hash:350855502

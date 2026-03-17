@@ -243,3 +243,4 @@ public class ListTypeDefinitionCacheModel
 	public int status;
 
 }
+// SB-Hash:-1093972786

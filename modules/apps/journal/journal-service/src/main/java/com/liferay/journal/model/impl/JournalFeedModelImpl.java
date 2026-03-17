@@ -1508,3 +1508,4 @@ public class JournalFeedModelImpl
 	private JournalFeed _escapedModel;
 
 }
+// SB-Hash:-893836626

@@ -400,3 +400,4 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 			CommerceAvailabilityEstimateLocalService.class);
 
 }
+// SB-Hash:1548296548

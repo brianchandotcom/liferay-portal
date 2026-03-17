@@ -333,3 +333,4 @@ public interface CommerceShippingFixedOptionLocalService
 		throws PortalException;
 
 }
+// SB-Hash:978940890

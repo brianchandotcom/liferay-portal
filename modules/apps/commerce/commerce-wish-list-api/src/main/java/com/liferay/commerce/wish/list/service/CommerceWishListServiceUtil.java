@@ -106,3 +106,4 @@ public class CommerceWishListServiceUtil {
 			CommerceWishListServiceUtil.class, CommerceWishListService.class);
 
 }
+// SB-Hash:-478871068

@@ -168,3 +168,4 @@ public class CommerceChannelServiceUtil {
 			CommerceChannelServiceUtil.class, CommerceChannelService.class);
 
 }
+// SB-Hash:2139869695

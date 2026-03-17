@@ -1227,3 +1227,4 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	private CommerceInventoryReplenishmentItem _escapedModel;
 
 }
+// SB-Hash:2047373509

@@ -729,3 +729,4 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1686151303

@@ -620,3 +620,4 @@ public class ObjectDefinitionSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-571155320

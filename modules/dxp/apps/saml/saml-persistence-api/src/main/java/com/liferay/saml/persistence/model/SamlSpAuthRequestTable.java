@@ -49,3 +49,4 @@ public class SamlSpAuthRequestTable extends BaseTable<SamlSpAuthRequestTable> {
 	}
 
 }
+// SB-Hash:1546376665

@@ -370,3 +370,4 @@ public interface ObjectActionLocalService
 		throws PortalException;
 
 }
+// SB-Hash:-432416216

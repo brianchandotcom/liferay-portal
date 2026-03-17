@@ -282,3 +282,4 @@ public interface SamlIdpSsoSessionLocalService
 		SamlIdpSsoSession samlIdpSsoSession);
 
 }
+// SB-Hash:1389344070

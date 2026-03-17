@@ -2469,3 +2469,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 }
+// SB-Hash:2028847866

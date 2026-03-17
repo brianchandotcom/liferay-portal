@@ -812,3 +812,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
+// SB-Hash:1152174268

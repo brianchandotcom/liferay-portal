@@ -1002,3 +1002,4 @@ public class FaroNotificationModelImpl
 	private FaroNotification _escapedModel;
 
 }
+// SB-Hash:422517399

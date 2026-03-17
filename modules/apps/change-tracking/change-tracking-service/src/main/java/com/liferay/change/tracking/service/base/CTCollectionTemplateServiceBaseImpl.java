@@ -127,3 +127,4 @@ public abstract class CTCollectionTemplateServiceBaseImpl
 		CTCollectionTemplateServiceBaseImpl.class);
 
 }
+// SB-Hash:1510976641

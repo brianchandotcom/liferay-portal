@@ -50,3 +50,4 @@ public interface DSLQueryEntry extends DSLQueryEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1365983510

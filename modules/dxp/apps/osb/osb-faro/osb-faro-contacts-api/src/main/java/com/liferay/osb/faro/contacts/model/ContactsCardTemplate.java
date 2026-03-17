@@ -52,3 +52,4 @@ public interface ContactsCardTemplate
 			};
 
 }
+// SB-Hash:1171665876

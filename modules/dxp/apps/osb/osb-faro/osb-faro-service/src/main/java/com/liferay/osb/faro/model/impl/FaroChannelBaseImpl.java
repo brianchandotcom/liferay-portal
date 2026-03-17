@@ -39,3 +39,4 @@ public abstract class FaroChannelBaseImpl
 	}
 
 }
+// SB-Hash:-294393813

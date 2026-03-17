@@ -540,3 +540,4 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 		_assetEntryAssetCategoryRelLocalService;
 
 }
+// SB-Hash:-1812523877

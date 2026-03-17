@@ -697,3 +697,4 @@ public class ResourceActionModelImpl
 	private ResourceAction _escapedModel;
 
 }
+// SB-Hash:1869468065

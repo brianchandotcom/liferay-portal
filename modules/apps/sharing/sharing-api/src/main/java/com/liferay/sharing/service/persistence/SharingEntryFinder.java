@@ -22,3 +22,4 @@ public interface SharingEntryFinder {
 			<com.liferay.sharing.model.SharingEntry> orderByComparator);
 
 }
+// SB-Hash:2049002310

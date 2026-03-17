@@ -567,3 +567,4 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 			LayoutPageTemplateCollectionLocalService.class);
 
 }
+// SB-Hash:-1611981504

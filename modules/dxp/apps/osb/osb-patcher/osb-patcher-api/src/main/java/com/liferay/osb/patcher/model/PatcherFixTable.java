@@ -96,3 +96,4 @@ public class PatcherFixTable extends BaseTable<PatcherFixTable> {
 	}
 
 }
+// SB-Hash:1033443026

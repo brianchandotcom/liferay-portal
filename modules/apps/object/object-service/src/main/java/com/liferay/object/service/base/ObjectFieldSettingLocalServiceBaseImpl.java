@@ -577,3 +577,4 @@ public abstract class ObjectFieldSettingLocalServiceBaseImpl
 		ObjectFieldSettingLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1541704439

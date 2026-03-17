@@ -955,3 +955,4 @@ public interface AssetLinkPersistence
 	public int countAll();
 
 }
+// SB-Hash:1475394954

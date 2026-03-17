@@ -89,3 +89,4 @@ public class DDMStructureVersionServiceWrapper
 	private DDMStructureVersionService _ddmStructureVersionService;
 
 }
+// SB-Hash:1447646355

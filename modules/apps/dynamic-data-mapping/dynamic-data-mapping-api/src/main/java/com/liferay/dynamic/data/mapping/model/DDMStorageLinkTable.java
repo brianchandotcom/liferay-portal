@@ -49,3 +49,4 @@ public class DDMStorageLinkTable extends BaseTable<DDMStorageLinkTable> {
 	}
 
 }
+// SB-Hash:-457224681

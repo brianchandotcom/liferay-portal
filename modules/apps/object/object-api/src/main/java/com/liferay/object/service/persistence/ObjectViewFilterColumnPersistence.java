@@ -755,3 +755,4 @@ public interface ObjectViewFilterColumnPersistence
 	public int countAll();
 
 }
+// SB-Hash:54780886

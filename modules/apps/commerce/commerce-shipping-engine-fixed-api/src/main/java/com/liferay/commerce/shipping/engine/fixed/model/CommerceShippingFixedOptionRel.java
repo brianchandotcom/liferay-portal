@@ -73,3 +73,4 @@ public interface CommerceShippingFixedOptionRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-1635670066

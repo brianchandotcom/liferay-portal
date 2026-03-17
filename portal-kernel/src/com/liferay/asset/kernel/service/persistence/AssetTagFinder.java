@@ -22,3 +22,4 @@ public interface AssetTagFinder {
 			<com.liferay.asset.kernel.model.AssetTag> orderByComparator);
 
 }
+// SB-Hash:745846960

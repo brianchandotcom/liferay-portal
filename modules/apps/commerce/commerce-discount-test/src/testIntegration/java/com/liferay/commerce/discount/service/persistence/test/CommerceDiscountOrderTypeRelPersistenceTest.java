@@ -642,3 +642,4 @@ public class CommerceDiscountOrderTypeRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-947806861

@@ -42,3 +42,4 @@ public abstract class CommerceInventoryWarehouseItemBaseImpl
 	}
 
 }
+// SB-Hash:1568191280

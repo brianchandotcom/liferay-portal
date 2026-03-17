@@ -87,3 +87,4 @@ public class UserGroupGroupRoleServiceWrapper
 	private UserGroupGroupRoleService _userGroupGroupRoleService;
 
 }
+// SB-Hash:715411248

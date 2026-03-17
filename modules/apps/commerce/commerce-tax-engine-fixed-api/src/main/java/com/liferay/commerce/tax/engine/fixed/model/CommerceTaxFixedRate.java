@@ -55,3 +55,4 @@ public interface CommerceTaxFixedRate
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:1346058685

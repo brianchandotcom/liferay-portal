@@ -53,12 +53,12 @@ public abstract class BaseBlogsEntryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(blogsEntry.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(blogsEntry.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(blogsEntry.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
@@ -98,3 +98,4 @@ public abstract class BaseBlogsEntryUADExporter
 	protected BlogsEntryLocalService blogsEntryLocalService;
 
 }
+// SB-Hash:258204989

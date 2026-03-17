@@ -566,3 +566,4 @@ public class PatcherProductVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1481003409

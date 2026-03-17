@@ -55,3 +55,4 @@ public class LaunchEntryTable extends BaseTable<LaunchEntryTable> {
 	}
 
 }
+// SB-Hash:1076527521

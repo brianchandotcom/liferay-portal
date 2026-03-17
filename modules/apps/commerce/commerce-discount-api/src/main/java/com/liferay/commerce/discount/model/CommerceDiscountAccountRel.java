@@ -61,3 +61,4 @@ public interface CommerceDiscountAccountRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-1944644628

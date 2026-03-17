@@ -548,3 +548,4 @@ public abstract class PermissionCheckFinderEntryLocalServiceBaseImpl
 		PermissionCheckFinderEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1761229509

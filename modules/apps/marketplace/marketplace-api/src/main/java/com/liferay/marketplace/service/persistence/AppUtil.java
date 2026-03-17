@@ -999,3 +999,4 @@ public class AppUtil {
 	private static volatile AppPersistence _persistence;
 
 }
+// SB-Hash:-1877001732

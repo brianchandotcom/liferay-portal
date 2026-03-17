@@ -396,3 +396,4 @@ public interface LVEntryLocalizationPersistence
 	public int countAll();
 
 }
+// SB-Hash:739154002

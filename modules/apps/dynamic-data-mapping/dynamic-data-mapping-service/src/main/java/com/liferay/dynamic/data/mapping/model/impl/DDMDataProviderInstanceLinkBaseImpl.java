@@ -42,3 +42,4 @@ public abstract class DDMDataProviderInstanceLinkBaseImpl
 	}
 
 }
+// SB-Hash:1036738294

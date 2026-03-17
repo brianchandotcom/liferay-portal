@@ -532,3 +532,4 @@ public class ObjectValidationRuleLocalServiceWrapper
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 }
+// SB-Hash:722706568

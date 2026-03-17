@@ -49,3 +49,4 @@ public class CPDefinitionLocalizationCTServiceImpl
 		_cpDefinitionLocalizationPersistence;
 
 }
+// SB-Hash:1597945557

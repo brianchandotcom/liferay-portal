@@ -437,3 +437,4 @@ public class ObjectStateLocalServiceWrapper
 	private ObjectStateLocalService _objectStateLocalService;
 
 }
+// SB-Hash:1579164887

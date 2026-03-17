@@ -110,3 +110,4 @@ public abstract class ERAssetCategoryLocalServiceBaseImpl
 		ERAssetCategoryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1219856608

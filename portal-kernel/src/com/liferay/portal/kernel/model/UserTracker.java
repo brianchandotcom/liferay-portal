@@ -59,3 +59,4 @@ public interface UserTracker extends PersistedModel, UserTrackerModel {
 	public java.util.List<UserTrackerPath> getPaths();
 
 }
+// SB-Hash:492142747

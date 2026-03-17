@@ -363,3 +363,4 @@ public class CTScoreLocalServiceWrapper
 	private CTScoreLocalService _ctScoreLocalService;
 
 }
+// SB-Hash:1237046449

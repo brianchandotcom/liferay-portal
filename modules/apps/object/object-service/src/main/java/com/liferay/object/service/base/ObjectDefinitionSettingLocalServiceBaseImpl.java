@@ -595,3 +595,4 @@ public abstract class ObjectDefinitionSettingLocalServiceBaseImpl
 		ObjectDefinitionSettingLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1989534866

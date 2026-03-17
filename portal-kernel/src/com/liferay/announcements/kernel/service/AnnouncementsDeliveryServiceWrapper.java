@@ -63,3 +63,4 @@ public class AnnouncementsDeliveryServiceWrapper
 	private AnnouncementsDeliveryService _announcementsDeliveryService;
 
 }
+// SB-Hash:709777048

@@ -293,3 +293,4 @@ public interface ModuleLocalService
 	public Module updateModule(Module module);
 
 }
+// SB-Hash:-1472255890

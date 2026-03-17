@@ -646,3 +646,4 @@ public class CPDVirtualSettingFileEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1165514412

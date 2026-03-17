@@ -66,3 +66,4 @@ public class AssetCategoryPropertyTable
 	}
 
 }
+// SB-Hash:280954680

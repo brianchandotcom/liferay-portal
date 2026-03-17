@@ -440,3 +440,4 @@ public class JournalFeedCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:1212624968

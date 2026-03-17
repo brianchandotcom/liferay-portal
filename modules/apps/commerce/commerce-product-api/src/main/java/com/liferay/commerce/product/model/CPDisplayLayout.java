@@ -56,3 +56,4 @@ public interface CPDisplayLayout extends CPDisplayLayoutModel, PersistedModel {
 	public com.liferay.portal.kernel.model.Layout fetchLayout();
 
 }
+// SB-Hash:-869399125

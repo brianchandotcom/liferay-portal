@@ -143,3 +143,4 @@ public abstract class CommerceOrderFinderBaseImpl
 		CommerceOrderFinderBaseImpl.class);
 
 }
+// SB-Hash:-2133060446

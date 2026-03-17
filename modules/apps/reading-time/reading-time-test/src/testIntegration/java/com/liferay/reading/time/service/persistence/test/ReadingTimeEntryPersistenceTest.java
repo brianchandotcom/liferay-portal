@@ -574,3 +574,4 @@ public class ReadingTimeEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1199045994

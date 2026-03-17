@@ -39,3 +39,4 @@ public abstract class FaroProjectUsageBaseImpl
 	}
 
 }
+// SB-Hash:8980066

@@ -692,3 +692,4 @@ public interface CPDefinitionLocalService
 		throws E;
 
 }
+// SB-Hash:-512691681

@@ -1176,3 +1176,4 @@ public class KBCommentModelImpl
 	private KBComment _escapedModel;
 
 }
+// SB-Hash:-1060388115

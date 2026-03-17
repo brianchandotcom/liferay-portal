@@ -64,3 +64,4 @@ public class MFAEmailOTPEntryTable extends BaseTable<MFAEmailOTPEntryTable> {
 	}
 
 }
+// SB-Hash:-1428859228

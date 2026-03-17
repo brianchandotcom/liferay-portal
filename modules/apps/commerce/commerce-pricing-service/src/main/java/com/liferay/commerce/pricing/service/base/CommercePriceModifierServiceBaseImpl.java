@@ -132,3 +132,4 @@ public abstract class CommercePriceModifierServiceBaseImpl
 		CommercePriceModifierServiceBaseImpl.class);
 
 }
+// SB-Hash:638031889

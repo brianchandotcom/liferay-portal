@@ -920,3 +920,4 @@ public class KBTemplateUtil {
 	private static volatile KBTemplatePersistence _persistence;
 
 }
+// SB-Hash:-586922944

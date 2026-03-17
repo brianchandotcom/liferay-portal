@@ -236,3 +236,4 @@ public class CPConfigurationListRelServiceWrapper
 	private CPConfigurationListRelService _cpConfigurationListRelService;
 
 }
+// SB-Hash:-1659363188

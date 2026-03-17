@@ -112,3 +112,4 @@ public class ManyColumnsEntryModelArgumentsResolver
 	}
 
 }
+// SB-Hash:1301015687

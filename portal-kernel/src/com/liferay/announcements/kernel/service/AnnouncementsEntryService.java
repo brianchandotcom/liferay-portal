@@ -68,3 +68,4 @@ public interface AnnouncementsEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1582963341

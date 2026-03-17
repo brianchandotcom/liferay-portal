@@ -179,3 +179,4 @@ public interface NestedSetsTreeEntryPersistence
 	public void setRebuildTreeEnabled(boolean rebuildTreeEnabled);
 
 }
+// SB-Hash:-912123378

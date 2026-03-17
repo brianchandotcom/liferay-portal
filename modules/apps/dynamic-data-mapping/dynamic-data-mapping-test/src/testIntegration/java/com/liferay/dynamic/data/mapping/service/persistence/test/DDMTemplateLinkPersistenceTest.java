@@ -505,3 +505,4 @@ public class DDMTemplateLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1024394795

@@ -50,3 +50,4 @@ public interface MBThreadFlag extends MBThreadFlagModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-163225528

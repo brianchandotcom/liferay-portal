@@ -106,3 +106,4 @@ public class CommerceInventoryBookedQuantityServiceWrapper
 		_commerceInventoryBookedQuantityService;
 
 }
+// SB-Hash:-1435463247

@@ -240,3 +240,4 @@ public class DEDataDefinitionFieldLinkCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:2051380113

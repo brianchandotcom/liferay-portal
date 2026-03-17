@@ -644,3 +644,4 @@ public abstract class SavedContentEntryLocalServiceBaseImpl
 		SavedContentEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-2120343924

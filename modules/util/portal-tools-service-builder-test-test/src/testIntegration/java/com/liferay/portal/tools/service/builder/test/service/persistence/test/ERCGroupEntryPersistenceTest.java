@@ -541,3 +541,4 @@ public class ERCGroupEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:386865460

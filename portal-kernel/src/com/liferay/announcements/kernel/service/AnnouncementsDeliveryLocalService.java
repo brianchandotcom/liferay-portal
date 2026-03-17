@@ -317,3 +317,4 @@ public interface AnnouncementsDeliveryLocalService
 		throws E;
 
 }
+// SB-Hash:-1370505200

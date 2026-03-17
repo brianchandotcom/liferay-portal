@@ -114,3 +114,4 @@ public class RenameFinderColumnEntryCacheModel
 	public String columnToRename;
 
 }
+// SB-Hash:-228229443

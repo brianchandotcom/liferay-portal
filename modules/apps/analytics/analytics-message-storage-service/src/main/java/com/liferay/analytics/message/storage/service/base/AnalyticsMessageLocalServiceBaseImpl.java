@@ -555,3 +555,4 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 	private boolean _useTempFile;
 
 }
+// SB-Hash:1034630726

@@ -314,3 +314,4 @@ public interface FaroUserLocalService
 	public FaroUser updateFaroUser(FaroUser faroUser);
 
 }
+// SB-Hash:1643022464

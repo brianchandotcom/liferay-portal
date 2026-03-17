@@ -1301,3 +1301,4 @@ public class CommerceOrderLocalServiceWrapper
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
 }
+// SB-Hash:-352635295

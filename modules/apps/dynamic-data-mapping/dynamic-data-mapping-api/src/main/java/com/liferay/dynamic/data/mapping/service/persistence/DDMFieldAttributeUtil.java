@@ -1210,3 +1210,4 @@ public class DDMFieldAttributeUtil {
 	private static volatile DDMFieldAttributePersistence _persistence;
 
 }
+// SB-Hash:511417190

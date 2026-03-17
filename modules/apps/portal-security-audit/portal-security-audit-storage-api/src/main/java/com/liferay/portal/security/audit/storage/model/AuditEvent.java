@@ -50,3 +50,4 @@ public interface AuditEvent extends AuditEventModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1242002024

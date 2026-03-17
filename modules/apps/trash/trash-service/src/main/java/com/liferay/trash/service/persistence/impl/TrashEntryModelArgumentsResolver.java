@@ -132,3 +132,4 @@ public class TrashEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// SB-Hash:-605969141

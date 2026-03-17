@@ -331,3 +331,4 @@ public interface ObjectLayoutLocalService
 	public ObjectLayout updateObjectLayout(ObjectLayout objectLayout);
 
 }
+// SB-Hash:-1339236054

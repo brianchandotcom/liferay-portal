@@ -430,3 +430,4 @@ public class DDLRecordSetVersionLocalServiceWrapper
 	private DDLRecordSetVersionLocalService _ddlRecordSetVersionLocalService;
 
 }
+// SB-Hash:-1275892461

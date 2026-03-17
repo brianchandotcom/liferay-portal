@@ -639,3 +639,4 @@ public class KaleoTransitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-832447360

@@ -55,3 +55,4 @@ public class AnnouncementsDeliveryServiceUtil {
 	private static volatile AnnouncementsDeliveryService _service;
 
 }
+// SB-Hash:671187342

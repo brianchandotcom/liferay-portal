@@ -722,3 +722,4 @@ public interface CalendarNotificationTemplatePersistence
 	public int countAll();
 
 }
+// SB-Hash:1630597098

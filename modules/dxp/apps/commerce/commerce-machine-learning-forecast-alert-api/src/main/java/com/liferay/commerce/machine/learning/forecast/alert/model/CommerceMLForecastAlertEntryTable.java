@@ -70,3 +70,4 @@ public class CommerceMLForecastAlertEntryTable
 	}
 
 }
+// SB-Hash:1379899905

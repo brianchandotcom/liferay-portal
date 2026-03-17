@@ -664,3 +664,4 @@ public class RepositoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-2059651812

@@ -358,3 +358,4 @@ public interface AssetEntryAssetCategoryRelLocalService
 		throws E;
 
 }
+// SB-Hash:666413755

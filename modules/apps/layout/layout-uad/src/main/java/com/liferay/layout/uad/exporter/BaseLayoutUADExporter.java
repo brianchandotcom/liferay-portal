@@ -53,12 +53,12 @@ public abstract class BaseLayoutUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(layout.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(layout.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(layout.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -70,3 +70,4 @@ public abstract class BaseLayoutUADExporter
 	protected LayoutLocalService layoutLocalService;
 
 }
+// SB-Hash:260187928

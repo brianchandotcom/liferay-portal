@@ -363,3 +363,4 @@ public class MBCategoryCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:1389887462

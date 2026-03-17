@@ -142,3 +142,4 @@ public interface BookmarksFolderService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1397902317

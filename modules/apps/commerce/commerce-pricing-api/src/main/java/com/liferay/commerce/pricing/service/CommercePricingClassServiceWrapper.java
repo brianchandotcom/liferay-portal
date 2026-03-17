@@ -195,3 +195,4 @@ public class CommercePricingClassServiceWrapper
 	private CommercePricingClassService _commercePricingClassService;
 
 }
+// SB-Hash:-1178227670

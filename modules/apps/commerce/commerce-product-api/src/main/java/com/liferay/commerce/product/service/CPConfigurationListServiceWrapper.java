@@ -183,3 +183,4 @@ public class CPConfigurationListServiceWrapper
 	private CPConfigurationListService _cpConfigurationListService;
 
 }
+// SB-Hash:-44780572

@@ -180,3 +180,4 @@ public class CommercePricingClassCPDefinitionRelServiceWrapper
 		_commercePricingClassCPDefinitionRelService;
 
 }
+// SB-Hash:1484674845

@@ -97,3 +97,4 @@ public abstract class BaseJournalFolderUADAnonymizer
 	protected JournalFolderLocalService journalFolderLocalService;
 
 }
+// SB-Hash:-538518121

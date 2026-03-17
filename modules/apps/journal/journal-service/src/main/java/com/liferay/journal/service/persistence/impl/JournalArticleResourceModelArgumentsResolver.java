@@ -119,3 +119,4 @@ public class JournalArticleResourceModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// SB-Hash:-594724394

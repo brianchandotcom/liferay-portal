@@ -520,3 +520,4 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:900398743

@@ -762,3 +762,4 @@ public class UserGroupRoleModelImpl
 	private UserGroupRole _escapedModel;
 
 }
+// SB-Hash:1107748590

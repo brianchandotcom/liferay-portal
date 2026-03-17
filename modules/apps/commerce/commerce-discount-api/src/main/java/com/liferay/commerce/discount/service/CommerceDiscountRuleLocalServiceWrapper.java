@@ -456,3 +456,4 @@ public class CommerceDiscountRuleLocalServiceWrapper
 	private CommerceDiscountRuleLocalService _commerceDiscountRuleLocalService;
 
 }
+// SB-Hash:-1629137902

@@ -53,3 +53,4 @@ public class MBBanTable extends BaseTable<MBBanTable> {
 	}
 
 }
+// SB-Hash:453215005

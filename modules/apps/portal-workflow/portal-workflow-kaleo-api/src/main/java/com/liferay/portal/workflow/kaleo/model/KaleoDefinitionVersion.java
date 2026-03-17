@@ -65,3 +65,4 @@ public interface KaleoDefinitionVersion
 	public void setContentAsXML(String contentAsXML);
 
 }
+// SB-Hash:1536076810

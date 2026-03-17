@@ -59,3 +59,4 @@ public interface ResourcePermission
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:1204828352

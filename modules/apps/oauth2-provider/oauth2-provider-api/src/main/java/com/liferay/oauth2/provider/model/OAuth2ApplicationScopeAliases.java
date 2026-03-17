@@ -56,3 +56,4 @@ public interface OAuth2ApplicationScopeAliases
 			};
 
 }
+// SB-Hash:1639519925

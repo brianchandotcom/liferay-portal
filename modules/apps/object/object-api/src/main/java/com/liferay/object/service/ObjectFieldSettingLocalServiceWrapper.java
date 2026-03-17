@@ -447,3 +447,4 @@ public class ObjectFieldSettingLocalServiceWrapper
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 }
+// SB-Hash:151312114

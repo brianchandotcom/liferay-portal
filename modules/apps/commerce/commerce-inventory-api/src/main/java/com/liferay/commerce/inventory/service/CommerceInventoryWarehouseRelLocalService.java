@@ -349,3 +349,4 @@ public interface CommerceInventoryWarehouseRelLocalService
 		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel);
 
 }
+// SB-Hash:1911508479

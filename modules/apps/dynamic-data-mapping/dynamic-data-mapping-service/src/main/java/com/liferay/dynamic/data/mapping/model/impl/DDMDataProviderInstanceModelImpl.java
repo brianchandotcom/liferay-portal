@@ -1429,3 +1429,4 @@ public class DDMDataProviderInstanceModelImpl
 	private DDMDataProviderInstance _escapedModel;
 
 }
+// SB-Hash:-610484492

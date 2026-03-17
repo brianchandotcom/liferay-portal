@@ -631,3 +631,4 @@ public class CommerceTermEntryLocalServiceWrapper
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
 }
+// SB-Hash:1400640575

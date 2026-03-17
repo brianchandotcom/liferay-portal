@@ -411,3 +411,4 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 			CommerceShippingFixedOptionLocalService.class);
 
 }
+// SB-Hash:947064723

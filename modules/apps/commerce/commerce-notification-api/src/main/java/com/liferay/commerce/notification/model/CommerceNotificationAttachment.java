@@ -61,3 +61,4 @@ public interface CommerceNotificationAttachment
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:2110203914

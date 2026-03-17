@@ -39,3 +39,4 @@ public abstract class ObjectStateBaseImpl
 	}
 
 }
+// SB-Hash:-543436131

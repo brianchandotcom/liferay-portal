@@ -988,3 +988,4 @@ public class SocialActivityLimitModelImpl
 	private SocialActivityLimit _escapedModel;
 
 }
+// SB-Hash:-1429465150

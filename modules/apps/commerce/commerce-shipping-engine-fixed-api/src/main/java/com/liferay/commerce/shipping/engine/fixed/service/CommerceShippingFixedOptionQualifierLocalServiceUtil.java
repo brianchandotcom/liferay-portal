@@ -434,3 +434,4 @@ public class CommerceShippingFixedOptionQualifierLocalServiceUtil {
 				CommerceShippingFixedOptionQualifierLocalService.class);
 
 }
+// SB-Hash:1212434712

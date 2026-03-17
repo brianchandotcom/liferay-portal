@@ -142,3 +142,4 @@ public class CommerceMLForecastAlertEntryModelArgumentsResolver
 	}
 
 }
+// SB-Hash:1233106603

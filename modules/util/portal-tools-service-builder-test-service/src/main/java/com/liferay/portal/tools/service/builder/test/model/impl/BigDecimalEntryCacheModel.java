@@ -102,3 +102,4 @@ public class BigDecimalEntryCacheModel
 	public BigDecimal bigDecimalValue;
 
 }
+// SB-Hash:1249561345

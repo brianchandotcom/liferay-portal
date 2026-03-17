@@ -1042,3 +1042,4 @@ public class ObjectStateUtil {
 	private static volatile ObjectStatePersistence _persistence;
 
 }
+// SB-Hash:1808034627

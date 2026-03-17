@@ -39,3 +39,4 @@ public abstract class ResourceActionBaseImpl
 	}
 
 }
+// SB-Hash:1994096757

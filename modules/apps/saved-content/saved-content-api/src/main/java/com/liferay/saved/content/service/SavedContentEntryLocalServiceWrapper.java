@@ -491,3 +491,4 @@ public class SavedContentEntryLocalServiceWrapper
 	private SavedContentEntryLocalService _savedContentEntryLocalService;
 
 }
+// SB-Hash:2074317108

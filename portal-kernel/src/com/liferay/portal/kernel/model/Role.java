@@ -97,3 +97,4 @@ public interface Role extends PersistedModel, RoleModel {
 	public boolean isTeam();
 
 }
+// SB-Hash:-1539703615

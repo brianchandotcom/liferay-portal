@@ -345,3 +345,4 @@ public class FaroNotificationLocalServiceUtil {
 			FaroNotificationLocalService.class);
 
 }
+// SB-Hash:726123937

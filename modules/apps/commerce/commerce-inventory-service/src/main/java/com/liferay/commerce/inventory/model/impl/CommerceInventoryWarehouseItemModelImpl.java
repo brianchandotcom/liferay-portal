@@ -1189,3 +1189,4 @@ public class CommerceInventoryWarehouseItemModelImpl
 	private CommerceInventoryWarehouseItem _escapedModel;
 
 }
+// SB-Hash:1543718016

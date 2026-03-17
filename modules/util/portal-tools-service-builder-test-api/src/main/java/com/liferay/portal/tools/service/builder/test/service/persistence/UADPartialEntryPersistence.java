@@ -153,3 +153,4 @@ public interface UADPartialEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-551001158

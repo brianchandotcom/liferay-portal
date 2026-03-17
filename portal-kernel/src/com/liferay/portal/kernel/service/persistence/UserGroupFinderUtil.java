@@ -149,3 +149,4 @@ public class UserGroupFinderUtil {
 	private static UserGroupFinder _finder;
 
 }
+// SB-Hash:750261071

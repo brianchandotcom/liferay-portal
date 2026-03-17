@@ -54,3 +54,4 @@ public interface CTPreferencesService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:222732877

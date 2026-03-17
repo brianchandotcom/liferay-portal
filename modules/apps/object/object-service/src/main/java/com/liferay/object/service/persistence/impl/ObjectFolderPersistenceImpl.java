@@ -4237,3 +4237,4 @@ public class ObjectFolderPersistenceImpl
 	}
 
 }
+// SB-Hash:1088038414

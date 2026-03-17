@@ -539,3 +539,4 @@ public abstract class AppLocalServiceBaseImpl
 		AppLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1128736765

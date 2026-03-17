@@ -1378,3 +1378,4 @@ public class CommerceShippingFixedOptionModelImpl
 	private CommerceShippingFixedOption _escapedModel;
 
 }
+// SB-Hash:-1478936802

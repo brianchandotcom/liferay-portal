@@ -854,3 +854,4 @@ public interface CommerceOrderNotePersistence
 	public int countAll();
 
 }
+// SB-Hash:1346656648

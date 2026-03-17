@@ -77,3 +77,4 @@ public abstract class DDLRecordFinderBaseImpl
 		DDLRecordFinderBaseImpl.class);
 
 }
+// SB-Hash:-1105059004

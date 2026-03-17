@@ -570,3 +570,4 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:77557266

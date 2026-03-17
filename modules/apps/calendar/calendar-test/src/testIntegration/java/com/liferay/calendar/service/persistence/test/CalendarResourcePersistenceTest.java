@@ -696,3 +696,4 @@ public class CalendarResourcePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1978382976

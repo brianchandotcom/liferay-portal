@@ -1022,3 +1022,4 @@ public class FaroUserModelImpl
 	private FaroUser _escapedModel;
 
 }
+// SB-Hash:-435652800

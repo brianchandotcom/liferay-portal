@@ -202,3 +202,4 @@ public class CommerceDiscountCommerceAccountGroupRelCacheModel
 	public long commerceAccountGroupId;
 
 }
+// SB-Hash:952076650

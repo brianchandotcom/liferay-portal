@@ -66,3 +66,4 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 	public void setSmallImageType(String smallImageType);
 
 }
+// SB-Hash:735772067

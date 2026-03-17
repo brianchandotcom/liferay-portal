@@ -319,3 +319,4 @@ public interface ObjectLayoutTabLocalService
 		ObjectLayoutTab objectLayoutTab);
 
 }
+// SB-Hash:-853481542

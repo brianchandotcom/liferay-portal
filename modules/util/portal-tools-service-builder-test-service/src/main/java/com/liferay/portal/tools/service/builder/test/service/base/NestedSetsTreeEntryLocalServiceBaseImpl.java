@@ -532,3 +532,4 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 		NestedSetsTreeEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1197767370

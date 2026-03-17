@@ -652,3 +652,4 @@ public class CommerceVirtualOrderItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:987144243

@@ -194,3 +194,4 @@ public class CTSContentCacheModel
 	public String storeType;
 
 }
+// SB-Hash:104414045

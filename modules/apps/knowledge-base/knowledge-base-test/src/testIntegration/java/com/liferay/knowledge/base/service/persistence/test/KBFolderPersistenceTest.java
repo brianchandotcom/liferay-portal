@@ -707,3 +707,4 @@ public class KBFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1296207782

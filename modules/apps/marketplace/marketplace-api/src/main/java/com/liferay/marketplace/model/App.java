@@ -63,3 +63,4 @@ public interface App extends AppModel, PersistedModel {
 	public boolean isInstalled();
 
 }
+// SB-Hash:-1960665276

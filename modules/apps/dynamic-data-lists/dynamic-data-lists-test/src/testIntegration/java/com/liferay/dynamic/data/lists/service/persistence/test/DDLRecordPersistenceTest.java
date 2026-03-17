@@ -630,3 +630,4 @@ public class DDLRecordPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1253708968

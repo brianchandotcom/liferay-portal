@@ -3633,3 +3633,4 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 }
+// SB-Hash:677210344

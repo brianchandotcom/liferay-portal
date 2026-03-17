@@ -50,3 +50,4 @@ public interface DDMContent extends DDMContentModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-773895450

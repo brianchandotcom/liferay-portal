@@ -70,3 +70,4 @@ public class CommercePricingClassTable
 	}
 
 }
+// SB-Hash:825287395

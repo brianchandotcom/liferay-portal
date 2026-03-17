@@ -119,3 +119,4 @@ public class SocialActivityInterpreterLocalServiceWrapper
 		_socialActivityInterpreterLocalService;
 
 }
+// SB-Hash:854012920

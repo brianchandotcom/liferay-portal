@@ -45,3 +45,4 @@ public class CompareRunsLocalServiceUtil {
 			CompareRunsLocalServiceUtil.class, CompareRunsLocalService.class);
 
 }
+// SB-Hash:559429684

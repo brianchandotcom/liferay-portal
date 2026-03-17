@@ -58,3 +58,4 @@ public class DefinitionTable extends BaseTable<DefinitionTable> {
 	}
 
 }
+// SB-Hash:217930782

@@ -757,3 +757,4 @@ public interface JournalFeedPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1185406716

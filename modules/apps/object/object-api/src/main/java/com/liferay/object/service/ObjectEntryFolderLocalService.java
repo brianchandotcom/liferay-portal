@@ -425,3 +425,4 @@ public interface ObjectEntryFolderLocalService
 		throws PortalException;
 
 }
+// SB-Hash:854044163

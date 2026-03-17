@@ -87,3 +87,4 @@ public class CommerceCurrencyTable extends BaseTable<CommerceCurrencyTable> {
 	}
 
 }
+// SB-Hash:1225551505

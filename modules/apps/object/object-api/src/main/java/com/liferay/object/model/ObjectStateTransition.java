@@ -57,3 +57,4 @@ public interface ObjectStateTransition
 		long targetObjectStateListTypeEntryId);
 
 }
+// SB-Hash:-1518933783

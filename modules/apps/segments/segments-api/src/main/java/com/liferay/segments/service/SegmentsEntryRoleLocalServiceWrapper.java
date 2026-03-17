@@ -447,3 +447,4 @@ public class SegmentsEntryRoleLocalServiceWrapper
 	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
 }
+// SB-Hash:-1713517898

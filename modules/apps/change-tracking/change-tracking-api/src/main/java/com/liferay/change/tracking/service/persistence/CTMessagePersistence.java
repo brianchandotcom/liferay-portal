@@ -294,3 +294,4 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	public int countAll();
 
 }
+// SB-Hash:-1077540508

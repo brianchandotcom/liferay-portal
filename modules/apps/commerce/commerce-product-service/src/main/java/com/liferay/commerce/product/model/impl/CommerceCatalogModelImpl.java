@@ -1181,3 +1181,4 @@ public class CommerceCatalogModelImpl
 	private CommerceCatalog _escapedModel;
 
 }
+// SB-Hash:1989451551

@@ -40,3 +40,4 @@ public abstract class CTCollectionTemplateBaseImpl
 	}
 
 }
+// SB-Hash:1325928222

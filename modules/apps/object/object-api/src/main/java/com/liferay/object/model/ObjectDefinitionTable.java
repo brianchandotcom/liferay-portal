@@ -161,3 +161,4 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 	}
 
 }
+// SB-Hash:368111822

@@ -988,3 +988,4 @@ public class ObjectFolderItemModelImpl
 	private ObjectFolderItem _escapedModel;
 
 }
+// SB-Hash:795248460

@@ -631,3 +631,4 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 		CommerceInventoryReplenishmentItemLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:470360574

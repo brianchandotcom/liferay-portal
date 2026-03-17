@@ -691,3 +691,4 @@ public class CSDiagramSettingUtil {
 	private static volatile CSDiagramSettingPersistence _persistence;
 
 }
+// SB-Hash:333838363

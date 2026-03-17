@@ -117,3 +117,4 @@ public class ListTypeEntryServiceUtil {
 			ListTypeEntryServiceUtil.class, ListTypeEntryService.class);
 
 }
+// SB-Hash:602372712

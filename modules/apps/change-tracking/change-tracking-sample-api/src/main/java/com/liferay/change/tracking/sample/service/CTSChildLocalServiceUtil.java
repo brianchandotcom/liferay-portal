@@ -337,3 +337,4 @@ public class CTSChildLocalServiceUtil {
 			CTSChildLocalServiceUtil.class, CTSChildLocalService.class);
 
 }
+// SB-Hash:496703072

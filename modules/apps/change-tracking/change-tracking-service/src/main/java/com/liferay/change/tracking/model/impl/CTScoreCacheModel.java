@@ -130,3 +130,4 @@ public class CTScoreCacheModel
 	public int score;
 
 }
+// SB-Hash:297991787

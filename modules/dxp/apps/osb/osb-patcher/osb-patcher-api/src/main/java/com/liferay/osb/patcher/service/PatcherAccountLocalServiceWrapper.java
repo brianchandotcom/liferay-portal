@@ -533,3 +533,4 @@ public class PatcherAccountLocalServiceWrapper
 	private PatcherAccountLocalService _patcherAccountLocalService;
 
 }
+// SB-Hash:-619995511

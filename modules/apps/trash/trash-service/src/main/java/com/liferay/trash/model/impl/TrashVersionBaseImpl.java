@@ -39,3 +39,4 @@ public abstract class TrashVersionBaseImpl
 	}
 
 }
+// SB-Hash:905352524

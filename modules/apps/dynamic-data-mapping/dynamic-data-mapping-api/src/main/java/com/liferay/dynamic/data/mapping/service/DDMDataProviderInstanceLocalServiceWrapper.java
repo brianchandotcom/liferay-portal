@@ -616,3 +616,4 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 		_ddmDataProviderInstanceLocalService;
 
 }
+// SB-Hash:1020238630

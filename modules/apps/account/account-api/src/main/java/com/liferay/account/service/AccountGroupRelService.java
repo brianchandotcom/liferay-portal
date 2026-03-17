@@ -68,3 +68,4 @@ public interface AccountGroupRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:831527514

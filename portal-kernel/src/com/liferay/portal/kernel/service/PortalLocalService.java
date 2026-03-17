@@ -43,3 +43,4 @@ public interface PortalLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:194484982

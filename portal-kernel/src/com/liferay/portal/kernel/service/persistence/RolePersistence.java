@@ -2764,3 +2764,4 @@ public interface RolePersistence
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 }
+// SB-Hash:-1443775480

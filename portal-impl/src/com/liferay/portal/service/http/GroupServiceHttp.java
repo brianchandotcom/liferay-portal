@@ -1822,3 +1822,4 @@ public class GroupServiceHttp {
 		new Class[] {long.class, java.util.Map.class};
 
 }
+// SB-Hash:732045991

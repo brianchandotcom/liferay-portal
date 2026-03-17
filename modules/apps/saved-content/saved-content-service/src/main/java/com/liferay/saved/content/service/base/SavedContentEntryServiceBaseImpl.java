@@ -125,3 +125,4 @@ public abstract class SavedContentEntryServiceBaseImpl
 		SavedContentEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:-2088228768

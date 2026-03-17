@@ -55,3 +55,4 @@ public interface ERAssetCategoryLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:648443795

@@ -130,3 +130,4 @@ public class CommerceCatalogServiceUtil {
 			CommerceCatalogServiceUtil.class, CommerceCatalogService.class);
 
 }
+// SB-Hash:478913678

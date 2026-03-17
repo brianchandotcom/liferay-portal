@@ -1568,3 +1568,4 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private Role _escapedModel;
 
 }
+// SB-Hash:-1919617089

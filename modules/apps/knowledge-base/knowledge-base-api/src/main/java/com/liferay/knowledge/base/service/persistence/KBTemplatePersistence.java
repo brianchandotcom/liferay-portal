@@ -707,3 +707,4 @@ public interface KBTemplatePersistence
 	public int countAll();
 
 }
+// SB-Hash:938315357

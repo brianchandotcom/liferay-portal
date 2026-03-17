@@ -1012,3 +1012,4 @@ public class StyleBookEntryServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 
 }
+// SB-Hash:1521542005

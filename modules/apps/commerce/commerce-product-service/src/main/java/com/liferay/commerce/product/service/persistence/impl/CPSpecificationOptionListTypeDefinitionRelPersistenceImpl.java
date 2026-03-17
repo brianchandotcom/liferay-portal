@@ -2518,3 +2518,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
+// SB-Hash:333789079

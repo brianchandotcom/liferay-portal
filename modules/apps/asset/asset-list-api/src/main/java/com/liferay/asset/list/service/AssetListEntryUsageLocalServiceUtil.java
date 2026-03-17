@@ -479,3 +479,4 @@ public class AssetListEntryUsageLocalServiceUtil {
 			AssetListEntryUsageLocalService.class);
 
 }
+// SB-Hash:-1494666846

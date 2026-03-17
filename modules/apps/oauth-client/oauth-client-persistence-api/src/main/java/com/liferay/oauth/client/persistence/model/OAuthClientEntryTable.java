@@ -77,3 +77,4 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 	}
 
 }
+// SB-Hash:2039921559

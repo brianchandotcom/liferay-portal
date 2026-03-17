@@ -50,3 +50,4 @@ public class ObjectStateFlowTable extends BaseTable<ObjectStateFlowTable> {
 	}
 
 }
+// SB-Hash:1363578333

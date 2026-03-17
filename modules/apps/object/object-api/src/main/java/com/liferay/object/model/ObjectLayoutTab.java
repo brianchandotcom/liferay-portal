@@ -56,3 +56,4 @@ public interface ObjectLayoutTab extends ObjectLayoutTabModel, PersistedModel {
 		java.util.List<ObjectLayoutBox> objectLayoutBoxes);
 
 }
+// SB-Hash:-222519801

@@ -314,3 +314,4 @@ public class CalendarResourceCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-381667463

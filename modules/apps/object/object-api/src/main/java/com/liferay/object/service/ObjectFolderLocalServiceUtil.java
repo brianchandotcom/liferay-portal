@@ -410,3 +410,4 @@ public class ObjectFolderLocalServiceUtil {
 			ObjectFolderLocalServiceUtil.class, ObjectFolderLocalService.class);
 
 }
+// SB-Hash:-772532336

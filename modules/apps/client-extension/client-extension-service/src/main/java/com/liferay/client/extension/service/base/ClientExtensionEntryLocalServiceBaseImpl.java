@@ -666,3 +666,4 @@ public abstract class ClientExtensionEntryLocalServiceBaseImpl
 		ClientExtensionEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:207991756

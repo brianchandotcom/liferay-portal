@@ -682,3 +682,4 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 		AssetVocabularyLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1757435960

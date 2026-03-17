@@ -39,3 +39,4 @@ public abstract class AssetTagGroupRelBaseImpl
 	}
 
 }
+// SB-Hash:-1399557548

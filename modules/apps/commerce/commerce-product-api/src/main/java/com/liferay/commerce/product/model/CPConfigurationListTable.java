@@ -98,3 +98,4 @@ public class CPConfigurationListTable
 	}
 
 }
+// SB-Hash:1028447442

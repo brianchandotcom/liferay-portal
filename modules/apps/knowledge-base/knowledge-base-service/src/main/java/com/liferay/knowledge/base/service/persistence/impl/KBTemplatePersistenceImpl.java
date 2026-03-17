@@ -3355,3 +3355,4 @@ public class KBTemplatePersistenceImpl
 	}
 
 }
+// SB-Hash:-126615529

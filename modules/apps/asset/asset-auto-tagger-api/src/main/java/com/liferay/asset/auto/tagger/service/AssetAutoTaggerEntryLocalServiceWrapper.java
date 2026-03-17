@@ -422,3 +422,4 @@ public class AssetAutoTaggerEntryLocalServiceWrapper
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 }
+// SB-Hash:81408473

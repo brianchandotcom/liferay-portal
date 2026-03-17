@@ -388,3 +388,4 @@ public class CommerceNotificationQueueEntryCacheModel
 	public long sentDate;
 
 }
+// SB-Hash:-271121477

@@ -39,3 +39,4 @@ public abstract class COREntryBaseImpl
 	}
 
 }
+// SB-Hash:-15068009

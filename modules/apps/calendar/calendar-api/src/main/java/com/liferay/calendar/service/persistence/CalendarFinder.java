@@ -82,3 +82,4 @@ public interface CalendarFinder {
 			<com.liferay.calendar.model.Calendar> orderByComparator);
 
 }
+// SB-Hash:-1761416314

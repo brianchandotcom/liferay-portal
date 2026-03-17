@@ -54,3 +54,4 @@ public interface CPDefinitionLocalization
 			};
 
 }
+// SB-Hash:1123582133

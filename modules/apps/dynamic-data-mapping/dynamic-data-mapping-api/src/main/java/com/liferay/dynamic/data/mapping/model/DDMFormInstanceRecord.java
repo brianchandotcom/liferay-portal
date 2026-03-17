@@ -75,3 +75,4 @@ public interface DDMFormInstanceRecord
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-1292455321

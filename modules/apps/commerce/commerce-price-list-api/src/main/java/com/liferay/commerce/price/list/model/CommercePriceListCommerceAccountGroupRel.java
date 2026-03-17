@@ -64,3 +64,4 @@ public interface CommercePriceListCommerceAccountGroupRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-340783409

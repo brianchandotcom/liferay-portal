@@ -57,3 +57,4 @@ public abstract class ViewCountEntryFinderBaseImpl
 	protected ViewCountEntryPersistence viewCountEntryPersistence;
 
 }
+// SB-Hash:1312937333

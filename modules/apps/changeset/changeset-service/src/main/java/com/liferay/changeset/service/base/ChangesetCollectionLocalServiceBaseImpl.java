@@ -476,3 +476,4 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 		ChangesetCollectionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1418284765

@@ -249,3 +249,4 @@ public class CPConfigurationEntrySettingCacheModel
 	public String value;
 
 }
+// SB-Hash:57223790

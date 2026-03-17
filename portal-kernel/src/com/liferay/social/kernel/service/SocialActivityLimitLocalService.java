@@ -300,3 +300,4 @@ public interface SocialActivityLimitLocalService
 		throws E;
 
 }
+// SB-Hash:-1248108386

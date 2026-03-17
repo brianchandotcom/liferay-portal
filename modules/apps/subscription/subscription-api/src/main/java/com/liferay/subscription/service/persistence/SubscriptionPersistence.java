@@ -1228,3 +1228,4 @@ public interface SubscriptionPersistence
 	public int countAll();
 
 }
+// SB-Hash:1063091327

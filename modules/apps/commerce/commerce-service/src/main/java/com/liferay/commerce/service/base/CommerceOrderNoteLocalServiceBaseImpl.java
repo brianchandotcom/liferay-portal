@@ -616,3 +616,4 @@ public abstract class CommerceOrderNoteLocalServiceBaseImpl
 		CommerceOrderNoteLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-99238189

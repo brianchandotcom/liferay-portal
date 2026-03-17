@@ -39,3 +39,4 @@ public abstract class MBMailingListBaseImpl
 	}
 
 }
+// SB-Hash:-706737245

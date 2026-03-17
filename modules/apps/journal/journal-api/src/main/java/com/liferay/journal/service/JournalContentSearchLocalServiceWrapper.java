@@ -503,3 +503,4 @@ public class JournalContentSearchLocalServiceWrapper
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
 
 }
+// SB-Hash:-74997804

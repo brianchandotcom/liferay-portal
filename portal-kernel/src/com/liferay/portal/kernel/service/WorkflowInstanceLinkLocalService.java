@@ -361,3 +361,4 @@ public interface WorkflowInstanceLinkLocalService
 		throws E;
 
 }
+// SB-Hash:614682792

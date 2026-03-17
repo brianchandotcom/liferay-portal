@@ -375,3 +375,4 @@ public interface CPDefinitionVirtualSettingLocalService
 		throws PortalException;
 
 }
+// SB-Hash:145045906

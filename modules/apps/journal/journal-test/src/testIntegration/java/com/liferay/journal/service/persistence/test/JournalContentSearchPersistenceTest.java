@@ -639,3 +639,4 @@ public class JournalContentSearchPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-612448810

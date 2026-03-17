@@ -1028,3 +1028,4 @@ public class AssetCategoryPropertyModelImpl
 	private AssetCategoryProperty _escapedModel;
 
 }
+// SB-Hash:-452109888

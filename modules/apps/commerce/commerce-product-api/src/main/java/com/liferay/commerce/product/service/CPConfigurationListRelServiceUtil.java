@@ -203,3 +203,4 @@ public class CPConfigurationListRelServiceUtil {
 			CPConfigurationListRelService.class);
 
 }
+// SB-Hash:1990279094

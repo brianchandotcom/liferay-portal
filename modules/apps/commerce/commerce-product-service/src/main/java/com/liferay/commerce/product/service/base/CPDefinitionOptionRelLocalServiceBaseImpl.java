@@ -640,3 +640,4 @@ public abstract class CPDefinitionOptionRelLocalServiceBaseImpl
 		CPDefinitionOptionRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1182894655

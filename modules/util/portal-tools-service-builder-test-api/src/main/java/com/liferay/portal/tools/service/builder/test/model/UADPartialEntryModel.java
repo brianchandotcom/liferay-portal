@@ -124,3 +124,4 @@ public interface UADPartialEntryModel extends BaseModel<UADPartialEntry> {
 	}
 
 }
+// SB-Hash:-677343313

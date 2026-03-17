@@ -643,3 +643,4 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	public int countAll();
 
 }
+// SB-Hash:12445404

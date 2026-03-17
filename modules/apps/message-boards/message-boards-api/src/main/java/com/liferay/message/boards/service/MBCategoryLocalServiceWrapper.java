@@ -849,3 +849,4 @@ public class MBCategoryLocalServiceWrapper
 	private MBCategoryLocalService _mbCategoryLocalService;
 
 }
+// SB-Hash:1292290282

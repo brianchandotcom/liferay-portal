@@ -518,3 +518,4 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 		_commerceShippingFixedOptionLocalService;
 
 }
+// SB-Hash:-1325543046

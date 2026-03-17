@@ -1217,3 +1217,4 @@ public class CommerceShipmentItemModelImpl
 	private CommerceShipmentItem _escapedModel;
 
 }
+// SB-Hash:1250939281

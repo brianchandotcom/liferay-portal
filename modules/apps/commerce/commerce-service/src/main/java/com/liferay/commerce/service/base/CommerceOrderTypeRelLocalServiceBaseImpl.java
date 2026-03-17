@@ -628,3 +628,4 @@ public abstract class CommerceOrderTypeRelLocalServiceBaseImpl
 		CommerceOrderTypeRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-410752018

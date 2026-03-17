@@ -90,3 +90,4 @@ public interface StagingLocalService extends BaseLocalService {
 		throws PortalException;
 
 }
+// SB-Hash:18069485

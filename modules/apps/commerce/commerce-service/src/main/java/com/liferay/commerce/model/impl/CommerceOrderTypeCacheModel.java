@@ -346,3 +346,4 @@ public class CommerceOrderTypeCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:-455820992

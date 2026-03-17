@@ -406,3 +406,4 @@ public class ObjectFilterLocalServiceWrapper
 	private ObjectFilterLocalService _objectFilterLocalService;
 
 }
+// SB-Hash:1415020648

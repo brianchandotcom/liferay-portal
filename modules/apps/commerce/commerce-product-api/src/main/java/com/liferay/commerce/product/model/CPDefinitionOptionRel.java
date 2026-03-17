@@ -75,3 +75,4 @@ public interface CPDefinitionOptionRel
 	public boolean isPriceTypeStatic();
 
 }
+// SB-Hash:1320628045

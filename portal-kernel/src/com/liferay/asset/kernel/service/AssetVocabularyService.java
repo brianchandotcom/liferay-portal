@@ -219,3 +219,4 @@ public interface AssetVocabularyService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1572181882

@@ -388,3 +388,4 @@ public interface TemplateEntryLocalService
 		throws E;
 
 }
+// SB-Hash:1176070065

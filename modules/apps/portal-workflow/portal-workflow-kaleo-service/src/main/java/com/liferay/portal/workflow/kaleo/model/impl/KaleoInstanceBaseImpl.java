@@ -39,3 +39,4 @@ public abstract class KaleoInstanceBaseImpl
 	}
 
 }
+// SB-Hash:-1483493972

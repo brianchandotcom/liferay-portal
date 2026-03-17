@@ -75,3 +75,4 @@ public abstract class BaseKBArticleUADDisplay
 	protected KBArticleLocalService kbArticleLocalService;
 
 }
+// SB-Hash:1832342701

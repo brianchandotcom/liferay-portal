@@ -1663,3 +1663,4 @@ public class DDMTemplateVersionModelImpl
 	private DDMTemplateVersion _escapedModel;
 
 }
+// SB-Hash:2008356463

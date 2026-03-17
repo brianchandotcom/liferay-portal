@@ -1827,3 +1827,4 @@ public class CommerceNotificationTemplateModelImpl
 	private CommerceNotificationTemplate _escapedModel;
 
 }
+// SB-Hash:221404855

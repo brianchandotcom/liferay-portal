@@ -598,3 +598,4 @@ public abstract class CommerceCatalogLocalServiceBaseImpl
 		CommerceCatalogLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1606819405

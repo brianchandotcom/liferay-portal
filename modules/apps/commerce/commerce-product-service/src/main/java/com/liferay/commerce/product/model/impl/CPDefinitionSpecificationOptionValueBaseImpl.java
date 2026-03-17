@@ -42,3 +42,4 @@ public abstract class CPDefinitionSpecificationOptionValueBaseImpl
 	}
 
 }
+// SB-Hash:-639254774

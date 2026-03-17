@@ -410,3 +410,4 @@ public class DispatchLogLocalServiceWrapper
 	private DispatchLogLocalService _dispatchLogLocalService;
 
 }
+// SB-Hash:-9061983

@@ -462,3 +462,4 @@ public abstract class SamlIdpSsoSessionLocalServiceBaseImpl
 		SamlIdpSsoSessionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:2044566037

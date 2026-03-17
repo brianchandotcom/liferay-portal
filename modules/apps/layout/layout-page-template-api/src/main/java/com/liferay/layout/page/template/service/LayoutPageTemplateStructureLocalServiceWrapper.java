@@ -519,3 +519,4 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 		_layoutPageTemplateStructureLocalService;
 
 }
+// SB-Hash:1917317444

@@ -75,3 +75,4 @@ public abstract class BaseKBTemplateUADDisplay
 	protected KBTemplateLocalService kbTemplateLocalService;
 
 }
+// SB-Hash:514642648

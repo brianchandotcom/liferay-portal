@@ -525,3 +525,4 @@ public class CommerceShippingMethodLocalServiceWrapper
 		_commerceShippingMethodLocalService;
 
 }
+// SB-Hash:895523900

@@ -601,3 +601,4 @@ public abstract class JournalFeedLocalServiceBaseImpl
 		JournalFeedLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1193999918

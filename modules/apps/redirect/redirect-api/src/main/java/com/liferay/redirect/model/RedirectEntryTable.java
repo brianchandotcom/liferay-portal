@@ -61,3 +61,4 @@ public class RedirectEntryTable extends BaseTable<RedirectEntryTable> {
 	}
 
 }
+// SB-Hash:223891547

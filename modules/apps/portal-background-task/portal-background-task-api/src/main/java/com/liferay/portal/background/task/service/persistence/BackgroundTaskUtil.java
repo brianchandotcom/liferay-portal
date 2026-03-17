@@ -3023,3 +3023,4 @@ public class BackgroundTaskUtil {
 	private static volatile BackgroundTaskPersistence _persistence;
 
 }
+// SB-Hash:1401022849

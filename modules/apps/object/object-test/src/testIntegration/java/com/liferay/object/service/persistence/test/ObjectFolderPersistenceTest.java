@@ -593,3 +593,4 @@ public class ObjectFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1720272320

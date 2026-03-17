@@ -196,3 +196,4 @@ public class CommerceTermEntryRelCacheModel
 	public long commerceTermEntryId;
 
 }
+// SB-Hash:1276166047

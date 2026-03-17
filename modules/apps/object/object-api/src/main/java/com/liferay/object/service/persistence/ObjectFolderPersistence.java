@@ -894,3 +894,4 @@ public interface ObjectFolderPersistence extends BasePersistence<ObjectFolder> {
 	public int countAll();
 
 }
+// SB-Hash:-1549767823

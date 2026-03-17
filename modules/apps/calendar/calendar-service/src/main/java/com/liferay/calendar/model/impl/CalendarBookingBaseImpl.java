@@ -39,3 +39,4 @@ public abstract class CalendarBookingBaseImpl
 	}
 
 }
+// SB-Hash:1104199288

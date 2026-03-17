@@ -640,3 +640,4 @@ public class ObjectEntryFolderLocalServiceWrapper
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 }
+// SB-Hash:228768141

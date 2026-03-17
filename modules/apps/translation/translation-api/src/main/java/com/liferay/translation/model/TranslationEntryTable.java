@@ -78,3 +78,4 @@ public class TranslationEntryTable extends BaseTable<TranslationEntryTable> {
 	}
 
 }
+// SB-Hash:612475264

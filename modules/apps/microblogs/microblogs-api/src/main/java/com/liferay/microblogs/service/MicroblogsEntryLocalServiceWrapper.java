@@ -566,3 +566,4 @@ public class MicroblogsEntryLocalServiceWrapper
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
 
 }
+// SB-Hash:1625606489

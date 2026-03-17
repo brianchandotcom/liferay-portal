@@ -250,3 +250,4 @@ public class CPDefinitionInventoryServiceHttp {
 		};
 
 }
+// SB-Hash:-582841521

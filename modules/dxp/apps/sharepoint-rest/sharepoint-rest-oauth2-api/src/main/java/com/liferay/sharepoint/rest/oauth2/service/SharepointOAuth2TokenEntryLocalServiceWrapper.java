@@ -422,3 +422,4 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 		_sharepointOAuth2TokenEntryLocalService;
 
 }
+// SB-Hash:742116142

@@ -698,3 +698,4 @@ public interface JournalArticleResourcePersistence
 	public int countAll();
 
 }
+// SB-Hash:849961805

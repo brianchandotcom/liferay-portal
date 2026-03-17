@@ -424,3 +424,4 @@ public class KaleoNotificationRecipientLocalServiceWrapper
 		_kaleoNotificationRecipientLocalService;
 
 }
+// SB-Hash:1101759262

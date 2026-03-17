@@ -448,3 +448,4 @@ public abstract class CTProcessLocalServiceBaseImpl
 		CTProcessLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1445016490

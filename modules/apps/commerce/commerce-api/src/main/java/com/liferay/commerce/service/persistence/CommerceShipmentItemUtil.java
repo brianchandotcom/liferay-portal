@@ -1805,3 +1805,4 @@ public class CommerceShipmentItemUtil {
 	private static volatile CommerceShipmentItemPersistence _persistence;
 
 }
+// SB-Hash:1149604263

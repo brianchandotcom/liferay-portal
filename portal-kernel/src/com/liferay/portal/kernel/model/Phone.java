@@ -50,3 +50,4 @@ public interface Phone extends PersistedModel, PhoneModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:491948732

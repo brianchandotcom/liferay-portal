@@ -121,3 +121,4 @@ public class DefinedDefaultOrderEntryCacheModel
 	public String name;
 
 }
+// SB-Hash:1241076284

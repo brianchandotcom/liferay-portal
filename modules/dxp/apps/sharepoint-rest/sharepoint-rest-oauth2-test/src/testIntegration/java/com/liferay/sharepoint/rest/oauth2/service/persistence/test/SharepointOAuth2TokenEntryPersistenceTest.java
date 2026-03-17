@@ -588,3 +588,4 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1159351100

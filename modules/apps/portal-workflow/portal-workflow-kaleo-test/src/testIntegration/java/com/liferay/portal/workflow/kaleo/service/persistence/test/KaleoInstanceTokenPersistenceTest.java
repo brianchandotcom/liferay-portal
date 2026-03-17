@@ -573,3 +573,4 @@ public class KaleoInstanceTokenPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:332309118

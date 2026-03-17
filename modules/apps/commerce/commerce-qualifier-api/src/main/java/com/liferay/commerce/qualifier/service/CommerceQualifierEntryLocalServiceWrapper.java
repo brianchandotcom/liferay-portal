@@ -480,3 +480,4 @@ public class CommerceQualifierEntryLocalServiceWrapper
 		_commerceQualifierEntryLocalService;
 
 }
+// SB-Hash:1059012223

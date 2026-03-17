@@ -1178,3 +1178,4 @@ public class PatcherProjectVersionModelImpl
 	private PatcherProjectVersion _escapedModel;
 
 }
+// SB-Hash:-213019167

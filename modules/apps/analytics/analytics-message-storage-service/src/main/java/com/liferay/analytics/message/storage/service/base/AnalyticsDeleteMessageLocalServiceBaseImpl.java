@@ -501,3 +501,4 @@ public abstract class AnalyticsDeleteMessageLocalServiceBaseImpl
 		AnalyticsDeleteMessageLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1345809519

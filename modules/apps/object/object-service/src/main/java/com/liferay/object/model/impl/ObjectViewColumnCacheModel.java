@@ -242,3 +242,4 @@ public class ObjectViewColumnCacheModel
 	public int priority;
 
 }
+// SB-Hash:763797900

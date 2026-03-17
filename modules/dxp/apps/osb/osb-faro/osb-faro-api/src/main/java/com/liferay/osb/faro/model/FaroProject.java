@@ -60,3 +60,4 @@ public interface FaroProject extends FaroProjectModel, PersistedModel {
 	public boolean isTrial();
 
 }
+// SB-Hash:798404575

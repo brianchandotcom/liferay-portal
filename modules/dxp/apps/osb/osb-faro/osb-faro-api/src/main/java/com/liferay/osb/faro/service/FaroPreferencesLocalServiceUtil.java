@@ -339,3 +339,4 @@ public class FaroPreferencesLocalServiceUtil {
 			FaroPreferencesLocalService.class);
 
 }
+// SB-Hash:1553045657

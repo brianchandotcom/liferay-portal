@@ -857,3 +857,4 @@ public interface DDMStorageLinkPersistence
 	public int countAll();
 
 }
+// SB-Hash:1193523728

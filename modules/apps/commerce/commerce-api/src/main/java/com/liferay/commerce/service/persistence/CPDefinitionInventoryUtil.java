@@ -779,3 +779,4 @@ public class CPDefinitionInventoryUtil {
 	private static volatile CPDefinitionInventoryPersistence _persistence;
 
 }
+// SB-Hash:-1976698916

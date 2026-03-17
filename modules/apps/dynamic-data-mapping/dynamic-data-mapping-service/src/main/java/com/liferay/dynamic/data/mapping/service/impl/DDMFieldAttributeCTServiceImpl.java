@@ -48,3 +48,4 @@ public class DDMFieldAttributeCTServiceImpl
 	private DDMFieldAttributePersistence _ddmFieldAttributePersistence;
 
 }
+// SB-Hash:525976077

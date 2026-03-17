@@ -595,3 +595,4 @@ public class DepotAppCustomizationUtil {
 	private static volatile DepotAppCustomizationPersistence _persistence;
 
 }
+// SB-Hash:1462608185

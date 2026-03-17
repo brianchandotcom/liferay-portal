@@ -55,3 +55,4 @@ public interface CPInstanceUnitOfMeasure
 			};
 
 }
+// SB-Hash:1907932046

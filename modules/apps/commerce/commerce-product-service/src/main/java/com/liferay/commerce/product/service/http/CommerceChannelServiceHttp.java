@@ -711,3 +711,4 @@ public class CommerceChannelServiceHttp {
 			new Class[] {String.class, long.class};
 
 }
+// SB-Hash:1627604430

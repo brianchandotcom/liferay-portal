@@ -134,3 +134,4 @@ public class CommerceWishListModelArgumentsResolver
 	}
 
 }
+// SB-Hash:1470884700

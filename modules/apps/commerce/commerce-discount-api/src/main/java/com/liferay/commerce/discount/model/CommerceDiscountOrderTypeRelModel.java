@@ -260,3 +260,4 @@ public interface CommerceDiscountOrderTypeRelModel
 	}
 
 }
+// SB-Hash:1517753390

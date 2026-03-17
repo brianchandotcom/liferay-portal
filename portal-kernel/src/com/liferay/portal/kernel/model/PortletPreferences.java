@@ -49,3 +49,4 @@ public interface PortletPreferences
 			};
 
 }
+// SB-Hash:-767738335

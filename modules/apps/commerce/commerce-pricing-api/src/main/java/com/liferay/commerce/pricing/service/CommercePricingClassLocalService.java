@@ -401,3 +401,4 @@ public interface CommercePricingClassLocalService
 		throws E;
 
 }
+// SB-Hash:-1063860122

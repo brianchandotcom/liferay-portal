@@ -323,3 +323,4 @@ public interface CompanyService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:163255992

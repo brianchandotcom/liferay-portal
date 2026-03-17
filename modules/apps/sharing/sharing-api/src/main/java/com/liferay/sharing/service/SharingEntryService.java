@@ -171,3 +171,4 @@ public interface SharingEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1055087372

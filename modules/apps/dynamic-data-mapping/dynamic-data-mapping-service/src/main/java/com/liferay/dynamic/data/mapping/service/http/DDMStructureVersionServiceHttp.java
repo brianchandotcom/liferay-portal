@@ -231,3 +231,4 @@ public class DDMStructureVersionServiceHttp {
 		new Class[] {long.class};
 
 }
+// SB-Hash:1256282450

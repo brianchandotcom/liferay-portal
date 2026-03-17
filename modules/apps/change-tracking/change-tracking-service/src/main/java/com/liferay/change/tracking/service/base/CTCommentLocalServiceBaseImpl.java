@@ -445,3 +445,4 @@ public abstract class CTCommentLocalServiceBaseImpl
 		CTCommentLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1180797920

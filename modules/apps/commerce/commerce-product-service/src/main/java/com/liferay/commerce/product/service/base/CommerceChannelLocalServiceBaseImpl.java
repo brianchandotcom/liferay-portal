@@ -598,3 +598,4 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 		CommerceChannelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1331667981

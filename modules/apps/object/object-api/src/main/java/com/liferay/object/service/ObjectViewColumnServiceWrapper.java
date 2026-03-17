@@ -53,3 +53,4 @@ public class ObjectViewColumnServiceWrapper
 	private ObjectViewColumnService _objectViewColumnService;
 
 }
+// SB-Hash:523841029

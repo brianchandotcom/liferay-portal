@@ -131,3 +131,4 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 		java.util.Map<java.util.Locale, String> urlTitleMap);
 
 }
+// SB-Hash:1435482833

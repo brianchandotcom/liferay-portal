@@ -159,3 +159,4 @@ public class CPDefinitionVirtualSettingServiceWrapper
 		_cpDefinitionVirtualSettingService;
 
 }
+// SB-Hash:1131135020

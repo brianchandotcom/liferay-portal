@@ -295,3 +295,4 @@ public class KaleoInstanceTokenCacheModel
 	public long completionDate;
 
 }
+// SB-Hash:1392506892

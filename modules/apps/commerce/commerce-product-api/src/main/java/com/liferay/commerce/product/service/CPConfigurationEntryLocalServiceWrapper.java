@@ -605,3 +605,4 @@ public class CPConfigurationEntryLocalServiceWrapper
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
 
 }
+// SB-Hash:549738440

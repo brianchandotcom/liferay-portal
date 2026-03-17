@@ -62,3 +62,4 @@ public class CTAutoResolutionInfoTable
 	}
 
 }
+// SB-Hash:-887824966

@@ -1625,3 +1625,4 @@ public class CommerceCatalogUtil {
 	private static volatile CommerceCatalogPersistence _persistence;
 
 }
+// SB-Hash:1425654977

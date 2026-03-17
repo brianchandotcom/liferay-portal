@@ -441,3 +441,4 @@ public interface PatcherFixRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:973466868

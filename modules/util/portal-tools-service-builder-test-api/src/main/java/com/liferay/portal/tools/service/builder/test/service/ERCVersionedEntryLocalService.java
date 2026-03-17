@@ -379,3 +379,4 @@ public interface ERCVersionedEntryLocalService
 		throws PortalException;
 
 }
+// SB-Hash:2069985201

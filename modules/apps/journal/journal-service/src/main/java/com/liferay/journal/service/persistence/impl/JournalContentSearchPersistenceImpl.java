@@ -6200,3 +6200,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
+// SB-Hash:597038742

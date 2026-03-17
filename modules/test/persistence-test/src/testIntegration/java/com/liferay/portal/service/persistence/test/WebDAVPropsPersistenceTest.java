@@ -497,3 +497,4 @@ public class WebDAVPropsPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1876325657

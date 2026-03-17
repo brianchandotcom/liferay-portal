@@ -495,3 +495,4 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 		CommerceTaxFixedRateAddressRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:251081095

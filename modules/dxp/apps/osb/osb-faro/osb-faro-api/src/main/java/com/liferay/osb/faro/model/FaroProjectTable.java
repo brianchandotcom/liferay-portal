@@ -89,3 +89,4 @@ public class FaroProjectTable extends BaseTable<FaroProjectTable> {
 	}
 
 }
+// SB-Hash:1295361779

@@ -495,3 +495,4 @@ public interface AssetAutoTaggerEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-377896856

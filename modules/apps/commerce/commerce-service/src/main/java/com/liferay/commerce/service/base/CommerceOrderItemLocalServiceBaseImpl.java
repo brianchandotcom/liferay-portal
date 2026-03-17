@@ -620,3 +620,4 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 		CommerceOrderItemLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-931167295

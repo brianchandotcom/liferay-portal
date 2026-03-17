@@ -129,3 +129,4 @@ public abstract class SharingEntryServiceBaseImpl
 		SharingEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:-701674934

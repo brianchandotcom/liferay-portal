@@ -444,3 +444,4 @@ public abstract class CTScoreLocalServiceBaseImpl
 		CTScoreLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-369719705

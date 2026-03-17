@@ -59,3 +59,4 @@ public interface CPSpecificationOptionListTypeDefinitionRelService
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:119929093

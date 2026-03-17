@@ -391,3 +391,4 @@ public class PatcherBuildRelLocalServiceWrapper
 	private PatcherBuildRelLocalService _patcherBuildRelLocalService;
 
 }
+// SB-Hash:2070484805

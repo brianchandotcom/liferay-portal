@@ -502,3 +502,4 @@ public interface AssetEntryAssetCategoryRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:1858101119

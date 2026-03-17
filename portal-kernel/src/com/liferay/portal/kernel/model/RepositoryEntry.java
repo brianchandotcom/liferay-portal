@@ -47,3 +47,4 @@ public interface RepositoryEntry extends PersistedModel, RepositoryEntryModel {
 		};
 
 }
+// SB-Hash:-130409305

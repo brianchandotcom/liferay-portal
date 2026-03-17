@@ -1364,3 +1364,4 @@ public class PortletPersistenceImpl
 	}
 
 }
+// SB-Hash:1772066699

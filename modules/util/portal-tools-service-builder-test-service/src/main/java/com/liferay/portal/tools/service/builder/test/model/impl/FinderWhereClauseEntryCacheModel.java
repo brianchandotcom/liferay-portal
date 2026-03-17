@@ -124,3 +124,4 @@ public class FinderWhereClauseEntryCacheModel
 	public String nickname;
 
 }
+// SB-Hash:1429523993

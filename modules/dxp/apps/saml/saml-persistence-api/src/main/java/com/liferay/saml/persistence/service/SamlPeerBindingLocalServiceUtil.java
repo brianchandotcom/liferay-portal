@@ -343,3 +343,4 @@ public class SamlPeerBindingLocalServiceUtil {
 			SamlPeerBindingLocalService.class);
 
 }
+// SB-Hash:-38620944

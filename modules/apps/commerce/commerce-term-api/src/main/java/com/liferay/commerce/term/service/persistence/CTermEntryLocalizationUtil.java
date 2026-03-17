@@ -544,3 +544,4 @@ public class CTermEntryLocalizationUtil {
 	private static volatile CTermEntryLocalizationPersistence _persistence;
 
 }
+// SB-Hash:-274202723

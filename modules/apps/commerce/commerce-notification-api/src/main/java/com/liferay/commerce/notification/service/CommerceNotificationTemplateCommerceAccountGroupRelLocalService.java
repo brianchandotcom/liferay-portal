@@ -308,3 +308,4 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelLocalService
 				commerceNotificationTemplateCommerceAccountGroupRel);
 
 }
+// SB-Hash:548292280

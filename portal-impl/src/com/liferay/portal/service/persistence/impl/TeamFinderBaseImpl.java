@@ -62,3 +62,4 @@ public class TeamFinderBaseImpl extends BasePersistenceImpl<Team> {
 		TeamFinderBaseImpl.class);
 
 }
+// SB-Hash:-479558585

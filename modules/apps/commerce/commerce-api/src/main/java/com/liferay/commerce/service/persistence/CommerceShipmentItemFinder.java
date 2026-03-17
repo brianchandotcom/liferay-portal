@@ -18,3 +18,4 @@ public interface CommerceShipmentItemFinder {
 		long commerceShipmentId, long commerceOrderItemId);
 
 }
+// SB-Hash:767073895

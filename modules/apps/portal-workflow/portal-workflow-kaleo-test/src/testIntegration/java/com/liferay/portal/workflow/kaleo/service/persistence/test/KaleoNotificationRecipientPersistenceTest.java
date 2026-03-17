@@ -619,3 +619,4 @@ public class KaleoNotificationRecipientPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1735833923

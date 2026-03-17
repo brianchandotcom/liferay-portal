@@ -39,3 +39,4 @@ public abstract class MemberRequestBaseImpl
 	}
 
 }
+// SB-Hash:916159561

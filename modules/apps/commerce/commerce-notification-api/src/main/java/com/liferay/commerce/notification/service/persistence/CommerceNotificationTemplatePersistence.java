@@ -1191,3 +1191,4 @@ public interface CommerceNotificationTemplatePersistence
 	public int countAll();
 
 }
+// SB-Hash:-1019741776

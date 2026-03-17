@@ -1294,3 +1294,4 @@ public class ObjectDefinitionSettingUtil {
 	private static volatile ObjectDefinitionSettingPersistence _persistence;
 
 }
+// SB-Hash:-456669156

@@ -1390,3 +1390,4 @@ public class CPDefinitionInventoryModelImpl
 	private CPDefinitionInventory _escapedModel;
 
 }
+// SB-Hash:-440232191

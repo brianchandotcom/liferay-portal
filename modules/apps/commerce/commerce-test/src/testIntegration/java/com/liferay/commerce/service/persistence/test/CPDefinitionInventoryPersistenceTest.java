@@ -696,3 +696,4 @@ public class CPDefinitionInventoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:668321345

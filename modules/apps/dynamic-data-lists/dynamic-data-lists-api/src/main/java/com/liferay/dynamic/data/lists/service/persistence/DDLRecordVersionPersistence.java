@@ -840,3 +840,4 @@ public interface DDLRecordVersionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1011236844

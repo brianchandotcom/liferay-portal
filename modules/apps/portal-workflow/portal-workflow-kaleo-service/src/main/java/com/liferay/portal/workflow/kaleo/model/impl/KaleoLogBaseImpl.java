@@ -39,3 +39,4 @@ public abstract class KaleoLogBaseImpl
 	}
 
 }
+// SB-Hash:-1984899876

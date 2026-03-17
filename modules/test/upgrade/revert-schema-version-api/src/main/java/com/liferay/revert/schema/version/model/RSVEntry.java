@@ -50,3 +50,4 @@ public interface RSVEntry extends PersistedModel, RSVEntryModel {
 		};
 
 }
+// SB-Hash:-1181388451

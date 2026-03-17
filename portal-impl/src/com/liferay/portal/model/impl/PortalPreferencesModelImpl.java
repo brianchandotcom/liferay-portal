@@ -673,3 +673,4 @@ public class PortalPreferencesModelImpl
 	private PortalPreferences _escapedModel;
 
 }
+// SB-Hash:1394040939

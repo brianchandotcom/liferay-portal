@@ -52,3 +52,4 @@ public interface EROrganizationLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:1378807779

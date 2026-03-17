@@ -456,3 +456,4 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 		_kaleoTaskFormInstanceLocalService;
 
 }
+// SB-Hash:1226110168

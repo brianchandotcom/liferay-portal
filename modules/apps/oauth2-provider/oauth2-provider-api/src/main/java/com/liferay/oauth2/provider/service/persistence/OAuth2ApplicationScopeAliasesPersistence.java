@@ -453,3 +453,4 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	public int countAll();
 
 }
+// SB-Hash:1788093075

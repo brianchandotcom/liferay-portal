@@ -626,3 +626,4 @@ public abstract class LayoutLocalizationLocalServiceBaseImpl
 		LayoutLocalizationLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:337951224

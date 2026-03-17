@@ -399,3 +399,4 @@ public class FaroNotificationLocalServiceWrapper
 	private FaroNotificationLocalService _faroNotificationLocalService;
 
 }
+// SB-Hash:790283126

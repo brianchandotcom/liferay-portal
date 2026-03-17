@@ -166,3 +166,4 @@ public class COREntryServiceWrapper
 	private COREntryService _corEntryService;
 
 }
+// SB-Hash:500964882

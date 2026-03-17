@@ -39,3 +39,4 @@ public abstract class CommerceOrderItemBaseImpl
 	}
 
 }
+// SB-Hash:46024114

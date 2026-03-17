@@ -462,3 +462,4 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 		CommerceTaxMethodLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1283643417

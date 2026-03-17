@@ -217,3 +217,4 @@ public class CommerceInventoryWarehouseRelServiceUtil {
 			CommerceInventoryWarehouseRelService.class);
 
 }
+// SB-Hash:1070941599

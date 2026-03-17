@@ -79,3 +79,4 @@ public abstract class DDMTemplateFinderBaseImpl
 		DDMTemplateFinderBaseImpl.class);
 
 }
+// SB-Hash:161472208

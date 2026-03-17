@@ -527,3 +527,4 @@ public class LocalizedEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1464272190

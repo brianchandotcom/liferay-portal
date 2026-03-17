@@ -961,3 +961,4 @@ public interface ManyColumnsEntryModel extends BaseModel<ManyColumnsEntry> {
 	}
 
 }
+// SB-Hash:1422360889

@@ -40,3 +40,4 @@ public abstract class CommerceDiscountRuleBaseImpl
 	}
 
 }
+// SB-Hash:937802923

@@ -273,3 +273,4 @@ public interface RedundantIndexEntryLocalService
 		RedundantIndexEntry redundantIndexEntry);
 
 }
+// SB-Hash:901513715

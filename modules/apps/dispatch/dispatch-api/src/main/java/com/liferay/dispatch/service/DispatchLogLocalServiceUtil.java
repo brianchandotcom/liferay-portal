@@ -347,3 +347,4 @@ public class DispatchLogLocalServiceUtil {
 			DispatchLogLocalServiceUtil.class, DispatchLogLocalService.class);
 
 }
+// SB-Hash:-2128174621

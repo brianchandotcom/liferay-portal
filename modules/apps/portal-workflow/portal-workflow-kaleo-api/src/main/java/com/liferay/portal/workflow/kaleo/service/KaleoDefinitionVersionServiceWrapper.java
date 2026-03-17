@@ -72,3 +72,4 @@ public class KaleoDefinitionVersionServiceWrapper
 	private KaleoDefinitionVersionService _kaleoDefinitionVersionService;
 
 }
+// SB-Hash:322205535

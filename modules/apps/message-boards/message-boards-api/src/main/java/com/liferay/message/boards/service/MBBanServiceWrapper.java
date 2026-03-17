@@ -67,3 +67,4 @@ public class MBBanServiceWrapper
 	private MBBanService _mbBanService;
 
 }
+// SB-Hash:1640430326

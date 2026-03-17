@@ -139,3 +139,4 @@ public class KaleoDefinitionVersionServiceHttp {
 		new Class[] {long.class, String.class};
 
 }
+// SB-Hash:-1021276326

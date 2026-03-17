@@ -388,3 +388,4 @@ public interface CommerceNotificationTemplateLocalService
 		throws PortalException;
 
 }
+// SB-Hash:252756082

@@ -462,3 +462,4 @@ public abstract class PatcherTicketHintLocalServiceBaseImpl
 		PatcherTicketHintLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1282648417

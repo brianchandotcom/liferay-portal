@@ -1811,3 +1811,4 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public int countAll();
 
 }
+// SB-Hash:1918768114

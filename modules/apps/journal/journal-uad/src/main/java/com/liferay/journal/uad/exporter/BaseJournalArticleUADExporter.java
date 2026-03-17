@@ -53,12 +53,12 @@ public abstract class BaseJournalArticleUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(journalArticle.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(journalArticle.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(journalArticle.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
@@ -74,3 +74,4 @@ public abstract class BaseJournalArticleUADExporter
 	protected JournalArticleLocalService journalArticleLocalService;
 
 }
+// SB-Hash:8135909

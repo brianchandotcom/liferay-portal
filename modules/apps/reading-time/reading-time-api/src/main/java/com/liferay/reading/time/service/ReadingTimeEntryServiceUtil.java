@@ -45,3 +45,4 @@ public class ReadingTimeEntryServiceUtil {
 			ReadingTimeEntryServiceUtil.class, ReadingTimeEntryService.class);
 
 }
+// SB-Hash:590793942

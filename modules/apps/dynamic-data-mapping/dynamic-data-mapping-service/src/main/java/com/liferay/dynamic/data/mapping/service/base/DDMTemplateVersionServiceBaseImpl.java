@@ -126,3 +126,4 @@ public abstract class DDMTemplateVersionServiceBaseImpl
 		DDMTemplateVersionServiceBaseImpl.class);
 
 }
+// SB-Hash:1353770513

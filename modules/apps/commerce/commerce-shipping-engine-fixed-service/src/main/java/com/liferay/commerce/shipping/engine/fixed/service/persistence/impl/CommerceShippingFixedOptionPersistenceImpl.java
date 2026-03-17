@@ -1552,3 +1552,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
+// SB-Hash:557291542

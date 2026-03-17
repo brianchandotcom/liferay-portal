@@ -587,3 +587,4 @@ public abstract class OAuth2ApplicationLocalServiceBaseImpl
 		OAuth2ApplicationLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-612152224

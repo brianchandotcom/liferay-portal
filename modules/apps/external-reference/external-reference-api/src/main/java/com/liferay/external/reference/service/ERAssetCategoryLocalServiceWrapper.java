@@ -68,3 +68,4 @@ public class ERAssetCategoryLocalServiceWrapper
 	private ERAssetCategoryLocalService _erAssetCategoryLocalService;
 
 }
+// SB-Hash:1257149090

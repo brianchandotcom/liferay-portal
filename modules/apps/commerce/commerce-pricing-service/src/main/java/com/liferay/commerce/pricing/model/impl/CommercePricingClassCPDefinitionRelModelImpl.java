@@ -960,3 +960,4 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	private CommercePricingClassCPDefinitionRel _escapedModel;
 
 }
+// SB-Hash:1920419540

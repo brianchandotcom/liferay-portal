@@ -470,3 +470,4 @@ public class CommercePaymentEntryCacheModel
 	public int type;
 
 }
+// SB-Hash:984367069

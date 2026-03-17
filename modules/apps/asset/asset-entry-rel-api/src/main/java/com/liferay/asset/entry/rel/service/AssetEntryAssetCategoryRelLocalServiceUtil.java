@@ -437,3 +437,4 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 			AssetEntryAssetCategoryRelLocalService.class);
 
 }
+// SB-Hash:245674036

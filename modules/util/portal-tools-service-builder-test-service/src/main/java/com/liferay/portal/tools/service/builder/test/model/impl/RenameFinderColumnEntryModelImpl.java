@@ -618,3 +618,4 @@ public class RenameFinderColumnEntryModelImpl
 	private RenameFinderColumnEntry _escapedModel;
 
 }
+// SB-Hash:-1079298082

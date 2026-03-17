@@ -167,3 +167,4 @@ public class RenameFinderColumnEntryWrapper
 	}
 
 }
+// SB-Hash:662959328

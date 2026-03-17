@@ -301,3 +301,4 @@ public interface FinderWhereClauseEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-518233924

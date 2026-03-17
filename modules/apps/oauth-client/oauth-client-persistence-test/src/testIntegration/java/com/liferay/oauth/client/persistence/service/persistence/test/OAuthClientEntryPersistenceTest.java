@@ -606,3 +606,4 @@ public class OAuthClientEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-2105331031

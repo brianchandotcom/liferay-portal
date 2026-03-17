@@ -53,12 +53,12 @@ public abstract class BaseWikiPageUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(wikiPage.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(wikiPage.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(wikiPage.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
@@ -82,3 +82,4 @@ public abstract class BaseWikiPageUADExporter
 	protected WikiPageLocalService wikiPageLocalService;
 
 }
+// SB-Hash:-1651130083

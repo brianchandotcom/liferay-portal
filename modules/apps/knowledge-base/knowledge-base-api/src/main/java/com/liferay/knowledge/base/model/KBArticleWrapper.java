@@ -1283,3 +1283,4 @@ public class KBArticleWrapper
 	}
 
 }
+// SB-Hash:2116278954

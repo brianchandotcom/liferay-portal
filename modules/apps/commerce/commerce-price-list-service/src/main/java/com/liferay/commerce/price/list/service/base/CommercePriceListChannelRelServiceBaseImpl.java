@@ -137,3 +137,4 @@ public abstract class CommercePriceListChannelRelServiceBaseImpl
 		CommercePriceListChannelRelServiceBaseImpl.class);
 
 }
+// SB-Hash:-601605394

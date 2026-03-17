@@ -59,3 +59,4 @@ public class CommerceInventoryWarehouseRelTable
 	}
 
 }
+// SB-Hash:-1487422141

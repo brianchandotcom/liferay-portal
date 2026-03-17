@@ -60,3 +60,4 @@ public interface CommerceDiscountRule
 		com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties);
 
 }
+// SB-Hash:-125245052

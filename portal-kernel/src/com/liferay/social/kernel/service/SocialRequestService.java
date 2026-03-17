@@ -55,3 +55,4 @@ public interface SocialRequestService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:657835968

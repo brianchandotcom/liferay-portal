@@ -132,3 +132,4 @@ public class DepotEntryServiceUtil {
 		new Snapshot<>(DepotEntryServiceUtil.class, DepotEntryService.class);
 
 }
+// SB-Hash:1376930221

@@ -110,3 +110,4 @@ public class CommercePriceModifierTable
 	}
 
 }
+// SB-Hash:906204855

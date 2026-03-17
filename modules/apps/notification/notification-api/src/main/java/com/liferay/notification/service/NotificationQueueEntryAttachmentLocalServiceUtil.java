@@ -346,3 +346,4 @@ public class NotificationQueueEntryAttachmentLocalServiceUtil {
 			NotificationQueueEntryAttachmentLocalService.class);
 
 }
+// SB-Hash:1259559571

@@ -77,3 +77,4 @@ public abstract class DefinitionFinderBaseImpl
 		DefinitionFinderBaseImpl.class);
 
 }
+// SB-Hash:-171966176

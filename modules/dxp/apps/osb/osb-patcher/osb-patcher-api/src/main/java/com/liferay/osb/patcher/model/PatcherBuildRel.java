@@ -50,3 +50,4 @@ public interface PatcherBuildRel extends PatcherBuildRelModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-1204215165

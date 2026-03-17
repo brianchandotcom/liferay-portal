@@ -632,3 +632,4 @@ public abstract class CommerceDiscountLocalServiceBaseImpl
 		CommerceDiscountLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-529778332

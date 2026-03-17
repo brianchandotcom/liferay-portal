@@ -337,3 +337,4 @@ public interface SXPBlueprintLocalService
 	public SXPBlueprint updateSXPBlueprint(SXPBlueprint sxpBlueprint);
 
 }
+// SB-Hash:227853017

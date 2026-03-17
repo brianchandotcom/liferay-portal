@@ -103,3 +103,4 @@ public class CommerceDiscountOrderTypeRelServiceUtil {
 			CommerceDiscountOrderTypeRelService.class);
 
 }
+// SB-Hash:1270904687

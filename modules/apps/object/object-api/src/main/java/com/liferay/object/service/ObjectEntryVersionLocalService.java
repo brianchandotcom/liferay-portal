@@ -365,3 +365,4 @@ public interface ObjectEntryVersionLocalService
 		ObjectEntryVersion objectEntryVersion);
 
 }
+// SB-Hash:1122493362

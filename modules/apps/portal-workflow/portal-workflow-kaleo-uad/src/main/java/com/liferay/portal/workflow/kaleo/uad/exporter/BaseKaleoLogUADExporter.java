@@ -66,3 +66,4 @@ public abstract class BaseKaleoLogUADExporter
 	protected KaleoLogLocalService kaleoLogLocalService;
 
 }
+// SB-Hash:-617255609

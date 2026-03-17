@@ -511,3 +511,4 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 		CommercePriceModifierRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1935254178

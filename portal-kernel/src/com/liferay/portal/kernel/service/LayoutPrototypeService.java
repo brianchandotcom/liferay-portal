@@ -82,3 +82,4 @@ public interface LayoutPrototypeService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:67404573

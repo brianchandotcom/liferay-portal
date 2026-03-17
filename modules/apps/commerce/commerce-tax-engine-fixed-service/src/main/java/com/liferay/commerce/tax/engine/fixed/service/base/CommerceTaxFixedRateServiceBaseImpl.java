@@ -126,3 +126,4 @@ public abstract class CommerceTaxFixedRateServiceBaseImpl
 		CommerceTaxFixedRateServiceBaseImpl.class);
 
 }
+// SB-Hash:1738575747

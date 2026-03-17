@@ -141,3 +141,4 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:174036909

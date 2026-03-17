@@ -50,3 +50,4 @@ public interface SequenceEntry extends PersistedModel, SequenceEntryModel {
 		};
 
 }
+// SB-Hash:-448461652

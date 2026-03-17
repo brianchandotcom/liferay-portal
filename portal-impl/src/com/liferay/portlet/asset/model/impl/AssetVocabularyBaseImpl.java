@@ -39,3 +39,4 @@ public abstract class AssetVocabularyBaseImpl
 	}
 
 }
+// SB-Hash:145388947

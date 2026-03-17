@@ -56,3 +56,4 @@ public interface CommerceTermEntry
 			typeSettingsUnicodeProperties);
 
 }
+// SB-Hash:-1417795032

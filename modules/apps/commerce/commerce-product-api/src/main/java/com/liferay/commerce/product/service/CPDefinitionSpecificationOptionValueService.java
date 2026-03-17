@@ -124,3 +124,4 @@ public interface CPDefinitionSpecificationOptionValueService
 		throws PortalException;
 
 }
+// SB-Hash:679065470

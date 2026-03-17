@@ -381,3 +381,4 @@ public class PluginSettingLocalServiceWrapper
 	private PluginSettingLocalService _pluginSettingLocalService;
 
 }
+// SB-Hash:-2050714116

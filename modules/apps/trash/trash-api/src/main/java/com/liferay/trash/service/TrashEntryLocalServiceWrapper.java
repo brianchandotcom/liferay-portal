@@ -568,3 +568,4 @@ public class TrashEntryLocalServiceWrapper
 	private TrashEntryLocalService _trashEntryLocalService;
 
 }
+// SB-Hash:1552995298

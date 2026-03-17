@@ -1498,3 +1498,4 @@ public class FaroProjectModelImpl
 	private FaroProject _escapedModel;
 
 }
+// SB-Hash:-667493939

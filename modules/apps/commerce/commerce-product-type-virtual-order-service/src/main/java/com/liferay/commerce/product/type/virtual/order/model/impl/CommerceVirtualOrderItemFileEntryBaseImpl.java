@@ -42,3 +42,4 @@ public abstract class CommerceVirtualOrderItemFileEntryBaseImpl
 	}
 
 }
+// SB-Hash:1412633035

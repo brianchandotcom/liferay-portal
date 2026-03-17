@@ -501,3 +501,4 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		DDMStorageLinkLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-944773625

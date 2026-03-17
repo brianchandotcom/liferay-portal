@@ -571,3 +571,4 @@ public abstract class SXPElementLocalServiceBaseImpl
 		SXPElementLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-716170125

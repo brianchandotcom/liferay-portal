@@ -1306,3 +1306,4 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	public int countAll();
 
 }
+// SB-Hash:1770092936

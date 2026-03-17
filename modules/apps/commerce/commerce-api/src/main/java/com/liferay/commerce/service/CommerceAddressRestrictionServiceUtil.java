@@ -46,3 +46,4 @@ public class CommerceAddressRestrictionServiceUtil {
 			CommerceAddressRestrictionService.class);
 
 }
+// SB-Hash:954384532

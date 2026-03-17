@@ -1831,3 +1831,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
+// SB-Hash:1247756152

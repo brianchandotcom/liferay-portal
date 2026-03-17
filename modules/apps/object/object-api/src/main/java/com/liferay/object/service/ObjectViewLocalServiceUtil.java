@@ -378,3 +378,4 @@ public class ObjectViewLocalServiceUtil {
 			ObjectViewLocalServiceUtil.class, ObjectViewLocalService.class);
 
 }
+// SB-Hash:548718373

@@ -50,3 +50,4 @@ public interface CTRemote extends CTRemoteModel, PersistedModel {
 	public String getUserName();
 
 }
+// SB-Hash:847769787

@@ -77,3 +77,4 @@ public abstract class JournalFolderFinderBaseImpl
 		JournalFolderFinderBaseImpl.class);
 
 }
+// SB-Hash:319618876

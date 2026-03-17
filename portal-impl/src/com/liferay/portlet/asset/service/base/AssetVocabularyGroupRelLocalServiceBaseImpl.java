@@ -628,3 +628,4 @@ public abstract class AssetVocabularyGroupRelLocalServiceBaseImpl
 		AssetVocabularyGroupRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1067315460

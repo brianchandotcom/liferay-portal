@@ -112,3 +112,4 @@ public class ClassNameServiceHttp {
 		new Class[] {String.class};
 
 }
+// SB-Hash:-821228138

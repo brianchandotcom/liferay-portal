@@ -53,3 +53,4 @@ public class FaroChannelTable extends BaseTable<FaroChannelTable> {
 	}
 
 }
+// SB-Hash:-961372084

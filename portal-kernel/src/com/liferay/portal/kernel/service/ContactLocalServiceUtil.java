@@ -350,3 +350,4 @@ public class ContactLocalServiceUtil {
 	private static volatile ContactLocalService _service;
 
 }
+// SB-Hash:444362040

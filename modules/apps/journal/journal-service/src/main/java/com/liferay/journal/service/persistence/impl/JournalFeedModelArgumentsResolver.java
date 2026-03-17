@@ -132,3 +132,4 @@ public class JournalFeedModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// SB-Hash:-338162061

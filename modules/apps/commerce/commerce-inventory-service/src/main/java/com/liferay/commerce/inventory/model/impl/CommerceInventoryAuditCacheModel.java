@@ -255,3 +255,4 @@ public class CommerceInventoryAuditCacheModel
 	public String unitOfMeasureKey;
 
 }
+// SB-Hash:-337333987

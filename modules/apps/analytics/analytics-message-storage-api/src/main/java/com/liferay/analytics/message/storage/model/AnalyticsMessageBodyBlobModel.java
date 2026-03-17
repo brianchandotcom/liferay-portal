@@ -50,3 +50,4 @@ public class AnalyticsMessageBodyBlobModel {
 	private Blob _bodyBlob;
 
 }
+// SB-Hash:1981279260

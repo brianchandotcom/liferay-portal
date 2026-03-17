@@ -272,3 +272,4 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:146096681

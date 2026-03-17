@@ -592,3 +592,4 @@ public class CProductPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-113177212

@@ -1149,3 +1149,4 @@ public class ListTypeDefinitionUtil {
 	private static volatile ListTypeDefinitionPersistence _persistence;
 
 }
+// SB-Hash:-678988963

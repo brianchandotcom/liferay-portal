@@ -91,3 +91,4 @@ public class AnnouncementsDeliveryServiceHttp {
 		new Class[] {long.class, String.class, boolean.class, boolean.class};
 
 }
+// SB-Hash:1335837138

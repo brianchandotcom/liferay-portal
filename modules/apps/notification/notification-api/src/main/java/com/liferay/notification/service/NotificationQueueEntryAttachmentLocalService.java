@@ -284,3 +284,4 @@ public interface NotificationQueueEntryAttachmentLocalService
 			NotificationQueueEntryAttachment notificationQueueEntryAttachment);
 
 }
+// SB-Hash:-1994831153

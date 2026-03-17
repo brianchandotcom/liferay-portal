@@ -76,3 +76,4 @@ public abstract class BaseBookmarksFolderUADDisplay
 	protected BookmarksFolderLocalService bookmarksFolderLocalService;
 
 }
+// SB-Hash:193479276

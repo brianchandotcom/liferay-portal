@@ -58,3 +58,4 @@ public interface CPDVirtualSettingFileEntry
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-1105837289

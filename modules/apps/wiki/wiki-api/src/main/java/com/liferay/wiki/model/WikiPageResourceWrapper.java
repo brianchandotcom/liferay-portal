@@ -312,3 +312,4 @@ public class WikiPageResourceWrapper
 	}
 
 }
+// SB-Hash:-65745506

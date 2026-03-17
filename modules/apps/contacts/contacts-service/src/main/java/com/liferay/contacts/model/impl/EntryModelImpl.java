@@ -861,3 +861,4 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private Entry _escapedModel;
 
 }
+// SB-Hash:-1527492531

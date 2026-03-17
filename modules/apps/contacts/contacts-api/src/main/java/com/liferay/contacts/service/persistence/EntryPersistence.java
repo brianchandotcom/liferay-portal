@@ -342,3 +342,4 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	public int countAll();
 
 }
+// SB-Hash:636838781

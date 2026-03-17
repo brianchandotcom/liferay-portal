@@ -512,3 +512,4 @@ public class DDMTemplateLinkUtil {
 	private static volatile DDMTemplateLinkPersistence _persistence;
 
 }
+// SB-Hash:1385011254

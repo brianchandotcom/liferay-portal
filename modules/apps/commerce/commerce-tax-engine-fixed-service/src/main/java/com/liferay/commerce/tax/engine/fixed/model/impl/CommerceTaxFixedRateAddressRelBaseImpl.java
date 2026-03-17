@@ -42,3 +42,4 @@ public abstract class CommerceTaxFixedRateAddressRelBaseImpl
 	}
 
 }
+// SB-Hash:1835767686

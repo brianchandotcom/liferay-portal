@@ -1368,3 +1368,4 @@ public interface KaleoTaskAssignmentInstancePersistence
 	public int countAll();
 
 }
+// SB-Hash:-568142099

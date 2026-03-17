@@ -483,3 +483,4 @@ public abstract class SequenceEntryLocalServiceBaseImpl
 		SequenceEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1817566699

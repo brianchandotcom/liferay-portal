@@ -58,3 +58,4 @@ public interface CommerceShippingFixedOptionQualifier
 			};
 
 }
+// SB-Hash:-1517449747

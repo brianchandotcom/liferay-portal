@@ -372,3 +372,4 @@ public class CommerceTermEntryRelLocalServiceUtil {
 			CommerceTermEntryRelLocalService.class);
 
 }
+// SB-Hash:1489538058

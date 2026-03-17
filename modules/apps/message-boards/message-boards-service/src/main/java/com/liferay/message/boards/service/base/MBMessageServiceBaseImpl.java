@@ -129,3 +129,4 @@ public abstract class MBMessageServiceBaseImpl
 		MBMessageServiceBaseImpl.class);
 
 }
+// SB-Hash:-1231598536

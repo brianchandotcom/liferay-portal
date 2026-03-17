@@ -245,3 +245,4 @@ public interface CommerceDiscountRuleModel
 	}
 
 }
+// SB-Hash:-1451831705

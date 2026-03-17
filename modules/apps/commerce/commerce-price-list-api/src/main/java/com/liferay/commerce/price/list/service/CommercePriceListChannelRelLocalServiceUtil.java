@@ -419,3 +419,4 @@ public class CommercePriceListChannelRelLocalServiceUtil {
 			CommercePriceListChannelRelLocalService.class);
 
 }
+// SB-Hash:2141169675

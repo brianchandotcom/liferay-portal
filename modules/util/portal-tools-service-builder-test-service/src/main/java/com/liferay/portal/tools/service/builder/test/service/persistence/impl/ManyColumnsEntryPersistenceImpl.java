@@ -600,3 +600,4 @@ public class ManyColumnsEntryPersistenceImpl
 	}
 
 }
+// SB-Hash:-760403257

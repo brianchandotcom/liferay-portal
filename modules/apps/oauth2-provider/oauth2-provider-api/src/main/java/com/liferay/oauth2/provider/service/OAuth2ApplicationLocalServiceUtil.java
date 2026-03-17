@@ -544,3 +544,4 @@ public class OAuth2ApplicationLocalServiceUtil {
 			OAuth2ApplicationLocalService.class);
 
 }
+// SB-Hash:1677176149

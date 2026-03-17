@@ -701,3 +701,4 @@ public class StyleBookEntryLocalServiceWrapper
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }
+// SB-Hash:436187170

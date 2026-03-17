@@ -35,3 +35,4 @@ public class LocalizedEntryTable extends BaseTable<LocalizedEntryTable> {
 	}
 
 }
+// SB-Hash:349779186

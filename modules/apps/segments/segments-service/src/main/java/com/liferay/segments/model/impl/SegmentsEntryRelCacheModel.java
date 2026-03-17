@@ -210,3 +210,4 @@ public class SegmentsEntryRelCacheModel
 	public long classPK;
 
 }
+// SB-Hash:-476949236

@@ -771,3 +771,4 @@ public class CTermEntryLocalizationModelImpl
 	private CTermEntryLocalization _escapedModel;
 
 }
+// SB-Hash:856495700

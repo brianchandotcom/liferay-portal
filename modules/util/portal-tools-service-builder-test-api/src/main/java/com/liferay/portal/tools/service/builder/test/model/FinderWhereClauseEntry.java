@@ -52,3 +52,4 @@ public interface FinderWhereClauseEntry
 			};
 
 }
+// SB-Hash:1973744277

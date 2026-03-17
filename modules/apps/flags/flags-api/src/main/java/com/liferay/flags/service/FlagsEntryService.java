@@ -55,3 +55,4 @@ public interface FlagsEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:1795322184

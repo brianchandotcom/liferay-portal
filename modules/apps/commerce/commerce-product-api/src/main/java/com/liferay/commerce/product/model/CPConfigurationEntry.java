@@ -63,3 +63,4 @@ public interface CPConfigurationEntry
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-108382113

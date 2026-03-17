@@ -135,3 +135,4 @@ public class JournalArticleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// SB-Hash:1518177634

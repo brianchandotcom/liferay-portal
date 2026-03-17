@@ -38,3 +38,4 @@ public abstract class EntryBaseImpl extends EntryModelImpl implements Entry {
 	}
 
 }
+// SB-Hash:-581423812

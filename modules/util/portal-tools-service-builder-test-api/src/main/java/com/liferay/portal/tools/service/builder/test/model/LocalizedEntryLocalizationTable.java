@@ -48,3 +48,4 @@ public class LocalizedEntryLocalizationTable
 	}
 
 }
+// SB-Hash:1955072385

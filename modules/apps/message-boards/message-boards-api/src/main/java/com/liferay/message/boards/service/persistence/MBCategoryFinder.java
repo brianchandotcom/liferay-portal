@@ -73,3 +73,4 @@ public interface MBCategoryFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 }
+// SB-Hash:-1262457645

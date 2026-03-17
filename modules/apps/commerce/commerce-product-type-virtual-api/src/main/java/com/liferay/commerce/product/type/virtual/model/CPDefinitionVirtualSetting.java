@@ -75,3 +75,4 @@ public interface CPDefinitionVirtualSetting
 	public boolean isUseTermsOfUseJournal();
 
 }
+// SB-Hash:483851136

@@ -426,3 +426,4 @@ public class CommerceChannelAccountEntryRelLocalServiceUtil {
 			CommerceChannelAccountEntryRelLocalService.class);
 
 }
+// SB-Hash:1393129664

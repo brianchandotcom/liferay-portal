@@ -759,3 +759,4 @@ public class RegionLocalizationModelImpl
 	private RegionLocalization _escapedModel;
 
 }
+// SB-Hash:2001443875

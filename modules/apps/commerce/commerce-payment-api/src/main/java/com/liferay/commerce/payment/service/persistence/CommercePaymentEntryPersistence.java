@@ -1219,3 +1219,4 @@ public interface CommercePaymentEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1707479862

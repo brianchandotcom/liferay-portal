@@ -621,3 +621,4 @@ public class KBCommentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-684527316

@@ -62,3 +62,4 @@ public interface CommerceVirtualOrderItemFileEntry
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:1785911046

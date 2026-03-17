@@ -133,3 +133,4 @@ public abstract class CPConfigurationEntrySettingServiceBaseImpl
 		CPConfigurationEntrySettingServiceBaseImpl.class);
 
 }
+// SB-Hash:2045045857

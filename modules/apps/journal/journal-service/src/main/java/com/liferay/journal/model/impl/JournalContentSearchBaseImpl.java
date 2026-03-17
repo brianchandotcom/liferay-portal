@@ -40,3 +40,4 @@ public abstract class JournalContentSearchBaseImpl
 	}
 
 }
+// SB-Hash:361744164

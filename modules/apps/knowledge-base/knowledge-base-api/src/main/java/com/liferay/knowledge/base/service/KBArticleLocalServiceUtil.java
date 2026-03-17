@@ -953,3 +953,4 @@ public class KBArticleLocalServiceUtil {
 			KBArticleLocalServiceUtil.class, KBArticleLocalService.class);
 
 }
+// SB-Hash:-827710605

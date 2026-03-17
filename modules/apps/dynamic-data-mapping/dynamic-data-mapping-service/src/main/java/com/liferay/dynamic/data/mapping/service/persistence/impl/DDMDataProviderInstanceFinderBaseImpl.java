@@ -79,3 +79,4 @@ public abstract class DDMDataProviderInstanceFinderBaseImpl
 		DDMDataProviderInstanceFinderBaseImpl.class);
 
 }
+// SB-Hash:-1135637744

@@ -47,3 +47,4 @@ public interface ObjectLayoutTabService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:490183583

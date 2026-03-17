@@ -482,3 +482,4 @@ public abstract class CommerceInventoryAuditLocalServiceBaseImpl
 		CommerceInventoryAuditLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1971980659

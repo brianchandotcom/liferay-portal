@@ -63,3 +63,4 @@ public interface UserGroupGroupRole
 	public int hashCode();
 
 }
+// SB-Hash:22219763

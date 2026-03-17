@@ -443,3 +443,4 @@ public class MBMailingListCacheModel
 	public boolean active;
 
 }
+// SB-Hash:528984383

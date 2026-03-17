@@ -150,3 +150,4 @@ public class AccountRoleCacheModel
 	public long roleId;
 
 }
+// SB-Hash:477346215

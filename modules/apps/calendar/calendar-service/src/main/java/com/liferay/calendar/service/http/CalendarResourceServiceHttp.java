@@ -445,3 +445,4 @@ public class CalendarResourceServiceHttp {
 		};
 
 }
+// SB-Hash:482640267

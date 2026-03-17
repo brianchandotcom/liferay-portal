@@ -55,3 +55,4 @@ public interface DepotEntryPinService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:2100557329

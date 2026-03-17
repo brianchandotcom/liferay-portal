@@ -32,3 +32,4 @@ public interface CommercePriceListChannelRelFinder {
 				boolean inlineSQLHelper);
 
 }
+// SB-Hash:-659004186

@@ -340,3 +340,4 @@ public class PluginSettingWrapper
 	}
 
 }
+// SB-Hash:-262149758

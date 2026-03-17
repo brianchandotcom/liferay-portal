@@ -1147,3 +1147,4 @@ public interface FriendlyURLEntryLocalizationPersistence
 	public int countAll();
 
 }
+// SB-Hash:1264635615

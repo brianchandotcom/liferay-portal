@@ -1111,3 +1111,4 @@ public interface CPSpecificationOptionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-529895701

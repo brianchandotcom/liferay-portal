@@ -573,3 +573,4 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 	public int countAll();
 
 }
+// SB-Hash:1383033040

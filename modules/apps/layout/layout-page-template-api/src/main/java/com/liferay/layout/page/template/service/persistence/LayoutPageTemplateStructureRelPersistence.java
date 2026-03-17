@@ -875,3 +875,4 @@ public interface LayoutPageTemplateStructureRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:1052712165

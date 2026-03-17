@@ -105,3 +105,4 @@ public abstract class BaseKaleoTaskAssignmentInstanceUADAnonymizer
 		kaleoTaskAssignmentInstanceLocalService;
 
 }
+// SB-Hash:629791508

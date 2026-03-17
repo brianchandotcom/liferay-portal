@@ -109,3 +109,4 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 		BlogsStatsUserLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-34098130

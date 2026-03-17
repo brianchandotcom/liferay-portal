@@ -245,3 +245,4 @@ public class SiteFriendlyURLCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-471665312

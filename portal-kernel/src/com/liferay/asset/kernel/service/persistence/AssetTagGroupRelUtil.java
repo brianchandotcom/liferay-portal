@@ -1079,3 +1079,4 @@ public class AssetTagGroupRelUtil {
 	private static volatile AssetTagGroupRelPersistence _persistence;
 
 }
+// SB-Hash:-938357305

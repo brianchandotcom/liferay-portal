@@ -1346,3 +1346,4 @@ public class DefinitionModelImpl
 	private Definition _escapedModel;
 
 }
+// SB-Hash:605988836

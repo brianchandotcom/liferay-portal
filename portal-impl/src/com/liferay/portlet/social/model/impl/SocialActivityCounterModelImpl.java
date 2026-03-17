@@ -1113,3 +1113,4 @@ public class SocialActivityCounterModelImpl
 	private SocialActivityCounter _escapedModel;
 
 }
+// SB-Hash:-960109347

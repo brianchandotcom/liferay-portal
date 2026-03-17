@@ -695,3 +695,4 @@ public class ClientExtensionEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1870917096

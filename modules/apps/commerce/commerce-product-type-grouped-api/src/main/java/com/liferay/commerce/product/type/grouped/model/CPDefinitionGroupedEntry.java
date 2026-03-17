@@ -68,3 +68,4 @@ public interface CPDefinitionGroupedEntry
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:352657955

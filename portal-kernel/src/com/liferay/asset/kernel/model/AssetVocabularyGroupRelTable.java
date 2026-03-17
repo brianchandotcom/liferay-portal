@@ -49,3 +49,4 @@ public class AssetVocabularyGroupRelTable
 	}
 
 }
+// SB-Hash:1244633168

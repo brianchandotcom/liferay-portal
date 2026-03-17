@@ -39,3 +39,4 @@ public class SpringEntryTable extends BaseTable<SpringEntryTable> {
 	}
 
 }
+// SB-Hash:247969434

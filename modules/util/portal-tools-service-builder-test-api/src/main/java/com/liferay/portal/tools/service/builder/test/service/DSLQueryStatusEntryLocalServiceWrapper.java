@@ -368,3 +368,4 @@ public class DSLQueryStatusEntryLocalServiceWrapper
 	private DSLQueryStatusEntryLocalService _dslQueryStatusEntryLocalService;
 
 }
+// SB-Hash:1175377085

@@ -564,3 +564,4 @@ public class SubscriptionLocalServiceUtil {
 			SubscriptionLocalServiceUtil.class, SubscriptionLocalService.class);
 
 }
+// SB-Hash:710032732

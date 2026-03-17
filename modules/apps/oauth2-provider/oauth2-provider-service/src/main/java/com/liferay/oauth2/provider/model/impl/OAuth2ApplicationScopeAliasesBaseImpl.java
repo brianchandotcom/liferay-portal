@@ -42,3 +42,4 @@ public abstract class OAuth2ApplicationScopeAliasesBaseImpl
 	}
 
 }
+// SB-Hash:378116452

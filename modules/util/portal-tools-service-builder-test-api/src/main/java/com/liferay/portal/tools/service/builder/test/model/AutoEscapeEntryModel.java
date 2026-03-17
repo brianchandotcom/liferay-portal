@@ -95,3 +95,4 @@ public interface AutoEscapeEntryModel extends BaseModel<AutoEscapeEntry> {
 	}
 
 }
+// SB-Hash:1654236956

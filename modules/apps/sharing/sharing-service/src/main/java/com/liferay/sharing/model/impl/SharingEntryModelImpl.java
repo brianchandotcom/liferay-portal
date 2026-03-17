@@ -1265,3 +1265,4 @@ public class SharingEntryModelImpl
 	private SharingEntry _escapedModel;
 
 }
+// SB-Hash:791519807

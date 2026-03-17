@@ -763,3 +763,4 @@ public class MBThreadPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1391279336

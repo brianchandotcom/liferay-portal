@@ -85,3 +85,4 @@ public interface UserFinder {
 				<com.liferay.portal.kernel.model.User> orderByComparator);
 
 }
+// SB-Hash:-1982442561

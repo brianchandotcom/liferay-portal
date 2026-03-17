@@ -42,3 +42,4 @@ public abstract class CPConfigurationEntrySettingBaseImpl
 	}
 
 }
+// SB-Hash:-819891093

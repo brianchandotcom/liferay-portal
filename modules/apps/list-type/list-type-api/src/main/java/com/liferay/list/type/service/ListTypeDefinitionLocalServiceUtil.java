@@ -405,3 +405,4 @@ public class ListTypeDefinitionLocalServiceUtil {
 			ListTypeDefinitionLocalService.class);
 
 }
+// SB-Hash:494142190

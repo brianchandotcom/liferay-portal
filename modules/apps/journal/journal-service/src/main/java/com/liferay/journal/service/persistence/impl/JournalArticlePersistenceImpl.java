@@ -37331,3 +37331,4 @@ public class JournalArticlePersistenceImpl
 	}
 
 }
+// SB-Hash:-2094782227

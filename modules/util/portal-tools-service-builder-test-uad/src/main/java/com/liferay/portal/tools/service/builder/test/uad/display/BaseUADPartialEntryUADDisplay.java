@@ -76,3 +76,4 @@ public abstract class BaseUADPartialEntryUADDisplay
 	protected UADPartialEntryLocalService uadPartialEntryLocalService;
 
 }
+// SB-Hash:-968748970

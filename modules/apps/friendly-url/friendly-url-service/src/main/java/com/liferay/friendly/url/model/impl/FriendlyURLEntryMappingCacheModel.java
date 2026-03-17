@@ -150,3 +150,4 @@ public class FriendlyURLEntryMappingCacheModel
 	public long friendlyURLEntryId;
 
 }
+// SB-Hash:624035373

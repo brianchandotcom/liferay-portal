@@ -2476,3 +2476,4 @@ public class AnnouncementsEntryUtil {
 	private static volatile AnnouncementsEntryPersistence _persistence;
 
 }
+// SB-Hash:-66198448

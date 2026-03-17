@@ -122,3 +122,4 @@ public class NestedSetsTreeEntryCacheModel
 	public long rightNestedSetsTreeEntryId;
 
 }
+// SB-Hash:-326383710

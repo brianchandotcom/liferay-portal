@@ -67,3 +67,4 @@ public class DDMStructureLinkServiceUtil {
 			DDMStructureLinkServiceUtil.class, DDMStructureLinkService.class);
 
 }
+// SB-Hash:1481032231

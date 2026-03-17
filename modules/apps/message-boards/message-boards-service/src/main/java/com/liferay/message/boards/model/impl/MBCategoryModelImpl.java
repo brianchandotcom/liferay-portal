@@ -1545,3 +1545,4 @@ public class MBCategoryModelImpl
 	private MBCategory _escapedModel;
 
 }
+// SB-Hash:353220438

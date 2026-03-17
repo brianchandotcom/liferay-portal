@@ -46,3 +46,4 @@ public class TrashVersionTable extends BaseTable<TrashVersionTable> {
 	}
 
 }
+// SB-Hash:-556301345

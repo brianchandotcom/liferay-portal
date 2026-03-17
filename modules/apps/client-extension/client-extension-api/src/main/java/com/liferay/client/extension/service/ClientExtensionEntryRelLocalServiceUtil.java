@@ -484,3 +484,4 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 			ClientExtensionEntryRelLocalService.class);
 
 }
+// SB-Hash:1474905088

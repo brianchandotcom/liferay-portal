@@ -775,3 +775,4 @@ public class MemberRequestUtil {
 	private static volatile MemberRequestPersistence _persistence;
 
 }
+// SB-Hash:1063695785

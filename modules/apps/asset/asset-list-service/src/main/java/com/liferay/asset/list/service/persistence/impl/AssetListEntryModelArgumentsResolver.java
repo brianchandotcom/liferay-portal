@@ -114,3 +114,4 @@ public class AssetListEntryModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// SB-Hash:-777492663

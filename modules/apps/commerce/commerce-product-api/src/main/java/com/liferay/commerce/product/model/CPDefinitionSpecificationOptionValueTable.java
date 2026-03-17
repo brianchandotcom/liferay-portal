@@ -94,3 +94,4 @@ public class CPDefinitionSpecificationOptionValueTable
 	}
 
 }
+// SB-Hash:-1044359477

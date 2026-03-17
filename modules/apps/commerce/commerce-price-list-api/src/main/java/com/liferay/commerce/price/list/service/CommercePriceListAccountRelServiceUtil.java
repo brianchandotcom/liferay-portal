@@ -133,3 +133,4 @@ public class CommercePriceListAccountRelServiceUtil {
 			CommercePriceListAccountRelService.class);
 
 }
+// SB-Hash:1435935395

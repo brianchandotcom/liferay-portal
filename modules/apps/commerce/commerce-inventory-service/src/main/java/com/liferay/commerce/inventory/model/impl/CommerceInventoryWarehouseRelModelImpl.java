@@ -967,3 +967,4 @@ public class CommerceInventoryWarehouseRelModelImpl
 	private CommerceInventoryWarehouseRel _escapedModel;
 
 }
+// SB-Hash:-577722734

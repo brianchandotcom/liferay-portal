@@ -1000,3 +1000,4 @@ public class CommerceShippingFixedOptionQualifierModelImpl
 	private CommerceShippingFixedOptionQualifier _escapedModel;
 
 }
+// SB-Hash:-2097276019

@@ -1932,3 +1932,4 @@ public class DDMStructureModelImpl
 	private DDMStructure _escapedModel;
 
 }
+// SB-Hash:392379642

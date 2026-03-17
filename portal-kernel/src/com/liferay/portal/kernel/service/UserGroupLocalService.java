@@ -801,3 +801,4 @@ public interface UserGroupLocalService
 		throws E;
 
 }
+// SB-Hash:1355717681

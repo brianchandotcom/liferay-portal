@@ -48,3 +48,4 @@ public interface KBTemplate extends KBTemplateModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-298136737

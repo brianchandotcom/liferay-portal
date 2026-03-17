@@ -477,3 +477,4 @@ public interface BookmarksFolderLocalService
 		throws E;
 
 }
+// SB-Hash:419786318

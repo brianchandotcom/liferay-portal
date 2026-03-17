@@ -51,3 +51,4 @@ public interface Image extends ImageModel, PersistedModel {
 	public void setTextObj(byte[] textObj);
 
 }
+// SB-Hash:753832360

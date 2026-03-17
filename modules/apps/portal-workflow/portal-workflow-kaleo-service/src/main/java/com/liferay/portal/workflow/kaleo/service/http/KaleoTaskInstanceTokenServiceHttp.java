@@ -91,3 +91,4 @@ public class KaleoTaskInstanceTokenServiceHttp {
 		new Class[] {long.class};
 
 }
+// SB-Hash:-1926139445

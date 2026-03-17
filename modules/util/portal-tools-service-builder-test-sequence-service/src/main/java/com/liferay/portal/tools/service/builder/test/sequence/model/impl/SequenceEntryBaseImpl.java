@@ -39,3 +39,4 @@ public abstract class SequenceEntryBaseImpl
 	}
 
 }
+// SB-Hash:20883162

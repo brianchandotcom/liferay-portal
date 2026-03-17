@@ -466,3 +466,4 @@ public class CSDiagramPinPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1017997871

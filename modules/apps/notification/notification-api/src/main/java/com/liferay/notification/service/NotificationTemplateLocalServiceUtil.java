@@ -403,3 +403,4 @@ public class NotificationTemplateLocalServiceUtil {
 			NotificationTemplateLocalService.class);
 
 }
+// SB-Hash:-298831699

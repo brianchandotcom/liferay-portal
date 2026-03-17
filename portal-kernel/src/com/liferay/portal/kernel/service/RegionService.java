@@ -124,3 +124,4 @@ public interface RegionService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:2075818662

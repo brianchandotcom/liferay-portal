@@ -269,3 +269,4 @@ public class CommerceTaxMethodCacheModel
 	public String typeSettings;
 
 }
+// SB-Hash:786312448

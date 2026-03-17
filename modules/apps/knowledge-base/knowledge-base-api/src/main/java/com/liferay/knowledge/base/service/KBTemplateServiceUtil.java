@@ -109,3 +109,4 @@ public class KBTemplateServiceUtil {
 		new Snapshot<>(KBTemplateServiceUtil.class, KBTemplateService.class);
 
 }
+// SB-Hash:-1364571248

@@ -53,12 +53,12 @@ public abstract class BaseLayoutRevisionUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(layoutRevision.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(layoutRevision.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(layoutRevision.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -70,3 +70,4 @@ public abstract class BaseLayoutRevisionUADExporter
 	protected LayoutRevisionLocalService layoutRevisionLocalService;
 
 }
+// SB-Hash:-328574908

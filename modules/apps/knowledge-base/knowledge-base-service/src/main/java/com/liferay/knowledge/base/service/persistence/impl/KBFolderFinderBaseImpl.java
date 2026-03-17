@@ -77,3 +77,4 @@ public abstract class KBFolderFinderBaseImpl
 		KBFolderFinderBaseImpl.class);
 
 }
+// SB-Hash:1793804548

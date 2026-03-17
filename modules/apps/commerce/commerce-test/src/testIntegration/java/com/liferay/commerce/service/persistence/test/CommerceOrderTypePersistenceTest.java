@@ -680,3 +680,4 @@ public class CommerceOrderTypePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1156763109

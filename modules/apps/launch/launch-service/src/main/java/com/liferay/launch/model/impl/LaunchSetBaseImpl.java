@@ -39,3 +39,4 @@ public abstract class LaunchSetBaseImpl
 	}
 
 }
+// SB-Hash:1158534468

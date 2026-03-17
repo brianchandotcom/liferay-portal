@@ -708,3 +708,4 @@ public class NotificationTemplateAttachmentModelImpl
 	private NotificationTemplateAttachment _escapedModel;
 
 }
+// SB-Hash:-1953328634

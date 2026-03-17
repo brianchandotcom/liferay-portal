@@ -361,3 +361,4 @@ public interface DefinitionLocalService
 		throws PortalException;
 
 }
+// SB-Hash:351262627

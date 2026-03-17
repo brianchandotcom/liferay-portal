@@ -628,3 +628,4 @@ public abstract class SegmentsEntryLocalServiceBaseImpl
 		SegmentsEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1663496574

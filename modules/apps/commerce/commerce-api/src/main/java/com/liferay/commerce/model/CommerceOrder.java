@@ -148,3 +148,4 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 			commerceDiscountValue);
 
 }
+// SB-Hash:1004683718

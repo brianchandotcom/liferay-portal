@@ -5425,3 +5425,4 @@ public interface BlogsEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:273844440

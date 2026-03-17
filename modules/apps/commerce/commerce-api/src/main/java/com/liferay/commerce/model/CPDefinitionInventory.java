@@ -54,3 +54,4 @@ public interface CPDefinitionInventory
 	public java.math.BigDecimal[] getAllowedOrderQuantitiesArray();
 
 }
+// SB-Hash:1014358700

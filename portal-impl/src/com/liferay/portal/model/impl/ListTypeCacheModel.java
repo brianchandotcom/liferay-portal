@@ -222,3 +222,4 @@ public class ListTypeCacheModel
 	public String type;
 
 }
+// SB-Hash:-1013604350

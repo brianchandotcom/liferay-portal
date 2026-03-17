@@ -47,3 +47,4 @@ public class OpenIdConnectUserTable extends BaseTable<OpenIdConnectUserTable> {
 	}
 
 }
+// SB-Hash:1808362632

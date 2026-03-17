@@ -315,3 +315,4 @@ public interface FaroProjectLocalService
 		long faroProjectId, String subscription);
 
 }
+// SB-Hash:-1924192358

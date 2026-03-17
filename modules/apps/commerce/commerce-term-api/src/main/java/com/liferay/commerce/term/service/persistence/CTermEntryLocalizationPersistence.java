@@ -355,3 +355,4 @@ public interface CTermEntryLocalizationPersistence
 	public int countAll();
 
 }
+// SB-Hash:84768965

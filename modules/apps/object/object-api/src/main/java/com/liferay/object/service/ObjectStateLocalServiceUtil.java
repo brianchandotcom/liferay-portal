@@ -372,3 +372,4 @@ public class ObjectStateLocalServiceUtil {
 			ObjectStateLocalServiceUtil.class, ObjectStateLocalService.class);
 
 }
+// SB-Hash:939046386

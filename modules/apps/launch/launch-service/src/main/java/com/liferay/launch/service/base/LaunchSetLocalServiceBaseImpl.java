@@ -564,3 +564,4 @@ public abstract class LaunchSetLocalServiceBaseImpl
 		LaunchSetLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1888332525

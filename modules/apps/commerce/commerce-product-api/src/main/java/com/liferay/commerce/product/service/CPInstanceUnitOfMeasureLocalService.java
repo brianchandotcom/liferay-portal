@@ -386,3 +386,4 @@ public interface CPInstanceUnitOfMeasureLocalService
 		throws E;
 
 }
+// SB-Hash:524973453

@@ -130,3 +130,4 @@ public interface FragmentCompositionService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-766972670

@@ -427,3 +427,4 @@ public class CommercePaymentEntryAuditLocalServiceWrapper
 		_commercePaymentEntryAuditLocalService;
 
 }
+// SB-Hash:1091094976

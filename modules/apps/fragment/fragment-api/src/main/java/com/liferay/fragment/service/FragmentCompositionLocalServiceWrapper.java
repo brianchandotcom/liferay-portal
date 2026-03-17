@@ -623,3 +623,4 @@ public class FragmentCompositionLocalServiceWrapper
 	private FragmentCompositionLocalService _fragmentCompositionLocalService;
 
 }
+// SB-Hash:938308998

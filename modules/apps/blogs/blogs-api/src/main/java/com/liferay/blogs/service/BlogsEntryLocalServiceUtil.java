@@ -910,3 +910,4 @@ public class BlogsEntryLocalServiceUtil {
 			BlogsEntryLocalServiceUtil.class, BlogsEntryLocalService.class);
 
 }
+// SB-Hash:-1453622075

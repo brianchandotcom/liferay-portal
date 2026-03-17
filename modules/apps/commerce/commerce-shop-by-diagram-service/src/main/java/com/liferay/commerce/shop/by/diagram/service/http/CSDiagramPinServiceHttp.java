@@ -383,3 +383,4 @@ public class CSDiagramPinServiceHttp {
 		new Class[] {long.class, double.class, double.class, String.class};
 
 }
+// SB-Hash:984600872

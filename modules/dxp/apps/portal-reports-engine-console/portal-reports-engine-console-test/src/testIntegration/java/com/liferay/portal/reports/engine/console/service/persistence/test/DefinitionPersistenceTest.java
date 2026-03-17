@@ -597,3 +597,4 @@ public class DefinitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:782111515

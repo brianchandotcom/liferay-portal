@@ -92,3 +92,4 @@ public class AnnouncementsEntryServiceWrapper
 	private AnnouncementsEntryService _announcementsEntryService;
 
 }
+// SB-Hash:217719917

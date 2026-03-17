@@ -72,3 +72,4 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	public String getWorkflowDefinition();
 
 }
+// SB-Hash:1755577750

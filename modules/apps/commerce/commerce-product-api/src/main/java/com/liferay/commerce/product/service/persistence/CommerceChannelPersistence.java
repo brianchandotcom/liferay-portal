@@ -1264,3 +1264,4 @@ public interface CommerceChannelPersistence
 	public int countAll();
 
 }
+// SB-Hash:1136764586

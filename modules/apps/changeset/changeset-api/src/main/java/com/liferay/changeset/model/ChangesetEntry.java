@@ -48,3 +48,4 @@ public interface ChangesetEntry extends ChangesetEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1005215988

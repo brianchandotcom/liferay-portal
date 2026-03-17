@@ -288,3 +288,4 @@ public interface CTCollectionTemplateLocalService
 		throws PortalException;
 
 }
+// SB-Hash:-78983300

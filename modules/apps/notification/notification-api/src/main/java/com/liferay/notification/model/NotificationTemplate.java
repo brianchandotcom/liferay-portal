@@ -54,3 +54,4 @@ public interface NotificationTemplate
 	public NotificationRecipient getNotificationRecipient();
 
 }
+// SB-Hash:92732762

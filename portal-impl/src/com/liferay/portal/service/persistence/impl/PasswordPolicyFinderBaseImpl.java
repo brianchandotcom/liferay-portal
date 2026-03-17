@@ -65,3 +65,4 @@ public class PasswordPolicyFinderBaseImpl
 		PasswordPolicyFinderBaseImpl.class);
 
 }
+// SB-Hash:1377613553

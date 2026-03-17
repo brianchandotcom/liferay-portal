@@ -78,3 +78,4 @@ public abstract class CommercePriceListFinderBaseImpl
 		CommercePriceListFinderBaseImpl.class);
 
 }
+// SB-Hash:-1249300622

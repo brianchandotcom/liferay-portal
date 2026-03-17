@@ -125,3 +125,4 @@ public abstract class KBCommentServiceBaseImpl
 		KBCommentServiceBaseImpl.class);
 
 }
+// SB-Hash:-624477726

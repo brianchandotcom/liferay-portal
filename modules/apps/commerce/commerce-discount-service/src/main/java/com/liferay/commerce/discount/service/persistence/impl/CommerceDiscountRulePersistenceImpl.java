@@ -1267,3 +1267,4 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 }
+// SB-Hash:2129193233

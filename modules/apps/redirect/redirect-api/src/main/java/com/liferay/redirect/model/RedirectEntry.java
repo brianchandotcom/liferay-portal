@@ -48,3 +48,4 @@ public interface RedirectEntry extends PersistedModel, RedirectEntryModel {
 		};
 
 }
+// SB-Hash:2016999052

@@ -397,3 +397,4 @@ public interface KaleoLogLocalService
 		throws E;
 
 }
+// SB-Hash:546549539

@@ -68,3 +68,4 @@ public class TemplateEntryTable extends BaseTable<TemplateEntryTable> {
 	}
 
 }
+// SB-Hash:2132257399

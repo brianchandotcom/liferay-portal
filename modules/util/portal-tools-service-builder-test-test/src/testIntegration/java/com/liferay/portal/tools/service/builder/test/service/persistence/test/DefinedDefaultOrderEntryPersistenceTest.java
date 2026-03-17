@@ -523,3 +523,4 @@ public class DefinedDefaultOrderEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1356629846

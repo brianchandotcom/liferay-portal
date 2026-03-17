@@ -44,3 +44,4 @@ public class DDMStructureLinkTable extends BaseTable<DDMStructureLinkTable> {
 	}
 
 }
+// SB-Hash:-1264073094

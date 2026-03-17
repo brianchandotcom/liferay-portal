@@ -39,3 +39,4 @@ public abstract class DefinitionBaseImpl
 	}
 
 }
+// SB-Hash:-1969902478

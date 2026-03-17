@@ -833,3 +833,4 @@ public class StyleBookEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1424479075

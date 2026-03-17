@@ -223,3 +223,4 @@ public class StyleBookEntryServiceUtil {
 			StyleBookEntryServiceUtil.class, StyleBookEntryService.class);
 
 }
+// SB-Hash:574895026

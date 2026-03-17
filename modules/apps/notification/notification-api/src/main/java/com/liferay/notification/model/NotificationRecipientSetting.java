@@ -55,3 +55,4 @@ public interface NotificationRecipientSetting
 			};
 
 }
+// SB-Hash:1872051393

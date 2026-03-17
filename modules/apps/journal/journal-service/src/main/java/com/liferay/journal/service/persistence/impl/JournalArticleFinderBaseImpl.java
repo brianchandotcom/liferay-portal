@@ -78,3 +78,4 @@ public abstract class JournalArticleFinderBaseImpl
 		JournalArticleFinderBaseImpl.class);
 
 }
+// SB-Hash:-376733964

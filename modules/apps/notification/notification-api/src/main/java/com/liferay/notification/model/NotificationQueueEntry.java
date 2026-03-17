@@ -54,3 +54,4 @@ public interface NotificationQueueEntry
 	public NotificationRecipient getNotificationRecipient();
 
 }
+// SB-Hash:417033831

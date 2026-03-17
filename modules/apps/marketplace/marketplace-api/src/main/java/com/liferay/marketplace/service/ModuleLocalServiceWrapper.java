@@ -391,3 +391,4 @@ public class ModuleLocalServiceWrapper
 	private ModuleLocalService _moduleLocalService;
 
 }
+// SB-Hash:-232197680

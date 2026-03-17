@@ -419,3 +419,4 @@ public class BatchPlannerPolicyLocalServiceWrapper
 	private BatchPlannerPolicyLocalService _batchPlannerPolicyLocalService;
 
 }
+// SB-Hash:-1190745904

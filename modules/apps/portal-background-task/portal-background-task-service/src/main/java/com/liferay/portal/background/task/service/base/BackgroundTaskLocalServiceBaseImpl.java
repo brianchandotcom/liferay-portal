@@ -458,3 +458,4 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		BackgroundTaskLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-372036556

@@ -556,3 +556,4 @@ public class CommerceTaxFixedRateAddressRelLocalServiceWrapper
 		_commerceTaxFixedRateAddressRelLocalService;
 
 }
+// SB-Hash:605655369

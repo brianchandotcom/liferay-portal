@@ -1101,3 +1101,4 @@ public class CPDVirtualSettingFileEntryUtil {
 	private static volatile CPDVirtualSettingFileEntryPersistence _persistence;
 
 }
+// SB-Hash:1049900579

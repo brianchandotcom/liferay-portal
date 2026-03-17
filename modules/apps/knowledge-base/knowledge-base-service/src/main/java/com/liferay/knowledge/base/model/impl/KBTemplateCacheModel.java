@@ -254,3 +254,4 @@ public class KBTemplateCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-1339040002

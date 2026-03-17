@@ -682,3 +682,4 @@ public class ResourcePermissionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1539273040

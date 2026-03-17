@@ -1246,3 +1246,4 @@ public interface ERCVersionedEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:1559055672

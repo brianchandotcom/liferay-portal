@@ -52,3 +52,4 @@ public interface SamlSpMessage extends PersistedModel, SamlSpMessageModel {
 	public boolean isExpired();
 
 }
+// SB-Hash:1777932842

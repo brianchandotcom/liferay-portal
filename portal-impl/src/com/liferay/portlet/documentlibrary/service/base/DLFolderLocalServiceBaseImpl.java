@@ -913,3 +913,4 @@ public abstract class DLFolderLocalServiceBaseImpl
 		DLFolderLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1407837715

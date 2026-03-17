@@ -497,3 +497,4 @@ public class KaleoProcessLinkLocalServiceWrapper
 	private KaleoProcessLinkLocalService _kaleoProcessLinkLocalService;
 
 }
+// SB-Hash:1084784759

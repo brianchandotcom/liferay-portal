@@ -52,3 +52,4 @@ public interface SegmentsEntryRole
 			};
 
 }
+// SB-Hash:-1467986869

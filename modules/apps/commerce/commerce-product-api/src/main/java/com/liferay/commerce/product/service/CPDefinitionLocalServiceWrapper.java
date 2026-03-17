@@ -1106,3 +1106,4 @@ public class CPDefinitionLocalServiceWrapper
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }
+// SB-Hash:-2040300879

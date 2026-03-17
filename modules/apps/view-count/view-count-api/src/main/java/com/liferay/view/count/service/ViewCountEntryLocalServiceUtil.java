@@ -340,3 +340,4 @@ public class ViewCountEntryLocalServiceUtil {
 			ViewCountEntryLocalService.class);
 
 }
+// SB-Hash:1998263327

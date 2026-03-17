@@ -112,3 +112,4 @@ public class FaroUserModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// SB-Hash:1572449890

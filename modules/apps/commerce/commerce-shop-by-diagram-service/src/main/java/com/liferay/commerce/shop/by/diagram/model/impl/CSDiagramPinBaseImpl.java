@@ -39,3 +39,4 @@ public abstract class CSDiagramPinBaseImpl
 	}
 
 }
+// SB-Hash:345548432

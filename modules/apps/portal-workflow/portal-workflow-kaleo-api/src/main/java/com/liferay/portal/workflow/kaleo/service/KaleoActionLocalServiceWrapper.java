@@ -393,3 +393,4 @@ public class KaleoActionLocalServiceWrapper
 	private KaleoActionLocalService _kaleoActionLocalService;
 
 }
+// SB-Hash:1425320307

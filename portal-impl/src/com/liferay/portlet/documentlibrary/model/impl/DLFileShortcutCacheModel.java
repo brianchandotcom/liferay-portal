@@ -333,3 +333,4 @@ public class DLFileShortcutCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:36767309

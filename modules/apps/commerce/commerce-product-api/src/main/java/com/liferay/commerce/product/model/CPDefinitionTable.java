@@ -168,3 +168,4 @@ public class CPDefinitionTable extends BaseTable<CPDefinitionTable> {
 	}
 
 }
+// SB-Hash:509728319

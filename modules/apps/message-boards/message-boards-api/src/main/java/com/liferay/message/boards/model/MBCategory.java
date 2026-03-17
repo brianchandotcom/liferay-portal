@@ -63,3 +63,4 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 	public boolean isRoot();
 
 }
+// SB-Hash:1555503697

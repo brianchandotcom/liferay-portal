@@ -64,3 +64,4 @@ public class NotificationRecipientSettingTable
 	}
 
 }
+// SB-Hash:1331085971

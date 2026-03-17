@@ -77,3 +77,4 @@ public abstract class DDMFormInstanceRecordFinderBaseImpl
 		DDMFormInstanceRecordFinderBaseImpl.class);
 
 }
+// SB-Hash:-1171814742

@@ -568,3 +568,4 @@ public class ObjectFieldSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:836036035

@@ -583,3 +583,4 @@ public abstract class SourceLocalServiceBaseImpl
 		SourceLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1037228121

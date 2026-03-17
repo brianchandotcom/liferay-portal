@@ -195,3 +195,4 @@ public interface CTScorePersistence extends BasePersistence<CTScore> {
 	public int countAll();
 
 }
+// SB-Hash:-321864282

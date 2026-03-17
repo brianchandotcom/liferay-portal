@@ -240,3 +240,4 @@ public class MBDiscussionCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:1096905982

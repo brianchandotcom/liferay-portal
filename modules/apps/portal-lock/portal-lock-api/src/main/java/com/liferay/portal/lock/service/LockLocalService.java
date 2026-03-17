@@ -346,3 +346,4 @@ public interface LockLocalService
 	public Lock updateLock(Lock lock);
 
 }
+// SB-Hash:69647325

@@ -130,3 +130,4 @@ public abstract class CPDefinitionServiceBaseImpl
 		CPDefinitionServiceBaseImpl.class);
 
 }
+// SB-Hash:915271334

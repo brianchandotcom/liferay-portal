@@ -243,3 +243,4 @@ public class AssetCategoryPropertyCacheModel
 	public String value;
 
 }
+// SB-Hash:-1214552174

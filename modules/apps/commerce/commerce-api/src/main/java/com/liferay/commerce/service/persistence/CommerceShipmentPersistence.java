@@ -1237,3 +1237,4 @@ public interface CommerceShipmentPersistence
 	public int countAll();
 
 }
+// SB-Hash:-979138870

@@ -207,3 +207,4 @@ public abstract class PluginSettingServiceBaseImpl
 		PluginSettingServiceBaseImpl.class);
 
 }
+// SB-Hash:-101480003

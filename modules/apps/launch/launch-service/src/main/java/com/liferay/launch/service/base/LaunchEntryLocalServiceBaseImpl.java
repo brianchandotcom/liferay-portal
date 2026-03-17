@@ -598,3 +598,4 @@ public abstract class LaunchEntryLocalServiceBaseImpl
 		LaunchEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1010179126

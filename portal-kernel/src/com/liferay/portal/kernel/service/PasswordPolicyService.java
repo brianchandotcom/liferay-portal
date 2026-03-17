@@ -88,3 +88,4 @@ public interface PasswordPolicyService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:852602106

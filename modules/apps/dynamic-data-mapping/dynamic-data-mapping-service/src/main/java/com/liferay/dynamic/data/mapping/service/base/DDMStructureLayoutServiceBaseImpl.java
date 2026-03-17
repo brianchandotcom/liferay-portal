@@ -126,3 +126,4 @@ public abstract class DDMStructureLayoutServiceBaseImpl
 		DDMStructureLayoutServiceBaseImpl.class);
 
 }
+// SB-Hash:1343757174

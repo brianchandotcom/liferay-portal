@@ -366,3 +366,4 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public String status;
 
 }
+// SB-Hash:-1943142479

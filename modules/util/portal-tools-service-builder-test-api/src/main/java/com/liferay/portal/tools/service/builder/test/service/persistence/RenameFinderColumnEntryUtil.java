@@ -355,3 +355,4 @@ public class RenameFinderColumnEntryUtil {
 	private static volatile RenameFinderColumnEntryPersistence _persistence;
 
 }
+// SB-Hash:-1557345340

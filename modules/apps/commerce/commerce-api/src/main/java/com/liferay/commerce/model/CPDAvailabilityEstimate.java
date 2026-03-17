@@ -58,3 +58,4 @@ public interface CPDAvailabilityEstimate
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-209305744

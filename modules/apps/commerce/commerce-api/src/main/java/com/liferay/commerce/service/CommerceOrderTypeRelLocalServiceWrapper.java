@@ -495,3 +495,4 @@ public class CommerceOrderTypeRelLocalServiceWrapper
 	private CommerceOrderTypeRelLocalService _commerceOrderTypeRelLocalService;
 
 }
+// SB-Hash:-1717974303

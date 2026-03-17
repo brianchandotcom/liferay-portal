@@ -1106,3 +1106,4 @@ public class DefinitionUtil {
 	private static volatile DefinitionPersistence _persistence;
 
 }
+// SB-Hash:584175397

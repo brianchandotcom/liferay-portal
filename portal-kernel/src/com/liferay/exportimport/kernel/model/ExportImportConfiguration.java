@@ -57,3 +57,4 @@ public interface ExportImportConfiguration
 	public java.util.Map<String, java.io.Serializable> getSettingsMap();
 
 }
+// SB-Hash:1354057591

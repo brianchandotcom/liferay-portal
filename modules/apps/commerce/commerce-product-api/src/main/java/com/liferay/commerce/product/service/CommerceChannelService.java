@@ -122,3 +122,4 @@ public interface CommerceChannelService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:2036680507

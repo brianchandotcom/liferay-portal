@@ -33,3 +33,4 @@ package com.liferay.portal.tools.service.builder.test.sequence.service.http;
  */
 public class SequenceEntryServiceHttp {
 }
+// SB-Hash:-846064156

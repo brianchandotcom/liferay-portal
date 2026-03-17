@@ -129,3 +129,4 @@ public interface CommercePricingClassService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-929873244

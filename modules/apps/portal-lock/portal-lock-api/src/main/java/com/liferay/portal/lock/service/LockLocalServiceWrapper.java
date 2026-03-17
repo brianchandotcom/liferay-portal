@@ -507,3 +507,4 @@ public class LockLocalServiceWrapper
 	private LockLocalService _lockLocalService;
 
 }
+// SB-Hash:700314745

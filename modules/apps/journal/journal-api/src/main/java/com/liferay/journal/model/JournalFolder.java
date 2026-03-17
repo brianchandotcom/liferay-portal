@@ -61,3 +61,4 @@ public interface JournalFolder
 	public boolean isRoot();
 
 }
+// SB-Hash:565683259

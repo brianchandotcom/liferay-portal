@@ -729,3 +729,4 @@ public class AssetVocabularyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1821146987

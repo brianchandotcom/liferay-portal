@@ -87,3 +87,4 @@ public interface SavedContentEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:229691391

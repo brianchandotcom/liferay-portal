@@ -646,3 +646,4 @@ public interface ObjectFieldSettingPersistence
 	public int countAll();
 
 }
+// SB-Hash:-2016009597

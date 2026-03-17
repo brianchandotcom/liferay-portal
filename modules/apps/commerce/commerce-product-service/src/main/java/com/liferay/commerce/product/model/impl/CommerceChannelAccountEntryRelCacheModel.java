@@ -244,3 +244,4 @@ public class CommerceChannelAccountEntryRelCacheModel
 	public int type;
 
 }
+// SB-Hash:-537255968

@@ -77,3 +77,4 @@ public abstract class CalendarFinderBaseImpl
 		CalendarFinderBaseImpl.class);
 
 }
+// SB-Hash:202573752

@@ -39,3 +39,4 @@ public abstract class SamlPeerBindingBaseImpl
 	}
 
 }
+// SB-Hash:2072268983

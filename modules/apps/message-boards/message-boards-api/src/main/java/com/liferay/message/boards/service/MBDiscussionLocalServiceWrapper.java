@@ -506,3 +506,4 @@ public class MBDiscussionLocalServiceWrapper
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 
 }
+// SB-Hash:-1936673669

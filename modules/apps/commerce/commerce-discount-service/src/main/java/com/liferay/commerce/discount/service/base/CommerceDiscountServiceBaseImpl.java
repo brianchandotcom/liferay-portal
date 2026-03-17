@@ -129,3 +129,4 @@ public abstract class CommerceDiscountServiceBaseImpl
 		CommerceDiscountServiceBaseImpl.class);
 
 }
+// SB-Hash:1491503503

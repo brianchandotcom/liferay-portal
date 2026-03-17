@@ -5168,3 +5168,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
+// SB-Hash:1106694781

@@ -39,3 +39,4 @@ public abstract class DDMStorageLinkBaseImpl
 	}
 
 }
+// SB-Hash:1507496076

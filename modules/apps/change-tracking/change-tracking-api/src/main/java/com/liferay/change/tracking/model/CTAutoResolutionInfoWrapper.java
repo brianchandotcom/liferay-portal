@@ -325,3 +325,4 @@ public class CTAutoResolutionInfoWrapper
 	}
 
 }
+// SB-Hash:1846790857

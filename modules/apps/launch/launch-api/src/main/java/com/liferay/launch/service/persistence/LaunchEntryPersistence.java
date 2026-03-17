@@ -705,3 +705,4 @@ public interface LaunchEntryPersistence extends BasePersistence<LaunchEntry> {
 	public int countAll();
 
 }
+// SB-Hash:1056526949

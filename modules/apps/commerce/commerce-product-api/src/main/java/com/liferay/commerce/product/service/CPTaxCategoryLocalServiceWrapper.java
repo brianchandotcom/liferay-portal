@@ -490,3 +490,4 @@ public class CPTaxCategoryLocalServiceWrapper
 	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 }
+// SB-Hash:1655443680

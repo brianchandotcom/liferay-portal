@@ -639,3 +639,4 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 		CPMeasurementUnitLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:569426927

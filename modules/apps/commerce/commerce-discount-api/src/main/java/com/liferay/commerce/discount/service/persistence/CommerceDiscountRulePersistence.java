@@ -299,3 +299,4 @@ public interface CommerceDiscountRulePersistence
 	public int countAll();
 
 }
+// SB-Hash:-1360014434

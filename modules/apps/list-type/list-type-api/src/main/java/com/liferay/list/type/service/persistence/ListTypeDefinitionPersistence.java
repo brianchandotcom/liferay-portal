@@ -864,3 +864,4 @@ public interface ListTypeDefinitionPersistence
 	public int countAll();
 
 }
+// SB-Hash:1511357254

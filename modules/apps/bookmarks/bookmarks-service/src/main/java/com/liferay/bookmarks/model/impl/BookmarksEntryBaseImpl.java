@@ -48,3 +48,4 @@ public abstract class BookmarksEntryBaseImpl
 	}
 
 }
+// SB-Hash:1899805247

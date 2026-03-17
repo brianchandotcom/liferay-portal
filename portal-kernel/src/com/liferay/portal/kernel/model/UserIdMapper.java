@@ -47,3 +47,4 @@ public interface UserIdMapper extends PersistedModel, UserIdMapperModel {
 		};
 
 }
+// SB-Hash:1524247298

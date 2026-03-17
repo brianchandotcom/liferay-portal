@@ -437,3 +437,4 @@ public class CPSpecificationOptionLocalServiceUtil {
 			CPSpecificationOptionLocalService.class);
 
 }
+// SB-Hash:322835932

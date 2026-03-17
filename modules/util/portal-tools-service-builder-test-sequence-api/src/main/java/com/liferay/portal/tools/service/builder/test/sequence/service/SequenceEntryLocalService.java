@@ -283,3 +283,4 @@ public interface SequenceEntryLocalService
 	public SequenceEntry updateSequenceEntry(SequenceEntry sequenceEntry);
 
 }
+// SB-Hash:1607904183

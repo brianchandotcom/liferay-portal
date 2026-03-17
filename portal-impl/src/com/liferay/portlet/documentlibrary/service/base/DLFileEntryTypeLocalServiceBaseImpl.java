@@ -865,3 +865,4 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 		DLFileEntryTypeLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:569976290

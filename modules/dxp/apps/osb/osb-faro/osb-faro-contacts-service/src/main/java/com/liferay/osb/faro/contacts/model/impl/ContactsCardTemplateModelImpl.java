@@ -902,3 +902,4 @@ public class ContactsCardTemplateModelImpl
 	private ContactsCardTemplate _escapedModel;
 
 }
+// SB-Hash:2035588880

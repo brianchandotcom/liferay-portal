@@ -263,3 +263,4 @@ public interface CTMessageLocalService
 	public CTMessage updateCTMessage(CTMessage ctMessage);
 
 }
+// SB-Hash:2048068147

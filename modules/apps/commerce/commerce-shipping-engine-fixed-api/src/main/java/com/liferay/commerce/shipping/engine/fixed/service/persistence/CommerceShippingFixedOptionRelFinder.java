@@ -32,3 +32,4 @@ public interface CommerceShippingFixedOptionRelFinder {
 				long regionId, String zip, double weight, int start, int end);
 
 }
+// SB-Hash:1514104402

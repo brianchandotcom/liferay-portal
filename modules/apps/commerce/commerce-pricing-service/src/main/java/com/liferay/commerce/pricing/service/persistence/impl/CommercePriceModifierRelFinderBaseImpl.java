@@ -58,3 +58,4 @@ public abstract class CommercePriceModifierRelFinderBaseImpl
 		commercePriceModifierRelPersistence;
 
 }
+// SB-Hash:272376251

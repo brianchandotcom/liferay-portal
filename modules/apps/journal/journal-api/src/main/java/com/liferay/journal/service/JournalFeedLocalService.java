@@ -406,3 +406,4 @@ public interface JournalFeedLocalService
 		throws E;
 
 }
+// SB-Hash:-1972479174

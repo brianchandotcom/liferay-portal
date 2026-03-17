@@ -125,3 +125,4 @@ public abstract class DepotEntryPinServiceBaseImpl
 		DepotEntryPinServiceBaseImpl.class);
 
 }
+// SB-Hash:2053791525

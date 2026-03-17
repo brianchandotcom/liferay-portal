@@ -1265,3 +1265,4 @@ public class SamlIdpSpConnectionModelImpl
 	private SamlIdpSpConnection _escapedModel;
 
 }
+// SB-Hash:620060476

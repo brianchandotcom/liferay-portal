@@ -839,3 +839,4 @@ public class CTAutoResolutionInfoModelImpl
 	private CTAutoResolutionInfo _escapedModel;
 
 }
+// SB-Hash:195499783

@@ -662,3 +662,4 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 		CPDefinitionVirtualSettingLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1770886269

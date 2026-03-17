@@ -152,3 +152,4 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 		SocialRequestInterpreterLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1308015781

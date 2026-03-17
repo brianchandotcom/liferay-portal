@@ -245,3 +245,4 @@ public interface CommerceInventoryWarehouseRelModel
 	}
 
 }
+// SB-Hash:982349969

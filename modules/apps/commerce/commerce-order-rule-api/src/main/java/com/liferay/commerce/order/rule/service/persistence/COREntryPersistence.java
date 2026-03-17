@@ -1774,3 +1774,4 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 	public int countAll();
 
 }
+// SB-Hash:-1262580090

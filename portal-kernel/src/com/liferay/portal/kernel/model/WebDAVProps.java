@@ -64,3 +64,4 @@ public interface WebDAVProps extends PersistedModel, WebDAVPropsModel {
 	public void store() throws Exception;
 
 }
+// SB-Hash:-1644820192

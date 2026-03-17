@@ -125,3 +125,4 @@ public abstract class ObjectViewServiceBaseImpl
 		ObjectViewServiceBaseImpl.class);
 
 }
+// SB-Hash:-1032891171

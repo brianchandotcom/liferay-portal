@@ -79,3 +79,4 @@ public class DDMStructureVersionServiceUtil {
 			DDMStructureVersionService.class);
 
 }
+// SB-Hash:66754348

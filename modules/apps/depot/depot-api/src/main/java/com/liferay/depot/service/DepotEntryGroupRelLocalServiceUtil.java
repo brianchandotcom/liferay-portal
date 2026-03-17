@@ -478,3 +478,4 @@ public class DepotEntryGroupRelLocalServiceUtil {
 			DepotEntryGroupRelLocalService.class);
 
 }
+// SB-Hash:-660098782

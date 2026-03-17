@@ -36,3 +36,4 @@ public class SequenceEntryTable extends BaseTable<SequenceEntryTable> {
 	}
 
 }
+// SB-Hash:198702684

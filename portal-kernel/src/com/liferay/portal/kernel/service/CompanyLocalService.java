@@ -606,3 +606,4 @@ public interface CompanyLocalService
 		boolean strangersVerify, boolean siteLogo);
 
 }
+// SB-Hash:-1994948731

@@ -441,3 +441,4 @@ public interface KaleoProcessLocalService
 		throws PortalException;
 
 }
+// SB-Hash:606653000

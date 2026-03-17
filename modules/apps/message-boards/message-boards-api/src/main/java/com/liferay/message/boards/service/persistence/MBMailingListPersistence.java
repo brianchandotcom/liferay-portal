@@ -695,3 +695,4 @@ public interface MBMailingListPersistence
 	public int countAll();
 
 }
+// SB-Hash:1181956183

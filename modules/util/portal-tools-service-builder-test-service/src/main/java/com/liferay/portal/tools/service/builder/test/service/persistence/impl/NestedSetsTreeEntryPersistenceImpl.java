@@ -1003,3 +1003,4 @@ public class NestedSetsTreeEntryPersistenceImpl
 	}
 
 }
+// SB-Hash:1788128613

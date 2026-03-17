@@ -85,3 +85,4 @@ public class BlogsStatsUserLocalServiceWrapper
 	private BlogsStatsUserLocalService _blogsStatsUserLocalService;
 
 }
+// SB-Hash:-520081928

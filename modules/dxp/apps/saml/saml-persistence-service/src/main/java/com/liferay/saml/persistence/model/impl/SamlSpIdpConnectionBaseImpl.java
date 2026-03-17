@@ -39,3 +39,4 @@ public abstract class SamlSpIdpConnectionBaseImpl
 	}
 
 }
+// SB-Hash:767398987

@@ -269,3 +269,4 @@ public interface CTProcessLocalService
 	public CTProcess updateCTProcess(CTProcess ctProcess);
 
 }
+// SB-Hash:654151941

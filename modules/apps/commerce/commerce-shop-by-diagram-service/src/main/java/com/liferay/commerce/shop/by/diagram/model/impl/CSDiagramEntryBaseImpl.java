@@ -39,3 +39,4 @@ public abstract class CSDiagramEntryBaseImpl
 	}
 
 }
+// SB-Hash:2089682896

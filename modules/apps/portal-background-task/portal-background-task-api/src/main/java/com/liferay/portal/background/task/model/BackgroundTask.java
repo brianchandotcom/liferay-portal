@@ -78,3 +78,4 @@ public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 	public boolean isInProgress();
 
 }
+// SB-Hash:939104800

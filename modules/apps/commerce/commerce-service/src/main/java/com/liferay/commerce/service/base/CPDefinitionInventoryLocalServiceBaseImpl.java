@@ -638,3 +638,4 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 		CPDefinitionInventoryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1468769527

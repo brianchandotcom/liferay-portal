@@ -8046,3 +8046,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
+// SB-Hash:747831767

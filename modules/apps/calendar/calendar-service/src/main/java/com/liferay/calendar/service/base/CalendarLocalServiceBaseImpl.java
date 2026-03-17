@@ -602,3 +602,4 @@ public abstract class CalendarLocalServiceBaseImpl
 		CalendarLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1163867638

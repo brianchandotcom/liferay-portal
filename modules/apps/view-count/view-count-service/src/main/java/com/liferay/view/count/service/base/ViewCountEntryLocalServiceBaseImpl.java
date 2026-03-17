@@ -463,3 +463,4 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 		ViewCountEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-884083800

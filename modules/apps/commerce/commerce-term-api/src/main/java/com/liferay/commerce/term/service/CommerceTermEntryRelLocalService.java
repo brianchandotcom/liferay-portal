@@ -308,3 +308,4 @@ public interface CommerceTermEntryRelLocalService
 		CommerceTermEntryRel commerceTermEntryRel);
 
 }
+// SB-Hash:990689550

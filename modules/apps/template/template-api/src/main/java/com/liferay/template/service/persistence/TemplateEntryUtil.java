@@ -1579,3 +1579,4 @@ public class TemplateEntryUtil {
 	private static volatile TemplateEntryPersistence _persistence;
 
 }
+// SB-Hash:-1667805149

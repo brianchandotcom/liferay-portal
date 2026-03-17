@@ -347,3 +347,4 @@ public class ObjectFilterLocalServiceUtil {
 			ObjectFilterLocalServiceUtil.class, ObjectFilterLocalService.class);
 
 }
+// SB-Hash:1024195862

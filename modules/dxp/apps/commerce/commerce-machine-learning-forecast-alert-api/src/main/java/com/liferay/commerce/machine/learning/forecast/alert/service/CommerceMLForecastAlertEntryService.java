@@ -88,3 +88,4 @@ public interface CommerceMLForecastAlertEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1761148507

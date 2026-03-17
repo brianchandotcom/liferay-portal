@@ -60,3 +60,4 @@ public interface SharingEntry extends PersistedModel, SharingEntryModel {
 			sharingEntryAction);
 
 }
+// SB-Hash:1195895875

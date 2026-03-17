@@ -954,3 +954,4 @@ public class CommerceDiscountRuleModelImpl
 	private CommerceDiscountRule _escapedModel;
 
 }
+// SB-Hash:-1451543795

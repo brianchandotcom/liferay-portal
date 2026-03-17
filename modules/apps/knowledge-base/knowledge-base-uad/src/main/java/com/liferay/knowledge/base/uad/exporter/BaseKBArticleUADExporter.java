@@ -53,12 +53,12 @@ public abstract class BaseKBArticleUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(kbArticle.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(kbArticle.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(kbArticle.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
@@ -86,3 +86,4 @@ public abstract class BaseKBArticleUADExporter
 	protected KBArticleLocalService kbArticleLocalService;
 
 }
+// SB-Hash:1295206334

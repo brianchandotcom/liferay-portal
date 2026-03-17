@@ -943,3 +943,4 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	private CommerceDiscountCommerceAccountGroupRel _escapedModel;
 
 }
+// SB-Hash:779889469

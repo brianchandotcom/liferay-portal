@@ -594,3 +594,4 @@ public class CPConfigurationListRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:899267929

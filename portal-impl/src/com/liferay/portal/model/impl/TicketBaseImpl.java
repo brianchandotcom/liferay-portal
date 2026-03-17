@@ -38,3 +38,4 @@ public abstract class TicketBaseImpl extends TicketModelImpl implements Ticket {
 	}
 
 }
+// SB-Hash:-1335196903

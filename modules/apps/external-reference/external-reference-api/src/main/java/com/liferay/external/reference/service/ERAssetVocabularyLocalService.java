@@ -55,3 +55,4 @@ public interface ERAssetVocabularyLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:675837153

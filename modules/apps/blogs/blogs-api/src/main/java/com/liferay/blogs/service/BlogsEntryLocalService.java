@@ -649,3 +649,4 @@ public interface BlogsEntryLocalService
 		throws E;
 
 }
+// SB-Hash:-1485493644

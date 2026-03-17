@@ -370,3 +370,4 @@ public class AkismetEntryLocalServiceWrapper
 	private AkismetEntryLocalService _akismetEntryLocalService;
 
 }
+// SB-Hash:1493520030

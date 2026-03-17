@@ -672,3 +672,4 @@ public class BookmarksEntryLocalServiceWrapper
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }
+// SB-Hash:1655111957

@@ -798,3 +798,4 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	public int countAll();
 
 }
+// SB-Hash:-157285789

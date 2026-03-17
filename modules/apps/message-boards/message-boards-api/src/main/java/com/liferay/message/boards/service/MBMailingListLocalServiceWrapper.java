@@ -503,3 +503,4 @@ public class MBMailingListLocalServiceWrapper
 	private MBMailingListLocalService _mbMailingListLocalService;
 
 }
+// SB-Hash:859292285

@@ -706,3 +706,4 @@ public interface LayoutPageTemplateStructurePersistence
 	public int countAll();
 
 }
+// SB-Hash:-668892017

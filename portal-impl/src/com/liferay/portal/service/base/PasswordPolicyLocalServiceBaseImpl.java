@@ -637,3 +637,4 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 		PasswordPolicyLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-117162156

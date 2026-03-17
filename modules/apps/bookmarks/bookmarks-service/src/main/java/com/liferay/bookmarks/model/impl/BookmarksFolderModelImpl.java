@@ -1457,3 +1457,4 @@ public class BookmarksFolderModelImpl
 	private BookmarksFolder _escapedModel;
 
 }
+// SB-Hash:-1154770305

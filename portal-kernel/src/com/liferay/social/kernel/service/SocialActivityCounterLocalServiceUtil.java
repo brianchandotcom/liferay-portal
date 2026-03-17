@@ -710,3 +710,4 @@ public class SocialActivityCounterLocalServiceUtil {
 	private static volatile SocialActivityCounterLocalService _service;
 
 }
+// SB-Hash:-1122034595

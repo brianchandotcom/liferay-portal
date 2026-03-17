@@ -999,3 +999,4 @@ public class MFAFIDO2CredentialEntryModelImpl
 	private MFAFIDO2CredentialEntry _escapedModel;
 
 }
+// SB-Hash:-1145467777

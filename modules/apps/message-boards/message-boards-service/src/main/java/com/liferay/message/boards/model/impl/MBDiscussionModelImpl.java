@@ -1087,3 +1087,4 @@ public class MBDiscussionModelImpl
 	private MBDiscussion _escapedModel;
 
 }
+// SB-Hash:1469095725

@@ -404,3 +404,4 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 				CommercePricingClassCPDefinitionRelLocalService.class);
 
 }
+// SB-Hash:512668748

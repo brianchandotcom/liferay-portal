@@ -48,3 +48,4 @@ public interface PatcherFix extends PatcherFixModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-2146797726

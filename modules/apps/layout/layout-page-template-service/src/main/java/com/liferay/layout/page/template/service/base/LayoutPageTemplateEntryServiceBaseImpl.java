@@ -131,3 +131,4 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 		LayoutPageTemplateEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:142462917

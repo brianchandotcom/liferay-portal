@@ -899,3 +899,4 @@ public class JournalFolderWrapper
 	}
 
 }
+// SB-Hash:1917630208

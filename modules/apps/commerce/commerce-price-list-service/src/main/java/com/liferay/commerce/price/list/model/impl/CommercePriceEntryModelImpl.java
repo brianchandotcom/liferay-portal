@@ -1973,3 +1973,4 @@ public class CommercePriceEntryModelImpl
 	private CommercePriceEntry _escapedModel;
 
 }
+// SB-Hash:-1881078055

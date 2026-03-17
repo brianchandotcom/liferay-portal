@@ -516,3 +516,4 @@ public abstract class ExpandoRowLocalServiceBaseImpl
 		ExpandoRowLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:376222847

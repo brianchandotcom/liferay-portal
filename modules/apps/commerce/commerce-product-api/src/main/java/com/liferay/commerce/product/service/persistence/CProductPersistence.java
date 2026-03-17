@@ -692,3 +692,4 @@ public interface CProductPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1562967167

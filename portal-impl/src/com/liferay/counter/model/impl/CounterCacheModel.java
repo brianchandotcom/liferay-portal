@@ -101,3 +101,4 @@ public class CounterCacheModel implements CacheModel<Counter>, Externalizable {
 	public long currentId;
 
 }
+// SB-Hash:186245327

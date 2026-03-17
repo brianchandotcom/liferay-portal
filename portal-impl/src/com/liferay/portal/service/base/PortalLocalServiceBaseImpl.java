@@ -144,3 +144,4 @@ public abstract class PortalLocalServiceBaseImpl
 		PortalLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:298830098

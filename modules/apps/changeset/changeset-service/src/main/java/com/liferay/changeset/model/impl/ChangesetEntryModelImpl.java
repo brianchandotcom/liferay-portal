@@ -996,3 +996,4 @@ public class ChangesetEntryModelImpl
 	private ChangesetEntry _escapedModel;
 
 }
+// SB-Hash:737891744

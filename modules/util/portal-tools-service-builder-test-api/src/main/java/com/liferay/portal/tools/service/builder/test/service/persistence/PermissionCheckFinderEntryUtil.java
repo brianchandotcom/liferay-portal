@@ -694,3 +694,4 @@ public class PermissionCheckFinderEntryUtil {
 	private static volatile PermissionCheckFinderEntryPersistence _persistence;
 
 }
+// SB-Hash:2032528864

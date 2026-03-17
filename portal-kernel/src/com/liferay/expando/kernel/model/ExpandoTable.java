@@ -52,3 +52,4 @@ public interface ExpandoTable extends ExpandoTableModel, PersistedModel {
 	public boolean isDefaultTable();
 
 }
+// SB-Hash:1920707035

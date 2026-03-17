@@ -517,3 +517,4 @@ public class CommercePriceListAccountRelLocalServiceWrapper
 		_commercePriceListAccountRelLocalService;
 
 }
+// SB-Hash:-1537576041

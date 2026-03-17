@@ -39,3 +39,4 @@ public abstract class CommercePriceListBaseImpl
 	}
 
 }
+// SB-Hash:55895980

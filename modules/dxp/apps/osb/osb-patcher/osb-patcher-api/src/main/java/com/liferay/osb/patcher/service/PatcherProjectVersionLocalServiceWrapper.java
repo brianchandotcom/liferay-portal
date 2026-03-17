@@ -461,3 +461,4 @@ public class PatcherProjectVersionLocalServiceWrapper
 		_patcherProjectVersionLocalService;
 
 }
+// SB-Hash:1130427439

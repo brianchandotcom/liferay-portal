@@ -969,3 +969,4 @@ public class AssetCategoryPropertyUtil {
 	private static volatile AssetCategoryPropertyPersistence _persistence;
 
 }
+// SB-Hash:491226126

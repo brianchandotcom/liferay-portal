@@ -89,3 +89,4 @@ public class DDMStructureVersionTable
 	}
 
 }
+// SB-Hash:1076095707

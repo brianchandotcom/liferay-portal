@@ -302,3 +302,4 @@ public interface CSDiagramPinLocalService
 		throws E;
 
 }
+// SB-Hash:1144086716

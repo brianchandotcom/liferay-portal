@@ -77,3 +77,4 @@ public interface ObjectActionService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:423675956

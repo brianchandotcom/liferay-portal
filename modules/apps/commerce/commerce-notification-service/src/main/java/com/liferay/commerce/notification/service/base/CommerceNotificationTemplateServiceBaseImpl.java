@@ -134,3 +134,4 @@ public abstract class CommerceNotificationTemplateServiceBaseImpl
 		CommerceNotificationTemplateServiceBaseImpl.class);
 
 }
+// SB-Hash:1128723023

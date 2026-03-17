@@ -200,3 +200,4 @@ public class ObjectEntryFolderServiceUtil {
 			ObjectEntryFolderServiceUtil.class, ObjectEntryFolderService.class);
 
 }
+// SB-Hash:1961010077

@@ -199,3 +199,4 @@ public interface PatcherFixComponentPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1673190671

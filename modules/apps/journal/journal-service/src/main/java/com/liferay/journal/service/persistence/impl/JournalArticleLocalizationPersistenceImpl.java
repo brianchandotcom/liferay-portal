@@ -1843,3 +1843,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
+// SB-Hash:177656639

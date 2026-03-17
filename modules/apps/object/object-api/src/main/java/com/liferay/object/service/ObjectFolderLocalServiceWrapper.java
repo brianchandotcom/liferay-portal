@@ -484,3 +484,4 @@ public class ObjectFolderLocalServiceWrapper
 	private ObjectFolderLocalService _objectFolderLocalService;
 
 }
+// SB-Hash:1894342813

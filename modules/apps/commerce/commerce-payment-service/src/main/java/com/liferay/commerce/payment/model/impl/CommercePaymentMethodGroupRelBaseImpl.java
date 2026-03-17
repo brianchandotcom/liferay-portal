@@ -42,3 +42,4 @@ public abstract class CommercePaymentMethodGroupRelBaseImpl
 	}
 
 }
+// SB-Hash:411058497

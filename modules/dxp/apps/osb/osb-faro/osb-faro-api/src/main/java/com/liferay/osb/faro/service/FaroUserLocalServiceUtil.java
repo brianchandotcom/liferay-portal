@@ -389,3 +389,4 @@ public class FaroUserLocalServiceUtil {
 			FaroUserLocalServiceUtil.class, FaroUserLocalService.class);
 
 }
+// SB-Hash:1266269349

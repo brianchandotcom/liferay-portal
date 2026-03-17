@@ -485,3 +485,4 @@ public class LayoutPrototypeLocalServiceWrapper
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }
+// SB-Hash:1338689498

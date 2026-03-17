@@ -553,3 +553,4 @@ public class LockPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-303921001

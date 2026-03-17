@@ -497,3 +497,4 @@ public class CommerceChannelRelLocalServiceWrapper
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
 
 }
+// SB-Hash:-1716169947

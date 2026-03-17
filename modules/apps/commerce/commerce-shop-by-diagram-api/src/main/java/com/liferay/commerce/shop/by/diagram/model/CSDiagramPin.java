@@ -53,3 +53,4 @@ public interface CSDiagramPin extends CSDiagramPinModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:-642849713

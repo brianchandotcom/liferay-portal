@@ -492,3 +492,4 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 		DDMStructureVersionLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1544611222

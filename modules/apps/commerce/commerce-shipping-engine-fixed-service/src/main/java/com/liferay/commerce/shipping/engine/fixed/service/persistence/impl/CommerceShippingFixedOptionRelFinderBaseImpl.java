@@ -79,3 +79,4 @@ public abstract class CommerceShippingFixedOptionRelFinderBaseImpl
 		CommerceShippingFixedOptionRelFinderBaseImpl.class);
 
 }
+// SB-Hash:1248061521

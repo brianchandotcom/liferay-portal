@@ -546,3 +546,4 @@ public class CommerceShipmentItemLocalServiceUtil {
 			CommerceShipmentItemLocalService.class);
 
 }
+// SB-Hash:694201672

@@ -1019,3 +1019,4 @@ public class KBTemplateModelImpl
 	private KBTemplate _escapedModel;
 
 }
+// SB-Hash:-1309865963

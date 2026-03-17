@@ -667,3 +667,4 @@ public interface AccountGroupRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:-938817310

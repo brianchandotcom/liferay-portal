@@ -954,3 +954,4 @@ public class CommercePriceModifierRelUtil {
 	private static volatile CommercePriceModifierRelPersistence _persistence;
 
 }
+// SB-Hash:632999740

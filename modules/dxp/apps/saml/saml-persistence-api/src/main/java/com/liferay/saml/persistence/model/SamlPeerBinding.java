@@ -50,3 +50,4 @@ public interface SamlPeerBinding extends PersistedModel, SamlPeerBindingModel {
 		};
 
 }
+// SB-Hash:-2085602874

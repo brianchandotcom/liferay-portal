@@ -594,3 +594,4 @@ public abstract class KaleoProcessLocalServiceBaseImpl
 		KaleoProcessLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1042223263

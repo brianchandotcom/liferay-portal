@@ -636,3 +636,4 @@ public class CommerceSubscriptionEntryLocalServiceUtil {
 			CommerceSubscriptionEntryLocalService.class);
 
 }
+// SB-Hash:936767478

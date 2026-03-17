@@ -482,3 +482,4 @@ public abstract class FaroProjectEmailDomainLocalServiceBaseImpl
 		FaroProjectEmailDomainLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1473662042

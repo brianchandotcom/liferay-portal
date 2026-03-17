@@ -848,3 +848,4 @@ public class KaleoNotificationRecipientUtil {
 	private static volatile KaleoNotificationRecipientPersistence _persistence;
 
 }
+// SB-Hash:-6570833

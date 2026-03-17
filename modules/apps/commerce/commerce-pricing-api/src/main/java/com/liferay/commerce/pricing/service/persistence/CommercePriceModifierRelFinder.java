@@ -68,3 +68,4 @@ public interface CommercePriceModifierRelFinder {
 				boolean inlineSQLHelper);
 
 }
+// SB-Hash:1381804596

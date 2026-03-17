@@ -547,3 +547,4 @@ public class CPDefinitionLocalizationUtil {
 	private static volatile CPDefinitionLocalizationPersistence _persistence;
 
 }
+// SB-Hash:809147857

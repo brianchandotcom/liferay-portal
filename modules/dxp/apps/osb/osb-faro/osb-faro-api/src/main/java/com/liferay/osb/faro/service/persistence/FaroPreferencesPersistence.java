@@ -346,3 +346,4 @@ public interface FaroPreferencesPersistence
 	public int countAll();
 
 }
+// SB-Hash:776105911

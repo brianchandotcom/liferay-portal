@@ -76,3 +76,4 @@ public class TranslationEntryServiceUtil {
 			TranslationEntryServiceUtil.class, TranslationEntryService.class);
 
 }
+// SB-Hash:-680474045

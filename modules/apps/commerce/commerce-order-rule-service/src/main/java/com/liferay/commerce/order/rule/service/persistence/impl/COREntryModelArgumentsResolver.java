@@ -130,3 +130,4 @@ public class COREntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// SB-Hash:1441473413

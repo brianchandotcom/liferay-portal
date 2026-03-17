@@ -63,3 +63,4 @@ public interface MembershipRequestService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:669157938

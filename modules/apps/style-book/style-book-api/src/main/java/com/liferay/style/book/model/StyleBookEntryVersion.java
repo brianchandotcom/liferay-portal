@@ -50,3 +50,4 @@ public interface StyleBookEntryVersion extends StyleBookEntryVersionModel {
 			};
 
 }
+// SB-Hash:1975190723

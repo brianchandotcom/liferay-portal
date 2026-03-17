@@ -479,3 +479,4 @@ public class SourceLocalServiceWrapper
 	private SourceLocalService _sourceLocalService;
 
 }
+// SB-Hash:658109707

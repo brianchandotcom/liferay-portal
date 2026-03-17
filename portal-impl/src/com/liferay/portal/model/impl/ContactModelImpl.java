@@ -1607,3 +1607,4 @@ public class ContactModelImpl
 	private Contact _escapedModel;
 
 }
+// SB-Hash:-1598462593

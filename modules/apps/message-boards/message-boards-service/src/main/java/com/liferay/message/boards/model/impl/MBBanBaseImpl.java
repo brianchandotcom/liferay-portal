@@ -38,3 +38,4 @@ public abstract class MBBanBaseImpl extends MBBanModelImpl implements MBBan {
 	}
 
 }
+// SB-Hash:1746541951

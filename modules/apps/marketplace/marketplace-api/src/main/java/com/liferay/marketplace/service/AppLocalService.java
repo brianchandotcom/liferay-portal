@@ -322,3 +322,4 @@ public interface AppLocalService
 		throws PortalException;
 
 }
+// SB-Hash:265536719

@@ -825,3 +825,4 @@ public class CommercePriceModifierPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-301333501

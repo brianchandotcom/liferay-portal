@@ -81,3 +81,4 @@ public interface CommerceSubscriptionEntry
 			subscriptionTypeSettingsUnicodeProperties);
 
 }
+// SB-Hash:2115129686

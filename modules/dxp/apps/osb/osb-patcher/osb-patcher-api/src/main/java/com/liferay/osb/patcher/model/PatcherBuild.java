@@ -48,3 +48,4 @@ public interface PatcherBuild extends PatcherBuildModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-1368232532

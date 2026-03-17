@@ -57,3 +57,4 @@ public interface SocialActivityLimit
 	public void setCount(int limitPeriod, int count);
 
 }
+// SB-Hash:-2129828775

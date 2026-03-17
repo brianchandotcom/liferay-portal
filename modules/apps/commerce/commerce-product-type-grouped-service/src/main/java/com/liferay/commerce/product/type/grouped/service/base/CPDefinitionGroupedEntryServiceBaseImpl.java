@@ -130,3 +130,4 @@ public abstract class CPDefinitionGroupedEntryServiceBaseImpl
 		CPDefinitionGroupedEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:702658661

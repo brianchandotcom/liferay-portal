@@ -198,3 +198,4 @@ public class BookmarksEntryServiceUtil {
 			BookmarksEntryServiceUtil.class, BookmarksEntryService.class);
 
 }
+// SB-Hash:-1348808327

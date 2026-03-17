@@ -668,3 +668,4 @@ public class DDMStructureLayoutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1937089166

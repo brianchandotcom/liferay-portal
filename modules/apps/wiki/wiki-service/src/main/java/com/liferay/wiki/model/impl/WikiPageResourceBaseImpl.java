@@ -39,3 +39,4 @@ public abstract class WikiPageResourceBaseImpl
 	}
 
 }
+// SB-Hash:167812238

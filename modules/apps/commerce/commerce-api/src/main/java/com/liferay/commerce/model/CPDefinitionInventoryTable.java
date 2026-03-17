@@ -103,3 +103,4 @@ public class CPDefinitionInventoryTable
 	}
 
 }
+// SB-Hash:1688141426

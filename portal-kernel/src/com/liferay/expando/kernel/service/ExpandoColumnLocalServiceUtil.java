@@ -504,3 +504,4 @@ public class ExpandoColumnLocalServiceUtil {
 	private static volatile ExpandoColumnLocalService _service;
 
 }
+// SB-Hash:1947747122

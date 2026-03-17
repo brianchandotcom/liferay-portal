@@ -391,3 +391,4 @@ public class ObjectStateTransitionLocalServiceUtil {
 			ObjectStateTransitionLocalService.class);
 
 }
+// SB-Hash:1967217996

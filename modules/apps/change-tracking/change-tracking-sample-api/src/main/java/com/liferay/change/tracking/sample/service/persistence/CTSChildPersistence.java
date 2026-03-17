@@ -606,3 +606,4 @@ public interface CTSChildPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1142415804

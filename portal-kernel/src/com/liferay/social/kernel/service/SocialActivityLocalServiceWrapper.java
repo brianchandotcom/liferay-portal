@@ -1201,3 +1201,4 @@ public class SocialActivityLocalServiceWrapper
 	private SocialActivityLocalService _socialActivityLocalService;
 
 }
+// SB-Hash:1314806662

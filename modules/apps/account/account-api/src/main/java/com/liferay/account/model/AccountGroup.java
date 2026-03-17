@@ -48,3 +48,4 @@ public interface AccountGroup extends AccountGroupModel, PersistedModel {
 		};
 
 }
+// SB-Hash:2105998269

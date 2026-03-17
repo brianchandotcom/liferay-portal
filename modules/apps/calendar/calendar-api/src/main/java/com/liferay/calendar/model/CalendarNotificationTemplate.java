@@ -62,3 +62,4 @@ public interface CalendarNotificationTemplate
 			notificationTypeSettingsUnicodeProperties);
 
 }
+// SB-Hash:-864333038

@@ -524,3 +524,4 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:783012660

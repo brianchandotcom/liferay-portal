@@ -1267,3 +1267,4 @@ public class BatchPlannerPlanModelImpl
 	private BatchPlannerPlan _escapedModel;
 
 }
+// SB-Hash:-528203674

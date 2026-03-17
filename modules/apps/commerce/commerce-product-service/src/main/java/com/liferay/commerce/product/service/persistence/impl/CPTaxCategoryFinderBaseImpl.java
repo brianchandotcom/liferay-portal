@@ -77,3 +77,4 @@ public abstract class CPTaxCategoryFinderBaseImpl
 		CPTaxCategoryFinderBaseImpl.class);
 
 }
+// SB-Hash:311979853

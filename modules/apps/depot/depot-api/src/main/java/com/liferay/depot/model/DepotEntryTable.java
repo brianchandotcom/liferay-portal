@@ -51,3 +51,4 @@ public class DepotEntryTable extends BaseTable<DepotEntryTable> {
 	}
 
 }
+// SB-Hash:288960202

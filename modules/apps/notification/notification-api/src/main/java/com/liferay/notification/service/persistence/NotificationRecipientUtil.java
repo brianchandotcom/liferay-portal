@@ -706,3 +706,4 @@ public class NotificationRecipientUtil {
 	private static volatile NotificationRecipientPersistence _persistence;
 
 }
+// SB-Hash:1349315788

@@ -559,3 +559,4 @@ public interface CPDefinitionVirtualSettingPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1096443629

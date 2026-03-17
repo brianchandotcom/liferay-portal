@@ -582,3 +582,4 @@ public class ObjectFolderWrapper
 	}
 
 }
+// SB-Hash:350678910

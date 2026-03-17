@@ -125,3 +125,4 @@ public interface COREntryRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:841327511

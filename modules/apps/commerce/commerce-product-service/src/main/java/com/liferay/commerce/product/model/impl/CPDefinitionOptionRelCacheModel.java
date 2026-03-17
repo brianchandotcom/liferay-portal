@@ -393,3 +393,4 @@ public class CPDefinitionOptionRelCacheModel
 	public String typeSettings;
 
 }
+// SB-Hash:-250277603

@@ -337,3 +337,4 @@ public class PatcherBuildRelLocalServiceUtil {
 			PatcherBuildRelLocalService.class);
 
 }
+// SB-Hash:2067033756

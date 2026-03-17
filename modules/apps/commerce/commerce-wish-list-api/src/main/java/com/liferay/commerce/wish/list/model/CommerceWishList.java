@@ -55,3 +55,4 @@ public interface CommerceWishList
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:615734171

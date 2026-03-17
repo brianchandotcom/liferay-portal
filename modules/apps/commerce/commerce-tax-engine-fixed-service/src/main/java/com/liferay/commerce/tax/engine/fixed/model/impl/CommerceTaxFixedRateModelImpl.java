@@ -927,3 +927,4 @@ public class CommerceTaxFixedRateModelImpl
 	private CommerceTaxFixedRate _escapedModel;
 
 }
+// SB-Hash:1173083687

@@ -144,3 +144,4 @@ public class CommerceShippingFixedOptionServiceUtil {
 			CommerceShippingFixedOptionService.class);
 
 }
+// SB-Hash:1927091734

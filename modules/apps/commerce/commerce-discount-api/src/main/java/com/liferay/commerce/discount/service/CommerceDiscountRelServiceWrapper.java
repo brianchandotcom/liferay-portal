@@ -230,3 +230,4 @@ public class CommerceDiscountRelServiceWrapper
 	private CommerceDiscountRelService _commerceDiscountRelService;
 
 }
+// SB-Hash:107007562

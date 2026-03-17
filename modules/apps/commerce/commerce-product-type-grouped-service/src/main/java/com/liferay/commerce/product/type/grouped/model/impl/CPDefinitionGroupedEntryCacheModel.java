@@ -233,3 +233,4 @@ public class CPDefinitionGroupedEntryCacheModel
 	public int quantity;
 
 }
+// SB-Hash:435549080

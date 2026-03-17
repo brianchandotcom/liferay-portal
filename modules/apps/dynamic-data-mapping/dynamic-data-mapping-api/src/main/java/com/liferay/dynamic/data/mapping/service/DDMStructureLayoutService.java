@@ -69,3 +69,4 @@ public interface DDMStructureLayoutService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-1012716500

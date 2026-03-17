@@ -290,3 +290,4 @@ public interface EntryLocalService
 		throws PortalException;
 
 }
+// SB-Hash:1352944348

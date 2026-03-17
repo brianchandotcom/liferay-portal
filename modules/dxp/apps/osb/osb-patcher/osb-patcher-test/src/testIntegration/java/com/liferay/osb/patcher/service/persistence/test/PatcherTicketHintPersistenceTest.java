@@ -517,3 +517,4 @@ public class PatcherTicketHintPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:730645286

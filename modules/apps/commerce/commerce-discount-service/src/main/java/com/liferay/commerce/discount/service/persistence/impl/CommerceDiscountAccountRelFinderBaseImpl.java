@@ -79,3 +79,4 @@ public abstract class CommerceDiscountAccountRelFinderBaseImpl
 		CommerceDiscountAccountRelFinderBaseImpl.class);
 
 }
+// SB-Hash:1519533115

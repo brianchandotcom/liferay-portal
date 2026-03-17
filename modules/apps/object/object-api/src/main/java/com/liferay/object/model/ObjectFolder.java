@@ -50,3 +50,4 @@ public interface ObjectFolder extends ObjectFolderModel, PersistedModel {
 	public boolean isDefault();
 
 }
+// SB-Hash:-781339325

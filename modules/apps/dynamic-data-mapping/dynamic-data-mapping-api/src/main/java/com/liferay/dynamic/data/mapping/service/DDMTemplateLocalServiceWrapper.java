@@ -1590,3 +1590,4 @@ public class DDMTemplateLocalServiceWrapper
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }
+// SB-Hash:576089960

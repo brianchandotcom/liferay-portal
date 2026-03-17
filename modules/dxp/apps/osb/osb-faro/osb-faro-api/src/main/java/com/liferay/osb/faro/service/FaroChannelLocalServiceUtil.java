@@ -372,3 +372,4 @@ public class FaroChannelLocalServiceUtil {
 			FaroChannelLocalServiceUtil.class, FaroChannelLocalService.class);
 
 }
+// SB-Hash:201385132

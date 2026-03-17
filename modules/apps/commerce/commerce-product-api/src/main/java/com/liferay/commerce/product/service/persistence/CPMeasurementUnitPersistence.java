@@ -1071,3 +1071,4 @@ public interface CPMeasurementUnitPersistence
 	public int countAll();
 
 }
+// SB-Hash:1013311557

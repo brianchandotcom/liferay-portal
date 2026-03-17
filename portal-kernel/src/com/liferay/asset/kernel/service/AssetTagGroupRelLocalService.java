@@ -355,3 +355,4 @@ public interface AssetTagGroupRelLocalService
 		throws E;
 
 }
+// SB-Hash:868081109

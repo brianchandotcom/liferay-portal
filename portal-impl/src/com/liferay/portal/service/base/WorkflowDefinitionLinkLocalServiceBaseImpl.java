@@ -745,3 +745,4 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 		WorkflowDefinitionLinkLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1174311888

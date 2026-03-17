@@ -42,3 +42,4 @@ public abstract class CommercePriceListCommerceAccountGroupRelBaseImpl
 	}
 
 }
+// SB-Hash:-1054464177

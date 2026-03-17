@@ -60,3 +60,4 @@ public interface PortletService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1681854685

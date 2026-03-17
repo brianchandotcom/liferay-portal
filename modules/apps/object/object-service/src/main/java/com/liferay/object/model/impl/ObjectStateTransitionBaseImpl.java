@@ -41,3 +41,4 @@ public abstract class ObjectStateTransitionBaseImpl
 	}
 
 }
+// SB-Hash:-2052580643

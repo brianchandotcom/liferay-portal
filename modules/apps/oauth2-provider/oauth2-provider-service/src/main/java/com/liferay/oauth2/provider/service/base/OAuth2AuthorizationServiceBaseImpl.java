@@ -134,3 +134,4 @@ public abstract class OAuth2AuthorizationServiceBaseImpl
 		OAuth2AuthorizationServiceBaseImpl.class);
 
 }
+// SB-Hash:1393537987

@@ -83,3 +83,4 @@ public interface CommerceAvailabilityEstimateService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:958654710

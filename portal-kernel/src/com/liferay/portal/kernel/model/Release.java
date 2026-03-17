@@ -49,3 +49,4 @@ public interface Release extends PersistedModel, ReleaseModel {
 	public String getBundleSymbolicName();
 
 }
+// SB-Hash:-1143620444

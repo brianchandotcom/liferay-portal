@@ -44,3 +44,4 @@ public interface CompareRunsLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:-1559332466

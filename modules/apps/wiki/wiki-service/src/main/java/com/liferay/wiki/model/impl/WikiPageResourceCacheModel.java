@@ -176,3 +176,4 @@ public class WikiPageResourceCacheModel
 	public String title;
 
 }
+// SB-Hash:1152627846

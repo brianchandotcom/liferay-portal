@@ -370,3 +370,4 @@ public class FaroPreferencesWrapper
 	}
 
 }
+// SB-Hash:953146622

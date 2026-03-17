@@ -518,3 +518,4 @@ public class MBSuspiciousActivityLocalServiceWrapper
 	private MBSuspiciousActivityLocalService _mbSuspiciousActivityLocalService;
 
 }
+// SB-Hash:-984496049

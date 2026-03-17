@@ -59,3 +59,4 @@ public class SegmentsEntryRelTable extends BaseTable<SegmentsEntryRelTable> {
 	}
 
 }
+// SB-Hash:650891654

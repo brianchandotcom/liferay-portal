@@ -92,3 +92,4 @@ public abstract class BaseKBTemplateUADAnonymizer
 	protected KBTemplateLocalService kbTemplateLocalService;
 
 }
+// SB-Hash:336385215

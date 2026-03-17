@@ -874,3 +874,4 @@ public class DDMTemplateServiceUtil {
 		new Snapshot<>(DDMTemplateServiceUtil.class, DDMTemplateService.class);
 
 }
+// SB-Hash:584877202

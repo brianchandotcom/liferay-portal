@@ -125,3 +125,4 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 		ReadingTimeEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:-1212297087

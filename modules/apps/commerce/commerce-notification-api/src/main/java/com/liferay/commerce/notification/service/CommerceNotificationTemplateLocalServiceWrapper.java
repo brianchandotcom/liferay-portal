@@ -581,3 +581,4 @@ public class CommerceNotificationTemplateLocalServiceWrapper
 		_commerceNotificationTemplateLocalService;
 
 }
+// SB-Hash:-1610312385

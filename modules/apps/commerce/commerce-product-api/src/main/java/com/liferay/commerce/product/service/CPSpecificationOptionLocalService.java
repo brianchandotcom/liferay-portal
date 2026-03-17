@@ -379,3 +379,4 @@ public interface CPSpecificationOptionLocalService
 		throws E;
 
 }
+// SB-Hash:1256745991

@@ -854,3 +854,4 @@ public class SharingEntryLocalServiceUtil {
 			SharingEntryLocalServiceUtil.class, SharingEntryLocalService.class);
 
 }
+// SB-Hash:920194991

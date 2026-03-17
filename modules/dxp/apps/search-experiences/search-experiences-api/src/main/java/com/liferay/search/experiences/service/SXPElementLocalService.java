@@ -330,3 +330,4 @@ public interface SXPElementLocalService
 	public SXPElement updateSXPElement(SXPElement sxpElement);
 
 }
+// SB-Hash:1885010038

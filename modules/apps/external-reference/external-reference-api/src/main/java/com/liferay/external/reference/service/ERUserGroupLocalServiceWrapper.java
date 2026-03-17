@@ -65,3 +65,4 @@ public class ERUserGroupLocalServiceWrapper
 	private ERUserGroupLocalService _erUserGroupLocalService;
 
 }
+// SB-Hash:816529223

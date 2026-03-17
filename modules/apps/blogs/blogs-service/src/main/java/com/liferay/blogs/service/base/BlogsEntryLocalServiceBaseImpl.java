@@ -689,3 +689,4 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 		BlogsEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-881430898

@@ -264,3 +264,4 @@ public interface CompanyInfoLocalService
 	public CompanyInfo updateCompanyInfo(CompanyInfo companyInfo);
 
 }
+// SB-Hash:875865028

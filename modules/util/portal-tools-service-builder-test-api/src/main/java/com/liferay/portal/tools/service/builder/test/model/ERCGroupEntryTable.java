@@ -40,3 +40,4 @@ public class ERCGroupEntryTable extends BaseTable<ERCGroupEntryTable> {
 	}
 
 }
+// SB-Hash:-857453780

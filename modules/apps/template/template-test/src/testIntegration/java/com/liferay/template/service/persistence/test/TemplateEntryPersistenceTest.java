@@ -666,3 +666,4 @@ public class TemplateEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-24019339

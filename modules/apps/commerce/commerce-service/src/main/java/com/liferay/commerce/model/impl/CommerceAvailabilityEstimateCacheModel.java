@@ -236,3 +236,4 @@ public class CommerceAvailabilityEstimateCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-935368080

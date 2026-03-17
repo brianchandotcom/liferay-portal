@@ -826,3 +826,4 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-827420501

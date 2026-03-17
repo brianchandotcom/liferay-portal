@@ -93,3 +93,4 @@ public class CommerceAddressTable extends BaseTable<CommerceAddressTable> {
 	}
 
 }
+// SB-Hash:-882194115

@@ -662,3 +662,4 @@ public interface NotificationRecipientSettingPersistence
 	public int countAll();
 
 }
+// SB-Hash:2146993777

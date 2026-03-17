@@ -96,3 +96,4 @@ public class KaleoTaskAssignmentTable
 	}
 
 }
+// SB-Hash:124274621

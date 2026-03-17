@@ -101,3 +101,4 @@ public class GenericMethodsEntryLocalServiceWrapper
 	private GenericMethodsEntryLocalService _genericMethodsEntryLocalService;
 
 }
+// SB-Hash:1420971033

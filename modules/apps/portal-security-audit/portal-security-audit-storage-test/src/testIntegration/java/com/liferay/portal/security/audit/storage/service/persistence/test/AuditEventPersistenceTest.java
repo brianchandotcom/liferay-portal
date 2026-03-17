@@ -479,3 +479,4 @@ public class AuditEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:100818432

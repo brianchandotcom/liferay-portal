@@ -624,3 +624,4 @@ public class AssetVocabularyLocalServiceUtil {
 	private static volatile AssetVocabularyLocalService _service;
 
 }
+// SB-Hash:-236408834

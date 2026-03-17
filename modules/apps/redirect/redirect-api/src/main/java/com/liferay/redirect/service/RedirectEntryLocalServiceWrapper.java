@@ -538,3 +538,4 @@ public class RedirectEntryLocalServiceWrapper
 	private RedirectEntryLocalService _redirectEntryLocalService;
 
 }
+// SB-Hash:500715199

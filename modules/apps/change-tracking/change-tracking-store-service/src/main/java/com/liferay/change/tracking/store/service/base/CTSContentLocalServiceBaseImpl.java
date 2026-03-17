@@ -540,3 +540,4 @@ public abstract class CTSContentLocalServiceBaseImpl
 	private boolean _useTempFile;
 
 }
+// SB-Hash:1846033876

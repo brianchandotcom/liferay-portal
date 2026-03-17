@@ -14,3 +14,4 @@ public class UserGroupsAdminUADConstants {
 	public static final String[] USER_ID_FIELD_NAMES_USER_GROUP = {"userId"};
 
 }
+// SB-Hash:962086652

@@ -1095,3 +1095,4 @@ public class CommercePriceListOrderTypeRelModelImpl
 	private CommercePriceListOrderTypeRel _escapedModel;
 
 }
+// SB-Hash:-2012357876

@@ -1076,3 +1076,4 @@ public class MBThreadFlagUtil {
 	private static volatile MBThreadFlagPersistence _persistence;
 
 }
+// SB-Hash:-1473987368

@@ -608,3 +608,4 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 		MBThreadFlagLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:220404089

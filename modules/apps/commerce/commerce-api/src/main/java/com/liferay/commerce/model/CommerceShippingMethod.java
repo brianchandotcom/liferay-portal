@@ -62,3 +62,4 @@ public interface CommerceShippingMethod
 			typeSettingsUnicodeProperties);
 
 }
+// SB-Hash:-1540990264

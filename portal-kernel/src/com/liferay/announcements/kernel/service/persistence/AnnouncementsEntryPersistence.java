@@ -1978,3 +1978,4 @@ public interface AnnouncementsEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:267018696

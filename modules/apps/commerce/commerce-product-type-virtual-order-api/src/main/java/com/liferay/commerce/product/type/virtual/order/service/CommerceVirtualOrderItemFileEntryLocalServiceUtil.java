@@ -463,3 +463,4 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceUtil {
 			CommerceVirtualOrderItemFileEntryLocalService.class);
 
 }
+// SB-Hash:1548469416

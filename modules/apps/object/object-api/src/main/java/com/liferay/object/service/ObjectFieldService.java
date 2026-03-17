@@ -79,3 +79,4 @@ public interface ObjectFieldService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:1850301605

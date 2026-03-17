@@ -348,3 +348,4 @@ public class DDMTemplateVersionLocalServiceUtil {
 			DDMTemplateVersionLocalService.class);
 
 }
+// SB-Hash:1382605240

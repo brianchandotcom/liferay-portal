@@ -106,3 +106,4 @@ public class BlogsEntryTable extends BaseTable<BlogsEntryTable> {
 	}
 
 }
+// SB-Hash:-1830745013

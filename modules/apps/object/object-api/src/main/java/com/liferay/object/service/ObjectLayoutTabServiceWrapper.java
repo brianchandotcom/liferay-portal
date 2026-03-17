@@ -52,3 +52,4 @@ public class ObjectLayoutTabServiceWrapper
 	private ObjectLayoutTabService _objectLayoutTabService;
 
 }
+// SB-Hash:1376036029

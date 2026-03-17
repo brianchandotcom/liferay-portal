@@ -129,3 +129,4 @@ public abstract class KBArticleServiceBaseImpl
 		KBArticleServiceBaseImpl.class);
 
 }
+// SB-Hash:2010201752

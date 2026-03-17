@@ -382,3 +382,4 @@ public class MemberRequestLocalServiceUtil {
 			MemberRequestLocalService.class);
 
 }
+// SB-Hash:1297045862

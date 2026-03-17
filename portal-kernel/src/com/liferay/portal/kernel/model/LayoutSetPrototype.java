@@ -78,3 +78,4 @@ public interface LayoutSetPrototype
 			settingsUnicodeProperties);
 
 }
+// SB-Hash:1416426795

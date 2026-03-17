@@ -3157,3 +3157,4 @@ public interface AssetListEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:1051064772

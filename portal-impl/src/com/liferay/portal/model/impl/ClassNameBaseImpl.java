@@ -39,3 +39,4 @@ public abstract class ClassNameBaseImpl
 	}
 
 }
+// SB-Hash:-360312928

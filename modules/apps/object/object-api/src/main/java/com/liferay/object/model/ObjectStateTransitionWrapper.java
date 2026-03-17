@@ -422,3 +422,4 @@ public class ObjectStateTransitionWrapper
 	}
 
 }
+// SB-Hash:788061237

@@ -456,3 +456,4 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 			CPInstanceUnitOfMeasureLocalService.class);
 
 }
+// SB-Hash:-1493386727

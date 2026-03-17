@@ -481,3 +481,4 @@ public interface CommerceSubscriptionEntryLocalService
 		throws PortalException;
 
 }
+// SB-Hash:506346690

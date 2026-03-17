@@ -404,3 +404,4 @@ public class JournalFolderServiceWrapper
 	private JournalFolderService _journalFolderService;
 
 }
+// SB-Hash:-315502373

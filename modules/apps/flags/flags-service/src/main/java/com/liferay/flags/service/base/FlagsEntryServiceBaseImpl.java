@@ -109,3 +109,4 @@ public abstract class FlagsEntryServiceBaseImpl
 		FlagsEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:72689941

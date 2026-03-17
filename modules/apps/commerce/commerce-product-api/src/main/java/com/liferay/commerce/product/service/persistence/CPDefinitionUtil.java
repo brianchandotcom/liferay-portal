@@ -2448,3 +2448,4 @@ public class CPDefinitionUtil {
 	private static volatile CPDefinitionPersistence _persistence;
 
 }
+// SB-Hash:486238371

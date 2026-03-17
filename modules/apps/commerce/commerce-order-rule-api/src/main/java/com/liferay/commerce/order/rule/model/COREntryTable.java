@@ -76,3 +76,4 @@ public class COREntryTable extends BaseTable<COREntryTable> {
 	}
 
 }
+// SB-Hash:-1527446297

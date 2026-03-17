@@ -70,3 +70,4 @@ public class BackgroundTaskTable extends BaseTable<BackgroundTaskTable> {
 	}
 
 }
+// SB-Hash:971197363

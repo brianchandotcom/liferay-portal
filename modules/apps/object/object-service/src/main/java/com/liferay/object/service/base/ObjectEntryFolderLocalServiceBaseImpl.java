@@ -601,3 +601,4 @@ public abstract class ObjectEntryFolderLocalServiceBaseImpl
 		ObjectEntryFolderLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1274525088

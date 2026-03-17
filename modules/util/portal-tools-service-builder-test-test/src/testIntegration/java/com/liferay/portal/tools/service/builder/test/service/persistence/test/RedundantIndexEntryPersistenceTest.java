@@ -490,3 +490,4 @@ public class RedundantIndexEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-2127768194

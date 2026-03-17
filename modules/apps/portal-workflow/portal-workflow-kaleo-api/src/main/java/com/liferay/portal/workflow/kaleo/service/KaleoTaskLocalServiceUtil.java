@@ -321,3 +321,4 @@ public class KaleoTaskLocalServiceUtil {
 			KaleoTaskLocalServiceUtil.class, KaleoTaskLocalService.class);
 
 }
+// SB-Hash:721152536

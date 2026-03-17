@@ -437,3 +437,4 @@ public class MembershipRequestLocalServiceWrapper
 	private MembershipRequestLocalService _membershipRequestLocalService;
 
 }
+// SB-Hash:-550777961

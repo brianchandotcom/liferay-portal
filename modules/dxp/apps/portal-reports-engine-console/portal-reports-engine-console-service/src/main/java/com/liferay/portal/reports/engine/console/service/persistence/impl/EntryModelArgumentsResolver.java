@@ -130,3 +130,4 @@ public class EntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// SB-Hash:1387553894

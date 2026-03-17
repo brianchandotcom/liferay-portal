@@ -796,3 +796,4 @@ public class PluginSettingModelImpl
 	private PluginSetting _escapedModel;
 
 }
+// SB-Hash:1451563216

@@ -65,3 +65,4 @@ public class CommerceShippingFixedOptionQualifierTable
 	}
 
 }
+// SB-Hash:-3892252

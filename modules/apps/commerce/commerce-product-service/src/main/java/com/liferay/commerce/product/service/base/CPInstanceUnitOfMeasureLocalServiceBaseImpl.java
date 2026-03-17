@@ -614,3 +614,4 @@ public abstract class CPInstanceUnitOfMeasureLocalServiceBaseImpl
 		CPInstanceUnitOfMeasureLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1981912615

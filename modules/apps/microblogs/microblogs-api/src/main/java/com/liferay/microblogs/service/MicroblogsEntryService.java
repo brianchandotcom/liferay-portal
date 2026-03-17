@@ -103,3 +103,4 @@ public interface MicroblogsEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:592626924

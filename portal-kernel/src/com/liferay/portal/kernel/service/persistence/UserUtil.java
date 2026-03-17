@@ -3984,3 +3984,4 @@ public class UserUtil {
 	private static volatile UserPersistence _persistence;
 
 }
+// SB-Hash:-779990229

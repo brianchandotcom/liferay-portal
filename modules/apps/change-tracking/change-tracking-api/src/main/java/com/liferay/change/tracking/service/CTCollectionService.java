@@ -107,3 +107,4 @@ public interface CTCollectionService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:304351551

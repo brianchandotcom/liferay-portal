@@ -846,3 +846,4 @@ public interface CPDefinitionGroupedEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:1377293829

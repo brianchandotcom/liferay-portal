@@ -52,3 +52,4 @@ public interface ObjectLayoutBox extends ObjectLayoutBoxModel {
 		java.util.List<ObjectLayoutRow> objectLayoutRows);
 
 }
+// SB-Hash:350491760

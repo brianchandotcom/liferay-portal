@@ -809,3 +809,4 @@ public class OAuth2ScopeGrantUtil {
 	private static volatile OAuth2ScopeGrantPersistence _persistence;
 
 }
+// SB-Hash:487931710

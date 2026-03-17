@@ -69,3 +69,4 @@ public class WikiNodeTable extends BaseTable<WikiNodeTable> {
 	}
 
 }
+// SB-Hash:-522564230

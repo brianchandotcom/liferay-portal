@@ -41,3 +41,4 @@ public abstract class CommercePriceModifierBaseImpl
 	}
 
 }
+// SB-Hash:-1412456747

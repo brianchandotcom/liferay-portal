@@ -112,3 +112,4 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 			CommerceMLForecastAlertEntryService.class);
 
 }
+// SB-Hash:-1158038783

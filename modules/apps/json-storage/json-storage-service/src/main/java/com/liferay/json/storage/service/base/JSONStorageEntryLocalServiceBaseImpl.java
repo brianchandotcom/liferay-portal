@@ -479,3 +479,4 @@ public abstract class JSONStorageEntryLocalServiceBaseImpl
 		JSONStorageEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1762373737

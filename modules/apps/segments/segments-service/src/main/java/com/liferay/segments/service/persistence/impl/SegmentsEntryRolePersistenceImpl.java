@@ -2275,3 +2275,4 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 }
+// SB-Hash:-1142728558

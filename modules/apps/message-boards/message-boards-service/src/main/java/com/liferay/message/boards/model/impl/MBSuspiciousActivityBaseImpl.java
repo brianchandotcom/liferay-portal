@@ -40,3 +40,4 @@ public abstract class MBSuspiciousActivityBaseImpl
 	}
 
 }
+// SB-Hash:2120276395

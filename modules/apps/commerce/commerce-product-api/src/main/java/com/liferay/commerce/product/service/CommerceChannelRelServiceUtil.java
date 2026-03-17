@@ -166,3 +166,4 @@ public class CommerceChannelRelServiceUtil {
 			CommerceChannelRelService.class);
 
 }
+// SB-Hash:380074619

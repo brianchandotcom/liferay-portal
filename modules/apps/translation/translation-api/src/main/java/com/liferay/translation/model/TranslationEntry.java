@@ -55,3 +55,4 @@ public interface TranslationEntry
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:340106012

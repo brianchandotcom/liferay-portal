@@ -351,3 +351,4 @@ public interface SamlSpIdpConnectionPersistence
 	public int countAll();
 
 }
+// SB-Hash:2088080303

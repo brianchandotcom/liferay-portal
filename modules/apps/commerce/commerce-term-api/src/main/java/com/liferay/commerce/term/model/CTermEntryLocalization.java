@@ -50,3 +50,4 @@ public interface CTermEntryLocalization extends CTermEntryLocalizationModel {
 			};
 
 }
+// SB-Hash:-531063927

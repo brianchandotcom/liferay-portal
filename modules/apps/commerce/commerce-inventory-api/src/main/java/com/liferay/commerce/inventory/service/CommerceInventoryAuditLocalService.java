@@ -286,3 +286,4 @@ public interface CommerceInventoryAuditLocalService
 		CommerceInventoryAudit commerceInventoryAudit);
 
 }
+// SB-Hash:-1248053979

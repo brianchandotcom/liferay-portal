@@ -425,3 +425,4 @@ public class DDMFieldLocalServiceWrapper
 	private DDMFieldLocalService _ddmFieldLocalService;
 
 }
+// SB-Hash:1497078996

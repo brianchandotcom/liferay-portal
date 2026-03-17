@@ -1076,3 +1076,4 @@ public interface DDMStructureLocalService
 		throws E;
 
 }
+// SB-Hash:319530675

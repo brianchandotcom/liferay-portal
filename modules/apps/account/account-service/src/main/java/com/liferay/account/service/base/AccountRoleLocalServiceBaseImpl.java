@@ -470,3 +470,4 @@ public abstract class AccountRoleLocalServiceBaseImpl
 		AccountRoleLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-13815826

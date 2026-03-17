@@ -567,3 +567,4 @@ public class CSDiagramEntryWrapper
 	}
 
 }
+// SB-Hash:1323005912

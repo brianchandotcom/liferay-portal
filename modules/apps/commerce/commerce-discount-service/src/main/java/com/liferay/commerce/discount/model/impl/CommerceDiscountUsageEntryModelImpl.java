@@ -918,3 +918,4 @@ public class CommerceDiscountUsageEntryModelImpl
 	private CommerceDiscountUsageEntry _escapedModel;
 
 }
+// SB-Hash:773465523

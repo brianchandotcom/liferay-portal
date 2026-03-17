@@ -63,3 +63,4 @@ public interface ObjectView extends ObjectViewModel, PersistedModel {
 		java.util.List<ObjectViewSortColumn> objectViewSortColumns);
 
 }
+// SB-Hash:616048895

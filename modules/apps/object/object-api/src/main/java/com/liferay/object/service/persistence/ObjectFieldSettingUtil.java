@@ -875,3 +875,4 @@ public class ObjectFieldSettingUtil {
 	private static volatile ObjectFieldSettingPersistence _persistence;
 
 }
+// SB-Hash:1180960765

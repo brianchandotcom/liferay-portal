@@ -50,3 +50,4 @@ public interface KaleoAction extends KaleoActionModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1243174351

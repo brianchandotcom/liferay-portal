@@ -499,3 +499,4 @@ public class CommerceCurrencyLocalServiceUtil {
 			CommerceCurrencyLocalService.class);
 
 }
+// SB-Hash:-1013648804

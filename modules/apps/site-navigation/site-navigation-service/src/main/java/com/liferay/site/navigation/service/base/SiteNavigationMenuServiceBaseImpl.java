@@ -125,3 +125,4 @@ public abstract class SiteNavigationMenuServiceBaseImpl
 		SiteNavigationMenuServiceBaseImpl.class);
 
 }
+// SB-Hash:1318235130

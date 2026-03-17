@@ -696,3 +696,4 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 			KaleoTaskInstanceTokenLocalService.class);
 
 }
+// SB-Hash:1984201992

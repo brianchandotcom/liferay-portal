@@ -38,3 +38,4 @@ public abstract class LockBaseImpl extends LockModelImpl implements Lock {
 	}
 
 }
+// SB-Hash:1505530633

@@ -77,3 +77,4 @@ public abstract class MBMessageFinderBaseImpl
 		MBMessageFinderBaseImpl.class);
 
 }
+// SB-Hash:1914934942

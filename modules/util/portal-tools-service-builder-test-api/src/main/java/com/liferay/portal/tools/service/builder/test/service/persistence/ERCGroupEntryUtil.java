@@ -762,3 +762,4 @@ public class ERCGroupEntryUtil {
 	private static volatile ERCGroupEntryPersistence _persistence;
 
 }
+// SB-Hash:1219507716

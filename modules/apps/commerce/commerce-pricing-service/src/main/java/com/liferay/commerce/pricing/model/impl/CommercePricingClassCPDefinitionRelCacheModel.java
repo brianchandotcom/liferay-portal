@@ -209,3 +209,4 @@ public class CommercePricingClassCPDefinitionRelCacheModel
 	public long CPDefinitionId;
 
 }
+// SB-Hash:-175373857

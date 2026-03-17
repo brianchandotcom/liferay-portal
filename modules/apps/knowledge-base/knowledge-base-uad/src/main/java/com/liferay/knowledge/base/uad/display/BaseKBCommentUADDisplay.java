@@ -75,3 +75,4 @@ public abstract class BaseKBCommentUADDisplay
 	protected KBCommentLocalService kbCommentLocalService;
 
 }
+// SB-Hash:-427460998

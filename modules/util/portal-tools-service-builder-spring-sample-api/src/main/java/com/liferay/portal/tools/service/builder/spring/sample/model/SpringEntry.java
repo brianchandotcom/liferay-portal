@@ -50,3 +50,4 @@ public interface SpringEntry extends PersistedModel, SpringEntryModel {
 		};
 
 }
+// SB-Hash:-639670014

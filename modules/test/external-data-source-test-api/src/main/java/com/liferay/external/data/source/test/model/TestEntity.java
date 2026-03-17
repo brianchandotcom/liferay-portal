@@ -50,3 +50,4 @@ public interface TestEntity extends PersistedModel, TestEntityModel {
 		};
 
 }
+// SB-Hash:-1689445274

@@ -565,3 +565,4 @@ public class AssetAutoTaggerEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:264442237

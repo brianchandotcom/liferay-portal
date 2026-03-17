@@ -1117,3 +1117,4 @@ public class DDLRecordVersionUtil {
 	private static volatile DDLRecordVersionPersistence _persistence;
 
 }
+// SB-Hash:84416264

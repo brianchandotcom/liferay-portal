@@ -349,3 +349,4 @@ public class KaleoNotificationRecipientCacheModel
 	public String notificationReceptionType;
 
 }
+// SB-Hash:729626864

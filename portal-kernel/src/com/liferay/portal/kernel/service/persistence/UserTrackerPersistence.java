@@ -580,3 +580,4 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	public int countAll();
 
 }
+// SB-Hash:638914363

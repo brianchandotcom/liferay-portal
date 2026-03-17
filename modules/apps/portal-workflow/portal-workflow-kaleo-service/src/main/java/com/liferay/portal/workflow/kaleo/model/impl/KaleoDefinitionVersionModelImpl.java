@@ -1621,3 +1621,4 @@ public class KaleoDefinitionVersionModelImpl
 	private KaleoDefinitionVersion _escapedModel;
 
 }
+// SB-Hash:-118862405

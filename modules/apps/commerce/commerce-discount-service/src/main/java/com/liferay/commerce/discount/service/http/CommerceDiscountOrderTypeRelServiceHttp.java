@@ -338,3 +338,4 @@ public class CommerceDiscountOrderTypeRelServiceHttp {
 		};
 
 }
+// SB-Hash:654968598

@@ -819,3 +819,4 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	public int countAll();
 
 }
+// SB-Hash:-1844531470

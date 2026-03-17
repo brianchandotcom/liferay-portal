@@ -42,3 +42,4 @@ public abstract class CommerceMLForecastAlertEntryBaseImpl
 	}
 
 }
+// SB-Hash:997892159

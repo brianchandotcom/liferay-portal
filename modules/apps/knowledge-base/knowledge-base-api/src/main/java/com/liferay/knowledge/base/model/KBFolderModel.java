@@ -536,3 +536,4 @@ public interface KBFolderModel
 	}
 
 }
+// SB-Hash:227299124

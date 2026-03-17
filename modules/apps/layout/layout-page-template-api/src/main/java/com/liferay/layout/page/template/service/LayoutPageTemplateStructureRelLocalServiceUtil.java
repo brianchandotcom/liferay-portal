@@ -480,3 +480,4 @@ public class LayoutPageTemplateStructureRelLocalServiceUtil {
 			LayoutPageTemplateStructureRelLocalService.class);
 
 }
+// SB-Hash:1681831489

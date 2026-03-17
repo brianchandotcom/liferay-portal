@@ -444,3 +444,4 @@ public class AppLocalServiceWrapper
 	private AppLocalService _appLocalService;
 
 }
+// SB-Hash:-1027365753

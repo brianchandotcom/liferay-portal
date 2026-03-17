@@ -55,3 +55,4 @@ public interface NotificationRecipient
 		getNotificationRecipientSettings();
 
 }
+// SB-Hash:-2024465837

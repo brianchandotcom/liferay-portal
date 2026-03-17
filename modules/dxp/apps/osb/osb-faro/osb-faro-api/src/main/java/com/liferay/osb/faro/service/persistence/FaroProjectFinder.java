@@ -18,3 +18,4 @@ public interface FaroProjectFinder {
 		findByEmailAddressDomain(String emailAddressDomain);
 
 }
+// SB-Hash:-2004527768

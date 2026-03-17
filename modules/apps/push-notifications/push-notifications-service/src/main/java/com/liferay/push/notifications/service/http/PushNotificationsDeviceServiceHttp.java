@@ -261,3 +261,4 @@ public class PushNotificationsDeviceServiceHttp {
 		new Class[] {String.class, java.util.List.class, String.class};
 
 }
+// SB-Hash:1471410345

@@ -469,3 +469,4 @@ public class ListTypeDefinitionLocalServiceWrapper
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 }
+// SB-Hash:1561370884

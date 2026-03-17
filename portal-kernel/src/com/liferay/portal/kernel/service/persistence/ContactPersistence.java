@@ -744,3 +744,4 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	public int countAll();
 
 }
+// SB-Hash:160172191

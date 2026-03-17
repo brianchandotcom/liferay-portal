@@ -85,3 +85,4 @@ public interface CPInstance extends CPInstanceModel, PersistedModel {
 			subscriptionTypeSettingsUnicodeProperties);
 
 }
+// SB-Hash:1311629681

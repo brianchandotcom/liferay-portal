@@ -48,3 +48,4 @@ public class FragmentEntryVersionCTServiceImpl
 	private FragmentEntryVersionPersistence _fragmentEntryVersionPersistence;
 
 }
+// SB-Hash:1712769702

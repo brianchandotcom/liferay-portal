@@ -580,3 +580,4 @@ public class JournalArticleResourcePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:819910206

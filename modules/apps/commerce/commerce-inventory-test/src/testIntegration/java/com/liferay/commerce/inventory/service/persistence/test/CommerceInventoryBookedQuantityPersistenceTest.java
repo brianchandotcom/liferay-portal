@@ -578,3 +578,4 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-562550874

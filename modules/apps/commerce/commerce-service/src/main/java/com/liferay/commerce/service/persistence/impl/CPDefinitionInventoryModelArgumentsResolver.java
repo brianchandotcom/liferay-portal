@@ -118,3 +118,4 @@ public class CPDefinitionInventoryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// SB-Hash:-1481111750

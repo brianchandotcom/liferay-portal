@@ -77,3 +77,4 @@ public abstract class KBArticleFinderBaseImpl
 		KBArticleFinderBaseImpl.class);
 
 }
+// SB-Hash:415381968

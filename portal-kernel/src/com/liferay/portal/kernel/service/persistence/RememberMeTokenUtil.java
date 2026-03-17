@@ -620,3 +620,4 @@ public class RememberMeTokenUtil {
 	private static volatile RememberMeTokenPersistence _persistence;
 
 }
+// SB-Hash:-2004522690

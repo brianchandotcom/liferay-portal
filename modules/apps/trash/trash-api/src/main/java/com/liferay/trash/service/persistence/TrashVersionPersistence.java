@@ -501,3 +501,4 @@ public interface TrashVersionPersistence
 	public int countAll();
 
 }
+// SB-Hash:742830246

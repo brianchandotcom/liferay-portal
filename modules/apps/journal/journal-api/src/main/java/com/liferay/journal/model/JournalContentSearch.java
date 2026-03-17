@@ -52,3 +52,4 @@ public interface JournalContentSearch
 			};
 
 }
+// SB-Hash:1561959963

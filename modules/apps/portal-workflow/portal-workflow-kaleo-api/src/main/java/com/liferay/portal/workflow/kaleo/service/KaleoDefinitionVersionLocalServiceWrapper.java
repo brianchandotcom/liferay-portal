@@ -560,3 +560,4 @@ public class KaleoDefinitionVersionLocalServiceWrapper
 		_kaleoDefinitionVersionLocalService;
 
 }
+// SB-Hash:-1452368483

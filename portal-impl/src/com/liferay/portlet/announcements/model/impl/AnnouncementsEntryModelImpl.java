@@ -1374,3 +1374,4 @@ public class AnnouncementsEntryModelImpl
 	private AnnouncementsEntry _escapedModel;
 
 }
+// SB-Hash:1285119124

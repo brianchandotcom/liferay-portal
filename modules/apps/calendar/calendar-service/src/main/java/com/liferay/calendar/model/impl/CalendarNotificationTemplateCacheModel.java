@@ -330,3 +330,4 @@ public class CalendarNotificationTemplateCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:1783798317

@@ -77,3 +77,4 @@ public abstract class CommerceShipmentFinderBaseImpl
 		CommerceShipmentFinderBaseImpl.class);
 
 }
+// SB-Hash:-809973734

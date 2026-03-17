@@ -356,3 +356,4 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 	private static volatile AnnouncementsDeliveryLocalService _service;
 
 }
+// SB-Hash:143034466

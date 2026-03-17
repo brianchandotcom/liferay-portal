@@ -797,3 +797,4 @@ public class DDLRecordLocalServiceUtil {
 			DDLRecordLocalServiceUtil.class, DDLRecordLocalService.class);
 
 }
+// SB-Hash:-1429263732

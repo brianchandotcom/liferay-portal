@@ -450,3 +450,4 @@ public abstract class DispatchLogLocalServiceBaseImpl
 		DispatchLogLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1993180674

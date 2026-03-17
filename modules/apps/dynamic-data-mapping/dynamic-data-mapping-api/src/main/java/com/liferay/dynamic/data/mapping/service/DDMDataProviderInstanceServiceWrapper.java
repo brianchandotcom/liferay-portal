@@ -177,3 +177,4 @@ public class DDMDataProviderInstanceServiceWrapper
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
 
 }
+// SB-Hash:-69310145

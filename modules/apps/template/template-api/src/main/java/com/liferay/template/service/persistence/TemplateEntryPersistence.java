@@ -1237,3 +1237,4 @@ public interface TemplateEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-862980514

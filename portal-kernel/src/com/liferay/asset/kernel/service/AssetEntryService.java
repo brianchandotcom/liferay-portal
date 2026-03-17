@@ -97,3 +97,4 @@ public interface AssetEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:670231488

@@ -125,3 +125,4 @@ public abstract class DepotEntryServiceBaseImpl
 		DepotEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:-1024726703

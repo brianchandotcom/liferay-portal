@@ -42,3 +42,4 @@ public abstract class CommercePriceListOrderTypeRelBaseImpl
 	}
 
 }
+// SB-Hash:-697823460

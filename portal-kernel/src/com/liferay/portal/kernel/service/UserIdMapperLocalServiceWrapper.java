@@ -377,3 +377,4 @@ public class UserIdMapperLocalServiceWrapper
 	private UserIdMapperLocalService _userIdMapperLocalService;
 
 }
+// SB-Hash:1880253938

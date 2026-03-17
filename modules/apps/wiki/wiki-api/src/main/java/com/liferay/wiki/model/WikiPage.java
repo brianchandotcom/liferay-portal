@@ -126,3 +126,4 @@ public interface WikiPage extends PersistedModel, WikiPageModel {
 	public void setAttachmentsFolderId(long attachmentsFolderId);
 
 }
+// SB-Hash:1359214880

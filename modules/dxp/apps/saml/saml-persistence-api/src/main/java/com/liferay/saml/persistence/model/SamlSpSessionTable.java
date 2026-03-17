@@ -58,3 +58,4 @@ public class SamlSpSessionTable extends BaseTable<SamlSpSessionTable> {
 	}
 
 }
+// SB-Hash:-878443830

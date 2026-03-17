@@ -38,3 +38,4 @@ public class CTMessageTable extends BaseTable<CTMessageTable> {
 	}
 
 }
+// SB-Hash:-487934784

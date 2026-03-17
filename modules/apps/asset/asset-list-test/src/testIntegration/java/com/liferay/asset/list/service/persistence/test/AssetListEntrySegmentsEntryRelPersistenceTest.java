@@ -711,3 +711,4 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-536600525

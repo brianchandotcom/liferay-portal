@@ -1510,3 +1510,4 @@ public interface KaleoDefinitionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-898646084

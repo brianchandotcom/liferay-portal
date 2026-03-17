@@ -50,3 +50,4 @@ public interface PatcherFixPack extends PatcherFixPackModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-12960491

@@ -31,3 +31,4 @@ public class TestEntityTable extends BaseTable<TestEntityTable> {
 	}
 
 }
+// SB-Hash:-1770398669

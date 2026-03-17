@@ -140,3 +140,4 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:462400722

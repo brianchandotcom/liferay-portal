@@ -90,3 +90,4 @@ public class AssetCategoryPropertyServiceUtil {
 			AssetCategoryPropertyService.class);
 
 }
+// SB-Hash:1187518912

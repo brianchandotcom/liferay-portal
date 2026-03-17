@@ -239,3 +239,4 @@ public class CommerceInventoryBookedQuantityServiceHttp {
 			new Class[] {long.class, String.class, String.class, String.class};
 
 }
+// SB-Hash:-600965804

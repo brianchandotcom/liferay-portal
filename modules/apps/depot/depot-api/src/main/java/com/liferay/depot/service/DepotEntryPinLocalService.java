@@ -358,3 +358,4 @@ public interface DepotEntryPinLocalService
 		throws E;
 
 }
+// SB-Hash:1294441067

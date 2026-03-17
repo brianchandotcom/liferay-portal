@@ -224,3 +224,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 	public long commerceAccountGroupId;
 
 }
+// SB-Hash:201643571

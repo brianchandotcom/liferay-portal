@@ -129,3 +129,4 @@ public abstract class CPTaxCategoryServiceBaseImpl
 		CPTaxCategoryServiceBaseImpl.class);
 
 }
+// SB-Hash:-1341515987

@@ -451,3 +451,4 @@ public abstract class PatcherFixRelLocalServiceBaseImpl
 		PatcherFixRelLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1210387068

@@ -597,3 +597,4 @@ public interface CommerceCurrencyModel
 	}
 
 }
+// SB-Hash:1440566323

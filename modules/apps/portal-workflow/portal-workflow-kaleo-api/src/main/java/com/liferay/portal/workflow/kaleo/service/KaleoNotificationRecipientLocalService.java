@@ -305,3 +305,4 @@ public interface KaleoNotificationRecipientLocalService
 		throws E;
 
 }
+// SB-Hash:115334808

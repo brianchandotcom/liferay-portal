@@ -6899,3 +6899,4 @@ public class MBMessageUtil {
 	private static volatile MBMessagePersistence _persistence;
 
 }
+// SB-Hash:858460593

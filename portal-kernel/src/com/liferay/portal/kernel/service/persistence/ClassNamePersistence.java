@@ -193,3 +193,4 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	public int countAll();
 
 }
+// SB-Hash:1251853392

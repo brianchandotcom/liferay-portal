@@ -39,3 +39,4 @@ public abstract class CommerceWishListBaseImpl
 	}
 
 }
+// SB-Hash:1929716916

@@ -808,3 +808,4 @@ public class ModuleModelImpl
 	private Module _escapedModel;
 
 }
+// SB-Hash:-1350815419

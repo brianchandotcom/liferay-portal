@@ -1443,3 +1443,4 @@ public interface CPDefinitionOptionValueRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:2008202983

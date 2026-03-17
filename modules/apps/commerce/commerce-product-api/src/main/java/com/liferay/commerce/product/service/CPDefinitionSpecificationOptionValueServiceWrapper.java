@@ -192,3 +192,4 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 		_cpDefinitionSpecificationOptionValueService;
 
 }
+// SB-Hash:982977229

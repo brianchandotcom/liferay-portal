@@ -76,3 +76,4 @@ public abstract class BaseBookmarksEntryUADDisplay
 	protected BookmarksEntryLocalService bookmarksEntryLocalService;
 
 }
+// SB-Hash:657300370

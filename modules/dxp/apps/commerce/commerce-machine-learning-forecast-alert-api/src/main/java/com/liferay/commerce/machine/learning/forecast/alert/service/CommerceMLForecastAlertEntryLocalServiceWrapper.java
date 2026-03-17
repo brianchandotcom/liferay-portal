@@ -517,3 +517,4 @@ public class CommerceMLForecastAlertEntryLocalServiceWrapper
 		_commerceMLForecastAlertEntryLocalService;
 
 }
+// SB-Hash:-1359346605

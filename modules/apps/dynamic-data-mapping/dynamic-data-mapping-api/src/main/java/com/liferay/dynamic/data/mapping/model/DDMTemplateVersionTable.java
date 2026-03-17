@@ -85,3 +85,4 @@ public class DDMTemplateVersionTable
 	}
 
 }
+// SB-Hash:1998668051

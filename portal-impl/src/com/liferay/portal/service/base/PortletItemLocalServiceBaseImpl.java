@@ -504,3 +504,4 @@ public abstract class PortletItemLocalServiceBaseImpl
 		PortletItemLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:2017740118

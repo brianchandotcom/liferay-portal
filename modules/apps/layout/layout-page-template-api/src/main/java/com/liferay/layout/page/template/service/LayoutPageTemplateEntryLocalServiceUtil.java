@@ -699,3 +699,4 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			LayoutPageTemplateEntryLocalService.class);
 
 }
+// SB-Hash:-1391057017

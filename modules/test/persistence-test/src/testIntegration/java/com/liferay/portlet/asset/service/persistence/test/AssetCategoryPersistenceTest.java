@@ -799,3 +799,4 @@ public class AssetCategoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1076172252

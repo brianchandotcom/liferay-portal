@@ -47,3 +47,4 @@ public interface Counter extends CounterModel {
 		};
 
 }
+// SB-Hash:1340512837

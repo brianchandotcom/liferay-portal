@@ -86,3 +86,4 @@ public class WikiPageTable extends BaseTable<WikiPageTable> {
 	}
 
 }
+// SB-Hash:-1719352656

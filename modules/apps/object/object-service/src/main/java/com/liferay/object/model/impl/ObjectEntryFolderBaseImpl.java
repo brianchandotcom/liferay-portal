@@ -85,3 +85,4 @@ public abstract class ObjectEntryFolderBaseImpl
 	}
 
 }
+// SB-Hash:83560674

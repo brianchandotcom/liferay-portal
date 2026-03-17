@@ -134,3 +134,4 @@ public class MicroblogsEntryServiceUtil {
 			MicroblogsEntryServiceUtil.class, MicroblogsEntryService.class);
 
 }
+// SB-Hash:-350920860

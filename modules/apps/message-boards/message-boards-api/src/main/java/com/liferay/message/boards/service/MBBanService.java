@@ -56,3 +56,4 @@ public interface MBBanService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:-706522996

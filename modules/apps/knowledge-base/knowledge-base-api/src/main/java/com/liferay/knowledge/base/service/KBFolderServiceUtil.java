@@ -168,3 +168,4 @@ public class KBFolderServiceUtil {
 		new Snapshot<>(KBFolderServiceUtil.class, KBFolderService.class);
 
 }
+// SB-Hash:-570770519

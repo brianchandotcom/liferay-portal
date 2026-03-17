@@ -691,3 +691,4 @@ public class TeamLocalServiceWrapper
 	private TeamLocalService _teamLocalService;
 
 }
+// SB-Hash:448518711

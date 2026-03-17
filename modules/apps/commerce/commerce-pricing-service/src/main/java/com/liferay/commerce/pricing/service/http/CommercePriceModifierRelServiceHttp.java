@@ -706,3 +706,4 @@ public class CommercePriceModifierRelServiceHttp {
 			new Class[] {long.class, String.class, String.class};
 
 }
+// SB-Hash:1542733003

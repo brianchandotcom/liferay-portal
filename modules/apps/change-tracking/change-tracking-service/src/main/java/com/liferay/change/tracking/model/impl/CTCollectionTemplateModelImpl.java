@@ -825,3 +825,4 @@ public class CTCollectionTemplateModelImpl
 	private CTCollectionTemplate _escapedModel;
 
 }
+// SB-Hash:76301649

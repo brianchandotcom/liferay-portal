@@ -553,3 +553,4 @@ public class CommerceInventoryWarehouseRelLocalServiceWrapper
 		_commerceInventoryWarehouseRelLocalService;
 
 }
+// SB-Hash:-573298322

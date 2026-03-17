@@ -570,3 +570,4 @@ public interface SocialActivityService extends BaseService {
 	public int getUserOrganizationsActivitiesCount(long userId);
 
 }
+// SB-Hash:-1358860716

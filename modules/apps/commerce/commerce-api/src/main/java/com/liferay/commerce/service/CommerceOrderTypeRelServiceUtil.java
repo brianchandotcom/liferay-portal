@@ -114,3 +114,4 @@ public class CommerceOrderTypeRelServiceUtil {
 			CommerceOrderTypeRelService.class);
 
 }
+// SB-Hash:2005311215

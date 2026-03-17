@@ -1089,3 +1089,4 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public int countAll();
 
 }
+// SB-Hash:-1762089487

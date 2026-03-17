@@ -39,3 +39,4 @@ public abstract class TrashEntryBaseImpl
 	}
 
 }
+// SB-Hash:2045667852

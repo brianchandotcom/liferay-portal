@@ -617,3 +617,4 @@ public abstract class DDMFormInstanceLocalServiceBaseImpl
 		DDMFormInstanceLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:761951311

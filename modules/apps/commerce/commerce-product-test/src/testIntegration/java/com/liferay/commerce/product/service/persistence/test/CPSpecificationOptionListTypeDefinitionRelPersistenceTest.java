@@ -640,3 +640,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1866321537

@@ -118,3 +118,4 @@ public class PatcherProjectVersionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// SB-Hash:243578776

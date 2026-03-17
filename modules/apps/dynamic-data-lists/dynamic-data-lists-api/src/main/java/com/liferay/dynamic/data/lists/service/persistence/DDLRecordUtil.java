@@ -1571,3 +1571,4 @@ public class DDLRecordUtil {
 	private static volatile DDLRecordPersistence _persistence;
 
 }
+// SB-Hash:-822099313

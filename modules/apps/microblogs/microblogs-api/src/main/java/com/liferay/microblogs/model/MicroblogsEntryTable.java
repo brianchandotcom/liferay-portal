@@ -62,3 +62,4 @@ public class MicroblogsEntryTable extends BaseTable<MicroblogsEntryTable> {
 	}
 
 }
+// SB-Hash:-1498787595

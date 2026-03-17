@@ -394,3 +394,4 @@ public interface ClientExtensionEntryLocalService
 		throws E;
 
 }
+// SB-Hash:379038910

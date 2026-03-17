@@ -58,3 +58,4 @@ public class FriendlyURLEntryTable extends BaseTable<FriendlyURLEntryTable> {
 	}
 
 }
+// SB-Hash:1918607024

@@ -67,3 +67,4 @@ public interface CPDefinitionSpecificationOptionValue
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:1443892792

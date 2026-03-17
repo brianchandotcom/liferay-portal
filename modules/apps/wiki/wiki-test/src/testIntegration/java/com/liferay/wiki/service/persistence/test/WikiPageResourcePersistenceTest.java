@@ -542,3 +542,4 @@ public class WikiPageResourcePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-495337434

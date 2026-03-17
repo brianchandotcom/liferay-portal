@@ -52,3 +52,4 @@ public interface ChangesetCollection
 			};
 
 }
+// SB-Hash:1235776908

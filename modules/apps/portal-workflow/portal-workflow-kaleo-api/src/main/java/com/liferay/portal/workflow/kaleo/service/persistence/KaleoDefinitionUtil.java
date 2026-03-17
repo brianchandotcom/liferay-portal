@@ -1941,3 +1941,4 @@ public class KaleoDefinitionUtil {
 	private static volatile KaleoDefinitionPersistence _persistence;
 
 }
+// SB-Hash:-1587542599

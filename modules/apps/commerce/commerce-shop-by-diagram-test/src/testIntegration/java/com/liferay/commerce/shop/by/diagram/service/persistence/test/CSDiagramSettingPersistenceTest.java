@@ -567,3 +567,4 @@ public class CSDiagramSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:251821636

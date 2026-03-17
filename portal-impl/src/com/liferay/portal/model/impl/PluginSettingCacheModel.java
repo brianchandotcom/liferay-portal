@@ -178,3 +178,4 @@ public class PluginSettingCacheModel
 	public boolean active;
 
 }
+// SB-Hash:-533442830

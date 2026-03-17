@@ -564,3 +564,4 @@ public class CommerceShippingFixedOptionUtil {
 	private static volatile CommerceShippingFixedOptionPersistence _persistence;
 
 }
+// SB-Hash:109916410

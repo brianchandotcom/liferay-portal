@@ -374,3 +374,4 @@ public class PatcherFixRelLocalServiceWrapper
 	private PatcherFixRelLocalService _patcherFixRelLocalService;
 
 }
+// SB-Hash:-619006603

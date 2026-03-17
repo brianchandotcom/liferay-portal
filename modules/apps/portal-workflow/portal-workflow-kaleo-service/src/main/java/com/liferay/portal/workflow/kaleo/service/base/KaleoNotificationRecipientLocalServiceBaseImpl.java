@@ -506,3 +506,4 @@ public abstract class KaleoNotificationRecipientLocalServiceBaseImpl
 		KaleoNotificationRecipientLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1613136394

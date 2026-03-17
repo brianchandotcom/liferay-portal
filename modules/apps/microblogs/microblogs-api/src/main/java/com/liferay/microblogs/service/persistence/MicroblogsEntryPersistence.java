@@ -3351,3 +3351,4 @@ public interface MicroblogsEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:376492640

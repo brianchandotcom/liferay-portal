@@ -298,3 +298,4 @@ public interface AuditEventLocalService
 	public AuditEvent updateAuditEvent(AuditEvent auditEvent);
 
 }
+// SB-Hash:1588164949

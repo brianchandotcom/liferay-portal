@@ -245,3 +245,4 @@ public class BookmarksFolderServiceWrapper
 	private BookmarksFolderService _bookmarksFolderService;
 
 }
+// SB-Hash:-691822647

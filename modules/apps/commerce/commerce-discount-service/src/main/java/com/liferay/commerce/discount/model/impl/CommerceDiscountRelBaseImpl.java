@@ -39,3 +39,4 @@ public abstract class CommerceDiscountRelBaseImpl
 	}
 
 }
+// SB-Hash:43439229

@@ -245,3 +245,4 @@ public class CommerceShippingMethodServiceWrapper
 	private CommerceShippingMethodService _commerceShippingMethodService;
 
 }
+// SB-Hash:614153344

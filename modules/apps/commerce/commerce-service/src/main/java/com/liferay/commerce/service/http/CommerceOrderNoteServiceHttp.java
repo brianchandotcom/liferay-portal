@@ -584,3 +584,4 @@ public class CommerceOrderNoteServiceHttp {
 		new Class[] {long.class, String.class, boolean.class};
 
 }
+// SB-Hash:1906436817

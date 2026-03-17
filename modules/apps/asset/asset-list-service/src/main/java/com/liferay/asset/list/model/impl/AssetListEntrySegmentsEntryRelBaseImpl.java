@@ -42,3 +42,4 @@ public abstract class AssetListEntrySegmentsEntryRelBaseImpl
 	}
 
 }
+// SB-Hash:1335245670

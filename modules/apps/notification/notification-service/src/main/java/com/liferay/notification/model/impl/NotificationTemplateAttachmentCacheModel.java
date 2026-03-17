@@ -139,3 +139,4 @@ public class NotificationTemplateAttachmentCacheModel
 	public long objectFieldId;
 
 }
+// SB-Hash:930610946

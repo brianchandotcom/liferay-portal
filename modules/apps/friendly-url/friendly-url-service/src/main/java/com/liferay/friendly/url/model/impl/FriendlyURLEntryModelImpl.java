@@ -1066,3 +1066,4 @@ public class FriendlyURLEntryModelImpl
 	private FriendlyURLEntry _escapedModel;
 
 }
+// SB-Hash:506127677

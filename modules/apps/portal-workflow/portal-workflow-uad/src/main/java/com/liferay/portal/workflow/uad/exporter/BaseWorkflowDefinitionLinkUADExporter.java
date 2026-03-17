@@ -70,3 +70,4 @@ public abstract class BaseWorkflowDefinitionLinkUADExporter
 		workflowDefinitionLinkLocalService;
 
 }
+// SB-Hash:2023301040

@@ -396,3 +396,4 @@ public class ChangesetCollectionLocalServiceWrapper
 	private ChangesetCollectionLocalService _changesetCollectionLocalService;
 
 }
+// SB-Hash:480961076

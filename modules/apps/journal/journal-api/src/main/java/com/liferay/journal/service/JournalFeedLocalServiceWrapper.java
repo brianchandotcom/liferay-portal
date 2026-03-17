@@ -570,3 +570,4 @@ public class JournalFeedLocalServiceWrapper
 	private JournalFeedLocalService _journalFeedLocalService;
 
 }
+// SB-Hash:473182990

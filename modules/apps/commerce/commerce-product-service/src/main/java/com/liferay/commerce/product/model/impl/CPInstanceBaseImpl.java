@@ -39,3 +39,4 @@ public abstract class CPInstanceBaseImpl
 	}
 
 }
+// SB-Hash:67362629

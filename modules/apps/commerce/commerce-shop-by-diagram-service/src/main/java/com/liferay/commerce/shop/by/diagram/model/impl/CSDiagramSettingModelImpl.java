@@ -1074,3 +1074,4 @@ public class CSDiagramSettingModelImpl
 	private CSDiagramSetting _escapedModel;
 
 }
+// SB-Hash:-40226137

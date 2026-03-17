@@ -1741,3 +1741,4 @@ public class CommercePriceModifierModelImpl
 	private CommercePriceModifier _escapedModel;
 
 }
+// SB-Hash:988956159

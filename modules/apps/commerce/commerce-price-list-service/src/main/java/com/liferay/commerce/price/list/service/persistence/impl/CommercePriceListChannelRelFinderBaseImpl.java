@@ -79,3 +79,4 @@ public abstract class CommercePriceListChannelRelFinderBaseImpl
 		CommercePriceListChannelRelFinderBaseImpl.class);
 
 }
+// SB-Hash:1245646266

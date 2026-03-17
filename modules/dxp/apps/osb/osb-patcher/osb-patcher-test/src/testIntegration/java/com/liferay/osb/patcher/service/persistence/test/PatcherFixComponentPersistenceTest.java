@@ -523,3 +523,4 @@ public class PatcherFixComponentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1287026854

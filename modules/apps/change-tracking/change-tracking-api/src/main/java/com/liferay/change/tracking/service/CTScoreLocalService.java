@@ -291,3 +291,4 @@ public interface CTScoreLocalService
 	public CTScore updateCTScore(CTScore ctScore);
 
 }
+// SB-Hash:625404289

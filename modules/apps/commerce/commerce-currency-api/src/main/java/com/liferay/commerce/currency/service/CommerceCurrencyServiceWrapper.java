@@ -218,3 +218,4 @@ public class CommerceCurrencyServiceWrapper
 	private CommerceCurrencyService _commerceCurrencyService;
 
 }
+// SB-Hash:-1523792763

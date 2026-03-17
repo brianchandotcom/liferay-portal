@@ -2467,3 +2467,4 @@ public interface CPAttachmentFileEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:482283339

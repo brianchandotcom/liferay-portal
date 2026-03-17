@@ -652,3 +652,4 @@ public abstract class LayoutPageTemplateStructureLocalServiceBaseImpl
 		LayoutPageTemplateStructureLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1900735129

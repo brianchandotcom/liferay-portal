@@ -382,3 +382,4 @@ public class COREntryCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:1069906036

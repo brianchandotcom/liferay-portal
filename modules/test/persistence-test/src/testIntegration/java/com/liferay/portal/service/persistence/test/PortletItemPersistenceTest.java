@@ -544,3 +544,4 @@ public class PortletItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1617752664

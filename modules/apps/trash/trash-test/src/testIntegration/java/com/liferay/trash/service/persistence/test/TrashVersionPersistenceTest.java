@@ -518,3 +518,4 @@ public class TrashVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1488533120

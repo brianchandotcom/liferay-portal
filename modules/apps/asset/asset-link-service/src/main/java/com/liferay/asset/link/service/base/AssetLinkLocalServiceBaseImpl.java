@@ -461,3 +461,4 @@ public abstract class AssetLinkLocalServiceBaseImpl
 		AssetLinkLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-688152418

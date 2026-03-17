@@ -500,3 +500,4 @@ public abstract class TestEntityLocalServiceBaseImpl
 		TestEntityLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1945199785

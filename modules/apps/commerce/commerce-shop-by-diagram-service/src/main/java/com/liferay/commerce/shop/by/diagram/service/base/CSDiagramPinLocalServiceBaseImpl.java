@@ -469,3 +469,4 @@ public abstract class CSDiagramPinLocalServiceBaseImpl
 		CSDiagramPinLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1702196982

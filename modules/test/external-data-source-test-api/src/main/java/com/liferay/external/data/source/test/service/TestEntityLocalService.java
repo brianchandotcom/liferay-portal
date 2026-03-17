@@ -263,3 +263,4 @@ public interface TestEntityLocalService
 	public TestEntity updateTestEntity(TestEntity testEntity);
 
 }
+// SB-Hash:1175577930

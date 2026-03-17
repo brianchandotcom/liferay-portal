@@ -520,3 +520,4 @@ public class UserIdMapperPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:1385180888

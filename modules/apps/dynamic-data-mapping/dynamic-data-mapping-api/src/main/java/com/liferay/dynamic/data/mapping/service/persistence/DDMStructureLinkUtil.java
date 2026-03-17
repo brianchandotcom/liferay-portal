@@ -719,3 +719,4 @@ public class DDMStructureLinkUtil {
 	private static volatile DDMStructureLinkPersistence _persistence;
 
 }
+// SB-Hash:-1628482815

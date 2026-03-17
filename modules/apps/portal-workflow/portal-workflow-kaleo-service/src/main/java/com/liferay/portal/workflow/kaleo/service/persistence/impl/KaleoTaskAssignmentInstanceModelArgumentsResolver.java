@@ -139,3 +139,4 @@ public class KaleoTaskAssignmentInstanceModelArgumentsResolver
 	}
 
 }
+// SB-Hash:-1326103007

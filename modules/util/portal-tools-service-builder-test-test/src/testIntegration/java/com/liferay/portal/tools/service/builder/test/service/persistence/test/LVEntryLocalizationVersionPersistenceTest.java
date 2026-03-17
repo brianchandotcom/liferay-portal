@@ -590,3 +590,4 @@ public class LVEntryLocalizationVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:423343825

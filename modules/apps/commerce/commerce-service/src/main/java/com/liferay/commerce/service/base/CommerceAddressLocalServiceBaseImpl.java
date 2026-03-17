@@ -83,3 +83,4 @@ public abstract class CommerceAddressLocalServiceBaseImpl
 		CommerceAddressLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:525218075

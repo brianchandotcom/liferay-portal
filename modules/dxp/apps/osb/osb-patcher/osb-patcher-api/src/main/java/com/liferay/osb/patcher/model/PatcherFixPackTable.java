@@ -67,3 +67,4 @@ public class PatcherFixPackTable extends BaseTable<PatcherFixPackTable> {
 	}
 
 }
+// SB-Hash:1493400655

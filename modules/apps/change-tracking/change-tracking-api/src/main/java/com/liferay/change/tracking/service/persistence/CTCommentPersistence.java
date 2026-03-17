@@ -437,3 +437,4 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	public int countAll();
 
 }
+// SB-Hash:711124635

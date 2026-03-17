@@ -164,3 +164,4 @@ public class CPConfigurationListServiceUtil {
 			CPConfigurationListService.class);
 
 }
+// SB-Hash:835338838

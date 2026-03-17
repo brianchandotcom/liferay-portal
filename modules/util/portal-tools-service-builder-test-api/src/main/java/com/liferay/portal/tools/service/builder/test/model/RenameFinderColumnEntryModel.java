@@ -96,3 +96,4 @@ public interface RenameFinderColumnEntryModel
 	}
 
 }
+// SB-Hash:-1985604752

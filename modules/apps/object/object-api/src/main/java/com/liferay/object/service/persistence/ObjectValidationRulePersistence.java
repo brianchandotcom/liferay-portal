@@ -1281,3 +1281,4 @@ public interface ObjectValidationRulePersistence
 	public int countAll();
 
 }
+// SB-Hash:-1025976131

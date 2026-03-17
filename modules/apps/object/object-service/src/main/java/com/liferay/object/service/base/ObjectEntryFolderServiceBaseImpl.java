@@ -125,3 +125,4 @@ public abstract class ObjectEntryFolderServiceBaseImpl
 		ObjectEntryFolderServiceBaseImpl.class);
 
 }
+// SB-Hash:-471969467

@@ -49,3 +49,4 @@ public interface WikiPageResource
 		};
 
 }
+// SB-Hash:55179490

@@ -434,3 +434,4 @@ public interface TrashEntryLocalService
 		throws E;
 
 }
+// SB-Hash:194201503

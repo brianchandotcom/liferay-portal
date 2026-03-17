@@ -41,3 +41,4 @@ public abstract class CPSpecificationOptionBaseImpl
 	}
 
 }
+// SB-Hash:-38907535

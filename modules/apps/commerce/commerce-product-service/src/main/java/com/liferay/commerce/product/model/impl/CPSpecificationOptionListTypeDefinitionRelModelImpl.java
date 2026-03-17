@@ -806,3 +806,4 @@ public class CPSpecificationOptionListTypeDefinitionRelModelImpl
 	private CPSpecificationOptionListTypeDefinitionRel _escapedModel;
 
 }
+// SB-Hash:1176769302

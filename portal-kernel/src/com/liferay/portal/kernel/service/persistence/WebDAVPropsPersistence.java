@@ -201,3 +201,4 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	public int countAll();
 
 }
+// SB-Hash:2030536413

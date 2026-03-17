@@ -666,3 +666,4 @@ public class DLFileShortcutLocalServiceWrapper
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 }
+// SB-Hash:-1472845477

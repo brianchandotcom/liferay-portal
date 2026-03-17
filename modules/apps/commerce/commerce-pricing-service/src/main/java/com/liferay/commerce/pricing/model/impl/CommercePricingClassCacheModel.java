@@ -267,3 +267,4 @@ public class CommercePricingClassCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-1981114417

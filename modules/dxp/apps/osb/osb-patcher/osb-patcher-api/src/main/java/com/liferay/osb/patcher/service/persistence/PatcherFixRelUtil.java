@@ -621,3 +621,4 @@ public class PatcherFixRelUtil {
 	private static volatile PatcherFixRelPersistence _persistence;
 
 }
+// SB-Hash:1295025339

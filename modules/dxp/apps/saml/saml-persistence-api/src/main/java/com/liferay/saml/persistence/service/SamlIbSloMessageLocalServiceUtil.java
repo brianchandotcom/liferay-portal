@@ -322,3 +322,4 @@ public class SamlIbSloMessageLocalServiceUtil {
 			SamlIbSloMessageLocalService.class);
 
 }
+// SB-Hash:604300058

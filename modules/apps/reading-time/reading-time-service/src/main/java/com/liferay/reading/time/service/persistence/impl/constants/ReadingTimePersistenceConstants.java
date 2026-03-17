@@ -21,3 +21,4 @@ public class ReadingTimePersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// SB-Hash:-1327503915

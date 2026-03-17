@@ -44,3 +44,4 @@ public abstract class CommerceNotificationAttachmentBaseImpl
 	}
 
 }
+// SB-Hash:802665701

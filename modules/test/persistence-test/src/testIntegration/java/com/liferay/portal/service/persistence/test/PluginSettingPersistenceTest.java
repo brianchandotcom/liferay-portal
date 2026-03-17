@@ -506,3 +506,4 @@ public class PluginSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1112262749

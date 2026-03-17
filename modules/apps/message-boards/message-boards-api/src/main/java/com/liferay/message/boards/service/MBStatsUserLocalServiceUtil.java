@@ -87,3 +87,4 @@ public class MBStatsUserLocalServiceUtil {
 			MBStatsUserLocalServiceUtil.class, MBStatsUserLocalService.class);
 
 }
+// SB-Hash:1665977971

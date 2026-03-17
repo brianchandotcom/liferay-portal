@@ -473,3 +473,4 @@ public class ObjectDefinitionSettingLocalServiceWrapper
 		_objectDefinitionSettingLocalService;
 
 }
+// SB-Hash:813241959

@@ -152,3 +152,4 @@ public interface AccountEntryService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:502648259

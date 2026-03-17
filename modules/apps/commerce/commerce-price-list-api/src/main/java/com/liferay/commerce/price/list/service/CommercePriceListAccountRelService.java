@@ -100,3 +100,4 @@ public interface CommercePriceListAccountRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:247294482

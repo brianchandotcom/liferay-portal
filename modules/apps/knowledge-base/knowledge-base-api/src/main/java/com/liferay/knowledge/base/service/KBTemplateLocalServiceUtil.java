@@ -423,3 +423,4 @@ public class KBTemplateLocalServiceUtil {
 			KBTemplateLocalServiceUtil.class, KBTemplateLocalService.class);
 
 }
+// SB-Hash:-653482425

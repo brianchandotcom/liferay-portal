@@ -344,3 +344,4 @@ public class KBFolderCacheModel
 	public long statusDate;
 
 }
+// SB-Hash:-1975158687

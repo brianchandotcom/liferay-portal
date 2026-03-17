@@ -52,3 +52,4 @@ public class SamlIdpSpSessionTable extends BaseTable<SamlIdpSpSessionTable> {
 	}
 
 }
+// SB-Hash:993594594

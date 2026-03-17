@@ -77,3 +77,4 @@ public interface ObjectViewService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:2080441312

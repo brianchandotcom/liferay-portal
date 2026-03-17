@@ -294,3 +294,4 @@ public class DDMDataProviderInstanceCacheModel
 	public long lastPublishDate;
 
 }
+// SB-Hash:-872920271

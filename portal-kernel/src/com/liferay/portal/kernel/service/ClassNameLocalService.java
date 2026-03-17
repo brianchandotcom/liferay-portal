@@ -292,3 +292,4 @@ public interface ClassNameLocalService
 	public ClassName updateClassName(ClassName className);
 
 }
+// SB-Hash:-901080911

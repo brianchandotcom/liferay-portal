@@ -55,3 +55,4 @@ public class FaroNotificationTable extends BaseTable<FaroNotificationTable> {
 	}
 
 }
+// SB-Hash:962595360

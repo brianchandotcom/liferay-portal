@@ -1637,3 +1637,4 @@ public class CPDefinitionVirtualSettingModelImpl
 	private CPDefinitionVirtualSetting _escapedModel;
 
 }
+// SB-Hash:-1480897158

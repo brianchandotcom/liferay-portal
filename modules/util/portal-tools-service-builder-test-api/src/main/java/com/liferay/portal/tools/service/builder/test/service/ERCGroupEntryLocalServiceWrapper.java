@@ -441,3 +441,4 @@ public class ERCGroupEntryLocalServiceWrapper
 	private ERCGroupEntryLocalService _ercGroupEntryLocalService;
 
 }
+// SB-Hash:428043180

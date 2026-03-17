@@ -104,3 +104,4 @@ public class AssetCategoryPropertyServiceWrapper
 	private AssetCategoryPropertyService _assetCategoryPropertyService;
 
 }
+// SB-Hash:-1693055178

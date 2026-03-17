@@ -346,3 +346,4 @@ public class AnalyticsMessageLocalServiceUtil {
 			AnalyticsMessageLocalService.class);
 
 }
+// SB-Hash:2051125209

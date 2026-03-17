@@ -52,3 +52,4 @@ public class OAuth2ApplicationScopeAliasesTable
 	}
 
 }
+// SB-Hash:362530960

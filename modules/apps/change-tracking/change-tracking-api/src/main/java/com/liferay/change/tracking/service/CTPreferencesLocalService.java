@@ -268,3 +268,4 @@ public interface CTPreferencesLocalService
 	public CTPreferences updateCTPreferences(CTPreferences ctPreferences);
 
 }
+// SB-Hash:979527111

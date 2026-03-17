@@ -102,3 +102,4 @@ public abstract class BaseWorkflowDefinitionLinkUADAnonymizer
 		workflowDefinitionLinkLocalService;
 
 }
+// SB-Hash:1968278911

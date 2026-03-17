@@ -561,3 +561,4 @@ public class CPConfigurationListServiceHttp {
 		};
 
 }
+// SB-Hash:12592093

@@ -690,3 +690,4 @@ public class PatcherBuildLocalServiceUtil {
 			PatcherBuildLocalServiceUtil.class, PatcherBuildLocalService.class);
 
 }
+// SB-Hash:1866436041

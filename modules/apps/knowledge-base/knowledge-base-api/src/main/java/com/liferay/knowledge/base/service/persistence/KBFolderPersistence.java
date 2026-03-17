@@ -1278,3 +1278,4 @@ public interface KBFolderPersistence
 	public int countAll();
 
 }
+// SB-Hash:2025506085

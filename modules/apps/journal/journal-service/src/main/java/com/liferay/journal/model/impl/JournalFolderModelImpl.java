@@ -1548,3 +1548,4 @@ public class JournalFolderModelImpl
 	private JournalFolder _escapedModel;
 
 }
+// SB-Hash:1946614685

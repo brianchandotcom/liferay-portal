@@ -401,3 +401,4 @@ public class DDMStorageLinkLocalServiceUtil {
 			DDMStorageLinkLocalService.class);
 
 }
+// SB-Hash:1383552024

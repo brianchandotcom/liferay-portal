@@ -562,3 +562,4 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 		JournalArticleResourceLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-161752615

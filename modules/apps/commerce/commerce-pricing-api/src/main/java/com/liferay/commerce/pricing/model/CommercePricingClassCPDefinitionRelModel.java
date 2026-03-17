@@ -235,3 +235,4 @@ public interface CommercePricingClassCPDefinitionRelModel
 	}
 
 }
+// SB-Hash:1757018142

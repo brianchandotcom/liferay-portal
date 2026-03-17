@@ -332,3 +332,4 @@ public class SamlIdpSpConnectionCacheModel
 	public String nameIdFormat;
 
 }
+// SB-Hash:2039354977

@@ -125,3 +125,4 @@ public abstract class ObjectActionServiceBaseImpl
 		ObjectActionServiceBaseImpl.class);
 
 }
+// SB-Hash:-2128973362

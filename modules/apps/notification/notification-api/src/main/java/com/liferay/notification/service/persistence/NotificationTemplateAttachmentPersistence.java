@@ -365,3 +365,4 @@ public interface NotificationTemplateAttachmentPersistence
 	public int countAll();
 
 }
+// SB-Hash:271299906

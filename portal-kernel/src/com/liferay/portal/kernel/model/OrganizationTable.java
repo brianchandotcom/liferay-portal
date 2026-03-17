@@ -76,3 +76,4 @@ public class OrganizationTable extends BaseTable<OrganizationTable> {
 	}
 
 }
+// SB-Hash:786277632

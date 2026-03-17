@@ -59,3 +59,4 @@ public interface CommerceInventoryWarehouseItem
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// SB-Hash:1433162861

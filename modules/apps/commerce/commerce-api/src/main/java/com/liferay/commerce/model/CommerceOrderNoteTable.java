@@ -64,3 +64,4 @@ public class CommerceOrderNoteTable extends BaseTable<CommerceOrderNoteTable> {
 	}
 
 }
+// SB-Hash:413757671

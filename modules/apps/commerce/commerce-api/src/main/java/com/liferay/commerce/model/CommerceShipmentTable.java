@@ -85,3 +85,4 @@ public class CommerceShipmentTable extends BaseTable<CommerceShipmentTable> {
 	}
 
 }
+// SB-Hash:-1191948449

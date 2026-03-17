@@ -92,3 +92,4 @@ public abstract class BaseJournalFeedUADAnonymizer
 	protected JournalFeedLocalService journalFeedLocalService;
 
 }
+// SB-Hash:169764192

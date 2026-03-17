@@ -355,3 +355,4 @@ public class NotificationTemplateCacheModel
 	public String type;
 
 }
+// SB-Hash:1611759298

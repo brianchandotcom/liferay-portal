@@ -3157,3 +3157,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
+// SB-Hash:80826859

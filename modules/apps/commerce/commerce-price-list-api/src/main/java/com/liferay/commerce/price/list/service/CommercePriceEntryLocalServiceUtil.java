@@ -640,3 +640,4 @@ public class CommercePriceEntryLocalServiceUtil {
 			CommercePriceEntryLocalService.class);
 
 }
+// SB-Hash:2007767993

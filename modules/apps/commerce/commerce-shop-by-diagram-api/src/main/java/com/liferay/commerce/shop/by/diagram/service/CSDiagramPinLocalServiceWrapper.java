@@ -388,3 +388,4 @@ public class CSDiagramPinLocalServiceWrapper
 	private CSDiagramPinLocalService _csDiagramPinLocalService;
 
 }
+// SB-Hash:-1160247082

@@ -148,3 +148,4 @@ public class OAuth2ApplicationServiceUtil {
 			OAuth2ApplicationServiceUtil.class, OAuth2ApplicationService.class);
 
 }
+// SB-Hash:1874331327

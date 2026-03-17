@@ -125,3 +125,4 @@ public abstract class ObjectDefinitionServiceBaseImpl
 		ObjectDefinitionServiceBaseImpl.class);
 
 }
+// SB-Hash:1678240139

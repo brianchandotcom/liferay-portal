@@ -54,3 +54,4 @@ public interface CommerceOrderNote
 	public com.liferay.portal.kernel.model.User getUser();
 
 }
+// SB-Hash:350719452

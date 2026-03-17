@@ -3418,3 +3418,4 @@ public class JournalArticleServiceHttp {
 		};
 
 }
+// SB-Hash:1322385238

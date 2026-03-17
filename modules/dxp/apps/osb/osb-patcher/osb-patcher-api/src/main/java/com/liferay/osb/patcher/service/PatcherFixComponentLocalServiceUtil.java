@@ -329,3 +329,4 @@ public class PatcherFixComponentLocalServiceUtil {
 			PatcherFixComponentLocalService.class);
 
 }
+// SB-Hash:273808688

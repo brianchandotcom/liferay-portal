@@ -470,3 +470,4 @@ public class CTCollectionTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:-1387700558

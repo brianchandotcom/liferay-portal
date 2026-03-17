@@ -220,3 +220,4 @@ public class LayoutPageTemplateStructureCacheModel
 	public long plid;
 
 }
+// SB-Hash:707304508

@@ -1512,3 +1512,4 @@ public class FaroNotificationUtil {
 	private static volatile FaroNotificationPersistence _persistence;
 
 }
+// SB-Hash:1340870485

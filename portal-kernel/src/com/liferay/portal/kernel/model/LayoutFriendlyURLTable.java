@@ -70,3 +70,4 @@ public class LayoutFriendlyURLTable extends BaseTable<LayoutFriendlyURLTable> {
 	}
 
 }
+// SB-Hash:-550303707

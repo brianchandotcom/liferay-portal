@@ -792,3 +792,4 @@ public class CTAutoResolutionInfoUtil {
 	private static volatile CTAutoResolutionInfoPersistence _persistence;
 
 }
+// SB-Hash:545225919

@@ -62,3 +62,4 @@ public interface KaleoDefinitionVersionService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:-1206086709

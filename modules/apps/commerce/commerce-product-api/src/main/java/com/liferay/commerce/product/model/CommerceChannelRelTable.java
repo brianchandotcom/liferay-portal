@@ -62,3 +62,4 @@ public class CommerceChannelRelTable
 	}
 
 }
+// SB-Hash:560182996

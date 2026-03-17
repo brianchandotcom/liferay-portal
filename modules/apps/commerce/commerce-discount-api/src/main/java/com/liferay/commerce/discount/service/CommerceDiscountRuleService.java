@@ -104,3 +104,4 @@ public interface CommerceDiscountRuleService extends BaseService {
 		throws PortalException;
 
 }
+// SB-Hash:-848327988

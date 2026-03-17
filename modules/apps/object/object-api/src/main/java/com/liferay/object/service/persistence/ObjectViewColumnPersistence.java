@@ -750,3 +750,4 @@ public interface ObjectViewColumnPersistence
 	public int countAll();
 
 }
+// SB-Hash:-908373244

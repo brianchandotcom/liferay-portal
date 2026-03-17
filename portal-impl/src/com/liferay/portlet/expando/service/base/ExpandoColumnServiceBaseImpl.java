@@ -207,3 +207,4 @@ public abstract class ExpandoColumnServiceBaseImpl
 		ExpandoColumnServiceBaseImpl.class);
 
 }
+// SB-Hash:552781740

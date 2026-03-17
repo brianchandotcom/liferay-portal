@@ -737,3 +737,4 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:117601161

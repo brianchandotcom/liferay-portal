@@ -807,3 +807,4 @@ public class AssetListEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:92440926

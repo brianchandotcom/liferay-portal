@@ -445,3 +445,4 @@ public class SiteFriendlyURLLocalServiceUtil {
 			SiteFriendlyURLLocalService.class);
 
 }
+// SB-Hash:845151514

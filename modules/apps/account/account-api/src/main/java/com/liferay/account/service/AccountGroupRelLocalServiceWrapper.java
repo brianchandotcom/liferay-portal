@@ -482,3 +482,4 @@ public class AccountGroupRelLocalServiceWrapper
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 }
+// SB-Hash:720196586

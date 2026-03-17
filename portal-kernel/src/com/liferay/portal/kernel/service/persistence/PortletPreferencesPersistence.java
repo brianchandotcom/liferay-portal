@@ -1642,3 +1642,4 @@ public interface PortletPreferencesPersistence
 	public int countAll();
 
 }
+// SB-Hash:634483723

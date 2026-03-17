@@ -2367,3 +2367,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
+// SB-Hash:-1904619037

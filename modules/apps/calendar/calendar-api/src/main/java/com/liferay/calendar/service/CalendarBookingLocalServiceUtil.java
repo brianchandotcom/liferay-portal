@@ -841,3 +841,4 @@ public class CalendarBookingLocalServiceUtil {
 			CalendarBookingLocalService.class);
 
 }
+// SB-Hash:157156017

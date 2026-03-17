@@ -57,3 +57,4 @@ public class LaunchSetTable extends BaseTable<LaunchSetTable> {
 	}
 
 }
+// SB-Hash:1413800204

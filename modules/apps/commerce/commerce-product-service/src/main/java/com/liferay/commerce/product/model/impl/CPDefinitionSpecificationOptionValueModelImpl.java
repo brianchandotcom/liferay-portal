@@ -1611,3 +1611,4 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	private CPDefinitionSpecificationOptionValue _escapedModel;
 
 }
+// SB-Hash:631293513

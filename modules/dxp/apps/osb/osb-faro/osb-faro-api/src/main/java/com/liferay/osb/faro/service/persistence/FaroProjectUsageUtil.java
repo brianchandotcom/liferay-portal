@@ -339,3 +339,4 @@ public class FaroProjectUsageUtil {
 	private static volatile FaroProjectUsagePersistence _persistence;
 
 }
+// SB-Hash:-1444285566

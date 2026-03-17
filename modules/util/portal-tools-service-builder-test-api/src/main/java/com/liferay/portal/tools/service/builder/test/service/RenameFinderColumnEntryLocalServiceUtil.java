@@ -313,3 +313,4 @@ public class RenameFinderColumnEntryLocalServiceUtil {
 	private static volatile RenameFinderColumnEntryLocalService _service;
 
 }
+// SB-Hash:1158672329

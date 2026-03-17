@@ -39,3 +39,4 @@ public abstract class ObjectDefinitionBaseImpl
 	}
 
 }
+// SB-Hash:886244071

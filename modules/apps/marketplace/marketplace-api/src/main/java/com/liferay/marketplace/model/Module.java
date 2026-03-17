@@ -50,3 +50,4 @@ public interface Module extends ModuleModel, PersistedModel {
 	public boolean isBundle();
 
 }
+// SB-Hash:-842019606

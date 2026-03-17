@@ -480,3 +480,4 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 		RedirectNotFoundEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1177159652

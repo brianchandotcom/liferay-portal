@@ -551,3 +551,4 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	public int countAll();
 
 }
+// SB-Hash:289165280

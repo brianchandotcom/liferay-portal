@@ -467,3 +467,4 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 			CPDefinitionVirtualSettingLocalService.class);
 
 }
+// SB-Hash:-2073070156

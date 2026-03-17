@@ -138,3 +138,4 @@ public class CommerceTaxFixedRateServiceWrapper
 	private CommerceTaxFixedRateService _commerceTaxFixedRateService;
 
 }
+// SB-Hash:755151042

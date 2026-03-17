@@ -384,3 +384,4 @@ public class CPSpecificationOptionListTypeDefinitionRelLocalServiceUtil {
 				CPSpecificationOptionListTypeDefinitionRelLocalService.class);
 
 }
+// SB-Hash:341090436

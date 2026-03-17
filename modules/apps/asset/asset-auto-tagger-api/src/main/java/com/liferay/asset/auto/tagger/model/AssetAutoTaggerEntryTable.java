@@ -58,3 +58,4 @@ public class AssetAutoTaggerEntryTable
 	}
 
 }
+// SB-Hash:196258314

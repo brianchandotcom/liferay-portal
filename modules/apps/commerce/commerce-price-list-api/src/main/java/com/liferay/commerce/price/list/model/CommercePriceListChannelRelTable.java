@@ -73,3 +73,4 @@ public class CommercePriceListChannelRelTable
 	}
 
 }
+// SB-Hash:-1074607259

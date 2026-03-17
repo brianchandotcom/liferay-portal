@@ -148,3 +148,4 @@ public class CommercePricingClassCPDefinitionRelServiceUtil {
 			CommercePricingClassCPDefinitionRelService.class);
 
 }
+// SB-Hash:-35212401

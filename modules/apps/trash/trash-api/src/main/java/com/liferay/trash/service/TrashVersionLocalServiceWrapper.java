@@ -383,3 +383,4 @@ public class TrashVersionLocalServiceWrapper
 	private TrashVersionLocalService _trashVersionLocalService;
 
 }
+// SB-Hash:457984376

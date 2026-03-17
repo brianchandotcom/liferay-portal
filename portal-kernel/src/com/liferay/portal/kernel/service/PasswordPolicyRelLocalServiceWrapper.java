@@ -437,3 +437,4 @@ public class PasswordPolicyRelLocalServiceWrapper
 	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
 
 }
+// SB-Hash:753799048

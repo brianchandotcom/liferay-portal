@@ -677,3 +677,4 @@ public class ObjectValidationRulePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// SB-Hash:317716485

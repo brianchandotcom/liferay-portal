@@ -1569,3 +1569,4 @@ public class RatingsStatsPersistenceImpl
 	}
 
 }
+// SB-Hash:-1169377654

@@ -1952,3 +1952,4 @@ public class FragmentCollectionUtil {
 	private static volatile FragmentCollectionPersistence _persistence;
 
 }
+// SB-Hash:1914323479

@@ -23,3 +23,4 @@ public interface KaleoTaskInstanceTokenFinder {
 				KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery);
 
 }
+// SB-Hash:-1786168299

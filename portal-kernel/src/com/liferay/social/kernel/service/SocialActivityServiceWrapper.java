@@ -667,3 +667,4 @@ public class SocialActivityServiceWrapper
 	private SocialActivityService _socialActivityService;
 
 }
+// SB-Hash:921624445

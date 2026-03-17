@@ -126,3 +126,4 @@ public abstract class NotificationTemplateServiceBaseImpl
 		NotificationTemplateServiceBaseImpl.class);
 
 }
+// SB-Hash:-974859302

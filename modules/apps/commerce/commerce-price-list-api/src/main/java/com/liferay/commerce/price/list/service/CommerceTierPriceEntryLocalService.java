@@ -545,3 +545,4 @@ public interface CommerceTierPriceEntryLocalService
 		throws E;
 
 }
+// SB-Hash:1496648827

@@ -75,3 +75,4 @@ public class CPMeasurementUnitTable extends BaseTable<CPMeasurementUnitTable> {
 	}
 
 }
+// SB-Hash:-37345770

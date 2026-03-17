@@ -584,3 +584,4 @@ public abstract class CSDiagramSettingLocalServiceBaseImpl
 		CSDiagramSettingLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:374192899

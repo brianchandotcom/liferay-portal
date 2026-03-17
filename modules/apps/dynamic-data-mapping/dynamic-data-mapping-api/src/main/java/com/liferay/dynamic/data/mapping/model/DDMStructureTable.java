@@ -81,3 +81,4 @@ public class DDMStructureTable extends BaseTable<DDMStructureTable> {
 	}
 
 }
+// SB-Hash:-589456746

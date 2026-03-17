@@ -590,3 +590,4 @@ public abstract class RedirectEntryLocalServiceBaseImpl
 		RedirectEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1633563012

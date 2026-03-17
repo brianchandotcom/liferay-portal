@@ -57,3 +57,4 @@ public abstract class CommerceChannelRelFinderBaseImpl
 	protected CommerceChannelRelPersistence commerceChannelRelPersistence;
 
 }
+// SB-Hash:-1953106755

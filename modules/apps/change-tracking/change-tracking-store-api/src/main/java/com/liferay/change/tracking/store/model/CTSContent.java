@@ -50,3 +50,4 @@ public interface CTSContent extends CTSContentModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1912047280

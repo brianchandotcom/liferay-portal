@@ -1949,3 +1949,4 @@ public interface CPDefinitionPersistence
 	public int countAll();
 
 }
+// SB-Hash:-2040473931

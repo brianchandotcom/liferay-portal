@@ -64,3 +64,4 @@ public class GroupFinderBaseImpl extends BasePersistenceImpl<Group> {
 		GroupFinderBaseImpl.class);
 
 }
+// SB-Hash:-1346907397

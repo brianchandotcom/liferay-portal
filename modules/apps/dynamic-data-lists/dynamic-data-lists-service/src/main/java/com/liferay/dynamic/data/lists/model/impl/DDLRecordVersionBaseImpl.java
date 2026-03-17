@@ -39,3 +39,4 @@ public abstract class DDLRecordVersionBaseImpl
 	}
 
 }
+// SB-Hash:550658538

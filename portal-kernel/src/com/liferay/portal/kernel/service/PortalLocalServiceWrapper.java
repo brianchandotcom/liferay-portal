@@ -46,3 +46,4 @@ public class PortalLocalServiceWrapper
 	private PortalLocalService _portalLocalService;
 
 }
+// SB-Hash:-1304434004

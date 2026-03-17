@@ -132,3 +132,4 @@ public abstract class CPAttachmentFileEntryServiceBaseImpl
 		CPAttachmentFileEntryServiceBaseImpl.class);
 
 }
+// SB-Hash:762528431

@@ -1881,3 +1881,4 @@ public interface LVEntryVersionPersistence
 				BigDecimalEntry> bigDecimalEntries);
 
 }
+// SB-Hash:-730867572

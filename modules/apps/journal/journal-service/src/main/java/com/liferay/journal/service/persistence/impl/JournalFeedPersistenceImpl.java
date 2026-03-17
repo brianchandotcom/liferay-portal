@@ -3568,3 +3568,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
+// SB-Hash:2059650454

@@ -3,21 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.feature.flag.web.internal.model.listener;
+package com.liferay.feature.flag.web.internal.instance.lifecycle;
 
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.feature.flag.FeatureFlagsBag;
 import com.liferay.portal.feature.flag.FeatureFlagsBagProvider;
-import com.liferay.portal.events.StartupHelperUtil;
-import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
-import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,6 +23,7 @@ import com.liferay.portlet.PortalPreferencesWrapper;
 
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,27 +32,32 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  * @author Thiago Buarque
  */
-@Component(service = ModelListener.class)
-public class CompanyModelListener extends BaseModelListener<Company> {
-
-	@Override
-	public void onAfterCreate(Company company) throws ModelListenerException {
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				_processDeprecationFeatureFlags(company.getCompanyId());
-
-				return null;
-			});
-	}
+@Component(
+	property = "service.ranking:Integer=100",
+	service = PortalInstanceLifecycleListener.class
+)
+public class
+	ProcessDeprecationFeatureFlagsInitialRequestPortalInstanceLifecycleListener
+		extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Activate
-	protected void activate() {
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
+
 		if (StartupHelperUtil.isDBNew()) {
 			_processDeprecationFeatureFlags(CompanyConstants.SYSTEM);
 		}
+	}
 
-		_companyLocalService.forEachCompanyId(
-			this::_processDeprecationFeatureFlags);
+	@Override
+	protected void doPortalInstanceRegistered(long companyId) throws Exception {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_processDeprecationFeatureFlags(companyId);
+
+				return null;
+			});
 	}
 
 	private PortalPreferences _getPortalPreferences(long companyId) {
@@ -99,9 +102,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		_portalPreferencesLocalService.updatePreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, portalPreferences);
 	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private FeatureFlagsBagProvider _featureFlagsBagProvider;

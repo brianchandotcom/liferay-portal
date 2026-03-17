@@ -111,6 +111,83 @@ public class LikeFinderEntryUtil {
 	}
 
 	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or throws a <code>NoSuchLikeFinderEntryException</code> if it could not be found.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the matching like finder entry
+	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
+	 */
+	public static LikeFinderEntry findByO_O_P(
+			long ownerId, int ownerType, String portletId)
+		throws com.liferay.portal.tools.service.builder.test.compat710.
+			exception.NoSuchLikeFinderEntryException {
+
+		return getPersistence().findByO_O_P(ownerId, ownerType, portletId);
+	}
+
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
+	 */
+	public static LikeFinderEntry fetchByO_O_P(
+		long ownerId, int ownerType, String portletId) {
+
+		return getPersistence().fetchByO_O_P(ownerId, ownerType, portletId);
+	}
+
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
+	 */
+	public static LikeFinderEntry fetchByO_O_P(
+		long ownerId, int ownerType, String portletId, boolean useFinderCache) {
+
+		return getPersistence().fetchByO_O_P(
+			ownerId, ownerType, portletId, useFinderCache);
+	}
+
+	/**
+	 * Removes the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the like finder entry that was removed
+	 */
+	public static LikeFinderEntry removeByO_O_P(
+			long ownerId, int ownerType, String portletId)
+		throws com.liferay.portal.tools.service.builder.test.compat710.
+			exception.NoSuchLikeFinderEntryException {
+
+		return getPersistence().removeByO_O_P(ownerId, ownerType, portletId);
+	}
+
+	/**
+	 * Returns the number of like finder entries where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the number of matching like finder entries
+	 */
+	public static int countByO_O_P(
+		long ownerId, int ownerType, String portletId) {
+
+		return getPersistence().countByO_O_P(ownerId, ownerType, portletId);
+	}
+
+	/**
 	 * Returns all the like finder entries where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -334,83 +411,6 @@ public class LikeFinderEntryUtil {
 
 		return getPersistence().countByC_O_O_LikeP(
 			companyId, ownerId, ownerType, portletId);
-	}
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or throws a <code>NoSuchLikeFinderEntryException</code> if it could not be found.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the matching like finder entry
-	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
-	 */
-	public static LikeFinderEntry findByO_O_P(
-			long ownerId, int ownerType, String portletId)
-		throws com.liferay.portal.tools.service.builder.test.compat710.
-			exception.NoSuchLikeFinderEntryException {
-
-		return getPersistence().findByO_O_P(ownerId, ownerType, portletId);
-	}
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	public static LikeFinderEntry fetchByO_O_P(
-		long ownerId, int ownerType, String portletId) {
-
-		return getPersistence().fetchByO_O_P(ownerId, ownerType, portletId);
-	}
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	public static LikeFinderEntry fetchByO_O_P(
-		long ownerId, int ownerType, String portletId, boolean useFinderCache) {
-
-		return getPersistence().fetchByO_O_P(
-			ownerId, ownerType, portletId, useFinderCache);
-	}
-
-	/**
-	 * Removes the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the like finder entry that was removed
-	 */
-	public static LikeFinderEntry removeByO_O_P(
-			long ownerId, int ownerType, String portletId)
-		throws com.liferay.portal.tools.service.builder.test.compat710.
-			exception.NoSuchLikeFinderEntryException {
-
-		return getPersistence().removeByO_O_P(ownerId, ownerType, portletId);
-	}
-
-	/**
-	 * Returns the number of like finder entries where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the number of matching like finder entries
-	 */
-	public static int countByO_O_P(
-		long ownerId, int ownerType, String portletId) {
-
-		return getPersistence().countByO_O_P(ownerId, ownerType, portletId);
 	}
 
 	/**

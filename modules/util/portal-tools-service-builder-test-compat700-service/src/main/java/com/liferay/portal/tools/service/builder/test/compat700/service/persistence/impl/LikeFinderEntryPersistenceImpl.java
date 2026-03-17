@@ -118,6 +118,287 @@ public class LikeFinderEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByO_O_P;
+	private FinderPath _finderPathCountByO_O_P;
+
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or throws a <code>NoSuchLikeFinderEntryException</code> if it could not be found.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the matching like finder entry
+	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
+	 */
+	@Override
+	public LikeFinderEntry findByO_O_P(
+			long ownerId, int ownerType, String portletId)
+		throws NoSuchLikeFinderEntryException {
+
+		LikeFinderEntry likeFinderEntry = fetchByO_O_P(
+			ownerId, ownerType, portletId);
+
+		if (likeFinderEntry == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("ownerId=");
+			sb.append(ownerId);
+
+			sb.append(", ownerType=");
+			sb.append(ownerType);
+
+			sb.append(", portletId=");
+			sb.append(portletId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchLikeFinderEntryException(sb.toString());
+		}
+
+		return likeFinderEntry;
+	}
+
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
+	 */
+	@Override
+	public LikeFinderEntry fetchByO_O_P(
+		long ownerId, int ownerType, String portletId) {
+
+		return fetchByO_O_P(ownerId, ownerType, portletId, true);
+	}
+
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
+	 */
+	@Override
+	public LikeFinderEntry fetchByO_O_P(
+		long ownerId, int ownerType, String portletId, boolean useFinderCache) {
+
+		portletId = Objects.toString(portletId, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {ownerId, ownerType, portletId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByO_O_P, finderArgs, this);
+		}
+
+		if (result instanceof LikeFinderEntry) {
+			LikeFinderEntry likeFinderEntry = (LikeFinderEntry)result;
+
+			if ((ownerId != likeFinderEntry.getOwnerId()) ||
+				(ownerType != likeFinderEntry.getOwnerType()) ||
+				!Objects.equals(portletId, likeFinderEntry.getPortletId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_SELECT_LIKEFINDERENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
+
+			sb.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
+
+			boolean bindPortletId = false;
+
+			if (portletId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_O_O_P_PORTLETID_3);
+			}
+			else {
+				bindPortletId = true;
+
+				sb.append(_FINDER_COLUMN_O_O_P_PORTLETID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(ownerId);
+
+				queryPos.add(ownerType);
+
+				if (bindPortletId) {
+					queryPos.add(portletId);
+				}
+
+				List<LikeFinderEntry> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByO_O_P, finderArgs, list);
+					}
+				}
+				else {
+					LikeFinderEntry likeFinderEntry = list.get(0);
+
+					result = likeFinderEntry;
+
+					cacheResult(likeFinderEntry);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByO_O_P, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (LikeFinderEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the like finder entry that was removed
+	 */
+	@Override
+	public LikeFinderEntry removeByO_O_P(
+			long ownerId, int ownerType, String portletId)
+		throws NoSuchLikeFinderEntryException {
+
+		LikeFinderEntry likeFinderEntry = findByO_O_P(
+			ownerId, ownerType, portletId);
+
+		return remove(likeFinderEntry);
+	}
+
+	/**
+	 * Returns the number of like finder entries where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the number of matching like finder entries
+	 */
+	@Override
+	public int countByO_O_P(long ownerId, int ownerType, String portletId) {
+		portletId = Objects.toString(portletId, "");
+
+		FinderPath finderPath = _finderPathCountByO_O_P;
+
+		Object[] finderArgs = new Object[] {ownerId, ownerType, portletId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_LIKEFINDERENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
+
+			sb.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
+
+			boolean bindPortletId = false;
+
+			if (portletId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_O_O_P_PORTLETID_3);
+			}
+			else {
+				bindPortletId = true;
+
+				sb.append(_FINDER_COLUMN_O_O_P_PORTLETID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(ownerId);
+
+				queryPos.add(ownerType);
+
+				if (bindPortletId) {
+					queryPos.add(portletId);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_O_O_P_OWNERID_2 =
+		"likeFinderEntry.ownerId = ? AND ";
+
+	private static final String _FINDER_COLUMN_O_O_P_OWNERTYPE_2 =
+		"likeFinderEntry.ownerType = ? AND ";
+
+	private static final String _FINDER_COLUMN_O_O_P_PORTLETID_2 =
+		"likeFinderEntry.portletId = ?";
+
+	private static final String _FINDER_COLUMN_O_O_P_PORTLETID_3 =
+		"(likeFinderEntry.portletId IS NULL OR likeFinderEntry.portletId = '')";
+
 	private FinderPath _finderPathWithPaginationFindByC_O_O_LikeP;
 	private FinderPath _finderPathWithPaginationCountByC_O_O_LikeP;
 
@@ -781,287 +1062,6 @@ public class LikeFinderEntryPersistenceImpl
 
 	private static final String _FINDER_COLUMN_C_O_O_LIKEP_PORTLETID_3 =
 		"(likeFinderEntry.portletId IS NULL OR likeFinderEntry.portletId LIKE '')";
-
-	private FinderPath _finderPathFetchByO_O_P;
-	private FinderPath _finderPathCountByO_O_P;
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or throws a <code>NoSuchLikeFinderEntryException</code> if it could not be found.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the matching like finder entry
-	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
-	 */
-	@Override
-	public LikeFinderEntry findByO_O_P(
-			long ownerId, int ownerType, String portletId)
-		throws NoSuchLikeFinderEntryException {
-
-		LikeFinderEntry likeFinderEntry = fetchByO_O_P(
-			ownerId, ownerType, portletId);
-
-		if (likeFinderEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ownerId=");
-			sb.append(ownerId);
-
-			sb.append(", ownerType=");
-			sb.append(ownerType);
-
-			sb.append(", portletId=");
-			sb.append(portletId);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchLikeFinderEntryException(sb.toString());
-		}
-
-		return likeFinderEntry;
-	}
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	@Override
-	public LikeFinderEntry fetchByO_O_P(
-		long ownerId, int ownerType, String portletId) {
-
-		return fetchByO_O_P(ownerId, ownerType, portletId, true);
-	}
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	@Override
-	public LikeFinderEntry fetchByO_O_P(
-		long ownerId, int ownerType, String portletId, boolean useFinderCache) {
-
-		portletId = Objects.toString(portletId, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {ownerId, ownerType, portletId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByO_O_P, finderArgs, this);
-		}
-
-		if (result instanceof LikeFinderEntry) {
-			LikeFinderEntry likeFinderEntry = (LikeFinderEntry)result;
-
-			if ((ownerId != likeFinderEntry.getOwnerId()) ||
-				(ownerType != likeFinderEntry.getOwnerType()) ||
-				!Objects.equals(portletId, likeFinderEntry.getPortletId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_LIKEFINDERENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
-
-			sb.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
-
-			boolean bindPortletId = false;
-
-			if (portletId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_O_O_P_PORTLETID_3);
-			}
-			else {
-				bindPortletId = true;
-
-				sb.append(_FINDER_COLUMN_O_O_P_PORTLETID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ownerId);
-
-				queryPos.add(ownerType);
-
-				if (bindPortletId) {
-					queryPos.add(portletId);
-				}
-
-				List<LikeFinderEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByO_O_P, finderArgs, list);
-					}
-				}
-				else {
-					LikeFinderEntry likeFinderEntry = list.get(0);
-
-					result = likeFinderEntry;
-
-					cacheResult(likeFinderEntry);
-				}
-			}
-			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByO_O_P, finderArgs);
-				}
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (LikeFinderEntry)result;
-		}
-	}
-
-	/**
-	 * Removes the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the like finder entry that was removed
-	 */
-	@Override
-	public LikeFinderEntry removeByO_O_P(
-			long ownerId, int ownerType, String portletId)
-		throws NoSuchLikeFinderEntryException {
-
-		LikeFinderEntry likeFinderEntry = findByO_O_P(
-			ownerId, ownerType, portletId);
-
-		return remove(likeFinderEntry);
-	}
-
-	/**
-	 * Returns the number of like finder entries where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the number of matching like finder entries
-	 */
-	@Override
-	public int countByO_O_P(long ownerId, int ownerType, String portletId) {
-		portletId = Objects.toString(portletId, "");
-
-		FinderPath finderPath = _finderPathCountByO_O_P;
-
-		Object[] finderArgs = new Object[] {ownerId, ownerType, portletId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_LIKEFINDERENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_O_O_P_OWNERID_2);
-
-			sb.append(_FINDER_COLUMN_O_O_P_OWNERTYPE_2);
-
-			boolean bindPortletId = false;
-
-			if (portletId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_O_O_P_PORTLETID_3);
-			}
-			else {
-				bindPortletId = true;
-
-				sb.append(_FINDER_COLUMN_O_O_P_PORTLETID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ownerId);
-
-				queryPos.add(ownerType);
-
-				if (bindPortletId) {
-					queryPos.add(portletId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_O_O_P_OWNERID_2 =
-		"likeFinderEntry.ownerId = ? AND ";
-
-	private static final String _FINDER_COLUMN_O_O_P_OWNERTYPE_2 =
-		"likeFinderEntry.ownerType = ? AND ";
-
-	private static final String _FINDER_COLUMN_O_O_P_PORTLETID_2 =
-		"likeFinderEntry.portletId = ?";
-
-	private static final String _FINDER_COLUMN_O_O_P_PORTLETID_3 =
-		"(likeFinderEntry.portletId IS NULL OR likeFinderEntry.portletId = '')";
 
 	public LikeFinderEntryPersistenceImpl() {
 		setModelClass(LikeFinderEntry.class);
@@ -1843,27 +1843,6 @@ public class LikeFinderEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
-		_finderPathWithPaginationFindByC_O_O_LikeP = new FinderPath(
-			LikeFinderEntryModelImpl.ENTITY_CACHE_ENABLED,
-			LikeFinderEntryModelImpl.FINDER_CACHE_ENABLED,
-			LikeFinderEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_O_O_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-
-		_finderPathWithPaginationCountByC_O_O_LikeP = new FinderPath(
-			LikeFinderEntryModelImpl.ENTITY_CACHE_ENABLED,
-			LikeFinderEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_O_O_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), String.class.getName()
-			});
-
 		_finderPathFetchByO_O_P = new FinderPath(
 			LikeFinderEntryModelImpl.ENTITY_CACHE_ENABLED,
 			LikeFinderEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -1883,6 +1862,27 @@ public class LikeFinderEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				String.class.getName()
+			});
+
+		_finderPathWithPaginationFindByC_O_O_LikeP = new FinderPath(
+			LikeFinderEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LikeFinderEntryModelImpl.FINDER_CACHE_ENABLED,
+			LikeFinderEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_O_O_LikeP",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithPaginationCountByC_O_O_LikeP = new FinderPath(
+			LikeFinderEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LikeFinderEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_O_O_LikeP",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), String.class.getName()
 			});
 
 		LikeFinderEntryUtil.setPersistence(this);

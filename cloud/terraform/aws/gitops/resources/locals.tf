@@ -9,6 +9,9 @@ locals {
 		"${local.secret_prefixes.certificates}${var.argocd_domain_config.tls_external_secret_name}"
 	)
 	argocd_tls_secret_name="argocd-server-tls"
+	aws_marketplace_enabled=var.liferay_helm_chart_name == "liferay-aws-marketplace"
+	aws_marketplace_role_name="${var.deployment_name}-awsmp-role"
+	aws_marketplace_serviceaccount_name_prefix="awsmp-sa-"
 	cluster_name="${var.deployment_name}-eks"
 	common_labels={
 		"app.kubernetes.io/component"="gitops-infrastructure"

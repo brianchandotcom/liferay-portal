@@ -358,40 +358,55 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 						merge(
 							{
 								helm={
-									parameters=[
-										{
-											name="${local.liferay_helm_chart_config.values_scope_prefix}network.gatewayName"
-											value=local.gateway_name
-										},
-										{
-											name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-											value="arn:aws:iam::${local.account_id}:role/${var.deployment_name}-irsa"
-										},
-										{
-											name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.create"
-											value=true
-										},
-										{
-											name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.name"
-											value="liferay-default"
-										},
-										{
-											name="global.aws.accountId"
-											value=local.account_id
-										},
-										{
-											name="global.deploymentName"
-											value=var.deployment_name
-										},
-										{
-											name="global.environmentId"
-											value=var.infrastructure_git_repo_config.target.slugEnvironmentId
-										},
-										{
-											name="global.projectId"
-											value=var.infrastructure_git_repo_config.target.slugProjectId
-										},
-									]
+									parameters=concat(
+										[
+											{
+												name="${local.liferay_helm_chart_config.values_scope_prefix}network.gatewayName"
+												value=local.gateway_name
+											},
+											{
+												name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+												value="arn:aws:iam::${local.account_id}:role/${var.deployment_name}-irsa"
+											},
+											{
+												name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.create"
+												value=true
+											},
+											{
+												name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.name"
+												value="liferay-default"
+											},
+											{
+												name="global.aws.accountId"
+												value=local.account_id
+											},
+											{
+												name="global.deploymentName"
+												value=var.deployment_name
+											},
+											{
+												name="global.environmentId"
+												value=var.liferay_git_repo_config.target.slugEnvironmentId
+											},
+											{
+												name="global.projectId"
+												value=var.liferay_git_repo_config.target.slugProjectId
+											},
+										],
+										local.aws_marketplace_enabled ? [
+											{
+												name="global.awsmpServiceAccount.name"
+												value="${var.liferay_git_repo_config.target.slugProjectId}-${var.liferay_git_repo_config.target.slugEnvironmentId}"
+											},
+											{
+												name="global.awsmpServiceAccount.prefix"
+												value=local.aws_marketplace_serviceaccount_name_prefix
+											},
+											{
+												name="global.awsmpServiceAccount.roleArn"
+												value=aws_iam_role.aws_marketplace_role.arn
+											},
+										] : [])
 									valueFiles=[
 										"$values/${var.liferay_git_repo_config.source_paths.base}/${var.liferay_git_repo_config.source_paths.values_filename}",
 										"$values/{{path}}/${var.liferay_git_repo_config.source_paths.values_filename}",

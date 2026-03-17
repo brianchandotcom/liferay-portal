@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portlet.documentlibrary.store.DLStoreImpl;
 
 import java.io.InputStream;
 
@@ -400,39 +402,54 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testSmoke() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Store originalStore = ReflectionTestUtil.getFieldValue(
+			DLStoreImpl.class, "_wrappedStore");
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(group.getGroupId());
+		DLStoreImpl.setStore(_store);
 
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+		try {
+			Group group = GroupTestUtil.addGroup();
 
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+				group.getGroupId());
 
-		Assert.assertTrue(
-			_store.hasFile(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		DLTrashLocalServiceUtil.moveFileEntryToTrash(
-			dlFileEntry.getUserId(), dlFileEntry.getRepositoryId(),
-			dlFileEntry.getFileEntryId());
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		Assert.assertTrue(
-			_store.hasFile(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
+			Assert.assertTrue(
+				_store.hasFile(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					dlFileVersion.getStoreFileName()));
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			DLFileEntry.class.getName());
+			DLTrashLocalServiceUtil.moveFileEntryToTrash(
+				dlFileEntry.getUserId(), dlFileEntry.getRepositoryId(),
+				dlFileEntry.getFileEntryId());
 
-		trashHandler.deleteTrashEntry(dlFileEntry.getPrimaryKey());
+			Assert.assertTrue(
+				_store.hasFile(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					dlFileVersion.getStoreFileName()));
 
-		Assert.assertFalse(
-			_store.hasFile(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					DLFileEntry.class.getName());
 
-		GroupTestUtil.deleteGroup(group);
+			trashHandler.deleteTrashEntry(dlFileEntry.getPrimaryKey());
+
+			Assert.assertFalse(
+				_store.hasFile(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					dlFileVersion.getStoreFileName()));
+
+			GroupTestUtil.deleteGroup(group);
+		}
+		finally {
+			DLStoreImpl.setStore(originalStore);
+		}
 	}
 
 	@Test

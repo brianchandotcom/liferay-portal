@@ -284,6 +284,27 @@ public class ObjectDefinitionLocalServiceTest {
 					Collections.emptyList(), new ServiceContext());
 			});
 
+		// Depot-scoped object definitions cannot have a panel category key
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionScopeException.class,
+			"Scope \"depot\" cannot be associated with a panel category key",
+			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
+				null, TestPropsValues.getUserId(), 0, null, false, true, false,
+				true, false, false, false, false, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, "site_administration.content",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_DEPOT,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())),
+				Collections.emptyList(), new ServiceContext()));
+
 		// Enable form container
 
 		ObjectDefinition objectDefinition =
@@ -3266,6 +3287,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionActiveException.class.getName(),
 				ObjectDefinitionLabelException.class.getName(),
 				ObjectDefinitionPluralLabelException.class.getName(),
+				ObjectDefinitionScopeException.class.getName(),
 				ObjectFieldLabelException.class.getName(),
 				ObjectFieldListTypeDefinitionIdException.class.getName(),
 				ObjectFieldNameException.MustBeginWithLowerCaseLetter.class.
@@ -3285,9 +3307,10 @@ public class ObjectDefinitionLocalServiceTest {
 					objectDefinition.isEnableObjectEntrySchedule(), false,
 					objectDefinition.isEnableObjectEntryVersioning(),
 					objectDefinition.getFriendlyURLSeparator(), null,
-					objectDefinition.getName(), null, null, false, null,
-					objectDefinition.getScope(), objectDefinition.getStatus(),
-					Collections.emptyList(),
+					objectDefinition.getName(), null,
+					"site_administration.content", false, null,
+					ObjectDefinitionConstants.SCOPE_DEPOT,
+					objectDefinition.getStatus(), Collections.emptyList(),
 					ListUtil.fromArray(
 						new PicklistObjectFieldBuilder(
 						).name(

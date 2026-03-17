@@ -21,9 +21,9 @@ import java.util.Map;
 /**
  * @author Gabriel Prates
  */
-public class DesignLibraryDashboardDisplayContext {
+public class DesignLibraryResourcesDisplayContext {
 
-	public DesignLibraryDashboardDisplayContext(
+	public DesignLibraryResourcesDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 

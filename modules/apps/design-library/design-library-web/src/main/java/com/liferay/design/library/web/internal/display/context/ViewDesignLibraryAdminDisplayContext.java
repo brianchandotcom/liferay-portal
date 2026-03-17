@@ -66,7 +66,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 				PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setMVCRenderCommandName(
-					"/design_library/design_library_dashboard"
+					"/design_library/design_library_resources"
 				).setParameter(
 					DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY, "{id}"
 				).buildString(),

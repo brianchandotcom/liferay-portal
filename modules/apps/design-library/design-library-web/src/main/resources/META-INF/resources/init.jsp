@@ -12,7 +12,7 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
 <%@ page import="com.liferay.design.library.web.internal.constants.DesignLibraryAdminFDSNames" %><%@
 page import="com.liferay.design.library.web.internal.constants.DesignLibraryConstants" %><%@
-page import="com.liferay.design.library.web.internal.display.context.DesignLibraryDashboardDisplayContext" %><%@
+page import="com.liferay.design.library.web.internal.display.context.DesignLibraryResourcesDisplayContext" %><%@
 page import="com.liferay.design.library.web.internal.display.context.ViewDesignLibraryAdminDisplayContext" %>
 
 <portlet:defineObjects />

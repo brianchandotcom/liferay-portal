@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {Fragment} from 'react';
 import useSWR from 'swr';
 
 import checkCircleIcon from '../../assets/icons/check_circle_icon.svg';
@@ -15,6 +14,7 @@ import timesCircleIcon from '../../assets/icons/times_circle_icon.svg';
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Header} from '../../components/Header/Header';
 import {PageRenderer} from '../../components/Page';
+import {MarketplaceCategories} from '../../enums/Categories';
 import {OrderTypes, PaymentStatus} from '../../enums/Order';
 import {
 	ProductSpecificationKey,
@@ -26,17 +26,17 @@ import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
 import HeadlessAdminUser from '../../services/rest/HeadlessAdminUser';
-import {getSiteURL} from '../../utils/site';
-import {getAccountImage} from '../../utils/util';
-import ProductPurchaseNextSteps from '../ProductPurchase/pages/NextSteps';
-
-import './NextSteps.scss';
-import {MarketplaceCategories} from '../../enums/Categories';
 import {
 	getProductCategoriesByVocabularyName,
 	getProductSpecification,
 } from '../../utils/productUtils';
+import {getSiteURL} from '../../utils/site';
+import {getAccountImage} from '../../utils/util';
+import AIHubNextSteps from '../ProductPurchase/pages/LiferayProduct/AIHubForm/AIHubNextSteps';
 import LDPNextSteps from '../ProductPurchase/pages/LiferayProduct/LDPNextSteps';
+import ProductPurchaseNextSteps from '../ProductPurchase/pages/NextSteps';
+
+import './NextSteps.scss';
 
 type NextStepsBodyProps = ReturnType<typeof useGetProductByOrderId>['data'];
 
@@ -100,7 +100,6 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 				}
 			/>
 		),
-
 		[PaymentStatus.PAID]: (
 			<Header
 				description={
@@ -290,6 +289,15 @@ export function NextSteps() {
 				)}
 				title={i18n.translate('setting-up-your-free-version-ldp')}
 			/>
+		);
+	}
+
+	if (
+		productTypeCategory === ProductTypeVocabulary.LIFERAY_PRODUCT &&
+		solutionTypeSpecificationValue === SolutionTypes.AI_HUB
+	) {
+		return (
+			<AIHubNextSteps data={data} error={error} isLoading={isLoading} />
 		);
 	}
 

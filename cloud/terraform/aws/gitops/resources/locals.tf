@@ -94,6 +94,7 @@ locals {
 			values_scope_prefix="liferay-aws.liferay-default."
 		} : {},
 	)
+	liferay_namespace_pattern="liferay-*"
 	liferay_service_account_role_name="${var.deployment_name}-irsa"
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	secret_prefixes={

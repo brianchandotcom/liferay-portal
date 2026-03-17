@@ -5,7 +5,7 @@ module "envoy_proxy_role" {
 		main={
 			namespace_service_accounts=[
 				"${var.gateway_namespace}:envoy-*",
-				"liferay-*:envoy-*",
+				"${local.liferay_namespace_pattern}:envoy-*",
 			]
 			provider_arn=local.oidc_provider_arn
 		}

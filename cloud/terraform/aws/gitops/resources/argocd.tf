@@ -161,7 +161,7 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 					server="https://kubernetes.default.svc"
 				},
 				{
-					namespace="liferay-*"
+					namespace=local.liferay_namespace_pattern
 					server="https://kubernetes.default.svc"
 				},
 				{
@@ -481,7 +481,7 @@ resource "kubernetes_manifest" "liferay_appproject" {
 			description="ArgoCD project for Liferay cloud native applications."
 			destinations=[
 				{
-					namespace="liferay-*"
+					namespace=local.liferay_namespace_pattern
 					server="https://kubernetes.default.svc"
 				},
 			]

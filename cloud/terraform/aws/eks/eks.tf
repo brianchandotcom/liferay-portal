@@ -102,7 +102,7 @@ resource "aws_iam_role" "irsa" {
 							"${module.eks.oidc_provider}:aud"="sts.amazonaws.com"
 						}
 						StringLike={
-							"${module.eks.oidc_provider}:sub"="system:serviceaccount:liferay-*:liferay-default"
+							"${module.eks.oidc_provider}:sub"="system:serviceaccount:${local.liferay_namespace_pattern}:liferay-default"
 						}
 					}
 					Effect="Allow"

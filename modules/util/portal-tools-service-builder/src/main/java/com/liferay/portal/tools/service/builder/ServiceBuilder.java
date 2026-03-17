@@ -3680,7 +3680,7 @@ public class ServiceBuilder {
 	private void _createService(Entity entity, int sessionType)
 		throws Exception {
 
-		Set<String> imports = new HashSet<>();
+		Set<String> imports = new TreeSet<>();
 
 		JavaClass javaClass = _getJavaClass(
 			StringBundler.concat(
@@ -3760,6 +3760,25 @@ public class ServiceBuilder {
 		context = _putDeprecatedKeys(context, javaClass);
 
 		String content = _processTemplate(_tplService, context);
+
+		int bodyIndex = content.indexOf("\npublic ");
+
+		if (bodyIndex == -1) {
+			bodyIndex = content.indexOf("\n@");
+		}
+
+		String body = content.substring(bodyIndex);
+
+		for (String importValue : imports) {
+			int x = importValue.lastIndexOf('.');
+
+			String simpleName = importValue.substring(x + 1);
+
+			if (!body.contains(simpleName)) {
+				content = StringUtil.removeSubstring(
+					content, "import " + importValue + ";\n");
+			}
+		}
 
 		File file = new File(
 			StringBundler.concat(

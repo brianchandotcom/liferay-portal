@@ -933,12 +933,7 @@ test.describe('ensure picklist translation', () => {
 			).toBeVisible();
 		}
 		finally {
-			await accountSettingsPage.selectAccountLanguage({
-				languageId: 'en_US',
-				navigate: true,
-			});
-
-			await waitForAlert(page);
+			await apiHelpers.headlessAdminUser.patchMyUserAccountLanguage('en_US');
 		}
 	});
 
@@ -1014,12 +1009,7 @@ test.describe('ensure picklist translation', () => {
 			await expect(page.getByTitle('Limpar Todos')).toBeVisible();
 		}
 		finally {
-			await accountSettingsPage.selectAccountLanguage({
-				languageId: 'en_US',
-				navigate: true,
-			});
-
-			await waitForAlert(page);
+			await apiHelpers.headlessAdminUser.patchMyUserAccountLanguage('en_US');
 		}
 	});
 
@@ -1103,12 +1093,7 @@ test.describe('ensure picklist translation', () => {
 			).toBeVisible();
 		}
 		finally {
-			await accountSettingsPage.selectAccountLanguage({
-				languageId: 'en_US',
-				navigate: true,
-			});
-
-			await waitForAlert(page);
+			await apiHelpers.headlessAdminUser.patchMyUserAccountLanguage('en_US');
 		}
 	});
 
@@ -1240,12 +1225,7 @@ test.describe('ensure picklist translation', () => {
 			).toBeVisible();
 		}
 		finally {
-			await accountSettingsPage.selectAccountLanguage({
-				languageId: 'en_US',
-				navigate: true,
-			});
-
-			await waitForAlert(page);
+			await apiHelpers.headlessAdminUser.patchMyUserAccountLanguage('en_US');
 		}
 	});
 });

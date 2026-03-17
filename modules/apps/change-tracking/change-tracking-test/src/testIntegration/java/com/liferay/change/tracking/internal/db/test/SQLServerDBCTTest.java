@@ -147,6 +147,7 @@ public class SQLServerDBCTTest {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from CTSChild where ctCollectionId = ?")) {
 

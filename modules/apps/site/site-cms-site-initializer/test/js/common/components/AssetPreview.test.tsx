@@ -14,6 +14,25 @@ import AssetPreview from '../../../../src/main/resources/META-INF/resources/js/c
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 
 jest.mock(
+	'@clayui/empty-state',
+	() =>
+		function ClayEmptyState() {
+			return <div data-testid="clay-empty-state" />;
+		}
+);
+
+const mockLiferayLanguageGet = jest.fn((key: string) => key);
+
+(global as any).Liferay = {
+	Language: {
+		get: mockLiferayLanguageGet,
+	},
+	ThemeDisplay: {
+		getPathThemeImages: () => '/path/to/images',
+	},
+};
+
+jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/common/components/FilePreview',
 	() =>
 		function FilePreview() {
@@ -94,5 +113,17 @@ describe('AssetPreview', () => {
 
 			await checkAccessibility({bestPractices: true, context: container});
 		});
+	});
+
+	it('renders ClayEmptyState when the item is a WebAsset and showContentPreview is false', async () => {
+		render(
+			<AssetPreview
+				item={mockContentAsset as any}
+				showContentPreview={false}
+				url="/some-url"
+			/>
+		);
+
+		expect(screen.getByTestId('clay-empty-state')).toBeInTheDocument();
 	});
 });

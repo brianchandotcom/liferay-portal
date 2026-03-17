@@ -35,8 +35,6 @@ create unique index IX_F8852A18 on MVCCEntry (companyId, name[$COLUMN_LENGTH:75$
 create index IX_AD13D943 on MappingEntries_BasicEntries (companyId);
 create index IX_824399F8 on MappingEntries_BasicEntries (mappingEntryId);
 
-create unique index IX_E3DB4638 on MvccEntry (companyId, name[$COLUMN_LENGTH:75$]);
-
 create index IX_6770C47D on VersionedEntry (groupId, head);
 create unique index IX_AAA6F330 on VersionedEntry (headId);
 

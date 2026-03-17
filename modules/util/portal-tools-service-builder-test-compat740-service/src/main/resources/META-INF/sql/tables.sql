@@ -203,13 +203,6 @@ create table MappingEntry (
 	name VARCHAR(75) null
 );
 
-create table MvccEntry (
-	mvccVersion LONG default 0 not null,
-	mvccEntryId LONG not null primary key,
-	companyId LONG,
-	name VARCHAR(75) null
-);
-
 create table TrashEntry (
 	trashEntryId LONG not null primary key,
 	groupId LONG,

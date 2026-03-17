@@ -52,7 +52,7 @@ public class ShareTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-site-dsr-site-initializer:share:roomId", 0);
+			"liferay-site-dsr-site-initializer:share:roomId", 0L);
 
 		if (_groupId == 0) {
 			return;

@@ -152,7 +152,7 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 	}
 
 	private void _setUpFragmentCollection(
-		boolean marketplace, boolean hasExportableItems) {
+		boolean marketplace, boolean hasExportableFragments) {
 
 		Mockito.when(
 			_fragmentCollection.getFragmentCollectionId()
@@ -173,9 +173,10 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 		);
 
 		Mockito.when(
-			_fragmentCollection.hasExportableItems()
+			_fragmentCollection.
+				hasExportableFragmentCompositionsAndFragmentEntries()
 		).thenReturn(
-			hasExportableItems
+			hasExportableFragments
 		);
 	}
 

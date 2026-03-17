@@ -54,9 +54,9 @@ jar {
 
 				optionDefaults.put("versions", String.valueOf(file.toURI()))
 
-				boolean isFacesModule = project.hasProperty("isFacesModule") && project.isFacesModule
+				boolean jakartaFacesModule = project.hasProperty("isFacesModule") && project.isFacesModule
 
-				if (isFacesModule) {
+				if (jakartaFacesModule) {
 					System.out.println("Configure extra transform properties for Faces modules...")
 
 					file = new File(rootDir, "liferay-jakarta-direct.properties")
@@ -85,7 +85,7 @@ jar {
 
 				JakartaTransformerCLI.runWith(jakartaTransformerCLI)
 
-				if (!isFacesModule) {
+				if (!jakartaFacesModule) {
 					JarTransformer.transform(jar.archivePath)
 				}
 			}

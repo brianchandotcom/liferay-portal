@@ -73,6 +73,25 @@ const paidApp = z.object({
 		.transform((url) => (url.startsWith('http') ? url : `https://${url}`)),
 });
 
+const personalInformationSchema = {
+	businessEmail: z.string().email('Please fill in valid email'),
+	companyName: z
+		.string()
+		.min(3, 'Company name is required')
+		.optional()
+		.or(z.literal('')),
+	country: z.string().min(2, 'Please select the country to continue'),
+	extension: z.string().optional(),
+	fullname: z.string().min(3, 'Full name is required'),
+	intlCode: z.object({code: z.string(), flag: z.string()}),
+	jobTitle: z
+		.string()
+		.min(3, 'Job title is required')
+		.optional()
+		.or(z.literal('')),
+	phoneNumber: z.string(),
+};
+
 const resources = z.object({
 	free: z.number(),
 	limit: z.number(),
@@ -144,6 +163,19 @@ const zodSchema = {
 			.or(z.literal('')),
 		notifyMeAboutProducts: z.boolean(),
 		phoneNumber: z.string(),
+		purpose: z.string().min(3, 'Purpose is required'),
+		purposeOther: z
+			.string()
+			.min(3, 'Purpose is required')
+			.optional()
+			.or(z.literal('')),
+		termsAndConditions: z.boolean().refine((value) => value === true),
+		userAgreement: z.boolean().refine((value) => value === true),
+	}),
+	aiHubForm: z.object({
+		...personalInformationSchema,
+		administrationEmail: z.string().email('Please fill in valid email'),
+		aiHubAccountName: z.string().min(3, 'AI Hub Account Name is required'),
 		purpose: z.string().min(3, 'Purpose is required'),
 		purposeOther: z
 			.string()

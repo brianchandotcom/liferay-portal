@@ -118,6 +118,8 @@ export default function SaveButtons({
 	};
 
 	const onClick = async (action, directSubmit = false) => {
+		removeAlert();
+
 		if (!(await validateRequiredFields(formId))) {
 			return;
 		}
@@ -157,8 +159,6 @@ export default function SaveButtons({
 		}
 
 		lockRef.current?.lock();
-
-		removeAlert();
 
 		const workflowActionInput = document.getElementById(
 			`${portletNamespace}workflowAction`

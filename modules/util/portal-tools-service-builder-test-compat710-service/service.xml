@@ -323,7 +323,7 @@
 
 		<reference entity="BasicEntry" package-path="com.liferay.portal.tools.service.builder.test.compat710" />
 	</entity>
-	<entity local-service="true" mvcc-enabled="true" name="MvccEntry" remote-service="false">
+	<entity local-service="true" mvcc-enabled="true" name="MVCCEntry" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -342,7 +342,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="C_N" return-type="MvccEntry" unique="true">
+		<finder name="C_N" return-type="MVCCEntry" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>

@@ -997,8 +997,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		if (ArrayUtil.isNotEmpty(groupIds) && inherit &&
 			!socialRelationTypeUnionUserGroups) {
 
+			List<Long> depotOrSiteGroupIds = new ArrayList<>();
 			List<Long> organizationIds = new ArrayList<>();
-			List<Long> siteGroupIds = new ArrayList<>();
 			List<Long> userGroupIds = new ArrayList<>();
 
 			for (long groupId : groupIds) {
@@ -1008,16 +1008,33 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 					continue;
 				}
 
+				if (group.isDepot() || group.isSite()) {
+					depotOrSiteGroupIds.add(groupId);
+				}
+
 				if (group.isOrganization()) {
 					organizationIds.add(group.getOrganizationId());
 				}
 				else if (group.isUserGroup()) {
 					userGroupIds.add(group.getClassPK());
 				}
+			}
 
-				if (group.isSite()) {
-					siteGroupIds.add(groupId);
-				}
+			if (!depotOrSiteGroupIds.isEmpty()) {
+				Long[] depotOrSiteGroupArray = depotOrSiteGroupIds.toArray(
+					new Long[0]);
+
+				params3 = new LinkedHashMap<>(params1);
+
+				params3.remove("usersGroups");
+
+				params3.put("groupsOrgs", depotOrSiteGroupArray);
+
+				params4 = new LinkedHashMap<>(params1);
+
+				params4.remove("usersGroups");
+
+				params4.put("groupsUserGroups", depotOrSiteGroupArray);
 			}
 
 			if (!organizationIds.isEmpty()) {
@@ -1038,22 +1055,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 						"usersOrgsTree",
 						new ArrayList<Organization>(organizations.values()));
 				}
-			}
-
-			if (!siteGroupIds.isEmpty()) {
-				Long[] siteGroupIdsArray = siteGroupIds.toArray(new Long[0]);
-
-				params3 = new LinkedHashMap<>(params1);
-
-				params3.remove("usersGroups");
-
-				params3.put("groupsOrgs", siteGroupIdsArray);
-
-				params4 = new LinkedHashMap<>(params1);
-
-				params4.remove("usersGroups");
-
-				params4.put("groupsUserGroups", siteGroupIdsArray);
 			}
 
 			if (!userGroupIds.isEmpty()) {

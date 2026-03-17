@@ -9,6 +9,8 @@ dependencies {
 	compileOnly group: "com.liferay", name: "jakarta.faces", transitive: false, version: "2.3.21.LIFERAY-PATCHED-2"
 }
 
+// TODO SF this very ugly block
+
 jar {
 	doLast {
 		File jarFile = archiveFile.get().asFile

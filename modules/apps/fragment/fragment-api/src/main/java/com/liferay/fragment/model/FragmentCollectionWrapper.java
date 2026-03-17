@@ -381,6 +381,11 @@ public class FragmentCollectionWrapper
 	}
 
 	@Override
+	public boolean hasExportableFragmentCompositionsAndFragmentEntries() {
+		return model.hasExportableFragmentCompositionsAndFragmentEntries();
+	}
+
+	@Override
 	public boolean hasResources()
 		throws com.liferay.portal.kernel.exception.PortalException {
 

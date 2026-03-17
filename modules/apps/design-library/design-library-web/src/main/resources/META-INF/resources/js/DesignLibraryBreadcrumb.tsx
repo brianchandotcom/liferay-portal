@@ -14,10 +14,7 @@ type ActionDropdownItemProps = ComponentProps<
 
 interface DesignLibraryBreadcrumbProps {
 	actionItems?: ActionDropdownItemProps[];
-	breadcrumbProps: {
-		current: {active: boolean; href?: string; label: string};
-		redirect: {active: boolean; href?: string; label: string};
-	};
+	breadcrumbItems: {active: boolean; href?: string; label: string}[];
 }
 
 function ActionDropdownItem({
@@ -33,14 +30,11 @@ function ActionDropdownItem({
 
 export default function DesignLibraryBreadcrumb({
 	actionItems,
-	breadcrumbProps,
+	breadcrumbItems,
 }: DesignLibraryBreadcrumbProps) {
 	return (
 		<div className="autofit-row autofit-row-center bg-white design-library-breadcrumb px-4 py-3">
-			<ClayBreadcrumb
-				className="px-0 py-1"
-				items={[breadcrumbProps.redirect, breadcrumbProps.current]}
-			/>
+			<ClayBreadcrumb className="px-0 py-1" items={breadcrumbItems} />
 
 			{actionItems && (
 				<div className="autofit-col ml-1">

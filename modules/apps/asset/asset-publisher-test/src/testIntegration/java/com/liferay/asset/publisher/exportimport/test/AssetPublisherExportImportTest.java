@@ -1177,7 +1177,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		Iterator<AssetEntry> expectedAssetEntriesIterator =
 			expectedAssetEntries.iterator();
 		Iterator<AssetEntry> actualAssetEntriesIterator =
-			expectedAssetEntries.iterator();
+			actualAssetEntries.iterator();
 
 		while (expectedAssetEntriesIterator.hasNext() &&
 			   actualAssetEntriesIterator.hasNext()) {

@@ -216,6 +216,47 @@ data "aws_iam_policy_document" "provider_aws_iam_policy_document" {
 		resources=["*"]
 	}
 }
+data "aws_iam_policy_document" "provider_aws_kms_assume_role_policy_document" {
+	statement {
+		actions=["sts:AssumeRoleWithWebIdentity"]
+		condition {
+			test="StringEquals"
+			values=["sts.amazonaws.com"]
+			variable="${local.oidc_provider}:aud"
+		}
+		condition {
+			test="StringLike"
+			values=["system:serviceaccount:${var.crossplane_namespace}:provider-aws-kms*"]
+			variable="${local.oidc_provider}:sub"
+		}
+		effect="Allow"
+		principals {
+			identifiers=["arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"]
+			type="Federated"
+		}
+	}
+}
+data "aws_iam_policy_document" "provider_aws_kms_policy_document" {
+	statement {
+		actions=[
+			"kms:CancelKeyDeletion",
+			"kms:CreateKey",
+			"kms:DescribeKey",
+			"kms:DisableKey",
+			"kms:EnableKey",
+			"kms:GetKeyPolicy",
+			"kms:ListKeys",
+			"kms:ListResourceTags",
+			"kms:PutKeyPolicy",
+			"kms:ScheduleKeyDeletion",
+			"kms:TagResource",
+			"kms:UntagResource",
+			"kms:UpdateKeyDescription",
+		]
+		effect="Allow"
+		resources=["*"]
+	}
+}
 data "aws_iam_policy_document" "provider_aws_opensearch_assume_role_policy_document" {
 	statement {
 		actions=["sts:AssumeRoleWithWebIdentity"]

@@ -106,6 +106,16 @@ export class ContentsPage {
 
 			await this.page.getByRole('button', {name: 'Save'}).click();
 		}
+
+		await this.page
+			.locator('.cms-control-menu')
+			.getByText('Edit')
+			.waitFor();
+
+		await this.page
+			.locator('.loading-animation')
+			.nth(0)
+			.waitFor({state: 'hidden'});
 	}
 
 	async createFolder(folderName: string, spaceName?: string) {

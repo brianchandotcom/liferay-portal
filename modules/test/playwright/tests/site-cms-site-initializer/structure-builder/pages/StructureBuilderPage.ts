@@ -389,6 +389,7 @@ export class StructureBuilderPage {
 		name = `StructureName${getRandomInt()}`,
 		page,
 		publish = true,
+		spaces,
 	}: {
 		autoDelete?: boolean;
 		erc?: string;
@@ -396,10 +397,16 @@ export class StructureBuilderPage {
 		name?: string;
 		page: StructureBuilderPage;
 		publish?: boolean;
+		spaces?: string[];
 	}) {
 		await page.goToCreateStructure();
 
-		await page.enableForAllSpaces();
+		if (!spaces) {
+			await page.enableForAllSpaces();
+		}
+		else {
+			await this.selectSpaces(spaces);
+		}
 
 		await page.changeStructureSettings({
 			erc,

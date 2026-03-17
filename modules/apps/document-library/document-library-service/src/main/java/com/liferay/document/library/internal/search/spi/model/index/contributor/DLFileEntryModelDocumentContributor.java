@@ -227,7 +227,7 @@ public class DLFileEntryModelDocumentContributor
 						StringPool.SPACE, text));
 			}
 		}
-		catch (Exception exception) {
+		catch (Throwable throwable) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to extract text from file version " +
@@ -235,7 +235,7 @@ public class DLFileEntryModelDocumentContributor
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(throwable);
 			}
 		}
 	}

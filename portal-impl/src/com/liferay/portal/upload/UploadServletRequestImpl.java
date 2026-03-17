@@ -5,8 +5,8 @@
 
 package com.liferay.portal.upload;
 
+import com.liferay.petra.io.ByteArrayFileInputStream;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;

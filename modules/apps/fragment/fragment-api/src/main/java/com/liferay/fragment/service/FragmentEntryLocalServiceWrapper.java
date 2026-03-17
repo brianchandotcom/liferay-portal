@@ -621,6 +621,12 @@ public class FragmentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasExportableFragmentEntries(long fragmentCollectionId) {
+		return _fragmentEntryLocalService.hasExportableFragmentEntries(
+			fragmentCollectionId);
+	}
+
+	@Override
 	public FragmentEntry moveFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -760,4 +766,4 @@ public class FragmentEntryLocalServiceWrapper
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1282295569
+// LIFERAY-SERVICE-BUILDER-HASH:656993293

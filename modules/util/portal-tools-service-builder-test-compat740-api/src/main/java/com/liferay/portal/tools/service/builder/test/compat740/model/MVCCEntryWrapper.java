@@ -13,18 +13,18 @@ import java.util.Map;
 
 /**
  * <p>
- * This class is a wrapper for {@link MVCCEntry}.
+ * This class is a wrapper for {@link MvccEntry}.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see MVCCEntry
+ * @see MvccEntry
  * @generated
  */
-public class MVCCEntryWrapper
-	extends BaseModelWrapper<MVCCEntry>
-	implements ModelWrapper<MVCCEntry>, MVCCEntry {
+public class MvccEntryWrapper
+	extends BaseModelWrapper<MvccEntry>
+	implements ModelWrapper<MvccEntry>, MvccEntry {
 
-	public MVCCEntryWrapper(MVCCEntry mvccEntry) {
+	public MvccEntryWrapper(MvccEntry mvccEntry) {
 		super(mvccEntry);
 	}
 
@@ -68,7 +68,7 @@ public class MVCCEntryWrapper
 	}
 
 	@Override
-	public MVCCEntry cloneWithOriginalValues() {
+	public MvccEntry cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
 	}
 
@@ -183,8 +183,8 @@ public class MVCCEntryWrapper
 	}
 
 	@Override
-	protected MVCCEntryWrapper wrap(MVCCEntry mvccEntry) {
-		return new MVCCEntryWrapper(mvccEntry);
+	protected MvccEntryWrapper wrap(MvccEntry mvccEntry) {
+		return new MvccEntryWrapper(mvccEntry);
 	}
 
 }

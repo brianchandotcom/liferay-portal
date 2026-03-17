@@ -8,7 +8,7 @@ package com.liferay.portal.tools.service.builder.test.compat730.service.persiste
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.tools.service.builder.test.compat730.model.MVCCEntry;
+import com.liferay.portal.tools.service.builder.test.compat730.model.MvccEntry;
 
 import java.io.Serializable;
 
@@ -17,17 +17,17 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The persistence utility for the mvcc entry service. This utility wraps <code>com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.MVCCEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the mvcc entry service. This utility wraps <code>com.liferay.portal.tools.service.builder.test.compat730.service.persistence.impl.MvccEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see MVCCEntryPersistence
+ * @see MvccEntryPersistence
  * @generated
  */
-public class MVCCEntryUtil {
+public class MvccEntryUtil {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -45,7 +45,7 @@ public class MVCCEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
-	public static void clearCache(MVCCEntry mvccEntry) {
+	public static void clearCache(MvccEntry mvccEntry) {
 		getPersistence().clearCache(mvccEntry);
 	}
 
@@ -59,7 +59,7 @@ public class MVCCEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
 	 */
-	public static Map<Serializable, MVCCEntry> fetchByPrimaryKeys(
+	public static Map<Serializable, MvccEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
 
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
@@ -68,7 +68,7 @@ public class MVCCEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<MVCCEntry> findWithDynamicQuery(
+	public static List<MvccEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
 
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
@@ -77,7 +77,7 @@ public class MVCCEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
-	public static List<MVCCEntry> findWithDynamicQuery(
+	public static List<MvccEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
@@ -86,9 +86,9 @@ public class MVCCEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
-	public static List<MVCCEntry> findWithDynamicQuery(
+	public static List<MvccEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<MVCCEntry> orderByComparator) {
+		OrderByComparator<MvccEntry> orderByComparator) {
 
 		return getPersistence().findWithDynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -97,15 +97,15 @@ public class MVCCEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
-	public static MVCCEntry update(MVCCEntry mvccEntry) {
+	public static MvccEntry update(MvccEntry mvccEntry) {
 		return getPersistence().update(mvccEntry);
 	}
 
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
-	public static MVCCEntry update(
-		MVCCEntry mvccEntry, ServiceContext serviceContext) {
+	public static MvccEntry update(
+		MvccEntry mvccEntry, ServiceContext serviceContext) {
 
 		return getPersistence().update(mvccEntry, serviceContext);
 	}
@@ -116,7 +116,7 @@ public class MVCCEntryUtil {
 	 * @param companyId the company ID
 	 * @return the matching mvcc entries
 	 */
-	public static List<MVCCEntry> findByCompanyId(long companyId) {
+	public static List<MvccEntry> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -124,7 +124,7 @@ public class MVCCEntryUtil {
 	 * Returns a range of all the mvcc entries where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -132,7 +132,7 @@ public class MVCCEntryUtil {
 	 * @param end the upper bound of the range of mvcc entries (not inclusive)
 	 * @return the range of matching mvcc entries
 	 */
-	public static List<MVCCEntry> findByCompanyId(
+	public static List<MvccEntry> findByCompanyId(
 		long companyId, int start, int end) {
 
 		return getPersistence().findByCompanyId(companyId, start, end);
@@ -142,7 +142,7 @@ public class MVCCEntryUtil {
 	 * Returns an ordered range of all the mvcc entries where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -151,9 +151,9 @@ public class MVCCEntryUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching mvcc entries
 	 */
-	public static List<MVCCEntry> findByCompanyId(
+	public static List<MvccEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<MVCCEntry> orderByComparator) {
+		OrderByComparator<MvccEntry> orderByComparator) {
 
 		return getPersistence().findByCompanyId(
 			companyId, start, end, orderByComparator);
@@ -163,7 +163,7 @@ public class MVCCEntryUtil {
 	 * Returns an ordered range of all the mvcc entries where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -173,9 +173,9 @@ public class MVCCEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching mvcc entries
 	 */
-	public static List<MVCCEntry> findByCompanyId(
+	public static List<MvccEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<MVCCEntry> orderByComparator,
+		OrderByComparator<MvccEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
@@ -188,12 +188,12 @@ public class MVCCEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching mvcc entry
-	 * @throws NoSuchMVCCEntryException if a matching mvcc entry could not be found
+	 * @throws NoSuchMvccEntryException if a matching mvcc entry could not be found
 	 */
-	public static MVCCEntry findByCompanyId_First(
-			long companyId, OrderByComparator<MVCCEntry> orderByComparator)
+	public static MvccEntry findByCompanyId_First(
+			long companyId, OrderByComparator<MvccEntry> orderByComparator)
 		throws com.liferay.portal.tools.service.builder.test.compat730.
-			exception.NoSuchMVCCEntryException {
+			exception.NoSuchMvccEntryException {
 
 		return getPersistence().findByCompanyId_First(
 			companyId, orderByComparator);
@@ -206,8 +206,8 @@ public class MVCCEntryUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
 	 */
-	public static MVCCEntry fetchByCompanyId_First(
-		long companyId, OrderByComparator<MVCCEntry> orderByComparator) {
+	public static MvccEntry fetchByCompanyId_First(
+		long companyId, OrderByComparator<MvccEntry> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_First(
 			companyId, orderByComparator);
@@ -219,12 +219,12 @@ public class MVCCEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching mvcc entry
-	 * @throws NoSuchMVCCEntryException if a matching mvcc entry could not be found
+	 * @throws NoSuchMvccEntryException if a matching mvcc entry could not be found
 	 */
-	public static MVCCEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<MVCCEntry> orderByComparator)
+	public static MvccEntry findByCompanyId_Last(
+			long companyId, OrderByComparator<MvccEntry> orderByComparator)
 		throws com.liferay.portal.tools.service.builder.test.compat730.
-			exception.NoSuchMVCCEntryException {
+			exception.NoSuchMvccEntryException {
 
 		return getPersistence().findByCompanyId_Last(
 			companyId, orderByComparator);
@@ -237,8 +237,8 @@ public class MVCCEntryUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
 	 */
-	public static MVCCEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<MVCCEntry> orderByComparator) {
+	public static MvccEntry fetchByCompanyId_Last(
+		long companyId, OrderByComparator<MvccEntry> orderByComparator) {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
@@ -251,13 +251,13 @@ public class MVCCEntryUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next mvcc entry
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
+	 * @throws NoSuchMvccEntryException if a mvcc entry with the primary key could not be found
 	 */
-	public static MVCCEntry[] findByCompanyId_PrevAndNext(
+	public static MvccEntry[] findByCompanyId_PrevAndNext(
 			long mvccEntryId, long companyId,
-			OrderByComparator<MVCCEntry> orderByComparator)
+			OrderByComparator<MvccEntry> orderByComparator)
 		throws com.liferay.portal.tools.service.builder.test.compat730.
-			exception.NoSuchMVCCEntryException {
+			exception.NoSuchMvccEntryException {
 
 		return getPersistence().findByCompanyId_PrevAndNext(
 			mvccEntryId, companyId, orderByComparator);
@@ -283,16 +283,16 @@ public class MVCCEntryUtil {
 	}
 
 	/**
-	 * Returns the mvcc entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchMVCCEntryException</code> if it could not be found.
+	 * Returns the mvcc entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchMvccEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the matching mvcc entry
-	 * @throws NoSuchMVCCEntryException if a matching mvcc entry could not be found
+	 * @throws NoSuchMvccEntryException if a matching mvcc entry could not be found
 	 */
-	public static MVCCEntry findByC_N(long companyId, String name)
+	public static MvccEntry findByC_N(long companyId, String name)
 		throws com.liferay.portal.tools.service.builder.test.compat730.
-			exception.NoSuchMVCCEntryException {
+			exception.NoSuchMvccEntryException {
 
 		return getPersistence().findByC_N(companyId, name);
 	}
@@ -304,7 +304,7 @@ public class MVCCEntryUtil {
 	 * @param name the name
 	 * @return the matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
 	 */
-	public static MVCCEntry fetchByC_N(long companyId, String name) {
+	public static MvccEntry fetchByC_N(long companyId, String name) {
 		return getPersistence().fetchByC_N(companyId, name);
 	}
 
@@ -316,7 +316,7 @@ public class MVCCEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
 	 */
-	public static MVCCEntry fetchByC_N(
+	public static MvccEntry fetchByC_N(
 		long companyId, String name, boolean useFinderCache) {
 
 		return getPersistence().fetchByC_N(companyId, name, useFinderCache);
@@ -329,9 +329,9 @@ public class MVCCEntryUtil {
 	 * @param name the name
 	 * @return the mvcc entry that was removed
 	 */
-	public static MVCCEntry removeByC_N(long companyId, String name)
+	public static MvccEntry removeByC_N(long companyId, String name)
 		throws com.liferay.portal.tools.service.builder.test.compat730.
-			exception.NoSuchMVCCEntryException {
+			exception.NoSuchMvccEntryException {
 
 		return getPersistence().removeByC_N(companyId, name);
 	}
@@ -352,7 +352,7 @@ public class MVCCEntryUtil {
 	 *
 	 * @param mvccEntry the mvcc entry
 	 */
-	public static void cacheResult(MVCCEntry mvccEntry) {
+	public static void cacheResult(MvccEntry mvccEntry) {
 		getPersistence().cacheResult(mvccEntry);
 	}
 
@@ -361,7 +361,7 @@ public class MVCCEntryUtil {
 	 *
 	 * @param mvccEntries the mvcc entries
 	 */
-	public static void cacheResult(List<MVCCEntry> mvccEntries) {
+	public static void cacheResult(List<MvccEntry> mvccEntries) {
 		getPersistence().cacheResult(mvccEntries);
 	}
 
@@ -371,7 +371,7 @@ public class MVCCEntryUtil {
 	 * @param mvccEntryId the primary key for the new mvcc entry
 	 * @return the new mvcc entry
 	 */
-	public static MVCCEntry create(long mvccEntryId) {
+	public static MvccEntry create(long mvccEntryId) {
 		return getPersistence().create(mvccEntryId);
 	}
 
@@ -380,29 +380,29 @@ public class MVCCEntryUtil {
 	 *
 	 * @param mvccEntryId the primary key of the mvcc entry
 	 * @return the mvcc entry that was removed
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
+	 * @throws NoSuchMvccEntryException if a mvcc entry with the primary key could not be found
 	 */
-	public static MVCCEntry remove(long mvccEntryId)
+	public static MvccEntry remove(long mvccEntryId)
 		throws com.liferay.portal.tools.service.builder.test.compat730.
-			exception.NoSuchMVCCEntryException {
+			exception.NoSuchMvccEntryException {
 
 		return getPersistence().remove(mvccEntryId);
 	}
 
-	public static MVCCEntry updateImpl(MVCCEntry mvccEntry) {
+	public static MvccEntry updateImpl(MvccEntry mvccEntry) {
 		return getPersistence().updateImpl(mvccEntry);
 	}
 
 	/**
-	 * Returns the mvcc entry with the primary key or throws a <code>NoSuchMVCCEntryException</code> if it could not be found.
+	 * Returns the mvcc entry with the primary key or throws a <code>NoSuchMvccEntryException</code> if it could not be found.
 	 *
 	 * @param mvccEntryId the primary key of the mvcc entry
 	 * @return the mvcc entry
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
+	 * @throws NoSuchMvccEntryException if a mvcc entry with the primary key could not be found
 	 */
-	public static MVCCEntry findByPrimaryKey(long mvccEntryId)
+	public static MvccEntry findByPrimaryKey(long mvccEntryId)
 		throws com.liferay.portal.tools.service.builder.test.compat730.
-			exception.NoSuchMVCCEntryException {
+			exception.NoSuchMvccEntryException {
 
 		return getPersistence().findByPrimaryKey(mvccEntryId);
 	}
@@ -413,7 +413,7 @@ public class MVCCEntryUtil {
 	 * @param mvccEntryId the primary key of the mvcc entry
 	 * @return the mvcc entry, or <code>null</code> if a mvcc entry with the primary key could not be found
 	 */
-	public static MVCCEntry fetchByPrimaryKey(long mvccEntryId) {
+	public static MvccEntry fetchByPrimaryKey(long mvccEntryId) {
 		return getPersistence().fetchByPrimaryKey(mvccEntryId);
 	}
 
@@ -422,7 +422,7 @@ public class MVCCEntryUtil {
 	 *
 	 * @return the mvcc entries
 	 */
-	public static List<MVCCEntry> findAll() {
+	public static List<MvccEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -430,14 +430,14 @@ public class MVCCEntryUtil {
 	 * Returns a range of all the mvcc entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of mvcc entries
 	 * @param end the upper bound of the range of mvcc entries (not inclusive)
 	 * @return the range of mvcc entries
 	 */
-	public static List<MVCCEntry> findAll(int start, int end) {
+	public static List<MvccEntry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -445,7 +445,7 @@ public class MVCCEntryUtil {
 	 * Returns an ordered range of all the mvcc entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of mvcc entries
@@ -453,8 +453,8 @@ public class MVCCEntryUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of mvcc entries
 	 */
-	public static List<MVCCEntry> findAll(
-		int start, int end, OrderByComparator<MVCCEntry> orderByComparator) {
+	public static List<MvccEntry> findAll(
+		int start, int end, OrderByComparator<MvccEntry> orderByComparator) {
 
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
@@ -463,7 +463,7 @@ public class MVCCEntryUtil {
 	 * Returns an ordered range of all the mvcc entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of mvcc entries
@@ -472,8 +472,8 @@ public class MVCCEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of mvcc entries
 	 */
-	public static List<MVCCEntry> findAll(
-		int start, int end, OrderByComparator<MVCCEntry> orderByComparator,
+	public static List<MvccEntry> findAll(
+		int start, int end, OrderByComparator<MvccEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		return getPersistence().findAll(
@@ -496,14 +496,14 @@ public class MVCCEntryUtil {
 		return getPersistence().countAll();
 	}
 
-	public static MVCCEntryPersistence getPersistence() {
+	public static MvccEntryPersistence getPersistence() {
 		return _persistence;
 	}
 
-	public static void setPersistence(MVCCEntryPersistence persistence) {
+	public static void setPersistence(MvccEntryPersistence persistence) {
 		_persistence = persistence;
 	}
 
-	private static volatile MVCCEntryPersistence _persistence;
+	private static volatile MvccEntryPersistence _persistence;
 
 }

@@ -17,27 +17,27 @@ import java.util.Objects;
 
 /**
  * <p>
- * This class is a wrapper for {@link MVCCEntry}.
+ * This class is a wrapper for {@link MvccEntry}.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see MVCCEntry
+ * @see MvccEntry
  * @generated
  */
-public class MVCCEntryWrapper implements ModelWrapper<MVCCEntry>, MVCCEntry {
+public class MvccEntryWrapper implements ModelWrapper<MvccEntry>, MvccEntry {
 
-	public MVCCEntryWrapper(MVCCEntry mvccEntry) {
+	public MvccEntryWrapper(MvccEntry mvccEntry) {
 		_mvccEntry = mvccEntry;
 	}
 
 	@Override
 	public Class<?> getModelClass() {
-		return MVCCEntry.class;
+		return MvccEntry.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return MVCCEntry.class.getName();
+		return MvccEntry.class.getName();
 	}
 
 	@Override
@@ -81,11 +81,11 @@ public class MVCCEntryWrapper implements ModelWrapper<MVCCEntry>, MVCCEntry {
 
 	@Override
 	public Object clone() {
-		return new MVCCEntryWrapper((MVCCEntry)_mvccEntry.clone());
+		return new MvccEntryWrapper((MvccEntry)_mvccEntry.clone());
 	}
 
 	@Override
-	public int compareTo(MVCCEntry mvccEntry) {
+	public int compareTo(MvccEntry mvccEntry) {
 		return _mvccEntry.compareTo(mvccEntry);
 	}
 
@@ -257,15 +257,15 @@ public class MVCCEntryWrapper implements ModelWrapper<MVCCEntry>, MVCCEntry {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MVCCEntry>
+	public com.liferay.portal.kernel.model.CacheModel<MvccEntry>
 		toCacheModel() {
 
 		return _mvccEntry.toCacheModel();
 	}
 
 	@Override
-	public MVCCEntry toEscapedModel() {
-		return new MVCCEntryWrapper(_mvccEntry.toEscapedModel());
+	public MvccEntry toEscapedModel() {
+		return new MvccEntryWrapper(_mvccEntry.toEscapedModel());
 	}
 
 	@Override
@@ -274,8 +274,8 @@ public class MVCCEntryWrapper implements ModelWrapper<MVCCEntry>, MVCCEntry {
 	}
 
 	@Override
-	public MVCCEntry toUnescapedModel() {
-		return new MVCCEntryWrapper(_mvccEntry.toUnescapedModel());
+	public MvccEntry toUnescapedModel() {
+		return new MvccEntryWrapper(_mvccEntry.toUnescapedModel());
 	}
 
 	@Override
@@ -289,11 +289,11 @@ public class MVCCEntryWrapper implements ModelWrapper<MVCCEntry>, MVCCEntry {
 			return true;
 		}
 
-		if (!(object instanceof MVCCEntryWrapper)) {
+		if (!(object instanceof MvccEntryWrapper)) {
 			return false;
 		}
 
-		MVCCEntryWrapper mvccEntryWrapper = (MVCCEntryWrapper)object;
+		MvccEntryWrapper mvccEntryWrapper = (MvccEntryWrapper)object;
 
 		if (Objects.equals(_mvccEntry, mvccEntryWrapper._mvccEntry)) {
 			return true;
@@ -303,7 +303,7 @@ public class MVCCEntryWrapper implements ModelWrapper<MVCCEntry>, MVCCEntry {
 	}
 
 	@Override
-	public MVCCEntry getWrappedModel() {
+	public MvccEntry getWrappedModel() {
 		return _mvccEntry;
 	}
 
@@ -322,6 +322,6 @@ public class MVCCEntryWrapper implements ModelWrapper<MVCCEntry>, MVCCEntry {
 		_mvccEntry.resetOriginalValues();
 	}
 
-	private final MVCCEntry _mvccEntry;
+	private final MvccEntry _mvccEntry;
 
 }

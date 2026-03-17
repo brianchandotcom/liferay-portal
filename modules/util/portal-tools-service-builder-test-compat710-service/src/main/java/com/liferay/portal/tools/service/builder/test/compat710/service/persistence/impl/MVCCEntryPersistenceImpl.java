@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portal.tools.service.builder.test.compat710.exception.NoSuchMVCCEntryException;
-import com.liferay.portal.tools.service.builder.test.compat710.model.MVCCEntry;
-import com.liferay.portal.tools.service.builder.test.compat710.model.impl.MVCCEntryImpl;
-import com.liferay.portal.tools.service.builder.test.compat710.model.impl.MVCCEntryModelImpl;
-import com.liferay.portal.tools.service.builder.test.compat710.service.persistence.MVCCEntryPersistence;
-import com.liferay.portal.tools.service.builder.test.compat710.service.persistence.MVCCEntryUtil;
+import com.liferay.portal.tools.service.builder.test.compat710.exception.NoSuchMvccEntryException;
+import com.liferay.portal.tools.service.builder.test.compat710.model.MvccEntry;
+import com.liferay.portal.tools.service.builder.test.compat710.model.impl.MvccEntryImpl;
+import com.liferay.portal.tools.service.builder.test.compat710.model.impl.MvccEntryModelImpl;
+import com.liferay.portal.tools.service.builder.test.compat710.service.persistence.MvccEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.compat710.service.persistence.MvccEntryUtil;
 
 import java.io.Serializable;
 
@@ -53,16 +53,16 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class MVCCEntryPersistenceImpl
-	extends BasePersistenceImpl<MVCCEntry> implements MVCCEntryPersistence {
+public class MvccEntryPersistenceImpl
+	extends BasePersistenceImpl<MvccEntry> implements MvccEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use <code>MVCCEntryUtil</code> to access the mvcc entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>MvccEntryUtil</code> to access the mvcc entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY =
-		MVCCEntryImpl.class.getName();
+		MvccEntryImpl.class.getName();
 
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List1";
@@ -84,7 +84,7 @@ public class MVCCEntryPersistenceImpl
 	 * @return the matching mvcc entries
 	 */
 	@Override
-	public List<MVCCEntry> findByCompanyId(long companyId) {
+	public List<MvccEntry> findByCompanyId(long companyId) {
 		return findByCompanyId(
 			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -93,7 +93,7 @@ public class MVCCEntryPersistenceImpl
 	 * Returns a range of all the mvcc entries where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -102,7 +102,7 @@ public class MVCCEntryPersistenceImpl
 	 * @return the range of matching mvcc entries
 	 */
 	@Override
-	public List<MVCCEntry> findByCompanyId(long companyId, int start, int end) {
+	public List<MvccEntry> findByCompanyId(long companyId, int start, int end) {
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -110,7 +110,7 @@ public class MVCCEntryPersistenceImpl
 	 * Returns an ordered range of all the mvcc entries where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -120,9 +120,9 @@ public class MVCCEntryPersistenceImpl
 	 * @return the ordered range of matching mvcc entries
 	 */
 	@Override
-	public List<MVCCEntry> findByCompanyId(
+	public List<MvccEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<MVCCEntry> orderByComparator) {
+		OrderByComparator<MvccEntry> orderByComparator) {
 
 		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
@@ -131,7 +131,7 @@ public class MVCCEntryPersistenceImpl
 	 * Returns an ordered range of all the mvcc entries where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -142,9 +142,9 @@ public class MVCCEntryPersistenceImpl
 	 * @return the ordered range of matching mvcc entries
 	 */
 	@Override
-	public List<MVCCEntry> findByCompanyId(
+	public List<MvccEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<MVCCEntry> orderByComparator,
+		OrderByComparator<MvccEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -165,14 +165,14 @@ public class MVCCEntryPersistenceImpl
 			};
 		}
 
-		List<MVCCEntry> list = null;
+		List<MvccEntry> list = null;
 
 		if (useFinderCache) {
-			list = (List<MVCCEntry>)finderCache.getResult(
+			list = (List<MvccEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (MVCCEntry mvccEntry : list) {
+				for (MvccEntry mvccEntry : list) {
 					if (companyId != mvccEntry.getCompanyId()) {
 						list = null;
 
@@ -202,7 +202,7 @@ public class MVCCEntryPersistenceImpl
 					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
 			else {
-				sb.append(MVCCEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(MvccEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = sb.toString();
@@ -218,7 +218,7 @@ public class MVCCEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				list = (List<MVCCEntry>)QueryUtil.list(
+				list = (List<MvccEntry>)QueryUtil.list(
 					query, getDialect(), start, end);
 
 				cacheResult(list);
@@ -248,14 +248,14 @@ public class MVCCEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching mvcc entry
-	 * @throws NoSuchMVCCEntryException if a matching mvcc entry could not be found
+	 * @throws NoSuchMvccEntryException if a matching mvcc entry could not be found
 	 */
 	@Override
-	public MVCCEntry findByCompanyId_First(
-			long companyId, OrderByComparator<MVCCEntry> orderByComparator)
-		throws NoSuchMVCCEntryException {
+	public MvccEntry findByCompanyId_First(
+			long companyId, OrderByComparator<MvccEntry> orderByComparator)
+		throws NoSuchMvccEntryException {
 
-		MVCCEntry mvccEntry = fetchByCompanyId_First(
+		MvccEntry mvccEntry = fetchByCompanyId_First(
 			companyId, orderByComparator);
 
 		if (mvccEntry != null) {
@@ -271,7 +271,7 @@ public class MVCCEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchMVCCEntryException(sb.toString());
+		throw new NoSuchMvccEntryException(sb.toString());
 	}
 
 	/**
@@ -282,10 +282,10 @@ public class MVCCEntryPersistenceImpl
 	 * @return the first matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
 	 */
 	@Override
-	public MVCCEntry fetchByCompanyId_First(
-		long companyId, OrderByComparator<MVCCEntry> orderByComparator) {
+	public MvccEntry fetchByCompanyId_First(
+		long companyId, OrderByComparator<MvccEntry> orderByComparator) {
 
-		List<MVCCEntry> list = findByCompanyId(
+		List<MvccEntry> list = findByCompanyId(
 			companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -301,14 +301,14 @@ public class MVCCEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching mvcc entry
-	 * @throws NoSuchMVCCEntryException if a matching mvcc entry could not be found
+	 * @throws NoSuchMvccEntryException if a matching mvcc entry could not be found
 	 */
 	@Override
-	public MVCCEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<MVCCEntry> orderByComparator)
-		throws NoSuchMVCCEntryException {
+	public MvccEntry findByCompanyId_Last(
+			long companyId, OrderByComparator<MvccEntry> orderByComparator)
+		throws NoSuchMvccEntryException {
 
-		MVCCEntry mvccEntry = fetchByCompanyId_Last(
+		MvccEntry mvccEntry = fetchByCompanyId_Last(
 			companyId, orderByComparator);
 
 		if (mvccEntry != null) {
@@ -324,7 +324,7 @@ public class MVCCEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchMVCCEntryException(sb.toString());
+		throw new NoSuchMvccEntryException(sb.toString());
 	}
 
 	/**
@@ -335,8 +335,8 @@ public class MVCCEntryPersistenceImpl
 	 * @return the last matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
 	 */
 	@Override
-	public MVCCEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<MVCCEntry> orderByComparator) {
+	public MvccEntry fetchByCompanyId_Last(
+		long companyId, OrderByComparator<MvccEntry> orderByComparator) {
 
 		int count = countByCompanyId(companyId);
 
@@ -344,7 +344,7 @@ public class MVCCEntryPersistenceImpl
 			return null;
 		}
 
-		List<MVCCEntry> list = findByCompanyId(
+		List<MvccEntry> list = findByCompanyId(
 			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -361,22 +361,22 @@ public class MVCCEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next mvcc entry
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
+	 * @throws NoSuchMvccEntryException if a mvcc entry with the primary key could not be found
 	 */
 	@Override
-	public MVCCEntry[] findByCompanyId_PrevAndNext(
+	public MvccEntry[] findByCompanyId_PrevAndNext(
 			long mvccEntryId, long companyId,
-			OrderByComparator<MVCCEntry> orderByComparator)
-		throws NoSuchMVCCEntryException {
+			OrderByComparator<MvccEntry> orderByComparator)
+		throws NoSuchMvccEntryException {
 
-		MVCCEntry mvccEntry = findByPrimaryKey(mvccEntryId);
+		MvccEntry mvccEntry = findByPrimaryKey(mvccEntryId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			MVCCEntry[] array = new MVCCEntryImpl[3];
+			MvccEntry[] array = new MvccEntryImpl[3];
 
 			array[0] = getByCompanyId_PrevAndNext(
 				session, mvccEntry, companyId, orderByComparator, true);
@@ -396,9 +396,9 @@ public class MVCCEntryPersistenceImpl
 		}
 	}
 
-	protected MVCCEntry getByCompanyId_PrevAndNext(
-		Session session, MVCCEntry mvccEntry, long companyId,
-		OrderByComparator<MVCCEntry> orderByComparator, boolean previous) {
+	protected MvccEntry getByCompanyId_PrevAndNext(
+		Session session, MvccEntry mvccEntry, long companyId,
+		OrderByComparator<MvccEntry> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
@@ -472,7 +472,7 @@ public class MVCCEntryPersistenceImpl
 			}
 		}
 		else {
-			sb.append(MVCCEntryModelImpl.ORDER_BY_JPQL);
+			sb.append(MvccEntryModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = sb.toString();
@@ -494,7 +494,7 @@ public class MVCCEntryPersistenceImpl
 			}
 		}
 
-		List<MVCCEntry> list = query.list();
+		List<MvccEntry> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -511,7 +511,7 @@ public class MVCCEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (MVCCEntry mvccEntry :
+		for (MvccEntry mvccEntry :
 				findByCompanyId(
 					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
@@ -577,18 +577,18 @@ public class MVCCEntryPersistenceImpl
 	private FinderPath _finderPathCountByC_N;
 
 	/**
-	 * Returns the mvcc entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchMVCCEntryException</code> if it could not be found.
+	 * Returns the mvcc entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchMvccEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the matching mvcc entry
-	 * @throws NoSuchMVCCEntryException if a matching mvcc entry could not be found
+	 * @throws NoSuchMvccEntryException if a matching mvcc entry could not be found
 	 */
 	@Override
-	public MVCCEntry findByC_N(long companyId, String name)
-		throws NoSuchMVCCEntryException {
+	public MvccEntry findByC_N(long companyId, String name)
+		throws NoSuchMvccEntryException {
 
-		MVCCEntry mvccEntry = fetchByC_N(companyId, name);
+		MvccEntry mvccEntry = fetchByC_N(companyId, name);
 
 		if (mvccEntry == null) {
 			StringBundler sb = new StringBundler(6);
@@ -607,7 +607,7 @@ public class MVCCEntryPersistenceImpl
 				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchMVCCEntryException(sb.toString());
+			throw new NoSuchMvccEntryException(sb.toString());
 		}
 
 		return mvccEntry;
@@ -621,7 +621,7 @@ public class MVCCEntryPersistenceImpl
 	 * @return the matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
 	 */
 	@Override
-	public MVCCEntry fetchByC_N(long companyId, String name) {
+	public MvccEntry fetchByC_N(long companyId, String name) {
 		return fetchByC_N(companyId, name, true);
 	}
 
@@ -634,7 +634,7 @@ public class MVCCEntryPersistenceImpl
 	 * @return the matching mvcc entry, or <code>null</code> if a matching mvcc entry could not be found
 	 */
 	@Override
-	public MVCCEntry fetchByC_N(
+	public MvccEntry fetchByC_N(
 		long companyId, String name, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
@@ -652,8 +652,8 @@ public class MVCCEntryPersistenceImpl
 				_finderPathFetchByC_N, finderArgs, this);
 		}
 
-		if (result instanceof MVCCEntry) {
-			MVCCEntry mvccEntry = (MVCCEntry)result;
+		if (result instanceof MvccEntry) {
+			MvccEntry mvccEntry = (MvccEntry)result;
 
 			if ((companyId != mvccEntry.getCompanyId()) ||
 				!Objects.equals(name, mvccEntry.getName())) {
@@ -697,7 +697,7 @@ public class MVCCEntryPersistenceImpl
 					queryPos.add(name);
 				}
 
-				List<MVCCEntry> list = query.list();
+				List<MvccEntry> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
@@ -706,7 +706,7 @@ public class MVCCEntryPersistenceImpl
 					}
 				}
 				else {
-					MVCCEntry mvccEntry = list.get(0);
+					MvccEntry mvccEntry = list.get(0);
 
 					result = mvccEntry;
 
@@ -729,7 +729,7 @@ public class MVCCEntryPersistenceImpl
 			return null;
 		}
 		else {
-			return (MVCCEntry)result;
+			return (MvccEntry)result;
 		}
 	}
 
@@ -741,10 +741,10 @@ public class MVCCEntryPersistenceImpl
 	 * @return the mvcc entry that was removed
 	 */
 	@Override
-	public MVCCEntry removeByC_N(long companyId, String name)
-		throws NoSuchMVCCEntryException {
+	public MvccEntry removeByC_N(long companyId, String name)
+		throws NoSuchMvccEntryException {
 
-		MVCCEntry mvccEntry = findByC_N(companyId, name);
+		MvccEntry mvccEntry = findByC_N(companyId, name);
 
 		return remove(mvccEntry);
 	}
@@ -827,8 +827,8 @@ public class MVCCEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_N_NAME_3 =
 		"(mvccEntry.name IS NULL OR mvccEntry.name = '')";
 
-	public MVCCEntryPersistenceImpl() {
-		setModelClass(MVCCEntry.class);
+	public MvccEntryPersistenceImpl() {
+		setModelClass(MvccEntry.class);
 	}
 
 	/**
@@ -837,9 +837,9 @@ public class MVCCEntryPersistenceImpl
 	 * @param mvccEntry the mvcc entry
 	 */
 	@Override
-	public void cacheResult(MVCCEntry mvccEntry) {
+	public void cacheResult(MvccEntry mvccEntry) {
 		entityCache.putResult(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED, MvccEntryImpl.class,
 			mvccEntry.getPrimaryKey(), mvccEntry);
 
 		finderCache.putResult(
@@ -858,7 +858,7 @@ public class MVCCEntryPersistenceImpl
 	 * @param mvccEntries the mvcc entries
 	 */
 	@Override
-	public void cacheResult(List<MVCCEntry> mvccEntries) {
+	public void cacheResult(List<MvccEntry> mvccEntries) {
 		if ((_valueObjectFinderCacheListThreshold == 0) ||
 			((_valueObjectFinderCacheListThreshold > 0) &&
 			 (mvccEntries.size() > _valueObjectFinderCacheListThreshold))) {
@@ -866,10 +866,10 @@ public class MVCCEntryPersistenceImpl
 			return;
 		}
 
-		for (MVCCEntry mvccEntry : mvccEntries) {
+		for (MvccEntry mvccEntry : mvccEntries) {
 			if (entityCache.getResult(
-					MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-					MVCCEntryImpl.class, mvccEntry.getPrimaryKey()) == null) {
+					MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+					MvccEntryImpl.class, mvccEntry.getPrimaryKey()) == null) {
 
 				cacheResult(mvccEntry);
 			}
@@ -888,7 +888,7 @@ public class MVCCEntryPersistenceImpl
 	 */
 	@Override
 	public void clearCache() {
-		entityCache.clearCache(MVCCEntryImpl.class);
+		entityCache.clearCache(MvccEntryImpl.class);
 
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -903,28 +903,28 @@ public class MVCCEntryPersistenceImpl
 	 * </p>
 	 */
 	@Override
-	public void clearCache(MVCCEntry mvccEntry) {
+	public void clearCache(MvccEntry mvccEntry) {
 		entityCache.removeResult(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED, MvccEntryImpl.class,
 			mvccEntry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((MVCCEntryModelImpl)mvccEntry, true);
+		clearUniqueFindersCache((MvccEntryModelImpl)mvccEntry, true);
 	}
 
 	@Override
-	public void clearCache(List<MVCCEntry> mvccEntries) {
+	public void clearCache(List<MvccEntry> mvccEntries) {
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (MVCCEntry mvccEntry : mvccEntries) {
+		for (MvccEntry mvccEntry : mvccEntries) {
 			entityCache.removeResult(
-				MVCCEntryModelImpl.ENTITY_CACHE_ENABLED, MVCCEntryImpl.class,
+				MvccEntryModelImpl.ENTITY_CACHE_ENABLED, MvccEntryImpl.class,
 				mvccEntry.getPrimaryKey());
 
-			clearUniqueFindersCache((MVCCEntryModelImpl)mvccEntry, true);
+			clearUniqueFindersCache((MvccEntryModelImpl)mvccEntry, true);
 		}
 	}
 
@@ -935,13 +935,13 @@ public class MVCCEntryPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				MVCCEntryModelImpl.ENTITY_CACHE_ENABLED, MVCCEntryImpl.class,
+				MvccEntryModelImpl.ENTITY_CACHE_ENABLED, MvccEntryImpl.class,
 				primaryKey);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		MVCCEntryModelImpl mvccEntryModelImpl) {
+		MvccEntryModelImpl mvccEntryModelImpl) {
 
 		Object[] args = new Object[] {
 			mvccEntryModelImpl.getCompanyId(), mvccEntryModelImpl.getName()
@@ -954,7 +954,7 @@ public class MVCCEntryPersistenceImpl
 	}
 
 	protected void clearUniqueFindersCache(
-		MVCCEntryModelImpl mvccEntryModelImpl, boolean clearCurrent) {
+		MvccEntryModelImpl mvccEntryModelImpl, boolean clearCurrent) {
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
@@ -985,8 +985,8 @@ public class MVCCEntryPersistenceImpl
 	 * @return the new mvcc entry
 	 */
 	@Override
-	public MVCCEntry create(long mvccEntryId) {
-		MVCCEntry mvccEntry = new MVCCEntryImpl();
+	public MvccEntry create(long mvccEntryId) {
+		MvccEntry mvccEntry = new MvccEntryImpl();
 
 		mvccEntry.setNew(true);
 		mvccEntry.setPrimaryKey(mvccEntryId);
@@ -1001,10 +1001,10 @@ public class MVCCEntryPersistenceImpl
 	 *
 	 * @param mvccEntryId the primary key of the mvcc entry
 	 * @return the mvcc entry that was removed
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
+	 * @throws NoSuchMvccEntryException if a mvcc entry with the primary key could not be found
 	 */
 	@Override
-	public MVCCEntry remove(long mvccEntryId) throws NoSuchMVCCEntryException {
+	public MvccEntry remove(long mvccEntryId) throws NoSuchMvccEntryException {
 		return remove((Serializable)mvccEntryId);
 	}
 
@@ -1013,32 +1013,32 @@ public class MVCCEntryPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the mvcc entry
 	 * @return the mvcc entry that was removed
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
+	 * @throws NoSuchMvccEntryException if a mvcc entry with the primary key could not be found
 	 */
 	@Override
-	public MVCCEntry remove(Serializable primaryKey)
-		throws NoSuchMVCCEntryException {
+	public MvccEntry remove(Serializable primaryKey)
+		throws NoSuchMvccEntryException {
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			MVCCEntry mvccEntry = (MVCCEntry)session.get(
-				MVCCEntryImpl.class, primaryKey);
+			MvccEntry mvccEntry = (MvccEntry)session.get(
+				MvccEntryImpl.class, primaryKey);
 
 			if (mvccEntry == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchMVCCEntryException(
+				throw new NoSuchMvccEntryException(
 					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(mvccEntry);
 		}
-		catch (NoSuchMVCCEntryException noSuchEntityException) {
+		catch (NoSuchMvccEntryException noSuchEntityException) {
 			throw noSuchEntityException;
 		}
 		catch (Exception exception) {
@@ -1050,15 +1050,15 @@ public class MVCCEntryPersistenceImpl
 	}
 
 	@Override
-	protected MVCCEntry removeImpl(MVCCEntry mvccEntry) {
+	protected MvccEntry removeImpl(MvccEntry mvccEntry) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			if (!session.contains(mvccEntry)) {
-				mvccEntry = (MVCCEntry)session.get(
-					MVCCEntryImpl.class, mvccEntry.getPrimaryKeyObj());
+				mvccEntry = (MvccEntry)session.get(
+					MvccEntryImpl.class, mvccEntry.getPrimaryKeyObj());
 			}
 
 			if (mvccEntry != null) {
@@ -1080,10 +1080,10 @@ public class MVCCEntryPersistenceImpl
 	}
 
 	@Override
-	public MVCCEntry updateImpl(MVCCEntry mvccEntry) {
+	public MvccEntry updateImpl(MvccEntry mvccEntry) {
 		boolean isNew = mvccEntry.isNew();
 
-		if (!(mvccEntry instanceof MVCCEntryModelImpl)) {
+		if (!(mvccEntry instanceof MvccEntryModelImpl)) {
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(mvccEntry.getClass())) {
@@ -1095,11 +1095,11 @@ public class MVCCEntryPersistenceImpl
 			}
 
 			throw new IllegalArgumentException(
-				"Implement ModelWrapper in custom MVCCEntry implementation " +
+				"Implement ModelWrapper in custom MvccEntry implementation " +
 					mvccEntry.getClass());
 		}
 
-		MVCCEntryModelImpl mvccEntryModelImpl = (MVCCEntryModelImpl)mvccEntry;
+		MvccEntryModelImpl mvccEntryModelImpl = (MvccEntryModelImpl)mvccEntry;
 
 		Session session = null;
 
@@ -1112,7 +1112,7 @@ public class MVCCEntryPersistenceImpl
 				mvccEntry.setNew(false);
 			}
 			else {
-				mvccEntry = (MVCCEntry)session.merge(mvccEntry);
+				mvccEntry = (MvccEntry)session.merge(mvccEntry);
 			}
 		}
 		catch (Exception exception) {
@@ -1124,7 +1124,7 @@ public class MVCCEntryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!MVCCEntryModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!MvccEntryModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -1160,7 +1160,7 @@ public class MVCCEntryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED, MvccEntryImpl.class,
 			mvccEntry.getPrimaryKey(), mvccEntry, false);
 
 		clearUniqueFindersCache(mvccEntryModelImpl, false);
@@ -1176,20 +1176,20 @@ public class MVCCEntryPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the mvcc entry
 	 * @return the mvcc entry
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
+	 * @throws NoSuchMvccEntryException if a mvcc entry with the primary key could not be found
 	 */
 	@Override
-	public MVCCEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMVCCEntryException {
+	public MvccEntry findByPrimaryKey(Serializable primaryKey)
+		throws NoSuchMvccEntryException {
 
-		MVCCEntry mvccEntry = fetchByPrimaryKey(primaryKey);
+		MvccEntry mvccEntry = fetchByPrimaryKey(primaryKey);
 
 		if (mvccEntry == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchMVCCEntryException(
+			throw new NoSuchMvccEntryException(
 				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
@@ -1197,15 +1197,15 @@ public class MVCCEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the mvcc entry with the primary key or throws a <code>NoSuchMVCCEntryException</code> if it could not be found.
+	 * Returns the mvcc entry with the primary key or throws a <code>NoSuchMvccEntryException</code> if it could not be found.
 	 *
 	 * @param mvccEntryId the primary key of the mvcc entry
 	 * @return the mvcc entry
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
+	 * @throws NoSuchMvccEntryException if a mvcc entry with the primary key could not be found
 	 */
 	@Override
-	public MVCCEntry findByPrimaryKey(long mvccEntryId)
-		throws NoSuchMVCCEntryException {
+	public MvccEntry findByPrimaryKey(long mvccEntryId)
+		throws NoSuchMvccEntryException {
 
 		return findByPrimaryKey((Serializable)mvccEntryId);
 	}
@@ -1217,16 +1217,16 @@ public class MVCCEntryPersistenceImpl
 	 * @return the mvcc entry, or <code>null</code> if a mvcc entry with the primary key could not be found
 	 */
 	@Override
-	public MVCCEntry fetchByPrimaryKey(Serializable primaryKey) {
+	public MvccEntry fetchByPrimaryKey(Serializable primaryKey) {
 		Serializable serializable = entityCache.getResult(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED, MvccEntryImpl.class,
 			primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
 		}
 
-		MVCCEntry mvccEntry = (MVCCEntry)serializable;
+		MvccEntry mvccEntry = (MvccEntry)serializable;
 
 		if (mvccEntry == null) {
 			Session session = null;
@@ -1234,22 +1234,22 @@ public class MVCCEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				mvccEntry = (MVCCEntry)session.get(
-					MVCCEntryImpl.class, primaryKey);
+				mvccEntry = (MvccEntry)session.get(
+					MvccEntryImpl.class, primaryKey);
 
 				if (mvccEntry != null) {
 					cacheResult(mvccEntry);
 				}
 				else {
 					entityCache.putResult(
-						MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-						MVCCEntryImpl.class, primaryKey, nullModel);
+						MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+						MvccEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception exception) {
 				entityCache.removeResult(
-					MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-					MVCCEntryImpl.class, primaryKey);
+					MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+					MvccEntryImpl.class, primaryKey);
 
 				throw processException(exception);
 			}
@@ -1268,27 +1268,27 @@ public class MVCCEntryPersistenceImpl
 	 * @return the mvcc entry, or <code>null</code> if a mvcc entry with the primary key could not be found
 	 */
 	@Override
-	public MVCCEntry fetchByPrimaryKey(long mvccEntryId) {
+	public MvccEntry fetchByPrimaryKey(long mvccEntryId) {
 		return fetchByPrimaryKey((Serializable)mvccEntryId);
 	}
 
 	@Override
-	public Map<Serializable, MVCCEntry> fetchByPrimaryKeys(
+	public Map<Serializable, MvccEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
 
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		Map<Serializable, MVCCEntry> map =
-			new HashMap<Serializable, MVCCEntry>();
+		Map<Serializable, MvccEntry> map =
+			new HashMap<Serializable, MvccEntry>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
 			Serializable primaryKey = iterator.next();
 
-			MVCCEntry mvccEntry = fetchByPrimaryKey(primaryKey);
+			MvccEntry mvccEntry = fetchByPrimaryKey(primaryKey);
 
 			if (mvccEntry != null) {
 				map.put(primaryKey, mvccEntry);
@@ -1321,7 +1321,7 @@ public class MVCCEntryPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			Serializable serializable = entityCache.getResult(
-				MVCCEntryModelImpl.ENTITY_CACHE_ENABLED, MVCCEntryImpl.class,
+				MvccEntryModelImpl.ENTITY_CACHE_ENABLED, MvccEntryImpl.class,
 				primaryKey);
 
 			if (serializable != nullModel) {
@@ -1333,7 +1333,7 @@ public class MVCCEntryPersistenceImpl
 					uncachedPrimaryKeys.add(primaryKey);
 				}
 				else {
-					map.put(primaryKey, (MVCCEntry)serializable);
+					map.put(primaryKey, (MvccEntry)serializable);
 				}
 			}
 		}
@@ -1366,7 +1366,7 @@ public class MVCCEntryPersistenceImpl
 
 			Query query = session.createQuery(sql);
 
-			for (MVCCEntry mvccEntry : (List<MVCCEntry>)query.list()) {
+			for (MvccEntry mvccEntry : (List<MvccEntry>)query.list()) {
 				map.put(mvccEntry.getPrimaryKeyObj(), mvccEntry);
 
 				cacheResult(mvccEntry);
@@ -1376,8 +1376,8 @@ public class MVCCEntryPersistenceImpl
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(
-					MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-					MVCCEntryImpl.class, primaryKey, nullModel);
+					MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+					MvccEntryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception exception) {
@@ -1396,7 +1396,7 @@ public class MVCCEntryPersistenceImpl
 	 * @return the mvcc entries
 	 */
 	@Override
-	public List<MVCCEntry> findAll() {
+	public List<MvccEntry> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1404,7 +1404,7 @@ public class MVCCEntryPersistenceImpl
 	 * Returns a range of all the mvcc entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of mvcc entries
@@ -1412,7 +1412,7 @@ public class MVCCEntryPersistenceImpl
 	 * @return the range of mvcc entries
 	 */
 	@Override
-	public List<MVCCEntry> findAll(int start, int end) {
+	public List<MvccEntry> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1420,7 +1420,7 @@ public class MVCCEntryPersistenceImpl
 	 * Returns an ordered range of all the mvcc entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of mvcc entries
@@ -1429,8 +1429,8 @@ public class MVCCEntryPersistenceImpl
 	 * @return the ordered range of mvcc entries
 	 */
 	@Override
-	public List<MVCCEntry> findAll(
-		int start, int end, OrderByComparator<MVCCEntry> orderByComparator) {
+	public List<MvccEntry> findAll(
+		int start, int end, OrderByComparator<MvccEntry> orderByComparator) {
 
 		return findAll(start, end, orderByComparator, true);
 	}
@@ -1439,7 +1439,7 @@ public class MVCCEntryPersistenceImpl
 	 * Returns an ordered range of all the mvcc entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of mvcc entries
@@ -1449,8 +1449,8 @@ public class MVCCEntryPersistenceImpl
 	 * @return the ordered range of mvcc entries
 	 */
 	@Override
-	public List<MVCCEntry> findAll(
-		int start, int end, OrderByComparator<MVCCEntry> orderByComparator,
+	public List<MvccEntry> findAll(
+		int start, int end, OrderByComparator<MvccEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -1469,10 +1469,10 @@ public class MVCCEntryPersistenceImpl
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<MVCCEntry> list = null;
+		List<MvccEntry> list = null;
 
 		if (useFinderCache) {
-			list = (List<MVCCEntry>)finderCache.getResult(
+			list = (List<MvccEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
 
@@ -1494,7 +1494,7 @@ public class MVCCEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_MVCCENTRY;
 
-				sql = sql.concat(MVCCEntryModelImpl.ORDER_BY_JPQL);
+				sql = sql.concat(MvccEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1504,7 +1504,7 @@ public class MVCCEntryPersistenceImpl
 
 				Query query = session.createQuery(sql);
 
-				list = (List<MVCCEntry>)QueryUtil.list(
+				list = (List<MvccEntry>)QueryUtil.list(
 					query, getDialect(), start, end);
 
 				cacheResult(list);
@@ -1534,7 +1534,7 @@ public class MVCCEntryPersistenceImpl
 	 */
 	@Override
 	public void removeAll() {
-		for (MVCCEntry mvccEntry : findAll()) {
+		for (MvccEntry mvccEntry : findAll()) {
 			remove(mvccEntry);
 		}
 	}
@@ -1578,7 +1578,7 @@ public class MVCCEntryPersistenceImpl
 
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
-		return MVCCEntryModelImpl.TABLE_COLUMNS_MAP;
+		return MvccEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**
@@ -1589,25 +1589,25 @@ public class MVCCEntryPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-			MVCCEntryModelImpl.FINDER_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MvccEntryModelImpl.FINDER_CACHE_ENABLED, MvccEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-			MVCCEntryModelImpl.FINDER_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MvccEntryModelImpl.FINDER_CACHE_ENABLED, MvccEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-			MVCCEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MvccEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-			MVCCEntryModelImpl.FINDER_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MvccEntryModelImpl.FINDER_CACHE_ENABLED, MvccEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1615,39 +1615,39 @@ public class MVCCEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-			MVCCEntryModelImpl.FINDER_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MvccEntryModelImpl.FINDER_CACHE_ENABLED, MvccEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			MVCCEntryModelImpl.COMPANYID_COLUMN_BITMASK);
+			MvccEntryModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-			MVCCEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MvccEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_N = new FinderPath(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-			MVCCEntryModelImpl.FINDER_CACHE_ENABLED, MVCCEntryImpl.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MvccEntryModelImpl.FINDER_CACHE_ENABLED, MvccEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			MVCCEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			MVCCEntryModelImpl.NAME_COLUMN_BITMASK);
+			MvccEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			MvccEntryModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByC_N = new FinderPath(
-			MVCCEntryModelImpl.ENTITY_CACHE_ENABLED,
-			MVCCEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			MvccEntryModelImpl.ENTITY_CACHE_ENABLED,
+			MvccEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] {Long.class.getName(), String.class.getName()});
 
-		MVCCEntryUtil.setPersistence(this);
+		MvccEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		MVCCEntryUtil.setPersistence(null);
+		MvccEntryUtil.setPersistence(null);
 
-		entityCache.removeCache(MVCCEntryImpl.class.getName());
+		entityCache.removeCache(MvccEntryImpl.class.getName());
 
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1661,29 +1661,29 @@ public class MVCCEntryPersistenceImpl
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_MVCCENTRY =
-		"SELECT mvccEntry FROM MVCCEntry mvccEntry";
+		"SELECT mvccEntry FROM MvccEntry mvccEntry";
 
 	private static final String _SQL_SELECT_MVCCENTRY_WHERE_PKS_IN =
-		"SELECT mvccEntry FROM MVCCEntry mvccEntry WHERE mvccEntryId IN (";
+		"SELECT mvccEntry FROM MvccEntry mvccEntry WHERE mvccEntryId IN (";
 
 	private static final String _SQL_SELECT_MVCCENTRY_WHERE =
-		"SELECT mvccEntry FROM MVCCEntry mvccEntry WHERE ";
+		"SELECT mvccEntry FROM MvccEntry mvccEntry WHERE ";
 
 	private static final String _SQL_COUNT_MVCCENTRY =
-		"SELECT COUNT(mvccEntry) FROM MVCCEntry mvccEntry";
+		"SELECT COUNT(mvccEntry) FROM MvccEntry mvccEntry";
 
 	private static final String _SQL_COUNT_MVCCENTRY_WHERE =
-		"SELECT COUNT(mvccEntry) FROM MVCCEntry mvccEntry WHERE ";
+		"SELECT COUNT(mvccEntry) FROM MvccEntry mvccEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mvccEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MVCCEntry exists with the primary key ";
+		"No MvccEntry exists with the primary key ";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No MVCCEntry exists with the key {";
+		"No MvccEntry exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MVCCEntryPersistenceImpl.class);
+		MvccEntryPersistenceImpl.class);
 
 }

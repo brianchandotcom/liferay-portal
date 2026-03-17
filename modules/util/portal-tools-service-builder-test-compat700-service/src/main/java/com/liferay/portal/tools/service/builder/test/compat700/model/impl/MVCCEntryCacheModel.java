@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.tools.service.builder.test.compat700.model.MVCCEntry;
+import com.liferay.portal.tools.service.builder.test.compat700.model.MvccEntry;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -17,13 +17,13 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 /**
- * The cache model class for representing MVCCEntry in entity cache.
+ * The cache model class for representing MvccEntry in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class MVCCEntryCacheModel
-	implements CacheModel<MVCCEntry>, Externalizable, MVCCModel {
+public class MvccEntryCacheModel
+	implements CacheModel<MvccEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -31,11 +31,11 @@ public class MVCCEntryCacheModel
 			return true;
 		}
 
-		if (!(object instanceof MVCCEntryCacheModel)) {
+		if (!(object instanceof MvccEntryCacheModel)) {
 			return false;
 		}
 
-		MVCCEntryCacheModel mvccEntryCacheModel = (MVCCEntryCacheModel)object;
+		MvccEntryCacheModel mvccEntryCacheModel = (MvccEntryCacheModel)object;
 
 		if ((mvccEntryId == mvccEntryCacheModel.mvccEntryId) &&
 			(mvccVersion == mvccEntryCacheModel.mvccVersion)) {
@@ -81,8 +81,8 @@ public class MVCCEntryCacheModel
 	}
 
 	@Override
-	public MVCCEntry toEntityModel() {
-		MVCCEntryImpl mvccEntryImpl = new MVCCEntryImpl();
+	public MvccEntry toEntityModel() {
+		MvccEntryImpl mvccEntryImpl = new MvccEntryImpl();
 
 		mvccEntryImpl.setMvccVersion(mvccVersion);
 		mvccEntryImpl.setMvccEntryId(mvccEntryId);

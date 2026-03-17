@@ -8,5 +8,5 @@ package com.liferay.portal.tools.service.builder.test.compat720.model.impl;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MVCCEntryImpl extends MVCCEntryBaseImpl {
+public class MvccEntryImpl extends MvccEntryBaseImpl {
 }

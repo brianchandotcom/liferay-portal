@@ -5,10 +5,10 @@
 
 package com.liferay.portal.tools.service.builder.test.compat710.service.impl;
 
-import com.liferay.portal.tools.service.builder.test.compat710.service.base.MVCCEntryLocalServiceBaseImpl;
+import com.liferay.portal.tools.service.builder.test.compat710.service.base.MvccEntryLocalServiceBaseImpl;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MVCCEntryLocalServiceImpl extends MVCCEntryLocalServiceBaseImpl {
+public class MvccEntryLocalServiceImpl extends MvccEntryLocalServiceBaseImpl {
 }

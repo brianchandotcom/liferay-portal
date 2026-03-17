@@ -16,10 +16,10 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class MVCCEntrySoap implements Serializable {
+public class MvccEntrySoap implements Serializable {
 
-	public static MVCCEntrySoap toSoapModel(MVCCEntry model) {
-		MVCCEntrySoap soapModel = new MVCCEntrySoap();
+	public static MvccEntrySoap toSoapModel(MvccEntry model) {
+		MvccEntrySoap soapModel = new MvccEntrySoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setMvccEntryId(model.getMvccEntryId());
@@ -29,8 +29,8 @@ public class MVCCEntrySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static MVCCEntrySoap[] toSoapModels(MVCCEntry[] models) {
-		MVCCEntrySoap[] soapModels = new MVCCEntrySoap[models.length];
+	public static MvccEntrySoap[] toSoapModels(MvccEntry[] models) {
+		MvccEntrySoap[] soapModels = new MvccEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -39,14 +39,14 @@ public class MVCCEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static MVCCEntrySoap[][] toSoapModels(MVCCEntry[][] models) {
-		MVCCEntrySoap[][] soapModels = null;
+	public static MvccEntrySoap[][] toSoapModels(MvccEntry[][] models) {
+		MvccEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new MVCCEntrySoap[models.length][models[0].length];
+			soapModels = new MvccEntrySoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new MVCCEntrySoap[0][0];
+			soapModels = new MvccEntrySoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -56,18 +56,18 @@ public class MVCCEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static MVCCEntrySoap[] toSoapModels(List<MVCCEntry> models) {
-		List<MVCCEntrySoap> soapModels = new ArrayList<MVCCEntrySoap>(
+	public static MvccEntrySoap[] toSoapModels(List<MvccEntry> models) {
+		List<MvccEntrySoap> soapModels = new ArrayList<MvccEntrySoap>(
 			models.size());
 
-		for (MVCCEntry model : models) {
+		for (MvccEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new MVCCEntrySoap[soapModels.size()]);
+		return soapModels.toArray(new MvccEntrySoap[soapModels.size()]);
 	}
 
-	public MVCCEntrySoap() {
+	public MvccEntrySoap() {
 	}
 
 	public long getPrimaryKey() {

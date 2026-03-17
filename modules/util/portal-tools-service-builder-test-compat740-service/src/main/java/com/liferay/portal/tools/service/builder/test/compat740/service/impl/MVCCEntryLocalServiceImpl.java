@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.service.builder.test.compat740.service.impl;
 
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.tools.service.builder.test.compat740.service.base.MVCCEntryLocalServiceBaseImpl;
+import com.liferay.portal.tools.service.builder.test.compat740.service.base.MvccEntryLocalServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -14,8 +14,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = "model.class.name=com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry",
+	property = "model.class.name=com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry",
 	service = AopService.class
 )
-public class MVCCEntryLocalServiceImpl extends MVCCEntryLocalServiceBaseImpl {
+public class MvccEntryLocalServiceImpl extends MvccEntryLocalServiceBaseImpl {
 }

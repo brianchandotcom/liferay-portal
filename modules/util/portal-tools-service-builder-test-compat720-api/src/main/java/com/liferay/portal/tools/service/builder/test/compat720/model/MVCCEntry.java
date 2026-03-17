@@ -12,28 +12,28 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the MVCCEntry service. Represents a row in the &quot;MVCCEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the MvccEntry service. Represents a row in the &quot;MvccEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see MVCCEntryModel
+ * @see MvccEntryModel
  * @generated
  */
 @ImplementationClassName(
-	"com.liferay.portal.tools.service.builder.test.compat720.model.impl.MVCCEntryImpl"
+	"com.liferay.portal.tools.service.builder.test.compat720.model.impl.MvccEntryImpl"
 )
 @ProviderType
-public interface MVCCEntry extends MVCCEntryModel, PersistedModel {
+public interface MvccEntry extends MvccEntryModel, PersistedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.compat720.model.impl.MVCCEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.compat720.model.impl.MvccEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MVCCEntry, Long> MVCC_ENTRY_ID_ACCESSOR =
-		new Accessor<MVCCEntry, Long>() {
+	public static final Accessor<MvccEntry, Long> MVCC_ENTRY_ID_ACCESSOR =
+		new Accessor<MvccEntry, Long>() {
 
 			@Override
-			public Long get(MVCCEntry mvccEntry) {
+			public Long get(MvccEntry mvccEntry) {
 				return mvccEntry.getMvccEntryId();
 			}
 
@@ -43,8 +43,8 @@ public interface MVCCEntry extends MVCCEntryModel, PersistedModel {
 			}
 
 			@Override
-			public Class<MVCCEntry> getTypeClass() {
-				return MVCCEntry.class;
+			public Class<MvccEntry> getTypeClass() {
+				return MvccEntry.class;
 			}
 
 		};

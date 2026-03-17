@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry;
+import com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry;
 
 import java.io.Serializable;
 
@@ -30,13 +30,13 @@ import java.util.List;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides the local service interface for MVCCEntry. Methods of this
+ * Provides the local service interface for MvccEntry. Methods of this
  * service will not have security checks based on the propagated JAAS
  * credentials because this service can only be accessed from within the same
  * VM.
  *
  * @author Brian Wing Shun Chan
- * @see MVCCEntryLocalServiceUtil
+ * @see MvccEntryLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -44,27 +44,27 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface MVCCEntryLocalService
+public interface MvccEntryLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.compat740.service.impl.MVCCEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the mvcc entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MVCCEntryLocalServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.compat740.service.impl.MvccEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the mvcc entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MvccEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 
 	/**
 	 * Adds the mvcc entry to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect MVCCEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect MvccEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
 	 * @param mvccEntry the mvcc entry
 	 * @return the mvcc entry that was added
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public MVCCEntry addMVCCEntry(MVCCEntry mvccEntry);
+	public MvccEntry addMvccEntry(MvccEntry mvccEntry);
 
 	/**
 	 * Creates a new mvcc entry with the primary key. Does not add the mvcc entry to the database.
@@ -73,7 +73,7 @@ public interface MVCCEntryLocalService
 	 * @return the new mvcc entry
 	 */
 	@Transactional(enabled = false)
-	public MVCCEntry createMVCCEntry(long mvccEntryId);
+	public MvccEntry createMvccEntry(long mvccEntryId);
 
 	/**
 	 * @throws PortalException
@@ -85,7 +85,7 @@ public interface MVCCEntryLocalService
 	 * Deletes the mvcc entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect MVCCEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect MvccEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
 	 * @param mvccEntryId the primary key of the mvcc entry
@@ -93,20 +93,20 @@ public interface MVCCEntryLocalService
 	 * @throws PortalException if a mvcc entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public MVCCEntry deleteMVCCEntry(long mvccEntryId) throws PortalException;
+	public MvccEntry deleteMvccEntry(long mvccEntryId) throws PortalException;
 
 	/**
 	 * Deletes the mvcc entry from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect MVCCEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect MvccEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
 	 * @param mvccEntry the mvcc entry
 	 * @return the mvcc entry that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public MVCCEntry deleteMVCCEntry(MVCCEntry mvccEntry);
+	public MvccEntry deleteMvccEntry(MvccEntry mvccEntry);
 
 	/**
 	 * @throws PortalException
@@ -137,7 +137,7 @@ public interface MVCCEntryLocalService
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -153,7 +153,7 @@ public interface MVCCEntryLocalService
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -188,7 +188,7 @@ public interface MVCCEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MVCCEntry fetchMVCCEntry(long mvccEntryId);
+	public MvccEntry fetchMvccEntry(long mvccEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -200,7 +200,7 @@ public interface MVCCEntryLocalService
 	 * Returns a range of all the mvcc entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of mvcc entries
@@ -208,7 +208,7 @@ public interface MVCCEntryLocalService
 	 * @return the range of mvcc entries
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MVCCEntry> getMVCCEntries(int start, int end);
+	public List<MvccEntry> getMvccEntries(int start, int end);
 
 	/**
 	 * Returns the number of mvcc entries.
@@ -216,7 +216,7 @@ public interface MVCCEntryLocalService
 	 * @return the number of mvcc entries
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMVCCEntriesCount();
+	public int getMvccEntriesCount();
 
 	/**
 	 * Returns the mvcc entry with the primary key.
@@ -226,7 +226,7 @@ public interface MVCCEntryLocalService
 	 * @throws PortalException if a mvcc entry with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MVCCEntry getMVCCEntry(long mvccEntryId) throws PortalException;
+	public MvccEntry getMvccEntry(long mvccEntryId) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -247,13 +247,13 @@ public interface MVCCEntryLocalService
 	 * Updates the mvcc entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect MVCCEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect MvccEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
 	 * @param mvccEntry the mvcc entry
 	 * @return the mvcc entry that was updated
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public MVCCEntry updateMVCCEntry(MVCCEntry mvccEntry);
+	public MvccEntry updateMvccEntry(MvccEntry mvccEntry);
 
 }

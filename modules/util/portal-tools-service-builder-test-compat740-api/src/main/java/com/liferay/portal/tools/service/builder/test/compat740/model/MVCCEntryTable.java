@@ -11,27 +11,27 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 import java.sql.Types;
 
 /**
- * The table class for the &quot;MVCCEntry&quot; database table.
+ * The table class for the &quot;MvccEntry&quot; database table.
  *
  * @author Brian Wing Shun Chan
- * @see MVCCEntry
+ * @see MvccEntry
  * @generated
  */
-public class MVCCEntryTable extends BaseTable<MVCCEntryTable> {
+public class MvccEntryTable extends BaseTable<MvccEntryTable> {
 
-	public static final MVCCEntryTable INSTANCE = new MVCCEntryTable();
+	public static final MvccEntryTable INSTANCE = new MvccEntryTable();
 
-	public final Column<MVCCEntryTable, Long> mvccVersion = createColumn(
+	public final Column<MvccEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<MVCCEntryTable, Long> mvccEntryId = createColumn(
+	public final Column<MvccEntryTable, Long> mvccEntryId = createColumn(
 		"mvccEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
-	public final Column<MVCCEntryTable, Long> companyId = createColumn(
+	public final Column<MvccEntryTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<MVCCEntryTable, String> name = createColumn(
+	public final Column<MvccEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
-	private MVCCEntryTable() {
-		super("MVCCEntry", MVCCEntryTable::new);
+	private MvccEntryTable() {
+		super("MvccEntry", MvccEntryTable::new);
 	}
 
 }

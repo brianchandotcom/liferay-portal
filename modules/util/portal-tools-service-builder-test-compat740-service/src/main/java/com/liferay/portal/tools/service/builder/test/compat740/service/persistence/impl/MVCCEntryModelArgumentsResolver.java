@@ -8,9 +8,9 @@ package com.liferay.portal.tools.service.builder.test.compat740.service.persiste
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntryTable;
-import com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryImpl;
-import com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryModelImpl;
+import com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntryTable;
+import com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryImpl;
+import com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryModelImpl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,19 +18,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The arguments resolver class for retrieving value from MVCCEntry.
+ * The arguments resolver class for retrieving value from MvccEntry.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @Component(
 	property = {
-		"class.name=com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryImpl",
-		"table.name=MVCCEntry"
+		"class.name=com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryImpl",
+		"table.name=MvccEntry"
 	},
 	service = ArgumentsResolver.class
 )
-public class MVCCEntryModelArgumentsResolver implements ArgumentsResolver {
+public class MvccEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override
 	public Object[] getArguments(
@@ -47,7 +47,7 @@ public class MVCCEntryModelArgumentsResolver implements ArgumentsResolver {
 			return null;
 		}
 
-		MVCCEntryModelImpl mvccEntryModelImpl = (MVCCEntryModelImpl)baseModel;
+		MvccEntryModelImpl mvccEntryModelImpl = (MvccEntryModelImpl)baseModel;
 
 		long columnBitmask = mvccEntryModelImpl.getColumnBitmask();
 
@@ -79,16 +79,16 @@ public class MVCCEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override
 	public String getClassName() {
-		return MVCCEntryImpl.class.getName();
+		return MvccEntryImpl.class.getName();
 	}
 
 	@Override
 	public String getTableName() {
-		return MVCCEntryTable.INSTANCE.getTableName();
+		return MvccEntryTable.INSTANCE.getTableName();
 	}
 
 	private static Object[] _getValue(
-		MVCCEntryModelImpl mvccEntryModelImpl, String[] columnNames,
+		MvccEntryModelImpl mvccEntryModelImpl, String[] columnNames,
 		boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];

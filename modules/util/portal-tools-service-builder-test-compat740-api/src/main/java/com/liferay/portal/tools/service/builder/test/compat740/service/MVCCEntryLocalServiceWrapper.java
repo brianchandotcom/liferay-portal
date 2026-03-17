@@ -9,21 +9,21 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
- * Provides a wrapper for {@link MVCCEntryLocalService}.
+ * Provides a wrapper for {@link MvccEntryLocalService}.
  *
  * @author Brian Wing Shun Chan
- * @see MVCCEntryLocalService
+ * @see MvccEntryLocalService
  * @generated
  */
-public class MVCCEntryLocalServiceWrapper
-	implements MVCCEntryLocalService, ServiceWrapper<MVCCEntryLocalService> {
+public class MvccEntryLocalServiceWrapper
+	implements MvccEntryLocalService, ServiceWrapper<MvccEntryLocalService> {
 
-	public MVCCEntryLocalServiceWrapper() {
+	public MvccEntryLocalServiceWrapper() {
 		this(null);
 	}
 
-	public MVCCEntryLocalServiceWrapper(
-		MVCCEntryLocalService mvccEntryLocalService) {
+	public MvccEntryLocalServiceWrapper(
+		MvccEntryLocalService mvccEntryLocalService) {
 
 		_mvccEntryLocalService = mvccEntryLocalService;
 	}
@@ -32,7 +32,7 @@ public class MVCCEntryLocalServiceWrapper
 	 * Adds the mvcc entry to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect MVCCEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect MvccEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
 	 * @param mvccEntry the mvcc entry
@@ -40,12 +40,12 @@ public class MVCCEntryLocalServiceWrapper
 	 */
 	@Override
 	public
-		com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry
-			addMVCCEntry(
+		com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry
+			addMvccEntry(
 				com.liferay.portal.tools.service.builder.test.compat740.model.
-					MVCCEntry mvccEntry) {
+					MvccEntry mvccEntry) {
 
-		return _mvccEntryLocalService.addMVCCEntry(mvccEntry);
+		return _mvccEntryLocalService.addMvccEntry(mvccEntry);
 	}
 
 	/**
@@ -56,10 +56,10 @@ public class MVCCEntryLocalServiceWrapper
 	 */
 	@Override
 	public
-		com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry
-			createMVCCEntry(long mvccEntryId) {
+		com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry
+			createMvccEntry(long mvccEntryId) {
 
-		return _mvccEntryLocalService.createMVCCEntry(mvccEntryId);
+		return _mvccEntryLocalService.createMvccEntry(mvccEntryId);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class MVCCEntryLocalServiceWrapper
 	 * Deletes the mvcc entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect MVCCEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect MvccEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
 	 * @param mvccEntryId the primary key of the mvcc entry
@@ -86,18 +86,18 @@ public class MVCCEntryLocalServiceWrapper
 	 */
 	@Override
 	public
-		com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry
-				deleteMVCCEntry(long mvccEntryId)
+		com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry
+				deleteMvccEntry(long mvccEntryId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _mvccEntryLocalService.deleteMVCCEntry(mvccEntryId);
+		return _mvccEntryLocalService.deleteMvccEntry(mvccEntryId);
 	}
 
 	/**
 	 * Deletes the mvcc entry from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect MVCCEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect MvccEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
 	 * @param mvccEntry the mvcc entry
@@ -105,12 +105,12 @@ public class MVCCEntryLocalServiceWrapper
 	 */
 	@Override
 	public
-		com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry
-			deleteMVCCEntry(
+		com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry
+			deleteMvccEntry(
 				com.liferay.portal.tools.service.builder.test.compat740.model.
-					MVCCEntry mvccEntry) {
+					MvccEntry mvccEntry) {
 
-		return _mvccEntryLocalService.deleteMVCCEntry(mvccEntry);
+		return _mvccEntryLocalService.deleteMvccEntry(mvccEntry);
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class MVCCEntryLocalServiceWrapper
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -178,7 +178,7 @@ public class MVCCEntryLocalServiceWrapper
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -228,10 +228,10 @@ public class MVCCEntryLocalServiceWrapper
 
 	@Override
 	public
-		com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry
-			fetchMVCCEntry(long mvccEntryId) {
+		com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry
+			fetchMvccEntry(long mvccEntryId) {
 
-		return _mvccEntryLocalService.fetchMVCCEntry(mvccEntryId);
+		return _mvccEntryLocalService.fetchMvccEntry(mvccEntryId);
 	}
 
 	@Override
@@ -252,7 +252,7 @@ public class MVCCEntryLocalServiceWrapper
 	 * Returns a range of all the mvcc entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MVCCEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.MvccEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of mvcc entries
@@ -262,9 +262,9 @@ public class MVCCEntryLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.portal.tools.service.builder.test.compat740.model.
-			MVCCEntry> getMVCCEntries(int start, int end) {
+			MvccEntry> getMvccEntries(int start, int end) {
 
-		return _mvccEntryLocalService.getMVCCEntries(start, end);
+		return _mvccEntryLocalService.getMvccEntries(start, end);
 	}
 
 	/**
@@ -273,8 +273,8 @@ public class MVCCEntryLocalServiceWrapper
 	 * @return the number of mvcc entries
 	 */
 	@Override
-	public int getMVCCEntriesCount() {
-		return _mvccEntryLocalService.getMVCCEntriesCount();
+	public int getMvccEntriesCount() {
+		return _mvccEntryLocalService.getMvccEntriesCount();
 	}
 
 	/**
@@ -286,11 +286,11 @@ public class MVCCEntryLocalServiceWrapper
 	 */
 	@Override
 	public
-		com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry
-				getMVCCEntry(long mvccEntryId)
+		com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry
+				getMvccEntry(long mvccEntryId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _mvccEntryLocalService.getMVCCEntry(mvccEntryId);
+		return _mvccEntryLocalService.getMvccEntry(mvccEntryId);
 	}
 
 	/**
@@ -318,7 +318,7 @@ public class MVCCEntryLocalServiceWrapper
 	 * Updates the mvcc entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect MVCCEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect MvccEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
 	 * @param mvccEntry the mvcc entry
@@ -326,12 +326,12 @@ public class MVCCEntryLocalServiceWrapper
 	 */
 	@Override
 	public
-		com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry
-			updateMVCCEntry(
+		com.liferay.portal.tools.service.builder.test.compat740.model.MvccEntry
+			updateMvccEntry(
 				com.liferay.portal.tools.service.builder.test.compat740.model.
-					MVCCEntry mvccEntry) {
+					MvccEntry mvccEntry) {
 
-		return _mvccEntryLocalService.updateMVCCEntry(mvccEntry);
+		return _mvccEntryLocalService.updateMvccEntry(mvccEntry);
 	}
 
 	@Override
@@ -340,15 +340,15 @@ public class MVCCEntryLocalServiceWrapper
 	}
 
 	@Override
-	public MVCCEntryLocalService getWrappedService() {
+	public MvccEntryLocalService getWrappedService() {
 		return _mvccEntryLocalService;
 	}
 
 	@Override
-	public void setWrappedService(MVCCEntryLocalService mvccEntryLocalService) {
+	public void setWrappedService(MvccEntryLocalService mvccEntryLocalService) {
 		_mvccEntryLocalService = mvccEntryLocalService;
 	}
 
-	private MVCCEntryLocalService _mvccEntryLocalService;
+	private MvccEntryLocalService _mvccEntryLocalService;
 
 }

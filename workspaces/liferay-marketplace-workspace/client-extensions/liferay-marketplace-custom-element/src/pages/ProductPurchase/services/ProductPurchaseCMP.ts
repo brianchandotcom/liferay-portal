@@ -7,17 +7,17 @@ import {z} from 'zod';
 
 import {OrderTypes} from '../../../enums/Order';
 import zodSchema from '../../../schema/zod';
-import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
+import provisioningOAuth2 from '../../../services/oauth/Provisioning';
 import {getSiteURL} from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
-type getLicenseKeyForm = z.infer<typeof zodSchema.generateLicenseKey>;
+type GenerateLicenseKeyForm = z.infer<typeof zodSchema.generateLicenseKey>;
 
 export class ProductPurchaseCMP extends ProductPurchase {
-	private form?: getLicenseKeyForm;
+	private form?: GenerateLicenseKeyForm;
 	protected orderTypeExternalReferenceCode = OrderTypes.CMP;
 
-	setForm(form: getLicenseKeyForm) {
+	setForm(form: GenerateLicenseKeyForm) {
 		this.form = form;
 	}
 
@@ -43,7 +43,7 @@ export class ProductPurchaseCMP extends ProductPurchase {
 
 		const order = await super.createOrder(cart);
 
-		await marketplaceOAuth2.provisionCMPBeta({
+		await provisioningOAuth2.provisionCMPBeta({
 			description: this.form.description,
 			hostName: this.form.hostname,
 			ipAddresses: this.form.ipAddress?.replaceAll('\n', ','),

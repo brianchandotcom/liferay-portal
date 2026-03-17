@@ -39,6 +39,211 @@ import {ItemTypes} from './Column';
 
 import './Task.scss';
 
+function getTaskItemsActions(
+	itemsActions: IItemsActions[],
+	loadData: Function,
+	task: ITask
+) {
+	const items = [];
+
+	const hasBottomItems = Boolean(task.actions.delete);
+
+	const hasMiddleItems = Boolean(
+		task.actions.assignToMe ||
+			task.actions.subscribe ||
+			task.actions.unsubscribe ||
+			task.actions.update
+	);
+
+	const hasTopItems = Boolean(task.actions.update || task.actions.get);
+
+	if (task.actions.update) {
+		items.push({
+			label: Liferay.Language.get('edit'),
+			onClick: () => {
+				const editURL = getURL('edit', itemsActions, task);
+				if (editURL) {
+					navigate(editURL);
+				}
+			},
+			symbolLeft: 'pencil',
+		});
+	}
+
+	if (task.actions.get) {
+		items.push({
+			label: Liferay.Language.get('view'),
+			onClick: () => {
+				const viewURL = getURL('actionLink', itemsActions, task);
+				if (viewURL) {
+					navigate(viewURL);
+				}
+			},
+			symbolLeft: 'view',
+		});
+	}
+
+	if (hasTopItems && hasMiddleItems) {
+		items.push({
+			type: 'divider' as const,
+		});
+	}
+
+	if (task.actions.subscribe) {
+		items.push({
+			label: Liferay.Language.get('watch-task'),
+			onClick: async () => {
+				const {error} = await postSubscribeTaskByExternalReferenceCode({
+					externalReferenceCode: task.embedded.externalReferenceCode,
+					scopeKey: task.embedded.scopeKey,
+				});
+
+				if (!error) {
+					loadData();
+					displayRequestSuccessToast();
+				}
+				else {
+					displayErrorToast(error);
+				}
+			},
+			symbolLeft: 'bell-on',
+		});
+	}
+
+	if (task.actions.unsubscribe) {
+		items.push({
+			label: Liferay.Language.get('stop-watching-task'),
+			onClick: async () => {
+				const {error} =
+					await postUnsubscribeTaskByExternalReferenceCode({
+						externalReferenceCode:
+							task.embedded.externalReferenceCode,
+						scopeKey: task.embedded.scopeKey,
+					});
+
+				if (!error) {
+					loadData();
+					displayRequestSuccessToast();
+				}
+				else {
+					displayErrorToast(error);
+				}
+			},
+			symbolLeft: 'bell-off',
+		});
+	}
+
+	if (task.actions.assignToMe) {
+		items.push({
+			label: Liferay.Language.get('assign-to-me'),
+			onClick: async () => {
+				const user = (await getUserAccount(
+					Liferay.ThemeDisplay.getUserId().toString()
+				)) as {
+					externalReferenceCode: string;
+					name: string;
+				};
+
+				const {error} = await patchTaskById({
+					body: {
+						assignTo: {
+							externalReferenceCode: user.externalReferenceCode,
+							name: user.name,
+							type: 'User',
+						},
+					},
+					taskId: String(task.embedded.id),
+				});
+
+				if (!error) {
+					loadData();
+					displayAssignSuccessToast(task.embedded.title, user.name);
+				}
+				else {
+					displayErrorToast(error);
+				}
+			},
+		});
+	}
+
+	if (task.actions.update) {
+		items.push({
+			label: Liferay.Language.get('assign-to-...'),
+			onClick: async () => {
+				await openCMPModal({
+					center: true,
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) => (
+						<EditAssigneeModalContent
+							closeModal={closeModal}
+							loadData={loadData}
+							taskId={String(task.embedded.id)}
+							taskTitle={task.embedded.title}
+							value={task.embedded.assignTo}
+						/>
+					),
+					size: 'md',
+				});
+			},
+		});
+	}
+
+	if (hasBottomItems) {
+		if (hasTopItems || hasMiddleItems) {
+			items.push({
+				type: 'divider' as const,
+			});
+		}
+
+		items.push({
+
+			// @ts-ignore
+
+			className: 'text-danger',
+			label: Liferay.Language.get('delete'),
+			onClick: async () => {
+				await openCMPModal({
+					center: true,
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) => (
+						<DeleteTaskModal
+							closeModal={closeModal}
+							onSubmit={async () => {
+								const {error} = await deleteTaskById({
+									taskId: String(task.embedded.id),
+								});
+
+								if (!error) {
+									loadData();
+									displayDeleteSuccessToast(
+										task.embedded.title
+									);
+								}
+								else {
+									displayErrorToast(error);
+								}
+								closeModal();
+							}}
+							title={task.embedded.title}
+						/>
+					),
+					size: 'md',
+					status: 'danger',
+				});
+			},
+			symbolLeft: 'trash',
+		});
+	}
+
+	return items;
+}
+
 function getURL(actionId: string, itemsActions: IItemsActions[], task: ITask) {
 	return itemsActions
 		.flatMap((group) => group.items || [])
@@ -68,262 +273,11 @@ const TaskCard = React.memo(
 									</strong>
 
 									<ClayDropDownWithItems
-										items={[
-											{
-												label: Liferay.Language.get(
-													'edit'
-												),
-												onClick: () => {
-													const editURL = getURL(
-														'edit',
-														itemsActions,
-														task
-													);
-
-													if (editURL) {
-														navigate(editURL);
-													}
-												},
-												symbolLeft: 'pencil',
-											},
-											{
-												label: Liferay.Language.get(
-													'view'
-												),
-												onClick: () => {
-													const viewURL = getURL(
-														'actionLink',
-														itemsActions,
-														task
-													);
-
-													if (viewURL) {
-														navigate(viewURL);
-													}
-												},
-												symbolLeft: 'view',
-											},
-											{
-												type: 'divider',
-											},
-											task.actions.subscribe
-												? {
-														label: Liferay.Language.get(
-															'watch-task'
-														),
-														onClick: async () => {
-															const {error} =
-																await postSubscribeTaskByExternalReferenceCode(
-																	{
-																		externalReferenceCode:
-																			task
-																				.embedded
-																				.externalReferenceCode,
-																		scopeKey:
-																			task
-																				.embedded
-																				.scopeKey,
-																	}
-																);
-
-															if (!error) {
-																loadData();
-
-																displayRequestSuccessToast();
-															}
-															else {
-																displayErrorToast(
-																	error
-																);
-															}
-														},
-														symbolLeft: 'bell-on',
-													}
-												: {
-														label: Liferay.Language.get(
-															'stop-watching-task'
-														),
-														onClick: async () => {
-															const {error} =
-																await postUnsubscribeTaskByExternalReferenceCode(
-																	{
-																		externalReferenceCode:
-																			task
-																				.embedded
-																				.externalReferenceCode,
-																		scopeKey:
-																			task
-																				.embedded
-																				.scopeKey,
-																	}
-																);
-
-															if (!error) {
-																loadData();
-
-																displayRequestSuccessToast();
-															}
-															else {
-																displayErrorToast(
-																	error
-																);
-															}
-														},
-														symbolLeft: 'bell-off',
-													},
-											{
-												label: Liferay.Language.get(
-													'assign-to-me'
-												),
-												onClick: async () => {
-													const user =
-														(await getUserAccount(
-															Liferay.ThemeDisplay.getUserId().toString()
-														)) as {
-															externalReferenceCode: string;
-															name: string;
-														};
-
-													const {error} =
-														await patchTaskById({
-															body: {
-																assignTo: {
-																	externalReferenceCode:
-																		user.externalReferenceCode,
-																	name: user.name,
-																	type: 'User',
-																},
-															},
-															taskId: String(
-																task.embedded.id
-															),
-														});
-
-													if (!error) {
-														loadData();
-
-														displayAssignSuccessToast(
-															task.embedded.title,
-															user.name
-														);
-													}
-													else {
-														displayErrorToast(
-															error
-														);
-													}
-												},
-											},
-											{
-												label: Liferay.Language.get(
-													'assign-to-...'
-												),
-												onClick: async () => {
-													await openCMPModal({
-														center: true,
-														contentComponent: ({
-															closeModal,
-														}: {
-															closeModal: () => void;
-														}) => (
-															<EditAssigneeModalContent
-																closeModal={
-																	closeModal
-																}
-																loadData={
-																	loadData
-																}
-																taskId={String(
-																	task
-																		.embedded
-																		.id
-																)}
-																taskTitle={
-																	task
-																		.embedded
-																		.title
-																}
-																value={
-																	task
-																		.embedded
-																		.assignTo
-																}
-															/>
-														),
-														size: 'md',
-													});
-												},
-											},
-											{
-												type: 'divider',
-											},
-											{
-
-												// @ts-ignore
-
-												className: 'text-danger',
-												label: Liferay.Language.get(
-													'delete'
-												),
-												onClick: async () => {
-													await openCMPModal({
-														center: true,
-														contentComponent: ({
-															closeModal,
-														}: {
-															closeModal: () => void;
-														}) => (
-															<DeleteTaskModal
-																closeModal={
-																	closeModal
-																}
-																onSubmit={async () => {
-																	const {
-																		error,
-																	} =
-																		await deleteTaskById(
-																			{
-																				taskId: String(
-																					task
-																						.embedded
-																						.id
-																				),
-																			}
-																		);
-
-																	if (
-																		!error
-																	) {
-																		loadData();
-
-																		displayDeleteSuccessToast(
-																			task
-																				.embedded
-																				.title
-																		);
-																	}
-																	else {
-																		displayErrorToast(
-																			error
-																		);
-																	}
-
-																	closeModal();
-																}}
-																title={
-																	task
-																		.embedded
-																		.title
-																}
-															/>
-														),
-														size: 'md',
-														status: 'danger',
-													});
-												},
-												symbolLeft: 'trash',
-											},
-										]}
+										items={getTaskItemsActions(
+											itemsActions,
+											loadData,
+											task
+										)}
 										trigger={
 											<ClayButton
 												aria-label={Liferay.Language.get(

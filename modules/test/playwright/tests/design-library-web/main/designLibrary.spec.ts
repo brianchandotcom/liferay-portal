@@ -59,19 +59,22 @@ test('Can navigate to a Design Library dashboard', async ({
 }) => {
 	const designLibraryName = getRandomString();
 
-	const depot = await apiHelpers.jsonWebServicesDepot.addDepotEntry(
-		designLibraryName,
-		{type: apiHelpers.jsonWebServicesDepot.depotType.DESIGN_LIBRARY}
-	);
+	const depot =
+		await test.step('Create temporary Design Library via headless', async () => {
+			return await apiHelpers.jsonWebServicesDepot.addDepotEntry(
+				designLibraryName,
+				{type: apiHelpers.jsonWebServicesDepot.depotType.DESIGN_LIBRARY}
+			);
+		});
 
 	await test.step('Navigate to a Design Library dashboard', async () => {
 		await designLibrariesPage.goto();
 
-		await expect(page.getByTestId('header')).toHaveText('Design Libraries');
-
 		const designLibraryLink = page.getByRole('link', {
 			name: designLibraryName,
 		});
+
+		await expect(designLibraryLink).toBeVisible();
 
 		await designLibraryLink.click();
 	});
@@ -126,5 +129,9 @@ test('Can navigate to a Design Library dashboard', async ({
 		).toBeVisible();
 	});
 
-	await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(depot.depotEntryId);
+	await test.step('Remove temporary Design Library', async () => {
+		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
+			depot.depotEntryId
+		);
+	});
 });

@@ -14,6 +14,10 @@ resource "aws_iam_policy" "provider_aws_iam_policy" {
 	name="${local.cluster_name}-provider-aws-iam"
 	policy=data.aws_iam_policy_document.provider_aws_iam_policy_document.json
 }
+resource "aws_iam_policy" "provider_aws_kms_policy" {
+	name="${local.cluster_name}-provider-aws-kms"
+	policy=data.aws_iam_policy_document.provider_aws_kms_policy_document.json
+}
 resource "aws_iam_policy" "provider_aws_opensearch_policy" {
 	name="${local.cluster_name}-provider-aws-opensearch"
 	policy=data.aws_iam_policy_document.provider_aws_opensearch_policy_document.json
@@ -42,6 +46,10 @@ resource "aws_iam_role" "provider_aws_iam_role" {
 	assume_role_policy=data.aws_iam_policy_document.provider_aws_iam_assume_role_policy_document.json
 	name="${local.cluster_name}-provider-aws-iam-role"
 }
+resource "aws_iam_role" "provider_aws_kms_role" {
+	assume_role_policy=data.aws_iam_policy_document.provider_aws_kms_assume_role_policy_document.json
+	name="${local.cluster_name}-provider-aws-kms-role"
+}
 resource "aws_iam_role" "provider_aws_opensearch_role" {
 	assume_role_policy=data.aws_iam_policy_document.provider_aws_opensearch_assume_role_policy_document.json
 	name="${local.cluster_name}-provider-aws-opensearch-role"
@@ -69,6 +77,10 @@ resource "aws_iam_role_policy_attachment" "provider_aws_ec2_attachment" {
 resource "aws_iam_role_policy_attachment" "provider_aws_iam_attachment" {
 	policy_arn=aws_iam_policy.provider_aws_iam_policy.arn
 	role=aws_iam_role.provider_aws_iam_role.name
+}
+resource "aws_iam_role_policy_attachment" "provider_aws_kms_attachment" {
+	policy_arn=aws_iam_policy.provider_aws_kms_policy.arn
+	role=aws_iam_role.provider_aws_kms_role.name
 }
 resource "aws_iam_role_policy_attachment" "provider_aws_opensearch_attachment" {
 	policy_arn=aws_iam_policy.provider_aws_opensearch_policy.arn

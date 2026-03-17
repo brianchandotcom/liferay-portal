@@ -231,6 +231,44 @@ kind: DeploymentRuntimeConfig
 metadata:
     annotations:
         argocd.argoproj.io/sync-wave: "-90"
+    name: aws-kms-config
+spec:
+    deploymentTemplate:
+        spec:
+            selector:
+                matchLabels:
+                    pkg.crossplane.io/provider: provider-aws-kms
+            template:
+                metadata:
+                    annotations:
+                        instrumentation.opentelemetry.io/inject-dotnet: "false"
+                        instrumentation.opentelemetry.io/inject-java: "false"
+                        instrumentation.opentelemetry.io/inject-nodejs: "false"
+                        instrumentation.opentelemetry.io/inject-python: "false"
+                        sidecar.opentelemetry.io/inject: "false"
+                    labels:
+                        pkg.crossplane.io/provider: provider-aws-kms
+                spec:
+                    containers:
+                        -   name: package-runtime
+                            resources:
+                                limits:
+                                    memory: 1Gi
+                                requests:
+                                    cpu: 23m
+                                    memory: 768Mi
+                    serviceAccountName: provider-aws-kms
+    serviceAccountTemplate:
+        metadata:
+            annotations:
+                eks.amazonaws.com/role-arn: arn:aws:iam::{{ $accountId }}:role/{{ $cluster }}-provider-aws-kms-role
+            name: provider-aws-kms
+---
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-90"
     name: aws-opensearch-config
 spec:
     deploymentTemplate:

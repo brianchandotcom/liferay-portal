@@ -99,6 +99,7 @@ function main {
 		/opt/liferay/chart/liferay-aws \
 		--install \
 		--namespace "${namespace}" \
+		--set "global.liferayServiceAccount.annotations.eks\.amazonaws\.com/role-arn=${role_arn}" \
 		--set "liferay-default.image.repository=${ecr_dxp_repository_url}" \
 		--set "liferay-default.image.tag=${dxp_image_tag}" \
 		--set "liferay-default.ingress.className=nginx" \
@@ -107,7 +108,6 @@ function main {
 		--set "liferay-default.ingress.rules[0].http.paths[0].backend.service.port.name=http" \
 		--set "liferay-default.ingress.rules[0].http.paths[0].path=/" \
 		--set "liferay-default.ingress.rules[0].http.paths[0].pathType=ImplementationSpecific" \
-		--set "liferay-default.serviceAccount.annotations.eks\.amazonaws\.com/role-arn=${role_arn}" \
 		${values_file_argument}
 
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx

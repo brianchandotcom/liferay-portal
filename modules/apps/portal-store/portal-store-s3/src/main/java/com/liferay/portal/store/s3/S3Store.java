@@ -9,12 +9,13 @@ import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
+import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.io.unsync.UnsyncFilterInputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -44,6 +45,10 @@ import java.util.Objects;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -573,9 +578,12 @@ public class S3Store implements Store {
 
 		_s3AsyncClient = s3AsyncClientBuilder.build();
 
-		_threadPoolExecutor = new ThreadPoolExecutor(
+		_threadPoolExecutor = new NoticeableThreadPoolExecutor(
 			_s3StoreConfiguration.corePoolSize(),
-			_s3StoreConfiguration.maxPoolSize());
+			_s3StoreConfiguration.maxPoolSize(), 60, TimeUnit.SECONDS,
+			new LinkedBlockingQueue<>(), Executors.defaultThreadFactory(),
+			new ThreadPoolExecutor.AbortPolicy(),
+			new ThreadPoolHandlerAdapter());
 
 		_s3TransferManager = S3TransferManager.builder(
 		).executor(
@@ -744,6 +752,6 @@ public class S3Store implements Store {
 	private S3StoreConfiguration _s3StoreConfiguration;
 	private S3TransferManager _s3TransferManager;
 	private StorageClass _storageClass;
-	private ThreadPoolExecutor _threadPoolExecutor;
+	private NoticeableThreadPoolExecutor _threadPoolExecutor;
 
 }

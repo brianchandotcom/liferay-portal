@@ -6,6 +6,7 @@
 package com.liferay.portal.lpkg.deployer.internal;
 
 import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;

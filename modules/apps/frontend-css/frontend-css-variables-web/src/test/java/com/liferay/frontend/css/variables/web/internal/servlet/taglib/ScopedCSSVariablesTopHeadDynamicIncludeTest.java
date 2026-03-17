@@ -7,11 +7,11 @@ package com.liferay.frontend.css.variables.web.internal.servlet.taglib;
 
 import com.liferay.frontend.css.variables.ScopedCSSVariables;
 import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;

@@ -5,8 +5,8 @@
 
 package com.liferay.portal.test.aspects;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.ByteArrayInputStream;

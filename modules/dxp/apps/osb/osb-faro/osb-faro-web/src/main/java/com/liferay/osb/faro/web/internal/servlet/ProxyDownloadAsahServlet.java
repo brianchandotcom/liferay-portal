@@ -6,11 +6,11 @@
 package com.liferay.osb.faro.web.internal.servlet;
 
 import com.liferay.osb.faro.engine.client.constants.OSBAsahHeaderConstants;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.Servlet;

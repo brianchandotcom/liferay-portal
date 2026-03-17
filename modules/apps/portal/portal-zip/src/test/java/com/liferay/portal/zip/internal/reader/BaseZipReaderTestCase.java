@@ -92,7 +92,7 @@ public abstract class BaseZipReaderTestCase {
 	@Test
 	public void testConstructorNullInputStream() {
 		Assert.assertThrows(
-			"Input stream is null", IllegalArgumentException.class,
+			"Input stream is null", NullPointerException.class,
 			() -> getZipReader((InputStream)null));
 	}
 

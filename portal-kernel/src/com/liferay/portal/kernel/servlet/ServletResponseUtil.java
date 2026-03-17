@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.RandomAccessInputStream;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -816,7 +816,14 @@ public class ServletResponseUtil {
 			_checkSocketException(ioException);
 		}
 		finally {
-			StreamUtil.cleanUp(true, inputStream);
+			try {
+				inputStream.close();
+			}
+			catch (IOException ioException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ioException);
+				}
+			}
 		}
 	}
 

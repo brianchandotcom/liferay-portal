@@ -273,7 +273,7 @@ testWithClaritySiteInitializerFF(
 							objectDefinition1.externalReferenceCode,
 							{
 								label: {
-									en_US: `objectRelationshipLabel${getRandomInt()}`,
+									en_US: `objectRelationshipLabel${getRandomInt() % 100}`,
 								},
 								name: `objectRelationshipName${getRandomInt() % 100}`,
 								objectDefinitionExternalReferenceCode1:

@@ -275,7 +275,7 @@ testWithClaritySiteInitializerFF(
 								label: {
 									en_US: `objectRelationshipLabel${getRandomInt()}`,
 								},
-								name: `objectRelationshipName${getRandomInt()}`,
+								name: `objectRelationshipName${getRandomInt() % 100}`,
 								objectDefinitionExternalReferenceCode1:
 									objectDefinition1.externalReferenceCode,
 								objectDefinitionExternalReferenceCode2:

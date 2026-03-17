@@ -257,25 +257,6 @@ public class CommerceAddressRestrictionUtil {
 	}
 
 	/**
-	 * Returns the commerce address restrictions before and after the current commerce address restriction in the ordered set where countryId = &#63;.
-	 *
-	 * @param commerceAddressRestrictionId the primary key of the current commerce address restriction
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a commerce address restriction with the primary key could not be found
-	 */
-	public static CommerceAddressRestriction[] findByCountryId_PrevAndNext(
-			long commerceAddressRestrictionId, long countryId,
-			OrderByComparator<CommerceAddressRestriction> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAddressRestrictionException {
-
-		return getPersistence().findByCountryId_PrevAndNext(
-			commerceAddressRestrictionId, countryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce address restrictions where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -441,27 +422,6 @@ public class CommerceAddressRestrictionUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce address restrictions before and after the current commerce address restriction in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commerceAddressRestrictionId the primary key of the current commerce address restriction
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a commerce address restriction with the primary key could not be found
-	 */
-	public static CommerceAddressRestriction[] findByC_C_PrevAndNext(
-			long commerceAddressRestrictionId, long classNameId, long classPK,
-			OrderByComparator<CommerceAddressRestriction> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAddressRestrictionException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			commerceAddressRestrictionId, classNameId, classPK,
-			orderByComparator);
 	}
 
 	/**
@@ -739,4 +699,4 @@ public class CommerceAddressRestrictionUtil {
 	private static volatile CommerceAddressRestrictionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1603724309
+// LIFERAY-SERVICE-BUILDER-HASH:-351466065

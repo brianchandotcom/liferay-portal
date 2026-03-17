@@ -146,21 +146,6 @@ public interface RedirectNotFoundEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the redirect not found entries before and after the current redirect not found entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param redirectNotFoundEntryId the primary key of the current redirect not found entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next redirect not found entry
-	 * @throws NoSuchNotFoundEntryException if a redirect not found entry with the primary key could not be found
-	 */
-	public RedirectNotFoundEntry[] findByGroupId_PrevAndNext(
-			long redirectNotFoundEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<RedirectNotFoundEntry> orderByComparator)
-		throws NoSuchNotFoundEntryException;
-
-	/**
 	 * Removes all the redirect not found entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -349,4 +334,4 @@ public interface RedirectNotFoundEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1902696546
+// LIFERAY-SERVICE-BUILDER-HASH:1649101626

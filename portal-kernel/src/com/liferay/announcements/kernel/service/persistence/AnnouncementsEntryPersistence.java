@@ -148,21 +148,6 @@ public interface AnnouncementsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] findByUuid_PrevAndNext(
-			long entryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -202,21 +187,6 @@ public interface AnnouncementsEntryPersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] filterFindByUuid_PrevAndNext(
-			long entryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the announcements entries where uuid = &#63; from the database.
@@ -364,22 +334,6 @@ public interface AnnouncementsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] findByUuid_C_PrevAndNext(
-			long entryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -423,22 +377,6 @@ public interface AnnouncementsEntryPersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(
-			long entryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the announcements entries where uuid = &#63; and companyId = &#63; from the database.
@@ -580,21 +518,6 @@ public interface AnnouncementsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] findByCompanyId_PrevAndNext(
-			long entryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -635,21 +558,6 @@ public interface AnnouncementsEntryPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] filterFindByCompanyId_PrevAndNext(
-			long entryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the announcements entries where companyId = &#63; from the database.
@@ -788,21 +696,6 @@ public interface AnnouncementsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set where userId = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] findByUserId_PrevAndNext(
-			long entryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where userId = &#63;.
 	 *
 	 * @param userId the user ID
@@ -842,21 +735,6 @@ public interface AnnouncementsEntryPersistence
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where userId = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] filterFindByUserId_PrevAndNext(
-			long entryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the announcements entries where userId = &#63; from the database.
@@ -1004,22 +882,6 @@ public interface AnnouncementsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] findByC_C_PrevAndNext(
-			long entryId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param classNameId the class name ID
@@ -1063,22 +925,6 @@ public interface AnnouncementsEntryPersistence
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] filterFindByC_C_PrevAndNext(
-			long entryId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the announcements entries where classNameId = &#63; and classPK = &#63; from the database.
@@ -1237,23 +1083,6 @@ public interface AnnouncementsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] findByC_C_C_PrevAndNext(
-			long entryId, long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1300,23 +1129,6 @@ public interface AnnouncementsEntryPersistence
 		long companyId, long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] filterFindByC_C_C_PrevAndNext(
-			long entryId, long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -1479,23 +1291,6 @@ public interface AnnouncementsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] findByC_C_A_PrevAndNext(
-			long entryId, long classNameId, long classPK, boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	 *
 	 * @param classNameId the class name ID
@@ -1542,23 +1337,6 @@ public interface AnnouncementsEntryPersistence
 		long classNameId, long classPK, boolean alert, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(
-			long entryId, long classNameId, long classPK, boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63; from the database.
@@ -1732,25 +1510,6 @@ public interface AnnouncementsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] findByC_C_C_A_PrevAndNext(
-			long entryId, long companyId, long classNameId, long classPK,
-			boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1802,25 +1561,6 @@ public interface AnnouncementsEntryPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
-	 *
-	 * @param entryId the primary key of the current announcements entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param alert the alert
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements entry
-	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
-	 */
-	public AnnouncementsEntry[] filterFindByC_C_C_A_PrevAndNext(
-			long entryId, long companyId, long classNameId, long classPK,
-			boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63; from the database.
@@ -1978,4 +1718,4 @@ public interface AnnouncementsEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:267018696
+// LIFERAY-SERVICE-BUILDER-HASH:-466733354

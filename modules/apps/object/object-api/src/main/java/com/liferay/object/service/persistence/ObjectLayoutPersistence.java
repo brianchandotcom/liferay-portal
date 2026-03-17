@@ -145,21 +145,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 			orderByComparator);
 
 	/**
-	 * Returns the object layouts before and after the current object layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectLayoutId the primary key of the current object layout
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout
-	 * @throws NoSuchObjectLayoutException if a object layout with the primary key could not be found
-	 */
-	public ObjectLayout[] findByUuid_PrevAndNext(
-			long objectLayoutId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
-
-	/**
 	 * Removes all the object layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -297,22 +282,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 			orderByComparator);
 
 	/**
-	 * Returns the object layouts before and after the current object layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectLayoutId the primary key of the current object layout
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout
-	 * @throws NoSuchObjectLayoutException if a object layout with the primary key could not be found
-	 */
-	public ObjectLayout[] findByUuid_C_PrevAndNext(
-			long objectLayoutId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
-
-	/**
 	 * Removes all the object layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -442,21 +411,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 		long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
 			orderByComparator);
-
-	/**
-	 * Returns the object layouts before and after the current object layout in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectLayoutId the primary key of the current object layout
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout
-	 * @throws NoSuchObjectLayoutException if a object layout with the primary key could not be found
-	 */
-	public ObjectLayout[] findByObjectDefinitionId_PrevAndNext(
-			long objectLayoutId, long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
 
 	/**
 	 * Removes all the object layouts where objectDefinitionId = &#63; from the database.
@@ -594,22 +548,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 		long companyId, boolean defaultObjectLayout,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
 			orderByComparator);
-
-	/**
-	 * Returns the object layouts before and after the current object layout in the ordered set where companyId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param objectLayoutId the primary key of the current object layout
-	 * @param companyId the company ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout
-	 * @throws NoSuchObjectLayoutException if a object layout with the primary key could not be found
-	 */
-	public ObjectLayout[] findByC_DOL_PrevAndNext(
-			long objectLayoutId, long companyId, boolean defaultObjectLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
 
 	/**
 	 * Removes all the object layouts where companyId = &#63; and defaultObjectLayout = &#63; from the database.
@@ -754,23 +692,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 			orderByComparator);
 
 	/**
-	 * Returns the object layouts before and after the current object layout in the ordered set where objectDefinitionId = &#63; and defaultObjectLayout = &#63;.
-	 *
-	 * @param objectLayoutId the primary key of the current object layout
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectLayout the default object layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout
-	 * @throws NoSuchObjectLayoutException if a object layout with the primary key could not be found
-	 */
-	public ObjectLayout[] findByODI_DOL_PrevAndNext(
-			long objectLayoutId, long objectDefinitionId,
-			boolean defaultObjectLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayout>
-				orderByComparator)
-		throws NoSuchObjectLayoutException;
-
-	/**
 	 * Removes all the object layouts where objectDefinitionId = &#63; and defaultObjectLayout = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -910,4 +831,4 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-540156627
+// LIFERAY-SERVICE-BUILDER-HASH:2073400766

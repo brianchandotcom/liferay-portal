@@ -292,24 +292,6 @@ public class CompanyUtil {
 	}
 
 	/**
-	 * Returns the companies before and after the current company in the ordered set where logoId = &#63;.
-	 *
-	 * @param companyId the primary key of the current company
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next company
-	 * @throws NoSuchCompanyException if a company with the primary key could not be found
-	 */
-	public static Company[] findByLogoId_PrevAndNext(
-			long companyId, long logoId,
-			OrderByComparator<Company> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchCompanyException {
-
-		return getPersistence().findByLogoId_PrevAndNext(
-			companyId, logoId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the companies where logoId = &#63; from the database.
 	 *
 	 * @param logoId the logo ID
@@ -486,4 +468,4 @@ public class CompanyUtil {
 	private static volatile CompanyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-761285749
+// LIFERAY-SERVICE-BUILDER-HASH:1355863643

@@ -203,23 +203,6 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 			orderByComparator);
 
 	/**
-	 * Returns the tickets before and after the current ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param ticketId the primary key of the current ticket
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ticket
-	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
-	 */
-	public Ticket[] findByC_C_C_PrevAndNext(
-			long ticketId, long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-				orderByComparator)
-		throws NoSuchTicketException;
-
-	/**
 	 * Removes all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -367,23 +350,6 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 		long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Ticket>
 			orderByComparator);
-
-	/**
-	 * Returns the tickets before and after the current ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param ticketId the primary key of the current ticket
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ticket
-	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
-	 */
-	public Ticket[] findByC_C_T_PrevAndNext(
-			long ticketId, long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-				orderByComparator)
-		throws NoSuchTicketException;
 
 	/**
 	 * Removes all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
@@ -546,25 +512,6 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 			orderByComparator);
 
 	/**
-	 * Returns the tickets before and after the current ticket in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param ticketId the primary key of the current ticket
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ticket
-	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
-	 */
-	public Ticket[] findByC_C_C_T_PrevAndNext(
-			long ticketId, long companyId, long classNameId, long classPK,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator<Ticket>
-				orderByComparator)
-		throws NoSuchTicketException;
-
-	/**
 	 * Removes all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -706,4 +653,4 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:744148952
+// LIFERAY-SERVICE-BUILDER-HASH:1317916849

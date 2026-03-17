@@ -148,21 +148,6 @@ public interface AssetListEntryUsagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public AssetListEntryUsage[] findByUuid_PrevAndNext(
-			long assetListEntryUsageId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException;
-
-	/**
 	 * Removes all the asset list entry usages where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface AssetListEntryUsagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public AssetListEntryUsage[] findByUuid_C_PrevAndNext(
-			long assetListEntryUsageId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException;
-
-	/**
 	 * Removes all the asset list entry usages where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface AssetListEntryUsagePersistence
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where plid = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public AssetListEntryUsage[] findByPlid_PrevAndNext(
-			long assetListEntryUsageId, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException;
 
 	/**
 	 * Removes all the asset list entry usages where plid = &#63; from the database.
@@ -646,22 +600,6 @@ public interface AssetListEntryUsagePersistence
 		long containerType, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where containerType = &#63; and plid = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public AssetListEntryUsage[] findByCT_P_PrevAndNext(
-			long assetListEntryUsageId, long containerType, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException;
 
 	/**
 	 * Removes all the asset list entry usages where containerType = &#63; and plid = &#63; from the database.
@@ -809,24 +747,6 @@ public interface AssetListEntryUsagePersistence
 		long groupId, long classNameId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where groupId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public AssetListEntryUsage[] findByG_C_K_PrevAndNext(
-			long assetListEntryUsageId, long groupId, long classNameId,
-			String key,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException;
 
 	/**
 	 * Removes all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63; from the database.
@@ -978,24 +898,6 @@ public interface AssetListEntryUsagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public AssetListEntryUsage[] findByC_C_K_PrevAndNext(
-			long assetListEntryUsageId, long companyId, long classNameId,
-			String key,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException;
-
-	/**
 	 * Removes all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1143,24 +1045,6 @@ public interface AssetListEntryUsagePersistence
 		String containerKey, long containerType, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param containerKey the container key
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public AssetListEntryUsage[] findByCK_CT_P_PrevAndNext(
-			long assetListEntryUsageId, String containerKey, long containerType,
-			long plid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException;
 
 	/**
 	 * Removes all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
@@ -1323,25 +1207,6 @@ public interface AssetListEntryUsagePersistence
 		long groupId, long classNameId, String key, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public AssetListEntryUsage[] findByG_C_K_T_PrevAndNext(
-			long assetListEntryUsageId, long groupId, long classNameId,
-			String key, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetListEntryUsage> orderByComparator)
-		throws NoSuchEntryUsageException;
 
 	/**
 	 * Removes all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; from the database.
@@ -1568,4 +1433,4 @@ public interface AssetListEntryUsagePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1958115228
+// LIFERAY-SERVICE-BUILDER-HASH:-86636594

@@ -149,21 +149,6 @@ public interface DLFileVersionPreviewPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the dl file version previews before and after the current dl file version preview in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param dlFileVersionPreviewId the primary key of the current dl file version preview
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a dl file version preview with the primary key could not be found
-	 */
-	public DLFileVersionPreview[] findByFileEntryId_PrevAndNext(
-			long dlFileVersionPreviewId, long fileEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DLFileVersionPreview> orderByComparator)
-		throws NoSuchFileVersionPreviewException;
-
-	/**
 	 * Removes all the dl file version previews where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -291,21 +276,6 @@ public interface DLFileVersionPreviewPersistence
 		long fileVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersionPreview>
 			orderByComparator);
-
-	/**
-	 * Returns the dl file version previews before and after the current dl file version preview in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param dlFileVersionPreviewId the primary key of the current dl file version preview
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a dl file version preview with the primary key could not be found
-	 */
-	public DLFileVersionPreview[] findByFileVersionId_PrevAndNext(
-			long dlFileVersionPreviewId, long fileVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DLFileVersionPreview> orderByComparator)
-		throws NoSuchFileVersionPreviewException;
 
 	/**
 	 * Removes all the dl file version previews where fileVersionId = &#63; from the database.
@@ -557,4 +527,4 @@ public interface DLFileVersionPreviewPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-629652417
+// LIFERAY-SERVICE-BUILDER-HASH:-604663217

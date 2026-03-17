@@ -251,25 +251,6 @@ public class UserTrackerPathUtil {
 	}
 
 	/**
-	 * Returns the user tracker paths before and after the current user tracker path in the ordered set where userTrackerId = &#63;.
-	 *
-	 * @param userTrackerPathId the primary key of the current user tracker path
-	 * @param userTrackerId the user tracker ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user tracker path
-	 * @throws NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
-	 */
-	public static UserTrackerPath[] findByUserTrackerId_PrevAndNext(
-			long userTrackerPathId, long userTrackerId,
-			OrderByComparator<UserTrackerPath> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserTrackerPathException {
-
-		return getPersistence().findByUserTrackerId_PrevAndNext(
-			userTrackerPathId, userTrackerId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user tracker paths where userTrackerId = &#63; from the database.
 	 *
 	 * @param userTrackerId the user tracker ID
@@ -450,4 +431,4 @@ public class UserTrackerPathUtil {
 	private static volatile UserTrackerPathPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2127985996
+// LIFERAY-SERVICE-BUILDER-HASH:1545714607

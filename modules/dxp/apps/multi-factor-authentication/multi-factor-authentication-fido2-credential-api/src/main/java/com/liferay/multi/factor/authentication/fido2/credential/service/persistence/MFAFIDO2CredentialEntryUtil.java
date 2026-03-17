@@ -250,25 +250,6 @@ public class MFAFIDO2CredentialEntryUtil {
 	}
 
 	/**
-	 * Returns the mfafido2 credential entries before and after the current mfafido2 credential entry in the ordered set where userId = &#63;.
-	 *
-	 * @param mfaFIDO2CredentialEntryId the primary key of the current mfafido2 credential entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next mfafido2 credential entry
-	 * @throws NoSuchMFAFIDO2CredentialEntryException if a mfafido2 credential entry with the primary key could not be found
-	 */
-	public static MFAFIDO2CredentialEntry[] findByUserId_PrevAndNext(
-			long mfaFIDO2CredentialEntryId, long userId,
-			OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator)
-		throws com.liferay.multi.factor.authentication.fido2.credential.
-			exception.NoSuchMFAFIDO2CredentialEntryException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			mfaFIDO2CredentialEntryId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the mfafido2 credential entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -426,25 +407,6 @@ public class MFAFIDO2CredentialEntryUtil {
 
 		return getPersistence().fetchByCredentialKeyHash_Last(
 			credentialKeyHash, orderByComparator);
-	}
-
-	/**
-	 * Returns the mfafido2 credential entries before and after the current mfafido2 credential entry in the ordered set where credentialKeyHash = &#63;.
-	 *
-	 * @param mfaFIDO2CredentialEntryId the primary key of the current mfafido2 credential entry
-	 * @param credentialKeyHash the credential key hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next mfafido2 credential entry
-	 * @throws NoSuchMFAFIDO2CredentialEntryException if a mfafido2 credential entry with the primary key could not be found
-	 */
-	public static MFAFIDO2CredentialEntry[] findByCredentialKeyHash_PrevAndNext(
-			long mfaFIDO2CredentialEntryId, long credentialKeyHash,
-			OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator)
-		throws com.liferay.multi.factor.authentication.fido2.credential.
-			exception.NoSuchMFAFIDO2CredentialEntryException {
-
-		return getPersistence().findByCredentialKeyHash_PrevAndNext(
-			mfaFIDO2CredentialEntryId, credentialKeyHash, orderByComparator);
 	}
 
 	/**
@@ -711,4 +673,4 @@ public class MFAFIDO2CredentialEntryUtil {
 	private static volatile MFAFIDO2CredentialEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1055781901
+// LIFERAY-SERVICE-BUILDER-HASH:1556771959

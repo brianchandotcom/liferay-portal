@@ -147,21 +147,6 @@ public interface IndexEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByOwnerId_PrevAndNext(
-			long indexEntryId, long ownerId,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
-
-	/**
 	 * Removes all the index entries where ownerId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -287,21 +272,6 @@ public interface IndexEntryPersistence
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where plid = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByPlid_PrevAndNext(
-			long indexEntryId, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
 
 	/**
 	 * Removes all the index entries where plid = &#63; from the database.
@@ -430,21 +400,6 @@ public interface IndexEntryPersistence
 		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByPortletId_PrevAndNext(
-			long indexEntryId, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
 
 	/**
 	 * Removes all the index entries where portletId = &#63; from the database.
@@ -584,22 +539,6 @@ public interface IndexEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByO_P_PrevAndNext(
-			long indexEntryId, int ownerType, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
-
-	/**
 	 * Removes all the index entries where ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -736,22 +675,6 @@ public interface IndexEntryPersistence
 		long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByP_P_PrevAndNext(
-			long indexEntryId, long plid, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
 
 	/**
 	 * Removes all the index entries where plid = &#63; and portletId = &#63; from the database.
@@ -899,23 +822,6 @@ public interface IndexEntryPersistence
 		long ownerId, int ownerType, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByO_O_P_PrevAndNext(
-			long indexEntryId, long ownerId, int ownerType, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
 
 	/**
 	 * Removes all the index entries where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
@@ -1067,23 +973,6 @@ public interface IndexEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByO_O_PI_PrevAndNext(
-			long indexEntryId, long ownerId, int ownerType, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
-
-	/**
 	 * Removes all the index entries where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -1231,23 +1120,6 @@ public interface IndexEntryPersistence
 		int ownerType, long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByO_P_P_PrevAndNext(
-			long indexEntryId, int ownerType, long plid, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
 
 	/**
 	 * Removes all the index entries where ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
@@ -1408,25 +1280,6 @@ public interface IndexEntryPersistence
 		long companyId, long ownerId, int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public IndexEntry[] findByC_O_O_LikeP_PrevAndNext(
-			long indexEntryId, long companyId, long ownerId, int ownerType,
-			String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<IndexEntry>
-				orderByComparator)
-		throws NoSuchIndexEntryException;
 
 	/**
 	 * Removes all the index entries where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63; from the database.
@@ -1689,4 +1542,4 @@ public interface IndexEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:204621271
+// LIFERAY-SERVICE-BUILDER-HASH:-2106630681

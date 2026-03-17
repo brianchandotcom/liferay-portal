@@ -254,25 +254,6 @@ public class BigDecimalEntryUtil {
 	}
 
 	/**
-	 * Returns the big decimal entries before and after the current big decimal entry in the ordered set where bigDecimalValue = &#63;.
-	 *
-	 * @param bigDecimalEntryId the primary key of the current big decimal entry
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a big decimal entry with the primary key could not be found
-	 */
-	public static BigDecimalEntry[] findByBigDecimalValue_PrevAndNext(
-			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchBigDecimalEntryException {
-
-		return getPersistence().findByBigDecimalValue_PrevAndNext(
-			bigDecimalEntryId, bigDecimalValue, orderByComparator);
-	}
-
-	/**
 	 * Removes all the big decimal entries where bigDecimalValue = &#63; from the database.
 	 *
 	 * @param bigDecimalValue the big decimal value
@@ -433,25 +414,6 @@ public class BigDecimalEntryUtil {
 	}
 
 	/**
-	 * Returns the big decimal entries before and after the current big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
-	 *
-	 * @param bigDecimalEntryId the primary key of the current big decimal entry
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a big decimal entry with the primary key could not be found
-	 */
-	public static BigDecimalEntry[] findByGtBigDecimalValue_PrevAndNext(
-			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchBigDecimalEntryException {
-
-		return getPersistence().findByGtBigDecimalValue_PrevAndNext(
-			bigDecimalEntryId, bigDecimalValue, orderByComparator);
-	}
-
-	/**
 	 * Removes all the big decimal entries where bigDecimalValue &gt; &#63; from the database.
 	 *
 	 * @param bigDecimalValue the big decimal value
@@ -609,25 +571,6 @@ public class BigDecimalEntryUtil {
 
 		return getPersistence().fetchByLtBigDecimalValue_Last(
 			bigDecimalValue, orderByComparator);
-	}
-
-	/**
-	 * Returns the big decimal entries before and after the current big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
-	 *
-	 * @param bigDecimalEntryId the primary key of the current big decimal entry
-	 * @param bigDecimalValue the big decimal value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a big decimal entry with the primary key could not be found
-	 */
-	public static BigDecimalEntry[] findByLtBigDecimalValue_PrevAndNext(
-			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchBigDecimalEntryException {
-
-		return getPersistence().findByLtBigDecimalValue_PrevAndNext(
-			bigDecimalEntryId, bigDecimalValue, orderByComparator);
 	}
 
 	/**
@@ -1039,4 +982,4 @@ public class BigDecimalEntryUtil {
 	private static volatile BigDecimalEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-84227001
+// LIFERAY-SERVICE-BUILDER-HASH:-1658411619

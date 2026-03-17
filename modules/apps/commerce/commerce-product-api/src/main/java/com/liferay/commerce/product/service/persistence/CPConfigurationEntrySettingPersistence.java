@@ -148,21 +148,6 @@ public interface CPConfigurationEntrySettingPersistence
 			<CPConfigurationEntrySetting> orderByComparator);
 
 	/**
-	 * Returns the cp configuration entry settings before and after the current cp configuration entry setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPConfigurationEntrySettingId the primary key of the current cp configuration entry setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a cp configuration entry setting with the primary key could not be found
-	 */
-	public CPConfigurationEntrySetting[] findByUuid_PrevAndNext(
-			long CPConfigurationEntrySettingId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException;
-
-	/**
 	 * Removes all the cp configuration entry settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface CPConfigurationEntrySettingPersistence
 			<CPConfigurationEntrySetting> orderByComparator);
 
 	/**
-	 * Returns the cp configuration entry settings before and after the current cp configuration entry setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPConfigurationEntrySettingId the primary key of the current cp configuration entry setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a cp configuration entry setting with the primary key could not be found
-	 */
-	public CPConfigurationEntrySetting[] findByUuid_C_PrevAndNext(
-			long CPConfigurationEntrySettingId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException;
-
-	/**
 	 * Removes all the cp configuration entry settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface CPConfigurationEntrySettingPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPConfigurationEntrySetting> orderByComparator);
-
-	/**
-	 * Returns the cp configuration entry settings before and after the current cp configuration entry setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPConfigurationEntrySettingId the primary key of the current cp configuration entry setting
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a cp configuration entry setting with the primary key could not be found
-	 */
-	public CPConfigurationEntrySetting[] findByCompanyId_PrevAndNext(
-			long CPConfigurationEntrySettingId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationEntrySetting> orderByComparator)
-		throws NoSuchCPConfigurationEntrySettingException;
 
 	/**
 	 * Removes all the cp configuration entry settings where companyId = &#63; from the database.
@@ -709,4 +663,4 @@ public interface CPConfigurationEntrySettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-713255261
+// LIFERAY-SERVICE-BUILDER-HASH:1220208641

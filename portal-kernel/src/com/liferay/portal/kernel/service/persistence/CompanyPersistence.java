@@ -186,21 +186,6 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 			orderByComparator);
 
 	/**
-	 * Returns the companies before and after the current company in the ordered set where logoId = &#63;.
-	 *
-	 * @param companyId the primary key of the current company
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next company
-	 * @throws NoSuchCompanyException if a company with the primary key could not be found
-	 */
-	public Company[] findByLogoId_PrevAndNext(
-			long companyId, long logoId,
-			com.liferay.portal.kernel.util.OrderByComparator<Company>
-				orderByComparator)
-		throws NoSuchCompanyException;
-
-	/**
 	 * Removes all the companies where logoId = &#63; from the database.
 	 *
 	 * @param logoId the logo ID
@@ -335,4 +320,4 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1462848145
+// LIFERAY-SERVICE-BUILDER-HASH:1627967768

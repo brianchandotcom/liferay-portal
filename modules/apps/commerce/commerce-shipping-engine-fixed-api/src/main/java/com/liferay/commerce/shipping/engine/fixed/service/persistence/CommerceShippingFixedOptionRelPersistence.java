@@ -154,23 +154,6 @@ public interface CommerceShippingFixedOptionRelPersistence
 				<CommerceShippingFixedOptionRel> orderByComparator);
 
 	/**
-	 * Returns the commerce shipping fixed option rels before and after the current commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionRelId the primary key of the current commerce shipping fixed option rel
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a commerce shipping fixed option rel with the primary key could not be found
-	 */
-	public CommerceShippingFixedOptionRel[]
-			findByCommerceShippingFixedOptionId_PrevAndNext(
-				long commerceShippingFixedOptionRelId,
-				long commerceShippingFixedOptionId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceShippingFixedOptionRel> orderByComparator)
-		throws NoSuchShippingFixedOptionRelException;
-
-	/**
 	 * Removes all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; from the database.
 	 *
 	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
@@ -303,23 +286,6 @@ public interface CommerceShippingFixedOptionRelPersistence
 		long commerceShippingMethodId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceShippingFixedOptionRel> orderByComparator);
-
-	/**
-	 * Returns the commerce shipping fixed option rels before and after the current commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionRelId the primary key of the current commerce shipping fixed option rel
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a commerce shipping fixed option rel with the primary key could not be found
-	 */
-	public CommerceShippingFixedOptionRel[]
-			findByCommerceShippingMethodId_PrevAndNext(
-				long commerceShippingFixedOptionRelId,
-				long commerceShippingMethodId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceShippingFixedOptionRel> orderByComparator)
-		throws NoSuchShippingFixedOptionRelException;
 
 	/**
 	 * Removes all the commerce shipping fixed option rels where commerceShippingMethodId = &#63; from the database.
@@ -460,23 +426,6 @@ public interface CommerceShippingFixedOptionRelPersistence
 		long commerceShippingFixedOptionId, long commerceShippingMethodId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceShippingFixedOptionRel> orderByComparator);
-
-	/**
-	 * Returns the commerce shipping fixed option rels before and after the current commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionRelId the primary key of the current commerce shipping fixed option rel
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a commerce shipping fixed option rel with the primary key could not be found
-	 */
-	public CommerceShippingFixedOptionRel[] findByC_C_PrevAndNext(
-			long commerceShippingFixedOptionRelId,
-			long commerceShippingFixedOptionId, long commerceShippingMethodId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceShippingFixedOptionRel> orderByComparator)
-		throws NoSuchShippingFixedOptionRelException;
 
 	/**
 	 * Removes all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63; from the database.
@@ -627,4 +576,4 @@ public interface CommerceShippingFixedOptionRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:748858041
+// LIFERAY-SERVICE-BUILDER-HASH:-1765792769

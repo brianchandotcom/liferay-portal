@@ -146,21 +146,6 @@ public interface CommerceTaxMethodPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce tax methods before and after the current commerce tax method in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the primary key of the current commerce tax method
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce tax method
-	 * @throws NoSuchTaxMethodException if a commerce tax method with the primary key could not be found
-	 */
-	public CommerceTaxMethod[] findByGroupId_PrevAndNext(
-			long commerceTaxMethodId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTaxMethod>
-				orderByComparator)
-		throws NoSuchTaxMethodException;
-
-	/**
 	 * Removes all the commerce tax methods where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -348,22 +333,6 @@ public interface CommerceTaxMethodPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce tax methods before and after the current commerce tax method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param commerceTaxMethodId the primary key of the current commerce tax method
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce tax method
-	 * @throws NoSuchTaxMethodException if a commerce tax method with the primary key could not be found
-	 */
-	public CommerceTaxMethod[] findByG_A_PrevAndNext(
-			long commerceTaxMethodId, long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTaxMethod>
-				orderByComparator)
-		throws NoSuchTaxMethodException;
-
-	/**
 	 * Removes all the commerce tax methods where groupId = &#63; and active = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -502,4 +471,4 @@ public interface CommerceTaxMethodPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1613268859
+// LIFERAY-SERVICE-BUILDER-HASH:-1345333361

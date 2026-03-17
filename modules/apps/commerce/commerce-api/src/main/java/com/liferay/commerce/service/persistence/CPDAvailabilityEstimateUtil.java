@@ -249,25 +249,6 @@ public class CPDAvailabilityEstimateUtil {
 	}
 
 	/**
-	 * Returns the cpd availability estimates before and after the current cpd availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDAvailabilityEstimateId the primary key of the current cpd availability estimate
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a cpd availability estimate with the primary key could not be found
-	 */
-	public static CPDAvailabilityEstimate[] findByUuid_PrevAndNext(
-			long CPDAvailabilityEstimateId, String uuid,
-			OrderByComparator<CPDAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchCPDAvailabilityEstimateException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			CPDAvailabilityEstimateId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cpd availability estimates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -432,26 +413,6 @@ public class CPDAvailabilityEstimateUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cpd availability estimates before and after the current cpd availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDAvailabilityEstimateId the primary key of the current cpd availability estimate
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a cpd availability estimate with the primary key could not be found
-	 */
-	public static CPDAvailabilityEstimate[] findByUuid_C_PrevAndNext(
-			long CPDAvailabilityEstimateId, String uuid, long companyId,
-			OrderByComparator<CPDAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchCPDAvailabilityEstimateException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			CPDAvailabilityEstimateId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -624,29 +585,6 @@ public class CPDAvailabilityEstimateUtil {
 
 		return getPersistence().fetchByCommerceAvailabilityEstimateId_Last(
 			commerceAvailabilityEstimateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cpd availability estimates before and after the current cpd availability estimate in the ordered set where commerceAvailabilityEstimateId = &#63;.
-	 *
-	 * @param CPDAvailabilityEstimateId the primary key of the current cpd availability estimate
-	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a cpd availability estimate with the primary key could not be found
-	 */
-	public static CPDAvailabilityEstimate[]
-			findByCommerceAvailabilityEstimateId_PrevAndNext(
-				long CPDAvailabilityEstimateId,
-				long commerceAvailabilityEstimateId,
-				OrderByComparator<CPDAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchCPDAvailabilityEstimateException {
-
-		return getPersistence().
-			findByCommerceAvailabilityEstimateId_PrevAndNext(
-				CPDAvailabilityEstimateId, commerceAvailabilityEstimateId,
-				orderByComparator);
 	}
 
 	/**
@@ -909,4 +847,4 @@ public class CPDAvailabilityEstimateUtil {
 	private static volatile CPDAvailabilityEstimatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-989658566
+// LIFERAY-SERVICE-BUILDER-HASH:-225121474

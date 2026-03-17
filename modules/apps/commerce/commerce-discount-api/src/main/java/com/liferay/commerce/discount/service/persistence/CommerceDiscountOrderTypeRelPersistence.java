@@ -146,21 +146,6 @@ public interface CommerceDiscountOrderTypeRelPersistence
 			<CommerceDiscountOrderTypeRel> orderByComparator);
 
 	/**
-	 * Returns the commerce discount order type rels before and after the current commerce discount order type rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceDiscountOrderTypeRelId the primary key of the current commerce discount order type rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount order type rel
-	 * @throws NoSuchDiscountOrderTypeRelException if a commerce discount order type rel with the primary key could not be found
-	 */
-	public CommerceDiscountOrderTypeRel[] findByUuid_PrevAndNext(
-			long commerceDiscountOrderTypeRelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountOrderTypeRel> orderByComparator)
-		throws NoSuchDiscountOrderTypeRelException;
-
-	/**
 	 * Removes all the commerce discount order type rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface CommerceDiscountOrderTypeRelPersistence
 			<CommerceDiscountOrderTypeRel> orderByComparator);
 
 	/**
-	 * Returns the commerce discount order type rels before and after the current commerce discount order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceDiscountOrderTypeRelId the primary key of the current commerce discount order type rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount order type rel
-	 * @throws NoSuchDiscountOrderTypeRelException if a commerce discount order type rel with the primary key could not be found
-	 */
-	public CommerceDiscountOrderTypeRel[] findByUuid_C_PrevAndNext(
-			long commerceDiscountOrderTypeRelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountOrderTypeRel> orderByComparator)
-		throws NoSuchDiscountOrderTypeRelException;
-
-	/**
 	 * Removes all the commerce discount order type rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -447,21 +416,6 @@ public interface CommerceDiscountOrderTypeRelPersistence
 			<CommerceDiscountOrderTypeRel> orderByComparator);
 
 	/**
-	 * Returns the commerce discount order type rels before and after the current commerce discount order type rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountOrderTypeRelId the primary key of the current commerce discount order type rel
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount order type rel
-	 * @throws NoSuchDiscountOrderTypeRelException if a commerce discount order type rel with the primary key could not be found
-	 */
-	public CommerceDiscountOrderTypeRel[] findByCommerceDiscountId_PrevAndNext(
-			long commerceDiscountOrderTypeRelId, long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountOrderTypeRel> orderByComparator)
-		throws NoSuchDiscountOrderTypeRelException;
-
-	/**
 	 * Removes all the commerce discount order type rels where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -591,21 +545,6 @@ public interface CommerceDiscountOrderTypeRelPersistence
 		long commerceOrderTypeId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountOrderTypeRel> orderByComparator);
-
-	/**
-	 * Returns the commerce discount order type rels before and after the current commerce discount order type rel in the ordered set where commerceOrderTypeId = &#63;.
-	 *
-	 * @param commerceDiscountOrderTypeRelId the primary key of the current commerce discount order type rel
-	 * @param commerceOrderTypeId the commerce order type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount order type rel
-	 * @throws NoSuchDiscountOrderTypeRelException if a commerce discount order type rel with the primary key could not be found
-	 */
-	public CommerceDiscountOrderTypeRel[] findByCommerceOrderTypeId_PrevAndNext(
-			long commerceDiscountOrderTypeRelId, long commerceOrderTypeId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountOrderTypeRel> orderByComparator)
-		throws NoSuchDiscountOrderTypeRelException;
 
 	/**
 	 * Removes all the commerce discount order type rels where commerceOrderTypeId = &#63; from the database.
@@ -807,4 +746,4 @@ public interface CommerceDiscountOrderTypeRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-382739231
+// LIFERAY-SERVICE-BUILDER-HASH:1153498583

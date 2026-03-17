@@ -166,24 +166,6 @@ public interface SamlPeerBindingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param samlPeerBindingId the primary key of the current saml peer binding
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml peer binding
-	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
-	 */
-	public SamlPeerBinding[] findByC_D_SNIV_PrevAndNext(
-			long samlPeerBindingId, long companyId, boolean deleted,
-			String samlNameIdValue,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
-				orderByComparator)
-		throws NoSuchPeerBindingException;
-
-	/**
 	 * Removes all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -348,25 +330,6 @@ public interface SamlPeerBindingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param samlPeerBindingId the primary key of the current saml peer binding
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml peer binding
-	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
-	 */
-	public SamlPeerBinding[] findByC_U_SPEI_D_PrevAndNext(
-			long samlPeerBindingId, long companyId, long userId,
-			String samlPeerEntityId, boolean deleted,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
-				orderByComparator)
-		throws NoSuchPeerBindingException;
-
-	/**
 	 * Removes all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -510,4 +473,4 @@ public interface SamlPeerBindingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2127798551
+// LIFERAY-SERVICE-BUILDER-HASH:1112890295

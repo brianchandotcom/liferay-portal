@@ -258,25 +258,6 @@ public class ViewCountEntryUtil {
 	}
 
 	/**
-	 * Returns the view count entries before and after the current view count entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param viewCountEntryPK the primary key of the current view count entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next view count entry
-	 * @throws NoSuchEntryException if a view count entry with the primary key could not be found
-	 */
-	public static ViewCountEntry[] findByC_CN_PrevAndNext(
-			ViewCountEntryPK viewCountEntryPK, long companyId, long classNameId,
-			OrderByComparator<ViewCountEntry> orderByComparator)
-		throws com.liferay.view.count.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_CN_PrevAndNext(
-			viewCountEntryPK, companyId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the view count entries where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -463,4 +444,4 @@ public class ViewCountEntryUtil {
 	private static volatile ViewCountEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1687991441
+// LIFERAY-SERVICE-BUILDER-HASH:-99661562

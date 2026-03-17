@@ -147,21 +147,6 @@ public interface KaleoConditionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo conditions before and after the current kaleo condition in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoConditionId the primary key of the current kaleo condition
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo condition
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
-	 */
-	public KaleoCondition[] findByCompanyId_PrevAndNext(
-			long kaleoConditionId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
-				orderByComparator)
-		throws NoSuchConditionException;
-
-	/**
 	 * Removes all the kaleo conditions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -289,21 +274,6 @@ public interface KaleoConditionPersistence
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo conditions before and after the current kaleo condition in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoConditionId the primary key of the current kaleo condition
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo condition
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
-	 */
-	public KaleoCondition[] findByKaleoDefinitionVersionId_PrevAndNext(
-			long kaleoConditionId, long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
-				orderByComparator)
-		throws NoSuchConditionException;
 
 	/**
 	 * Removes all the kaleo conditions where kaleoDefinitionVersionId = &#63; from the database.
@@ -486,4 +456,4 @@ public interface KaleoConditionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:295611088
+// LIFERAY-SERVICE-BUILDER-HASH:-1023095270

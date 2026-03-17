@@ -250,25 +250,6 @@ public class CommerceAvailabilityEstimateUtil {
 	}
 
 	/**
-	 * Returns the commerce availability estimates before and after the current commerce availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the primary key of the current commerce availability estimate
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a commerce availability estimate with the primary key could not be found
-	 */
-	public static CommerceAvailabilityEstimate[] findByUuid_PrevAndNext(
-			long commerceAvailabilityEstimateId, String uuid,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceAvailabilityEstimateId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce availability estimates that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -317,25 +298,6 @@ public class CommerceAvailabilityEstimateUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce availability estimates before and after the current commerce availability estimate in the ordered set of commerce availability estimates that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the primary key of the current commerce availability estimate
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a commerce availability estimate with the primary key could not be found
-	 */
-	public static CommerceAvailabilityEstimate[] filterFindByUuid_PrevAndNext(
-			long commerceAvailabilityEstimateId, String uuid,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			commerceAvailabilityEstimateId, uuid, orderByComparator);
 	}
 
 	/**
@@ -516,26 +478,6 @@ public class CommerceAvailabilityEstimateUtil {
 	}
 
 	/**
-	 * Returns the commerce availability estimates before and after the current commerce availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the primary key of the current commerce availability estimate
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a commerce availability estimate with the primary key could not be found
-	 */
-	public static CommerceAvailabilityEstimate[] findByUuid_C_PrevAndNext(
-			long commerceAvailabilityEstimateId, String uuid, long companyId,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceAvailabilityEstimateId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce availability estimates that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -587,26 +529,6 @@ public class CommerceAvailabilityEstimateUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce availability estimates before and after the current commerce availability estimate in the ordered set of commerce availability estimates that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the primary key of the current commerce availability estimate
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a commerce availability estimate with the primary key could not be found
-	 */
-	public static CommerceAvailabilityEstimate[] filterFindByUuid_C_PrevAndNext(
-			long commerceAvailabilityEstimateId, String uuid, long companyId,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			commerceAvailabilityEstimateId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -782,25 +704,6 @@ public class CommerceAvailabilityEstimateUtil {
 	}
 
 	/**
-	 * Returns the commerce availability estimates before and after the current commerce availability estimate in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the primary key of the current commerce availability estimate
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a commerce availability estimate with the primary key could not be found
-	 */
-	public static CommerceAvailabilityEstimate[] findByCompanyId_PrevAndNext(
-			long commerceAvailabilityEstimateId, long companyId,
-			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commerceAvailabilityEstimateId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce availability estimates that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -849,27 +752,6 @@ public class CommerceAvailabilityEstimateUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce availability estimates before and after the current commerce availability estimate in the ordered set of commerce availability estimates that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the primary key of the current commerce availability estimate
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a commerce availability estimate with the primary key could not be found
-	 */
-	public static CommerceAvailabilityEstimate[]
-			filterFindByCompanyId_PrevAndNext(
-				long commerceAvailabilityEstimateId, long companyId,
-				OrderByComparator<CommerceAvailabilityEstimate>
-					orderByComparator)
-		throws com.liferay.commerce.exception.
-			NoSuchAvailabilityEstimateException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			commerceAvailabilityEstimateId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1082,4 +964,4 @@ public class CommerceAvailabilityEstimateUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1816271388
+// LIFERAY-SERVICE-BUILDER-HASH:717849606

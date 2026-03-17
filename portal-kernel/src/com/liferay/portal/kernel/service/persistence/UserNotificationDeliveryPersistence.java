@@ -145,21 +145,6 @@ public interface UserNotificationDeliveryPersistence
 			<UserNotificationDelivery> orderByComparator);
 
 	/**
-	 * Returns the user notification deliveries before and after the current user notification delivery in the ordered set where userId = &#63;.
-	 *
-	 * @param userNotificationDeliveryId the primary key of the current user notification delivery
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user notification delivery
-	 * @throws NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	 */
-	public UserNotificationDelivery[] findByUserId_PrevAndNext(
-			long userNotificationDeliveryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<UserNotificationDelivery> orderByComparator)
-		throws NoSuchUserNotificationDeliveryException;
-
-	/**
 	 * Removes all the user notification deliveries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -373,4 +358,4 @@ public interface UserNotificationDeliveryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1179169828
+// LIFERAY-SERVICE-BUILDER-HASH:280391340

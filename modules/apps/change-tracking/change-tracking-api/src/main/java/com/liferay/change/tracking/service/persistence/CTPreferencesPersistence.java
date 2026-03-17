@@ -147,21 +147,6 @@ public interface CTPreferencesPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ct preferenceses before and after the current ct preferences in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctPreferencesId the primary key of the current ct preferences
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct preferences
-	 * @throws NoSuchPreferencesException if a ct preferences with the primary key could not be found
-	 */
-	public CTPreferences[] findByCtCollectionId_PrevAndNext(
-			long ctPreferencesId, long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
-				orderByComparator)
-		throws NoSuchPreferencesException;
-
-	/**
 	 * Removes all the ct preferenceses where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -289,21 +274,6 @@ public interface CTPreferencesPersistence
 		long previousCtCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
 			orderByComparator);
-
-	/**
-	 * Returns the ct preferenceses before and after the current ct preferences in the ordered set where previousCtCollectionId = &#63;.
-	 *
-	 * @param ctPreferencesId the primary key of the current ct preferences
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct preferences
-	 * @throws NoSuchPreferencesException if a ct preferences with the primary key could not be found
-	 */
-	public CTPreferences[] findByPreviousCtCollectionId_PrevAndNext(
-			long ctPreferencesId, long previousCtCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTPreferences>
-				orderByComparator)
-		throws NoSuchPreferencesException;
 
 	/**
 	 * Removes all the ct preferenceses where previousCtCollectionId = &#63; from the database.
@@ -491,4 +461,4 @@ public interface CTPreferencesPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:794712546
+// LIFERAY-SERVICE-BUILDER-HASH:238349967

@@ -145,21 +145,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 			orderByComparator);
 
 	/**
-	 * Returns the object views before and after the current object view in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectViewId the primary key of the current object view
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view
-	 * @throws NoSuchObjectViewException if a object view with the primary key could not be found
-	 */
-	public ObjectView[] findByUuid_PrevAndNext(
-			long objectViewId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-				orderByComparator)
-		throws NoSuchObjectViewException;
-
-	/**
 	 * Removes all the object views where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -296,22 +281,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 			orderByComparator);
 
 	/**
-	 * Returns the object views before and after the current object view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectViewId the primary key of the current object view
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view
-	 * @throws NoSuchObjectViewException if a object view with the primary key could not be found
-	 */
-	public ObjectView[] findByUuid_C_PrevAndNext(
-			long objectViewId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-				orderByComparator)
-		throws NoSuchObjectViewException;
-
-	/**
 	 * Removes all the object views where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -441,21 +410,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 		long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
 			orderByComparator);
-
-	/**
-	 * Returns the object views before and after the current object view in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectViewId the primary key of the current object view
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view
-	 * @throws NoSuchObjectViewException if a object view with the primary key could not be found
-	 */
-	public ObjectView[] findByObjectDefinitionId_PrevAndNext(
-			long objectViewId, long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-				orderByComparator)
-		throws NoSuchObjectViewException;
 
 	/**
 	 * Removes all the object views where objectDefinitionId = &#63; from the database.
@@ -593,23 +547,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 		long objectDefinitionId, boolean defaultObjectView,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
 			orderByComparator);
-
-	/**
-	 * Returns the object views before and after the current object view in the ordered set where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * @param objectViewId the primary key of the current object view
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view
-	 * @throws NoSuchObjectViewException if a object view with the primary key could not be found
-	 */
-	public ObjectView[] findByODI_DOV_PrevAndNext(
-			long objectViewId, long objectDefinitionId,
-			boolean defaultObjectView,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectView>
-				orderByComparator)
-		throws NoSuchObjectViewException;
 
 	/**
 	 * Removes all the object views where objectDefinitionId = &#63; and defaultObjectView = &#63; from the database.
@@ -751,4 +688,4 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:880738889
+// LIFERAY-SERVICE-BUILDER-HASH:-816572484

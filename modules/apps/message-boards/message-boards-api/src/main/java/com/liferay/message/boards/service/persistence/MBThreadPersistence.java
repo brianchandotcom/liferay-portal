@@ -148,21 +148,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where uuid = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByUuid_PrevAndNext(
-			long threadId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Removes all the message boards threads where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByUuid_C_PrevAndNext(
-			long threadId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Removes all the message boards threads where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByGroupId_PrevAndNext(
-			long threadId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -549,21 +503,6 @@ public interface MBThreadPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByGroupId_PrevAndNext(
-			long threadId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Removes all the message boards threads where groupId = &#63; from the database.
@@ -755,22 +694,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByG_C_PrevAndNext(
-			long threadId, long groupId, long categoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -814,22 +737,6 @@ public interface MBThreadPersistence
 		long groupId, long categoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByG_C_PrevAndNext(
-			long threadId, long groupId, long categoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63;.
@@ -1111,22 +1018,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByG_NotC_PrevAndNext(
-			long threadId, long groupId, long categoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1170,22 +1061,6 @@ public interface MBThreadPersistence
 		long groupId, long categoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByG_NotC_PrevAndNext(
-			long threadId, long groupId, long categoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Removes all the message boards threads where groupId = &#63; and categoryId &ne; &#63; from the database.
@@ -1335,22 +1210,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByG_S_PrevAndNext(
-			long threadId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1393,22 +1252,6 @@ public interface MBThreadPersistence
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByG_S_PrevAndNext(
-			long threadId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Removes all the message boards threads where groupId = &#63; and status = &#63; from the database.
@@ -1558,22 +1401,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where categoryId = &#63; and priority = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByC_P_PrevAndNext(
-			long threadId, long categoryId, double priority,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Removes all the message boards threads where categoryId = &#63; and priority = &#63; from the database.
 	 *
 	 * @param categoryId the category ID
@@ -1711,22 +1538,6 @@ public interface MBThreadPersistence
 		Date lastPostDate, double priority,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByL_P_PrevAndNext(
-			long threadId, Date lastPostDate, double priority,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Removes all the message boards threads where lastPostDate = &#63; and priority = &#63; from the database.
@@ -1876,23 +1687,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByG_C_L_PrevAndNext(
-			long threadId, long groupId, long categoryId, Date lastPostDate,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1939,23 +1733,6 @@ public interface MBThreadPersistence
 		long groupId, long categoryId, Date lastPostDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByG_C_L_PrevAndNext(
-			long threadId, long groupId, long categoryId, Date lastPostDate,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Removes all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63; from the database.
@@ -2118,23 +1895,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByG_C_S_PrevAndNext(
-			long threadId, long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2181,23 +1941,6 @@ public interface MBThreadPersistence
 		long groupId, long categoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByG_C_S_PrevAndNext(
-			long threadId, long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status = &#63;.
@@ -2501,23 +2244,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByG_C_NotS_PrevAndNext(
-			long threadId, long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2564,23 +2290,6 @@ public interface MBThreadPersistence
 		long groupId, long categoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByG_C_NotS_PrevAndNext(
-			long threadId, long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
@@ -2885,23 +2594,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByG_NotC_S_PrevAndNext(
-			long threadId, long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2948,23 +2640,6 @@ public interface MBThreadPersistence
 		long groupId, long categoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByG_NotC_S_PrevAndNext(
-			long threadId, long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Removes all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63; from the database.
@@ -3126,23 +2801,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] findByG_NotC_NotS_PrevAndNext(
-			long threadId, long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
-
-	/**
 	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3189,23 +2847,6 @@ public interface MBThreadPersistence
 		long groupId, long categoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
-	 *
-	 * @param threadId the primary key of the current message boards thread
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	public MBThread[] filterFindByG_NotC_NotS_PrevAndNext(
-			long threadId, long groupId, long categoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-				orderByComparator)
-		throws NoSuchThreadException;
 
 	/**
 	 * Removes all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63; from the database.
@@ -3357,4 +2998,4 @@ public interface MBThreadPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-755793772
+// LIFERAY-SERVICE-BUILDER-HASH:1339581522

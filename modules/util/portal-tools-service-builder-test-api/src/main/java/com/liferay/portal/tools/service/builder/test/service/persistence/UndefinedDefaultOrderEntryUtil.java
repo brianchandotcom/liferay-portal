@@ -317,26 +317,6 @@ public class UndefinedDefaultOrderEntryUtil {
 	}
 
 	/**
-	 * Returns the undefined default order entries before and after the current undefined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param undefinedDefaultOrderEntryId the primary key of the current undefined default order entry
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next undefined default order entry
-	 * @throws NoSuchUndefinedDefaultOrderEntryException if a undefined default order entry with the primary key could not be found
-	 */
-	public static UndefinedDefaultOrderEntry[]
-			findByName_Collection_PrevAndNext(
-				long undefinedDefaultOrderEntryId, String name,
-				OrderByComparator<UndefinedDefaultOrderEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchUndefinedDefaultOrderEntryException {
-
-		return getPersistence().findByName_Collection_PrevAndNext(
-			undefinedDefaultOrderEntryId, name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the undefined default order entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -531,4 +511,4 @@ public class UndefinedDefaultOrderEntryUtil {
 	private static volatile UndefinedDefaultOrderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1727093959
+// LIFERAY-SERVICE-BUILDER-HASH:-1100231533

@@ -146,21 +146,6 @@ public interface PortalPreferenceValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portal preference values before and after the current portal preference value in the ordered set where portalPreferencesId = &#63;.
-	 *
-	 * @param portalPreferenceValueId the primary key of the current portal preference value
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portal preference value
-	 * @throws NoSuchPreferenceValueException if a portal preference value with the primary key could not be found
-	 */
-	public PortalPreferenceValue[] findByPortalPreferencesId_PrevAndNext(
-			long portalPreferenceValueId, long portalPreferencesId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortalPreferenceValue> orderByComparator)
-		throws NoSuchPreferenceValueException;
-
-	/**
 	 * Returns all the portal preference values where portalPreferencesId = any &#63;.
 	 *
 	 * <p>
@@ -372,23 +357,6 @@ public interface PortalPreferenceValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portal preference values before and after the current portal preference value in the ordered set where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferenceValueId the primary key of the current portal preference value
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portal preference value
-	 * @throws NoSuchPreferenceValueException if a portal preference value with the primary key could not be found
-	 */
-	public PortalPreferenceValue[] findByP_N_PrevAndNext(
-			long portalPreferenceValueId, long portalPreferencesId,
-			String namespace,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortalPreferenceValue> orderByComparator)
-		throws NoSuchPreferenceValueException;
-
-	/**
 	 * Removes all the portal preference values where portalPreferencesId = &#63; and namespace = &#63; from the database.
 	 *
 	 * @param portalPreferencesId the portal preferences ID
@@ -537,24 +505,6 @@ public interface PortalPreferenceValuePersistence
 		long portalPreferencesId, String key, String namespace,
 		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
 			orderByComparator);
-
-	/**
-	 * Returns the portal preference values before and after the current portal preference value in the ordered set where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferenceValueId the primary key of the current portal preference value
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portal preference value
-	 * @throws NoSuchPreferenceValueException if a portal preference value with the primary key could not be found
-	 */
-	public PortalPreferenceValue[] findByP_K_N_PrevAndNext(
-			long portalPreferenceValueId, long portalPreferencesId, String key,
-			String namespace,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortalPreferenceValue> orderByComparator)
-		throws NoSuchPreferenceValueException;
 
 	/**
 	 * Removes all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; from the database.
@@ -789,25 +739,6 @@ public interface PortalPreferenceValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portal preference values before and after the current portal preference value in the ordered set where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * @param portalPreferenceValueId the primary key of the current portal preference value
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portal preference value
-	 * @throws NoSuchPreferenceValueException if a portal preference value with the primary key could not be found
-	 */
-	public PortalPreferenceValue[] findByP_K_N_SV_PrevAndNext(
-			long portalPreferenceValueId, long portalPreferencesId, String key,
-			String namespace, String smallValue,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortalPreferenceValue> orderByComparator)
-		throws NoSuchPreferenceValueException;
-
-	/**
 	 * Removes all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63; from the database.
 	 *
 	 * @param portalPreferencesId the portal preferences ID
@@ -956,4 +887,4 @@ public interface PortalPreferenceValuePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1854704230
+// LIFERAY-SERVICE-BUILDER-HASH:-593708368

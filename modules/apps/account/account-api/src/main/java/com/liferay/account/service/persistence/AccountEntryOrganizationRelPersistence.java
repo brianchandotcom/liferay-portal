@@ -147,21 +147,6 @@ public interface AccountEntryOrganizationRelPersistence
 			<AccountEntryOrganizationRel> orderByComparator);
 
 	/**
-	 * Returns the account entry organization rels before and after the current account entry organization rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryOrganizationRelId the primary key of the current account entry organization rel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
-	 */
-	public AccountEntryOrganizationRel[] findByAccountEntryId_PrevAndNext(
-			long accountEntryOrganizationRelId, long accountEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AccountEntryOrganizationRel> orderByComparator)
-		throws NoSuchEntryOrganizationRelException;
-
-	/**
 	 * Removes all the account entry organization rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -289,21 +274,6 @@ public interface AccountEntryOrganizationRelPersistence
 		long organizationId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AccountEntryOrganizationRel> orderByComparator);
-
-	/**
-	 * Returns the account entry organization rels before and after the current account entry organization rel in the ordered set where organizationId = &#63;.
-	 *
-	 * @param accountEntryOrganizationRelId the primary key of the current account entry organization rel
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
-	 */
-	public AccountEntryOrganizationRel[] findByOrganizationId_PrevAndNext(
-			long accountEntryOrganizationRelId, long organizationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AccountEntryOrganizationRel> orderByComparator)
-		throws NoSuchEntryOrganizationRelException;
 
 	/**
 	 * Removes all the account entry organization rels where organizationId = &#63; from the database.
@@ -503,4 +473,4 @@ public interface AccountEntryOrganizationRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1873948832
+// LIFERAY-SERVICE-BUILDER-HASH:1633454808

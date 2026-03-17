@@ -147,21 +147,6 @@ public interface SocialRelationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where uuid = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByUuid_PrevAndNext(
-			long relationId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
-
-	/**
 	 * Removes all the social relations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -299,22 +284,6 @@ public interface SocialRelationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByUuid_C_PrevAndNext(
-			long relationId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
-
-	/**
 	 * Removes all the social relations where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -445,21 +414,6 @@ public interface SocialRelationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where companyId = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByCompanyId_PrevAndNext(
-			long relationId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
-
-	/**
 	 * Removes all the social relations where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -586,21 +540,6 @@ public interface SocialRelationPersistence
 		long userId1,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
 			orderByComparator);
-
-	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId1 the user id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByUserId1_PrevAndNext(
-			long relationId, long userId1,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
 
 	/**
 	 * Removes all the social relations where userId1 = &#63; from the database.
@@ -731,21 +670,6 @@ public interface SocialRelationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId2 = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByUserId2_PrevAndNext(
-			long relationId, long userId2,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
-
-	/**
 	 * Removes all the social relations where userId2 = &#63; from the database.
 	 *
 	 * @param userId2 the user id2
@@ -872,21 +796,6 @@ public interface SocialRelationPersistence
 		int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
 			orderByComparator);
-
-	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where type = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByType_PrevAndNext(
-			long relationId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
 
 	/**
 	 * Removes all the social relations where type = &#63; from the database.
@@ -1023,22 +932,6 @@ public interface SocialRelationPersistence
 		long companyId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
 			orderByComparator);
-
-	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByC_T_PrevAndNext(
-			long relationId, long companyId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
 
 	/**
 	 * Removes all the social relations where companyId = &#63; and type = &#63; from the database.
@@ -1180,22 +1073,6 @@ public interface SocialRelationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId1 the user id1
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByU1_U2_PrevAndNext(
-			long relationId, long userId1, long userId2,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; and userId2 = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -1334,22 +1211,6 @@ public interface SocialRelationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63; and type = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId1 the user id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByU1_T_PrevAndNext(
-			long relationId, long userId1, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; and type = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -1486,22 +1347,6 @@ public interface SocialRelationPersistence
 		long userId2, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
 			orderByComparator);
-
-	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId2 = &#63; and type = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId2 the user id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public SocialRelation[] findByU2_T_PrevAndNext(
-			long relationId, long userId2, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialRelation>
-				orderByComparator)
-		throws NoSuchRelationException;
 
 	/**
 	 * Removes all the social relations where userId2 = &#63; and type = &#63; from the database.
@@ -1696,4 +1541,4 @@ public interface SocialRelationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:672130105
+// LIFERAY-SERVICE-BUILDER-HASH:1651919108

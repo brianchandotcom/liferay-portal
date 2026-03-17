@@ -241,25 +241,6 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where uuid = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByUuid_PrevAndNext(
-			long fileVersionId, String uuid,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			fileVersionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -492,26 +473,6 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByUuid_C_PrevAndNext(
-			long fileVersionId, String uuid, long companyId,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			fileVersionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -664,25 +625,6 @@ public class DLFileVersionUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where companyId = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByCompanyId_PrevAndNext(
-			long fileVersionId, long companyId,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			fileVersionId, companyId, orderByComparator);
 	}
 
 	/**
@@ -841,25 +783,6 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByFileEntryId_PrevAndNext(
-			long fileVersionId, long fileEntryId,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByFileEntryId_PrevAndNext(
-			fileVersionId, fileEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file versions where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -1010,25 +933,6 @@ public class DLFileVersionUtil {
 
 		return getPersistence().fetchByMimeType_Last(
 			mimeType, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where mimeType = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByMimeType_PrevAndNext(
-			long fileVersionId, String mimeType,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByMimeType_PrevAndNext(
-			fileVersionId, mimeType, orderByComparator);
 	}
 
 	/**
@@ -1200,26 +1104,6 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where companyId = &#63; and storeUUID = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param companyId the company ID
-	 * @param storeUUID the store uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByC_SU_PrevAndNext(
-			long fileVersionId, long companyId, String storeUUID,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByC_SU_PrevAndNext(
-			fileVersionId, companyId, storeUUID, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file versions where companyId = &#63; and storeUUID = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1384,26 +1268,6 @@ public class DLFileVersionUtil {
 
 		return getPersistence().fetchByC_NotS_Last(
 			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByC_NotS_PrevAndNext(
-			long fileVersionId, long companyId, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByC_NotS_PrevAndNext(
-			fileVersionId, companyId, status, orderByComparator);
 	}
 
 	/**
@@ -1637,26 +1501,6 @@ public class DLFileVersionUtil {
 
 		return getPersistence().fetchByF_S_Last(
 			fileEntryId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param fileEntryId the file entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByF_S_PrevAndNext(
-			long fileVersionId, long fileEntryId, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByF_S_PrevAndNext(
-			fileVersionId, fileEntryId, status, orderByComparator);
 	}
 
 	/**
@@ -1923,26 +1767,6 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByLtD_S_PrevAndNext(
-			long fileVersionId, Date displayDate, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByLtD_S_PrevAndNext(
-			fileVersionId, displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file versions where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -2119,27 +1943,6 @@ public class DLFileVersionUtil {
 
 		return getPersistence().fetchByG_F_S_Last(
 			groupId, folderId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByG_F_S_PrevAndNext(
-			long fileVersionId, long groupId, long folderId, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByG_F_S_PrevAndNext(
-			fileVersionId, groupId, folderId, status, orderByComparator);
 	}
 
 	/**
@@ -2321,28 +2124,6 @@ public class DLFileVersionUtil {
 
 		return getPersistence().fetchByC_E_S_Last(
 			companyId, expirationDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where companyId = &#63; and expirationDate = &#63; and status = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param companyId the company ID
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByC_E_S_PrevAndNext(
-			long fileVersionId, long companyId, Date expirationDate, int status,
-			OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByC_E_S_PrevAndNext(
-			fileVersionId, companyId, expirationDate, status,
-			orderByComparator);
 	}
 
 	/**
@@ -2646,29 +2427,6 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * Returns the document library file versions before and after the current document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
-	 *
-	 * @param fileVersionId the primary key of the current document library file version
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param title the title
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	public static DLFileVersion[] findByG_F_T_V_PrevAndNext(
-			long fileVersionId, long groupId, long folderId, String title,
-			String version, OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileVersionException {
-
-		return getPersistence().findByG_F_T_V_PrevAndNext(
-			fileVersionId, groupId, folderId, title, version,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2859,4 +2617,4 @@ public class DLFileVersionUtil {
 	private static volatile DLFileVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1063192675
+// LIFERAY-SERVICE-BUILDER-HASH:-1058876030

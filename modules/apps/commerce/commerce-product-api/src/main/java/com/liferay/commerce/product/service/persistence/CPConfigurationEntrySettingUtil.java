@@ -250,25 +250,6 @@ public class CPConfigurationEntrySettingUtil {
 	}
 
 	/**
-	 * Returns the cp configuration entry settings before and after the current cp configuration entry setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPConfigurationEntrySettingId the primary key of the current cp configuration entry setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a cp configuration entry setting with the primary key could not be found
-	 */
-	public static CPConfigurationEntrySetting[] findByUuid_PrevAndNext(
-			long CPConfigurationEntrySettingId, String uuid,
-			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationEntrySettingException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			CPConfigurationEntrySettingId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration entry settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -505,26 +486,6 @@ public class CPConfigurationEntrySettingUtil {
 	}
 
 	/**
-	 * Returns the cp configuration entry settings before and after the current cp configuration entry setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPConfigurationEntrySettingId the primary key of the current cp configuration entry setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a cp configuration entry setting with the primary key could not be found
-	 */
-	public static CPConfigurationEntrySetting[] findByUuid_C_PrevAndNext(
-			long CPConfigurationEntrySettingId, String uuid, long companyId,
-			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationEntrySettingException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			CPConfigurationEntrySettingId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration entry settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -683,25 +644,6 @@ public class CPConfigurationEntrySettingUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp configuration entry settings before and after the current cp configuration entry setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPConfigurationEntrySettingId the primary key of the current cp configuration entry setting
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a cp configuration entry setting with the primary key could not be found
-	 */
-	public static CPConfigurationEntrySetting[] findByCompanyId_PrevAndNext(
-			long CPConfigurationEntrySettingId, long companyId,
-			OrderByComparator<CPConfigurationEntrySetting> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationEntrySettingException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			CPConfigurationEntrySettingId, companyId, orderByComparator);
 	}
 
 	/**
@@ -972,4 +914,4 @@ public class CPConfigurationEntrySettingUtil {
 	private static volatile CPConfigurationEntrySettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:514159630
+// LIFERAY-SERVICE-BUILDER-HASH:-1460691604

@@ -148,21 +148,6 @@ public interface DDMDataProviderInstancePersistence
 			<DDMDataProviderInstance> orderByComparator);
 
 	/**
-	 * Returns the ddm data provider instances before and after the current ddm data provider instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param dataProviderInstanceId the primary key of the current ddm data provider instance
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a ddm data provider instance with the primary key could not be found
-	 */
-	public DDMDataProviderInstance[] findByUuid_PrevAndNext(
-			long dataProviderInstanceId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
-
-	/**
 	 * Removes all the ddm data provider instances where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface DDMDataProviderInstancePersistence
 			<DDMDataProviderInstance> orderByComparator);
 
 	/**
-	 * Returns the ddm data provider instances before and after the current ddm data provider instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the primary key of the current ddm data provider instance
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a ddm data provider instance with the primary key could not be found
-	 */
-	public DDMDataProviderInstance[] findByUuid_C_PrevAndNext(
-			long dataProviderInstanceId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
-
-	/**
 	 * Removes all the ddm data provider instances where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface DDMDataProviderInstancePersistence
 			<DDMDataProviderInstance> orderByComparator);
 
 	/**
-	 * Returns the ddm data provider instances before and after the current ddm data provider instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the primary key of the current ddm data provider instance
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a ddm data provider instance with the primary key could not be found
-	 */
-	public DDMDataProviderInstance[] findByGroupId_PrevAndNext(
-			long dataProviderInstanceId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
-
-	/**
 	 * Returns all the ddm data provider instances that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -551,21 +505,6 @@ public interface DDMDataProviderInstancePersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DDMDataProviderInstance> orderByComparator);
-
-	/**
-	 * Returns the ddm data provider instances before and after the current ddm data provider instance in the ordered set of ddm data provider instances that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the primary key of the current ddm data provider instance
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a ddm data provider instance with the primary key could not be found
-	 */
-	public DDMDataProviderInstance[] filterFindByGroupId_PrevAndNext(
-			long dataProviderInstanceId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
 
 	/**
 	 * Returns all the ddm data provider instances that the user has permission to view where groupId = any &#63;.
@@ -829,21 +768,6 @@ public interface DDMDataProviderInstancePersistence
 			<DDMDataProviderInstance> orderByComparator);
 
 	/**
-	 * Returns the ddm data provider instances before and after the current ddm data provider instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the primary key of the current ddm data provider instance
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a ddm data provider instance with the primary key could not be found
-	 */
-	public DDMDataProviderInstance[] findByCompanyId_PrevAndNext(
-			long dataProviderInstanceId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstance> orderByComparator)
-		throws NoSuchDataProviderInstanceException;
-
-	/**
 	 * Removes all the ddm data provider instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -982,4 +906,4 @@ public interface DDMDataProviderInstancePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:780829580
+// LIFERAY-SERVICE-BUILDER-HASH:-70253300

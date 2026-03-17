@@ -250,25 +250,6 @@ public class CommerceInventoryWarehouseItemUtil {
 	}
 
 	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouseItem[] findByUuid_PrevAndNext(
-			long commerceInventoryWarehouseItemId, String uuid,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceInventoryWarehouseItemId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -436,27 +417,6 @@ public class CommerceInventoryWarehouseItemUtil {
 	}
 
 	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouseItem[] findByUuid_C_PrevAndNext(
-			long commerceInventoryWarehouseItemId, String uuid, long companyId,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceInventoryWarehouseItemId, uuid, companyId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce inventory warehouse items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -615,25 +575,6 @@ public class CommerceInventoryWarehouseItemUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouseItem[] findByCompanyId_PrevAndNext(
-			long commerceInventoryWarehouseItemId, long companyId,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commerceInventoryWarehouseItemId, companyId, orderByComparator);
 	}
 
 	/**
@@ -808,29 +749,6 @@ public class CommerceInventoryWarehouseItemUtil {
 
 		return getPersistence().fetchByCommerceInventoryWarehouseId_Last(
 			commerceInventoryWarehouseId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouseItem[]
-			findByCommerceInventoryWarehouseId_PrevAndNext(
-				long commerceInventoryWarehouseItemId,
-				long commerceInventoryWarehouseId,
-				OrderByComparator<CommerceInventoryWarehouseItem>
-					orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByCommerceInventoryWarehouseId_PrevAndNext(
-			commerceInventoryWarehouseItemId, commerceInventoryWarehouseId,
-			orderByComparator);
 	}
 
 	/**
@@ -1015,29 +933,6 @@ public class CommerceInventoryWarehouseItemUtil {
 
 		return getPersistence().fetchByC_S_U_Last(
 			companyId, sku, unitOfMeasureKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouseItem[] findByC_S_U_PrevAndNext(
-			long commerceInventoryWarehouseItemId, long companyId, String sku,
-			String unitOfMeasureKey,
-			OrderByComparator<CommerceInventoryWarehouseItem> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseItemException {
-
-		return getPersistence().findByC_S_U_PrevAndNext(
-			commerceInventoryWarehouseItemId, companyId, sku, unitOfMeasureKey,
-			orderByComparator);
 	}
 
 	/**
@@ -1407,4 +1302,4 @@ public class CommerceInventoryWarehouseItemUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-247673354
+// LIFERAY-SERVICE-BUILDER-HASH:855373421

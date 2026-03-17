@@ -252,25 +252,6 @@ public class CTPreferencesUtil {
 	}
 
 	/**
-	 * Returns the ct preferenceses before and after the current ct preferences in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctPreferencesId the primary key of the current ct preferences
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct preferences
-	 * @throws NoSuchPreferencesException if a ct preferences with the primary key could not be found
-	 */
-	public static CTPreferences[] findByCtCollectionId_PrevAndNext(
-			long ctPreferencesId, long ctCollectionId,
-			OrderByComparator<CTPreferences> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchPreferencesException {
-
-		return getPersistence().findByCtCollectionId_PrevAndNext(
-			ctPreferencesId, ctCollectionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ct preferenceses where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -430,25 +411,6 @@ public class CTPreferencesUtil {
 
 		return getPersistence().fetchByPreviousCtCollectionId_Last(
 			previousCtCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct preferenceses before and after the current ct preferences in the ordered set where previousCtCollectionId = &#63;.
-	 *
-	 * @param ctPreferencesId the primary key of the current ct preferences
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct preferences
-	 * @throws NoSuchPreferencesException if a ct preferences with the primary key could not be found
-	 */
-	public static CTPreferences[] findByPreviousCtCollectionId_PrevAndNext(
-			long ctPreferencesId, long previousCtCollectionId,
-			OrderByComparator<CTPreferences> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchPreferencesException {
-
-		return getPersistence().findByPreviousCtCollectionId_PrevAndNext(
-			ctPreferencesId, previousCtCollectionId, orderByComparator);
 	}
 
 	/**
@@ -701,4 +663,4 @@ public class CTPreferencesUtil {
 	private static volatile CTPreferencesPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:230534002
+// LIFERAY-SERVICE-BUILDER-HASH:-56811557

@@ -145,21 +145,6 @@ public interface RegionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the regions before and after the current region in the ordered set where uuid = &#63;.
-	 *
-	 * @param regionId the primary key of the current region
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next region
-	 * @throws NoSuchRegionException if a region with the primary key could not be found
-	 */
-	public Region[] findByUuid_PrevAndNext(
-			long regionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
-
-	/**
 	 * Removes all the regions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -296,22 +281,6 @@ public interface RegionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the regions before and after the current region in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param regionId the primary key of the current region
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next region
-	 * @throws NoSuchRegionException if a region with the primary key could not be found
-	 */
-	public Region[] findByUuid_C_PrevAndNext(
-			long regionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
-
-	/**
 	 * Removes all the regions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -442,21 +411,6 @@ public interface RegionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the regions before and after the current region in the ordered set where countryId = &#63;.
-	 *
-	 * @param regionId the primary key of the current region
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next region
-	 * @throws NoSuchRegionException if a region with the primary key could not be found
-	 */
-	public Region[] findByCountryId_PrevAndNext(
-			long regionId, long countryId,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
-
-	/**
 	 * Removes all the regions where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -583,21 +537,6 @@ public interface RegionPersistence
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region>
 			orderByComparator);
-
-	/**
-	 * Returns the regions before and after the current region in the ordered set where active = &#63;.
-	 *
-	 * @param regionId the primary key of the current region
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next region
-	 * @throws NoSuchRegionException if a region with the primary key could not be found
-	 */
-	public Region[] findByActive_PrevAndNext(
-			long regionId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
 
 	/**
 	 * Removes all the regions where active = &#63; from the database.
@@ -734,22 +673,6 @@ public interface RegionPersistence
 		long countryId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region>
 			orderByComparator);
-
-	/**
-	 * Returns the regions before and after the current region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param regionId the primary key of the current region
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next region
-	 * @throws NoSuchRegionException if a region with the primary key could not be found
-	 */
-	public Region[] findByC_A_PrevAndNext(
-			long regionId, long countryId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Region>
-				orderByComparator)
-		throws NoSuchRegionException;
 
 	/**
 	 * Removes all the regions where countryId = &#63; and active = &#63; from the database.
@@ -937,4 +860,4 @@ public interface RegionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1217917932
+// LIFERAY-SERVICE-BUILDER-HASH:1179589537

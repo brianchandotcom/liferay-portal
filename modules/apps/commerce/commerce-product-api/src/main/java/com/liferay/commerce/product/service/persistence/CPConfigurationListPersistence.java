@@ -150,21 +150,6 @@ public interface CPConfigurationListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByUuid_PrevAndNext(
-			long CPConfigurationListId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
-
-	/**
 	 * Removes all the cp configuration lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -352,22 +337,6 @@ public interface CPConfigurationListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByUuid_C_PrevAndNext(
-			long CPConfigurationListId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
-
-	/**
 	 * Removes all the cp configuration lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface CPConfigurationListPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationList>
 			orderByComparator);
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByCompanyId_PrevAndNext(
-			long CPConfigurationListId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
 
 	/**
 	 * Removes all the cp configuration lists where companyId = &#63; from the database.
@@ -643,21 +597,6 @@ public interface CPConfigurationListPersistence
 		long parentCPConfigurationListId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationList>
 			orderByComparator);
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByParentCPConfigurationListId_PrevAndNext(
-			long CPConfigurationListId, long parentCPConfigurationListId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
 
 	/**
 	 * Removes all the cp configuration lists where parentCPConfigurationListId = &#63; from the database.
@@ -797,22 +736,6 @@ public interface CPConfigurationListPersistence
 		long groupId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationList>
 			orderByComparator);
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByG_C_PrevAndNext(
-			long CPConfigurationListId, long groupId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
 
 	/**
 	 * Returns all the cp configuration lists where groupId = any &#63; and companyId = &#63;.
@@ -1033,22 +956,6 @@ public interface CPConfigurationListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByG_M_PrevAndNext(
-			long CPConfigurationListId, long groupId, boolean master,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
-
-	/**
 	 * Removes all the cp configuration lists where groupId = &#63; and master = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1186,22 +1093,6 @@ public interface CPConfigurationListPersistence
 		Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationList>
 			orderByComparator);
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByLtD_S_PrevAndNext(
-			long CPConfigurationListId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
 
 	/**
 	 * Removes all the cp configuration lists where displayDate &lt; &#63; and status = &#63; from the database.
@@ -1349,24 +1240,6 @@ public interface CPConfigurationListPersistence
 		long groupId, long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationList>
 			orderByComparator);
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByG_C_S_PrevAndNext(
-			long CPConfigurationListId, long groupId, long companyId,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
 
 	/**
 	 * Returns all the cp configuration lists where groupId = any &#63; and companyId = &#63; and status = &#63;.
@@ -1600,24 +1473,6 @@ public interface CPConfigurationListPersistence
 		long groupId, long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationList>
 			orderByComparator);
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public CPConfigurationList[] findByG_C_NotS_PrevAndNext(
-			long CPConfigurationListId, long groupId, long companyId,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPConfigurationList> orderByComparator)
-		throws NoSuchCPConfigurationListException;
 
 	/**
 	 * Returns all the cp configuration lists where groupId = any &#63; and companyId = &#63; and status &ne; &#63;.
@@ -1898,4 +1753,4 @@ public interface CPConfigurationListPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2003886762
+// LIFERAY-SERVICE-BUILDER-HASH:1562350926

@@ -146,21 +146,6 @@ public interface OAuth2AuthorizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where userId = &#63;.
-	 *
-	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
-	 */
-	public OAuth2Authorization[] findByUserId_PrevAndNext(
-			long oAuth2AuthorizationId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException;
-
-	/**
 	 * Removes all the o auth2 authorizations where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -288,21 +273,6 @@ public interface OAuth2AuthorizationPersistence
 		long oAuth2ApplicationId,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
 			orderByComparator);
-
-	/**
-	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where oAuth2ApplicationId = &#63;.
-	 *
-	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
-	 */
-	public OAuth2Authorization[] findByOAuth2ApplicationId_PrevAndNext(
-			long oAuth2AuthorizationId, long oAuth2ApplicationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException;
 
 	/**
 	 * Removes all the o auth2 authorizations where oAuth2ApplicationId = &#63; from the database.
@@ -442,23 +412,6 @@ public interface OAuth2AuthorizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where companyId = &#63; and accessTokenContentHash = &#63;.
-	 *
-	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
-	 * @param companyId the company ID
-	 * @param accessTokenContentHash the access token content hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
-	 */
-	public OAuth2Authorization[] findByC_ATCH_PrevAndNext(
-			long oAuth2AuthorizationId, long companyId,
-			long accessTokenContentHash,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException;
-
-	/**
 	 * Removes all the o auth2 authorizations where companyId = &#63; and accessTokenContentHash = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -596,23 +549,6 @@ public interface OAuth2AuthorizationPersistence
 		long companyId, long refreshTokenContentHash,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
 			orderByComparator);
-
-	/**
-	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where companyId = &#63; and refreshTokenContentHash = &#63;.
-	 *
-	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
-	 * @param companyId the company ID
-	 * @param refreshTokenContentHash the refresh token content hash
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
-	 */
-	public OAuth2Authorization[] findByC_RTCH_PrevAndNext(
-			long oAuth2AuthorizationId, long companyId,
-			long refreshTokenContentHash,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException;
 
 	/**
 	 * Removes all the o auth2 authorizations where companyId = &#63; and refreshTokenContentHash = &#63; from the database.
@@ -763,24 +699,6 @@ public interface OAuth2AuthorizationPersistence
 		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
 			orderByComparator);
-
-	/**
-	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
-	 *
-	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
-	 * @param userId the user ID
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param rememberDeviceContent the remember device content
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
-	 */
-	public OAuth2Authorization[] findByU_O_R_PrevAndNext(
-			long oAuth2AuthorizationId, long userId, long oAuth2ApplicationId,
-			String rememberDeviceContent,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuth2Authorization> orderByComparator)
-		throws NoSuchOAuth2AuthorizationException;
 
 	/**
 	 * Removes all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63; from the database.
@@ -1106,4 +1024,4 @@ public interface OAuth2AuthorizationPersistence
 			oAuth2ScopeGrants);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-564527651
+// LIFERAY-SERVICE-BUILDER-HASH:1469879191

@@ -242,25 +242,6 @@ public class LayoutFriendlyURLUtil {
 	}
 
 	/**
-	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where uuid = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	public static LayoutFriendlyURL[] findByUuid_PrevAndNext(
-			long layoutFriendlyURLId, String uuid,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutFriendlyURLException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			layoutFriendlyURLId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout friendly urls where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -493,26 +474,6 @@ public class LayoutFriendlyURLUtil {
 	}
 
 	/**
-	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	public static LayoutFriendlyURL[] findByUuid_C_PrevAndNext(
-			long layoutFriendlyURLId, String uuid, long companyId,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutFriendlyURLException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			layoutFriendlyURLId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout friendly urls where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -664,25 +625,6 @@ public class LayoutFriendlyURLUtil {
 		long groupId, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where groupId = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	public static LayoutFriendlyURL[] findByGroupId_PrevAndNext(
-			long layoutFriendlyURLId, long groupId,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutFriendlyURLException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			layoutFriendlyURLId, groupId, orderByComparator);
 	}
 
 	/**
@@ -843,25 +785,6 @@ public class LayoutFriendlyURLUtil {
 	}
 
 	/**
-	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where companyId = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	public static LayoutFriendlyURL[] findByCompanyId_PrevAndNext(
-			long layoutFriendlyURLId, long companyId,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutFriendlyURLException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			layoutFriendlyURLId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout friendly urls where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1007,25 +930,6 @@ public class LayoutFriendlyURLUtil {
 		long plid, OrderByComparator<LayoutFriendlyURL> orderByComparator) {
 
 		return getPersistence().fetchByPlid_Last(plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where plid = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	public static LayoutFriendlyURL[] findByPlid_PrevAndNext(
-			long layoutFriendlyURLId, long plid,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutFriendlyURLException {
-
-		return getPersistence().findByPlid_PrevAndNext(
-			layoutFriendlyURLId, plid, orderByComparator);
 	}
 
 	/**
@@ -1197,26 +1101,6 @@ public class LayoutFriendlyURLUtil {
 	}
 
 	/**
-	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where companyId = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
-	 * @param companyId the company ID
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	public static LayoutFriendlyURL[] findByC_F_PrevAndNext(
-			long layoutFriendlyURLId, long companyId, String friendlyURL,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutFriendlyURLException {
-
-		return getPersistence().findByC_F_PrevAndNext(
-			layoutFriendlyURLId, companyId, friendlyURL, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout friendly urls where companyId = &#63; and friendlyURL = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1383,26 +1267,6 @@ public class LayoutFriendlyURLUtil {
 
 		return getPersistence().fetchByP_F_Last(
 			plid, friendlyURL, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where plid = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
-	 * @param plid the plid
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	public static LayoutFriendlyURL[] findByP_F_PrevAndNext(
-			long layoutFriendlyURLId, long plid, String friendlyURL,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutFriendlyURLException {
-
-		return getPersistence().findByP_F_PrevAndNext(
-			layoutFriendlyURLId, plid, friendlyURL, orderByComparator);
 	}
 
 	/**
@@ -1745,29 +1609,6 @@ public class LayoutFriendlyURLUtil {
 	}
 
 	/**
-	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	public static LayoutFriendlyURL[] findByG_P_F_PrevAndNext(
-			long layoutFriendlyURLId, long groupId, boolean privateLayout,
-			String friendlyURL,
-			OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutFriendlyURLException {
-
-		return getPersistence().findByG_P_F_PrevAndNext(
-			layoutFriendlyURLId, groupId, privateLayout, friendlyURL,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2054,4 +1895,4 @@ public class LayoutFriendlyURLUtil {
 	private static volatile LayoutFriendlyURLPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1475714240
+// LIFERAY-SERVICE-BUILDER-HASH:1256791674

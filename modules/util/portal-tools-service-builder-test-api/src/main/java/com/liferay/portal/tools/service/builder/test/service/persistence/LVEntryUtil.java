@@ -237,25 +237,6 @@ public class LVEntryUtil {
 	}
 
 	/**
-	 * Returns the lv entries before and after the current lv entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param lvEntryId the primary key of the current lv entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	public static LVEntry[] findByUuid_PrevAndNext(
-			long lvEntryId, String uuid,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			lvEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -417,26 +398,6 @@ public class LVEntryUtil {
 
 		return getPersistence().fetchByUuid_Head_Last(
 			uuid, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the lv entries before and after the current lv entry in the ordered set where uuid = &#63; and head = &#63;.
-	 *
-	 * @param lvEntryId the primary key of the current lv entry
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	public static LVEntry[] findByUuid_Head_PrevAndNext(
-			long lvEntryId, String uuid, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUuid_Head_PrevAndNext(
-			lvEntryId, uuid, head, orderByComparator);
 	}
 
 	/**
@@ -603,26 +564,6 @@ public class LVEntryUtil {
 
 		return getPersistence().fetchByUUID_G_Last(
 			uuid, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the lv entries before and after the current lv entry in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param lvEntryId the primary key of the current lv entry
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	public static LVEntry[] findByUUID_G_PrevAndNext(
-			long lvEntryId, String uuid, long groupId,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUUID_G_PrevAndNext(
-			lvEntryId, uuid, groupId, orderByComparator);
 	}
 
 	/**
@@ -869,26 +810,6 @@ public class LVEntryUtil {
 	}
 
 	/**
-	 * Returns the lv entries before and after the current lv entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param lvEntryId the primary key of the current lv entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	public static LVEntry[] findByUuid_C_PrevAndNext(
-			long lvEntryId, String uuid, long companyId,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			lvEntryId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1067,27 +988,6 @@ public class LVEntryUtil {
 	}
 
 	/**
-	 * Returns the lv entries before and after the current lv entry in the ordered set where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param lvEntryId the primary key of the current lv entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	public static LVEntry[] findByUuid_C_Head_PrevAndNext(
-			long lvEntryId, String uuid, long companyId, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByUuid_C_Head_PrevAndNext(
-			lvEntryId, uuid, companyId, head, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entries where uuid = &#63; and companyId = &#63; and head = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1242,25 +1142,6 @@ public class LVEntryUtil {
 		long groupId, OrderByComparator<LVEntry> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the lv entries before and after the current lv entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param lvEntryId the primary key of the current lv entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	public static LVEntry[] findByGroupId_PrevAndNext(
-			long lvEntryId, long groupId,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			lvEntryId, groupId, orderByComparator);
 	}
 
 	/**
@@ -1510,26 +1391,6 @@ public class LVEntryUtil {
 
 		return getPersistence().fetchByGroupId_Head_Last(
 			groupId, head, orderByComparator);
-	}
-
-	/**
-	 * Returns the lv entries before and after the current lv entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param lvEntryId the primary key of the current lv entry
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	public static LVEntry[] findByGroupId_Head_PrevAndNext(
-			long lvEntryId, long groupId, boolean head,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByGroupId_Head_PrevAndNext(
-			lvEntryId, groupId, head, orderByComparator);
 	}
 
 	/**
@@ -1792,26 +1653,6 @@ public class LVEntryUtil {
 
 		return getPersistence().fetchByG_UGK_Last(
 			groupId, uniqueGroupKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the lv entries before and after the current lv entry in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param lvEntryId the primary key of the current lv entry
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	public static LVEntry[] findByG_UGK_PrevAndNext(
-			long lvEntryId, long groupId, String uniqueGroupKey,
-			OrderByComparator<LVEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryException {
-
-		return getPersistence().findByG_UGK_PrevAndNext(
-			lvEntryId, groupId, uniqueGroupKey, orderByComparator);
 	}
 
 	/**
@@ -2376,4 +2217,4 @@ public class LVEntryUtil {
 	private static volatile LVEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2079055007
+// LIFERAY-SERVICE-BUILDER-HASH:1192612511

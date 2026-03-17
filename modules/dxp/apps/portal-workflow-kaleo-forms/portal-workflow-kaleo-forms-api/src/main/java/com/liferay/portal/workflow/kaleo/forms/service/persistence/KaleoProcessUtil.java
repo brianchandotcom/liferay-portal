@@ -240,25 +240,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Returns the kaleo processes before and after the current kaleo process in the ordered set where uuid = &#63;.
-	 *
-	 * @param kaleoProcessId the primary key of the current kaleo process
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	public static KaleoProcess[] findByUuid_PrevAndNext(
-			long kaleoProcessId, String uuid,
-			OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			kaleoProcessId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -489,26 +470,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Returns the kaleo processes before and after the current kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param kaleoProcessId the primary key of the current kaleo process
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	public static KaleoProcess[] findByUuid_C_PrevAndNext(
-			long kaleoProcessId, String uuid, long companyId,
-			OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			kaleoProcessId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -661,25 +622,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Returns the kaleo processes before and after the current kaleo process in the ordered set where groupId = &#63;.
-	 *
-	 * @param kaleoProcessId the primary key of the current kaleo process
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	public static KaleoProcess[] findByGroupId_PrevAndNext(
-			long kaleoProcessId, long groupId,
-			OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			kaleoProcessId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the kaleo processes that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -726,25 +668,6 @@ public class KaleoProcessUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo processes before and after the current kaleo process in the ordered set of kaleo processes that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param kaleoProcessId the primary key of the current kaleo process
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	public static KaleoProcess[] filterFindByGroupId_PrevAndNext(
-			long kaleoProcessId, long groupId,
-			OrderByComparator<KaleoProcess> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			kaleoProcessId, groupId, orderByComparator);
 	}
 
 	/**
@@ -997,4 +920,4 @@ public class KaleoProcessUtil {
 	private static volatile KaleoProcessPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1126846785
+// LIFERAY-SERVICE-BUILDER-HASH:-618694795

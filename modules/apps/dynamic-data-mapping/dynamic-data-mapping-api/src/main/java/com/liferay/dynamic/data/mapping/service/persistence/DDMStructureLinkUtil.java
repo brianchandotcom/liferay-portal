@@ -249,25 +249,6 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	 * Returns the ddm structure links before and after the current ddm structure link in the ordered set where structureId = &#63;.
-	 *
-	 * @param structureLinkId the primary key of the current ddm structure link
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure link
-	 * @throws NoSuchStructureLinkException if a ddm structure link with the primary key could not be found
-	 */
-	public static DDMStructureLink[] findByStructureId_PrevAndNext(
-			long structureLinkId, long structureId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLinkException {
-
-		return getPersistence().findByStructureId_PrevAndNext(
-			structureLinkId, structureId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm structure links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -433,26 +414,6 @@ public class DDMStructureLinkUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm structure links before and after the current ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param structureLinkId the primary key of the current ddm structure link
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure link
-	 * @throws NoSuchStructureLinkException if a ddm structure link with the primary key could not be found
-	 */
-	public static DDMStructureLink[] findByC_C_PrevAndNext(
-			long structureLinkId, long classNameId, long classPK,
-			OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLinkException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			structureLinkId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -719,4 +680,4 @@ public class DDMStructureLinkUtil {
 	private static volatile DDMStructureLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1628482815
+// LIFERAY-SERVICE-BUILDER-HASH:1800618054

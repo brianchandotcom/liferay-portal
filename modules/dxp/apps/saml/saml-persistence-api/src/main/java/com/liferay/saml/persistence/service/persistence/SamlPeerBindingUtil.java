@@ -271,29 +271,6 @@ public class SamlPeerBindingUtil {
 	}
 
 	/**
-	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param samlPeerBindingId the primary key of the current saml peer binding
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml peer binding
-	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
-	 */
-	public static SamlPeerBinding[] findByC_D_SNIV_PrevAndNext(
-			long samlPeerBindingId, long companyId, boolean deleted,
-			String samlNameIdValue,
-			OrderByComparator<SamlPeerBinding> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchPeerBindingException {
-
-		return getPersistence().findByC_D_SNIV_PrevAndNext(
-			samlPeerBindingId, companyId, deleted, samlNameIdValue,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -495,30 +472,6 @@ public class SamlPeerBindingUtil {
 	}
 
 	/**
-	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param samlPeerBindingId the primary key of the current saml peer binding
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml peer binding
-	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
-	 */
-	public static SamlPeerBinding[] findByC_U_SPEI_D_PrevAndNext(
-			long samlPeerBindingId, long companyId, long userId,
-			String samlPeerEntityId, boolean deleted,
-			OrderByComparator<SamlPeerBinding> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchPeerBindingException {
-
-		return getPersistence().findByC_U_SPEI_D_PrevAndNext(
-			samlPeerBindingId, companyId, userId, samlPeerEntityId, deleted,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -711,4 +664,4 @@ public class SamlPeerBindingUtil {
 	private static volatile SamlPeerBindingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-88985039
+// LIFERAY-SERVICE-BUILDER-HASH:-1110298132

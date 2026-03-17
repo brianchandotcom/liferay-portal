@@ -149,21 +149,6 @@ public interface AssetCategoryPropertyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset category properties before and after the current asset category property in the ordered set where companyId = &#63;.
-	 *
-	 * @param categoryPropertyId the primary key of the current asset category property
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset category property
-	 * @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
-	 */
-	public AssetCategoryProperty[] findByCompanyId_PrevAndNext(
-			long categoryPropertyId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetCategoryProperty> orderByComparator)
-		throws NoSuchCategoryPropertyException;
-
-	/**
 	 * Removes all the asset category properties where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -291,21 +276,6 @@ public interface AssetCategoryPropertyPersistence
 		long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
 			orderByComparator);
-
-	/**
-	 * Returns the asset category properties before and after the current asset category property in the ordered set where categoryId = &#63;.
-	 *
-	 * @param categoryPropertyId the primary key of the current asset category property
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset category property
-	 * @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
-	 */
-	public AssetCategoryProperty[] findByCategoryId_PrevAndNext(
-			long categoryPropertyId, long categoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetCategoryProperty> orderByComparator)
-		throws NoSuchCategoryPropertyException;
 
 	/**
 	 * Removes all the asset category properties where categoryId = &#63; from the database.
@@ -443,22 +413,6 @@ public interface AssetCategoryPropertyPersistence
 		long companyId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
 			orderByComparator);
-
-	/**
-	 * Returns the asset category properties before and after the current asset category property in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param categoryPropertyId the primary key of the current asset category property
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset category property
-	 * @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
-	 */
-	public AssetCategoryProperty[] findByC_K_PrevAndNext(
-			long categoryPropertyId, long companyId, String key,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetCategoryProperty> orderByComparator)
-		throws NoSuchCategoryPropertyException;
 
 	/**
 	 * Removes all the asset category properties where companyId = &#63; and key = &#63; from the database.
@@ -703,4 +657,4 @@ public interface AssetCategoryPropertyPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1836812433
+// LIFERAY-SERVICE-BUILDER-HASH:408741628

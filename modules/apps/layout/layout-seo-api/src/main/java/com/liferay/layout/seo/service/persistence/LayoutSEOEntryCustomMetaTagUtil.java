@@ -267,28 +267,6 @@ public class LayoutSEOEntryCustomMetaTagUtil {
 	}
 
 	/**
-	 * Returns the layout seo entry custom meta tags before and after the current layout seo entry custom meta tag in the ordered set where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * @param layoutSEOEntryCustomMetaTagId the primary key of the current layout seo entry custom meta tag
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout seo entry custom meta tag
-	 * @throws NoSuchEntryCustomMetaTagException if a layout seo entry custom meta tag with the primary key could not be found
-	 */
-	public static LayoutSEOEntryCustomMetaTag[] findByG_L_PrevAndNext(
-			long layoutSEOEntryCustomMetaTagId, long groupId,
-			long layoutSEOEntryId,
-			OrderByComparator<LayoutSEOEntryCustomMetaTag> orderByComparator)
-		throws com.liferay.layout.seo.exception.
-			NoSuchEntryCustomMetaTagException {
-
-		return getPersistence().findByG_L_PrevAndNext(
-			layoutSEOEntryCustomMetaTagId, groupId, layoutSEOEntryId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -488,4 +466,4 @@ public class LayoutSEOEntryCustomMetaTagUtil {
 	private static volatile LayoutSEOEntryCustomMetaTagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-148620798
+// LIFERAY-SERVICE-BUILDER-HASH:89510003

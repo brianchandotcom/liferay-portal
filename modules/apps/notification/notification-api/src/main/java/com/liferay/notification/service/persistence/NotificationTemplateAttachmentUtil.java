@@ -272,29 +272,6 @@ public class NotificationTemplateAttachmentUtil {
 	}
 
 	/**
-	 * Returns the notification template attachments before and after the current notification template attachment in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateAttachmentId the primary key of the current notification template attachment
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification template attachment
-	 * @throws NoSuchNotificationTemplateAttachmentException if a notification template attachment with the primary key could not be found
-	 */
-	public static NotificationTemplateAttachment[]
-			findByNotificationTemplateId_PrevAndNext(
-				long notificationTemplateAttachmentId,
-				long notificationTemplateId,
-				OrderByComparator<NotificationTemplateAttachment>
-					orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationTemplateAttachmentException {
-
-		return getPersistence().findByNotificationTemplateId_PrevAndNext(
-			notificationTemplateAttachmentId, notificationTemplateId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the notification template attachments where notificationTemplateId = &#63; from the database.
 	 *
 	 * @param notificationTemplateId the notification template ID
@@ -576,4 +553,4 @@ public class NotificationTemplateAttachmentUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1924629745
+// LIFERAY-SERVICE-BUILDER-HASH:-179750692

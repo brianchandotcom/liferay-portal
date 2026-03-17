@@ -246,25 +246,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[] findByUuid_PrevAndNext(
-			long CPConfigurationListId, String uuid,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			CPConfigurationListId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -497,26 +478,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[] findByUuid_C_PrevAndNext(
-			long CPConfigurationListId, String uuid, long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			CPConfigurationListId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -673,25 +634,6 @@ public class CPConfigurationListUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[] findByCompanyId_PrevAndNext(
-			long CPConfigurationListId, long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			CPConfigurationListId, companyId, orderByComparator);
 	}
 
 	/**
@@ -854,27 +796,6 @@ public class CPConfigurationListUtil {
 
 		return getPersistence().fetchByParentCPConfigurationListId_Last(
 			parentCPConfigurationListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where parentCPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[]
-			findByParentCPConfigurationListId_PrevAndNext(
-				long CPConfigurationListId, long parentCPConfigurationListId,
-				OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByParentCPConfigurationListId_PrevAndNext(
-			CPConfigurationListId, parentCPConfigurationListId,
-			orderByComparator);
 	}
 
 	/**
@@ -1048,26 +969,6 @@ public class CPConfigurationListUtil {
 
 		return getPersistence().fetchByG_C_Last(
 			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[] findByG_C_PrevAndNext(
-			long CPConfigurationListId, long groupId, long companyId,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByG_C_PrevAndNext(
-			CPConfigurationListId, groupId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1333,26 +1234,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and master = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[] findByG_M_PrevAndNext(
-			long CPConfigurationListId, long groupId, boolean master,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByG_M_PrevAndNext(
-			CPConfigurationListId, groupId, master, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration lists where groupId = &#63; and master = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1519,26 +1400,6 @@ public class CPConfigurationListUtil {
 
 		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[] findByLtD_S_PrevAndNext(
-			long CPConfigurationListId, Date displayDate, int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByLtD_S_PrevAndNext(
-			CPConfigurationListId, displayDate, status, orderByComparator);
 	}
 
 	/**
@@ -1718,29 +1579,6 @@ public class CPConfigurationListUtil {
 
 		return getPersistence().fetchByG_C_S_Last(
 			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[] findByG_C_S_PrevAndNext(
-			long CPConfigurationListId, long groupId, long companyId,
-			int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByG_C_S_PrevAndNext(
-			CPConfigurationListId, groupId, companyId, status,
-			orderByComparator);
 	}
 
 	/**
@@ -2024,29 +1862,6 @@ public class CPConfigurationListUtil {
 
 		return getPersistence().fetchByG_C_NotS_Last(
 			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp configuration lists before and after the current cp configuration list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param CPConfigurationListId the primary key of the current cp configuration list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list
-	 * @throws NoSuchCPConfigurationListException if a cp configuration list with the primary key could not be found
-	 */
-	public static CPConfigurationList[] findByG_C_NotS_PrevAndNext(
-			long CPConfigurationListId, long groupId, long companyId,
-			int status,
-			OrderByComparator<CPConfigurationList> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListException {
-
-		return getPersistence().findByG_C_NotS_PrevAndNext(
-			CPConfigurationListId, groupId, companyId, status,
-			orderByComparator);
 	}
 
 	/**
@@ -2421,4 +2236,4 @@ public class CPConfigurationListUtil {
 	private static volatile CPConfigurationListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-304210981
+// LIFERAY-SERVICE-BUILDER-HASH:233266247

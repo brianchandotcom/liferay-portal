@@ -189,21 +189,6 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 			orderByComparator);
 
 	/**
-	 * Returns the faro projects before and after the current faro project in the ordered set where userId = &#63;.
-	 *
-	 * @param faroProjectId the primary key of the current faro project
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro project
-	 * @throws NoSuchFaroProjectException if a faro project with the primary key could not be found
-	 */
-	public FaroProject[] findByUserId_PrevAndNext(
-			long faroProjectId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroProject>
-				orderByComparator)
-		throws NoSuchFaroProjectException;
-
-	/**
 	 * Removes all the faro projects where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -376,21 +361,6 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 		String serverLocation,
 		com.liferay.portal.kernel.util.OrderByComparator<FaroProject>
 			orderByComparator);
-
-	/**
-	 * Returns the faro projects before and after the current faro project in the ordered set where serverLocation = &#63;.
-	 *
-	 * @param faroProjectId the primary key of the current faro project
-	 * @param serverLocation the server location
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro project
-	 * @throws NoSuchFaroProjectException if a faro project with the primary key could not be found
-	 */
-	public FaroProject[] findByServerLocation_PrevAndNext(
-			long faroProjectId, String serverLocation,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroProject>
-				orderByComparator)
-		throws NoSuchFaroProjectException;
 
 	/**
 	 * Removes all the faro projects where serverLocation = &#63; from the database.
@@ -573,4 +543,4 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1383033040
+// LIFERAY-SERVICE-BUILDER-HASH:580472147

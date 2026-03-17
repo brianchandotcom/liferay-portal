@@ -247,24 +247,6 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	 * Returns the journal article resources before and after the current journal article resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current journal article resource
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article resource
-	 * @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 */
-	public static JournalArticleResource[] findByUuid_PrevAndNext(
-			long resourcePrimKey, String uuid,
-			OrderByComparator<JournalArticleResource> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleResourceException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			resourcePrimKey, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal article resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,25 +478,6 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	 * Returns the journal article resources before and after the current journal article resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current journal article resource
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article resource
-	 * @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 */
-	public static JournalArticleResource[] findByUuid_C_PrevAndNext(
-			long resourcePrimKey, String uuid, long companyId,
-			OrderByComparator<JournalArticleResource> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleResourceException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			resourcePrimKey, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal article resources where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -666,24 +629,6 @@ public class JournalArticleResourceUtil {
 		OrderByComparator<JournalArticleResource> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal article resources before and after the current journal article resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current journal article resource
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article resource
-	 * @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 */
-	public static JournalArticleResource[] findByGroupId_PrevAndNext(
-			long resourcePrimKey, long groupId,
-			OrderByComparator<JournalArticleResource> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleResourceException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			resourcePrimKey, groupId, orderByComparator);
 	}
 
 	/**
@@ -942,4 +887,4 @@ public class JournalArticleResourceUtil {
 	private static volatile JournalArticleResourcePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2103309258
+// LIFERAY-SERVICE-BUILDER-HASH:1517449968

@@ -146,21 +146,6 @@ public interface ChangesetEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public ChangesetEntry[] findByGroupId_PrevAndNext(
-			long changesetEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the changeset entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -287,21 +272,6 @@ public interface ChangesetEntryPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public ChangesetEntry[] findByCompanyId_PrevAndNext(
-			long changesetEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the changeset entries where companyId = &#63; from the database.
@@ -431,21 +401,6 @@ public interface ChangesetEntryPersistence
 		long changesetCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where changesetCollectionId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param changesetCollectionId the changeset collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public ChangesetEntry[] findByChangesetCollectionId_PrevAndNext(
-			long changesetEntryId, long changesetCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the changeset entries where changesetCollectionId = &#63; from the database.
@@ -585,22 +540,6 @@ public interface ChangesetEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public ChangesetEntry[] findByG_C_PrevAndNext(
-			long changesetEntryId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the changeset entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -738,22 +677,6 @@ public interface ChangesetEntryPersistence
 		long changesetCollectionId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where changesetCollectionId = &#63; and classNameId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param changesetCollectionId the changeset collection ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public ChangesetEntry[] findByC_C_PrevAndNext(
-			long changesetEntryId, long changesetCollectionId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the changeset entries where changesetCollectionId = &#63; and classNameId = &#63; from the database.
@@ -1017,4 +940,4 @@ public interface ChangesetEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1336432567
+// LIFERAY-SERVICE-BUILDER-HASH:17752073

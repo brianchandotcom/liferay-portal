@@ -148,21 +148,6 @@ public interface SamlIdpSpSessionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saml idp sp sessions before and after the current saml idp sp session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param samlIdpSpSessionId the primary key of the current saml idp sp session
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a saml idp sp session with the primary key could not be found
-	 */
-	public SamlIdpSpSession[] findByLtCreateDate_PrevAndNext(
-			long samlIdpSpSessionId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-				orderByComparator)
-		throws NoSuchIdpSpSessionException;
-
-	/**
 	 * Removes all the saml idp sp sessions where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -290,21 +275,6 @@ public interface SamlIdpSpSessionPersistence
 		long samlIdpSsoSessionId,
 		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
 			orderByComparator);
-
-	/**
-	 * Returns the saml idp sp sessions before and after the current saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
-	 *
-	 * @param samlIdpSpSessionId the primary key of the current saml idp sp session
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a saml idp sp session with the primary key could not be found
-	 */
-	public SamlIdpSpSession[] findBySamlIdpSsoSessionId_PrevAndNext(
-			long samlIdpSpSessionId, long samlIdpSsoSessionId,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-				orderByComparator)
-		throws NoSuchIdpSpSessionException;
 
 	/**
 	 * Removes all the saml idp sp sessions where samlIdpSsoSessionId = &#63; from the database.
@@ -442,4 +412,4 @@ public interface SamlIdpSpSessionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2098825811
+// LIFERAY-SERVICE-BUILDER-HASH:1901547859

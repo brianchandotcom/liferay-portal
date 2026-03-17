@@ -253,24 +253,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByPatcherProjectVersionId_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByPatcherProjectVersionId_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -321,24 +303,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByPatcherProjectVersionId(
 			patcherProjectVersionId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByPatcherProjectVersionId_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByPatcherProjectVersionId_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, orderByComparator);
 	}
 
 	/**
@@ -539,27 +503,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByP_L_T_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId, boolean latestFix,
-			int type, OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByP_L_T_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, latestFix, type,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -617,27 +560,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByP_L_T(
 			patcherProjectVersionId, latestFix, type, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByP_L_T_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId, boolean latestFix,
-			int type, OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByP_L_T_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, latestFix, type,
 			orderByComparator);
 	}
 
@@ -845,27 +767,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where patcherProjectVersionId = &#63; and latestFix = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByP_L_NotT_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId, boolean latestFix,
-			int type, OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByP_L_NotT_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, latestFix, type,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and type &ne; &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -923,27 +824,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByP_L_NotT(
 			patcherProjectVersionId, latestFix, type, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByP_L_NotT_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId, boolean latestFix,
-			int type, OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByP_L_NotT_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, latestFix, type,
 			orderByComparator);
 	}
 
@@ -1148,26 +1028,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where key = &#63; and keyVersion &gt; &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByK_GtKV_NotT_PrevAndNext(
-			long patcherFixId, String key, double keyVersion, int type,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByK_GtKV_NotT_PrevAndNext(
-			patcherFixId, key, keyVersion, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where key = &#63; and keyVersion &gt; &#63; and type &ne; &#63;.
 	 *
 	 * @param key the key
@@ -1223,26 +1083,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByK_GtKV_NotT(
 			key, keyVersion, type, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where key = &#63; and keyVersion &gt; &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByK_GtKV_NotT_PrevAndNext(
-			long patcherFixId, String key, double keyVersion, int type,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByK_GtKV_NotT_PrevAndNext(
-			patcherFixId, key, keyVersion, type, orderByComparator);
 	}
 
 	/**
@@ -1443,26 +1283,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where key = &#63; and keyVersion &lt; &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByK_LtKV_NotT_PrevAndNext(
-			long patcherFixId, String key, double keyVersion, int type,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByK_LtKV_NotT_PrevAndNext(
-			patcherFixId, key, keyVersion, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where key = &#63; and keyVersion &lt; &#63; and type &ne; &#63;.
 	 *
 	 * @param key the key
@@ -1518,26 +1338,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByK_LtKV_NotT(
 			key, keyVersion, type, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where key = &#63; and keyVersion &lt; &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByK_LtKV_NotT_PrevAndNext(
-			long patcherFixId, String key, double keyVersion, int type,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByK_LtKV_NotT_PrevAndNext(
-			patcherFixId, key, keyVersion, type, orderByComparator);
 	}
 
 	/**
@@ -1738,26 +1538,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where key = &#63; and latestFix = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param key the key
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByK_L_NotT_PrevAndNext(
-			long patcherFixId, String key, boolean latestFix, int type,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByK_L_NotT_PrevAndNext(
-			patcherFixId, key, latestFix, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where key = &#63; and latestFix = &#63; and type &ne; &#63;.
 	 *
 	 * @param key the key
@@ -1813,26 +1593,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByK_L_NotT(
 			key, latestFix, type, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where key = &#63; and latestFix = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param key the key
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByK_L_NotT_PrevAndNext(
-			long patcherFixId, String key, boolean latestFix, int type,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByK_L_NotT_PrevAndNext(
-			patcherFixId, key, latestFix, type, orderByComparator);
 	}
 
 	/**
@@ -2042,28 +1802,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where modifiedDate &lt; &#63; and notified = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param modifiedDate the modified date
-	 * @param notified the notified
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByLtM_N_T_S_PrevAndNext(
-			long patcherFixId, Date modifiedDate, boolean notified, int type,
-			int status, OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByLtM_N_T_S_PrevAndNext(
-			patcherFixId, modifiedDate, notified, type, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where modifiedDate &lt; &#63; and notified = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param modifiedDate the modified date
@@ -2124,28 +1862,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByLtM_N_T_S(
 			modifiedDate, notified, type, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where modifiedDate &lt; &#63; and notified = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param modifiedDate the modified date
-	 * @param notified the notified
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByLtM_N_T_S_PrevAndNext(
-			long patcherFixId, Date modifiedDate, boolean notified, int type,
-			int status, OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByLtM_N_T_S_PrevAndNext(
-			patcherFixId, modifiedDate, notified, type, status,
 			orderByComparator);
 	}
 
@@ -2556,29 +2272,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where patcherProjectVersionId = &#63; and latestFix = &#63; and name = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByP_L_N_NotT_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId, boolean latestFix,
-			String name, int type,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByP_L_N_NotT_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, latestFix, name, type,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and name = &#63; and type &ne; &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -2640,29 +2333,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByP_L_N_NotT(
 			patcherProjectVersionId, latestFix, name, type, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and name = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByP_L_N_NotT_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId, boolean latestFix,
-			String name, int type,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByP_L_N_NotT_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, latestFix, name, type,
 			orderByComparator);
 	}
 
@@ -2888,29 +2558,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set where patcherProjectVersionId = &#63; and latestFix = &#63; and type &ne; &#63; and status = &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] findByP_L_NotT_S_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId, boolean latestFix,
-			int type, int status,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().findByP_L_NotT_S_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, latestFix, type, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and type &ne; &#63; and status = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -2971,29 +2618,6 @@ public class PatcherFixUtil {
 
 		return getPersistence().filterFindByP_L_NotT_S(
 			patcherProjectVersionId, latestFix, type, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fixes before and after the current patcher fix in the ordered set of patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and type &ne; &#63; and status = &#63;.
-	 *
-	 * @param patcherFixId the primary key of the current patcher fix
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix
-	 * @throws NoSuchPatcherFixException if a patcher fix with the primary key could not be found
-	 */
-	public static PatcherFix[] filterFindByP_L_NotT_S_PrevAndNext(
-			long patcherFixId, long patcherProjectVersionId, boolean latestFix,
-			int type, int status,
-			OrderByComparator<PatcherFix> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixException {
-
-		return getPersistence().filterFindByP_L_NotT_S_PrevAndNext(
-			patcherFixId, patcherProjectVersionId, latestFix, type, status,
 			orderByComparator);
 	}
 
@@ -3640,4 +3264,4 @@ public class PatcherFixUtil {
 	private static volatile PatcherFixPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1046882906
+// LIFERAY-SERVICE-BUILDER-HASH:1424430165

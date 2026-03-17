@@ -146,21 +146,6 @@ public interface EagerBlobEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the eager blob entries before and after the current eager blob entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param eagerBlobEntryId the primary key of the current eager blob entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next eager blob entry
-	 * @throws NoSuchEagerBlobEntryException if a eager blob entry with the primary key could not be found
-	 */
-	public EagerBlobEntry[] findByUuid_PrevAndNext(
-			long eagerBlobEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<EagerBlobEntry>
-				orderByComparator)
-		throws NoSuchEagerBlobEntryException;
-
-	/**
 	 * Removes all the eager blob entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -346,4 +331,4 @@ public interface EagerBlobEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1020161856
+// LIFERAY-SERVICE-BUILDER-HASH:-329413799

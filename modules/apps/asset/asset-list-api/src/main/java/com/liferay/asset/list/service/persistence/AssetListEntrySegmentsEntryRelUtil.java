@@ -250,25 +250,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	}
 
 	/**
-	 * Returns the asset list entry segments entry rels before and after the current asset list entry segments entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetListEntrySegmentsEntryRelId the primary key of the current asset list entry segments entry rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a asset list entry segments entry rel with the primary key could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel[] findByUuid_PrevAndNext(
-			long assetListEntrySegmentsEntryRelId, String uuid,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			assetListEntrySegmentsEntryRelId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -505,27 +486,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	}
 
 	/**
-	 * Returns the asset list entry segments entry rels before and after the current asset list entry segments entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetListEntrySegmentsEntryRelId the primary key of the current asset list entry segments entry rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a asset list entry segments entry rel with the primary key could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel[] findByUuid_C_PrevAndNext(
-			long assetListEntrySegmentsEntryRelId, String uuid, long companyId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			assetListEntrySegmentsEntryRelId, uuid, companyId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -688,28 +648,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	}
 
 	/**
-	 * Returns the asset list entry segments entry rels before and after the current asset list entry segments entry rel in the ordered set where assetListEntryId = &#63;.
-	 *
-	 * @param assetListEntrySegmentsEntryRelId the primary key of the current asset list entry segments entry rel
-	 * @param assetListEntryId the asset list entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a asset list entry segments entry rel with the primary key could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel[]
-			findByAssetListEntryId_PrevAndNext(
-				long assetListEntrySegmentsEntryRelId, long assetListEntryId,
-				OrderByComparator<AssetListEntrySegmentsEntryRel>
-					orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findByAssetListEntryId_PrevAndNext(
-			assetListEntrySegmentsEntryRelId, assetListEntryId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry segments entry rels where assetListEntryId = &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
@@ -867,28 +805,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 
 		return getPersistence().fetchBySegmentsEntryId_Last(
 			segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry segments entry rels before and after the current asset list entry segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntrySegmentsEntryRelId the primary key of the current asset list entry segments entry rel
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a asset list entry segments entry rel with the primary key could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel[]
-			findBySegmentsEntryId_PrevAndNext(
-				long assetListEntrySegmentsEntryRelId, long segmentsEntryId,
-				OrderByComparator<AssetListEntrySegmentsEntryRel>
-					orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findBySegmentsEntryId_PrevAndNext(
-			assetListEntrySegmentsEntryRelId, segmentsEntryId,
-			orderByComparator);
 	}
 
 	/**
@@ -1128,28 +1044,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 
 		return getPersistence().fetchByA_S_C_Last(
 			assetListEntryId, segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry segments entry rels before and after the current asset list entry segments entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntrySegmentsEntryRelId the primary key of the current asset list entry segments entry rel
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a asset list entry segments entry rel with the primary key could not be found
-	 */
-	public static AssetListEntrySegmentsEntryRel[] findByA_S_C_PrevAndNext(
-			long assetListEntrySegmentsEntryRelId, long assetListEntryId,
-			long segmentsEntryId,
-			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntrySegmentsEntryRelException {
-
-		return getPersistence().findByA_S_C_PrevAndNext(
-			assetListEntrySegmentsEntryRelId, assetListEntryId, segmentsEntryId,
-			orderByComparator);
 	}
 
 	/**
@@ -1456,4 +1350,4 @@ public class AssetListEntrySegmentsEntryRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:361562335
+// LIFERAY-SERVICE-BUILDER-HASH:-1242515897

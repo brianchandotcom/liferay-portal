@@ -150,21 +150,6 @@ public interface CPAttachmentFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByUuid_PrevAndNext(
-			long CPAttachmentFileEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
-
-	/**
 	 * Removes all the cp attachment file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -352,22 +337,6 @@ public interface CPAttachmentFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByUuid_C_PrevAndNext(
-			long CPAttachmentFileEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
-
-	/**
 	 * Removes all the cp attachment file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -497,21 +466,6 @@ public interface CPAttachmentFileEntryPersistence
 		long fileEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByFileEntryId_PrevAndNext(
-			long CPAttachmentFileEntryId, long fileEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	 * Removes all the cp attachment file entries where fileEntryId = &#63; from the database.
@@ -651,22 +605,6 @@ public interface CPAttachmentFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByC_C_PrevAndNext(
-			long CPAttachmentFileEntryId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
-
-	/**
 	 * Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -804,22 +742,6 @@ public interface CPAttachmentFileEntryPersistence
 		Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByLtD_S_PrevAndNext(
-			long CPAttachmentFileEntryId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	 * Removes all the cp attachment file entries where displayDate &lt; &#63; and status = &#63; from the database.
@@ -967,24 +889,6 @@ public interface CPAttachmentFileEntryPersistence
 		long groupId, long classNameId, long fileEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByG_C_F_PrevAndNext(
-			long CPAttachmentFileEntryId, long groupId, long classNameId,
-			long fileEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	 * Removes all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63; from the database.
@@ -1136,24 +1040,6 @@ public interface CPAttachmentFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByC_C_F_PrevAndNext(
-			long CPAttachmentFileEntryId, long classNameId, long classPK,
-			long fileEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
-
-	/**
 	 * Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and fileEntryId = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1301,24 +1187,6 @@ public interface CPAttachmentFileEntryPersistence
 		long classNameId, long classPK, String cdnURL,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and cdnURL = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param cdnURL the cdn url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByC_C_C_PrevAndNext(
-			long CPAttachmentFileEntryId, long classNameId, long classPK,
-			String cdnURL,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	 * Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and cdnURL = &#63; from the database.
@@ -1479,25 +1347,6 @@ public interface CPAttachmentFileEntryPersistence
 		long classNameId, long classPK, Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByC_C_LtD_S_PrevAndNext(
-			long CPAttachmentFileEntryId, long classNameId, long classPK,
-			Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	 * Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and displayDate &lt; &#63; and status = &#63; from the database.
@@ -1664,25 +1513,6 @@ public interface CPAttachmentFileEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByC_C_T_ST_PrevAndNext(
-			long CPAttachmentFileEntryId, long classNameId, long classPK,
-			int type, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
-
-	/**
 	 * Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1845,25 +1675,6 @@ public interface CPAttachmentFileEntryPersistence
 		long classNameId, long classPK, int type, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and status &ne; &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByC_C_T_NotST_PrevAndNext(
-			long CPAttachmentFileEntryId, long classNameId, long classPK,
-			int type, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	 * Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and type = &#63; and status &ne; &#63; from the database.
@@ -2041,26 +1852,6 @@ public interface CPAttachmentFileEntryPersistence
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and galleryEnabled = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param galleryEnabled the gallery enabled
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByC_C_G_T_ST_PrevAndNext(
-			long CPAttachmentFileEntryId, long classNameId, long classPK,
-			boolean galleryEnabled, int type, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	 * Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and galleryEnabled = &#63; and type = &#63; and status = &#63; from the database.
@@ -2242,26 +2033,6 @@ public interface CPAttachmentFileEntryPersistence
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPAttachmentFileEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cp attachment file entries before and after the current cp attachment file entry in the ordered set where classNameId = &#63; and classPK = &#63; and galleryEnabled = &#63; and type = &#63; and status &ne; &#63;.
-	 *
-	 * @param CPAttachmentFileEntryId the primary key of the current cp attachment file entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param galleryEnabled the gallery enabled
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp attachment file entry
-	 * @throws NoSuchCPAttachmentFileEntryException if a cp attachment file entry with the primary key could not be found
-	 */
-	public CPAttachmentFileEntry[] findByC_C_G_T_NotST_PrevAndNext(
-			long CPAttachmentFileEntryId, long classNameId, long classPK,
-			boolean galleryEnabled, int type, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPAttachmentFileEntry> orderByComparator)
-		throws NoSuchCPAttachmentFileEntryException;
 
 	/**
 	 * Removes all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and galleryEnabled = &#63; and type = &#63; and status &ne; &#63; from the database.
@@ -2467,4 +2238,4 @@ public interface CPAttachmentFileEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:482283339
+// LIFERAY-SERVICE-BUILDER-HASH:-1782616492

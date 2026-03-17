@@ -255,25 +255,6 @@ public class CTAutoResolutionInfoUtil {
 	}
 
 	/**
-	 * Returns the ct auto resolution infos before and after the current ct auto resolution info in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctAutoResolutionInfoId the primary key of the current ct auto resolution info
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a ct auto resolution info with the primary key could not be found
-	 */
-	public static CTAutoResolutionInfo[] findByCtCollectionId_PrevAndNext(
-			long ctAutoResolutionInfoId, long ctCollectionId,
-			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchAutoResolutionInfoException {
-
-		return getPersistence().findByCtCollectionId_PrevAndNext(
-			ctAutoResolutionInfoId, ctCollectionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ct auto resolution infos where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -457,29 +438,6 @@ public class CTAutoResolutionInfoUtil {
 		return getPersistence().fetchByC_MCNI_SMCPK_Last(
 			ctCollectionId, modelClassNameId, sourceModelClassPK,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the ct auto resolution infos before and after the current ct auto resolution info in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctAutoResolutionInfoId the primary key of the current ct auto resolution info
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a ct auto resolution info with the primary key could not be found
-	 */
-	public static CTAutoResolutionInfo[] findByC_MCNI_SMCPK_PrevAndNext(
-			long ctAutoResolutionInfoId, long ctCollectionId,
-			long modelClassNameId, long sourceModelClassPK,
-			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchAutoResolutionInfoException {
-
-		return getPersistence().findByC_MCNI_SMCPK_PrevAndNext(
-			ctAutoResolutionInfoId, ctCollectionId, modelClassNameId,
-			sourceModelClassPK, orderByComparator);
 	}
 
 	/**
@@ -792,4 +750,4 @@ public class CTAutoResolutionInfoUtil {
 	private static volatile CTAutoResolutionInfoPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:545225919
+// LIFERAY-SERVICE-BUILDER-HASH:1839991271

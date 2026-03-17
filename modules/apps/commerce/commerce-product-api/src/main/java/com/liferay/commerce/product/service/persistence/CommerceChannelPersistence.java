@@ -147,21 +147,6 @@ public interface CommerceChannelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] findByUuid_PrevAndNext(
-			long commerceChannelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -201,21 +186,6 @@ public interface CommerceChannelPersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] filterFindByUuid_PrevAndNext(
-			long commerceChannelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
 
 	/**
 	 * Removes all the commerce channels where uuid = &#63; from the database.
@@ -363,22 +333,6 @@ public interface CommerceChannelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] findByUuid_C_PrevAndNext(
-			long commerceChannelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -422,22 +376,6 @@ public interface CommerceChannelPersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] filterFindByUuid_C_PrevAndNext(
-			long commerceChannelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
 
 	/**
 	 * Removes all the commerce channels where uuid = &#63; and companyId = &#63; from the database.
@@ -579,21 +517,6 @@ public interface CommerceChannelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] findByCompanyId_PrevAndNext(
-			long commerceChannelId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -634,21 +557,6 @@ public interface CommerceChannelPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] filterFindByCompanyId_PrevAndNext(
-			long commerceChannelId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
 
 	/**
 	 * Removes all the commerce channels where companyId = &#63; from the database.
@@ -788,21 +696,6 @@ public interface CommerceChannelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] findByAccountEntryId_PrevAndNext(
-			long commerceChannelId, long accountEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where accountEntryId = &#63;.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -843,21 +736,6 @@ public interface CommerceChannelPersistence
 		long accountEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where accountEntryId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] filterFindByAccountEntryId_PrevAndNext(
-			long commerceChannelId, long accountEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
 
 	/**
 	 * Removes all the commerce channels where accountEntryId = &#63; from the database.
@@ -996,21 +874,6 @@ public interface CommerceChannelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where siteGroupId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param siteGroupId the site group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] findBySiteGroupId_PrevAndNext(
-			long commerceChannelId, long siteGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where siteGroupId = &#63;.
 	 *
 	 * @param siteGroupId the site group ID
@@ -1051,21 +914,6 @@ public interface CommerceChannelPersistence
 		long siteGroupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where siteGroupId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param siteGroupId the site group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public CommerceChannel[] filterFindBySiteGroupId_PrevAndNext(
-			long commerceChannelId, long siteGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannel>
-				orderByComparator)
-		throws NoSuchChannelException;
 
 	/**
 	 * Removes all the commerce channels where siteGroupId = &#63; from the database.
@@ -1264,4 +1112,4 @@ public interface CommerceChannelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1136764586
+// LIFERAY-SERVICE-BUILDER-HASH:-287287834

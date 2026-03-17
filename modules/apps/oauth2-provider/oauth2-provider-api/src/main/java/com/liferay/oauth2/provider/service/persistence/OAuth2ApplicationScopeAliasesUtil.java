@@ -257,25 +257,6 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	}
 
 	/**
-	 * Returns the o auth2 application scope aliaseses before and after the current o auth2 application scope aliases in the ordered set where companyId = &#63;.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the primary key of the current o auth2 application scope aliases
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application scope aliases
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a o auth2 application scope aliases with the primary key could not be found
-	 */
-	public static OAuth2ApplicationScopeAliases[] findByCompanyId_PrevAndNext(
-			long oAuth2ApplicationScopeAliasesId, long companyId,
-			OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationScopeAliasesException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			oAuth2ApplicationScopeAliasesId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the o auth2 application scope aliaseses where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -435,28 +416,6 @@ public class OAuth2ApplicationScopeAliasesUtil {
 
 		return getPersistence().fetchByOAuth2ApplicationId_Last(
 			oAuth2ApplicationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the o auth2 application scope aliaseses before and after the current o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63;.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the primary key of the current o auth2 application scope aliases
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application scope aliases
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a o auth2 application scope aliases with the primary key could not be found
-	 */
-	public static OAuth2ApplicationScopeAliases[]
-			findByOAuth2ApplicationId_PrevAndNext(
-				long oAuth2ApplicationScopeAliasesId, long oAuth2ApplicationId,
-				OrderByComparator<OAuth2ApplicationScopeAliases>
-					orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationScopeAliasesException {
-
-		return getPersistence().findByOAuth2ApplicationId_PrevAndNext(
-			oAuth2ApplicationScopeAliasesId, oAuth2ApplicationId,
-			orderByComparator);
 	}
 
 	/**
@@ -659,4 +618,4 @@ public class OAuth2ApplicationScopeAliasesUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1609944529
+// LIFERAY-SERVICE-BUILDER-HASH:-1547430637

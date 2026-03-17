@@ -238,24 +238,6 @@ public class ReadingTimeEntryUtil {
 	}
 
 	/**
-	 * Returns the reading time entries before and after the current reading time entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param readingTimeEntryId the primary key of the current reading time entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next reading time entry
-	 * @throws NoSuchEntryException if a reading time entry with the primary key could not be found
-	 */
-	public static ReadingTimeEntry[] findByUuid_PrevAndNext(
-			long readingTimeEntryId, String uuid,
-			OrderByComparator<ReadingTimeEntry> orderByComparator)
-		throws com.liferay.reading.time.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			readingTimeEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the reading time entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -481,25 +463,6 @@ public class ReadingTimeEntryUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the reading time entries before and after the current reading time entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param readingTimeEntryId the primary key of the current reading time entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next reading time entry
-	 * @throws NoSuchEntryException if a reading time entry with the primary key could not be found
-	 */
-	public static ReadingTimeEntry[] findByUuid_C_PrevAndNext(
-			long readingTimeEntryId, String uuid, long companyId,
-			OrderByComparator<ReadingTimeEntry> orderByComparator)
-		throws com.liferay.reading.time.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			readingTimeEntryId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -760,4 +723,4 @@ public class ReadingTimeEntryUtil {
 	private static volatile ReadingTimeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2047706104
+// LIFERAY-SERVICE-BUILDER-HASH:-1761713336

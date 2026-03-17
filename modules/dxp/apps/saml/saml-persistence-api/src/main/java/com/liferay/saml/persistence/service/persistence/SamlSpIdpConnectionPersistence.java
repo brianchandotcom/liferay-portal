@@ -146,21 +146,6 @@ public interface SamlSpIdpConnectionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saml sp idp connections before and after the current saml sp idp connection in the ordered set where companyId = &#63;.
-	 *
-	 * @param samlSpIdpConnectionId the primary key of the current saml sp idp connection
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml sp idp connection
-	 * @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
-	 */
-	public SamlSpIdpConnection[] findByCompanyId_PrevAndNext(
-			long samlSpIdpConnectionId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SamlSpIdpConnection> orderByComparator)
-		throws NoSuchSpIdpConnectionException;
-
-	/**
 	 * Removes all the saml sp idp connections where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -351,4 +336,4 @@ public interface SamlSpIdpConnectionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2088080303
+// LIFERAY-SERVICE-BUILDER-HASH:-10814606

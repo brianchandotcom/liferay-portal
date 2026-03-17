@@ -147,21 +147,6 @@ public interface CTSParentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cts parents before and after the current cts parent in the ordered set where companyId = &#63;.
-	 *
-	 * @param ctsParentId the primary key of the current cts parent
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cts parent
-	 * @throws NoSuchCTSParentException if a cts parent with the primary key could not be found
-	 */
-	public CTSParent[] findByCompanyId_PrevAndNext(
-			long ctsParentId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSParent>
-				orderByComparator)
-		throws NoSuchCTSParentException;
-
-	/**
 	 * Removes all the cts parents where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -297,22 +282,6 @@ public interface CTSParentPersistence
 		long companyId, long ctsGrandParentId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTSParent>
 			orderByComparator);
-
-	/**
-	 * Returns the cts parents before and after the current cts parent in the ordered set where companyId = &#63; and ctsGrandParentId = &#63;.
-	 *
-	 * @param ctsParentId the primary key of the current cts parent
-	 * @param companyId the company ID
-	 * @param ctsGrandParentId the cts grand parent ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cts parent
-	 * @throws NoSuchCTSParentException if a cts parent with the primary key could not be found
-	 */
-	public CTSParent[] findByC_C_PrevAndNext(
-			long ctsParentId, long companyId, long ctsGrandParentId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSParent>
-				orderByComparator)
-		throws NoSuchCTSParentException;
 
 	/**
 	 * Removes all the cts parents where companyId = &#63; and ctsGrandParentId = &#63; from the database.
@@ -451,4 +420,4 @@ public interface CTSParentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1485096602
+// LIFERAY-SERVICE-BUILDER-HASH:-1674828812

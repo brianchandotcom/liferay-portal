@@ -250,24 +250,6 @@ public class DispatchLogUtil {
 	}
 
 	/**
-	 * Returns the dispatch logs before and after the current dispatch log in the ordered set where dispatchTriggerId = &#63;.
-	 *
-	 * @param dispatchLogId the primary key of the current dispatch log
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dispatch log
-	 * @throws NoSuchLogException if a dispatch log with the primary key could not be found
-	 */
-	public static DispatchLog[] findByDispatchTriggerId_PrevAndNext(
-			long dispatchLogId, long dispatchTriggerId,
-			OrderByComparator<DispatchLog> orderByComparator)
-		throws com.liferay.dispatch.exception.NoSuchLogException {
-
-		return getPersistence().findByDispatchTriggerId_PrevAndNext(
-			dispatchLogId, dispatchTriggerId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the dispatch logs where dispatchTriggerId = &#63; from the database.
 	 *
 	 * @param dispatchTriggerId the dispatch trigger ID
@@ -432,25 +414,6 @@ public class DispatchLogUtil {
 
 		return getPersistence().fetchByDTI_S_Last(
 			dispatchTriggerId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the dispatch logs before and after the current dispatch log in the ordered set where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * @param dispatchLogId the primary key of the current dispatch log
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dispatch log
-	 * @throws NoSuchLogException if a dispatch log with the primary key could not be found
-	 */
-	public static DispatchLog[] findByDTI_S_PrevAndNext(
-			long dispatchLogId, long dispatchTriggerId, int status,
-			OrderByComparator<DispatchLog> orderByComparator)
-		throws com.liferay.dispatch.exception.NoSuchLogException {
-
-		return getPersistence().findByDTI_S_PrevAndNext(
-			dispatchLogId, dispatchTriggerId, status, orderByComparator);
 	}
 
 	/**
@@ -632,4 +595,4 @@ public class DispatchLogUtil {
 	private static volatile DispatchLogPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:92400056
+// LIFERAY-SERVICE-BUILDER-HASH:-449972193

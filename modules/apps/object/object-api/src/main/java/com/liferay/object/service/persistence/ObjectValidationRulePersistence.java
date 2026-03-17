@@ -146,21 +146,6 @@ public interface ObjectValidationRulePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public ObjectValidationRule[] findByUuid_PrevAndNext(
-			long objectValidationRuleId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
 	 * Removes all the object validation rules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectValidationRulePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public ObjectValidationRule[] findByUuid_C_PrevAndNext(
-			long objectValidationRuleId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
 	 * Removes all the object validation rules where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,21 +412,6 @@ public interface ObjectValidationRulePersistence
 		long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
 			orderByComparator);
-
-	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public ObjectValidationRule[] findByObjectDefinitionId_PrevAndNext(
-			long objectValidationRuleId, long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
 
 	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; from the database.
@@ -595,23 +549,6 @@ public interface ObjectValidationRulePersistence
 		long objectDefinitionId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
 			orderByComparator);
-
-	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public ObjectValidationRule[] findByODI_A_PrevAndNext(
-			long objectValidationRuleId, long objectDefinitionId,
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
 
 	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; and active = &#63; from the database.
@@ -753,22 +690,6 @@ public interface ObjectValidationRulePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public ObjectValidationRule[] findByODI_E_PrevAndNext(
-			long objectValidationRuleId, long objectDefinitionId, String engine,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; and engine = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -908,23 +829,6 @@ public interface ObjectValidationRulePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public ObjectValidationRule[] findByODI_O_PrevAndNext(
-			long objectValidationRuleId, long objectDefinitionId,
-			String outputType,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; and outputType = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1062,22 +966,6 @@ public interface ObjectValidationRulePersistence
 		boolean active, String engine,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectValidationRule>
 			orderByComparator);
-
-	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where active = &#63; and engine = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param active the active
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public ObjectValidationRule[] findByA_E_PrevAndNext(
-			long objectValidationRuleId, boolean active, String engine,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectValidationRule> orderByComparator)
-		throws NoSuchObjectValidationRuleException;
 
 	/**
 	 * Removes all the object validation rules where active = &#63; and engine = &#63; from the database.
@@ -1281,4 +1169,4 @@ public interface ObjectValidationRulePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1025976131
+// LIFERAY-SERVICE-BUILDER-HASH:525873590

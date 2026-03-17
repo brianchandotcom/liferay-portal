@@ -149,21 +149,6 @@ public interface KaleoTaskFormInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoTaskFormInstanceId the primary key of the current kaleo task form instance
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a kaleo task form instance with the primary key could not be found
-	 */
-	public KaleoTaskFormInstance[] findByCompanyId_PrevAndNext(
-			long kaleoTaskFormInstanceId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException;
-
-	/**
 	 * Removes all the kaleo task form instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -291,21 +276,6 @@ public interface KaleoTaskFormInstancePersistence
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoTaskFormInstanceId the primary key of the current kaleo task form instance
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a kaleo task form instance with the primary key could not be found
-	 */
-	public KaleoTaskFormInstance[] findByKaleoDefinitionVersionId_PrevAndNext(
-			long kaleoTaskFormInstanceId, long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException;
 
 	/**
 	 * Removes all the kaleo task form instances where kaleoDefinitionVersionId = &#63; from the database.
@@ -437,21 +407,6 @@ public interface KaleoTaskFormInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoTaskFormInstanceId the primary key of the current kaleo task form instance
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a kaleo task form instance with the primary key could not be found
-	 */
-	public KaleoTaskFormInstance[] findByKaleoInstanceId_PrevAndNext(
-			long kaleoTaskFormInstanceId, long kaleoInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException;
-
-	/**
 	 * Removes all the kaleo task form instances where kaleoInstanceId = &#63; from the database.
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -581,21 +536,6 @@ public interface KaleoTaskFormInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where kaleoTaskId = &#63;.
-	 *
-	 * @param kaleoTaskFormInstanceId the primary key of the current kaleo task form instance
-	 * @param kaleoTaskId the kaleo task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a kaleo task form instance with the primary key could not be found
-	 */
-	public KaleoTaskFormInstance[] findByKaleoTaskId_PrevAndNext(
-			long kaleoTaskFormInstanceId, long kaleoTaskId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException;
-
-	/**
 	 * Removes all the kaleo task form instances where kaleoTaskId = &#63; from the database.
 	 *
 	 * @param kaleoTaskId the kaleo task ID
@@ -723,21 +663,6 @@ public interface KaleoTaskFormInstancePersistence
 		long kaleoTaskInstanceTokenId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where kaleoTaskInstanceTokenId = &#63;.
-	 *
-	 * @param kaleoTaskFormInstanceId the primary key of the current kaleo task form instance
-	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form instance
-	 * @throws NoSuchTaskFormInstanceException if a kaleo task form instance with the primary key could not be found
-	 */
-	public KaleoTaskFormInstance[] findByKaleoTaskInstanceTokenId_PrevAndNext(
-			long kaleoTaskFormInstanceId, long kaleoTaskInstanceTokenId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskFormInstance> orderByComparator)
-		throws NoSuchTaskFormInstanceException;
 
 	/**
 	 * Removes all the kaleo task form instances where kaleoTaskInstanceTokenId = &#63; from the database.
@@ -923,4 +848,4 @@ public interface KaleoTaskFormInstancePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:523242630
+// LIFERAY-SERVICE-BUILDER-HASH:569182433

@@ -240,25 +240,6 @@ public class RepositoryEntryUtil {
 	}
 
 	/**
-	 * Returns the repository entries before and after the current repository entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param repositoryEntryId the primary key of the current repository entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next repository entry
-	 * @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
-	 */
-	public static RepositoryEntry[] findByUuid_PrevAndNext(
-			long repositoryEntryId, String uuid,
-			OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchRepositoryEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			repositoryEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the repository entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -491,26 +472,6 @@ public class RepositoryEntryUtil {
 	}
 
 	/**
-	 * Returns the repository entries before and after the current repository entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param repositoryEntryId the primary key of the current repository entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next repository entry
-	 * @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
-	 */
-	public static RepositoryEntry[] findByUuid_C_PrevAndNext(
-			long repositoryEntryId, String uuid, long companyId,
-			OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchRepositoryEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			repositoryEntryId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the repository entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -667,25 +628,6 @@ public class RepositoryEntryUtil {
 
 		return getPersistence().fetchByRepositoryId_Last(
 			repositoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the repository entries before and after the current repository entry in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param repositoryEntryId the primary key of the current repository entry
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next repository entry
-	 * @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
-	 */
-	public static RepositoryEntry[] findByRepositoryId_PrevAndNext(
-			long repositoryEntryId, long repositoryId,
-			OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchRepositoryEntryException {
-
-		return getPersistence().findByRepositoryId_PrevAndNext(
-			repositoryEntryId, repositoryId, orderByComparator);
 	}
 
 	/**
@@ -938,4 +880,4 @@ public class RepositoryEntryUtil {
 	private static volatile RepositoryEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1292265199
+// LIFERAY-SERVICE-BUILDER-HASH:-1011963932

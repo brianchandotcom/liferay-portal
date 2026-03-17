@@ -146,21 +146,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByUuid_PrevAndNext(
-			long folderId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Removes all the document library folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -347,22 +332,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByUuid_C_PrevAndNext(
-			long folderId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Removes all the document library folders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -493,21 +462,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByGroupId_PrevAndNext(
-			long folderId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -547,21 +501,6 @@ public interface DLFolderPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] filterFindByGroupId_PrevAndNext(
-			long folderId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where groupId = &#63; from the database.
@@ -700,21 +639,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByCompanyId_PrevAndNext(
-			long folderId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Removes all the document library folders where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -841,21 +765,6 @@ public interface DLFolderPersistence
 		long repositoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByRepositoryId_PrevAndNext(
-			long folderId, long repositoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where repositoryId = &#63; from the database.
@@ -995,22 +904,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByG_P_PrevAndNext(
-			long folderId, long groupId, long parentFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1054,22 +947,6 @@ public interface DLFolderPersistence
 		long groupId, long parentFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] filterFindByG_P_PrevAndNext(
-			long folderId, long groupId, long parentFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where groupId = &#63; and parentFolderId = &#63; from the database.
@@ -1217,22 +1094,6 @@ public interface DLFolderPersistence
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByC_NotS_PrevAndNext(
-			long folderId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where companyId = &#63; and status &ne; &#63; from the database.
@@ -1424,22 +1285,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where repositoryId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param repositoryId the repository ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByR_P_PrevAndNext(
-			long folderId, long repositoryId, long parentFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Removes all the document library folders where repositoryId = &#63; and parentFolderId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -1576,22 +1421,6 @@ public interface DLFolderPersistence
 		long parentFolderId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where parentFolderId = &#63; and name = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param parentFolderId the parent folder ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByP_N_PrevAndNext(
-			long folderId, long parentFolderId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where parentFolderId = &#63; and name = &#63; from the database.
@@ -1895,24 +1724,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByG_M_P_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1961,24 +1772,6 @@ public interface DLFolderPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] filterFindByG_M_P_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; from the database.
@@ -2377,25 +2170,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByG_M_P_H_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, boolean hidden,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2447,25 +2221,6 @@ public interface DLFolderPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] filterFindByG_M_P_H_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, boolean hidden,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; from the database.
@@ -2644,25 +2399,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param treePath the tree path
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByG_M_LikeT_H_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint, String treePath,
-			boolean hidden,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2714,25 +2450,6 @@ public interface DLFolderPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param treePath the tree path
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] filterFindByG_M_LikeT_H_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint, String treePath,
-			boolean hidden,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63; from the database.
@@ -2911,25 +2628,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByG_P_H_S_PrevAndNext(
-			long folderId, long groupId, long parentFolderId, boolean hidden,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2981,25 +2679,6 @@ public interface DLFolderPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] filterFindByG_P_H_S_PrevAndNext(
-			long folderId, long groupId, long parentFolderId, boolean hidden,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63; from the database.
@@ -3191,26 +2870,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByG_M_P_H_S_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, boolean hidden, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3266,26 +2925,6 @@ public interface DLFolderPersistence
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] filterFindByG_M_P_H_S_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, boolean hidden, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63; from the database.
@@ -3483,26 +3122,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param treePath the tree path
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] findByG_M_LikeT_H_NotS_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint, String treePath,
-			boolean hidden, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3558,26 +3177,6 @@ public interface DLFolderPersistence
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param treePath the tree path
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public DLFolder[] filterFindByG_M_LikeT_H_NotS_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint, String treePath,
-			boolean hidden, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the document library folders where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63; and status &ne; &#63; from the database.
@@ -3979,4 +3578,4 @@ public interface DLFolderPersistence
 				dlFileEntryTypes);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:831668500
+// LIFERAY-SERVICE-BUILDER-HASH:995540387

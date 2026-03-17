@@ -273,29 +273,6 @@ public class NotificationQueueEntryAttachmentUtil {
 	}
 
 	/**
-	 * Returns the notification queue entry attachments before and after the current notification queue entry attachment in the ordered set where notificationQueueEntryId = &#63;.
-	 *
-	 * @param notificationQueueEntryAttachmentId the primary key of the current notification queue entry attachment
-	 * @param notificationQueueEntryId the notification queue entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry attachment
-	 * @throws NoSuchNotificationQueueEntryAttachmentException if a notification queue entry attachment with the primary key could not be found
-	 */
-	public static NotificationQueueEntryAttachment[]
-			findByNotificationQueueEntryId_PrevAndNext(
-				long notificationQueueEntryAttachmentId,
-				long notificationQueueEntryId,
-				OrderByComparator<NotificationQueueEntryAttachment>
-					orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryAttachmentException {
-
-		return getPersistence().findByNotificationQueueEntryId_PrevAndNext(
-			notificationQueueEntryAttachmentId, notificationQueueEntryId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the notification queue entry attachments where notificationQueueEntryId = &#63; from the database.
 	 *
 	 * @param notificationQueueEntryId the notification queue entry ID
@@ -502,4 +479,4 @@ public class NotificationQueueEntryAttachmentUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:862044514
+// LIFERAY-SERVICE-BUILDER-HASH:-747406212

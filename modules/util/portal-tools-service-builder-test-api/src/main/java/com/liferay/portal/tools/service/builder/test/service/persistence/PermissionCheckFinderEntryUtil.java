@@ -252,25 +252,6 @@ public class PermissionCheckFinderEntryUtil {
 	}
 
 	/**
-	 * Returns the permission check finder entries before and after the current permission check finder entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param permissionCheckFinderEntryId the primary key of the current permission check finder entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next permission check finder entry
-	 * @throws NoSuchPermissionCheckFinderEntryException if a permission check finder entry with the primary key could not be found
-	 */
-	public static PermissionCheckFinderEntry[] findByGroupId_PrevAndNext(
-			long permissionCheckFinderEntryId, long groupId,
-			OrderByComparator<PermissionCheckFinderEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchPermissionCheckFinderEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			permissionCheckFinderEntryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the permission check finder entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -319,25 +300,6 @@ public class PermissionCheckFinderEntryUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the permission check finder entries before and after the current permission check finder entry in the ordered set of permission check finder entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param permissionCheckFinderEntryId the primary key of the current permission check finder entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next permission check finder entry
-	 * @throws NoSuchPermissionCheckFinderEntryException if a permission check finder entry with the primary key could not be found
-	 */
-	public static PermissionCheckFinderEntry[] filterFindByGroupId_PrevAndNext(
-			long permissionCheckFinderEntryId, long groupId,
-			OrderByComparator<PermissionCheckFinderEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchPermissionCheckFinderEntryException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			permissionCheckFinderEntryId, groupId, orderByComparator);
 	}
 
 	/**
@@ -694,4 +656,4 @@ public class PermissionCheckFinderEntryUtil {
 	private static volatile PermissionCheckFinderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2032528864
+// LIFERAY-SERVICE-BUILDER-HASH:-932540086

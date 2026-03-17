@@ -147,21 +147,6 @@ public interface BatchPlannerMappingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the batch planner mappings before and after the current batch planner mapping in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerMappingId the primary key of the current batch planner mapping
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch planner mapping
-	 * @throws NoSuchMappingException if a batch planner mapping with the primary key could not be found
-	 */
-	public BatchPlannerMapping[] findByBatchPlannerPlanId_PrevAndNext(
-			long batchPlannerMappingId, long batchPlannerPlanId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<BatchPlannerMapping> orderByComparator)
-		throws NoSuchMappingException;
-
-	/**
 	 * Removes all the batch planner mappings where batchPlannerPlanId = &#63; from the database.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
@@ -363,4 +348,4 @@ public interface BatchPlannerMappingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1565208165
+// LIFERAY-SERVICE-BUILDER-HASH:1980910099

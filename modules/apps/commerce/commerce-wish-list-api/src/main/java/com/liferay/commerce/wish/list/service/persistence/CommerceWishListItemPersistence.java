@@ -147,21 +147,6 @@ public interface CommerceWishListItemPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce wish list items before and after the current commerce wish list item in the ordered set where commerceWishListId = &#63;.
-	 *
-	 * @param commerceWishListItemId the primary key of the current commerce wish list item
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list item
-	 * @throws NoSuchWishListItemException if a commerce wish list item with the primary key could not be found
-	 */
-	public CommerceWishListItem[] findByCommerceWishListId_PrevAndNext(
-			long commerceWishListItemId, long commerceWishListId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException;
-
-	/**
 	 * Removes all the commerce wish list items where commerceWishListId = &#63; from the database.
 	 *
 	 * @param commerceWishListId the commerce wish list ID
@@ -291,21 +276,6 @@ public interface CommerceWishListItemPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce wish list items before and after the current commerce wish list item in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param commerceWishListItemId the primary key of the current commerce wish list item
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list item
-	 * @throws NoSuchWishListItemException if a commerce wish list item with the primary key could not be found
-	 */
-	public CommerceWishListItem[] findByCPInstanceUuid_PrevAndNext(
-			long commerceWishListItemId, String CPInstanceUuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException;
-
-	/**
 	 * Removes all the commerce wish list items where CPInstanceUuid = &#63; from the database.
 	 *
 	 * @param CPInstanceUuid the cp instance uuid
@@ -433,21 +403,6 @@ public interface CommerceWishListItemPersistence
 		long CProductId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceWishListItem>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce wish list items before and after the current commerce wish list item in the ordered set where CProductId = &#63;.
-	 *
-	 * @param commerceWishListItemId the primary key of the current commerce wish list item
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list item
-	 * @throws NoSuchWishListItemException if a commerce wish list item with the primary key could not be found
-	 */
-	public CommerceWishListItem[] findByCProductId_PrevAndNext(
-			long commerceWishListItemId, long CProductId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException;
 
 	/**
 	 * Removes all the commerce wish list items where CProductId = &#63; from the database.
@@ -587,23 +542,6 @@ public interface CommerceWishListItemPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce wish list items before and after the current commerce wish list item in the ordered set where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * @param commerceWishListItemId the primary key of the current commerce wish list item
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list item
-	 * @throws NoSuchWishListItemException if a commerce wish list item with the primary key could not be found
-	 */
-	public CommerceWishListItem[] findByCW_CPI_PrevAndNext(
-			long commerceWishListItemId, long commerceWishListId,
-			String CPInstanceUuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException;
-
-	/**
 	 * Removes all the commerce wish list items where commerceWishListId = &#63; and CPInstanceUuid = &#63; from the database.
 	 *
 	 * @param commerceWishListId the commerce wish list ID
@@ -741,23 +679,6 @@ public interface CommerceWishListItemPersistence
 		long commerceWishListId, long CProductId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceWishListItem>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce wish list items before and after the current commerce wish list item in the ordered set where commerceWishListId = &#63; and CProductId = &#63;.
-	 *
-	 * @param commerceWishListItemId the primary key of the current commerce wish list item
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list item
-	 * @throws NoSuchWishListItemException if a commerce wish list item with the primary key could not be found
-	 */
-	public CommerceWishListItem[] findByCW_CP_PrevAndNext(
-			long commerceWishListItemId, long commerceWishListId,
-			long CProductId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceWishListItem> orderByComparator)
-		throws NoSuchWishListItemException;
 
 	/**
 	 * Removes all the commerce wish list items where commerceWishListId = &#63; and CProductId = &#63; from the database.
@@ -959,4 +880,4 @@ public interface CommerceWishListItemPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-796510598
+// LIFERAY-SERVICE-BUILDER-HASH:1996275529

@@ -258,27 +258,6 @@ public class AccountEntryOrganizationRelUtil {
 	}
 
 	/**
-	 * Returns the account entry organization rels before and after the current account entry organization rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryOrganizationRelId the primary key of the current account entry organization rel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
-	 */
-	public static AccountEntryOrganizationRel[]
-			findByAccountEntryId_PrevAndNext(
-				long accountEntryOrganizationRelId, long accountEntryId,
-				OrderByComparator<AccountEntryOrganizationRel>
-					orderByComparator)
-		throws com.liferay.account.exception.
-			NoSuchEntryOrganizationRelException {
-
-		return getPersistence().findByAccountEntryId_PrevAndNext(
-			accountEntryOrganizationRelId, accountEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the account entry organization rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -436,27 +415,6 @@ public class AccountEntryOrganizationRelUtil {
 
 		return getPersistence().fetchByOrganizationId_Last(
 			organizationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the account entry organization rels before and after the current account entry organization rel in the ordered set where organizationId = &#63;.
-	 *
-	 * @param accountEntryOrganizationRelId the primary key of the current account entry organization rel
-	 * @param organizationId the organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
-	 */
-	public static AccountEntryOrganizationRel[]
-			findByOrganizationId_PrevAndNext(
-				long accountEntryOrganizationRelId, long organizationId,
-				OrderByComparator<AccountEntryOrganizationRel>
-					orderByComparator)
-		throws com.liferay.account.exception.
-			NoSuchEntryOrganizationRelException {
-
-		return getPersistence().findByOrganizationId_PrevAndNext(
-			accountEntryOrganizationRelId, organizationId, orderByComparator);
 	}
 
 	/**
@@ -727,4 +685,4 @@ public class AccountEntryOrganizationRelUtil {
 	private static volatile AccountEntryOrganizationRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-883252479
+// LIFERAY-SERVICE-BUILDER-HASH:195041861

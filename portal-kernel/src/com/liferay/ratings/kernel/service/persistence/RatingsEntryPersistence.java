@@ -147,21 +147,6 @@ public interface RatingsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ratings entries before and after the current ratings entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param entryId the primary key of the current ratings entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	public RatingsEntry[] findByUuid_PrevAndNext(
-			long entryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the ratings entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -297,22 +282,6 @@ public interface RatingsEntryPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the ratings entries before and after the current ratings entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current ratings entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	public RatingsEntry[] findByUuid_C_PrevAndNext(
-			long entryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the ratings entries where uuid = &#63; and companyId = &#63; from the database.
@@ -452,22 +421,6 @@ public interface RatingsEntryPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the ratings entries before and after the current ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param entryId the primary key of the current ratings entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	public RatingsEntry[] findByC_C_PrevAndNext(
-			long entryId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the ratings entries where classNameId = &#63; and classPK = &#63; from the database.
@@ -758,23 +711,6 @@ public interface RatingsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ratings entries before and after the current ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
-	 *
-	 * @param entryId the primary key of the current ratings entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param score the score
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	public RatingsEntry[] findByC_C_S_PrevAndNext(
-			long entryId, long classNameId, long classPK, double score,
-			com.liferay.portal.kernel.util.OrderByComparator<RatingsEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -913,4 +849,4 @@ public interface RatingsEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:946691352
+// LIFERAY-SERVICE-BUILDER-HASH:279744107

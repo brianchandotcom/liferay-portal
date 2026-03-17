@@ -247,25 +247,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns the object state transitions before and after the current object state transition in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectStateTransitionId the primary key of the current object state transition
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state transition
-	 * @throws NoSuchObjectStateTransitionException if a object state transition with the primary key could not be found
-	 */
-	public static ObjectStateTransition[] findByUuid_PrevAndNext(
-			long objectStateTransitionId, String uuid,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectStateTransitionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object state transitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,26 +414,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns the object state transitions before and after the current object state transition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectStateTransitionId the primary key of the current object state transition
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state transition
-	 * @throws NoSuchObjectStateTransitionException if a object state transition with the primary key could not be found
-	 */
-	public static ObjectStateTransition[] findByUuid_C_PrevAndNext(
-			long objectStateTransitionId, String uuid, long companyId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectStateTransitionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object state transitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -612,25 +573,6 @@ public class ObjectStateTransitionUtil {
 
 		return getPersistence().fetchByObjectStateFlowId_Last(
 			objectStateFlowId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object state transitions before and after the current object state transition in the ordered set where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateTransitionId the primary key of the current object state transition
-	 * @param objectStateFlowId the object state flow ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state transition
-	 * @throws NoSuchObjectStateTransitionException if a object state transition with the primary key could not be found
-	 */
-	public static ObjectStateTransition[] findByObjectStateFlowId_PrevAndNext(
-			long objectStateTransitionId, long objectStateFlowId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findByObjectStateFlowId_PrevAndNext(
-			objectStateTransitionId, objectStateFlowId, orderByComparator);
 	}
 
 	/**
@@ -794,25 +736,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns the object state transitions before and after the current object state transition in the ordered set where sourceObjectStateId = &#63;.
-	 *
-	 * @param objectStateTransitionId the primary key of the current object state transition
-	 * @param sourceObjectStateId the source object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state transition
-	 * @throws NoSuchObjectStateTransitionException if a object state transition with the primary key could not be found
-	 */
-	public static ObjectStateTransition[] findBySourceObjectStateId_PrevAndNext(
-			long objectStateTransitionId, long sourceObjectStateId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findBySourceObjectStateId_PrevAndNext(
-			objectStateTransitionId, sourceObjectStateId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object state transitions where sourceObjectStateId = &#63; from the database.
 	 *
 	 * @param sourceObjectStateId the source object state ID
@@ -970,25 +893,6 @@ public class ObjectStateTransitionUtil {
 
 		return getPersistence().fetchByTargetObjectStateId_Last(
 			targetObjectStateId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object state transitions before and after the current object state transition in the ordered set where targetObjectStateId = &#63;.
-	 *
-	 * @param objectStateTransitionId the primary key of the current object state transition
-	 * @param targetObjectStateId the target object state ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state transition
-	 * @throws NoSuchObjectStateTransitionException if a object state transition with the primary key could not be found
-	 */
-	public static ObjectStateTransition[] findByTargetObjectStateId_PrevAndNext(
-			long objectStateTransitionId, long targetObjectStateId,
-			OrderByComparator<ObjectStateTransition> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectStateTransitionException {
-
-		return getPersistence().findByTargetObjectStateId_PrevAndNext(
-			objectStateTransitionId, targetObjectStateId, orderByComparator);
 	}
 
 	/**
@@ -1183,4 +1087,4 @@ public class ObjectStateTransitionUtil {
 	private static volatile ObjectStateTransitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-203883270
+// LIFERAY-SERVICE-BUILDER-HASH:1224135808

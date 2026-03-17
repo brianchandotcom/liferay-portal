@@ -231,24 +231,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns the modules before and after the current module in the ordered set where uuid = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public static Module[] findByUuid_PrevAndNext(
-			long moduleId, String uuid,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			moduleId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the modules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -411,25 +393,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns the modules before and after the current module in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public static Module[] findByUuid_C_PrevAndNext(
-			long moduleId, String uuid, long companyId,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			moduleId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the modules where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -573,24 +536,6 @@ public class ModuleUtil {
 		long appId, OrderByComparator<Module> orderByComparator) {
 
 		return getPersistence().fetchByAppId_Last(appId, orderByComparator);
-	}
-
-	/**
-	 * Returns the modules before and after the current module in the ordered set where appId = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param appId the app ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public static Module[] findByAppId_PrevAndNext(
-			long moduleId, long appId,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByAppId_PrevAndNext(
-			moduleId, appId, orderByComparator);
 	}
 
 	/**
@@ -751,24 +696,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns the modules before and after the current module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public static Module[] findByBundleSymbolicName_PrevAndNext(
-			long moduleId, String bundleSymbolicName,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByBundleSymbolicName_PrevAndNext(
-			moduleId, bundleSymbolicName, orderByComparator);
-	}
-
-	/**
 	 * Removes all the modules where bundleSymbolicName = &#63; from the database.
 	 *
 	 * @param bundleSymbolicName the bundle symbolic name
@@ -916,24 +843,6 @@ public class ModuleUtil {
 
 		return getPersistence().fetchByContextName_Last(
 			contextName, orderByComparator);
-	}
-
-	/**
-	 * Returns the modules before and after the current module in the ordered set where contextName = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public static Module[] findByContextName_PrevAndNext(
-			long moduleId, String contextName,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByContextName_PrevAndNext(
-			moduleId, contextName, orderByComparator);
 	}
 
 	/**
@@ -1096,25 +1005,6 @@ public class ModuleUtil {
 
 		return getPersistence().fetchByA_CN_Last(
 			appId, contextName, orderByComparator);
-	}
-
-	/**
-	 * Returns the modules before and after the current module in the ordered set where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public static Module[] findByA_CN_PrevAndNext(
-			long moduleId, long appId, String contextName,
-			OrderByComparator<Module> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchModuleException {
-
-		return getPersistence().findByA_CN_PrevAndNext(
-			moduleId, appId, contextName, orderByComparator);
 	}
 
 	/**
@@ -1376,4 +1266,4 @@ public class ModuleUtil {
 	private static volatile ModulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1743352566
+// LIFERAY-SERVICE-BUILDER-HASH:1275856426

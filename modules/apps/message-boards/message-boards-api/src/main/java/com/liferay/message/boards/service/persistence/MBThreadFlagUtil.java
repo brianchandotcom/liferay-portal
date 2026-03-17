@@ -238,24 +238,6 @@ public class MBThreadFlagUtil {
 	}
 
 	/**
-	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where uuid = &#63;.
-	 *
-	 * @param threadFlagId the primary key of the current message boards thread flag
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread flag
-	 * @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
-	 */
-	public static MBThreadFlag[] findByUuid_PrevAndNext(
-			long threadFlagId, String uuid,
-			OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			threadFlagId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the message boards thread flags where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -482,25 +464,6 @@ public class MBThreadFlagUtil {
 	}
 
 	/**
-	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param threadFlagId the primary key of the current message boards thread flag
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread flag
-	 * @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
-	 */
-	public static MBThreadFlag[] findByUuid_C_PrevAndNext(
-			long threadFlagId, String uuid, long companyId,
-			OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			threadFlagId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the message boards thread flags where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -647,24 +610,6 @@ public class MBThreadFlagUtil {
 		long userId, OrderByComparator<MBThreadFlag> orderByComparator) {
 
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where userId = &#63;.
-	 *
-	 * @param threadFlagId the primary key of the current message boards thread flag
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread flag
-	 * @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
-	 */
-	public static MBThreadFlag[] findByUserId_PrevAndNext(
-			long threadFlagId, long userId,
-			OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			threadFlagId, userId, orderByComparator);
 	}
 
 	/**
@@ -816,24 +761,6 @@ public class MBThreadFlagUtil {
 
 		return getPersistence().fetchByThreadId_Last(
 			threadId, orderByComparator);
-	}
-
-	/**
-	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where threadId = &#63;.
-	 *
-	 * @param threadFlagId the primary key of the current message boards thread flag
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards thread flag
-	 * @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
-	 */
-	public static MBThreadFlag[] findByThreadId_PrevAndNext(
-			long threadFlagId, long threadId,
-			OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
-
-		return getPersistence().findByThreadId_PrevAndNext(
-			threadFlagId, threadId, orderByComparator);
 	}
 
 	/**
@@ -1076,4 +1003,4 @@ public class MBThreadFlagUtil {
 	private static volatile MBThreadFlagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1473987368
+// LIFERAY-SERVICE-BUILDER-HASH:758277779

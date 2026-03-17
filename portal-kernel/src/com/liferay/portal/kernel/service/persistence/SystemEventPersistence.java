@@ -146,21 +146,6 @@ public interface SystemEventPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the system events before and after the current system event in the ordered set where groupId = &#63;.
-	 *
-	 * @param systemEventId the primary key of the current system event
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next system event
-	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
-	 */
-	public SystemEvent[] findByGroupId_PrevAndNext(
-			long systemEventId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SystemEvent>
-				orderByComparator)
-		throws NoSuchSystemEventException;
-
-	/**
 	 * Removes all the system events where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -296,22 +281,6 @@ public interface SystemEventPersistence
 		long groupId, long systemEventSetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent>
 			orderByComparator);
-
-	/**
-	 * Returns the system events before and after the current system event in the ordered set where groupId = &#63; and systemEventSetKey = &#63;.
-	 *
-	 * @param systemEventId the primary key of the current system event
-	 * @param groupId the group ID
-	 * @param systemEventSetKey the system event set key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next system event
-	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
-	 */
-	public SystemEvent[] findByG_S_PrevAndNext(
-			long systemEventId, long groupId, long systemEventSetKey,
-			com.liferay.portal.kernel.util.OrderByComparator<SystemEvent>
-				orderByComparator)
-		throws NoSuchSystemEventException;
 
 	/**
 	 * Removes all the system events where groupId = &#63; and systemEventSetKey = &#63; from the database.
@@ -459,23 +428,6 @@ public interface SystemEventPersistence
 		long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent>
 			orderByComparator);
-
-	/**
-	 * Returns the system events before and after the current system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param systemEventId the primary key of the current system event
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next system event
-	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
-	 */
-	public SystemEvent[] findByG_C_C_PrevAndNext(
-			long systemEventId, long groupId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SystemEvent>
-				orderByComparator)
-		throws NoSuchSystemEventException;
 
 	/**
 	 * Removes all the system events where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -638,25 +590,6 @@ public interface SystemEventPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the system events before and after the current system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param systemEventId the primary key of the current system event
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next system event
-	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
-	 */
-	public SystemEvent[] findByG_C_C_T_PrevAndNext(
-			long systemEventId, long groupId, long classNameId, long classPK,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SystemEvent>
-				orderByComparator)
-		throws NoSuchSystemEventException;
-
-	/**
 	 * Removes all the system events where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -800,4 +733,4 @@ public interface SystemEventPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1465006123
+// LIFERAY-SERVICE-BUILDER-HASH:1880575144

@@ -147,21 +147,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 			<CommerceVirtualOrderItemFileEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce virtual order item file entries before and after the current commerce virtual order item file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemFileEntryId the primary key of the current commerce virtual order item file entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	public CommerceVirtualOrderItemFileEntry[] findByUuid_PrevAndNext(
-			long commerceVirtualOrderItemFileEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceVirtualOrderItemFileEntry> orderByComparator)
-		throws NoSuchVirtualOrderItemFileEntryException;
-
-	/**
 	 * Removes all the commerce virtual order item file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -352,23 +337,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 			<CommerceVirtualOrderItemFileEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce virtual order item file entries before and after the current commerce virtual order item file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemFileEntryId the primary key of the current commerce virtual order item file entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	public CommerceVirtualOrderItemFileEntry[] findByUuid_C_PrevAndNext(
-			long commerceVirtualOrderItemFileEntryId, String uuid,
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceVirtualOrderItemFileEntry> orderByComparator)
-		throws NoSuchVirtualOrderItemFileEntryException;
-
-	/**
 	 * Removes all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -505,23 +473,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 			long commerceVirtualOrderItemId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceVirtualOrderItemFileEntry> orderByComparator);
-
-	/**
-	 * Returns the commerce virtual order item file entries before and after the current commerce virtual order item file entry in the ordered set where commerceVirtualOrderItemId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemFileEntryId the primary key of the current commerce virtual order item file entry
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	public CommerceVirtualOrderItemFileEntry[]
-			findByCommerceVirtualOrderItemId_PrevAndNext(
-				long commerceVirtualOrderItemFileEntryId,
-				long commerceVirtualOrderItemId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceVirtualOrderItemFileEntry> orderByComparator)
-		throws NoSuchVirtualOrderItemFileEntryException;
 
 	/**
 	 * Removes all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; from the database.
@@ -661,23 +612,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 		long commerceVirtualOrderItemId, long fileEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceVirtualOrderItemFileEntry> orderByComparator);
-
-	/**
-	 * Returns the commerce virtual order item file entries before and after the current commerce virtual order item file entry in the ordered set where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemFileEntryId the primary key of the current commerce virtual order item file entry
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	public CommerceVirtualOrderItemFileEntry[] findByC_F_PrevAndNext(
-			long commerceVirtualOrderItemFileEntryId,
-			long commerceVirtualOrderItemId, long fileEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceVirtualOrderItemFileEntry> orderByComparator)
-		throws NoSuchVirtualOrderItemFileEntryException;
 
 	/**
 	 * Removes all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63; from the database.
@@ -826,4 +760,4 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-827420501
+// LIFERAY-SERVICE-BUILDER-HASH:1972270055

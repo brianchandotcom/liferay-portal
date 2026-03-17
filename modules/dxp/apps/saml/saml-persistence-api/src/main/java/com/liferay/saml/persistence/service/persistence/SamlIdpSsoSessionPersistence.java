@@ -193,21 +193,6 @@ public interface SamlIdpSsoSessionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saml idp sso sessions before and after the current saml idp sso session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param samlIdpSsoSessionId the primary key of the current saml idp sso session
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml idp sso session
-	 * @throws NoSuchIdpSsoSessionException if a saml idp sso session with the primary key could not be found
-	 */
-	public SamlIdpSsoSession[] findByLtCreateDate_PrevAndNext(
-			long samlIdpSsoSessionId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
-				orderByComparator)
-		throws NoSuchIdpSsoSessionException;
-
-	/**
 	 * Removes all the saml idp sso sessions where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -392,4 +377,4 @@ public interface SamlIdpSsoSessionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1614259277
+// LIFERAY-SERVICE-BUILDER-HASH:-257863664

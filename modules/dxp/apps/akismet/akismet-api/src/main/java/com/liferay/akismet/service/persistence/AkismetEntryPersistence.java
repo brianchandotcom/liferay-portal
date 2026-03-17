@@ -147,21 +147,6 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the akismet entries before and after the current akismet entry in the ordered set where modifiedDate &lt; &#63;.
-	 *
-	 * @param akismetEntryId the primary key of the current akismet entry
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next akismet entry
-	 * @throws NoSuchAkismetEntryException if a akismet entry with the primary key could not be found
-	 */
-	public AkismetEntry[] findByLtModifiedDate_PrevAndNext(
-			long akismetEntryId, Date modifiedDate,
-			com.liferay.portal.kernel.util.OrderByComparator<AkismetEntry>
-				orderByComparator)
-		throws NoSuchAkismetEntryException;
-
-	/**
 	 * Removes all the akismet entries where modifiedDate &lt; &#63; from the database.
 	 *
 	 * @param modifiedDate the modified date
@@ -347,4 +332,4 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1534242651
+// LIFERAY-SERVICE-BUILDER-HASH:1621134589

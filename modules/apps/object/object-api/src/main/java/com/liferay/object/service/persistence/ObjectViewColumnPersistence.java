@@ -146,21 +146,6 @@ public interface ObjectViewColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object view columns before and after the current object view column in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectViewColumnId the primary key of the current object view column
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view column
-	 * @throws NoSuchObjectViewColumnException if a object view column with the primary key could not be found
-	 */
-	public ObjectViewColumn[] findByUuid_PrevAndNext(
-			long objectViewColumnId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-				orderByComparator)
-		throws NoSuchObjectViewColumnException;
-
-	/**
 	 * Removes all the object view columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectViewColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object view columns before and after the current object view column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectViewColumnId the primary key of the current object view column
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view column
-	 * @throws NoSuchObjectViewColumnException if a object view column with the primary key could not be found
-	 */
-	public ObjectViewColumn[] findByUuid_C_PrevAndNext(
-			long objectViewColumnId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-				orderByComparator)
-		throws NoSuchObjectViewColumnException;
-
-	/**
 	 * Removes all the object view columns where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,21 +412,6 @@ public interface ObjectViewColumnPersistence
 		long objectViewId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
 			orderByComparator);
-
-	/**
-	 * Returns the object view columns before and after the current object view column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewColumnId the primary key of the current object view column
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view column
-	 * @throws NoSuchObjectViewColumnException if a object view column with the primary key could not be found
-	 */
-	public ObjectViewColumn[] findByObjectViewId_PrevAndNext(
-			long objectViewColumnId, long objectViewId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-				orderByComparator)
-		throws NoSuchObjectViewColumnException;
 
 	/**
 	 * Removes all the object view columns where objectViewId = &#63; from the database.
@@ -597,22 +551,6 @@ public interface ObjectViewColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object view columns before and after the current object view column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewColumnId the primary key of the current object view column
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view column
-	 * @throws NoSuchObjectViewColumnException if a object view column with the primary key could not be found
-	 */
-	public ObjectViewColumn[] findByOVI_OFN_PrevAndNext(
-			long objectViewColumnId, long objectViewId, String objectFieldName,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectViewColumn>
-				orderByComparator)
-		throws NoSuchObjectViewColumnException;
-
-	/**
 	 * Removes all the object view columns where objectViewId = &#63; and objectFieldName = &#63; from the database.
 	 *
 	 * @param objectViewId the object view ID
@@ -750,4 +688,4 @@ public interface ObjectViewColumnPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-908373244
+// LIFERAY-SERVICE-BUILDER-HASH:1540524486

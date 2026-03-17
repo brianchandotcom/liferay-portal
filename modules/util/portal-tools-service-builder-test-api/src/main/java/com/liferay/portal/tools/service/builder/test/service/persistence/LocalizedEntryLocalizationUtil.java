@@ -258,26 +258,6 @@ public class LocalizedEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the localized entry localizations before and after the current localized entry localization in the ordered set where localizedEntryId = &#63;.
-	 *
-	 * @param localizedEntryLocalizationId the primary key of the current localized entry localization
-	 * @param localizedEntryId the localized entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next localized entry localization
-	 * @throws NoSuchLocalizedEntryLocalizationException if a localized entry localization with the primary key could not be found
-	 */
-	public static LocalizedEntryLocalization[]
-			findByLocalizedEntryId_PrevAndNext(
-				long localizedEntryLocalizationId, long localizedEntryId,
-				OrderByComparator<LocalizedEntryLocalization> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLocalizedEntryLocalizationException {
-
-		return getPersistence().findByLocalizedEntryId_PrevAndNext(
-			localizedEntryLocalizationId, localizedEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the localized entry localizations where localizedEntryId = &#63; from the database.
 	 *
 	 * @param localizedEntryId the localized entry ID
@@ -549,4 +529,4 @@ public class LocalizedEntryLocalizationUtil {
 	private static volatile LocalizedEntryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1754251230
+// LIFERAY-SERVICE-BUILDER-HASH:1437881187

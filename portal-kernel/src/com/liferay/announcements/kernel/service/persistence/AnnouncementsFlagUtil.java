@@ -249,24 +249,6 @@ public class AnnouncementsFlagUtil {
 	}
 
 	/**
-	 * Returns the announcements flags before and after the current announcements flag in the ordered set where companyId = &#63;.
-	 *
-	 * @param flagId the primary key of the current announcements flag
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements flag
-	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
-	 */
-	public static AnnouncementsFlag[] findByCompanyId_PrevAndNext(
-			long flagId, long companyId,
-			OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchFlagException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			flagId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the announcements flags where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -414,24 +396,6 @@ public class AnnouncementsFlagUtil {
 		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator) {
 
 		return getPersistence().fetchByEntryId_Last(entryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the announcements flags before and after the current announcements flag in the ordered set where entryId = &#63;.
-	 *
-	 * @param flagId the primary key of the current announcements flag
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements flag
-	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
-	 */
-	public static AnnouncementsFlag[] findByEntryId_PrevAndNext(
-			long flagId, long entryId,
-			OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchFlagException {
-
-		return getPersistence().findByEntryId_PrevAndNext(
-			flagId, entryId, orderByComparator);
 	}
 
 	/**
@@ -690,4 +654,4 @@ public class AnnouncementsFlagUtil {
 	private static volatile AnnouncementsFlagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:747143823
+// LIFERAY-SERVICE-BUILDER-HASH:770695460

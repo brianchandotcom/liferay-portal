@@ -239,24 +239,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] findByUuid_PrevAndNext(
-			long commerceDiscountId, String uuid,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceDiscountId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -303,24 +285,6 @@ public class CommerceDiscountUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set of commerce discounts that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] filterFindByUuid_PrevAndNext(
-			long commerceDiscountId, String uuid,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			commerceDiscountId, uuid, orderByComparator);
 	}
 
 	/**
@@ -499,25 +463,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] findByUuid_C_PrevAndNext(
-			long commerceDiscountId, String uuid, long companyId,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceDiscountId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -569,25 +514,6 @@ public class CommerceDiscountUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set of commerce discounts that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] filterFindByUuid_C_PrevAndNext(
-			long commerceDiscountId, String uuid, long companyId,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			commerceDiscountId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -757,24 +683,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] findByCompanyId_PrevAndNext(
-			long commerceDiscountId, long companyId,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commerceDiscountId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -821,24 +729,6 @@ public class CommerceDiscountUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set of commerce discounts that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] filterFindByCompanyId_PrevAndNext(
-			long commerceDiscountId, long companyId,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			commerceDiscountId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1018,25 +908,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set where companyId = &#63; and couponCode = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param companyId the company ID
-	 * @param couponCode the coupon code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] findByC_C_PrevAndNext(
-			long commerceDiscountId, long companyId, String couponCode,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			commerceDiscountId, companyId, couponCode, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where companyId = &#63; and couponCode = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1089,25 +960,6 @@ public class CommerceDiscountUtil {
 
 		return getPersistence().filterFindByC_C(
 			companyId, couponCode, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set of commerce discounts that the user has permission to view where companyId = &#63; and couponCode = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param companyId the company ID
-	 * @param couponCode the coupon code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] filterFindByC_C_PrevAndNext(
-			long commerceDiscountId, long companyId, String couponCode,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().filterFindByC_C_PrevAndNext(
-			commerceDiscountId, companyId, couponCode, orderByComparator);
 	}
 
 	/**
@@ -1289,25 +1141,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] findByLtD_S_PrevAndNext(
-			long commerceDiscountId, Date displayDate, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByLtD_S_PrevAndNext(
-			commerceDiscountId, displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -1360,25 +1193,6 @@ public class CommerceDiscountUtil {
 
 		return getPersistence().filterFindByLtD_S(
 			displayDate, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set of commerce discounts that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] filterFindByLtD_S_PrevAndNext(
-			long commerceDiscountId, Date displayDate, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().filterFindByLtD_S_PrevAndNext(
-			commerceDiscountId, displayDate, status, orderByComparator);
 	}
 
 	/**
@@ -1561,25 +1375,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] findByLtE_S_PrevAndNext(
-			long commerceDiscountId, Date expirationDate, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByLtE_S_PrevAndNext(
-			commerceDiscountId, expirationDate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param expirationDate the expiration date
@@ -1632,25 +1427,6 @@ public class CommerceDiscountUtil {
 
 		return getPersistence().filterFindByLtE_S(
 			expirationDate, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set of commerce discounts that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] filterFindByLtE_S_PrevAndNext(
-			long commerceDiscountId, Date expirationDate, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().filterFindByLtE_S_PrevAndNext(
-			commerceDiscountId, expirationDate, status, orderByComparator);
 	}
 
 	/**
@@ -1927,29 +1703,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param companyId the company ID
-	 * @param level the level
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] findByC_L_A_S_PrevAndNext(
-			long commerceDiscountId, long companyId, String level,
-			boolean active, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().findByC_L_A_S_PrevAndNext(
-			commerceDiscountId, companyId, level, active, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce discounts that the user has permission to view where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2010,29 +1763,6 @@ public class CommerceDiscountUtil {
 
 		return getPersistence().filterFindByC_L_A_S(
 			companyId, level, active, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce discounts before and after the current commerce discount in the ordered set of commerce discounts that the user has permission to view where companyId = &#63; and level = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param commerceDiscountId the primary key of the current commerce discount
-	 * @param companyId the company ID
-	 * @param level the level
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	public static CommerceDiscount[] filterFindByC_L_A_S_PrevAndNext(
-			long commerceDiscountId, long companyId, String level,
-			boolean active, int status,
-			OrderByComparator<CommerceDiscount> orderByComparator)
-		throws com.liferay.commerce.discount.exception.NoSuchDiscountException {
-
-		return getPersistence().filterFindByC_L_A_S_PrevAndNext(
-			commerceDiscountId, companyId, level, active, status,
-			orderByComparator);
 	}
 
 	/**
@@ -2313,4 +2043,4 @@ public class CommerceDiscountUtil {
 	private static volatile CommerceDiscountPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1639142228
+// LIFERAY-SERVICE-BUILDER-HASH:-1099832712

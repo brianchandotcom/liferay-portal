@@ -241,24 +241,6 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByGroupId_PrevAndNext(
-			long entryId, long groupId,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			entryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -410,24 +392,6 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByCompanyId_PrevAndNext(
-			long entryId, long companyId,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			entryId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -573,24 +537,6 @@ public class AssetEntryUtil {
 		boolean visible, OrderByComparator<AssetEntry> orderByComparator) {
 
 		return getPersistence().fetchByVisible_Last(visible, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where visible = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByVisible_PrevAndNext(
-			long entryId, boolean visible,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByVisible_PrevAndNext(
-			entryId, visible, orderByComparator);
 	}
 
 	/**
@@ -742,24 +688,6 @@ public class AssetEntryUtil {
 
 		return getPersistence().fetchByPublishDate_Last(
 			publishDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where publishDate = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param publishDate the publish date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByPublishDate_PrevAndNext(
-			long entryId, Date publishDate,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByPublishDate_PrevAndNext(
-			entryId, publishDate, orderByComparator);
 	}
 
 	/**
@@ -917,24 +845,6 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where expirationDate = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByExpirationDate_PrevAndNext(
-			long entryId, Date expirationDate,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByExpirationDate_PrevAndNext(
-			entryId, expirationDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset entries where expirationDate = &#63; from the database.
 	 *
 	 * @param expirationDate the expiration date
@@ -1083,24 +993,6 @@ public class AssetEntryUtil {
 
 		return getPersistence().fetchByLayoutUuid_Last(
 			layoutUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where layoutUuid = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByLayoutUuid_PrevAndNext(
-			long entryId, String layoutUuid,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByLayoutUuid_PrevAndNext(
-			entryId, layoutUuid, orderByComparator);
 	}
 
 	/**
@@ -1330,25 +1222,6 @@ public class AssetEntryUtil {
 
 		return getPersistence().fetchByC_CN_Last(
 			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByC_CN_PrevAndNext(
-			long entryId, long companyId, long classNameId,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_CN_PrevAndNext(
-			entryId, companyId, classNameId, orderByComparator);
 	}
 
 	/**
@@ -1593,26 +1466,6 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and visible = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param visible the visible
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByG_C_V_PrevAndNext(
-			long entryId, long groupId, long classNameId, boolean visible,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_C_V_PrevAndNext(
-			entryId, groupId, classNameId, visible, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset entries where groupId = &#63; and classNameId = &#63; and visible = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1809,29 +1662,6 @@ public class AssetEntryUtil {
 
 		return getPersistence().fetchByG_C_P_E_Last(
 			groupId, classNameId, publishDate, expirationDate,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param publishDate the publish date
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	public static AssetEntry[] findByG_C_P_E_PrevAndNext(
-			long entryId, long groupId, long classNameId, Date publishDate,
-			Date expirationDate,
-			OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_C_P_E_PrevAndNext(
-			entryId, groupId, classNameId, publishDate, expirationDate,
 			orderByComparator);
 	}
 
@@ -2239,4 +2069,4 @@ public class AssetEntryUtil {
 	private static volatile AssetEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1971474521
+// LIFERAY-SERVICE-BUILDER-HASH:-1675902101

@@ -148,21 +148,6 @@ public interface SegmentsEntryRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the segments entry rels before and after the current segments entry rel in the ordered set where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryRelId the primary key of the current segments entry rel
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry rel
-	 * @throws NoSuchEntryRelException if a segments entry rel with the primary key could not be found
-	 */
-	public SegmentsEntryRel[] findBySegmentsEntryId_PrevAndNext(
-			long segmentsEntryRelId, long segmentsEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
-		throws NoSuchEntryRelException;
-
-	/**
 	 * Removes all the segments entry rels where segmentsEntryId = &#63; from the database.
 	 *
 	 * @param segmentsEntryId the segments entry ID
@@ -298,22 +283,6 @@ public interface SegmentsEntryRelPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
 			orderByComparator);
-
-	/**
-	 * Returns the segments entry rels before and after the current segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param segmentsEntryRelId the primary key of the current segments entry rel
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry rel
-	 * @throws NoSuchEntryRelException if a segments entry rel with the primary key could not be found
-	 */
-	public SegmentsEntryRel[] findByCN_CPK_PrevAndNext(
-			long segmentsEntryRelId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
-		throws NoSuchEntryRelException;
 
 	/**
 	 * Removes all the segments entry rels where classNameId = &#63; and classPK = &#63; from the database.
@@ -461,24 +430,6 @@ public interface SegmentsEntryRelPersistence
 		long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
 			orderByComparator);
-
-	/**
-	 * Returns the segments entry rels before and after the current segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param segmentsEntryRelId the primary key of the current segments entry rel
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry rel
-	 * @throws NoSuchEntryRelException if a segments entry rel with the primary key could not be found
-	 */
-	public SegmentsEntryRel[] findByG_CN_CPK_PrevAndNext(
-			long segmentsEntryRelId, long groupId, long classNameId,
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
-		throws NoSuchEntryRelException;
 
 	/**
 	 * Removes all the segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -680,4 +631,4 @@ public interface SegmentsEntryRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1172567721
+// LIFERAY-SERVICE-BUILDER-HASH:852827674

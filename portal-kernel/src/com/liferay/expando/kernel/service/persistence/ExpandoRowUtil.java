@@ -240,24 +240,6 @@ public class ExpandoRowUtil {
 	}
 
 	/**
-	 * Returns the expando rows before and after the current expando row in the ordered set where tableId = &#63;.
-	 *
-	 * @param rowId the primary key of the current expando row
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando row
-	 * @throws NoSuchRowException if a expando row with the primary key could not be found
-	 */
-	public static ExpandoRow[] findByTableId_PrevAndNext(
-			long rowId, long tableId,
-			OrderByComparator<ExpandoRow> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchRowException {
-
-		return getPersistence().findByTableId_PrevAndNext(
-			rowId, tableId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the expando rows where tableId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -403,24 +385,6 @@ public class ExpandoRowUtil {
 		long classPK, OrderByComparator<ExpandoRow> orderByComparator) {
 
 		return getPersistence().fetchByClassPK_Last(classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the expando rows before and after the current expando row in the ordered set where classPK = &#63;.
-	 *
-	 * @param rowId the primary key of the current expando row
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando row
-	 * @throws NoSuchRowException if a expando row with the primary key could not be found
-	 */
-	public static ExpandoRow[] findByClassPK_PrevAndNext(
-			long rowId, long classPK,
-			OrderByComparator<ExpandoRow> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchRowException {
-
-		return getPersistence().findByClassPK_PrevAndNext(
-			rowId, classPK, orderByComparator);
 	}
 
 	/**
@@ -663,4 +627,4 @@ public class ExpandoRowUtil {
 	private static volatile ExpandoRowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-465911317
+// LIFERAY-SERVICE-BUILDER-HASH:1790677517

@@ -267,28 +267,6 @@ public class DDMDataProviderInstanceLinkUtil {
 	}
 
 	/**
-	 * Returns the ddm data provider instance links before and after the current ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
-	 *
-	 * @param dataProviderInstanceLinkId the primary key of the current ddm data provider instance link
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
-	 */
-	public static DDMDataProviderInstanceLink[]
-			findByDataProviderInstanceId_PrevAndNext(
-				long dataProviderInstanceLinkId, long dataProviderInstanceId,
-				OrderByComparator<DDMDataProviderInstanceLink>
-					orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchDataProviderInstanceLinkException {
-
-		return getPersistence().findByDataProviderInstanceId_PrevAndNext(
-			dataProviderInstanceLinkId, dataProviderInstanceId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm data provider instance links where dataProviderInstanceId = &#63; from the database.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
@@ -450,25 +428,6 @@ public class DDMDataProviderInstanceLinkUtil {
 
 		return getPersistence().fetchByStructureId_Last(
 			structureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm data provider instance links before and after the current ddm data provider instance link in the ordered set where structureId = &#63;.
-	 *
-	 * @param dataProviderInstanceLinkId the primary key of the current ddm data provider instance link
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
-	 */
-	public static DDMDataProviderInstanceLink[] findByStructureId_PrevAndNext(
-			long dataProviderInstanceLinkId, long structureId,
-			OrderByComparator<DDMDataProviderInstanceLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchDataProviderInstanceLinkException {
-
-		return getPersistence().findByStructureId_PrevAndNext(
-			dataProviderInstanceLinkId, structureId, orderByComparator);
 	}
 
 	/**
@@ -741,4 +700,4 @@ public class DDMDataProviderInstanceLinkUtil {
 	private static volatile DDMDataProviderInstanceLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2027585107
+// LIFERAY-SERVICE-BUILDER-HASH:-1094710694

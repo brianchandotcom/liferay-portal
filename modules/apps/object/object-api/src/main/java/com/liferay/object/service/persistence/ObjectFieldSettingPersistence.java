@@ -146,21 +146,6 @@ public interface ObjectFieldSettingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object field settings before and after the current object field setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectFieldSettingId the primary key of the current object field setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field setting
-	 * @throws NoSuchObjectFieldSettingException if a object field setting with the primary key could not be found
-	 */
-	public ObjectFieldSetting[] findByUuid_PrevAndNext(
-			long objectFieldSettingId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-				orderByComparator)
-		throws NoSuchObjectFieldSettingException;
-
-	/**
 	 * Removes all the object field settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectFieldSettingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object field settings before and after the current object field setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectFieldSettingId the primary key of the current object field setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field setting
-	 * @throws NoSuchObjectFieldSettingException if a object field setting with the primary key could not be found
-	 */
-	public ObjectFieldSetting[] findByUuid_C_PrevAndNext(
-			long objectFieldSettingId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-				orderByComparator)
-		throws NoSuchObjectFieldSettingException;
-
-	/**
 	 * Removes all the object field settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,21 +412,6 @@ public interface ObjectFieldSettingPersistence
 		long objectFieldId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
 			orderByComparator);
-
-	/**
-	 * Returns the object field settings before and after the current object field setting in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldSettingId the primary key of the current object field setting
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field setting
-	 * @throws NoSuchObjectFieldSettingException if a object field setting with the primary key could not be found
-	 */
-	public ObjectFieldSetting[] findByObjectFieldId_PrevAndNext(
-			long objectFieldSettingId, long objectFieldId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFieldSetting>
-				orderByComparator)
-		throws NoSuchObjectFieldSettingException;
 
 	/**
 	 * Removes all the object field settings where objectFieldId = &#63; from the database.
@@ -646,4 +600,4 @@ public interface ObjectFieldSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2016009597
+// LIFERAY-SERVICE-BUILDER-HASH:-1577298420

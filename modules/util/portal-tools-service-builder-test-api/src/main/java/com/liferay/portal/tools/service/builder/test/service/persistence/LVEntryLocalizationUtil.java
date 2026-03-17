@@ -252,25 +252,6 @@ public class LVEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the lv entry localizations before and after the current lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryLocalizationId the primary key of the current lv entry localization
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
-	 */
-	public static LVEntryLocalization[] findByLvEntryId_PrevAndNext(
-			long lvEntryLocalizationId, long lvEntryId,
-			OrderByComparator<LVEntryLocalization> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchLVEntryLocalizationException {
-
-		return getPersistence().findByLvEntryId_PrevAndNext(
-			lvEntryLocalizationId, lvEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the lv entry localizations where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -596,4 +577,4 @@ public class LVEntryLocalizationUtil {
 	private static volatile LVEntryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1895131745
+// LIFERAY-SERVICE-BUILDER-HASH:106278973

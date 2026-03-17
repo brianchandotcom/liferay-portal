@@ -240,24 +240,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[] findByUuid_PrevAndNext(
-			long commerceOrderItemId, String uuid,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceOrderItemId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -486,25 +468,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[] findByUuid_C_PrevAndNext(
-			long commerceOrderItemId, String uuid, long companyId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceOrderItemId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -675,28 +638,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where commerceInventoryBookedQuantityId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[]
-			findByCommerceInventoryBookedQuantityId_PrevAndNext(
-				long commerceOrderItemId,
-				long commerceInventoryBookedQuantityId,
-				OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().
-			findByCommerceInventoryBookedQuantityId_PrevAndNext(
-				commerceOrderItemId, commerceInventoryBookedQuantityId,
-				orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where commerceInventoryBookedQuantityId = &#63; from the database.
 	 *
 	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
@@ -861,24 +802,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[] findByCommerceOrderId_PrevAndNext(
-			long commerceOrderItemId, long commerceOrderId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCommerceOrderId_PrevAndNext(
-			commerceOrderItemId, commerceOrderId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where commerceOrderId = &#63; from the database.
 	 *
 	 * @param commerceOrderId the commerce order ID
@@ -1036,24 +959,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[] findByCPInstanceId_PrevAndNext(
-			long commerceOrderItemId, long CPInstanceId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCPInstanceId_PrevAndNext(
-			commerceOrderItemId, CPInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where CPInstanceId = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -1206,24 +1111,6 @@ public class CommerceOrderItemUtil {
 
 		return getPersistence().fetchByCProductId_Last(
 			CProductId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where CProductId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[] findByCProductId_PrevAndNext(
-			long commerceOrderItemId, long CProductId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCProductId_PrevAndNext(
-			commerceOrderItemId, CProductId, orderByComparator);
 	}
 
 	/**
@@ -1384,26 +1271,6 @@ public class CommerceOrderItemUtil {
 
 		return getPersistence().fetchByCustomerCommerceOrderItemId_Last(
 			customerCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where customerCommerceOrderItemId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param customerCommerceOrderItemId the customer commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[]
-			findByCustomerCommerceOrderItemId_PrevAndNext(
-				long commerceOrderItemId, long customerCommerceOrderItemId,
-				OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByCustomerCommerceOrderItemId_PrevAndNext(
-			commerceOrderItemId, customerCommerceOrderItemId,
-			orderByComparator);
 	}
 
 	/**
@@ -1570,25 +1437,6 @@ public class CommerceOrderItemUtil {
 
 		return getPersistence().fetchByParentCommerceOrderItemId_Last(
 			parentCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where parentCommerceOrderItemId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param parentCommerceOrderItemId the parent commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[]
-			findByParentCommerceOrderItemId_PrevAndNext(
-				long commerceOrderItemId, long parentCommerceOrderItemId,
-				OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByParentCommerceOrderItemId_PrevAndNext(
-			commerceOrderItemId, parentCommerceOrderItemId, orderByComparator);
 	}
 
 	/**
@@ -1765,26 +1613,6 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where commerceOrderId = &#63; and CPInstanceId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param commerceOrderId the commerce order ID
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[] findByC_CPI_PrevAndNext(
-			long commerceOrderItemId, long commerceOrderId, long CPInstanceId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByC_CPI_PrevAndNext(
-			commerceOrderItemId, commerceOrderId, CPInstanceId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order items where commerceOrderId = &#63; and CPInstanceId = &#63; from the database.
 	 *
 	 * @param commerceOrderId the commerce order ID
@@ -1954,27 +1782,6 @@ public class CommerceOrderItemUtil {
 
 		return getPersistence().fetchByC_PCOI_Last(
 			commerceOrderId, parentCommerceOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where commerceOrderId = &#63; and parentCommerceOrderItemId = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param commerceOrderId the commerce order ID
-	 * @param parentCommerceOrderItemId the parent commerce order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[] findByC_PCOI_PrevAndNext(
-			long commerceOrderItemId, long commerceOrderId,
-			long parentCommerceOrderItemId,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByC_PCOI_PrevAndNext(
-			commerceOrderItemId, commerceOrderId, parentCommerceOrderItemId,
-			orderByComparator);
 	}
 
 	/**
@@ -2150,27 +1957,6 @@ public class CommerceOrderItemUtil {
 
 		return getPersistence().fetchByC_S_Last(
 			commerceOrderId, subscription, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order items before and after the current commerce order item in the ordered set where commerceOrderId = &#63; and subscription = &#63;.
-	 *
-	 * @param commerceOrderItemId the primary key of the current commerce order item
-	 * @param commerceOrderId the commerce order ID
-	 * @param subscription the subscription
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order item
-	 * @throws NoSuchOrderItemException if a commerce order item with the primary key could not be found
-	 */
-	public static CommerceOrderItem[] findByC_S_PrevAndNext(
-			long commerceOrderItemId, long commerceOrderId,
-			boolean subscription,
-			OrderByComparator<CommerceOrderItem> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderItemException {
-
-		return getPersistence().findByC_S_PrevAndNext(
-			commerceOrderItemId, commerceOrderId, subscription,
-			orderByComparator);
 	}
 
 	/**
@@ -2430,4 +2216,4 @@ public class CommerceOrderItemUtil {
 	private static volatile CommerceOrderItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1998785856
+// LIFERAY-SERVICE-BUILDER-HASH:-899102865

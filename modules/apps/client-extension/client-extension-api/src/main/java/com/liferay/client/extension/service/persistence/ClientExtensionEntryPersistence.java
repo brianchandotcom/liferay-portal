@@ -148,21 +148,6 @@ public interface ClientExtensionEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] findByUuid_PrevAndNext(
-			long clientExtensionEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
-
-	/**
 	 * Returns all the client extension entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -202,21 +187,6 @@ public interface ClientExtensionEntryPersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set of client extension entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] filterFindByUuid_PrevAndNext(
-			long clientExtensionEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
 
 	/**
 	 * Removes all the client extension entries where uuid = &#63; from the database.
@@ -364,22 +334,6 @@ public interface ClientExtensionEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] findByUuid_C_PrevAndNext(
-			long clientExtensionEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
-
-	/**
 	 * Returns all the client extension entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -423,22 +377,6 @@ public interface ClientExtensionEntryPersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set of client extension entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] filterFindByUuid_C_PrevAndNext(
-			long clientExtensionEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
 
 	/**
 	 * Removes all the client extension entries where uuid = &#63; and companyId = &#63; from the database.
@@ -580,21 +518,6 @@ public interface ClientExtensionEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] findByCompanyId_PrevAndNext(
-			long clientExtensionEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
-
-	/**
 	 * Returns all the client extension entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -635,21 +558,6 @@ public interface ClientExtensionEntryPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set of client extension entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] filterFindByCompanyId_PrevAndNext(
-			long clientExtensionEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
 
 	/**
 	 * Removes all the client extension entries where companyId = &#63; from the database.
@@ -797,22 +705,6 @@ public interface ClientExtensionEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] findByC_T_PrevAndNext(
-			long clientExtensionEntryId, long companyId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
-
-	/**
 	 * Returns all the client extension entries that the user has permission to view where companyId = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -856,22 +748,6 @@ public interface ClientExtensionEntryPersistence
 		long companyId, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set of client extension entries that the user has permission to view where companyId = &#63; and type = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] filterFindByC_T_PrevAndNext(
-			long clientExtensionEntryId, long companyId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
 
 	/**
 	 * Removes all the client extension entries where companyId = &#63; and type = &#63; from the database.
@@ -1075,4 +951,4 @@ public interface ClientExtensionEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-512010061
+// LIFERAY-SERVICE-BUILDER-HASH:-85600987

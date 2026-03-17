@@ -257,25 +257,6 @@ public class KaleoNotificationRecipientUtil {
 	}
 
 	/**
-	 * Returns the kaleo notification recipients before and after the current kaleo notification recipient in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoNotificationRecipientId the primary key of the current kaleo notification recipient
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo notification recipient
-	 * @throws NoSuchNotificationRecipientException if a kaleo notification recipient with the primary key could not be found
-	 */
-	public static KaleoNotificationRecipient[] findByCompanyId_PrevAndNext(
-			long kaleoNotificationRecipientId, long companyId,
-			OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchNotificationRecipientException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			kaleoNotificationRecipientId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo notification recipients where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -445,28 +426,6 @@ public class KaleoNotificationRecipientUtil {
 	}
 
 	/**
-	 * Returns the kaleo notification recipients before and after the current kaleo notification recipient in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoNotificationRecipientId the primary key of the current kaleo notification recipient
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo notification recipient
-	 * @throws NoSuchNotificationRecipientException if a kaleo notification recipient with the primary key could not be found
-	 */
-	public static KaleoNotificationRecipient[]
-			findByKaleoDefinitionVersionId_PrevAndNext(
-				long kaleoNotificationRecipientId,
-				long kaleoDefinitionVersionId,
-				OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchNotificationRecipientException {
-
-		return getPersistence().findByKaleoDefinitionVersionId_PrevAndNext(
-			kaleoNotificationRecipientId, kaleoDefinitionVersionId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo notification recipients where kaleoDefinitionVersionId = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -630,27 +589,6 @@ public class KaleoNotificationRecipientUtil {
 
 		return getPersistence().fetchByKaleoNotificationId_Last(
 			kaleoNotificationId, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo notification recipients before and after the current kaleo notification recipient in the ordered set where kaleoNotificationId = &#63;.
-	 *
-	 * @param kaleoNotificationRecipientId the primary key of the current kaleo notification recipient
-	 * @param kaleoNotificationId the kaleo notification ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo notification recipient
-	 * @throws NoSuchNotificationRecipientException if a kaleo notification recipient with the primary key could not be found
-	 */
-	public static KaleoNotificationRecipient[]
-			findByKaleoNotificationId_PrevAndNext(
-				long kaleoNotificationRecipientId, long kaleoNotificationId,
-				OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchNotificationRecipientException {
-
-		return getPersistence().findByKaleoNotificationId_PrevAndNext(
-			kaleoNotificationRecipientId, kaleoNotificationId,
-			orderByComparator);
 	}
 
 	/**
@@ -848,4 +786,4 @@ public class KaleoNotificationRecipientUtil {
 	private static volatile KaleoNotificationRecipientPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-6570833
+// LIFERAY-SERVICE-BUILDER-HASH:-662611434

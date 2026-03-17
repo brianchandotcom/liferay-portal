@@ -311,24 +311,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set where patcherFixComponentId = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] findByPatcherFixComponentId_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().findByPatcherFixComponentId_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63;.
 	 *
 	 * @param patcherFixComponentId the patcher fix component ID
@@ -379,25 +361,6 @@ public class PatcherFixPackUtil {
 
 		return getPersistence().filterFindByPatcherFixComponentId(
 			patcherFixComponentId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set of patcher fix packs that the user has permission to view where patcherFixComponentId = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[]
-			filterFindByPatcherFixComponentId_PrevAndNext(
-				long patcherFixPackId, long patcherFixComponentId,
-				OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().filterFindByPatcherFixComponentId_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, orderByComparator);
 	}
 
 	/**
@@ -565,24 +528,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set where version = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] findByVersion_PrevAndNext(
-			long patcherFixPackId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().findByVersion_PrevAndNext(
-			patcherFixPackId, version, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where version = &#63;.
 	 *
 	 * @param version the version
@@ -629,24 +574,6 @@ public class PatcherFixPackUtil {
 
 		return getPersistence().filterFindByVersion(
 			version, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set of patcher fix packs that the user has permission to view where version = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] filterFindByVersion_PrevAndNext(
-			long patcherFixPackId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().filterFindByVersion_PrevAndNext(
-			patcherFixPackId, version, orderByComparator);
 	}
 
 	/**
@@ -830,27 +757,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] findByPFCI_PPVI_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId,
-			long patcherProjectVersionId,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().findByPFCI_PPVI_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, patcherProjectVersionId,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
 	 *
 	 * @param patcherFixComponentId the patcher fix component ID
@@ -905,27 +811,6 @@ public class PatcherFixPackUtil {
 
 		return getPersistence().filterFindByPFCI_PPVI(
 			patcherFixComponentId, patcherProjectVersionId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set of patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] filterFindByPFCI_PPVI_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId,
-			long patcherProjectVersionId,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().filterFindByPFCI_PPVI_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, patcherProjectVersionId,
 			orderByComparator);
 	}
 
@@ -1119,26 +1004,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] findByPFCI_V_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().findByPFCI_V_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, version,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and version = &#63;.
 	 *
 	 * @param patcherFixComponentId the patcher fix component ID
@@ -1192,26 +1057,6 @@ public class PatcherFixPackUtil {
 
 		return getPersistence().filterFindByPFCI_V(
 			patcherFixComponentId, version, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set of patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] filterFindByPFCI_V_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().filterFindByPFCI_V_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, version,
-			orderByComparator);
 	}
 
 	/**
@@ -1466,26 +1311,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] findByPFCI_S_PrevAndNext(
-			long patcherFixPackId, long patcherProjectVersionId, int status,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().findByPFCI_S_PrevAndNext(
-			patcherFixPackId, patcherProjectVersionId, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherProjectVersionId = &#63; and status = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -1539,26 +1364,6 @@ public class PatcherFixPackUtil {
 
 		return getPersistence().filterFindByPFCI_S(
 			patcherProjectVersionId, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set of patcher fix packs that the user has permission to view where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] filterFindByPFCI_S_PrevAndNext(
-			long patcherFixPackId, long patcherProjectVersionId, int status,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().filterFindByPFCI_S_PrevAndNext(
-			patcherFixPackId, patcherProjectVersionId, status,
-			orderByComparator);
 	}
 
 	/**
@@ -1764,28 +1569,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &gt; &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] findByPFCI_PPVI_GtV_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId,
-			long patcherProjectVersionId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().findByPFCI_PPVI_GtV_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, patcherProjectVersionId,
-			version, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &gt; &#63;.
 	 *
 	 * @param patcherFixComponentId the patcher fix component ID
@@ -1846,28 +1629,6 @@ public class PatcherFixPackUtil {
 		return getPersistence().filterFindByPFCI_PPVI_GtV(
 			patcherFixComponentId, patcherProjectVersionId, version, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set of patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &gt; &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] filterFindByPFCI_PPVI_GtV_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId,
-			long patcherProjectVersionId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().filterFindByPFCI_PPVI_GtV_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, patcherProjectVersionId,
-			version, orderByComparator);
 	}
 
 	/**
@@ -2080,28 +1841,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &lt; &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] findByPFCI_PPVI_LtV_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId,
-			long patcherProjectVersionId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().findByPFCI_PPVI_LtV_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, patcherProjectVersionId,
-			version, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &lt; &#63;.
 	 *
 	 * @param patcherFixComponentId the patcher fix component ID
@@ -2162,28 +1901,6 @@ public class PatcherFixPackUtil {
 		return getPersistence().filterFindByPFCI_PPVI_LtV(
 			patcherFixComponentId, patcherProjectVersionId, version, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher fix packs before and after the current patcher fix pack in the ordered set of patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and version &lt; &#63;.
-	 *
-	 * @param patcherFixPackId the primary key of the current patcher fix pack
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	public static PatcherFixPack[] filterFindByPFCI_PPVI_LtV_PrevAndNext(
-			long patcherFixPackId, long patcherFixComponentId,
-			long patcherProjectVersionId, int version,
-			OrderByComparator<PatcherFixPack> orderByComparator)
-		throws com.liferay.osb.patcher.exception.NoSuchPatcherFixPackException {
-
-		return getPersistence().filterFindByPFCI_PPVI_LtV_PrevAndNext(
-			patcherFixPackId, patcherFixComponentId, patcherProjectVersionId,
-			version, orderByComparator);
 	}
 
 	/**
@@ -2692,4 +2409,4 @@ public class PatcherFixPackUtil {
 	private static volatile PatcherFixPackPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1168100027
+// LIFERAY-SERVICE-BUILDER-HASH:-88382144

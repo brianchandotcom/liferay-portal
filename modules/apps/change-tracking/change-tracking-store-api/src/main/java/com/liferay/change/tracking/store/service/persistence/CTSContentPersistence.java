@@ -155,22 +155,6 @@ public interface CTSContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cts contents before and after the current cts content in the ordered set where repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param ctsContentId the primary key of the current cts content
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cts content
-	 * @throws NoSuchContentException if a cts content with the primary key could not be found
-	 */
-	public CTSContent[] findByR_P_PrevAndNext(
-			long ctsContentId, long repositoryId, String path,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
 	 * Removes all the cts contents where repositoryId = &#63; and path = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -317,24 +301,6 @@ public interface CTSContentPersistence
 		long companyId, long repositoryId, String storeType,
 		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
 			orderByComparator);
-
-	/**
-	 * Returns the cts contents before and after the current cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
-	 *
-	 * @param ctsContentId the primary key of the current cts content
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cts content
-	 * @throws NoSuchContentException if a cts content with the primary key could not be found
-	 */
-	public CTSContent[] findByC_R_S_PrevAndNext(
-			long ctsContentId, long companyId, long repositoryId,
-			String storeType,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-				orderByComparator)
-		throws NoSuchContentException;
 
 	/**
 	 * Removes all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63; from the database.
@@ -499,25 +465,6 @@ public interface CTSContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cts contents before and after the current cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
-	 *
-	 * @param ctsContentId the primary key of the current cts content
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cts content
-	 * @throws NoSuchContentException if a cts content with the primary key could not be found
-	 */
-	public CTSContent[] findByC_R_P_S_PrevAndNext(
-			long ctsContentId, long companyId, long repositoryId, String path,
-			String storeType,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
 	 * Removes all the cts contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -680,25 +627,6 @@ public interface CTSContentPersistence
 		long companyId, long repositoryId, String path, String storeType,
 		com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
 			orderByComparator);
-
-	/**
-	 * Returns the cts contents before and after the current cts content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; and storeType = &#63;.
-	 *
-	 * @param ctsContentId the primary key of the current cts content
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cts content
-	 * @throws NoSuchContentException if a cts content with the primary key could not be found
-	 */
-	public CTSContent[] findByC_R_LikeP_S_PrevAndNext(
-			long ctsContentId, long companyId, long repositoryId, String path,
-			String storeType,
-			com.liferay.portal.kernel.util.OrderByComparator<CTSContent>
-				orderByComparator)
-		throws NoSuchContentException;
 
 	/**
 	 * Removes all the cts contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; and storeType = &#63; from the database.
@@ -917,4 +845,4 @@ public interface CTSContentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:993521906
+// LIFERAY-SERVICE-BUILDER-HASH:-1526854427

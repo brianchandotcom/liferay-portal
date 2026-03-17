@@ -147,21 +147,6 @@ public interface KaleoTaskFormPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo task forms before and after the current kaleo task form in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoTaskFormId the primary key of the current kaleo task form
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form
-	 * @throws NoSuchTaskFormException if a kaleo task form with the primary key could not be found
-	 */
-	public KaleoTaskForm[] findByCompanyId_PrevAndNext(
-			long kaleoTaskFormId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
-				orderByComparator)
-		throws NoSuchTaskFormException;
-
-	/**
 	 * Removes all the kaleo task forms where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -289,21 +274,6 @@ public interface KaleoTaskFormPersistence
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo task forms before and after the current kaleo task form in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoTaskFormId the primary key of the current kaleo task form
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form
-	 * @throws NoSuchTaskFormException if a kaleo task form with the primary key could not be found
-	 */
-	public KaleoTaskForm[] findByKaleoDefinitionVersionId_PrevAndNext(
-			long kaleoTaskFormId, long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
-				orderByComparator)
-		throws NoSuchTaskFormException;
 
 	/**
 	 * Removes all the kaleo task forms where kaleoDefinitionVersionId = &#63; from the database.
@@ -434,21 +404,6 @@ public interface KaleoTaskFormPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo task forms before and after the current kaleo task form in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoTaskFormId the primary key of the current kaleo task form
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form
-	 * @throws NoSuchTaskFormException if a kaleo task form with the primary key could not be found
-	 */
-	public KaleoTaskForm[] findByKaleoNodeId_PrevAndNext(
-			long kaleoTaskFormId, long kaleoNodeId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
-				orderByComparator)
-		throws NoSuchTaskFormException;
-
-	/**
 	 * Removes all the kaleo task forms where kaleoNodeId = &#63; from the database.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
@@ -575,21 +530,6 @@ public interface KaleoTaskFormPersistence
 		long kaleoTaskId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo task forms before and after the current kaleo task form in the ordered set where kaleoTaskId = &#63;.
-	 *
-	 * @param kaleoTaskFormId the primary key of the current kaleo task form
-	 * @param kaleoTaskId the kaleo task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task form
-	 * @throws NoSuchTaskFormException if a kaleo task form with the primary key could not be found
-	 */
-	public KaleoTaskForm[] findByKaleoTaskId_PrevAndNext(
-			long kaleoTaskFormId, long kaleoTaskId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskForm>
-				orderByComparator)
-		throws NoSuchTaskFormException;
 
 	/**
 	 * Removes all the kaleo task forms where kaleoTaskId = &#63; from the database.
@@ -777,4 +717,4 @@ public interface KaleoTaskFormPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1913170790
+// LIFERAY-SERVICE-BUILDER-HASH:1355733753

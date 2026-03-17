@@ -147,21 +147,6 @@ public interface WikiPageResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki page resources before and after the current wiki page resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current wiki page resource
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page resource
-	 * @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
-	 */
-	public WikiPageResource[] findByUuid_PrevAndNext(
-			long resourcePrimKey, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-				orderByComparator)
-		throws NoSuchPageResourceException;
-
-	/**
 	 * Removes all the wiki page resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -347,22 +332,6 @@ public interface WikiPageResourcePersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki page resources before and after the current wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current wiki page resource
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page resource
-	 * @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
-	 */
-	public WikiPageResource[] findByUuid_C_PrevAndNext(
-			long resourcePrimKey, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-				orderByComparator)
-		throws NoSuchPageResourceException;
 
 	/**
 	 * Removes all the wiki page resources where uuid = &#63; and companyId = &#63; from the database.
@@ -552,4 +521,4 @@ public interface WikiPageResourcePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1159090928
+// LIFERAY-SERVICE-BUILDER-HASH:-860556831

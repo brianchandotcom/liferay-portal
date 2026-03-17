@@ -250,25 +250,6 @@ public class NotificationRecipientSettingUtil {
 	}
 
 	/**
-	 * Returns the notification recipient settings before and after the current notification recipient setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param notificationRecipientSettingId the primary key of the current notification recipient setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification recipient setting
-	 * @throws NoSuchNotificationRecipientSettingException if a notification recipient setting with the primary key could not be found
-	 */
-	public static NotificationRecipientSetting[] findByUuid_PrevAndNext(
-			long notificationRecipientSettingId, String uuid,
-			OrderByComparator<NotificationRecipientSetting> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientSettingException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			notificationRecipientSettingId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the notification recipient settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,26 +414,6 @@ public class NotificationRecipientSettingUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the notification recipient settings before and after the current notification recipient setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param notificationRecipientSettingId the primary key of the current notification recipient setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification recipient setting
-	 * @throws NoSuchNotificationRecipientSettingException if a notification recipient setting with the primary key could not be found
-	 */
-	public static NotificationRecipientSetting[] findByUuid_C_PrevAndNext(
-			long notificationRecipientSettingId, String uuid, long companyId,
-			OrderByComparator<NotificationRecipientSetting> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientSettingException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			notificationRecipientSettingId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -626,29 +587,6 @@ public class NotificationRecipientSettingUtil {
 
 		return getPersistence().fetchByNotificationRecipientId_Last(
 			notificationRecipientId, orderByComparator);
-	}
-
-	/**
-	 * Returns the notification recipient settings before and after the current notification recipient setting in the ordered set where notificationRecipientId = &#63;.
-	 *
-	 * @param notificationRecipientSettingId the primary key of the current notification recipient setting
-	 * @param notificationRecipientId the notification recipient ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification recipient setting
-	 * @throws NoSuchNotificationRecipientSettingException if a notification recipient setting with the primary key could not be found
-	 */
-	public static NotificationRecipientSetting[]
-			findByNotificationRecipientId_PrevAndNext(
-				long notificationRecipientSettingId,
-				long notificationRecipientId,
-				OrderByComparator<NotificationRecipientSetting>
-					orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientSettingException {
-
-		return getPersistence().findByNotificationRecipientId_PrevAndNext(
-			notificationRecipientSettingId, notificationRecipientId,
-			orderByComparator);
 	}
 
 	/**
@@ -927,4 +865,4 @@ public class NotificationRecipientSettingUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1463641681
+// LIFERAY-SERVICE-BUILDER-HASH:-318429301

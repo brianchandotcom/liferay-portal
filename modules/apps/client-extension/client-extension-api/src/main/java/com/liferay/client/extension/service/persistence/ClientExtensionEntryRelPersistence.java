@@ -148,21 +148,6 @@ public interface ClientExtensionEntryRelPersistence
 			<ClientExtensionEntryRel> orderByComparator);
 
 	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public ClientExtensionEntryRel[] findByUuid_PrevAndNext(
-			long clientExtensionEntryRelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException;
-
-	/**
 	 * Removes all the client extension entry rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface ClientExtensionEntryRelPersistence
 			<ClientExtensionEntryRel> orderByComparator);
 
 	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public ClientExtensionEntryRel[] findByUuid_C_PrevAndNext(
-			long clientExtensionEntryRelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException;
-
-	/**
 	 * Removes all the client extension entry rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface ClientExtensionEntryRelPersistence
 		String type,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ClientExtensionEntryRel> orderByComparator);
-
-	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where type = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public ClientExtensionEntryRel[] findByType_PrevAndNext(
-			long clientExtensionEntryRelId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException;
 
 	/**
 	 * Removes all the client extension entry rels where type = &#63; from the database.
@@ -646,23 +600,6 @@ public interface ClientExtensionEntryRelPersistence
 		long companyId, String cetExternalReferenceCode,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ClientExtensionEntryRel> orderByComparator);
-
-	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where companyId = &#63; and cetExternalReferenceCode = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param companyId the company ID
-	 * @param cetExternalReferenceCode the cet external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public ClientExtensionEntryRel[] findByC_CETERC_PrevAndNext(
-			long clientExtensionEntryRelId, long companyId,
-			String cetExternalReferenceCode,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException;
 
 	/**
 	 * Removes all the client extension entry rels where companyId = &#63; and cetExternalReferenceCode = &#63; from the database.
@@ -803,22 +740,6 @@ public interface ClientExtensionEntryRelPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ClientExtensionEntryRel> orderByComparator);
-
-	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public ClientExtensionEntryRel[] findByC_C_PrevAndNext(
-			long clientExtensionEntryRelId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException;
 
 	/**
 	 * Removes all the client extension entry rels where classNameId = &#63; and classPK = &#63; from the database.
@@ -966,24 +887,6 @@ public interface ClientExtensionEntryRelPersistence
 		long classNameId, long classPK, String type,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ClientExtensionEntryRel> orderByComparator);
-
-	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public ClientExtensionEntryRel[] findByC_C_T_PrevAndNext(
-			long clientExtensionEntryRelId, long classNameId, long classPK,
-			String type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntryRel> orderByComparator)
-		throws NoSuchClientExtensionEntryRelException;
 
 	/**
 	 * Removes all the client extension entry rels where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
@@ -1182,4 +1085,4 @@ public interface ClientExtensionEntryRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1745493479
+// LIFERAY-SERVICE-BUILDER-HASH:-1625585950

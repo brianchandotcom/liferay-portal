@@ -247,25 +247,6 @@ public class ObjectValidationRuleUtil {
 	}
 
 	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public static ObjectValidationRule[] findByUuid_PrevAndNext(
-			long objectValidationRuleId, String uuid,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectValidationRuleId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object validation rules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -433,26 +414,6 @@ public class ObjectValidationRuleUtil {
 	}
 
 	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public static ObjectValidationRule[] findByUuid_C_PrevAndNext(
-			long objectValidationRuleId, String uuid, long companyId,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectValidationRuleId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object validation rules where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -612,25 +573,6 @@ public class ObjectValidationRuleUtil {
 
 		return getPersistence().fetchByObjectDefinitionId_Last(
 			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public static ObjectValidationRule[] findByObjectDefinitionId_PrevAndNext(
-			long objectValidationRuleId, long objectDefinitionId,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleException {
-
-		return getPersistence().findByObjectDefinitionId_PrevAndNext(
-			objectValidationRuleId, objectDefinitionId, orderByComparator);
 	}
 
 	/**
@@ -800,28 +742,6 @@ public class ObjectValidationRuleUtil {
 
 		return getPersistence().fetchByODI_A_Last(
 			objectDefinitionId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public static ObjectValidationRule[] findByODI_A_PrevAndNext(
-			long objectValidationRuleId, long objectDefinitionId,
-			boolean active,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleException {
-
-		return getPersistence().findByODI_A_PrevAndNext(
-			objectValidationRuleId, objectDefinitionId, active,
-			orderByComparator);
 	}
 
 	/**
@@ -996,27 +916,6 @@ public class ObjectValidationRuleUtil {
 	}
 
 	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public static ObjectValidationRule[] findByODI_E_PrevAndNext(
-			long objectValidationRuleId, long objectDefinitionId, String engine,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleException {
-
-		return getPersistence().findByODI_E_PrevAndNext(
-			objectValidationRuleId, objectDefinitionId, engine,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; and engine = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1188,28 +1087,6 @@ public class ObjectValidationRuleUtil {
 	}
 
 	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public static ObjectValidationRule[] findByODI_O_PrevAndNext(
-			long objectValidationRuleId, long objectDefinitionId,
-			String outputType,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleException {
-
-		return getPersistence().findByODI_O_PrevAndNext(
-			objectValidationRuleId, objectDefinitionId, outputType,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the object validation rules where objectDefinitionId = &#63; and outputType = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1378,26 +1255,6 @@ public class ObjectValidationRuleUtil {
 
 		return getPersistence().fetchByA_E_Last(
 			active, engine, orderByComparator);
-	}
-
-	/**
-	 * Returns the object validation rules before and after the current object validation rule in the ordered set where active = &#63; and engine = &#63;.
-	 *
-	 * @param objectValidationRuleId the primary key of the current object validation rule
-	 * @param active the active
-	 * @param engine the engine
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	public static ObjectValidationRule[] findByA_E_PrevAndNext(
-			long objectValidationRuleId, boolean active, String engine,
-			OrderByComparator<ObjectValidationRule> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectValidationRuleException {
-
-		return getPersistence().findByA_E_PrevAndNext(
-			objectValidationRuleId, active, engine, orderByComparator);
 	}
 
 	/**
@@ -1677,4 +1534,4 @@ public class ObjectValidationRuleUtil {
 	private static volatile ObjectValidationRulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1155042598
+// LIFERAY-SERVICE-BUILDER-HASH:-501825829

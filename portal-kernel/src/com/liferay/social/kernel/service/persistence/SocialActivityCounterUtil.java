@@ -249,25 +249,6 @@ public class SocialActivityCounterUtil {
 	}
 
 	/**
-	 * Returns the social activity counters before and after the current social activity counter in the ordered set where groupId = &#63;.
-	 *
-	 * @param activityCounterId the primary key of the current social activity counter
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity counter
-	 * @throws NoSuchActivityCounterException if a social activity counter with the primary key could not be found
-	 */
-	public static SocialActivityCounter[] findByGroupId_PrevAndNext(
-			long activityCounterId, long groupId,
-			OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityCounterException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			activityCounterId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activity counters where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -433,26 +414,6 @@ public class SocialActivityCounterUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity counters before and after the current social activity counter in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param activityCounterId the primary key of the current social activity counter
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity counter
-	 * @throws NoSuchActivityCounterException if a social activity counter with the primary key could not be found
-	 */
-	public static SocialActivityCounter[] findByC_C_PrevAndNext(
-			long activityCounterId, long classNameId, long classPK,
-			OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityCounterException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			activityCounterId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -643,30 +604,6 @@ public class SocialActivityCounterUtil {
 
 		return getPersistence().fetchByG_C_C_O_Last(
 			groupId, classNameId, classPK, ownerType, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity counters before and after the current social activity counter in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param activityCounterId the primary key of the current social activity counter
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param ownerType the owner type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity counter
-	 * @throws NoSuchActivityCounterException if a social activity counter with the primary key could not be found
-	 */
-	public static SocialActivityCounter[] findByG_C_C_O_PrevAndNext(
-			long activityCounterId, long groupId, long classNameId,
-			long classPK, int ownerType,
-			OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityCounterException {
-
-		return getPersistence().findByG_C_C_O_PrevAndNext(
-			activityCounterId, groupId, classNameId, classPK, ownerType,
-			orderByComparator);
 	}
 
 	/**
@@ -1076,4 +1013,4 @@ public class SocialActivityCounterUtil {
 	private static volatile SocialActivityCounterPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1341408017
+// LIFERAY-SERVICE-BUILDER-HASH:2083912676

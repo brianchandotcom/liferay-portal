@@ -252,25 +252,6 @@ public class PatcherBuildRelUtil {
 	}
 
 	/**
-	 * Returns the patcher build rels before and after the current patcher build rel in the ordered set where childPatcherBuildId = &#63;.
-	 *
-	 * @param patcherBuildRelId the primary key of the current patcher build rel
-	 * @param childPatcherBuildId the child patcher build ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build rel
-	 * @throws NoSuchPatcherBuildRelException if a patcher build rel with the primary key could not be found
-	 */
-	public static PatcherBuildRel[] findByChildPatcherBuildId_PrevAndNext(
-			long patcherBuildRelId, long childPatcherBuildId,
-			OrderByComparator<PatcherBuildRel> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherBuildRelException {
-
-		return getPersistence().findByChildPatcherBuildId_PrevAndNext(
-			patcherBuildRelId, childPatcherBuildId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the patcher build rels where childPatcherBuildId = &#63; from the database.
 	 *
 	 * @param childPatcherBuildId the child patcher build ID
@@ -430,25 +411,6 @@ public class PatcherBuildRelUtil {
 
 		return getPersistence().fetchByParentPatcherBuildId_Last(
 			parentPatcherBuildId, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher build rels before and after the current patcher build rel in the ordered set where parentPatcherBuildId = &#63;.
-	 *
-	 * @param patcherBuildRelId the primary key of the current patcher build rel
-	 * @param parentPatcherBuildId the parent patcher build ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build rel
-	 * @throws NoSuchPatcherBuildRelException if a patcher build rel with the primary key could not be found
-	 */
-	public static PatcherBuildRel[] findByParentPatcherBuildId_PrevAndNext(
-			long patcherBuildRelId, long parentPatcherBuildId,
-			OrderByComparator<PatcherBuildRel> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherBuildRelException {
-
-		return getPersistence().findByParentPatcherBuildId_PrevAndNext(
-			patcherBuildRelId, parentPatcherBuildId, orderByComparator);
 	}
 
 	/**
@@ -633,4 +595,4 @@ public class PatcherBuildRelUtil {
 	private static volatile PatcherBuildRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2078071510
+// LIFERAY-SERVICE-BUILDER-HASH:-2127670680

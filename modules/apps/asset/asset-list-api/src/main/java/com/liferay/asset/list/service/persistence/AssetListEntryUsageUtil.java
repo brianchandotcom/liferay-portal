@@ -243,24 +243,6 @@ public class AssetListEntryUsageUtil {
 	}
 
 	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public static AssetListEntryUsage[] findByUuid_PrevAndNext(
-			long assetListEntryUsageId, String uuid,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryUsageException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			assetListEntryUsageId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry usages where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -489,25 +471,6 @@ public class AssetListEntryUsageUtil {
 	}
 
 	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public static AssetListEntryUsage[] findByUuid_C_PrevAndNext(
-			long assetListEntryUsageId, String uuid, long companyId,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryUsageException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			assetListEntryUsageId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry usages where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -653,24 +616,6 @@ public class AssetListEntryUsageUtil {
 		long plid, OrderByComparator<AssetListEntryUsage> orderByComparator) {
 
 		return getPersistence().fetchByPlid_Last(plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where plid = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public static AssetListEntryUsage[] findByPlid_PrevAndNext(
-			long assetListEntryUsageId, long plid,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryUsageException {
-
-		return getPersistence().findByPlid_PrevAndNext(
-			assetListEntryUsageId, plid, orderByComparator);
 	}
 
 	/**
@@ -836,25 +781,6 @@ public class AssetListEntryUsageUtil {
 
 		return getPersistence().fetchByCT_P_Last(
 			containerType, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where containerType = &#63; and plid = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public static AssetListEntryUsage[] findByCT_P_PrevAndNext(
-			long assetListEntryUsageId, long containerType, long plid,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryUsageException {
-
-		return getPersistence().findByCT_P_PrevAndNext(
-			assetListEntryUsageId, containerType, plid, orderByComparator);
 	}
 
 	/**
@@ -1032,28 +958,6 @@ public class AssetListEntryUsageUtil {
 
 		return getPersistence().fetchByG_C_K_Last(
 			groupId, classNameId, key, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where groupId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public static AssetListEntryUsage[] findByG_C_K_PrevAndNext(
-			long assetListEntryUsageId, long groupId, long classNameId,
-			String key,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryUsageException {
-
-		return getPersistence().findByG_C_K_PrevAndNext(
-			assetListEntryUsageId, groupId, classNameId, key,
-			orderByComparator);
 	}
 
 	/**
@@ -1235,28 +1139,6 @@ public class AssetListEntryUsageUtil {
 
 		return getPersistence().fetchByC_C_K_Last(
 			companyId, classNameId, key, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public static AssetListEntryUsage[] findByC_C_K_PrevAndNext(
-			long assetListEntryUsageId, long companyId, long classNameId,
-			String key,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryUsageException {
-
-		return getPersistence().findByC_C_K_PrevAndNext(
-			assetListEntryUsageId, companyId, classNameId, key,
-			orderByComparator);
 	}
 
 	/**
@@ -1442,27 +1324,6 @@ public class AssetListEntryUsageUtil {
 
 		return getPersistence().fetchByCK_CT_P_Last(
 			containerKey, containerType, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where containerKey = &#63; and containerType = &#63; and plid = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param containerKey the container key
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public static AssetListEntryUsage[] findByCK_CT_P_PrevAndNext(
-			long assetListEntryUsageId, String containerKey, long containerType,
-			long plid, OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryUsageException {
-
-		return getPersistence().findByCK_CT_P_PrevAndNext(
-			assetListEntryUsageId, containerKey, containerType, plid,
-			orderByComparator);
 	}
 
 	/**
@@ -1656,29 +1517,6 @@ public class AssetListEntryUsageUtil {
 
 		return getPersistence().fetchByG_C_K_T_Last(
 			groupId, classNameId, key, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	public static AssetListEntryUsage[] findByG_C_K_T_PrevAndNext(
-			long assetListEntryUsageId, long groupId, long classNameId,
-			String key, int type,
-			OrderByComparator<AssetListEntryUsage> orderByComparator)
-		throws com.liferay.asset.list.exception.NoSuchEntryUsageException {
-
-		return getPersistence().findByG_C_K_T_PrevAndNext(
-			assetListEntryUsageId, groupId, classNameId, key, type,
-			orderByComparator);
 	}
 
 	/**
@@ -1979,4 +1817,4 @@ public class AssetListEntryUsageUtil {
 	private static volatile AssetListEntryUsagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1870336503
+// LIFERAY-SERVICE-BUILDER-HASH:384983952

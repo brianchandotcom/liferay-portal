@@ -246,25 +246,6 @@ public class PortletPreferencesUtil {
 	}
 
 	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByOwnerId_PrevAndNext(
-			long portletPreferencesId, long ownerId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByOwnerId_PrevAndNext(
-			portletPreferencesId, ownerId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the portlet preferenceses where ownerId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -410,25 +391,6 @@ public class PortletPreferencesUtil {
 		long plid, OrderByComparator<PortletPreferences> orderByComparator) {
 
 		return getPersistence().fetchByPlid_Last(plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByPlid_PrevAndNext(
-			long portletPreferencesId, long plid,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByPlid_PrevAndNext(
-			portletPreferencesId, plid, orderByComparator);
 	}
 
 	/**
@@ -586,25 +548,6 @@ public class PortletPreferencesUtil {
 
 		return getPersistence().fetchByPortletId_Last(
 			portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByPortletId_PrevAndNext(
-			long portletPreferencesId, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByPortletId_PrevAndNext(
-			portletPreferencesId, portletId, orderByComparator);
 	}
 
 	/**
@@ -776,26 +719,6 @@ public class PortletPreferencesUtil {
 	}
 
 	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByO_P_PrevAndNext(
-			long portletPreferencesId, int ownerType, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByO_P_PrevAndNext(
-			portletPreferencesId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the portlet preferenceses where ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -962,26 +885,6 @@ public class PortletPreferencesUtil {
 
 		return getPersistence().fetchByP_P_Last(
 			plid, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByP_P_PrevAndNext(
-			long portletPreferencesId, long plid, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByP_P_PrevAndNext(
-			portletPreferencesId, plid, portletId, orderByComparator);
 	}
 
 	/**
@@ -1164,27 +1067,6 @@ public class PortletPreferencesUtil {
 	}
 
 	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByO_O_P_PrevAndNext(
-			long portletPreferencesId, long ownerId, int ownerType, long plid,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByO_O_P_PrevAndNext(
-			portletPreferencesId, ownerId, ownerType, plid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -1363,29 +1245,6 @@ public class PortletPreferencesUtil {
 
 		return getPersistence().fetchByO_O_PI_Last(
 			ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByO_O_PI_PrevAndNext(
-			long portletPreferencesId, long ownerId, int ownerType,
-			String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByO_O_PI_PrevAndNext(
-			portletPreferencesId, ownerId, ownerType, portletId,
-			orderByComparator);
 	}
 
 	/**
@@ -1571,29 +1430,6 @@ public class PortletPreferencesUtil {
 
 		return getPersistence().fetchByO_P_P_Last(
 			ownerType, plid, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByO_P_P_PrevAndNext(
-			long portletPreferencesId, int ownerType, long plid,
-			String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByO_P_P_PrevAndNext(
-			portletPreferencesId, ownerType, plid, portletId,
-			orderByComparator);
 	}
 
 	/**
@@ -1790,30 +1626,6 @@ public class PortletPreferencesUtil {
 
 		return getPersistence().fetchByC_O_O_LikeP_Last(
 			companyId, ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public static PortletPreferences[] findByC_O_O_LikeP_PrevAndNext(
-			long portletPreferencesId, long companyId, long ownerId,
-			int ownerType, String portletId,
-			OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPortletPreferencesException {
-
-		return getPersistence().findByC_O_O_LikeP_PrevAndNext(
-			portletPreferencesId, companyId, ownerId, ownerType, portletId,
-			orderByComparator);
 	}
 
 	/**
@@ -2104,4 +1916,4 @@ public class PortletPreferencesUtil {
 	private static volatile PortletPreferencesPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1626940172
+// LIFERAY-SERVICE-BUILDER-HASH:1968652822

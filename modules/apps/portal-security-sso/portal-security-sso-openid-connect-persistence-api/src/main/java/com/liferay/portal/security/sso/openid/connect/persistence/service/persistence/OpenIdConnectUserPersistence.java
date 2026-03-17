@@ -155,22 +155,6 @@ public interface OpenIdConnectUserPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the open ID connect users before and after the current open ID connect user in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param openIdConnectUserId the primary key of the current open ID connect user
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next open ID connect user
-	 * @throws NoSuchUserException if a open ID connect user with the primary key could not be found
-	 */
-	public OpenIdConnectUser[] findByC_U_PrevAndNext(
-			long openIdConnectUserId, long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<OpenIdConnectUser>
-				orderByComparator)
-		throws NoSuchUserException;
-
-	/**
 	 * Removes all the open ID connect users where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -367,4 +351,4 @@ public interface OpenIdConnectUserPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:980887247
+// LIFERAY-SERVICE-BUILDER-HASH:-12312406

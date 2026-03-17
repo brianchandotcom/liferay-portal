@@ -240,24 +240,6 @@ public class ChangesetEntryUtil {
 	}
 
 	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public static ChangesetEntry[] findByGroupId_PrevAndNext(
-			long changesetEntryId, long groupId,
-			OrderByComparator<ChangesetEntry> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			changesetEntryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the changeset entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -406,24 +388,6 @@ public class ChangesetEntryUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public static ChangesetEntry[] findByCompanyId_PrevAndNext(
-			long changesetEntryId, long companyId,
-			OrderByComparator<ChangesetEntry> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchEntryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			changesetEntryId, companyId, orderByComparator);
 	}
 
 	/**
@@ -584,24 +548,6 @@ public class ChangesetEntryUtil {
 
 		return getPersistence().fetchByChangesetCollectionId_Last(
 			changesetCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where changesetCollectionId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param changesetCollectionId the changeset collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public static ChangesetEntry[] findByChangesetCollectionId_PrevAndNext(
-			long changesetEntryId, long changesetCollectionId,
-			OrderByComparator<ChangesetEntry> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchEntryException {
-
-		return getPersistence().findByChangesetCollectionId_PrevAndNext(
-			changesetEntryId, changesetCollectionId, orderByComparator);
 	}
 
 	/**
@@ -774,25 +720,6 @@ public class ChangesetEntryUtil {
 	}
 
 	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public static ChangesetEntry[] findByG_C_PrevAndNext(
-			long changesetEntryId, long groupId, long classNameId,
-			OrderByComparator<ChangesetEntry> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_C_PrevAndNext(
-			changesetEntryId, groupId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the changeset entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -959,26 +886,6 @@ public class ChangesetEntryUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			changesetCollectionId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the changeset entries before and after the current changeset entry in the ordered set where changesetCollectionId = &#63; and classNameId = &#63;.
-	 *
-	 * @param changesetEntryId the primary key of the current changeset entry
-	 * @param changesetCollectionId the changeset collection ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	public static ChangesetEntry[] findByC_C_PrevAndNext(
-			long changesetEntryId, long changesetCollectionId, long classNameId,
-			OrderByComparator<ChangesetEntry> orderByComparator)
-		throws com.liferay.changeset.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			changesetEntryId, changesetCollectionId, classNameId,
-			orderByComparator);
 	}
 
 	/**
@@ -1328,4 +1235,4 @@ public class ChangesetEntryUtil {
 	private static volatile ChangesetEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1625555368
+// LIFERAY-SERVICE-BUILDER-HASH:-1154026775

@@ -247,25 +247,6 @@ public class NotificationRecipientUtil {
 	}
 
 	/**
-	 * Returns the notification recipients before and after the current notification recipient in the ordered set where uuid = &#63;.
-	 *
-	 * @param notificationRecipientId the primary key of the current notification recipient
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification recipient
-	 * @throws NoSuchNotificationRecipientException if a notification recipient with the primary key could not be found
-	 */
-	public static NotificationRecipient[] findByUuid_PrevAndNext(
-			long notificationRecipientId, String uuid,
-			OrderByComparator<NotificationRecipient> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			notificationRecipientId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the notification recipients where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -430,26 +411,6 @@ public class NotificationRecipientUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the notification recipients before and after the current notification recipient in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param notificationRecipientId the primary key of the current notification recipient
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification recipient
-	 * @throws NoSuchNotificationRecipientException if a notification recipient with the primary key could not be found
-	 */
-	public static NotificationRecipient[] findByUuid_C_PrevAndNext(
-			long notificationRecipientId, String uuid, long companyId,
-			OrderByComparator<NotificationRecipient> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationRecipientException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			notificationRecipientId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -706,4 +667,4 @@ public class NotificationRecipientUtil {
 	private static volatile NotificationRecipientPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1349315788
+// LIFERAY-SERVICE-BUILDER-HASH:1286861598

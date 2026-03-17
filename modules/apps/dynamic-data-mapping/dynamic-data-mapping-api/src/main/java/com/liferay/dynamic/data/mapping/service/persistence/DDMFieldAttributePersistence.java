@@ -148,21 +148,6 @@ public interface DDMFieldAttributePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where storageId = &#63;.
-	 *
-	 * @param fieldAttributeId the primary key of the current ddm field attribute
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	public DDMFieldAttribute[] findByStorageId_PrevAndNext(
-			long fieldAttributeId, long storageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-				orderByComparator)
-		throws NoSuchFieldAttributeException;
-
-	/**
 	 * Removes all the ddm field attributes where storageId = &#63; from the database.
 	 *
 	 * @param storageId the storage ID
@@ -298,22 +283,6 @@ public interface DDMFieldAttributePersistence
 		long storageId, String attributeName,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * @param fieldAttributeId the primary key of the current ddm field attribute
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	public DDMFieldAttribute[] findByS_AN_PrevAndNext(
-			long fieldAttributeId, long storageId, String attributeName,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-				orderByComparator)
-		throws NoSuchFieldAttributeException;
 
 	/**
 	 * Removes all the ddm field attributes where storageId = &#63; and attributeName = &#63; from the database.
@@ -453,22 +422,6 @@ public interface DDMFieldAttributePersistence
 		long storageId, String languageId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where storageId = &#63; and languageId = &#63;.
-	 *
-	 * @param fieldAttributeId the primary key of the current ddm field attribute
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	public DDMFieldAttribute[] findByS_L_PrevAndNext(
-			long fieldAttributeId, long storageId, String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-				orderByComparator)
-		throws NoSuchFieldAttributeException;
 
 	/**
 	 * Returns all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
@@ -689,23 +642,6 @@ public interface DDMFieldAttributePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * @param fieldAttributeId the primary key of the current ddm field attribute
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	public DDMFieldAttribute[] findByAN_SAV_PrevAndNext(
-			long fieldAttributeId, String attributeName,
-			String smallAttributeValue,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-				orderByComparator)
-		throws NoSuchFieldAttributeException;
-
-	/**
 	 * Removes all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63; from the database.
 	 *
 	 * @param attributeName the attribute name
@@ -905,4 +841,4 @@ public interface DDMFieldAttributePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1946103791
+// LIFERAY-SERVICE-BUILDER-HASH:734419331

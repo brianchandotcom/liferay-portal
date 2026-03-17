@@ -146,21 +146,6 @@ public interface CProductPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the c products before and after the current c product in the ordered set where uuid = &#63;.
-	 *
-	 * @param CProductId the primary key of the current c product
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next c product
-	 * @throws NoSuchCProductException if a c product with the primary key could not be found
-	 */
-	public CProduct[] findByUuid_PrevAndNext(
-			long CProductId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-				orderByComparator)
-		throws NoSuchCProductException;
-
-	/**
 	 * Removes all the c products where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -347,22 +332,6 @@ public interface CProductPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the c products before and after the current c product in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CProductId the primary key of the current c product
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next c product
-	 * @throws NoSuchCProductException if a c product with the primary key could not be found
-	 */
-	public CProduct[] findByUuid_C_PrevAndNext(
-			long CProductId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-				orderByComparator)
-		throws NoSuchCProductException;
-
-	/**
 	 * Removes all the c products where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -491,21 +460,6 @@ public interface CProductPersistence
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CProduct>
 			orderByComparator);
-
-	/**
-	 * Returns the c products before and after the current c product in the ordered set where groupId = &#63;.
-	 *
-	 * @param CProductId the primary key of the current c product
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next c product
-	 * @throws NoSuchCProductException if a c product with the primary key could not be found
-	 */
-	public CProduct[] findByGroupId_PrevAndNext(
-			long CProductId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CProduct>
-				orderByComparator)
-		throws NoSuchCProductException;
 
 	/**
 	 * Removes all the c products where groupId = &#63; from the database.
@@ -692,4 +646,4 @@ public interface CProductPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1562967167
+// LIFERAY-SERVICE-BUILDER-HASH:-1390296470

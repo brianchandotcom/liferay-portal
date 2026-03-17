@@ -144,21 +144,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public CTEntry[] findByUuid_PrevAndNext(
-			long ctEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the ct entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -295,22 +280,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public CTEntry[] findByUuid_C_PrevAndNext(
-			long ctEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the ct entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -441,21 +410,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where userId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public CTEntry[] findByUserId_PrevAndNext(
-			long ctEntryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the ct entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -582,21 +536,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 		long ctCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public CTEntry[] findByCtCollectionId_PrevAndNext(
-			long ctEntryId, long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the ct entries where ctCollectionId = &#63; from the database.
@@ -734,22 +673,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 		long ctCollectionId, long modelClassNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public CTEntry[] findByC_MCNI_PrevAndNext(
-			long ctEntryId, long ctCollectionId, long modelClassNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the ct entries where ctCollectionId = &#63; and modelClassNameId = &#63; from the database.
@@ -960,24 +883,6 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 		long ctCollectionId, long modelClassNameId, long modelClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public CTEntry[] findByNotC_MCNI_MCPK_PrevAndNext(
-			long ctEntryId, long ctCollectionId, long modelClassNameId,
-			long modelClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator<CTEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the ct entries where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = any &#63;.
@@ -1257,4 +1162,4 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1909718159
+// LIFERAY-SERVICE-BUILDER-HASH:50567683

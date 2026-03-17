@@ -242,25 +242,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns the o auth2 applications before and after the current o auth2 application in the ordered set where uuid = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the primary key of the current o auth2 application
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	public static OAuth2Application[] findByUuid_PrevAndNext(
-			long oAuth2ApplicationId, String uuid,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			oAuth2ApplicationId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -307,25 +288,6 @@ public class OAuth2ApplicationUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the o auth2 applications before and after the current o auth2 application in the ordered set of o auth2 applications that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the primary key of the current o auth2 application
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	public static OAuth2Application[] filterFindByUuid_PrevAndNext(
-			long oAuth2ApplicationId, String uuid,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			oAuth2ApplicationId, uuid, orderByComparator);
 	}
 
 	/**
@@ -506,26 +468,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns the o auth2 applications before and after the current o auth2 application in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the primary key of the current o auth2 application
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	public static OAuth2Application[] findByUuid_C_PrevAndNext(
-			long oAuth2ApplicationId, String uuid, long companyId,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			oAuth2ApplicationId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -577,26 +519,6 @@ public class OAuth2ApplicationUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the o auth2 applications before and after the current o auth2 application in the ordered set of o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the primary key of the current o auth2 application
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	public static OAuth2Application[] filterFindByUuid_C_PrevAndNext(
-			long oAuth2ApplicationId, String uuid, long companyId,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			oAuth2ApplicationId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -770,25 +692,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns the o auth2 applications before and after the current o auth2 application in the ordered set where companyId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the primary key of the current o auth2 application
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	public static OAuth2Application[] findByCompanyId_PrevAndNext(
-			long oAuth2ApplicationId, long companyId,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			oAuth2ApplicationId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -837,25 +740,6 @@ public class OAuth2ApplicationUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the o auth2 applications before and after the current o auth2 application in the ordered set of o auth2 applications that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the primary key of the current o auth2 application
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	public static OAuth2Application[] filterFindByCompanyId_PrevAndNext(
-			long oAuth2ApplicationId, long companyId,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			oAuth2ApplicationId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1105,26 +989,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns the o auth2 applications before and after the current o auth2 application in the ordered set where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the primary key of the current o auth2 application
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	public static OAuth2Application[] findByC_CP_PrevAndNext(
-			long oAuth2ApplicationId, long companyId, int clientProfile,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().findByC_CP_PrevAndNext(
-			oAuth2ApplicationId, companyId, clientProfile, orderByComparator);
-	}
-
-	/**
 	 * Returns all the o auth2 applications that the user has permission to view where companyId = &#63; and clientProfile = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1177,26 +1041,6 @@ public class OAuth2ApplicationUtil {
 
 		return getPersistence().filterFindByC_CP(
 			companyId, clientProfile, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the o auth2 applications before and after the current o auth2 application in the ordered set of o auth2 applications that the user has permission to view where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param oAuth2ApplicationId the primary key of the current o auth2 application
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	public static OAuth2Application[] filterFindByC_CP_PrevAndNext(
-			long oAuth2ApplicationId, long companyId, int clientProfile,
-			OrderByComparator<OAuth2Application> orderByComparator)
-		throws com.liferay.oauth2.provider.exception.
-			NoSuchOAuth2ApplicationException {
-
-		return getPersistence().filterFindByC_CP_PrevAndNext(
-			oAuth2ApplicationId, companyId, clientProfile, orderByComparator);
 	}
 
 	/**
@@ -1471,4 +1315,4 @@ public class OAuth2ApplicationUtil {
 	private static volatile OAuth2ApplicationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1343389572
+// LIFERAY-SERVICE-BUILDER-HASH:581609296

@@ -150,21 +150,6 @@ public interface LVEntryLocalizationVersionPersistence
 			<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
-	 * Returns the lv entry localization versions before and after the current lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
-	 *
-	 * @param lvEntryLocalizationVersionId the primary key of the current lv entry localization version
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a lv entry localization version with the primary key could not be found
-	 */
-	public LVEntryLocalizationVersion[] findByLvEntryLocalizationId_PrevAndNext(
-			long lvEntryLocalizationVersionId, long lvEntryLocalizationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
-		throws NoSuchLVEntryLocalizationVersionException;
-
-	/**
 	 * Removes all the lv entry localization versions where lvEntryLocalizationId = &#63; from the database.
 	 *
 	 * @param lvEntryLocalizationId the lv entry localization ID
@@ -348,21 +333,6 @@ public interface LVEntryLocalizationVersionPersistence
 			<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
-	 * Returns the lv entry localization versions before and after the current lv entry localization version in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryLocalizationVersionId the primary key of the current lv entry localization version
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a lv entry localization version with the primary key could not be found
-	 */
-	public LVEntryLocalizationVersion[] findByLvEntryId_PrevAndNext(
-			long lvEntryLocalizationVersionId, long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
-		throws NoSuchLVEntryLocalizationVersionException;
-
-	/**
 	 * Removes all the lv entry localization versions where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -498,22 +468,6 @@ public interface LVEntryLocalizationVersionPersistence
 		long lvEntryId, int version,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LVEntryLocalizationVersion> orderByComparator);
-
-	/**
-	 * Returns the lv entry localization versions before and after the current lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryLocalizationVersionId the primary key of the current lv entry localization version
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a lv entry localization version with the primary key could not be found
-	 */
-	public LVEntryLocalizationVersion[] findByLvEntryId_Version_PrevAndNext(
-			long lvEntryLocalizationVersionId, long lvEntryId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
-		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
 	 * Removes all the lv entry localization versions where lvEntryId = &#63; and version = &#63; from the database.
@@ -656,23 +610,6 @@ public interface LVEntryLocalizationVersionPersistence
 		long lvEntryId, String languageId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LVEntryLocalizationVersion> orderByComparator);
-
-	/**
-	 * Returns the lv entry localization versions before and after the current lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * @param lvEntryLocalizationVersionId the primary key of the current lv entry localization version
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a lv entry localization version with the primary key could not be found
-	 */
-	public LVEntryLocalizationVersion[] findByLvEntryId_LanguageId_PrevAndNext(
-			long lvEntryLocalizationVersionId, long lvEntryId,
-			String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
-		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
 	 * Removes all the lv entry localization versions where lvEntryId = &#63; and languageId = &#63; from the database.
@@ -877,4 +814,4 @@ public interface LVEntryLocalizationVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-196971746
+// LIFERAY-SERVICE-BUILDER-HASH:364537700

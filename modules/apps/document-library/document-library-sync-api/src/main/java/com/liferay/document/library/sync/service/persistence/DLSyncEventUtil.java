@@ -245,25 +245,6 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	 * Returns the dl sync events before and after the current dl sync event in the ordered set where modifiedTime &gt; &#63;.
-	 *
-	 * @param syncEventId the primary key of the current dl sync event
-	 * @param modifiedTime the modified time
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dl sync event
-	 * @throws NoSuchEventException if a dl sync event with the primary key could not be found
-	 */
-	public static DLSyncEvent[] findByGtModifiedTime_PrevAndNext(
-			long syncEventId, long modifiedTime,
-			OrderByComparator<DLSyncEvent> orderByComparator)
-		throws com.liferay.document.library.sync.exception.
-			NoSuchEventException {
-
-		return getPersistence().findByGtModifiedTime_PrevAndNext(
-			syncEventId, modifiedTime, orderByComparator);
-	}
-
-	/**
 	 * Removes all the dl sync events where modifiedTime &gt; &#63; from the database.
 	 *
 	 * @param modifiedTime the modified time
@@ -502,4 +483,4 @@ public class DLSyncEventUtil {
 	private static volatile DLSyncEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:654646401
+// LIFERAY-SERVICE-BUILDER-HASH:1119462387

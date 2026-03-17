@@ -148,21 +148,6 @@ public interface SocialActivitySetPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the social activity sets before and after the current social activity set in the ordered set where groupId = &#63;.
-	 *
-	 * @param activitySetId the primary key of the current social activity set
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity set
-	 * @throws NoSuchActivitySetException if a social activity set with the primary key could not be found
-	 */
-	public SocialActivitySet[] findByGroupId_PrevAndNext(
-			long activitySetId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
-
-	/**
 	 * Removes all the social activity sets where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -289,21 +274,6 @@ public interface SocialActivitySetPersistence
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
 			orderByComparator);
-
-	/**
-	 * Returns the social activity sets before and after the current social activity set in the ordered set where userId = &#63;.
-	 *
-	 * @param activitySetId the primary key of the current social activity set
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity set
-	 * @throws NoSuchActivitySetException if a social activity set with the primary key could not be found
-	 */
-	public SocialActivitySet[] findByUserId_PrevAndNext(
-			long activitySetId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
 
 	/**
 	 * Removes all the social activity sets where userId = &#63; from the database.
@@ -449,23 +419,6 @@ public interface SocialActivitySetPersistence
 		long groupId, long userId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
 			orderByComparator);
-
-	/**
-	 * Returns the social activity sets before and after the current social activity set in the ordered set where groupId = &#63; and userId = &#63; and type = &#63;.
-	 *
-	 * @param activitySetId the primary key of the current social activity set
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity set
-	 * @throws NoSuchActivitySetException if a social activity set with the primary key could not be found
-	 */
-	public SocialActivitySet[] findByG_U_T_PrevAndNext(
-			long activitySetId, long groupId, long userId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
 
 	/**
 	 * Removes all the social activity sets where groupId = &#63; and userId = &#63; and type = &#63; from the database.
@@ -615,23 +568,6 @@ public interface SocialActivitySetPersistence
 		long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
 			orderByComparator);
-
-	/**
-	 * Returns the social activity sets before and after the current social activity set in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param activitySetId the primary key of the current social activity set
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity set
-	 * @throws NoSuchActivitySetException if a social activity set with the primary key could not be found
-	 */
-	public SocialActivitySet[] findByC_C_T_PrevAndNext(
-			long activitySetId, long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
 
 	/**
 	 * Removes all the social activity sets where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
@@ -792,25 +728,6 @@ public interface SocialActivitySetPersistence
 		long groupId, long userId, long classNameId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
 			orderByComparator);
-
-	/**
-	 * Returns the social activity sets before and after the current social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
-	 *
-	 * @param activitySetId the primary key of the current social activity set
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity set
-	 * @throws NoSuchActivitySetException if a social activity set with the primary key could not be found
-	 */
-	public SocialActivitySet[] findByG_U_C_T_PrevAndNext(
-			long activitySetId, long groupId, long userId, long classNameId,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
 
 	/**
 	 * Removes all the social activity sets where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63; from the database.
@@ -977,25 +894,6 @@ public interface SocialActivitySetPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the social activity sets before and after the current social activity set in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param activitySetId the primary key of the current social activity set
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity set
-	 * @throws NoSuchActivitySetException if a social activity set with the primary key could not be found
-	 */
-	public SocialActivitySet[] findByU_C_C_T_PrevAndNext(
-			long activitySetId, long userId, long classNameId, long classPK,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivitySet>
-				orderByComparator)
-		throws NoSuchActivitySetException;
-
-	/**
 	 * Removes all the social activity sets where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1140,4 +1038,4 @@ public interface SocialActivitySetPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-795426572
+// LIFERAY-SERVICE-BUILDER-HASH:1617893186

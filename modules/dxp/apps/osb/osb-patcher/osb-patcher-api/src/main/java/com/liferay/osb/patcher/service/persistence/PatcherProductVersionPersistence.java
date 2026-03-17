@@ -147,21 +147,6 @@ public interface PatcherProductVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the patcher product versions before and after the current patcher product version in the ordered set where fixDeliveryMethod = &#63;.
-	 *
-	 * @param patcherProductVersionId the primary key of the current patcher product version
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher product version
-	 * @throws NoSuchPatcherProductVersionException if a patcher product version with the primary key could not be found
-	 */
-	public PatcherProductVersion[] findByFixDeliveryMethod_PrevAndNext(
-			long patcherProductVersionId, int fixDeliveryMethod,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PatcherProductVersion> orderByComparator)
-		throws NoSuchPatcherProductVersionException;
-
-	/**
 	 * Returns all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
 	 *
 	 * @param fixDeliveryMethod the fix delivery method
@@ -202,21 +187,6 @@ public interface PatcherProductVersionPersistence
 		int fixDeliveryMethod, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherProductVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher product versions before and after the current patcher product version in the ordered set of patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
-	 *
-	 * @param patcherProductVersionId the primary key of the current patcher product version
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher product version
-	 * @throws NoSuchPatcherProductVersionException if a patcher product version with the primary key could not be found
-	 */
-	public PatcherProductVersion[] filterFindByFixDeliveryMethod_PrevAndNext(
-			long patcherProductVersionId, int fixDeliveryMethod,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PatcherProductVersion> orderByComparator)
-		throws NoSuchPatcherProductVersionException;
 
 	/**
 	 * Removes all the patcher product versions where fixDeliveryMethod = &#63; from the database.
@@ -410,4 +380,4 @@ public interface PatcherProductVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:274441825
+// LIFERAY-SERVICE-BUILDER-HASH:-71800931

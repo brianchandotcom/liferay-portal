@@ -240,25 +240,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the am image entries before and after the current am image entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param amImageEntryId the primary key of the current am image entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next am image entry
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	public static AMImageEntry[] findByUuid_PrevAndNext(
-			long amImageEntryId, String uuid,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			amImageEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the am image entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -489,26 +470,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the am image entries before and after the current am image entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param amImageEntryId the primary key of the current am image entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next am image entry
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	public static AMImageEntry[] findByUuid_C_PrevAndNext(
-			long amImageEntryId, String uuid, long companyId,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			amImageEntryId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the am image entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -658,25 +619,6 @@ public class AMImageEntryUtil {
 		long groupId, OrderByComparator<AMImageEntry> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the am image entries before and after the current am image entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param amImageEntryId the primary key of the current am image entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next am image entry
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	public static AMImageEntry[] findByGroupId_PrevAndNext(
-			long amImageEntryId, long groupId,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			amImageEntryId, groupId, orderByComparator);
 	}
 
 	/**
@@ -830,25 +772,6 @@ public class AMImageEntryUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the am image entries before and after the current am image entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param amImageEntryId the primary key of the current am image entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next am image entry
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	public static AMImageEntry[] findByCompanyId_PrevAndNext(
-			long amImageEntryId, long companyId,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			amImageEntryId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1012,25 +935,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the am image entries before and after the current am image entry in the ordered set where configurationUuid = &#63;.
-	 *
-	 * @param amImageEntryId the primary key of the current am image entry
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next am image entry
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	public static AMImageEntry[] findByConfigurationUuid_PrevAndNext(
-			long amImageEntryId, String configurationUuid,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByConfigurationUuid_PrevAndNext(
-			amImageEntryId, configurationUuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the am image entries where configurationUuid = &#63; from the database.
 	 *
 	 * @param configurationUuid the configuration uuid
@@ -1183,25 +1087,6 @@ public class AMImageEntryUtil {
 
 		return getPersistence().fetchByFileVersionId_Last(
 			fileVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the am image entries before and after the current am image entry in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param amImageEntryId the primary key of the current am image entry
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next am image entry
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	public static AMImageEntry[] findByFileVersionId_PrevAndNext(
-			long amImageEntryId, long fileVersionId,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByFileVersionId_PrevAndNext(
-			amImageEntryId, fileVersionId, orderByComparator);
 	}
 
 	/**
@@ -1371,26 +1256,6 @@ public class AMImageEntryUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			companyId, configurationUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the am image entries before and after the current am image entry in the ordered set where companyId = &#63; and configurationUuid = &#63;.
-	 *
-	 * @param amImageEntryId the primary key of the current am image entry
-	 * @param companyId the company ID
-	 * @param configurationUuid the configuration uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next am image entry
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	public static AMImageEntry[] findByC_C_PrevAndNext(
-			long amImageEntryId, long companyId, String configurationUuid,
-			OrderByComparator<AMImageEntry> orderByComparator)
-		throws com.liferay.adaptive.media.image.exception.
-			NoSuchAMImageEntryException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			amImageEntryId, companyId, configurationUuid, orderByComparator);
 	}
 
 	/**
@@ -1644,4 +1509,4 @@ public class AMImageEntryUtil {
 	private static volatile AMImageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-623031888
+// LIFERAY-SERVICE-BUILDER-HASH:-235529313

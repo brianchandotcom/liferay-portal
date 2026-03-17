@@ -250,25 +250,6 @@ public class CPInstanceOptionValueRelUtil {
 	}
 
 	/**
-	 * Returns the cp instance option value rels before and after the current cp instance option value rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPInstanceOptionValueRelId the primary key of the current cp instance option value rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a cp instance option value rel with the primary key could not be found
-	 */
-	public static CPInstanceOptionValueRel[] findByUuid_PrevAndNext(
-			long CPInstanceOptionValueRelId, String uuid,
-			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPInstanceOptionValueRelException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			CPInstanceOptionValueRelId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp instance option value rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -505,26 +486,6 @@ public class CPInstanceOptionValueRelUtil {
 	}
 
 	/**
-	 * Returns the cp instance option value rels before and after the current cp instance option value rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPInstanceOptionValueRelId the primary key of the current cp instance option value rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a cp instance option value rel with the primary key could not be found
-	 */
-	public static CPInstanceOptionValueRel[] findByUuid_C_PrevAndNext(
-			long CPInstanceOptionValueRelId, String uuid, long companyId,
-			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPInstanceOptionValueRelException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			CPInstanceOptionValueRelId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp instance option value rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -686,27 +647,6 @@ public class CPInstanceOptionValueRelUtil {
 
 		return getPersistence().fetchByCPDefinitionOptionRelId_Last(
 			CPDefinitionOptionRelId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp instance option value rels before and after the current cp instance option value rel in the ordered set where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPInstanceOptionValueRelId the primary key of the current cp instance option value rel
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a cp instance option value rel with the primary key could not be found
-	 */
-	public static CPInstanceOptionValueRel[]
-			findByCPDefinitionOptionRelId_PrevAndNext(
-				long CPInstanceOptionValueRelId, long CPDefinitionOptionRelId,
-				OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPInstanceOptionValueRelException {
-
-		return getPersistence().findByCPDefinitionOptionRelId_PrevAndNext(
-			CPInstanceOptionValueRelId, CPDefinitionOptionRelId,
-			orderByComparator);
 	}
 
 	/**
@@ -872,25 +812,6 @@ public class CPInstanceOptionValueRelUtil {
 
 		return getPersistence().fetchByCPInstanceId_Last(
 			CPInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp instance option value rels before and after the current cp instance option value rel in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceOptionValueRelId the primary key of the current cp instance option value rel
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a cp instance option value rel with the primary key could not be found
-	 */
-	public static CPInstanceOptionValueRel[] findByCPInstanceId_PrevAndNext(
-			long CPInstanceOptionValueRelId, long CPInstanceId,
-			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPInstanceOptionValueRelException {
-
-		return getPersistence().findByCPInstanceId_PrevAndNext(
-			CPInstanceOptionValueRelId, CPInstanceId, orderByComparator);
 	}
 
 	/**
@@ -1062,28 +983,6 @@ public class CPInstanceOptionValueRelUtil {
 
 		return getPersistence().fetchByCDORI_CII_Last(
 			CPDefinitionOptionRelId, CPInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp instance option value rels before and after the current cp instance option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceOptionValueRelId the primary key of the current cp instance option value rel
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a cp instance option value rel with the primary key could not be found
-	 */
-	public static CPInstanceOptionValueRel[] findByCDORI_CII_PrevAndNext(
-			long CPInstanceOptionValueRelId, long CPDefinitionOptionRelId,
-			long CPInstanceId,
-			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPInstanceOptionValueRelException {
-
-		return getPersistence().findByCDORI_CII_PrevAndNext(
-			CPInstanceOptionValueRelId, CPDefinitionOptionRelId, CPInstanceId,
-			orderByComparator);
 	}
 
 	/**
@@ -1457,4 +1356,4 @@ public class CPInstanceOptionValueRelUtil {
 	private static volatile CPInstanceOptionValueRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1434808272
+// LIFERAY-SERVICE-BUILDER-HASH:17247590

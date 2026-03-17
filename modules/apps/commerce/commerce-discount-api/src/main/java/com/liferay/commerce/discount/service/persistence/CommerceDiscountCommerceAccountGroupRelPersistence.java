@@ -153,23 +153,6 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 				<CommerceDiscountCommerceAccountGroupRel> orderByComparator);
 
 	/**
-	 * Returns the commerce discount commerce account group rels before and after the current commerce discount commerce account group rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountCommerceAccountGroupRelId the primary key of the current commerce discount commerce account group rel
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount commerce account group rel
-	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a commerce discount commerce account group rel with the primary key could not be found
-	 */
-	public CommerceDiscountCommerceAccountGroupRel[]
-			findByCommerceDiscountId_PrevAndNext(
-				long commerceDiscountCommerceAccountGroupRelId,
-				long commerceDiscountId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceDiscountCommerceAccountGroupRel> orderByComparator)
-		throws NoSuchDiscountCommerceAccountGroupRelException;
-
-	/**
 	 * Removes all the commerce discount commerce account group rels where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -304,23 +287,6 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 			long commerceAccountGroupId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceDiscountCommerceAccountGroupRel> orderByComparator);
-
-	/**
-	 * Returns the commerce discount commerce account group rels before and after the current commerce discount commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceDiscountCommerceAccountGroupRelId the primary key of the current commerce discount commerce account group rel
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount commerce account group rel
-	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a commerce discount commerce account group rel with the primary key could not be found
-	 */
-	public CommerceDiscountCommerceAccountGroupRel[]
-			findByCommerceAccountGroupId_PrevAndNext(
-				long commerceDiscountCommerceAccountGroupRelId,
-				long commerceAccountGroupId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceDiscountCommerceAccountGroupRel> orderByComparator)
-		throws NoSuchDiscountCommerceAccountGroupRelException;
 
 	/**
 	 * Removes all the commerce discount commerce account group rels where commerceAccountGroupId = &#63; from the database.
@@ -524,4 +490,4 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:783012660
+// LIFERAY-SERVICE-BUILDER-HASH:-1927460077

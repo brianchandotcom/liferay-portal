@@ -147,21 +147,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByUuid_PrevAndNext(
-			long assetListEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the asset list entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByUuid_C_PrevAndNext(
-			long assetListEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the asset list entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByGroupId_PrevAndNext(
-			long assetListEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -549,21 +503,6 @@ public interface AssetListEntryPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set of asset list entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] filterFindByGroupId_PrevAndNext(
-			long assetListEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = any &#63;.
@@ -933,22 +872,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where groupId = &#63; and title LIKE &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByG_LikeT_PrevAndNext(
-			long assetListEntryId, long groupId, String title,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63;.
 	 *
 	 * @param groupId the group ID
@@ -992,22 +915,6 @@ public interface AssetListEntryPersistence
 		long groupId, String title, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set of asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] filterFindByG_LikeT_PrevAndNext(
-			long assetListEntryId, long groupId, String title,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = any &#63; and title LIKE &#63;.
@@ -1290,22 +1197,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByG_TY_PrevAndNext(
-			long assetListEntryId, long groupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1349,22 +1240,6 @@ public interface AssetListEntryPersistence
 		long groupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set of asset list entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] filterFindByG_TY_PrevAndNext(
-			long assetListEntryId, long groupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the asset list entries where groupId = &#63; and type = &#63; from the database.
@@ -1515,22 +1390,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where groupId = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByG_AET_PrevAndNext(
-			long assetListEntryId, long groupId, String assetEntryType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and assetEntryType = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1574,22 +1433,6 @@ public interface AssetListEntryPersistence
 		long groupId, String assetEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set of asset list entries that the user has permission to view where groupId = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] filterFindByG_AET_PrevAndNext(
-			long assetListEntryId, long groupId, String assetEntryType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = any &#63; and assetEntryType = any &#63;.
@@ -1881,24 +1724,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntryType = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByG_LikeT_AET_PrevAndNext(
-			long assetListEntryId, long groupId, String title,
-			String assetEntryType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63; and assetEntryType = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1945,24 +1770,6 @@ public interface AssetListEntryPersistence
 		long groupId, String title, String assetEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set of asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63; and assetEntryType = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] filterFindByG_LikeT_AET_PrevAndNext(
-			long assetListEntryId, long groupId, String title,
-			String assetEntryType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = any &#63; and title LIKE &#63; and assetEntryType = any &#63;.
@@ -2279,24 +2086,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByG_AES_AET_PrevAndNext(
-			long assetListEntryId, long groupId, String assetEntrySubtype,
-			String assetEntryType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2345,24 +2134,6 @@ public interface AssetListEntryPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set of asset list entries that the user has permission to view where groupId = &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] filterFindByG_AES_AET_PrevAndNext(
-			long assetListEntryId, long groupId, String assetEntrySubtype,
-			String assetEntryType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = any &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
@@ -2692,25 +2463,6 @@ public interface AssetListEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set where groupId = &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] findByG_LikeT_AES_AET_PrevAndNext(
-			long assetListEntryId, long groupId, String title,
-			String assetEntrySubtype, String assetEntryType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2763,25 +2515,6 @@ public interface AssetListEntryPersistence
 		String assetEntryType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset list entries before and after the current asset list entry in the ordered set of asset list entries that the user has permission to view where groupId = &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
-	 *
-	 * @param assetListEntryId the primary key of the current asset list entry
-	 * @param groupId the group ID
-	 * @param title the title
-	 * @param assetEntrySubtype the asset entry subtype
-	 * @param assetEntryType the asset entry type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	public AssetListEntry[] filterFindByG_LikeT_AES_AET_PrevAndNext(
-			long assetListEntryId, long groupId, String title,
-			String assetEntrySubtype, String assetEntryType,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetListEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the asset list entries that the user has permission to view where groupId = any &#63; and title LIKE &#63; and assetEntrySubtype = &#63; and assetEntryType = &#63;.
@@ -3157,4 +2890,4 @@ public interface AssetListEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1051064772
+// LIFERAY-SERVICE-BUILDER-HASH:-160786840

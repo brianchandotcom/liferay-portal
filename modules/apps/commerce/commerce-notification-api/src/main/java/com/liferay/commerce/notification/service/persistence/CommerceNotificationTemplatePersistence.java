@@ -148,21 +148,6 @@ public interface CommerceNotificationTemplatePersistence
 			<CommerceNotificationTemplate> orderByComparator);
 
 	/**
-	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	public CommerceNotificationTemplate[] findByUuid_PrevAndNext(
-			long commerceNotificationTemplateId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
 	 * Removes all the commerce notification templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -352,22 +337,6 @@ public interface CommerceNotificationTemplatePersistence
 			<CommerceNotificationTemplate> orderByComparator);
 
 	/**
-	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	public CommerceNotificationTemplate[] findByUuid_C_PrevAndNext(
-			long commerceNotificationTemplateId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
 	 * Removes all the commerce notification templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -499,21 +468,6 @@ public interface CommerceNotificationTemplatePersistence
 			<CommerceNotificationTemplate> orderByComparator);
 
 	/**
-	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	public CommerceNotificationTemplate[] findByGroupId_PrevAndNext(
-			long commerceNotificationTemplateId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
 	 * Returns all the commerce notification templates that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -554,21 +508,6 @@ public interface CommerceNotificationTemplatePersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationTemplate> orderByComparator);
-
-	/**
-	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set of commerce notification templates that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	public CommerceNotificationTemplate[] filterFindByGroupId_PrevAndNext(
-			long commerceNotificationTemplateId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
 
 	/**
 	 * Removes all the commerce notification templates where groupId = &#63; from the database.
@@ -716,22 +655,6 @@ public interface CommerceNotificationTemplatePersistence
 			<CommerceNotificationTemplate> orderByComparator);
 
 	/**
-	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
-	 * @param groupId the group ID
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	public CommerceNotificationTemplate[] findByG_E_PrevAndNext(
-			long commerceNotificationTemplateId, long groupId, boolean enabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
 	 * Returns all the commerce notification templates that the user has permission to view where groupId = &#63; and enabled = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -775,22 +698,6 @@ public interface CommerceNotificationTemplatePersistence
 		long groupId, boolean enabled, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationTemplate> orderByComparator);
-
-	/**
-	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set of commerce notification templates that the user has permission to view where groupId = &#63; and enabled = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
-	 * @param groupId the group ID
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	public CommerceNotificationTemplate[] filterFindByG_E_PrevAndNext(
-			long commerceNotificationTemplateId, long groupId, boolean enabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
 
 	/**
 	 * Removes all the commerce notification templates where groupId = &#63; and enabled = &#63; from the database.
@@ -949,24 +856,6 @@ public interface CommerceNotificationTemplatePersistence
 			<CommerceNotificationTemplate> orderByComparator);
 
 	/**
-	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set where groupId = &#63; and type = &#63; and enabled = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	public CommerceNotificationTemplate[] findByG_T_E_PrevAndNext(
-			long commerceNotificationTemplateId, long groupId, String type,
-			boolean enabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
-
-	/**
 	 * Returns all the commerce notification templates that the user has permission to view where groupId = &#63; and type = &#63; and enabled = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1013,24 +902,6 @@ public interface CommerceNotificationTemplatePersistence
 		long groupId, String type, boolean enabled, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationTemplate> orderByComparator);
-
-	/**
-	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set of commerce notification templates that the user has permission to view where groupId = &#63; and type = &#63; and enabled = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param enabled the enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	public CommerceNotificationTemplate[] filterFindByG_T_E_PrevAndNext(
-			long commerceNotificationTemplateId, long groupId, String type,
-			boolean enabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationTemplate> orderByComparator)
-		throws NoSuchNotificationTemplateException;
 
 	/**
 	 * Removes all the commerce notification templates where groupId = &#63; and type = &#63; and enabled = &#63; from the database.
@@ -1191,4 +1062,4 @@ public interface CommerceNotificationTemplatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1019741776
+// LIFERAY-SERVICE-BUILDER-HASH:2138570575

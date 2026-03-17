@@ -147,21 +147,6 @@ public interface CPOptionCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp option categories before and after the current cp option category in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPOptionCategoryId the primary key of the current cp option category
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option category
-	 * @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
-	 */
-	public CPOptionCategory[] findByUuid_PrevAndNext(
-			long CPOptionCategoryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
-
-	/**
 	 * Returns all the cp option categories that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -201,21 +186,6 @@ public interface CPOptionCategoryPersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the cp option categories before and after the current cp option category in the ordered set of cp option categories that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param CPOptionCategoryId the primary key of the current cp option category
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option category
-	 * @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
-	 */
-	public CPOptionCategory[] filterFindByUuid_PrevAndNext(
-			long CPOptionCategoryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
 
 	/**
 	 * Removes all the cp option categories where uuid = &#63; from the database.
@@ -363,22 +333,6 @@ public interface CPOptionCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp option categories before and after the current cp option category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the primary key of the current cp option category
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option category
-	 * @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
-	 */
-	public CPOptionCategory[] findByUuid_C_PrevAndNext(
-			long CPOptionCategoryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
-
-	/**
 	 * Returns all the cp option categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -422,22 +376,6 @@ public interface CPOptionCategoryPersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the cp option categories before and after the current cp option category in the ordered set of cp option categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the primary key of the current cp option category
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option category
-	 * @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
-	 */
-	public CPOptionCategory[] filterFindByUuid_C_PrevAndNext(
-			long CPOptionCategoryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
 
 	/**
 	 * Removes all the cp option categories where uuid = &#63; and companyId = &#63; from the database.
@@ -579,21 +517,6 @@ public interface CPOptionCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp option categories before and after the current cp option category in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the primary key of the current cp option category
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option category
-	 * @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
-	 */
-	public CPOptionCategory[] findByCompanyId_PrevAndNext(
-			long CPOptionCategoryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
-
-	/**
 	 * Returns all the cp option categories that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -634,21 +557,6 @@ public interface CPOptionCategoryPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the cp option categories before and after the current cp option category in the ordered set of cp option categories that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param CPOptionCategoryId the primary key of the current cp option category
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option category
-	 * @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
-	 */
-	public CPOptionCategory[] filterFindByCompanyId_PrevAndNext(
-			long CPOptionCategoryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionCategory>
-				orderByComparator)
-		throws NoSuchCPOptionCategoryException;
 
 	/**
 	 * Removes all the cp option categories where companyId = &#63; from the database.
@@ -898,4 +806,4 @@ public interface CPOptionCategoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-81242894
+// LIFERAY-SERVICE-BUILDER-HASH:-642780181

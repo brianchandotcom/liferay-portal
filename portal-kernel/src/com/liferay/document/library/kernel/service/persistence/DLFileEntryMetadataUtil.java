@@ -245,25 +245,6 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where uuid = &#63;.
-	 *
-	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
-	 */
-	public static DLFileEntryMetadata[] findByUuid_PrevAndNext(
-			long fileEntryMetadataId, String uuid,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryMetadataException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			fileEntryMetadataId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entry metadatas where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -431,26 +412,6 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
-	 */
-	public static DLFileEntryMetadata[] findByUuid_C_PrevAndNext(
-			long fileEntryMetadataId, String uuid, long companyId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryMetadataException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			fileEntryMetadataId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entry metadatas where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -612,25 +573,6 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
-	 */
-	public static DLFileEntryMetadata[] findByFileEntryId_PrevAndNext(
-			long fileEntryMetadataId, long fileEntryId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryMetadataException {
-
-		return getPersistence().findByFileEntryId_PrevAndNext(
-			fileEntryMetadataId, fileEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entry metadatas where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -787,25 +729,6 @@ public class DLFileEntryMetadataUtil {
 
 		return getPersistence().fetchByFileVersionId_Last(
 			fileVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param fileEntryMetadataId the primary key of the current document library file entry metadata
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
-	 */
-	public static DLFileEntryMetadata[] findByFileVersionId_PrevAndNext(
-			long fileEntryMetadataId, long fileVersionId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryMetadataException {
-
-		return getPersistence().findByFileVersionId_PrevAndNext(
-			fileEntryMetadataId, fileVersionId, orderByComparator);
 	}
 
 	/**
@@ -1139,4 +1062,4 @@ public class DLFileEntryMetadataUtil {
 	private static volatile DLFileEntryMetadataPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1328996791
+// LIFERAY-SERVICE-BUILDER-HASH:919405797

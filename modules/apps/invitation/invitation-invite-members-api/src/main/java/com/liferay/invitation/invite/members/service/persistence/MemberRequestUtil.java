@@ -310,25 +310,6 @@ public class MemberRequestUtil {
 	}
 
 	/**
-	 * Returns the member requests before and after the current member request in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param memberRequestId the primary key of the current member request
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next member request
-	 * @throws NoSuchMemberRequestException if a member request with the primary key could not be found
-	 */
-	public static MemberRequest[] findByReceiverUserId_PrevAndNext(
-			long memberRequestId, long receiverUserId,
-			OrderByComparator<MemberRequest> orderByComparator)
-		throws com.liferay.invitation.invite.members.exception.
-			NoSuchMemberRequestException {
-
-		return getPersistence().findByReceiverUserId_PrevAndNext(
-			memberRequestId, receiverUserId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the member requests where receiverUserId = &#63; from the database.
 	 *
 	 * @param receiverUserId the receiver user ID
@@ -494,26 +475,6 @@ public class MemberRequestUtil {
 
 		return getPersistence().fetchByR_S_Last(
 			receiverUserId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the member requests before and after the current member request in the ordered set where receiverUserId = &#63; and status = &#63;.
-	 *
-	 * @param memberRequestId the primary key of the current member request
-	 * @param receiverUserId the receiver user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next member request
-	 * @throws NoSuchMemberRequestException if a member request with the primary key could not be found
-	 */
-	public static MemberRequest[] findByR_S_PrevAndNext(
-			long memberRequestId, long receiverUserId, int status,
-			OrderByComparator<MemberRequest> orderByComparator)
-		throws com.liferay.invitation.invite.members.exception.
-			NoSuchMemberRequestException {
-
-		return getPersistence().findByR_S_PrevAndNext(
-			memberRequestId, receiverUserId, status, orderByComparator);
 	}
 
 	/**
@@ -775,4 +736,4 @@ public class MemberRequestUtil {
 	private static volatile MemberRequestPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1063695785
+// LIFERAY-SERVICE-BUILDER-HASH:1864663782

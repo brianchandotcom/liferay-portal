@@ -146,21 +146,6 @@ public interface RedirectEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the redirect entries before and after the current redirect entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param redirectEntryId the primary key of the current redirect entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next redirect entry
-	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
-	 */
-	public RedirectEntry[] findByUuid_PrevAndNext(
-			long redirectEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the redirect entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -348,22 +333,6 @@ public interface RedirectEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the redirect entries before and after the current redirect entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param redirectEntryId the primary key of the current redirect entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next redirect entry
-	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
-	 */
-	public RedirectEntry[] findByUuid_C_PrevAndNext(
-			long redirectEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the redirect entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface RedirectEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the redirect entries before and after the current redirect entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param redirectEntryId the primary key of the current redirect entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next redirect entry
-	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
-	 */
-	public RedirectEntry[] findByGroupId_PrevAndNext(
-			long redirectEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the redirect entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -548,21 +502,6 @@ public interface RedirectEntryPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the redirect entries before and after the current redirect entry in the ordered set of redirect entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param redirectEntryId the primary key of the current redirect entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next redirect entry
-	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
-	 */
-	public RedirectEntry[] filterFindByGroupId_PrevAndNext(
-			long redirectEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the redirect entries where groupId = &#63; from the database.
@@ -710,22 +649,6 @@ public interface RedirectEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the redirect entries before and after the current redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * @param redirectEntryId the primary key of the current redirect entry
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next redirect entry
-	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
-	 */
-	public RedirectEntry[] findByG_D_PrevAndNext(
-			long redirectEntryId, long groupId, String destinationURL,
-			com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -769,22 +692,6 @@ public interface RedirectEntryPersistence
 		long groupId, String destinationURL, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the redirect entries before and after the current redirect entry in the ordered set of redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * @param redirectEntryId the primary key of the current redirect entry
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next redirect entry
-	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
-	 */
-	public RedirectEntry[] filterFindByG_D_PrevAndNext(
-			long redirectEntryId, long groupId, String destinationURL,
-			com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the redirect entries where groupId = &#63; and destinationURL = &#63; from the database.
@@ -983,4 +890,4 @@ public interface RedirectEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1087508230
+// LIFERAY-SERVICE-BUILDER-HASH:-1652420395

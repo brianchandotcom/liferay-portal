@@ -146,21 +146,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 			orderByComparator);
 
 	/**
-	 * Returns the locks before and after the current lock in the ordered set where uuid = &#63;.
-	 *
-	 * @param lockId the primary key of the current lock
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lock
-	 * @throws NoSuchLockException if a lock with the primary key could not be found
-	 */
-	public Lock[] findByUuid_PrevAndNext(
-			long lockId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Lock>
-				orderByComparator)
-		throws NoSuchLockException;
-
-	/**
 	 * Removes all the locks where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -297,22 +282,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 			orderByComparator);
 
 	/**
-	 * Returns the locks before and after the current lock in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param lockId the primary key of the current lock
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lock
-	 * @throws NoSuchLockException if a lock with the primary key could not be found
-	 */
-	public Lock[] findByUuid_C_PrevAndNext(
-			long lockId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Lock>
-				orderByComparator)
-		throws NoSuchLockException;
-
-	/**
 	 * Removes all the locks where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,21 +412,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 			orderByComparator);
 
 	/**
-	 * Returns the locks before and after the current lock in the ordered set where className = &#63;.
-	 *
-	 * @param lockId the primary key of the current lock
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lock
-	 * @throws NoSuchLockException if a lock with the primary key could not be found
-	 */
-	public Lock[] findByClassName_PrevAndNext(
-			long lockId, String className,
-			com.liferay.portal.kernel.util.OrderByComparator<Lock>
-				orderByComparator)
-		throws NoSuchLockException;
-
-	/**
 	 * Removes all the locks where className = &#63; from the database.
 	 *
 	 * @param className the class name
@@ -584,21 +538,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock>
 			orderByComparator);
-
-	/**
-	 * Returns the locks before and after the current lock in the ordered set where expirationDate &lt; &#63;.
-	 *
-	 * @param lockId the primary key of the current lock
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lock
-	 * @throws NoSuchLockException if a lock with the primary key could not be found
-	 */
-	public Lock[] findByLtExpirationDate_PrevAndNext(
-			long lockId, Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<Lock>
-				orderByComparator)
-		throws NoSuchLockException;
 
 	/**
 	 * Removes all the locks where expirationDate &lt; &#63; from the database.
@@ -735,22 +674,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 		long companyId, String className,
 		com.liferay.portal.kernel.util.OrderByComparator<Lock>
 			orderByComparator);
-
-	/**
-	 * Returns the locks before and after the current lock in the ordered set where companyId = &#63; and className = &#63;.
-	 *
-	 * @param lockId the primary key of the current lock
-	 * @param companyId the company ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lock
-	 * @throws NoSuchLockException if a lock with the primary key could not be found
-	 */
-	public Lock[] findByC_C_PrevAndNext(
-			long lockId, long companyId, String className,
-			com.liferay.portal.kernel.util.OrderByComparator<Lock>
-				orderByComparator)
-		throws NoSuchLockException;
 
 	/**
 	 * Removes all the locks where companyId = &#63; and className = &#63; from the database.
@@ -950,23 +873,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 			orderByComparator);
 
 	/**
-	 * Returns the locks before and after the current lock in the ordered set where companyId = &#63; and userId = &#63; and className = &#63;.
-	 *
-	 * @param lockId the primary key of the current lock
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param className the class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lock
-	 * @throws NoSuchLockException if a lock with the primary key could not be found
-	 */
-	public Lock[] findByC_U_C_PrevAndNext(
-			long lockId, long companyId, long userId, String className,
-			com.liferay.portal.kernel.util.OrderByComparator<Lock>
-				orderByComparator)
-		throws NoSuchLockException;
-
-	/**
 	 * Removes all the locks where companyId = &#63; and userId = &#63; and className = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1104,4 +1010,4 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1471750913
+// LIFERAY-SERVICE-BUILDER-HASH:-1570392100

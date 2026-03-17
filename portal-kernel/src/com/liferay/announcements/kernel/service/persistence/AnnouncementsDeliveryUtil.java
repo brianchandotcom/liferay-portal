@@ -252,25 +252,6 @@ public class AnnouncementsDeliveryUtil {
 	}
 
 	/**
-	 * Returns the announcements deliveries before and after the current announcements delivery in the ordered set where companyId = &#63;.
-	 *
-	 * @param deliveryId the primary key of the current announcements delivery
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements delivery
-	 * @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	 */
-	public static AnnouncementsDelivery[] findByCompanyId_PrevAndNext(
-			long deliveryId, long companyId,
-			OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.
-			NoSuchDeliveryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			deliveryId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the announcements deliveries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -421,25 +402,6 @@ public class AnnouncementsDeliveryUtil {
 		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the announcements deliveries before and after the current announcements delivery in the ordered set where userId = &#63;.
-	 *
-	 * @param deliveryId the primary key of the current announcements delivery
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next announcements delivery
-	 * @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	 */
-	public static AnnouncementsDelivery[] findByUserId_PrevAndNext(
-			long deliveryId, long userId,
-			OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.
-			NoSuchDeliveryException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			deliveryId, userId, orderByComparator);
 	}
 
 	/**
@@ -696,4 +658,4 @@ public class AnnouncementsDeliveryUtil {
 	private static volatile AnnouncementsDeliveryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:65311258
+// LIFERAY-SERVICE-BUILDER-HASH:-1861092292

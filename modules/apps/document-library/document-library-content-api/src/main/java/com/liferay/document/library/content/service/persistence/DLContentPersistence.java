@@ -156,22 +156,6 @@ public interface DLContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library contents before and after the current document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
-	 *
-	 * @param contentId the primary key of the current document library content
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library content
-	 * @throws NoSuchContentException if a document library content with the primary key could not be found
-	 */
-	public DLContent[] findByC_R_PrevAndNext(
-			long contentId, long companyId, long repositoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
 	 * Removes all the document library contents where companyId = &#63; and repositoryId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -317,23 +301,6 @@ public interface DLContentPersistence
 		long companyId, long repositoryId, String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
 			orderByComparator);
-
-	/**
-	 * Returns the document library contents before and after the current document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param contentId the primary key of the current document library content
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library content
-	 * @throws NoSuchContentException if a document library content with the primary key could not be found
-	 */
-	public DLContent[] findByC_R_P_PrevAndNext(
-			long contentId, long companyId, long repositoryId, String path,
-			com.liferay.portal.kernel.util.OrderByComparator<DLContent>
-				orderByComparator)
-		throws NoSuchContentException;
 
 	/**
 	 * Removes all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63; from the database.
@@ -483,23 +450,6 @@ public interface DLContentPersistence
 		long companyId, long repositoryId, String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent>
 			orderByComparator);
-
-	/**
-	 * Returns the document library contents before and after the current document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
-	 *
-	 * @param contentId the primary key of the current document library content
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library content
-	 * @throws NoSuchContentException if a document library content with the primary key could not be found
-	 */
-	public DLContent[] findByC_R_LikeP_PrevAndNext(
-			long contentId, long companyId, long repositoryId, String path,
-			com.liferay.portal.kernel.util.OrderByComparator<DLContent>
-				orderByComparator)
-		throws NoSuchContentException;
 
 	/**
 	 * Removes all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; from the database.
@@ -706,4 +656,4 @@ public interface DLContentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1401636760
+// LIFERAY-SERVICE-BUILDER-HASH:1218086268

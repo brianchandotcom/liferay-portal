@@ -148,21 +148,6 @@ public interface CSDiagramEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cs diagram entries before and after the current cs diagram entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CSDiagramEntryId the primary key of the current cs diagram entry
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
-	 */
-	public CSDiagramEntry[] findByCPDefinitionId_PrevAndNext(
-			long CSDiagramEntryId, long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-				orderByComparator)
-		throws NoSuchCSDiagramEntryException;
-
-	/**
 	 * Removes all the cs diagram entries where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -291,21 +276,6 @@ public interface CSDiagramEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cs diagram entries before and after the current cs diagram entry in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CSDiagramEntryId the primary key of the current cs diagram entry
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
-	 */
-	public CSDiagramEntry[] findByCPInstanceId_PrevAndNext(
-			long CSDiagramEntryId, long CPInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-				orderByComparator)
-		throws NoSuchCSDiagramEntryException;
-
-	/**
 	 * Removes all the cs diagram entries where CPInstanceId = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -432,21 +402,6 @@ public interface CSDiagramEntryPersistence
 		long CProductId,
 		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the cs diagram entries before and after the current cs diagram entry in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CSDiagramEntryId the primary key of the current cs diagram entry
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
-	 */
-	public CSDiagramEntry[] findByCProductId_PrevAndNext(
-			long CSDiagramEntryId, long CProductId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
-				orderByComparator)
-		throws NoSuchCSDiagramEntryException;
 
 	/**
 	 * Removes all the cs diagram entries where CProductId = &#63; from the database.
@@ -687,4 +642,4 @@ public interface CSDiagramEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-128713056
+// LIFERAY-SERVICE-BUILDER-HASH:609215654

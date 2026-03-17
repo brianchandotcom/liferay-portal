@@ -148,21 +148,6 @@ public interface DepotEntryGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entry group rels before and after the current depot entry group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param depotEntryGroupRelId the primary key of the current depot entry group rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
-	 */
-	public DepotEntryGroupRel[] findByUuid_PrevAndNext(
-			long depotEntryGroupRelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
-				orderByComparator)
-		throws NoSuchEntryGroupRelException;
-
-	/**
 	 * Removes all the depot entry group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface DepotEntryGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entry group rels before and after the current depot entry group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param depotEntryGroupRelId the primary key of the current depot entry group rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
-	 */
-	public DepotEntryGroupRel[] findByUuid_C_PrevAndNext(
-			long depotEntryGroupRelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
-				orderByComparator)
-		throws NoSuchEntryGroupRelException;
-
-	/**
 	 * Removes all the depot entry group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -497,21 +466,6 @@ public interface DepotEntryGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entry group rels before and after the current depot entry group rel in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryGroupRelId the primary key of the current depot entry group rel
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
-	 */
-	public DepotEntryGroupRel[] findByDepotEntryId_PrevAndNext(
-			long depotEntryGroupRelId, long depotEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
-				orderByComparator)
-		throws NoSuchEntryGroupRelException;
-
-	/**
 	 * Removes all the depot entry group rels where depotEntryId = &#63; from the database.
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -638,21 +592,6 @@ public interface DepotEntryGroupRelPersistence
 		long toGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 			orderByComparator);
-
-	/**
-	 * Returns the depot entry group rels before and after the current depot entry group rel in the ordered set where toGroupId = &#63;.
-	 *
-	 * @param depotEntryGroupRelId the primary key of the current depot entry group rel
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
-	 */
-	public DepotEntryGroupRel[] findByToGroupId_PrevAndNext(
-			long depotEntryGroupRelId, long toGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
-				orderByComparator)
-		throws NoSuchEntryGroupRelException;
 
 	/**
 	 * Removes all the depot entry group rels where toGroupId = &#63; from the database.
@@ -790,23 +729,6 @@ public interface DepotEntryGroupRelPersistence
 		boolean ddmStructuresAvailable, long toGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 			orderByComparator);
-
-	/**
-	 * Returns the depot entry group rels before and after the current depot entry group rel in the ordered set where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
-	 *
-	 * @param depotEntryGroupRelId the primary key of the current depot entry group rel
-	 * @param ddmStructuresAvailable the ddm structures available
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
-	 */
-	public DepotEntryGroupRel[] findByDDMSA_TGI_PrevAndNext(
-			long depotEntryGroupRelId, boolean ddmStructuresAvailable,
-			long toGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
-				orderByComparator)
-		throws NoSuchEntryGroupRelException;
 
 	/**
 	 * Removes all the depot entry group rels where ddmStructuresAvailable = &#63; and toGroupId = &#63; from the database.
@@ -999,22 +921,6 @@ public interface DepotEntryGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entry group rels before and after the current depot entry group rel in the ordered set where searchable = &#63; and toGroupId = &#63;.
-	 *
-	 * @param depotEntryGroupRelId the primary key of the current depot entry group rel
-	 * @param searchable the searchable
-	 * @param toGroupId the to group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
-	 */
-	public DepotEntryGroupRel[] findByS_TGI_PrevAndNext(
-			long depotEntryGroupRelId, boolean searchable, long toGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
-				orderByComparator)
-		throws NoSuchEntryGroupRelException;
-
-	/**
 	 * Removes all the depot entry group rels where searchable = &#63; and toGroupId = &#63; from the database.
 	 *
 	 * @param searchable the searchable
@@ -1152,22 +1058,6 @@ public interface DepotEntryGroupRelPersistence
 		long toGroupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
 			orderByComparator);
-
-	/**
-	 * Returns the depot entry group rels before and after the current depot entry group rel in the ordered set where toGroupId = &#63; and type = &#63;.
-	 *
-	 * @param depotEntryGroupRelId the primary key of the current depot entry group rel
-	 * @param toGroupId the to group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry group rel
-	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
-	 */
-	public DepotEntryGroupRel[] findByTGI_T_PrevAndNext(
-			long depotEntryGroupRelId, long toGroupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryGroupRel>
-				orderByComparator)
-		throws NoSuchEntryGroupRelException;
 
 	/**
 	 * Removes all the depot entry group rels where toGroupId = &#63; and type = &#63; from the database.
@@ -1308,4 +1198,4 @@ public interface DepotEntryGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-454967797
+// LIFERAY-SERVICE-BUILDER-HASH:-327541681

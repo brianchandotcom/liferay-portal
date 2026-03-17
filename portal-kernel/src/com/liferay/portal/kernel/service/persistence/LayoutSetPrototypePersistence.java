@@ -147,21 +147,6 @@ public interface LayoutSetPrototypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set where uuid = &#63;.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	public LayoutSetPrototype[] findByUuid_PrevAndNext(
-			long layoutSetPrototypeId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
-
-	/**
 	 * Returns all the layout set prototypes that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -201,21 +186,6 @@ public interface LayoutSetPrototypePersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator);
-
-	/**
-	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set of layout set prototypes that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	public LayoutSetPrototype[] filterFindByUuid_PrevAndNext(
-			long layoutSetPrototypeId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
 
 	/**
 	 * Removes all the layout set prototypes where uuid = &#63; from the database.
@@ -363,22 +333,6 @@ public interface LayoutSetPrototypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	public LayoutSetPrototype[] findByUuid_C_PrevAndNext(
-			long layoutSetPrototypeId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
-
-	/**
 	 * Returns all the layout set prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -422,22 +376,6 @@ public interface LayoutSetPrototypePersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator);
-
-	/**
-	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set of layout set prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	public LayoutSetPrototype[] filterFindByUuid_C_PrevAndNext(
-			long layoutSetPrototypeId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
 
 	/**
 	 * Removes all the layout set prototypes where uuid = &#63; and companyId = &#63; from the database.
@@ -579,21 +517,6 @@ public interface LayoutSetPrototypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set where companyId = &#63;.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	public LayoutSetPrototype[] findByCompanyId_PrevAndNext(
-			long layoutSetPrototypeId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
-
-	/**
 	 * Returns all the layout set prototypes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -634,21 +557,6 @@ public interface LayoutSetPrototypePersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator);
-
-	/**
-	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set of layout set prototypes that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	public LayoutSetPrototype[] filterFindByCompanyId_PrevAndNext(
-			long layoutSetPrototypeId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
 
 	/**
 	 * Removes all the layout set prototypes where companyId = &#63; from the database.
@@ -796,22 +704,6 @@ public interface LayoutSetPrototypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	public LayoutSetPrototype[] findByC_A_PrevAndNext(
-			long layoutSetPrototypeId, long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
-
-	/**
 	 * Returns all the layout set prototypes that the user has permission to view where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -855,22 +747,6 @@ public interface LayoutSetPrototypePersistence
 		long companyId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
 			orderByComparator);
-
-	/**
-	 * Returns the layout set prototypes before and after the current layout set prototype in the ordered set of layout set prototypes that the user has permission to view where companyId = &#63; and active = &#63;.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the current layout set prototype
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	public LayoutSetPrototype[] filterFindByC_A_PrevAndNext(
-			long layoutSetPrototypeId, long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSetPrototype>
-				orderByComparator)
-		throws NoSuchLayoutSetPrototypeException;
 
 	/**
 	 * Removes all the layout set prototypes where companyId = &#63; and active = &#63; from the database.
@@ -1020,4 +896,4 @@ public interface LayoutSetPrototypePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1198588663
+// LIFERAY-SERVICE-BUILDER-HASH:1817562469

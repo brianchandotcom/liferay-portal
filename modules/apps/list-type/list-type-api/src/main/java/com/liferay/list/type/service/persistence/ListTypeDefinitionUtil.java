@@ -244,25 +244,6 @@ public class ListTypeDefinitionUtil {
 	}
 
 	/**
-	 * Returns the list type definitions before and after the current list type definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param listTypeDefinitionId the primary key of the current list type definition
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type definition
-	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
-	 */
-	public static ListTypeDefinition[] findByUuid_PrevAndNext(
-			long listTypeDefinitionId, String uuid,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws com.liferay.list.type.exception.
-			NoSuchListTypeDefinitionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			listTypeDefinitionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the list type definitions that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -309,25 +290,6 @@ public class ListTypeDefinitionUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the list type definitions before and after the current list type definition in the ordered set of list type definitions that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param listTypeDefinitionId the primary key of the current list type definition
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type definition
-	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
-	 */
-	public static ListTypeDefinition[] filterFindByUuid_PrevAndNext(
-			long listTypeDefinitionId, String uuid,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws com.liferay.list.type.exception.
-			NoSuchListTypeDefinitionException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			listTypeDefinitionId, uuid, orderByComparator);
 	}
 
 	/**
@@ -508,26 +470,6 @@ public class ListTypeDefinitionUtil {
 	}
 
 	/**
-	 * Returns the list type definitions before and after the current list type definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the primary key of the current list type definition
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type definition
-	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
-	 */
-	public static ListTypeDefinition[] findByUuid_C_PrevAndNext(
-			long listTypeDefinitionId, String uuid, long companyId,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws com.liferay.list.type.exception.
-			NoSuchListTypeDefinitionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			listTypeDefinitionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -579,26 +521,6 @@ public class ListTypeDefinitionUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the list type definitions before and after the current list type definition in the ordered set of list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the primary key of the current list type definition
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type definition
-	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
-	 */
-	public static ListTypeDefinition[] filterFindByUuid_C_PrevAndNext(
-			long listTypeDefinitionId, String uuid, long companyId,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws com.liferay.list.type.exception.
-			NoSuchListTypeDefinitionException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			listTypeDefinitionId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -782,26 +704,6 @@ public class ListTypeDefinitionUtil {
 	}
 
 	/**
-	 * Returns the list type definitions before and after the current list type definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the primary key of the current list type definition
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type definition
-	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
-	 */
-	public static ListTypeDefinition[] findByC_U_PrevAndNext(
-			long listTypeDefinitionId, long companyId, long userId,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws com.liferay.list.type.exception.
-			NoSuchListTypeDefinitionException {
-
-		return getPersistence().findByC_U_PrevAndNext(
-			listTypeDefinitionId, companyId, userId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the list type definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -853,26 +755,6 @@ public class ListTypeDefinitionUtil {
 
 		return getPersistence().filterFindByC_U(
 			companyId, userId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the list type definitions before and after the current list type definition in the ordered set of list type definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the primary key of the current list type definition
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type definition
-	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
-	 */
-	public static ListTypeDefinition[] filterFindByC_U_PrevAndNext(
-			long listTypeDefinitionId, long companyId, long userId,
-			OrderByComparator<ListTypeDefinition> orderByComparator)
-		throws com.liferay.list.type.exception.
-			NoSuchListTypeDefinitionException {
-
-		return getPersistence().filterFindByC_U_PrevAndNext(
-			listTypeDefinitionId, companyId, userId, orderByComparator);
 	}
 
 	/**
@@ -1149,4 +1031,4 @@ public class ListTypeDefinitionUtil {
 	private static volatile ListTypeDefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-678988963
+// LIFERAY-SERVICE-BUILDER-HASH:-697980972

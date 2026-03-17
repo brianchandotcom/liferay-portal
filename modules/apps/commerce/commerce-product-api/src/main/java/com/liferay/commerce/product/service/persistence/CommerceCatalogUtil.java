@@ -238,24 +238,6 @@ public class CommerceCatalogUtil {
 	}
 
 	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] findByUuid_PrevAndNext(
-			long commerceCatalogId, String uuid,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceCatalogId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -302,24 +284,6 @@ public class CommerceCatalogUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set of commerce catalogs that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] filterFindByUuid_PrevAndNext(
-			long commerceCatalogId, String uuid,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			commerceCatalogId, uuid, orderByComparator);
 	}
 
 	/**
@@ -498,25 +462,6 @@ public class CommerceCatalogUtil {
 	}
 
 	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] findByUuid_C_PrevAndNext(
-			long commerceCatalogId, String uuid, long companyId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceCatalogId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -568,25 +513,6 @@ public class CommerceCatalogUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set of commerce catalogs that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] filterFindByUuid_C_PrevAndNext(
-			long commerceCatalogId, String uuid, long companyId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			commerceCatalogId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -756,24 +682,6 @@ public class CommerceCatalogUtil {
 	}
 
 	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] findByCompanyId_PrevAndNext(
-			long commerceCatalogId, long companyId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commerceCatalogId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -820,24 +728,6 @@ public class CommerceCatalogUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set of commerce catalogs that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] filterFindByCompanyId_PrevAndNext(
-			long commerceCatalogId, long companyId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			commerceCatalogId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1009,24 +899,6 @@ public class CommerceCatalogUtil {
 	}
 
 	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] findByAccountEntryId_PrevAndNext(
-			long commerceCatalogId, long accountEntryId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().findByAccountEntryId_PrevAndNext(
-			commerceCatalogId, accountEntryId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where accountEntryId = &#63;.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -1076,24 +948,6 @@ public class CommerceCatalogUtil {
 
 		return getPersistence().filterFindByAccountEntryId(
 			accountEntryId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set of commerce catalogs that the user has permission to view where accountEntryId = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] filterFindByAccountEntryId_PrevAndNext(
-			long commerceCatalogId, long accountEntryId,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().filterFindByAccountEntryId_PrevAndNext(
-			commerceCatalogId, accountEntryId, orderByComparator);
 	}
 
 	/**
@@ -1272,25 +1126,6 @@ public class CommerceCatalogUtil {
 	}
 
 	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set where companyId = &#63; and system = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param companyId the company ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] findByC_S_PrevAndNext(
-			long commerceCatalogId, long companyId, boolean system,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().findByC_S_PrevAndNext(
-			commerceCatalogId, companyId, system, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce catalogs that the user has permission to view where companyId = &#63; and system = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1342,25 +1177,6 @@ public class CommerceCatalogUtil {
 
 		return getPersistence().filterFindByC_S(
 			companyId, system, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set of commerce catalogs that the user has permission to view where companyId = &#63; and system = &#63;.
-	 *
-	 * @param commerceCatalogId the primary key of the current commerce catalog
-	 * @param companyId the company ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	public static CommerceCatalog[] filterFindByC_S_PrevAndNext(
-			long commerceCatalogId, long companyId, boolean system,
-			OrderByComparator<CommerceCatalog> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
-
-		return getPersistence().filterFindByC_S_PrevAndNext(
-			commerceCatalogId, companyId, system, orderByComparator);
 	}
 
 	/**
@@ -1625,4 +1441,4 @@ public class CommerceCatalogUtil {
 	private static volatile CommerceCatalogPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1425654977
+// LIFERAY-SERVICE-BUILDER-HASH:-298550421

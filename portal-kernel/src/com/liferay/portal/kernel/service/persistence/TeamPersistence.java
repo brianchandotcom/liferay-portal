@@ -145,21 +145,6 @@ public interface TeamPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the teams before and after the current team in the ordered set where uuid = &#63;.
-	 *
-	 * @param teamId the primary key of the current team
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next team
-	 * @throws NoSuchTeamException if a team with the primary key could not be found
-	 */
-	public Team[] findByUuid_PrevAndNext(
-			long teamId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
-
-	/**
 	 * Removes all the teams where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -346,22 +331,6 @@ public interface TeamPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the teams before and after the current team in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param teamId the primary key of the current team
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next team
-	 * @throws NoSuchTeamException if a team with the primary key could not be found
-	 */
-	public Team[] findByUuid_C_PrevAndNext(
-			long teamId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
-
-	/**
 	 * Removes all the teams where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -492,21 +461,6 @@ public interface TeamPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the teams before and after the current team in the ordered set where companyId = &#63;.
-	 *
-	 * @param teamId the primary key of the current team
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next team
-	 * @throws NoSuchTeamException if a team with the primary key could not be found
-	 */
-	public Team[] findByCompanyId_PrevAndNext(
-			long teamId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
-
-	/**
 	 * Removes all the teams where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -634,21 +588,6 @@ public interface TeamPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the teams before and after the current team in the ordered set where groupId = &#63;.
-	 *
-	 * @param teamId the primary key of the current team
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next team
-	 * @throws NoSuchTeamException if a team with the primary key could not be found
-	 */
-	public Team[] findByGroupId_PrevAndNext(
-			long teamId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
-
-	/**
 	 * Returns all the teams that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -688,21 +627,6 @@ public interface TeamPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Team>
 			orderByComparator);
-
-	/**
-	 * Returns the teams before and after the current team in the ordered set of teams that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param teamId the primary key of the current team
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next team
-	 * @throws NoSuchTeamException if a team with the primary key could not be found
-	 */
-	public Team[] filterFindByGroupId_PrevAndNext(
-			long teamId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
-		throws NoSuchTeamException;
 
 	/**
 	 * Removes all the teams where groupId = &#63; from the database.
@@ -1238,4 +1162,4 @@ public interface TeamPersistence
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-357326973
+// LIFERAY-SERVICE-BUILDER-HASH:363263279

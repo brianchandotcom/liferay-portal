@@ -149,21 +149,6 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 			<CommercePriceListCommerceAccountGroupRel> orderByComparator);
 
 	/**
-	 * Returns the commerce price list commerce account group rels before and after the current commerce price list commerce account group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRelId the primary key of the current commerce price list commerce account group rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list commerce account group rel
-	 * @throws NoSuchPriceListCommerceAccountGroupRelException if a commerce price list commerce account group rel with the primary key could not be found
-	 */
-	public CommercePriceListCommerceAccountGroupRel[] findByUuid_PrevAndNext(
-			long commercePriceListCommerceAccountGroupRelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePriceListCommerceAccountGroupRel> orderByComparator)
-		throws NoSuchPriceListCommerceAccountGroupRelException;
-
-	/**
 	 * Removes all the commerce price list commerce account group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -303,23 +288,6 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 			<CommercePriceListCommerceAccountGroupRel> orderByComparator);
 
 	/**
-	 * Returns the commerce price list commerce account group rels before and after the current commerce price list commerce account group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRelId the primary key of the current commerce price list commerce account group rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list commerce account group rel
-	 * @throws NoSuchPriceListCommerceAccountGroupRelException if a commerce price list commerce account group rel with the primary key could not be found
-	 */
-	public CommercePriceListCommerceAccountGroupRel[] findByUuid_C_PrevAndNext(
-			long commercePriceListCommerceAccountGroupRelId, String uuid,
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePriceListCommerceAccountGroupRel> orderByComparator)
-		throws NoSuchPriceListCommerceAccountGroupRelException;
-
-	/**
 	 * Removes all the commerce price list commerce account group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -457,24 +425,6 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 			long commercePriceListId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommercePriceListCommerceAccountGroupRel> orderByComparator);
-
-	/**
-	 * Returns the commerce price list commerce account group rels before and after the current commerce price list commerce account group rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRelId the primary key of the current commerce price list commerce account group rel
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list commerce account group rel
-	 * @throws NoSuchPriceListCommerceAccountGroupRelException if a commerce price list commerce account group rel with the primary key could not be found
-	 */
-	public CommercePriceListCommerceAccountGroupRel[]
-			findByCommercePriceListId_PrevAndNext(
-				long commercePriceListCommerceAccountGroupRelId,
-				long commercePriceListId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommercePriceListCommerceAccountGroupRel>
-						orderByComparator)
-		throws NoSuchPriceListCommerceAccountGroupRelException;
 
 	/**
 	 * Removes all the commerce price list commerce account group rels where commercePriceListId = &#63; from the database.
@@ -678,4 +628,4 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-261436832
+// LIFERAY-SERVICE-BUILDER-HASH:2094251284

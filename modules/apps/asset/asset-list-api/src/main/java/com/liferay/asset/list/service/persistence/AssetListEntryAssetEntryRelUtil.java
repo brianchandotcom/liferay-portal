@@ -250,25 +250,6 @@ public class AssetListEntryAssetEntryRelUtil {
 	}
 
 	/**
-	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry asset entry rel
-	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
-	 */
-	public static AssetListEntryAssetEntryRel[] findByUuid_PrevAndNext(
-			long assetListEntryAssetEntryRelId, String uuid,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntryAssetEntryRelException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			assetListEntryAssetEntryRelId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry asset entry rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -505,26 +486,6 @@ public class AssetListEntryAssetEntryRelUtil {
 	}
 
 	/**
-	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry asset entry rel
-	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
-	 */
-	public static AssetListEntryAssetEntryRel[] findByUuid_C_PrevAndNext(
-			long assetListEntryAssetEntryRelId, String uuid, long companyId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntryAssetEntryRelException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			assetListEntryAssetEntryRelId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry asset entry rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -687,27 +648,6 @@ public class AssetListEntryAssetEntryRelUtil {
 	}
 
 	/**
-	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63;.
-	 *
-	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
-	 * @param assetListEntryId the asset list entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry asset entry rel
-	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
-	 */
-	public static AssetListEntryAssetEntryRel[]
-			findByAssetListEntryId_PrevAndNext(
-				long assetListEntryAssetEntryRelId, long assetListEntryId,
-				OrderByComparator<AssetListEntryAssetEntryRel>
-					orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntryAssetEntryRelException {
-
-		return getPersistence().findByAssetListEntryId_PrevAndNext(
-			assetListEntryAssetEntryRelId, assetListEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
@@ -864,25 +804,6 @@ public class AssetListEntryAssetEntryRelUtil {
 
 		return getPersistence().fetchByAssetEntryId_Last(
 			assetEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry asset entry rel
-	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
-	 */
-	public static AssetListEntryAssetEntryRel[] findByAssetEntryId_PrevAndNext(
-			long assetListEntryAssetEntryRelId, long assetEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntryAssetEntryRelException {
-
-		return getPersistence().findByAssetEntryId_PrevAndNext(
-			assetListEntryAssetEntryRelId, assetEntryId, orderByComparator);
 	}
 
 	/**
@@ -1052,28 +973,6 @@ public class AssetListEntryAssetEntryRelUtil {
 
 		return getPersistence().fetchByA_S_Last(
 			assetListEntryId, segmentsEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry asset entry rel
-	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
-	 */
-	public static AssetListEntryAssetEntryRel[] findByA_S_PrevAndNext(
-			long assetListEntryAssetEntryRelId, long assetListEntryId,
-			long segmentsEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntryAssetEntryRelException {
-
-		return getPersistence().findByA_S_PrevAndNext(
-			assetListEntryAssetEntryRelId, assetListEntryId, segmentsEntryId,
-			orderByComparator);
 	}
 
 	/**
@@ -1442,29 +1341,6 @@ public class AssetListEntryAssetEntryRelUtil {
 	}
 
 	/**
-	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
-	 *
-	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param position the position
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset list entry asset entry rel
-	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
-	 */
-	public static AssetListEntryAssetEntryRel[] findByA_S_GtP_PrevAndNext(
-			long assetListEntryAssetEntryRelId, long assetListEntryId,
-			long segmentsEntryId, int position,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
-		throws com.liferay.asset.list.exception.
-			NoSuchEntryAssetEntryRelException {
-
-		return getPersistence().findByA_S_GtP_PrevAndNext(
-			assetListEntryAssetEntryRelId, assetListEntryId, segmentsEntryId,
-			position, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
@@ -1672,4 +1548,4 @@ public class AssetListEntryAssetEntryRelUtil {
 	private static volatile AssetListEntryAssetEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1905286503
+// LIFERAY-SERVICE-BUILDER-HASH:683447824

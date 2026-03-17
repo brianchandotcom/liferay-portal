@@ -236,24 +236,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the ddl records before and after the current ddl record in the ordered set where uuid = &#63;.
-	 *
-	 * @param recordId the primary key of the current ddl record
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record
-	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
-	 */
-	public static DDLRecord[] findByUuid_PrevAndNext(
-			long recordId, String uuid,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			recordId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl records where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -480,25 +462,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the ddl records before and after the current ddl record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param recordId the primary key of the current ddl record
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record
-	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
-	 */
-	public static DDLRecord[] findByUuid_C_PrevAndNext(
-			long recordId, String uuid, long companyId,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			recordId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl records where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -652,24 +615,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the ddl records before and after the current ddl record in the ordered set where companyId = &#63;.
-	 *
-	 * @param recordId the primary key of the current ddl record
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record
-	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
-	 */
-	public static DDLRecord[] findByCompanyId_PrevAndNext(
-			long recordId, long companyId,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			recordId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl records where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -818,24 +763,6 @@ public class DDLRecordUtil {
 
 		return getPersistence().fetchByRecordSetId_Last(
 			recordSetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddl records before and after the current ddl record in the ordered set where recordSetId = &#63;.
-	 *
-	 * @param recordId the primary key of the current ddl record
-	 * @param recordSetId the record set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record
-	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
-	 */
-	public static DDLRecord[] findByRecordSetId_PrevAndNext(
-			long recordId, long recordSetId,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByRecordSetId_PrevAndNext(
-			recordId, recordSetId, orderByComparator);
 	}
 
 	/**
@@ -999,25 +926,6 @@ public class DDLRecordUtil {
 
 		return getPersistence().fetchByR_U_Last(
 			recordSetId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddl records before and after the current ddl record in the ordered set where recordSetId = &#63; and userId = &#63;.
-	 *
-	 * @param recordId the primary key of the current ddl record
-	 * @param recordSetId the record set ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record
-	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
-	 */
-	public static DDLRecord[] findByR_U_PrevAndNext(
-			long recordId, long recordSetId, long userId,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByR_U_PrevAndNext(
-			recordId, recordSetId, userId, orderByComparator);
 	}
 
 	/**
@@ -1190,25 +1098,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the ddl records before and after the current ddl record in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * @param recordId the primary key of the current ddl record
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record
-	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
-	 */
-	public static DDLRecord[] findByR_R_PrevAndNext(
-			long recordId, long recordSetId, String recordSetVersion,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByR_R_PrevAndNext(
-			recordId, recordSetId, recordSetVersion, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl records where recordSetId = &#63; and recordSetVersion = &#63; from the database.
 	 *
 	 * @param recordSetId the record set ID
@@ -1371,25 +1260,6 @@ public class DDLRecordUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			className, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddl records before and after the current ddl record in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param recordId the primary key of the current ddl record
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record
-	 * @throws NoSuchRecordException if a ddl record with the primary key could not be found
-	 */
-	public static DDLRecord[] findByC_C_PrevAndNext(
-			long recordId, String className, long classPK,
-			OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			recordId, className, classPK, orderByComparator);
 	}
 
 	/**
@@ -1571,4 +1441,4 @@ public class DDLRecordUtil {
 	private static volatile DDLRecordPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-822099313
+// LIFERAY-SERVICE-BUILDER-HASH:131797478

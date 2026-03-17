@@ -242,24 +242,6 @@ public class ContactUtil {
 	}
 
 	/**
-	 * Returns the contacts before and after the current contact in the ordered set where companyId = &#63;.
-	 *
-	 * @param contactId the primary key of the current contact
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next contact
-	 * @throws NoSuchContactException if a contact with the primary key could not be found
-	 */
-	public static Contact[] findByCompanyId_PrevAndNext(
-			long contactId, long companyId,
-			OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			contactId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the contacts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -401,24 +383,6 @@ public class ContactUtil {
 		long userId, OrderByComparator<Contact> orderByComparator) {
 
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the contacts before and after the current contact in the ordered set where userId = &#63;.
-	 *
-	 * @param contactId the primary key of the current contact
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next contact
-	 * @throws NoSuchContactException if a contact with the primary key could not be found
-	 */
-	public static Contact[] findByUserId_PrevAndNext(
-			long contactId, long userId,
-			OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			contactId, userId, orderByComparator);
 	}
 
 	/**
@@ -584,25 +548,6 @@ public class ContactUtil {
 	}
 
 	/**
-	 * Returns the contacts before and after the current contact in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param contactId the primary key of the current contact
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next contact
-	 * @throws NoSuchContactException if a contact with the primary key could not be found
-	 */
-	public static Contact[] findByC_U_PrevAndNext(
-			long contactId, long companyId, long userId,
-			OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException {
-
-		return getPersistence().findByC_U_PrevAndNext(
-			contactId, companyId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the contacts where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -765,25 +710,6 @@ public class ContactUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the contacts before and after the current contact in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param contactId the primary key of the current contact
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next contact
-	 * @throws NoSuchContactException if a contact with the primary key could not be found
-	 */
-	public static Contact[] findByC_C_PrevAndNext(
-			long contactId, long classNameId, long classPK,
-			OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			contactId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -965,4 +891,4 @@ public class ContactUtil {
 	private static volatile ContactPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:530704471
+// LIFERAY-SERVICE-BUILDER-HASH:-1187861820

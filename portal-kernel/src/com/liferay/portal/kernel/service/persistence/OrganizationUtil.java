@@ -238,24 +238,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where uuid = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByUuid_PrevAndNext(
-			long organizationId, String uuid,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			organizationId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -302,24 +284,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByUuid_PrevAndNext(
-			long organizationId, String uuid,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			organizationId, uuid, orderByComparator);
 	}
 
 	/**
@@ -496,25 +460,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByUuid_C_PrevAndNext(
-			long organizationId, String uuid, long companyId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			organizationId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -566,25 +511,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByUuid_C_PrevAndNext(
-			long organizationId, String uuid, long companyId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			organizationId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -752,24 +678,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByCompanyId_PrevAndNext(
-			long organizationId, long companyId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			organizationId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -816,24 +724,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByCompanyId_PrevAndNext(
-			long organizationId, long companyId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			organizationId, companyId, orderByComparator);
 	}
 
 	/**
@@ -998,24 +888,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where companyId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByCompanyIdLocations_PrevAndNext(
-			long organizationId, long companyId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByCompanyIdLocations_PrevAndNext(
-			organizationId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1065,24 +937,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByCompanyIdLocations(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByCompanyIdLocations_PrevAndNext(
-			long organizationId, long companyId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByCompanyIdLocations_PrevAndNext(
-			organizationId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1243,24 +1097,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where logoId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByLogoId_PrevAndNext(
-			long organizationId, long logoId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByLogoId_PrevAndNext(
-			organizationId, logoId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where logoId = &#63;.
 	 *
 	 * @param logoId the logo ID
@@ -1307,24 +1143,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByLogoId(
 			logoId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where logoId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByLogoId_PrevAndNext(
-			long organizationId, long logoId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByLogoId_PrevAndNext(
-			organizationId, logoId, orderByComparator);
 	}
 
 	/**
@@ -1505,25 +1323,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByC_P_PrevAndNext(
-			long organizationId, long companyId, long parentOrganizationId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByC_P_PrevAndNext(
-			organizationId, companyId, parentOrganizationId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63; and parentOrganizationId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1577,25 +1376,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByC_P(
 			companyId, parentOrganizationId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where companyId = &#63; and parentOrganizationId = &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByC_P_PrevAndNext(
-			long organizationId, long companyId, long parentOrganizationId,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByC_P_PrevAndNext(
-			organizationId, companyId, parentOrganizationId, orderByComparator);
 	}
 
 	/**
@@ -1780,25 +1560,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByC_LikeT_PrevAndNext(
-			long organizationId, long companyId, String treePath,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByC_LikeT_PrevAndNext(
-			organizationId, companyId, treePath, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63; and treePath LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1851,25 +1612,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByC_LikeT(
 			companyId, treePath, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByC_LikeT_PrevAndNext(
-			long organizationId, long companyId, String treePath,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByC_LikeT_PrevAndNext(
-			organizationId, companyId, treePath, orderByComparator);
 	}
 
 	/**
@@ -2114,25 +1856,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByC_LikeN_PrevAndNext(
-			long organizationId, long companyId, String name,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByC_LikeN_PrevAndNext(
-			organizationId, companyId, name, orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63; and name LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2185,25 +1908,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByC_LikeN(
 			companyId, name, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where companyId = &#63; and name LIKE &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByC_LikeN_PrevAndNext(
-			long organizationId, long companyId, String name,
-			OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByC_LikeN_PrevAndNext(
-			organizationId, companyId, name, orderByComparator);
 	}
 
 	/**
@@ -2662,27 +2366,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Returns the organizations before and after the current organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63; and name LIKE &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] findByC_P_LikeN_PrevAndNext(
-			long organizationId, long companyId, long parentOrganizationId,
-			String name, OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().findByC_P_LikeN_PrevAndNext(
-			organizationId, companyId, parentOrganizationId, name,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the organizations that the user has permission to view where companyId = &#63; and parentOrganizationId = &#63; and name LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2740,27 +2423,6 @@ public class OrganizationUtil {
 
 		return getPersistence().filterFindByC_P_LikeN(
 			companyId, parentOrganizationId, name, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where companyId = &#63; and parentOrganizationId = &#63; and name LIKE &#63;.
-	 *
-	 * @param organizationId the primary key of the current organization
-	 * @param companyId the company ID
-	 * @param parentOrganizationId the parent organization ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	public static Organization[] filterFindByC_P_LikeN_PrevAndNext(
-			long organizationId, long companyId, long parentOrganizationId,
-			String name, OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
-
-		return getPersistence().filterFindByC_P_LikeN_PrevAndNext(
-			organizationId, companyId, parentOrganizationId, name,
 			orderByComparator);
 	}
 
@@ -3464,4 +3126,4 @@ public class OrganizationUtil {
 	private static volatile OrganizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1094549734
+// LIFERAY-SERVICE-BUILDER-HASH:1208973501

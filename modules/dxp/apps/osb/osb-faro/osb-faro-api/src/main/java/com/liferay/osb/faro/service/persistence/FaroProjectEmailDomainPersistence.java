@@ -146,21 +146,6 @@ public interface FaroProjectEmailDomainPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the faro project email domains before and after the current faro project email domain in the ordered set where groupId = &#63;.
-	 *
-	 * @param faroProjectEmailDomainId the primary key of the current faro project email domain
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro project email domain
-	 * @throws NoSuchFaroProjectEmailDomainException if a faro project email domain with the primary key could not be found
-	 */
-	public FaroProjectEmailDomain[] findByGroupId_PrevAndNext(
-			long faroProjectEmailDomainId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FaroProjectEmailDomain> orderByComparator)
-		throws NoSuchFaroProjectEmailDomainException;
-
-	/**
 	 * Removes all the faro project email domains where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -288,21 +273,6 @@ public interface FaroProjectEmailDomainPersistence
 		long faroProjectId,
 		com.liferay.portal.kernel.util.OrderByComparator<FaroProjectEmailDomain>
 			orderByComparator);
-
-	/**
-	 * Returns the faro project email domains before and after the current faro project email domain in the ordered set where faroProjectId = &#63;.
-	 *
-	 * @param faroProjectEmailDomainId the primary key of the current faro project email domain
-	 * @param faroProjectId the faro project ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro project email domain
-	 * @throws NoSuchFaroProjectEmailDomainException if a faro project email domain with the primary key could not be found
-	 */
-	public FaroProjectEmailDomain[] findByFaroProjectId_PrevAndNext(
-			long faroProjectEmailDomainId, long faroProjectId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FaroProjectEmailDomain> orderByComparator)
-		throws NoSuchFaroProjectEmailDomainException;
 
 	/**
 	 * Removes all the faro project email domains where faroProjectId = &#63; from the database.
@@ -444,4 +414,4 @@ public interface FaroProjectEmailDomainPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1601905072
+// LIFERAY-SERVICE-BUILDER-HASH:-621170904

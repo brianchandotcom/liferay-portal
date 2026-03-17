@@ -147,21 +147,6 @@ public interface CPDisplayLayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByUuid_PrevAndNext(
-			long CPDisplayLayoutId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
-
-	/**
 	 * Removes all the cp display layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface CPDisplayLayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByUuid_C_PrevAndNext(
-			long CPDisplayLayoutId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
-
-	/**
 	 * Removes all the cp display layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -493,21 +462,6 @@ public interface CPDisplayLayoutPersistence
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
 			orderByComparator);
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where groupId = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByGroupId_PrevAndNext(
-			long CPDisplayLayoutId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
 
 	/**
 	 * Removes all the cp display layouts where groupId = &#63; from the database.
@@ -647,22 +601,6 @@ public interface CPDisplayLayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByG_C_PrevAndNext(
-			long CPDisplayLayoutId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
-
-	/**
 	 * Removes all the cp display layouts where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -800,23 +738,6 @@ public interface CPDisplayLayoutPersistence
 		long groupId, String layoutPageTemplateEntryUuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
 			orderByComparator);
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where groupId = &#63; and layoutPageTemplateEntryUuid = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateEntryUuid the layout page template entry uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByG_LPTEU_PrevAndNext(
-			long CPDisplayLayoutId, long groupId,
-			String layoutPageTemplateEntryUuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
 
 	/**
 	 * Removes all the cp display layouts where groupId = &#63; and layoutPageTemplateEntryUuid = &#63; from the database.
@@ -959,22 +880,6 @@ public interface CPDisplayLayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where groupId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param groupId the group ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByG_L_PrevAndNext(
-			long CPDisplayLayoutId, long groupId, String layoutUuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
-
-	/**
 	 * Removes all the cp display layouts where groupId = &#63; and layoutUuid = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1112,22 +1017,6 @@ public interface CPDisplayLayoutPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
 			orderByComparator);
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByC_C_PrevAndNext(
-			long CPDisplayLayoutId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
 
 	/**
 	 * Removes all the cp display layouts where classNameId = &#63; and classPK = &#63; from the database.
@@ -1269,22 +1158,6 @@ public interface CPDisplayLayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByC_C_LPTEU_PrevAndNext(
-			long CPDisplayLayoutId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
-
-	/**
 	 * Removes all the cp display layouts where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1422,22 +1295,6 @@ public interface CPDisplayLayoutPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
 			orderByComparator);
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public CPDisplayLayout[] findByC_C_L_PrevAndNext(
-			long CPDisplayLayoutId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout>
-				orderByComparator)
-		throws NoSuchCPDisplayLayoutException;
 
 	/**
 	 * Removes all the cp display layouts where classNameId = &#63; and classPK = &#63; from the database.
@@ -1635,4 +1492,4 @@ public interface CPDisplayLayoutPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1195477108
+// LIFERAY-SERVICE-BUILDER-HASH:-1417194344

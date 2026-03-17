@@ -147,21 +147,6 @@ public interface CPOptionValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp option values before and after the current cp option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPOptionValueId the primary key of the current cp option value
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	public CPOptionValue[] findByUuid_PrevAndNext(
-			long CPOptionValueId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-				orderByComparator)
-		throws NoSuchCPOptionValueException;
-
-	/**
 	 * Removes all the cp option values where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -299,22 +284,6 @@ public interface CPOptionValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp option values before and after the current cp option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPOptionValueId the primary key of the current cp option value
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	public CPOptionValue[] findByUuid_C_PrevAndNext(
-			long CPOptionValueId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-				orderByComparator)
-		throws NoSuchCPOptionValueException;
-
-	/**
 	 * Removes all the cp option values where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -445,21 +414,6 @@ public interface CPOptionValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp option values before and after the current cp option value in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPOptionValueId the primary key of the current cp option value
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	public CPOptionValue[] findByCompanyId_PrevAndNext(
-			long CPOptionValueId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-				orderByComparator)
-		throws NoSuchCPOptionValueException;
-
-	/**
 	 * Removes all the cp option values where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -586,21 +540,6 @@ public interface CPOptionValuePersistence
 		long CPOptionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
 			orderByComparator);
-
-	/**
-	 * Returns the cp option values before and after the current cp option value in the ordered set where CPOptionId = &#63;.
-	 *
-	 * @param CPOptionValueId the primary key of the current cp option value
-	 * @param CPOptionId the cp option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	public CPOptionValue[] findByCPOptionId_PrevAndNext(
-			long CPOptionValueId, long CPOptionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPOptionValue>
-				orderByComparator)
-		throws NoSuchCPOptionValueException;
 
 	/**
 	 * Removes all the cp option values where CPOptionId = &#63; from the database.
@@ -841,4 +780,4 @@ public interface CPOptionValuePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1537049617
+// LIFERAY-SERVICE-BUILDER-HASH:1326466297

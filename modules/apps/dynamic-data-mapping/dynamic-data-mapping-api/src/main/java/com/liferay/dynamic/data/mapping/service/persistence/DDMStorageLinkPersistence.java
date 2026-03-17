@@ -147,21 +147,6 @@ public interface DDMStorageLinkPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where uuid = &#63;.
-	 *
-	 * @param storageLinkId the primary key of the current ddm storage link
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm storage link
-	 * @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
-	 */
-	public DDMStorageLink[] findByUuid_PrevAndNext(
-			long storageLinkId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
-		throws NoSuchStorageLinkException;
-
-	/**
 	 * Removes all the ddm storage links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -297,22 +282,6 @@ public interface DDMStorageLinkPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param storageLinkId the primary key of the current ddm storage link
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm storage link
-	 * @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
-	 */
-	public DDMStorageLink[] findByUuid_C_PrevAndNext(
-			long storageLinkId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
-		throws NoSuchStorageLinkException;
 
 	/**
 	 * Removes all the ddm storage links where uuid = &#63; and companyId = &#63; from the database.
@@ -489,21 +458,6 @@ public interface DDMStorageLinkPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where structureId = &#63;.
-	 *
-	 * @param storageLinkId the primary key of the current ddm storage link
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm storage link
-	 * @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
-	 */
-	public DDMStorageLink[] findByStructureId_PrevAndNext(
-			long storageLinkId, long structureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
-		throws NoSuchStorageLinkException;
-
-	/**
 	 * Removes all the ddm storage links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -631,21 +585,6 @@ public interface DDMStorageLinkPersistence
 		long structureVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param storageLinkId the primary key of the current ddm storage link
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm storage link
-	 * @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
-	 */
-	public DDMStorageLink[] findByStructureVersionId_PrevAndNext(
-			long storageLinkId, long structureVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
-		throws NoSuchStorageLinkException;
 
 	/**
 	 * Returns all the ddm storage links where structureVersionId = any &#63;.
@@ -857,4 +796,4 @@ public interface DDMStorageLinkPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1193523728
+// LIFERAY-SERVICE-BUILDER-HASH:1573400027

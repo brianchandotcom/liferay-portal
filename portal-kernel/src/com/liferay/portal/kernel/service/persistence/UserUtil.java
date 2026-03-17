@@ -232,23 +232,6 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the users before and after the current user in the ordered set where uuid = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByUuid_PrevAndNext(
-			long userId, String uuid, OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			userId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the users where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -411,25 +394,6 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the users before and after the current user in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByUuid_C_PrevAndNext(
-			long userId, String uuid, long companyId,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			userId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the users where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -579,24 +543,6 @@ public class UserUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByCompanyId_PrevAndNext(
-			long userId, long companyId,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			userId, companyId, orderByComparator);
 	}
 
 	/**
@@ -808,24 +754,6 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the users before and after the current user in the ordered set where emailAddress = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param emailAddress the email address
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByEmailAddress_PrevAndNext(
-			long userId, String emailAddress,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByEmailAddress_PrevAndNext(
-			userId, emailAddress, orderByComparator);
-	}
-
-	/**
 	 * Removes all the users where emailAddress = &#63; from the database.
 	 *
 	 * @param emailAddress the email address
@@ -973,24 +901,6 @@ public class UserUtil {
 
 		return getPersistence().fetchByPortraitId_Last(
 			portraitId, orderByComparator);
-	}
-
-	/**
-	 * Returns the users before and after the current user in the ordered set where portraitId = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param portraitId the portrait ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByPortraitId_PrevAndNext(
-			long userId, long portraitId,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByPortraitId_PrevAndNext(
-			userId, portraitId, orderByComparator);
 	}
 
 	/**
@@ -1384,25 +1294,6 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByC_CD_PrevAndNext(
-			long userId, long companyId, Date createDate,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByC_CD_PrevAndNext(
-			userId, companyId, createDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the users where companyId = &#63; and createDate = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1565,25 +1456,6 @@ public class UserUtil {
 
 		return getPersistence().fetchByC_MD_Last(
 			companyId, modifiedDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and modifiedDate = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByC_MD_PrevAndNext(
-			long userId, long companyId, Date modifiedDate,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByC_MD_PrevAndNext(
-			userId, companyId, modifiedDate, orderByComparator);
 	}
 
 	/**
@@ -1880,25 +1752,6 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and facebookId = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param companyId the company ID
-	 * @param facebookId the facebook ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByC_FID_PrevAndNext(
-			long userId, long companyId, long facebookId,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByC_FID_PrevAndNext(
-			userId, companyId, facebookId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the users where companyId = &#63; and facebookId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2056,25 +1909,6 @@ public class UserUtil {
 
 		return getPersistence().fetchByC_T_Last(
 			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByC_T_PrevAndNext(
-			long userId, long companyId, int type,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByC_T_PrevAndNext(
-			userId, companyId, type, orderByComparator);
 	}
 
 	/**
@@ -2237,25 +2071,6 @@ public class UserUtil {
 
 		return getPersistence().fetchByC_S_Last(
 			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByC_S_PrevAndNext(
-			long userId, long companyId, int status,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByC_S_PrevAndNext(
-			userId, companyId, status, orderByComparator);
 	}
 
 	/**
@@ -2437,26 +2252,6 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByC_CD_MD_PrevAndNext(
-			long userId, long companyId, Date createDate, Date modifiedDate,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByC_CD_MD_PrevAndNext(
-			userId, companyId, createDate, modifiedDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the users where companyId = &#63; and createDate = &#63; and modifiedDate = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2635,26 +2430,6 @@ public class UserUtil {
 
 		return getPersistence().fetchByC_T_S_Last(
 			companyId, type, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param userId the primary key of the current user
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	public static User[] findByC_T_S_PrevAndNext(
-			long userId, long companyId, int type, int status,
-			OrderByComparator<User> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByC_T_S_PrevAndNext(
-			userId, companyId, type, status, orderByComparator);
 	}
 
 	/**
@@ -3984,4 +3759,4 @@ public class UserUtil {
 	private static volatile UserPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-779990229
+// LIFERAY-SERVICE-BUILDER-HASH:-75033081

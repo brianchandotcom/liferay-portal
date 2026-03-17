@@ -149,21 +149,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByUuid_PrevAndNext(
-			long CPInstanceId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
 	 * Removes all the cp instances where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByUuid_C_PrevAndNext(
-			long CPInstanceId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
 	 * Removes all the cp instances where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where groupId = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByGroupId_PrevAndNext(
-			long CPInstanceId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
 	 * Returns all the cp instances that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -550,21 +504,6 @@ public interface CPInstancePersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set of cp instances that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] filterFindByGroupId_PrevAndNext(
-			long CPInstanceId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
 
 	/**
 	 * Removes all the cp instances where groupId = &#63; from the database.
@@ -703,21 +642,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByCompanyId_PrevAndNext(
-			long CPInstanceId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
 	 * Removes all the cp instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -844,21 +768,6 @@ public interface CPInstancePersistence
 		long CPDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByCPDefinitionId_PrevAndNext(
-			long CPInstanceId, long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
 
 	/**
 	 * Removes all the cp instances where CPDefinitionId = &#63; from the database.
@@ -988,21 +897,6 @@ public interface CPInstancePersistence
 		String CPInstanceUuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByCPInstanceUuid_PrevAndNext(
-			long CPInstanceId, String CPInstanceUuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
 
 	/**
 	 * Removes all the cp instances where CPInstanceUuid = &#63; from the database.
@@ -1141,22 +1035,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByG_ST_PrevAndNext(
-			long CPInstanceId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
 	 * Returns all the cp instances that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1200,22 +1078,6 @@ public interface CPInstancePersistence
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set of cp instances that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] filterFindByG_ST_PrevAndNext(
-			long CPInstanceId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
 
 	/**
 	 * Removes all the cp instances where groupId = &#63; and status = &#63; from the database.
@@ -1363,22 +1225,6 @@ public interface CPInstancePersistence
 		long companyId, String sku,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where companyId = &#63; and sku = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByC_S_PrevAndNext(
-			long CPInstanceId, long companyId, String sku,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
 
 	/**
 	 * Removes all the cp instances where companyId = &#63; and sku = &#63; from the database.
@@ -1620,22 +1466,6 @@ public interface CPInstancePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param CPDefinitionId the cp definition ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByC_ST_PrevAndNext(
-			long CPInstanceId, long CPDefinitionId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
-
-	/**
 	 * Removes all the cp instances where CPDefinitionId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1772,22 +1602,6 @@ public interface CPInstancePersistence
 		Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByLtD_S_PrevAndNext(
-			long CPInstanceId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
 
 	/**
 	 * Removes all the cp instances where displayDate &lt; &#63; and status = &#63; from the database.
@@ -1935,24 +1749,6 @@ public interface CPInstancePersistence
 		long CPDefinitionId, Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param CPDefinitionId the cp definition ID
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByC_LtD_S_PrevAndNext(
-			long CPInstanceId, long CPDefinitionId, Date displayDate,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
 
 	/**
 	 * Removes all the cp instances where CPDefinitionId = &#63; and displayDate &lt; &#63; and status = &#63; from the database.
@@ -2112,24 +1908,6 @@ public interface CPInstancePersistence
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param replacementCPInstanceUuid the replacement cp instance uuid
-	 * @param replacementCProductId the replacement c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	public CPInstance[] findByR_R_S_PrevAndNext(
-			long CPInstanceId, String replacementCPInstanceUuid,
-			long replacementCProductId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
-				orderByComparator)
-		throws NoSuchCPInstanceException;
 
 	/**
 	 * Removes all the cp instances where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63; from the database.
@@ -2327,4 +2105,4 @@ public interface CPInstancePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1442656807
+// LIFERAY-SERVICE-BUILDER-HASH:1237834317

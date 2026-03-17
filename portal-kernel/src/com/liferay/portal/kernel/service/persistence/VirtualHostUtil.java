@@ -243,24 +243,6 @@ public class VirtualHostUtil {
 	}
 
 	/**
-	 * Returns the virtual hosts before and after the current virtual host in the ordered set where companyId = &#63;.
-	 *
-	 * @param virtualHostId the primary key of the current virtual host
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next virtual host
-	 * @throws NoSuchVirtualHostException if a virtual host with the primary key could not be found
-	 */
-	public static VirtualHost[] findByCompanyId_PrevAndNext(
-			long virtualHostId, long companyId,
-			OrderByComparator<VirtualHost> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchVirtualHostException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			virtualHostId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the virtual hosts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -485,25 +467,6 @@ public class VirtualHostUtil {
 	}
 
 	/**
-	 * Returns the virtual hosts before and after the current virtual host in the ordered set where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * @param virtualHostId the primary key of the current virtual host
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next virtual host
-	 * @throws NoSuchVirtualHostException if a virtual host with the primary key could not be found
-	 */
-	public static VirtualHost[] findByC_L_PrevAndNext(
-			long virtualHostId, long companyId, long layoutSetId,
-			OrderByComparator<VirtualHost> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchVirtualHostException {
-
-		return getPersistence().findByC_L_PrevAndNext(
-			virtualHostId, companyId, layoutSetId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the virtual hosts where companyId = &#63; and layoutSetId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -669,25 +632,6 @@ public class VirtualHostUtil {
 
 		return getPersistence().fetchByNotL_H_Last(
 			layoutSetId, hostname, orderByComparator);
-	}
-
-	/**
-	 * Returns the virtual hosts before and after the current virtual host in the ordered set where layoutSetId &ne; &#63; and hostname = &#63;.
-	 *
-	 * @param virtualHostId the primary key of the current virtual host
-	 * @param layoutSetId the layout set ID
-	 * @param hostname the hostname
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next virtual host
-	 * @throws NoSuchVirtualHostException if a virtual host with the primary key could not be found
-	 */
-	public static VirtualHost[] findByNotL_H_PrevAndNext(
-			long virtualHostId, long layoutSetId, String hostname,
-			OrderByComparator<VirtualHost> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchVirtualHostException {
-
-		return getPersistence().findByNotL_H_PrevAndNext(
-			virtualHostId, layoutSetId, hostname, orderByComparator);
 	}
 
 	/**
@@ -964,4 +908,4 @@ public class VirtualHostUtil {
 	private static volatile VirtualHostPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1304743081
+// LIFERAY-SERVICE-BUILDER-HASH:-875066275

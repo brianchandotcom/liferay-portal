@@ -147,21 +147,6 @@ public interface CTAutoResolutionInfoPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ct auto resolution infos before and after the current ct auto resolution info in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctAutoResolutionInfoId the primary key of the current ct auto resolution info
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a ct auto resolution info with the primary key could not be found
-	 */
-	public CTAutoResolutionInfo[] findByCtCollectionId_PrevAndNext(
-			long ctAutoResolutionInfoId, long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTAutoResolutionInfo> orderByComparator)
-		throws NoSuchAutoResolutionInfoException;
-
-	/**
 	 * Removes all the ct auto resolution infos where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -308,24 +293,6 @@ public interface CTAutoResolutionInfoPersistence
 		long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<CTAutoResolutionInfo>
 			orderByComparator);
-
-	/**
-	 * Returns the ct auto resolution infos before and after the current ct auto resolution info in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctAutoResolutionInfoId the primary key of the current ct auto resolution info
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a ct auto resolution info with the primary key could not be found
-	 */
-	public CTAutoResolutionInfo[] findByC_MCNI_SMCPK_PrevAndNext(
-			long ctAutoResolutionInfoId, long ctCollectionId,
-			long modelClassNameId, long sourceModelClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTAutoResolutionInfo> orderByComparator)
-		throws NoSuchAutoResolutionInfoException;
 
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = any &#63;.
@@ -559,4 +526,4 @@ public interface CTAutoResolutionInfoPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1706895148
+// LIFERAY-SERVICE-BUILDER-HASH:634892390

@@ -252,25 +252,6 @@ public class KaleoProcessLinkUtil {
 	}
 
 	/**
-	 * Returns the kaleo process links before and after the current kaleo process link in the ordered set where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessLinkId the primary key of the current kaleo process link
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process link
-	 * @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
-	 */
-	public static KaleoProcessLink[] findByKaleoProcessId_PrevAndNext(
-			long kaleoProcessLinkId, long kaleoProcessId,
-			OrderByComparator<KaleoProcessLink> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.forms.exception.
-			NoSuchKaleoProcessLinkException {
-
-		return getPersistence().findByKaleoProcessId_PrevAndNext(
-			kaleoProcessLinkId, kaleoProcessId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo process links where kaleoProcessId = &#63; from the database.
 	 *
 	 * @param kaleoProcessId the kaleo process ID
@@ -528,4 +509,4 @@ public class KaleoProcessLinkUtil {
 	private static volatile KaleoProcessLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2103844387
+// LIFERAY-SERVICE-BUILDER-HASH:-832799163

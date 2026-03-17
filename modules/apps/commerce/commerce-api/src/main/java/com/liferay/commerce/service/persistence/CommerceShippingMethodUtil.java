@@ -249,24 +249,6 @@ public class CommerceShippingMethodUtil {
 	}
 
 	/**
-	 * Returns the commerce shipping methods before and after the current commerce shipping method in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the primary key of the current commerce shipping method
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping method
-	 * @throws NoSuchShippingMethodException if a commerce shipping method with the primary key could not be found
-	 */
-	public static CommerceShippingMethod[] findByGroupId_PrevAndNext(
-			long commerceShippingMethodId, long groupId,
-			OrderByComparator<CommerceShippingMethod> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchShippingMethodException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			commerceShippingMethodId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce shipping methods where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -429,25 +411,6 @@ public class CommerceShippingMethodUtil {
 
 		return getPersistence().fetchByG_A_Last(
 			groupId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce shipping methods before and after the current commerce shipping method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param commerceShippingMethodId the primary key of the current commerce shipping method
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping method
-	 * @throws NoSuchShippingMethodException if a commerce shipping method with the primary key could not be found
-	 */
-	public static CommerceShippingMethod[] findByG_A_PrevAndNext(
-			long commerceShippingMethodId, long groupId, boolean active,
-			OrderByComparator<CommerceShippingMethod> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchShippingMethodException {
-
-		return getPersistence().findByG_A_PrevAndNext(
-			commerceShippingMethodId, groupId, active, orderByComparator);
 	}
 
 	/**
@@ -709,4 +672,4 @@ public class CommerceShippingMethodUtil {
 	private static volatile CommerceShippingMethodPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1784125883
+// LIFERAY-SERVICE-BUILDER-HASH:-1131891883

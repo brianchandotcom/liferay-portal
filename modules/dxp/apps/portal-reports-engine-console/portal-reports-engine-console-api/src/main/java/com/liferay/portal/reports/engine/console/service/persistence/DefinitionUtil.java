@@ -238,25 +238,6 @@ public class DefinitionUtil {
 	}
 
 	/**
-	 * Returns the definitions before and after the current definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param definitionId the primary key of the current definition
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next definition
-	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
-	 */
-	public static Definition[] findByUuid_PrevAndNext(
-			long definitionId, String uuid,
-			OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			definitionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -487,26 +468,6 @@ public class DefinitionUtil {
 	}
 
 	/**
-	 * Returns the definitions before and after the current definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param definitionId the primary key of the current definition
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next definition
-	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
-	 */
-	public static Definition[] findByUuid_C_PrevAndNext(
-			long definitionId, String uuid, long companyId,
-			OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			definitionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -659,25 +620,6 @@ public class DefinitionUtil {
 	}
 
 	/**
-	 * Returns the definitions before and after the current definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param definitionId the primary key of the current definition
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next definition
-	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
-	 */
-	public static Definition[] findByGroupId_PrevAndNext(
-			long definitionId, long groupId,
-			OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			definitionId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the definitions that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -724,25 +666,6 @@ public class DefinitionUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the definitions before and after the current definition in the ordered set of definitions that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param definitionId the primary key of the current definition
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next definition
-	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
-	 */
-	public static Definition[] filterFindByGroupId_PrevAndNext(
-			long definitionId, long groupId,
-			OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			definitionId, groupId, orderByComparator);
 	}
 
 	/**
@@ -906,25 +829,6 @@ public class DefinitionUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the definitions before and after the current definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param definitionId the primary key of the current definition
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next definition
-	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
-	 */
-	public static Definition[] findByCompanyId_PrevAndNext(
-			long definitionId, long companyId,
-			OrderByComparator<Definition> orderByComparator)
-		throws com.liferay.portal.reports.engine.console.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			definitionId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1106,4 +1010,4 @@ public class DefinitionUtil {
 	private static volatile DefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:584175397
+// LIFERAY-SERVICE-BUILDER-HASH:647734508

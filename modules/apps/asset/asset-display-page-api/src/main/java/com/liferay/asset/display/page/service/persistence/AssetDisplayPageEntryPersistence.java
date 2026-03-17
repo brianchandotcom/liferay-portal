@@ -148,21 +148,6 @@ public interface AssetDisplayPageEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public AssetDisplayPageEntry[] findByUuid_PrevAndNext(
-			long assetDisplayPageEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException;
-
-	/**
 	 * Removes all the asset display page entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface AssetDisplayPageEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public AssetDisplayPageEntry[] findByUuid_C_PrevAndNext(
-			long assetDisplayPageEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException;
-
-	/**
 	 * Removes all the asset display page entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface AssetDisplayPageEntryPersistence
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public AssetDisplayPageEntry[] findByGroupId_PrevAndNext(
-			long assetDisplayPageEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException;
 
 	/**
 	 * Removes all the asset display page entries where groupId = &#63; from the database.
@@ -641,21 +595,6 @@ public interface AssetDisplayPageEntryPersistence
 		long layoutPageTemplateEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where layoutPageTemplateEntryId = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param layoutPageTemplateEntryId the layout page template entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public AssetDisplayPageEntry[] findByLayoutPageTemplateEntryId_PrevAndNext(
-			long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException;
 
 	/**
 	 * Removes all the asset display page entries where layoutPageTemplateEntryId = &#63; from the database.
@@ -794,22 +733,6 @@ public interface AssetDisplayPageEntryPersistence
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public AssetDisplayPageEntry[] findByG_CN_PrevAndNext(
-			long assetDisplayPageEntryId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException;
 
 	/**
 	 * Removes all the asset display page entries where groupId = &#63; and classNameId = &#63; from the database.
@@ -1010,4 +933,4 @@ public interface AssetDisplayPageEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1049415528
+// LIFERAY-SERVICE-BUILDER-HASH:-1701093784

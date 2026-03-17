@@ -117,8 +117,7 @@ function FirstSectionComponent({
 							};
 
 							if (event.target.checked) {
-								settings.storageDLFolderPath =
-									'/' + Liferay.Language.get('new');
+								settings.storageDLFolderPath = '/';
 								settings.storageDepotGroup =
 									config.spaceExternalReferenceCode;
 							}

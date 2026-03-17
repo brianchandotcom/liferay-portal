@@ -18,6 +18,11 @@ jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/confirmAndDeleteEntryAction'
 );
 
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/tab_content/DetailsTabContent',
+	() => jest.fn()
+);
+
 const mockLiferay = {
 	Language: {
 		get: jest.fn((key) => key),

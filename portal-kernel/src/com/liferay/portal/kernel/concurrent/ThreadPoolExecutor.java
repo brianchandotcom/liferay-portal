@@ -5,6 +5,9 @@
 
 package com.liferay.portal.kernel.concurrent;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

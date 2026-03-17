@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;

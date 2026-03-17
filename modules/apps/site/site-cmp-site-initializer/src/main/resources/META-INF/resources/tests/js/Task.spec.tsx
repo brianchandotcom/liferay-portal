@@ -83,7 +83,11 @@ afterEach(() => {
 describe('Kanban Task', () => {
 	const task = {
 		actions: {
+			assignToMe: true,
+			delete: true,
+			get: true,
 			subscribe: true,
+			update: true,
 		},
 		embedded: {
 			assignTo: {name: 'Alice', portrait: 'p.jpg'},
@@ -221,48 +225,12 @@ describe('Kanban Task', () => {
 		});
 	});
 
-	describe('watch-task', () => {
-		it('watches a task successfully', async () => {
-			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
-				error: null,
-			});
-
-			const {getByText} = renderTask();
-
-			fireEvent.click(getByText('watch-task'));
-
-			await waitFor(() => {
-				expect(
-					mockPostSubscribeTaskByExternalReferenceCode
-				).toHaveBeenCalledWith({
-					externalReferenceCode: 'erc-1',
-					scopeKey: 1,
-				});
-				expect(mockLoadData).toHaveBeenCalled();
-				expect(mockDisplayRequestSuccessToast).toHaveBeenCalled();
-			});
-		});
-
-		it('shows an error toast when watch task fails', async () => {
-			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
-				error: 'error',
-			});
-
-			const {getByText} = renderTask();
-
-			fireEvent.click(getByText('watch-task'));
-
-			await waitFor(() => {
-				expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');
-			});
-		});
-	});
-
 	describe('stop-watching-task', () => {
 		const taskWithSubscription = {
 			...task,
 			actions: {
 				subscribe: false,
+				unsubscribe: true,
 			},
 		};
 
@@ -319,6 +287,43 @@ describe('Kanban Task', () => {
 			);
 
 			fireEvent.click(getByText('stop-watching-task'));
+
+			await waitFor(() => {
+				expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');
+			});
+		});
+	});
+
+	describe('watch-task', () => {
+		it('watches a task successfully', async () => {
+			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
+				error: null,
+			});
+
+			const {getByText} = renderTask();
+
+			fireEvent.click(getByText('watch-task'));
+
+			await waitFor(() => {
+				expect(
+					mockPostSubscribeTaskByExternalReferenceCode
+				).toHaveBeenCalledWith({
+					externalReferenceCode: 'erc-1',
+					scopeKey: 1,
+				});
+				expect(mockLoadData).toHaveBeenCalled();
+				expect(mockDisplayRequestSuccessToast).toHaveBeenCalled();
+			});
+		});
+
+		it('shows an error toast when watch task fails', async () => {
+			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
+				error: 'error',
+			});
+
+			const {getByText} = renderTask();
+
+			fireEvent.click(getByText('watch-task'));
 
 			await waitFor(() => {
 				expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');

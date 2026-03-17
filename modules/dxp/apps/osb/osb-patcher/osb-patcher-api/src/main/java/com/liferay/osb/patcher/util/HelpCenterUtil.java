@@ -150,7 +150,8 @@ public class HelpCenterUtil {
 				patcherConfiguration.supportLiferayURL(),
 				StringPool.FORWARD_SLASH,
 				patcherConfiguration.supportLiferayAccountSearchAPIEndpoint(),
-				accountEntryCode));
+				StringPool.APOSTROPHE + accountEntryCode +
+					StringPool.APOSTROPHE));
 		options.setPost(false);
 
 		String responseString = _sendRequest(options);

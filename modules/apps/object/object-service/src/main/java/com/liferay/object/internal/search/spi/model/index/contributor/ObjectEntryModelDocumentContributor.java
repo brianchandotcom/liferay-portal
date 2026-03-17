@@ -399,6 +399,8 @@ public class ObjectEntryModelDocumentContributor
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectEntry.getCompanyId(), "LPD-17564")) {
 
+			document.addDate(Field.DISPLAY_DATE, objectEntry.getDisplayDate());
+
 			_contributeObjectEntryFolder(
 				document, objectEntry.getObjectEntryFolderId());
 

@@ -39,7 +39,7 @@ export default function confirmAndDeleteEntryAction({
 
 					executeAsyncItemAction({
 						method: deleteAction.method,
-						refreshData: (responseData) => {
+						refreshData: () => {
 							loadData();
 
 							Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {

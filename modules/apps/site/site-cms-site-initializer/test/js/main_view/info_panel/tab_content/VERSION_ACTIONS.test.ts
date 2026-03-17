@@ -5,22 +5,27 @@
 
 import {cleanup} from '@testing-library/react';
 
-import {FDS_EVENT_UPDATE_DISPLAY} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
-import {VERSION_ACTIONS} from '../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/tab_content/index';
-import {executeAsyncItemAction} from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/utils/executeAsyncItemAction';
-import confirmAndDeleteEntryAction from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/confirmAndDeleteEntryAction';
+import {FDS_EVENT_UPDATE_DISPLAY} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
+import {VERSION_ACTIONS} from '../../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/tab_content';
+import confirmAndDeleteEntryAction from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/confirmAndDeleteEntryAction';
+import {executeAsyncItemAction} from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/utils/executeAsyncItemAction';
 
-jest.mock('../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/utils/executeAsyncItemAction');
-jest.mock('../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/confirmAndDeleteEntryAction');
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/utils/executeAsyncItemAction'
+);
+
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/confirmAndDeleteEntryAction'
+);
 
 const mockLiferay = {
-	fire: jest.fn(),
 	Language: {
 		get: jest.fn((key) => key),
 	},
 	Util: {
 		escapeHTML: jest.fn((str) => str),
 	},
+	fire: jest.fn(),
 };
 
 (global as any).Liferay = mockLiferay;
@@ -47,10 +52,13 @@ describe('VERSION_ACTIONS', () => {
 	const event = {preventDefault: jest.fn()} as any;
 
 	it('EXPIRE action fires FDS_EVENT_UPDATE_DISPLAY with dataSetId', async () => {
-		(executeAsyncItemAction as jest.Mock).mockImplementation(({refreshData}) => {
-			refreshData({title: 'Test Asset'});
-			return Promise.resolve();
-		});
+		(executeAsyncItemAction as jest.Mock).mockImplementation(
+			({refreshData}) => {
+				refreshData({title: 'Test Asset'});
+
+				return Promise.resolve();
+			}
+		);
 
 		await VERSION_ACTIONS.expire.action(
 			event,
@@ -60,17 +68,24 @@ describe('VERSION_ACTIONS', () => {
 			dataSetId
 		);
 
-		expect(mockLiferay.fire).toHaveBeenCalledWith(FDS_EVENT_UPDATE_DISPLAY, {
-			id: dataSetId,
-		});
+		expect(mockLiferay.fire).toHaveBeenCalledWith(
+			FDS_EVENT_UPDATE_DISPLAY,
+			{
+				id: dataSetId,
+			}
+		);
+
 		expect(refreshData).toHaveBeenCalled();
 	});
 
 	it('RESTORE action fires FDS_EVENT_UPDATE_DISPLAY with dataSetId', async () => {
-		(executeAsyncItemAction as jest.Mock).mockImplementation(({refreshData}) => {
-			refreshData({title: 'Test Asset'});
-			return Promise.resolve();
-		});
+		(executeAsyncItemAction as jest.Mock).mockImplementation(
+			({refreshData}) => {
+				refreshData({title: 'Test Asset'});
+
+				return Promise.resolve();
+			}
+		);
 
 		await VERSION_ACTIONS.restore.action(
 			event,
@@ -80,9 +95,13 @@ describe('VERSION_ACTIONS', () => {
 			dataSetId
 		);
 
-		expect(mockLiferay.fire).toHaveBeenCalledWith(FDS_EVENT_UPDATE_DISPLAY, {
-			id: dataSetId,
-		});
+		expect(mockLiferay.fire).toHaveBeenCalledWith(
+			FDS_EVENT_UPDATE_DISPLAY,
+			{
+				id: dataSetId,
+			}
+		);
+
 		expect(refreshData).toHaveBeenCalled();
 	});
 

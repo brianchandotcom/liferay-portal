@@ -7,8 +7,8 @@ package com.liferay.asset.publisher.test.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -29,24 +29,9 @@ public class AssetPublisherTestUtil {
 			actualAssetEntries.toString(), expectedAssetEntries.size(),
 			actualAssetEntries.size());
 
-		Iterator<AssetEntry> expectedAssetEntriesIterator =
-			expectedAssetEntries.iterator();
-		Iterator<AssetEntry> actualAssetEntriesIterator =
-			actualAssetEntries.iterator();
-
-		while (expectedAssetEntriesIterator.hasNext() &&
-			   actualAssetEntriesIterator.hasNext()) {
-
-			AssetEntry expectedAssetEntry = expectedAssetEntriesIterator.next();
-			AssetEntry actualAssetEntry = actualAssetEntriesIterator.next();
-
-			Assert.assertEquals(
-				expectedAssetEntry.getClassName(),
-				actualAssetEntry.getClassName());
-			Assert.assertEquals(
-				expectedAssetEntry.getClassUuid(),
-				actualAssetEntry.getClassUuid());
-		}
+		Assert.assertEquals(
+			SetUtil.fromList(expectedAssetEntries),
+			SetUtil.fromList(actualAssetEntries));
 	}
 
 	public static String getAssetEntryXml(AssetEntry assetEntry) {

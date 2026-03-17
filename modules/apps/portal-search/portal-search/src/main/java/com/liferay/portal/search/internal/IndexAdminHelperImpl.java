@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.IndexAdminHelper;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
@@ -33,8 +34,9 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 	public synchronized void backup(String backupName) throws SearchException {
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> searchEngine.backup(companyId, backupName));
+		for (Company company : _companyLocalService.getCompanies()) {
+			searchEngine.backup(company.getCompanyId(), backupName);
+		}
 	}
 
 	@Override
@@ -52,8 +54,9 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> searchEngine.removeBackup(companyId, backupName));
+		for (Company company : _companyLocalService.getCompanies()) {
+			searchEngine.removeBackup(company.getCompanyId(), backupName);
+		}
 	}
 
 	@Override
@@ -69,8 +72,9 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 	public synchronized void restore(String backupName) throws SearchException {
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> searchEngine.restore(companyId, backupName));
+		for (Company company : _companyLocalService.getCompanies()) {
+			searchEngine.restore(company.getCompanyId(), backupName);
+		}
 	}
 
 	@Reference

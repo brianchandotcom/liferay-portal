@@ -107,7 +107,8 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 		throws Exception {
 
 		Mockito.when(
-			_fragmentCollection.hasExportableItems()
+			_fragmentCollection.
+				hasExportableFragmentCompositionsAndFragmentEntries()
 		).thenReturn(
 			true
 		);
@@ -129,7 +130,8 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 		throws Exception {
 
 		Mockito.when(
-			_fragmentCollection.hasExportableItems()
+			_fragmentCollection.
+				hasExportableFragmentCompositionsAndFragmentEntries()
 		).thenReturn(
 			false
 		);

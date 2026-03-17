@@ -107,8 +107,10 @@ public class FragmentCollectionImplTest {
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testHasExportableItems() throws Exception {
-		Assert.assertFalse(_fragmentCollection.hasExportableItems());
+	public void testHasExportableFragments() throws Exception {
+		Assert.assertFalse(
+			_fragmentCollection.
+				hasExportableFragmentCompositionsAndFragmentEntries());
 
 		FragmentComposition marketplaceFragmentComposition =
 			FragmentCompositionTestUtil.addFragmentComposition(
@@ -120,7 +122,9 @@ public class FragmentCollectionImplTest {
 		_fragmentCompositionLocalService.updateFragmentComposition(
 			marketplaceFragmentComposition);
 
-		Assert.assertFalse(_fragmentCollection.hasExportableItems());
+		Assert.assertFalse(
+			_fragmentCollection.
+				hasExportableFragmentCompositionsAndFragmentEntries());
 
 		FragmentEntry reactFragmentEntry =
 			FragmentEntryTestUtil.addFragmentEntryByType(
@@ -129,7 +133,9 @@ public class FragmentCollectionImplTest {
 
 		Assert.assertTrue(reactFragmentEntry.isTypeReact());
 
-		Assert.assertFalse(_fragmentCollection.hasExportableItems());
+		Assert.assertFalse(
+			_fragmentCollection.
+				hasExportableFragmentCompositionsAndFragmentEntries());
 
 		FragmentEntry marketplaceFragmentEntry =
 			FragmentEntryTestUtil.addFragmentEntry(
@@ -140,7 +146,9 @@ public class FragmentCollectionImplTest {
 		_fragmentEntryLocalService.updateFragmentEntry(
 			marketplaceFragmentEntry);
 
-		Assert.assertFalse(_fragmentCollection.hasExportableItems());
+		Assert.assertFalse(
+			_fragmentCollection.
+				hasExportableFragmentCompositionsAndFragmentEntries());
 
 		FragmentComposition exportableFragmentComposition =
 			FragmentCompositionTestUtil.addFragmentComposition(
@@ -149,7 +157,9 @@ public class FragmentCollectionImplTest {
 
 		Assert.assertFalse(exportableFragmentComposition.isMarketplace());
 
-		Assert.assertTrue(_fragmentCollection.hasExportableItems());
+		Assert.assertTrue(
+			_fragmentCollection.
+				hasExportableFragmentCompositionsAndFragmentEntries());
 	}
 
 	@Test

@@ -5,8 +5,8 @@
 
 package com.liferay.taglib.servlet;
 
+import com.liferay.petra.io.WriterOutputStream;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.io.WriterOutputStream;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
 import com.liferay.portal.kernel.util.ServerDetector;

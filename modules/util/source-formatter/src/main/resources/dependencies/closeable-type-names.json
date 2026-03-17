@@ -67,6 +67,9 @@
 			"name": "com.liferay.petra.io.AnnotatedObjectOutputStream"
 		},
 		{
+			"name": "com.liferay.petra.io.WriterOutputStream"
+		},
+		{
 			"name": "com.liferay.petra.io.unsync.UnsyncBufferedReader"
 		},
 		{
@@ -92,9 +95,6 @@
 		},
 		{
 			"name": "com.liferay.portal.kernel.deploy.auto.AutoDeployer"
-		},
-		{
-			"name": "com.liferay.portal.kernel.io.WriterOutputStream"
 		},
 		{
 			"name": "com.liferay.portal.kernel.test.CaptureHandler"

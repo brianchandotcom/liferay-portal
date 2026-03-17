@@ -214,14 +214,14 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	@Test
-	public void testValidateDocumentOnSeparateNodes() throws Exception {
+	public void testValidateFileEntryOnSeparateNodes() throws Exception {
 		long groupId = TestPropsValues.getGroupId();
 		long userId = TestPropsValues.getUserId();
 
-		_testValidateDocumentOnSeparateNodes(
+		_testValidateFileEntryOnSeparateNodes(
 			_tomcatNode1, _tomcatNode2, userId, groupId,
 			RandomTestUtil.randomString());
-		_testValidateDocumentOnSeparateNodes(
+		_testValidateFileEntryOnSeparateNodes(
 			_tomcatNode2, _tomcatNode1, userId, groupId,
 			RandomTestUtil.randomString());
 	}
@@ -664,7 +664,7 @@ public class ClusterGeneralTest implements Serializable {
 				}));
 	}
 
-	private void _testValidateDocumentOnSeparateNodes(
+	private void _testValidateFileEntryOnSeparateNodes(
 			TomcatNode tomcatNode1, TomcatNode tomcatNode2, long userId,
 			long groupId, String fileName)
 		throws Exception {

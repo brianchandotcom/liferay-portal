@@ -8152,8 +8152,10 @@ public class ServiceBuilder {
 
 		String year = simpleDateFormat.format(new Date());
 
+		String oldContent = null;
+
 		if (file.exists()) {
-			String oldContent = _read(file);
+			oldContent = _read(file);
 
 			int x = oldContent.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
 
@@ -8167,6 +8169,21 @@ public class ServiceBuilder {
 		header = header.replaceFirst(Pattern.quote("{$year}"), year);
 
 		content = header + "\n\n" + content;
+
+		if (oldContent != null) {
+			int index = oldContent.lastIndexOf(_SB_HASH_PREFIX);
+
+			if (index != -1) {
+				int contentHash = content.hashCode();
+
+				String hashLine = oldContent.substring(
+					index + _SB_HASH_PREFIX.length());
+
+				if (GetterUtil.getInteger(hashLine) == contentHash) {
+					return;
+				}
+			}
+		}
 
 		String fileName = _normalize(file.toString());
 
@@ -8199,16 +8216,17 @@ public class ServiceBuilder {
 			}
 		}
 
-		ToolsUtil.writeFileRaw(
+		String parsedContent = JavaParser.parse(
 			file,
-			JavaParser.parse(
-				file,
-				StringUtil.replace(
-					fileName.substring(
-						startIndex, fileName.lastIndexOf(StringPool.SLASH)),
-					CharPool.SLASH, CharPool.PERIOD),
-				content, _MAX_LINE_LENGTH, false),
-			modifiedFileNames);
+			StringUtil.replace(
+				fileName.substring(
+					startIndex, fileName.lastIndexOf(StringPool.SLASH)),
+				CharPool.SLASH, CharPool.PERIOD),
+			content, _MAX_LINE_LENGTH, false);
+
+		parsedContent = parsedContent + _SB_HASH_PREFIX + content.hashCode();
+
+		ToolsUtil.writeFileRaw(file, parsedContent, modifiedFileNames);
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
@@ -8224,6 +8242,8 @@ public class ServiceBuilder {
 		"\"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd\"";
 
 	private static final int _MAX_LINE_LENGTH = 80;
+
+	private static final String _SB_HASH_PREFIX = "\n// SB-Hash:";
 
 	private static final int _SESSION_TYPE_LOCAL = 1;
 

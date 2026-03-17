@@ -5,9 +5,9 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.io.unsync.UnsyncFilterInputStream;
+import com.liferay.petra.io.unsync.UnsyncFilterOutputStream;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.io.unsync.UnsyncFilterInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncFilterOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

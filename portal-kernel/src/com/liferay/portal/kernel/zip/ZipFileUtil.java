@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.zip;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncFilterInputStream;
+import com.liferay.petra.io.unsync.UnsyncFilterInputStream;
 
 import java.io.File;
 import java.io.IOException;

@@ -787,6 +787,7 @@ public class UpgradeReport {
 					try (PreparedStatement preparedStatement =
 							connection.prepareStatement(
 								"select count(*) from " + tableName);
+
 						ResultSet resultSet2 =
 							preparedStatement.executeQuery()) {
 

@@ -481,6 +481,7 @@ public class DB2DB extends BaseDB {
 					"sysproc.admin_get_tab_info(current_schema, '",
 					StringUtil.toUpperCase(tableName),
 					"')) where reorg_pending = 'Y'"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

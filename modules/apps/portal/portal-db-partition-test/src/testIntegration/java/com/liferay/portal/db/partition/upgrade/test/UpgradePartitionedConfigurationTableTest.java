@@ -226,6 +226,7 @@ public class UpgradePartitionedConfigurationTableTest
 					currentCompanyId -> {
 						try (Connection connection =
 								_dataSource.getConnection();
+
 							PreparedStatement preparedStatement =
 								connection.prepareStatement(
 									"select dictionary from Configuration_ " +
@@ -258,6 +259,7 @@ public class UpgradePartitionedConfigurationTableTest
 			DBPartitionUtil.forEachCompanyId(
 				currentCompanyId -> {
 					try (Connection connection = DataAccess.getConnection();
+
 						PreparedStatement preparedStatement =
 							connection.prepareStatement(
 								StringBundler.concat(

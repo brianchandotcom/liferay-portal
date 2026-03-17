@@ -36,6 +36,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 		List<String[]> portletIds = new ArrayList<>();
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select clientExtensionEntryId from ClientExtensionEntry")) {
 

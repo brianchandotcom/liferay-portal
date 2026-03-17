@@ -63,6 +63,7 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select fullImageId, thumbnailId from SCProductScreenshot");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -87,6 +88,7 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId, productEntryId from SCProductEntry");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

@@ -46,6 +46,7 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 				"clientExtensionEntryId = ?";
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(selectSQL);
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(

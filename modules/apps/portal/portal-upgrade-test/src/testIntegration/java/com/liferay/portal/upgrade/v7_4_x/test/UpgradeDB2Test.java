@@ -64,6 +64,7 @@ public class UpgradeDB2Test {
 		upgradeProcess.upgrade();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select length from syscat.columns where tabname = " +
 					"'TESTTABLE' and colname = 'COLUMN1'")) {

@@ -142,6 +142,7 @@ public abstract class BaseLastPublishDateUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select groupId from Group_ where typeSettings like " +
 					"'%staged=true%'");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			List<Long> stagedGroupIds = new ArrayList<>();

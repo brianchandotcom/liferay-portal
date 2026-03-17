@@ -621,6 +621,7 @@ public class ContentTargetingUpgradeProcessTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into CT_RuleInstance(ruleInstanceId, groupId, ",
@@ -655,6 +656,7 @@ public class ContentTargetingUpgradeProcessTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into CT_UserSegment(userSegmentId, groupId, ",

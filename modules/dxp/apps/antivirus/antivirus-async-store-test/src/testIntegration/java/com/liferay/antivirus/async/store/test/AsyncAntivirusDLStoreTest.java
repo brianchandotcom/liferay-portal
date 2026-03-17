@@ -672,34 +672,34 @@ public class AsyncAntivirusDLStoreTest {
 		AtomicInteger scanCount = new AtomicInteger(0);
 
 		try (SafeCloseable closeable1 = _registerService(
-			AntivirusAsyncEventListener.class,
-			_create(
-				HashMapBuilder.<AntivirusAsyncEvent, Runnable>put(
-					AntivirusAsyncEvent.MISSING,
-					() -> firedEventSuccess.set(true)
-				).put(
-					AntivirusAsyncEvent.PREPARE,
-					() -> firedEventPrepare.set(true)
-				).put(
-					AntivirusAsyncEvent.PROCESSING_ERROR,
-					() -> firedEventSuccess.set(true)
-				).put(
-					AntivirusAsyncEvent.SUCCESS,
-					() -> firedEventSuccess.set(true)
-				).put(
-					AntivirusAsyncEvent.VIRUS_FOUND,
-					() -> firedEventVirusFound.set(true)
-				).build()),
-			MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
-
-		SafeCloseable closeable2 = _registerService(
-			AntivirusAsyncRetryScheduler.class,
-			ProxyFactory.newDummyInstance(AntivirusAsyncRetryScheduler.class),
-			MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
-		SafeCloseable closeable3 = _registerService(
-			AntivirusScanner.class,
-			new MockAntivirusScanner(
-				() -> {
+				AntivirusAsyncEventListener.class,
+				_create(
+					HashMapBuilder.<AntivirusAsyncEvent, Runnable>put(
+						AntivirusAsyncEvent.MISSING,
+						() -> firedEventSuccess.set(true)
+					).put(
+						AntivirusAsyncEvent.PREPARE,
+						() -> firedEventPrepare.set(true)
+					).put(
+						AntivirusAsyncEvent.PROCESSING_ERROR,
+						() -> firedEventSuccess.set(true)
+					).put(
+						AntivirusAsyncEvent.SUCCESS,
+						() -> firedEventSuccess.set(true)
+					).put(
+						AntivirusAsyncEvent.VIRUS_FOUND,
+						() -> firedEventVirusFound.set(true)
+					).build()),
+				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
+			SafeCloseable closeable2 = _registerService(
+				AntivirusAsyncRetryScheduler.class,
+				ProxyFactory.newDummyInstance(
+					AntivirusAsyncRetryScheduler.class),
+				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
+			SafeCloseable closeable3 = _registerService(
+				AntivirusScanner.class,
+				new MockAntivirusScanner(
+					() -> {
 						int currentScan = scanCount.getAndIncrement();
 
 						if (currentScan > 0) {

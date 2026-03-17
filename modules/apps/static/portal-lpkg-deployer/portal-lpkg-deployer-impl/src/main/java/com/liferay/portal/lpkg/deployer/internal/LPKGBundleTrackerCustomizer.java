@@ -545,6 +545,7 @@ public class LPKGBundleTrackerCustomizer
 		throws IOException {
 
 		try (InputStream inputStream = url.openStream();
+
 			JarInputStream jarInputStream = new JarInputStream(inputStream)) {
 
 			Manifest manifest = jarInputStream.getManifest();
@@ -649,6 +650,7 @@ public class LPKGBundleTrackerCustomizer
 				StandardCopyOption.REPLACE_EXISTING);
 
 			try (ZipFile zipFile = new ZipFile(tempFilePath.toFile());
+
 				InputStream inputStream2 = zipFile.getInputStream(
 					new ZipEntry(
 						"WEB-INF/liferay-plugin-package.properties"))) {

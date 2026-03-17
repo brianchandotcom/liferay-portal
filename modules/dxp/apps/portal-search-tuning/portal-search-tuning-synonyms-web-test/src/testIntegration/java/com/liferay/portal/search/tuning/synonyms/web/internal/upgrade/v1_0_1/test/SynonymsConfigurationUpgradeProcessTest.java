@@ -76,6 +76,7 @@ public class SynonymsConfigurationUpgradeProcessTest {
 			).build());
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"insert into Configuration_ (configurationId, dictionary) " +
 					"values(?, ?)")) {
@@ -90,6 +91,7 @@ public class SynonymsConfigurationUpgradeProcessTest {
 
 	private void _assertConfiguration() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select dictionary from Configuration_ where configurationId " +
 					"= ?")) {

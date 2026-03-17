@@ -163,6 +163,7 @@ public class PortalInstancePool {
 
 	private static long _getCompanyIdBySQL(String webId) throws SQLException {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company where webId = ?")) {
 
@@ -197,6 +198,7 @@ public class PortalInstancePool {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -238,6 +240,7 @@ public class PortalInstancePool {
 
 	private static String _getWebIdBySQL(long companyId) throws SQLException {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select webId from Company where companyId = ?")) {
 
@@ -257,8 +260,10 @@ public class PortalInstancePool {
 		List<String> webIds = new ArrayList<>();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select webId from Company");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

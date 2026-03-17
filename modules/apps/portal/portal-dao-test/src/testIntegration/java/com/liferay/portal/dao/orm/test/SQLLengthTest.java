@@ -55,9 +55,11 @@ public class SQLLengthTest {
 	@Test
 	public void testLength() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					"select LENGTH(data) from SQLLengthTest"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());

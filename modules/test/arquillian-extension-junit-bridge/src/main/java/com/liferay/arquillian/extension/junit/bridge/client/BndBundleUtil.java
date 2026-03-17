@@ -56,9 +56,12 @@ public class BndBundleUtil {
 		File buildDir = new File(System.getProperty("user.dir"));
 
 		try (Workspace workspace = Workspace.createDefaultWorkspace();
+
 			Project project = new Project(workspace, buildDir);
+
 			ProjectBuilder projectBuilder = _createProjectBuilder(
 				project, filteredMethodNamesMap, hostAddress, port, passCode);
+
 			Jar jar = projectBuilder.build()) {
 
 			Manifest manifest = jar.getManifest();

@@ -61,6 +61,7 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 
 	private long _getCProductId(long cpDefinitionId) throws Exception {
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select CProductId from CPDefinition where CPDefinitionId = " +
 					cpDefinitionId)) {

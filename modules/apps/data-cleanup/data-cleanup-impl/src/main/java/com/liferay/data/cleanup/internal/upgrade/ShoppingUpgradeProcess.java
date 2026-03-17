@@ -72,6 +72,7 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 					StringBundler.concat(
 						"select ", type, "Id from ShoppingItem where ", type,
 						" = [$TRUE$]")));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

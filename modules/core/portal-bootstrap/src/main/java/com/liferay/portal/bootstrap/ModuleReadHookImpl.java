@@ -73,6 +73,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 				if (matcher.find()) {
 					try (ZipFile zipFile = new ZipFile(
 							_normalizePath(matcher.group(2)));
+
 						InputStream inputStream = zipFile.getInputStream(
 							zipFile.getEntry(matcher.group(1)))) {
 

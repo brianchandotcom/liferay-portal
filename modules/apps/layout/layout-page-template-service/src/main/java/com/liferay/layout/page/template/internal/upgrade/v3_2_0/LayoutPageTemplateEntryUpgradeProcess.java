@@ -40,6 +40,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeLayoutPageTemplateEntryKey() throws Exception {
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select layoutPageTemplateEntryId, name from " +
 					"LayoutPageTemplateEntry");

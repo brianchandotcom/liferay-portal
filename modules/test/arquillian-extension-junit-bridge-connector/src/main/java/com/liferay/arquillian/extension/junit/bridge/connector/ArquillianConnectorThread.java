@@ -48,6 +48,7 @@ public class ArquillianConnectorThread extends Thread {
 	public void run() {
 		while (true) {
 			try (Socket socket = _serverSocket.accept();
+
 				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 					socket.getOutputStream());
 				ObjectInputStream objectInputStream = new ObjectInputStream(

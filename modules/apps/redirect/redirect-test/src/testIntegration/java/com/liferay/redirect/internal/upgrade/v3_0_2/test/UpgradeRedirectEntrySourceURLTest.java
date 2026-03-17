@@ -199,6 +199,7 @@ public class UpgradeRedirectEntrySourceURLTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into RedirectEntry (uuid_, redirectEntryId,",

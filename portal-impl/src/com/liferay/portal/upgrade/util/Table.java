@@ -388,6 +388,7 @@ public class Table {
 				}
 				else {
 					try (Reader reader = clob.getCharacterStream();
+
 						UnsyncBufferedReader unsyncBufferedReader =
 							new UnsyncBufferedReader(reader)) {
 
@@ -668,6 +669,7 @@ public class Table {
 			columnName, " = ?");
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 

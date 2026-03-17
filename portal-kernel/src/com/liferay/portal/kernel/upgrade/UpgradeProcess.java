@@ -215,6 +215,7 @@ public abstract class UpgradeProcess
 					new ArrayList<>();
 
 				try (Reader reader = new InputStreamReader(inputStream);
+
 					UnsyncBufferedReader unsyncBufferedReader =
 						new UnsyncBufferedReader(reader)) {
 
@@ -247,7 +248,9 @@ public abstract class UpgradeProcess
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
 				"com/liferay/portal/tools/sql/dependencies/indexes.sql");
+
 			Reader reader = new InputStreamReader(inputStream);
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader)) {
 

@@ -107,6 +107,7 @@ public class ProjectDataUtil {
 
 	private static ProjectData _readProjectData(File dataFile) {
 		try (FileInputStream fileInputStream = new FileInputStream(dataFile);
+
 			ObjectInputStream objectInputStream = new ObjectInputStream(
 				fileInputStream)) {
 
@@ -121,6 +122,7 @@ public class ProjectDataUtil {
 		ProjectData projectData, File dataFile) {
 
 		try (FileOutputStream fileOutputStream = new FileOutputStream(dataFile);
+
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				fileOutputStream)) {
 

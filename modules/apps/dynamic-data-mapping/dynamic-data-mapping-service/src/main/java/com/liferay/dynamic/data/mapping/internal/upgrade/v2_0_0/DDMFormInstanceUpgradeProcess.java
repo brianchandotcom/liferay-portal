@@ -77,6 +77,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 					"DDMStructureVersion.structureId) TEMP_TABLE on ",
 					"DDLRecordSet.DDMStructureId = TEMP_TABLE.structureId ",
 					"where scope = 2"));
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

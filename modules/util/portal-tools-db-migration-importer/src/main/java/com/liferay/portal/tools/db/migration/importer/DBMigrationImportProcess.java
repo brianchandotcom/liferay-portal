@@ -87,7 +87,9 @@ public class DBMigrationImportProcess {
 		StringBundler sb = new StringBundler(6);
 
 		try (Connection connection = _sourceDataSource.getConnection();
+
 			Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select buildDate, buildNumber, schemaVersion from Release_ " +
 					"where servletContextName = 'portal'")) {
@@ -382,6 +384,7 @@ public class DBMigrationImportProcess {
 
 		for (String sql : _syncInitialSQLs) {
 			try (Connection connection = dataSource.getConnection();
+
 				Statement statement = connection.createStatement()) {
 
 				statement.executeUpdate(sql);
@@ -398,6 +401,7 @@ public class DBMigrationImportProcess {
 				_executorService.submit(
 					() -> {
 						try (Connection connection = dataSource.getConnection();
+
 							Statement statement =
 								connection.createStatement()) {
 
@@ -423,6 +427,7 @@ public class DBMigrationImportProcess {
 
 		for (String sql : _syncFinalSQLs) {
 			try (Connection connection = dataSource.getConnection();
+
 				Statement statement = connection.createStatement()) {
 
 				statement.executeUpdate(sql);

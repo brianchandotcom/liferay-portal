@@ -86,6 +86,7 @@ public class UpgradeViewCountTest {
 		}
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from ViewCountEntry where companyId = 2 AND " +
 					"classNameId = ? AND classPK = 1")) {

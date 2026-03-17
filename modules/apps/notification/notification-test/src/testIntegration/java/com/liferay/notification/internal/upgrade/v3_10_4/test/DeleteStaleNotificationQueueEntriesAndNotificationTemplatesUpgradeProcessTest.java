@@ -124,6 +124,7 @@ public class
 
 	private void _insertNotificationQueueEntry() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into NotificationQueueEntry (mvccVersion, ",
@@ -156,6 +157,7 @@ public class
 
 	private void _insertNotificationQueueEntryAttachment() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into NQueueEntryAttachment (mvccVersion, ",
@@ -179,6 +181,7 @@ public class
 		_notificationRecipientId = RandomTestUtil.nextLong();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into NotificationRecipient (mvccVersion, uuid_, ",
@@ -206,6 +209,7 @@ public class
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into NotificationRecipientSetting (mvccVersion, ",
@@ -232,6 +236,7 @@ public class
 
 	private void _insertNotificationTemplate() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into NotificationTemplate (mvccVersion, uuid_, ",
@@ -266,6 +271,7 @@ public class
 
 	private void _insertNotificationTemplateAttachment() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into NTemplateAttachment (mvccVersion, ",

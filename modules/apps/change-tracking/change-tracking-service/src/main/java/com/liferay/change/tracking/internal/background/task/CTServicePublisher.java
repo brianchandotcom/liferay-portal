@@ -376,6 +376,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 							ctCollectionId,
 							ListUtil.subList(primaryKeys, batchCount, count),
 							primaryKeyName, tableName));
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

@@ -48,6 +48,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 		}
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
 					"select * from Configuration_ where configurationId LIKE ",

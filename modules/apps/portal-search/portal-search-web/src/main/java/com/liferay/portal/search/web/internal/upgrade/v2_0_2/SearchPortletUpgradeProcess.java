@@ -40,6 +40,7 @@ public class SearchPortletUpgradeProcess extends BasePortletIdUpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select plid, typeSettings from Layout where " +
 					getTypeSettingsCriteria(_PORTLET_ID));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

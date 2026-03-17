@@ -105,9 +105,11 @@ public class DBInitUtil {
 
 	private static void _checkSQLServer(DataSource dataSource) {
 		try (Connection connection = dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select name, is_read_committed_snapshot_on from " +
 					"sys.databases where name = db_name()");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (!resultSet.next() ||

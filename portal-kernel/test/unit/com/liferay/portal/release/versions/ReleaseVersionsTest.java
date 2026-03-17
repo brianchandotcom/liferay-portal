@@ -199,6 +199,7 @@ public class ReleaseVersionsTest {
 
 	private boolean _contains(Path path, String... strings) throws IOException {
 		try (FileReader fileReader = new FileReader(path.toFile());
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(fileReader)) {
 

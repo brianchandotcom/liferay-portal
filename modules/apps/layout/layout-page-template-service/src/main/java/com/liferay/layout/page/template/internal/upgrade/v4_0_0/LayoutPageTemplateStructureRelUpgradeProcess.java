@@ -121,6 +121,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 	private void _upgradeLayoutPageTemplateStructureRel() throws Exception {
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select ctCollectionId, lPageTemplateStructureRelId, data_ " +
 					"from LayoutPageTemplateStructureRel");

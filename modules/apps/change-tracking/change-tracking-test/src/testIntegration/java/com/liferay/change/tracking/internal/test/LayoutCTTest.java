@@ -176,6 +176,7 @@ public class LayoutCTTest {
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from Layout where ctCollectionId = ?")) {
 
@@ -206,6 +207,7 @@ public class LayoutCTTest {
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from Layout where ctCollectionId = ?")) {
 
@@ -237,6 +239,7 @@ public class LayoutCTTest {
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from Layout where ctCollectionId = ?")) {
 
@@ -270,6 +273,7 @@ public class LayoutCTTest {
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from Layout where ctCollectionId = ?")) {
 
@@ -602,6 +606,7 @@ public class LayoutCTTest {
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select changeType from CTEntry inner join Layout on ",
@@ -627,6 +632,7 @@ public class LayoutCTTest {
 		}
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select changeType from CTEntry inner join Layout on ",
@@ -1167,6 +1173,7 @@ public class LayoutCTTest {
 			Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select ctCollectionId from Layout where plid = ?")) {
@@ -1194,6 +1201,7 @@ public class LayoutCTTest {
 			Assert.assertNull(ctEntry);
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select * from Layout where plid = ?")) {
@@ -1220,6 +1228,7 @@ public class LayoutCTTest {
 			layout = _layoutLocalService.updateLayout(layout);
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select count(*) as count from Layout where plid = " +
@@ -1249,6 +1258,7 @@ public class LayoutCTTest {
 				CTConstants.CT_CHANGE_TYPE_DELETION, ctEntry.getChangeType());
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select ctCollectionId from Layout where plid = ?")) {

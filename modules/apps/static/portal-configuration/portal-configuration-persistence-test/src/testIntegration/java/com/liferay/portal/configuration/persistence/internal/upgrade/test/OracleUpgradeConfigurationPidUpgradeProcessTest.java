@@ -132,6 +132,7 @@ public class OracleUpgradeConfigurationPidUpgradeProcessTest {
 			).build());
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

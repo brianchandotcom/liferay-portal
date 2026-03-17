@@ -57,6 +57,7 @@ public class CalendarUpgradeProcess extends UpgradeProcess {
 							"calendarResourceId = CalendarResource.",
 							"calendarResourceId inner join User_ on ",
 							"CalendarResource.userId = User_.userId"));
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				long userClassNameId = PortalUtil.getClassNameId(User.class);

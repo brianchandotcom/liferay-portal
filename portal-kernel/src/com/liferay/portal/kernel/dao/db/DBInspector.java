@@ -212,6 +212,7 @@ public class DBInspector {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select count(*) from " + tableName);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

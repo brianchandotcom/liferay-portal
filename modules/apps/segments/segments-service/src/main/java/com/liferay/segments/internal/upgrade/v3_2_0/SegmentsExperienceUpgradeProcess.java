@@ -54,26 +54,24 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 						"active_, typeSettings, lastPublishDate) values (?, ",
 						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
 						"?)"));
-			 PreparedStatement preparedStatement3 =
-				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					 connection,
-					 StringBundler.concat(
-						 "update FragmentEntryLink set segmentsExperienceId = ",
-						 "? where ctCollectionId = ? and segmentsExperienceId ",
-						 "= ? and ",
-						 fragmentEntryLinkColumnName, " = ?"));
-			 PreparedStatement preparedStatement4 =
-				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					 connection,
-					 StringBundler.concat(
-						 "update LayoutPageTemplateStructureRel set ",
-						 "segmentsExperienceId = ? where ctCollectionId = ? ",
-						 "and segmentsExperienceId = ? and ",
-						 "LayoutPageTemplateStructureId in (select ",
-						 "LayoutPageTemplateStructureId from ",
-						 "LayoutPageTemplateStructure where ",
-						 layoutPageTemplateStructureColumnName, " = ?)"));
-
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"update FragmentEntryLink set segmentsExperienceId = ",
+						"? where ctCollectionId = ? and segmentsExperienceId ",
+						"= ? and ", fragmentEntryLinkColumnName, " = ?"));
+			PreparedStatement preparedStatement4 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"update LayoutPageTemplateStructureRel set ",
+						"segmentsExperienceId = ? where ctCollectionId = ? ",
+						"and segmentsExperienceId = ? and ",
+						"LayoutPageTemplateStructureId in (select ",
+						"LayoutPageTemplateStructureId from ",
+						"LayoutPageTemplateStructure where ",
+						layoutPageTemplateStructureColumnName, " = ?)"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

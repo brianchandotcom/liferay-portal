@@ -231,6 +231,7 @@ public class DBResourceUtil {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				_SQL_SERVICE_COMPONENT + sqlCondition);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -250,6 +251,7 @@ public class DBResourceUtil {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				_SQL_SERVICE_COMPONENT + sqlCondition);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

@@ -110,6 +110,7 @@ public class ExamResultsRestController extends BaseRestController {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(
 					multipartFile.getInputStream(), StandardCharsets.UTF_8));
+
 			CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader(
 			).parse(
 				bufferedReader

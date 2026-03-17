@@ -533,6 +533,7 @@ public class InlineSQLHelperImplTest {
 			new DefaultASTNodeListener();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				dslQuery.toSQL(defaultASTNodeListener))) {
 
@@ -549,6 +550,7 @@ public class InlineSQLHelperImplTest {
 
 	private void _assertValidSql(String sql) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 

@@ -761,6 +761,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	@Override
 	public void unzip(File source, File destination) {
 		try (InputStream inputStream = new FileInputStream(source);
+
 			ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
 
 			ZipEntry entry = null;

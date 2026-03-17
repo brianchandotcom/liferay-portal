@@ -436,6 +436,7 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTask);
 
 		try (InputStream inputStream = new FileInputStream(file);
+
 			BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
 				_getBatchEngineImportTaskItemReader(
 					batchEngineImportTask, inputStream, parameters)) {

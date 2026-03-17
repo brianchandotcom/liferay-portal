@@ -50,6 +50,7 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(sql1);
+
 				ResultSet resultSet = preparedStatement1.executeQuery();
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -109,6 +110,7 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 	private int _getLatestSamlPeerBindingId() throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select max(samlPeerBindingId) from SamlPeerBinding");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -122,6 +124,7 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 	private int _getSamlSpSessionIdOffset() throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select min(samlSpSessionId) - 1 from SamlSpSession");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

@@ -163,6 +163,7 @@ public class ExternalDataSourceControllerTest {
 		try (InputStream inputStream =
 				ExternalDataSourceControllerTest.class.getResourceAsStream(
 					path);
+
 			JarInputStream jarInputStream = new JarInputStream(inputStream);
 			JarOutputStream jarOutputStream = new JarOutputStream(
 				unsyncByteArrayOutputStream)) {
@@ -266,6 +267,7 @@ public class ExternalDataSourceControllerTest {
 
 			try (UnsyncStringWriter unsyncStringWriter =
 					new UnsyncStringWriter();
+
 				UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
 					unsyncStringWriter)) {
 

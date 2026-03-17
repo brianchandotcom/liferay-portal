@@ -60,7 +60,6 @@ public class StreamUtilTest {
 				}
 
 			};
-
 			FileChannel toFileChannel = FileChannel.open(
 				_toFilePath, StandardOpenOption.CREATE,
 				StandardOpenOption.WRITE)) {

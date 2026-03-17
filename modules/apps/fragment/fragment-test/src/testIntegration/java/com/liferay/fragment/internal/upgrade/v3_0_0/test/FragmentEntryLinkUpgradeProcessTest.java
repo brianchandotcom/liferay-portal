@@ -377,6 +377,7 @@ public class FragmentEntryLinkUpgradeProcessTest
 			fragmentEntryLinkIds);
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select FragmentEntryLink1.ctCollectionId, ",
@@ -403,6 +404,7 @@ public class FragmentEntryLinkUpgradeProcessTest
 					"Group_.groupId = FragmentEntryLink1.groupId and ",
 					"FragmentEntryLink1.fragmentEntryScopeERC is null)) and ",
 					"FragmentEntry.groupId = Group_.groupId"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

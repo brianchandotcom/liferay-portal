@@ -64,6 +64,7 @@ public class SiteExternalReferenceCodeToGroupConfigurationPluginImpl
 				dataSourceServiceReference);
 
 			try (Connection connection = dataSource.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						_db.buildSQL(

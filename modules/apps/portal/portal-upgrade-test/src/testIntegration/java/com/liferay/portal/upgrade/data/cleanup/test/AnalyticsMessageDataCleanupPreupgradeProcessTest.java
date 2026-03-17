@@ -92,6 +92,7 @@ public class AnalyticsMessageDataCleanupPreupgradeProcessTest
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(
 						"select * from AnalyticsMessage");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				Assert.assertFalse(resultSet.next());

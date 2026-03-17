@@ -118,6 +118,7 @@ public class JournalArticleTypeUpgradeProcess extends UpgradeProcess {
 	private Set<String> _getArticleTypes() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select distinct type_ from JournalArticle");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Set<String> types = new HashSet<>();
@@ -134,6 +135,7 @@ public class JournalArticleTypeUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) as count from JournalArticle where type_ != " +
 					"'general'");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

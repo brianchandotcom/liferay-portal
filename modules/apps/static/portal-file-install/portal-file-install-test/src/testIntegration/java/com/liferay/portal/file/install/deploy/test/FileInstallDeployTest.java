@@ -550,6 +550,7 @@ public class FileInstallDeployTest {
 
 		public void build() throws IOException {
 			try (OutputStream outputStream = Files.newOutputStream(_path);
+
 				JarOutputStream jarOutputStream = new JarOutputStream(
 					outputStream)) {
 

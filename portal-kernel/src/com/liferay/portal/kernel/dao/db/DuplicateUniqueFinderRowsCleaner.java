@@ -114,6 +114,7 @@ public class DuplicateUniqueFinderRowsCleaner {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				sb.toString());
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

@@ -61,6 +61,7 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 						put("user", "sa");
 					}
 				});
+
 			Statement statement = testServerConnection.createStatement()) {
 
 			statement.execute("SHUTDOWN COMPACT");
@@ -146,6 +147,7 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 						put("user", "sa");
 					}
 				});
+
 			Statement statement = testServerConnection.createStatement()) {
 
 			statement.execute("SET WRITE_DELAY FALSE");

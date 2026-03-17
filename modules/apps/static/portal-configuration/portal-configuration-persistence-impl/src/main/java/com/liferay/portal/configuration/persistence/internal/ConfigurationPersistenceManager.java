@@ -349,6 +349,7 @@ public class ConfigurationPersistenceManager
 
 	private void _deleteFromDatabase(String pid) throws IOException {
 		try (Connection connection = _dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_db.buildSQL(
 					"delete from Configuration_ where configurationId = ?"))) {
@@ -366,6 +367,7 @@ public class ConfigurationPersistenceManager
 		throws IOException {
 
 		try (Connection connection = _dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_db.buildSQL(
 					"select dictionary from Configuration_ where " +
@@ -447,6 +449,7 @@ public class ConfigurationPersistenceManager
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> {
 				try (Connection connection = _dataSource.getConnection();
+
 					PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							_db.buildSQL(
@@ -454,6 +457,7 @@ public class ConfigurationPersistenceManager
 									"Configuration_"),
 							ResultSet.TYPE_FORWARD_ONLY,
 							ResultSet.CONCUR_READ_ONLY);
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {

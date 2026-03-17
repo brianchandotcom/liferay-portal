@@ -366,7 +366,9 @@ public class SampleSQLBuilder {
 
 	private void _loadCreateSQL(URL url, Writer writer) throws IOException {
 		try (InputStream inputStream = url.openStream();
+
 			Reader reader = new InputStreamReader(inputStream);
+
 			BufferedReader bufferedReader = new BufferedReader(reader)) {
 
 			String line;

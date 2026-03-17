@@ -20,17 +20,15 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-			"select ctCollectionId, alEntrySegmentsEntryRelId, " +
-			"assetListEntryId from AssetListEntrySegmentsEntryRel order by " +
-			"assetListEntryId asc, priority asc, createDate desc");
-
-			 PreparedStatement preparedStatement2 =
-				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					 connection,
-					 "update AssetListEntrySegmentsEntryRel set priority " +
-					 "= ? where ctCollectionId = ? and " +
-					 "alEntrySegmentsEntryRelId = ?");
-
+				"select ctCollectionId, alEntrySegmentsEntryRelId, " +
+					"assetListEntryId from AssetListEntrySegmentsEntryRel order by " +
+						"assetListEntryId asc, priority asc, createDate desc");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update AssetListEntrySegmentsEntryRel set priority " +
+						"= ? where ctCollectionId = ? and " +
+							"alEntrySegmentsEntryRelId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			long priority = 0;

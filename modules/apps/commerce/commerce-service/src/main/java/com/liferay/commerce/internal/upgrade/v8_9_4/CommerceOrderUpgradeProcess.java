@@ -54,6 +54,7 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 			true);
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select companyId, commerceOrderId from CommerceOrder")) {
 

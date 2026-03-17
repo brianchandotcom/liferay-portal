@@ -231,6 +231,7 @@ public class DDMDataCleanupPreupgradeProcess
 						connection.prepareStatement(
 							"select groupId, parentGroupId from Group_ where " +
 								"parentGroupId != 0");
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {
@@ -245,6 +246,7 @@ public class DDMDataCleanupPreupgradeProcess
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"select groupId, structureKey from DDMStructure");
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {

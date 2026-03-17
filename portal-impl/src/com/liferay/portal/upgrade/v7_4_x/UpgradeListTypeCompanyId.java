@@ -59,6 +59,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 		List<ListTypeEntry> listTypeEntries = new ArrayList<>();
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(
 				"select listTypeId, name, type_ from ListType")) {
 
@@ -106,6 +107,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 			(CompanyThreadLocal.getCompanyId() == defaultCompanyId)) {
 
 			try (Statement statement = connection.createStatement();
+
 				ResultSet resultSet1 = statement.executeQuery(
 					StringBundler.concat(
 						"select currentId from Counter where name = '",

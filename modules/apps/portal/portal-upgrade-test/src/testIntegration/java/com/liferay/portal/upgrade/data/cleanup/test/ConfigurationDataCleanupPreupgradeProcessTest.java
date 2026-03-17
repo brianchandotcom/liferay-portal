@@ -158,6 +158,7 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select groupId from Group_");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

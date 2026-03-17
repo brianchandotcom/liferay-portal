@@ -24,6 +24,7 @@ public class LayoutSetPrototypeReadyForPropagationUpgradeProcess
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select ctCollectionId, layoutSetPrototypeId, settings_ from " +
 					"LayoutSetPrototype");
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(

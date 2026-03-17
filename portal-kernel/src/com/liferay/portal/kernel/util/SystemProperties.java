@@ -208,8 +208,10 @@ public class SystemProperties {
 		throws IOException {
 
 		try (InputStream inputStream = url.openStream();
+
 			InputStreamReader inputStreamReader = new InputStreamReader(
 				inputStream);
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(inputStreamReader)) {
 

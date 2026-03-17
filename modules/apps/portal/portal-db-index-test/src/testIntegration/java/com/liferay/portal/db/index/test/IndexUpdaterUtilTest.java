@@ -236,6 +236,7 @@ public class IndexUpdaterUtilTest {
 			}
 
 			try (Connection connection = DataAccess.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select count(*) from TestTable")) {

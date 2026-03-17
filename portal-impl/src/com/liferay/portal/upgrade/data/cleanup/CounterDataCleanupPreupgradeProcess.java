@@ -41,6 +41,7 @@ public class CounterDataCleanupPreupgradeProcess
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select name, currentId from Counter");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			DBInspector dbInspector = new DBInspector(connection);
@@ -306,6 +307,7 @@ public class CounterDataCleanupPreupgradeProcess
 					connection.prepareStatement(
 						StringBundler.concat(
 							"select ", columnName, " from ", tableName));
+
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {
@@ -332,6 +334,7 @@ public class CounterDataCleanupPreupgradeProcess
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select max(", columnName, ") from ", tableName));
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			if (resultSet.next()) {

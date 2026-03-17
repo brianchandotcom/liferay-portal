@@ -1672,6 +1672,7 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", objectField.getSortableDBColumnName(), " from ",
@@ -1917,6 +1918,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId());
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", objectField.getDBColumnName(), " from ",
@@ -7732,8 +7734,10 @@ public class ObjectEntryLocalServiceTest {
 
 	private int _count() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) from " + _objectDefinition.getDBTableName());
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();

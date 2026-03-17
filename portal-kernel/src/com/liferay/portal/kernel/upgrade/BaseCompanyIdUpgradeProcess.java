@@ -135,6 +135,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select distinct companyId from " + foreignTableName);
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
@@ -214,6 +215,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select companyId from Company");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

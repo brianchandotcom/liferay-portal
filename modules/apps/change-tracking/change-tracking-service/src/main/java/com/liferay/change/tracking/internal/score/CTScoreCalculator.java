@@ -126,6 +126,7 @@ public class CTScoreCalculator {
 								"select count(", primaryKeyName,
 								") as count from ",
 								ctPersistence.getTableName()));
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					if (resultSet.next()) {

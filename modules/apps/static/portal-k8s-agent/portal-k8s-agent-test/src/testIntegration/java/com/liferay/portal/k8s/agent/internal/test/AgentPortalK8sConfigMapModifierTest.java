@@ -644,6 +644,7 @@ public class AgentPortalK8sConfigMapModifierTest {
 
 	private void _assertNotInDatabase(String pid) throws Exception {
 		try (Connection connection = _dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select configurationId, dictionary from Configuration_ " +
 					"where configurationId = ?")) {

@@ -67,7 +67,8 @@ public class FragmentCollectionActionDropdownItemsProvider {
 							FragmentCollection fragmentCollection =
 								_fragmentDisplayContext.getFragmentCollection();
 
-							return fragmentCollection.hasExportableItems();
+							return fragmentCollection.
+								hasExportableFragmentCompositionsAndFragmentEntries();
 						},
 						dropdownItem -> {
 							ResourceURL

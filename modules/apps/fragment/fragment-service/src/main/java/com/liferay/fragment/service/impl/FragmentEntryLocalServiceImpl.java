@@ -577,7 +577,7 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public boolean hasExportableItems(long fragmentCollectionId) {
+	public boolean hasExportableFragmentEntries(long fragmentCollectionId) {
 		int count = dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(

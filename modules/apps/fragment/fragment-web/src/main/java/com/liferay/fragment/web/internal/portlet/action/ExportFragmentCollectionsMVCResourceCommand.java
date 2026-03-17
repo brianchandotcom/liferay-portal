@@ -69,7 +69,8 @@ public class ExportFragmentCollectionsMVCResourceCommand
 								exportFragmentCollectionId);
 
 						if ((fragmentCollection != null) &&
-							fragmentCollection.hasExportableItems()) {
+							fragmentCollection.
+								hasExportableFragmentCompositionsAndFragmentEntries()) {
 
 							return fragmentCollection;
 						}

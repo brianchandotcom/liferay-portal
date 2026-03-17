@@ -42,7 +42,7 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 						{
 							contentRenderer: 'dateTime',
 							fieldName: 'dateModified',
-							label: Liferay.Language.get('last-updated'),
+							label: Liferay.Language.get('modified'),
 							localizeLabel: true,
 							sortable: true,
 						},

@@ -96,6 +96,120 @@ function mapEditingToFilterValues(editing: State['editing']): DateFilterValues {
 	return {filterType: FilterType.All};
 }
 
+function getAppliedFilterSummary(applied: DateFilterValues): string {
+	if (applied.filterType === FilterType.Last) {
+		const option = MODIFIED_LAST_OPTIONS.find(
+			(opt) => opt.value === applied.modifiedLast
+		);
+
+		return `${Liferay.Language.get('modified-last')}: ${option?.label}`;
+	}
+
+	if (applied.filterType === FilterType.Range) {
+		const {fromDate, toDate} = applied;
+
+		if (fromDate && toDate) {
+			return Liferay.Util.sub(Liferay.Language.get('date-range-x-to-x'), [
+				fromDate,
+				toDate,
+			]);
+		}
+
+		if (fromDate) {
+			return Liferay.Util.sub(
+				Liferay.Language.get('date-range-after-x'),
+				fromDate
+			);
+		}
+
+		if (toDate) {
+			return Liferay.Util.sub(
+				Liferay.Language.get('date-range-before-x'),
+				toDate
+			);
+		}
+	}
+
+	return '';
+}
+
+function getIsDirty(
+	editing: State['editing'],
+	applied: State['applied']
+): boolean {
+	if (editing.filterType !== applied.filterType) {
+		return true;
+	}
+
+	if (
+		applied.filterType === FilterType.Last &&
+		editing.filterType === FilterType.Last
+	) {
+		return editing.modifiedLast !== applied.modifiedLast;
+	}
+
+	if (
+		applied.filterType === FilterType.Range &&
+		editing.filterType === FilterType.Range
+	) {
+		return (
+			editing.fromDate !== applied.fromDate ||
+			editing.toDate !== applied.toDate
+		);
+	}
+
+	return false;
+}
+
+function getValidation(editing: State['editing']): {
+	errors: {fromDate?: string; toDate?: string};
+	isValid: boolean;
+} {
+	const errors: {fromDate?: string; toDate?: string} = {};
+
+	if (editing.filterType !== FilterType.Range) {
+		return {errors, isValid: true};
+	}
+
+	const {fromDate, toDate} = editing;
+
+	if (!fromDate && !toDate) {
+		return {errors, isValid: false};
+	}
+
+	const isFromValid = !fromDate || dateUtils.isValid(fromDate);
+	const isToValid = !toDate || dateUtils.isValid(toDate);
+
+	if (!isFromValid || !isToValid) {
+		return {errors, isValid: false};
+	}
+
+	const fromDateObj = fromDate ? new Date(fromDate) : null;
+	const toDateObj = toDate ? new Date(toDate) : null;
+
+	if (fromDateObj && fromDateObj > new Date()) {
+		errors.fromDate = Liferay.Language.get(
+			'dates-must-not-be-in-the-future'
+		);
+	}
+
+	if (toDateObj && toDateObj > new Date()) {
+		errors.toDate = Liferay.Language.get('dates-must-not-be-in-the-future');
+	}
+
+	if (fromDateObj && toDateObj && fromDateObj > toDateObj) {
+		const rangeError = Liferay.Language.get('date-range-is-invalid');
+
+		errors.fromDate = rangeError;
+		errors.toDate = rangeError;
+	}
+
+	return {
+		errors,
+		isValid: !Object.keys(errors).length,
+	};
+}
+
 type Action =
 	| {payload: Partial<State['editing']>; type: 'UPDATE_FILTER'}
 	| {payload: Partial<State['touchedFields']>; type: 'UPDATE_TOUCHED'}
@@ -157,115 +271,17 @@ export default function DateFilter({
 
 	const {applied, editing, touchedFields} = state;
 
-	const validation = useMemo(() => {
-		const errors: {fromDate?: string; toDate?: string} = {};
+	const validation = useMemo(() => getValidation(editing), [editing]);
 
-		if (editing.filterType !== FilterType.Range) {
-			return {errors, isValid: true};
-		}
+	const isDirty = useMemo(
+		() => getIsDirty(editing, applied),
+		[editing, applied]
+	);
 
-		const {fromDate, toDate} = editing;
-
-		if (!fromDate && !toDate) {
-			return {errors, isValid: false};
-		}
-
-		const isFromValid = !fromDate || dateUtils.isValid(fromDate);
-		const isToValid = !toDate || dateUtils.isValid(toDate);
-
-		if (!isFromValid || !isToValid) {
-			return {errors, isValid: false};
-		}
-
-		const fromDateObj = fromDate ? new Date(fromDate) : null;
-		const toDateObj = toDate ? new Date(toDate) : null;
-
-		if (fromDateObj && fromDateObj > new Date()) {
-			errors.fromDate = Liferay.Language.get(
-				'dates-must-not-be-in-the-future'
-			);
-		}
-
-		if (toDateObj && toDateObj > new Date()) {
-			errors.toDate = Liferay.Language.get(
-				'dates-must-not-be-in-the-future'
-			);
-		}
-
-		if (fromDateObj && toDateObj && fromDateObj > toDateObj) {
-			const rangeError = Liferay.Language.get('date-range-is-invalid');
-
-			errors.fromDate = rangeError;
-			errors.toDate = rangeError;
-		}
-
-		return {
-			errors,
-			isValid: !Object.keys(errors).length,
-		};
-	}, [editing]);
-
-	const isDirty = useMemo(() => {
-		if (editing.filterType !== applied.filterType) {
-			return true;
-		}
-
-		if (
-			applied.filterType === FilterType.Last &&
-			editing.filterType === FilterType.Last
-		) {
-			return editing.modifiedLast !== applied.modifiedLast;
-		}
-
-		if (
-			applied.filterType === FilterType.Range &&
-			editing.filterType === FilterType.Range
-		) {
-			return (
-				editing.fromDate !== applied.fromDate ||
-				editing.toDate !== applied.toDate
-			);
-		}
-
-		return false;
-	}, [editing, applied]);
-
-	const appliedFilterSummary = useMemo(() => {
-		if (applied.filterType === FilterType.Last) {
-			const option = MODIFIED_LAST_OPTIONS.find(
-				(opt) => opt.value === applied.modifiedLast
-			);
-
-			return `${Liferay.Language.get('modified-last')}: ${option?.label}`;
-		}
-
-		if (applied.filterType === FilterType.Range) {
-			const {fromDate, toDate} = applied;
-
-			if (fromDate && toDate) {
-				return Liferay.Util.sub(
-					Liferay.Language.get('date-range-x-to-x'),
-					[fromDate, toDate]
-				);
-			}
-
-			if (fromDate) {
-				return Liferay.Util.sub(
-					Liferay.Language.get('date-range-after-x'),
-					fromDate
-				);
-			}
-
-			if (toDate) {
-				return Liferay.Util.sub(
-					Liferay.Language.get('date-range-before-x'),
-					toDate
-				);
-			}
-		}
-
-		return '';
-	}, [applied]);
+	const appliedFilterSummary = useMemo(
+		() => getAppliedFilterSummary(applied),
+		[applied]
+	);
 
 	const handleShowResults = () => {
 		dispatch({type: 'SET_TOUCH_ALL'});

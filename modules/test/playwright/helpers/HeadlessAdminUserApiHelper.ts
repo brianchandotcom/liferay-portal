@@ -367,6 +367,26 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async patchMyUserAccountLanguage(languageId: string): Promise<void> {
+		const authorization = this.apiHelpers.getAuthorizationHeader();
+		const baseUrl = `${this.apiHelpers.baseUrl}${this.basePath}`;
+
+		const response = await fetch(`${baseUrl}/my-user-account`, {
+			headers: {Authorization: authorization},
+		});
+
+		const myUserAccount = await response.json();
+
+		await fetch(`${baseUrl}/user-accounts/${myUserAccount.id}`, {
+			body: JSON.stringify({languageId}),
+			headers: {
+				'Authorization': authorization,
+				'Content-Type': 'application/json',
+			},
+			method: 'PATCH',
+		});
+	}
+
 	async getOrganizationByName(organizationName: string): Promise<TAccount> {
 		const organizationResponse = await this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/organizations?filter=name eq '${organizationName}'&flatten=true`

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.petra.io.ProtectedClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.ProtectedClassLoaderObjectInputStream;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

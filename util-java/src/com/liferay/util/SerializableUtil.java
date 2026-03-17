@@ -5,10 +5,10 @@
 
 package com.liferay.util;
 
+import com.liferay.petra.io.ProtectedClassLoaderObjectInputStream;
 import com.liferay.petra.io.ProtectedObjectInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.util.ProtectedClassLoaderObjectInputStream;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

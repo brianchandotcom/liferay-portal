@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.service.http;
 
+import com.liferay.petra.io.ProtectedClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProtectedClassLoaderObjectInputStream;
 
 import java.io.EOFException;
 import java.io.ObjectInputStream;

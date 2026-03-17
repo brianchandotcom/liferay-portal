@@ -79,9 +79,6 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_reindexIndexReindexerBackgroundTaskExecutor,
-			"_companyLocalService", _companyLocalService);
-		ReflectionTestUtil.setFieldValue(
-			_reindexIndexReindexerBackgroundTaskExecutor,
 			"_indexReindexerRegistry", _indexReindexerRegistry);
 		ReflectionTestUtil.setFieldValue(
 			_reindexIndexReindexerBackgroundTaskExecutor,
@@ -89,6 +86,9 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 		ReflectionTestUtil.setFieldValue(
 			_reindexIndexReindexerBackgroundTaskExecutor,
 			"_reindexStatusMessageSender", _reindexStatusMessageSender);
+		ReflectionTestUtil.setFieldValue(
+			_reindexIndexReindexerBackgroundTaskExecutor,
+			"_companyLocalService", _companyLocalService);
 
 		Mockito.doAnswer(
 			invocation -> {

@@ -507,16 +507,16 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		try {
+			if (Objects.equals(scope, WorkflowDefinitionConstants.SCOPE_AI)) {
+				liberal = true;
+			}
+
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCompanyId(companyId);
 			serviceContext.setUserId(userId);
 
 			List<KaleoDefinition> kaleoDefinitions = null;
-
-			if (Objects.equals(scope, WorkflowDefinitionConstants.SCOPE_AI)) {
-				liberal = true;
-			}
 
 			if (active == null) {
 				kaleoDefinitions = _get(

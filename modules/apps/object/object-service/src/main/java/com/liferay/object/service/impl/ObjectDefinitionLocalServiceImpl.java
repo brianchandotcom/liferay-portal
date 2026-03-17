@@ -1575,7 +1575,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateLabel(labelMap);
 		_validateName(0, user.getCompanyId(), modifiable, name, system);
 		_validatePluralLabel(pluralLabelMap);
-		_validateScope(scope, storageType);
+		_validateScope(panelCategoryKey, scope, storageType);
 		_validateVersion(system, version);
 		_validateWorkflowDefinitionLinks(
 			user.getCompanyId(), objectDefinitionSettings, scope,
@@ -2741,6 +2741,8 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition, objectDefinition.isSystem());
 		_validateLabel(labelMap);
 		_validatePluralLabel(pluralLabelMap);
+		_validateScope(
+			panelCategoryKey, scope, objectDefinition.getStorageType());
 		_validateWorkflowDefinitionLinks(
 			objectDefinition.getCompanyId(), objectDefinitionSettings, scope,
 			workflowDefinitionLinks);
@@ -2892,7 +2894,6 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.getObjectDefinitionId(),
 			objectDefinition.getCompanyId(), objectDefinition.isModifiable(),
 			name, objectDefinition.isSystem());
-		_validateScope(scope, objectDefinition.getStorageType());
 
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setEnableIndexSearch(enableIndexSearch);
@@ -3721,7 +3722,8 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
-	private void _validateScope(String scope, String storageType)
+	private void _validateScope(
+			String panelCategoryKey, String scope, String storageType)
 		throws PortalException {
 
 		if (Validator.isNull(scope)) {
@@ -3738,6 +3740,16 @@ public class ObjectDefinitionLocalServiceImpl
 				new ObjectDefinitionScopeException(
 					illegalArgumentException.getMessage()),
 				"scope", scope);
+		}
+
+		if (StringUtil.equals(scope, ObjectDefinitionConstants.SCOPE_DEPOT) &&
+			Validator.isNotNull(panelCategoryKey)) {
+
+			_handleException(
+				new ObjectDefinitionScopeException(
+					"Scope \"depot\" cannot be associated with a panel " +
+						"category key"),
+				"panelCategoryKey", panelCategoryKey);
 		}
 
 		if (StringUtil.equals(scope, ObjectDefinitionConstants.SCOPE_SITE) &&

@@ -115,7 +115,8 @@ export function ScopeContainer({
 				disabled={
 					(!values.modifiable && values.system) ||
 					!hasUpdateObjectDefinitionPermission ||
-					isLinkedObjectDefinition
+					isLinkedObjectDefinition ||
+					values.scope === 'depot'
 				}
 				error={errors.titleObjectFieldId}
 				id="lfr-objects__object-scope-container-panel-link"

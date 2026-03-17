@@ -34,8 +34,14 @@ export default {
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
 	'address-name': 'Address Name',
+	'administration-email': 'Administration Email',
 	'administrator-dashboard': 'Administrator Dashboard',
 	'agreements': 'Agreements',
+	'ai-administration-email': 'AI Administration Email',
+	'ai-hub': 'AI Hub',
+	'ai-hub-account-details': 'AI Hub Account Details',
+	'ai-hub-account-name': 'AI Hub Account Name',
+	'ai-hub-information': 'AI Hub Information',
 	'all-orders': 'All Orders',
 	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the app will be lost. Do you still want to exit?',
@@ -248,6 +254,8 @@ export default {
 	'email': 'Email',
 	'email-address': 'Email Address',
 	'end-user-license-agreement': 'End User License Agreement',
+	'enter-administration-email': 'Enter administration email',
+	'enter-ai-hub-account-name': 'Enter AI Hub Account Name',
 	'enter-app-description': 'Enter app description',
 	'enter-domain-here': 'Enter domain here',
 	'enter-email-address': 'Enter email address',
@@ -343,6 +351,8 @@ export default {
 		'How satisfied are you with the product?',
 	'how-useful-is-the-product-for-your-workflow':
 		'How useful is the product for your workflow?',
+	'i-agree-to-the-processing-of-my-personal-data-for-the-purpose-of-evaluating-my-beta-access-request-in-accordance-with-liferay’s-privacy-policy':
+		'I agree to the processing of my personal data for the purpose of evaluating my beta access request in accordance with Liferay’s Privacy Policy.',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
 	'i-have-read-and-agree-to-the-liferay-end-user-agreement':
@@ -585,6 +595,7 @@ export default {
 		'Purchase and install new apps and they will show up here.',
 	'purchase-app': 'Purchase App',
 	'purchase-completed': 'Purchase Completed',
+
 	'purchase-date': 'Purchase Date',
 	'purchase-failed': 'Purchase Failed',
 	'purchase-number': 'Purchase Number',
@@ -610,6 +621,8 @@ export default {
 		'Renewal will be available 3 months before your activation key expires.',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',
+	'request-access-to-ai-private-hub-beta':
+		'Request Access to AI Private Hub Beta',
 	'request-account': 'Request Account',
 	'request-description': 'Request Description',
 	'request-details': 'Request Details',
@@ -688,6 +701,8 @@ export default {
 	'storefront': 'Storefront',
 	'submit': 'Submit',
 	'submit-solution': 'Submit Solution',
+	'submit-your-request-to-join-the-beta-program-all-submissions-will-be-reviewed-and-youll-receive-an-email-with-the-outcome':
+		'Submit your request to join the beta program. All submissions will be reviewed, and you’ll receive an email with the outcome.',
 	'subscription-type': 'Subscription Type',
 	'subtotal': 'Subtotal',
 	'subtotal-discount': 'Subtotal Discount',
@@ -717,6 +732,7 @@ export default {
 	'thank-you-for-trying-the-beta-version-of-this-product-your-feedback-is-essential-to-improve-the-final-release-this-survey-takes-3–5-minutes':
 		'Thank you for trying the beta version of this product! Your feedback is essential to improve the final release. This survey takes ~3–5 minutes.',
 	'thank-you-for-your': 'Thank you for your',
+	'thank-you-for-your-request': 'Thank You for Your Request!',
 	'the-app-and-all-its-client-extensions-services-will-be-deleted-and-uninstalled-from-liferay-dxp':
 		'The app and all its client extensions (services) will be deleted and uninstalled from Liferay DXP.',
 	'the-app-submission-is-compatible-with-liferay-experience-cloud-and':
@@ -752,6 +768,8 @@ export default {
 	'this-app-is-already-installed-in-this-environment':
 		'This app is already installed in this environment.',
 	'this-field-is-required': 'This field is required.',
+	'this-is-the-email-address-that-will-receive-the-aihub-account-management-invite':
+		'This is the email address that will receive the AIHub account management invite.',
 	'this-is-the-first-version-of-the-app-to-be-published':
 		'This is the first version of the app to be published.',
 	'this-key-is-expired-and-cannot-be-downloaded':

@@ -28,6 +28,7 @@ export enum OrderStatus {
 
 export enum OrderTypes {
 	ADDONS = 'ADDONS',
+	AI_HUB = 'AI_HUB',
 	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
 	CLOUD_APP = 'CLOUD_APP',
 	CMP = 'CMP_BETA',
@@ -115,6 +116,12 @@ export function getOrderStatusLabel(order: PlacedOrder) {
 				[OrderWorkflowStatusCode.PROCESSING]: 'Pending',
 			}[order.orderStatusInfo.code] || order.orderStatusInfo.label
 		);
+	}
+
+	if (OrderTypes.AI_HUB) {
+		if (order.orderStatusInfo.code !== OrderWorkflowStatusCode.COMPLETED) {
+			return 'Requested';
+		}
 	}
 
 	return order.orderStatusInfo.label;

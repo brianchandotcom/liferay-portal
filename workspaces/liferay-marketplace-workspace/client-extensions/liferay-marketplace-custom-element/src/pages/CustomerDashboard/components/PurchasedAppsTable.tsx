@@ -10,7 +10,7 @@ import ButtonWithIcon from '../../../components/ButtonWithIcon';
 import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
-import {OrderTypes, orderTypeLabel} from '../../../enums/Order';
+import {orderTypeLabel} from '../../../enums/Order';
 import {ProductImageFallbackCategories} from '../../../enums/Product';
 import i18n from '../../../i18n';
 import {getProductImageFallback} from '../../../utils/productUtils';
@@ -89,11 +89,10 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 				},
 				{
 					key: 'orderTypeExternalReferenceCode',
-					render: (orderTypeExternalReferenceCode) => {
-						return orderTypeLabel[
-							orderTypeExternalReferenceCode as OrderTypes
-						];
-					},
+					render: (orderTypeExternalReferenceCode) =>
+						orderTypeLabel[
+							orderTypeExternalReferenceCode as keyof typeof orderTypeLabel
+						],
 					title: i18n.translate('app-type'),
 				},
 				{

@@ -169,19 +169,9 @@ public class HelpCenterUtil {
 			return 0;
 		}
 
-		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
 
-			if (itemJSONObject.has("code")) {
-				String code = itemJSONObject.getString("code");
-
-				if (code.equals(accountEntryCode)) {
-					return itemJSONObject.getLong("id");
-				}
-			}
-		}
-
-		return 0;
+		return itemJSONObject.getLong("id", 0);
 	}
 
 	protected static void completeUpload(

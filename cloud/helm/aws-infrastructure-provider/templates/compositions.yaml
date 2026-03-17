@@ -42,6 +42,28 @@ spec:
                         {{- $privateSubnetIdsList := $privateSubnetIds | fromJson -}}
                         {{- $subnetCount := len $privateSubnetIdsList -}}
 
+                        {{- range $service := list "opensearchservice.amazonaws.com" "rds.amazonaws.com" }}
+                        ---
+                        apiVersion: iam.aws.m.upbound.io/v1beta1
+                        kind: ServiceLinkedRole
+                        metadata:
+                            annotations:
+                                {{- if eq $service "opensearchservice.amazonaws.com" }}
+                                crossplane.io/external-name: AWSServiceRoleForAmazonOpenSearchService
+                                {{- else }}
+                                crossplane.io/external-name: AWSServiceRoleForRDS
+                                {{- end }}
+                                gotemplating.fn.crossplane.io/composition-resource-name: {{ printf "liferay-slr-%s" (index (split "." $service) 0) }}
+                            labels:
+                                app: liferay
+                                component: service-linked-roles
+                            name: {{ printf "liferay-slr-%s" (index (split "." $service) 0) }}
+                        spec:
+                            forProvider:
+                                awsServiceName: {{ $service }}
+                            managementPolicies: ["Create", "Observe"]
+                        {{- end }}
+
                         {{- $backupSpec := $xr.spec.backup -}}
                         {{- $backupRegion := $backupSpec.region | default $baseRegion -}}
 
@@ -1320,15 +1342,11 @@ spec:
                         {{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
 
                         {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
-
                         {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectIdFull | sha256sum | trunc 6 -}}
-
                         {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
                         {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
-
                         {{- $targetInactiveDataPlane := (eq $targetActiveDataPlane "blue") | ternary "green" "blue" -}}
-
                         {{- $activeDataPlane := $targetActiveDataPlane -}}
 
                         {{- if (eq $restorePhase "provisioning") -}}

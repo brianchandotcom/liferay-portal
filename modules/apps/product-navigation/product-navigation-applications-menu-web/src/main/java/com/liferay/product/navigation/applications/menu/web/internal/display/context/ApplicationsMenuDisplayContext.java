@@ -94,8 +94,9 @@ public class ApplicationsMenuDisplayContext {
 				).put(
 					"logoURL",
 					StringBundler.concat(
-						themeDisplay.getPathImage(), "/company_logo?img_id=",
-						company.getLogoId(), "&t=",
+						themeDisplay.getPathImage(),
+						"/liferay_instance_logo?img_id=", company.getLogoId(),
+						"&t=",
 						WebServerServletTokenUtil.getToken(company.getLogoId()))
 				).put(
 					"url",

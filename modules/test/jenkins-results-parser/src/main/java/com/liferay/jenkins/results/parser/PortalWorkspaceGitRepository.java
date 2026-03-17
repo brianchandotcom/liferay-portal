@@ -273,11 +273,17 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 				throw new RuntimeException(ioException);
 			}
 
-			testProperties.put(
-				"test.released.test.portal.bundle.zip.url",
-				JenkinsResultsParserUtil.getProperty(
-					buildProperties, "portal.bundle.tomcat",
-					portalLatestBundleVersion));
+			String portalBundleTomcatURL = JenkinsResultsParserUtil.getProperty(
+				buildProperties, "portal.bundle.tomcat",
+				portalLatestBundleVersion);
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					portalBundleTomcatURL)) {
+
+				testProperties.put(
+					"test.released.test.portal.bundle.zip.url",
+					portalBundleTomcatURL);
+			}
 		}
 
 		return testProperties;

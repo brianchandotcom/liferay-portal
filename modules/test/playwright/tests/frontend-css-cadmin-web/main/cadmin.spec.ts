@@ -25,7 +25,7 @@ const test = mergeTests(
 	loginTest()
 );
 
-const DEFAULT_COLOR = 'rgb(48, 49, 63)';
+const DEFAULT_COLOR = 'rgb(255, 255, 255)';
 const OVERRIDE_COLOR = 'rgb(0, 255, 0)';
 const ELEMENT_SELECTOR = '.cadmin .control-menu-level-1-dark';
 

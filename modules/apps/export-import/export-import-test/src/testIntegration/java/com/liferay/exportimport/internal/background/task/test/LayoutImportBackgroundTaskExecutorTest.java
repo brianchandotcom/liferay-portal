@@ -48,6 +48,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.staging.StagingGroupHelper;
@@ -107,38 +109,44 @@ public class LayoutImportBackgroundTaskExecutorTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition,
 			values.get(_OBJECT_FIELD_NAME_TEXT));
 
-		long backgroundTaskId =
-			ExportImportLocalServiceUtil.importLayoutsInBackground(
-				TestPropsValues.getUserId(),
-				ExportImportConfigurationLocalServiceUtil.
-					addExportImportConfiguration(
-						TestPropsValues.getUserId(), group.getGroupId(),
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString(), 0,
-						ExportImportConfigurationSettingsMapFactoryUtil.
-							buildImportLayoutSettingsMap(
-								TestPropsValues.getUser(), group.getGroupId(),
-								false, new long[0],
-								_getExportImportParameterMap(
-									false, true,
-									Arrays.asList(objectDefinition))),
-						WorkflowConstants.STATUS_DRAFT,
-						ServiceContextTestUtil.getServiceContext()),
-				larFile);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.OFF)) {
 
-		ExportImportTestUtil.retryAssert(
-			1, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
-			() -> {
-				BackgroundTask backgroundTask =
-					_backgroundTaskLocalService.getBackgroundTask(
-						backgroundTaskId);
+			long backgroundTaskId =
+				ExportImportLocalServiceUtil.importLayoutsInBackground(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationLocalServiceUtil.
+						addExportImportConfiguration(
+							TestPropsValues.getUserId(), group.getGroupId(),
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString(), 0,
+							ExportImportConfigurationSettingsMapFactoryUtil.
+								buildImportLayoutSettingsMap(
+									TestPropsValues.getUser(),
+									group.getGroupId(), false, new long[0],
+									_getExportImportParameterMap(
+										false, true,
+										Arrays.asList(objectDefinition))),
+							WorkflowConstants.STATUS_DRAFT,
+							ServiceContextTestUtil.getServiceContext()),
+					larFile);
 
-				Assert.assertEquals(
-					BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
-					backgroundTask.getStatus());
-			});
+			ExportImportTestUtil.retryAssert(
+				1, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+				() -> {
+					BackgroundTask backgroundTask =
+						_backgroundTaskLocalService.getBackgroundTask(
+							backgroundTaskId);
 
-		ServiceContextThreadLocal.popServiceContext();
+					Assert.assertEquals(
+						BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
+						backgroundTask.getStatus());
+				});
+
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private DLFileEntry _addDLFileEntry(String content, long groupId)

@@ -121,7 +121,7 @@ export default function useColorPicker({
 		setValue(hex);
 	};
 
-	const onClickSplotch = () => {
+	const onSplotchClick = () => {
 		{
 			if (useNative && valueInputRef.current) {
 				valueInputRef.current.click();
@@ -230,10 +230,10 @@ export default function useColorPicker({
 		internalToHex,
 		internalValue,
 		onChangeEditor,
-		onClickSplotch,
 		onColorChangeEditor,
 		onHexBlur,
 		onHexChange,
+		onSplotchClick,
 		setCustomEditorActive,
 		setInternalActive,
 		setValue,

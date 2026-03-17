@@ -32,11 +32,6 @@ interface IProps
 	name?: string;
 
 	/**
-	 * Callback for when the splotch component is clicked or pressed.
-	 */
-	onClickSplotch: () => void;
-
-	/**
 	 * Callback for when the hex input loses focus.
 	 */
 	onHexBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -45,6 +40,11 @@ interface IProps
 	 * Callback for when the hex input changes.
 	 */
 	onHexChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+
+	/**
+	 * Callback for when the splotch component is clicked or pressed.
+	 */
+	onSplotchClick: () => void;
 
 	/**
 	 * Set the color value
@@ -103,9 +103,9 @@ export default function Field({
 	ariaLabels,
 	disabled,
 	name,
-	onClickSplotch,
 	onHexBlur,
 	onHexChange,
+	onSplotchClick,
 	setValue,
 	showHex = true,
 	small,
@@ -160,7 +160,7 @@ export default function Field({
 							aria-label={ariaLabels?.selectColor}
 							className="dropdown-toggle"
 							disabled={disabled}
-							onClick={onClickSplotch}
+							onClick={onSplotchClick}
 							ref={splotchRef}
 							title={splotchTitle}
 							value={value}

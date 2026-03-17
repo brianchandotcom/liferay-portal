@@ -225,10 +225,10 @@ function ColorPicker({
 		internalToHex,
 		internalValue,
 		onChangeEditor,
-		onClickSplotch,
 		onColorChangeEditor,
 		onHexBlur,
 		onHexChange,
+		onSplotchClick,
 		setCustomEditorActive,
 		setInternalActive,
 		setValue,
@@ -260,9 +260,9 @@ function ColorPicker({
 					ariaLabels={ariaLabels}
 					disabled={disabled}
 					name={name}
-					onClickSplotch={onClickSplotch}
 					onHexBlur={onHexBlur}
 					onHexChange={onHexChange}
+					onSplotchClick={onSplotchClick}
 					setValue={setValue}
 					showHex={showHex}
 					small={small}

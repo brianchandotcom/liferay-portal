@@ -62,9 +62,9 @@ export default function ColorPickerField({
 		internalToHex,
 		internalValue,
 		onChangeEditor,
-		onClickSplotch,
 		onColorChangeEditor,
 		onHexChange,
+		onSplotchClick,
 		setInternalActive,
 		setValue,
 		state,
@@ -97,9 +97,9 @@ export default function ColorPickerField({
 					}}
 					disabled={disabled}
 					name={name}
-					onClickSplotch={onClickSplotch}
 					onHexBlur={onBlurInput}
 					onHexChange={onHexChange}
+					onSplotchClick={onSplotchClick}
 					setValue={setValue}
 					small
 					splotchRef={splotchRef}

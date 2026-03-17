@@ -2438,7 +2438,7 @@ public abstract class BaseTopLevelBuild
 			new CITestSuiteValidationFailureMessageGenerator(),
 			new CompileFailureMessageGenerator(),
 			new FormatFailureMessageGenerator(),
-                new GitForcePushFailureMessageGenerator(),
+            new GitForcePushFailureMessageGenerator(),
 			new GitLPushFailureMessageGenerator(),
 			new JenkinsRegenFailureMessageGenerator(),
 			new JenkinsSourceFormatFailureMessageGenerator(),

@@ -1,0 +1,67 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.OSDetector
+
+task downloadSrc(type: Copy)
+task jarMvn(type: Exec)
+
+String facesUtilGitHash = "daf908f411ea1593c1e8c41e334c9c9fc118b99e"
+String facesUtilSrcUrl = "https://github.com/liferay/liferay-faces-alloy/archive/${facesUtilGitHash}.zip"
+File srcDir = new File(buildDir, "liferay-faces-alloy-${facesUtilGitHash}")
+
+downloadSrc {
+	doLast {
+		File pomXmlFile = new File(srcDir, "pom.xml")
+
+		if (pomXmlFile.exists()) {
+			pomXmlFile.text = pomXmlFile.text.replace("<module>demo</module>", "")
+		}
+	}
+
+	doNotTrackState("")
+
+	from {
+		zipTree(FileUtil.get(project, facesUtilSrcUrl))
+	}
+
+	into buildDir
+}
+
+jar {
+	dependsOn jarMvn
+	setActions([])
+}
+
+jarMvn {
+	commandLine _getMvnCommand("package")
+	dependsOn downloadSrc
+
+	doLast {
+		copy {
+			from new File(srcDir, "alloy/target")
+			include "com.liferay.faces.alloy-5.0.0.jar"
+			into base.distsDirectory
+
+			rename {
+				jar.archiveFileName.get()
+			}
+		}
+	}
+
+	workingDir = srcDir
+}
+
+jarSources {
+	mustRunAfter downloadSrc
+}
+
+processResources {
+	mustRunAfter downloadSrc
+}
+
+private List<String> _getMvnCommand(String command) {
+	if (OSDetector.windows) {
+		return ["cmd.exe", "/c", "mvn ${command}"]
+	}
+
+	return ["/bin/sh", "-c", "mvn ${command}"]
+}

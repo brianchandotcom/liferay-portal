@@ -10,24 +10,24 @@
 <%
 long designLibraryEntryId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
 
-DesignLibraryDashboardDisplayContext designLibraryDashboardDisplayContext = new DesignLibraryDashboardDisplayContext(request, liferayPortletResponse);
+DesignLibraryResourcesDisplayContext designLibraryResourcesDisplayContext = new DesignLibraryResourcesDisplayContext(request, liferayPortletResponse);
 %>
 
 <div>
 	<div>
 		<react:component
 			module="{DesignLibraryBreadcrumb} from design-library-web"
-			props="<%= designLibraryDashboardDisplayContext.getBreadcrumbProps(designLibraryEntryId) %>"
+			props="<%= designLibraryResourcesDisplayContext.getBreadcrumbProps(designLibraryEntryId) %>"
 		/>
 	</div>
 
 	<div class="design-library-fds-wrapper">
 		<frontend-data-set:headless-display
-			apiURL="<%= designLibraryDashboardDisplayContext.getAPIURL() %>"
-			emptyState="<%= designLibraryDashboardDisplayContext.getEmptyState() %>"
+			apiURL="<%= designLibraryResourcesDisplayContext.getAPIURL() %>"
+			emptyState="<%= designLibraryResourcesDisplayContext.getEmptyState() %>"
 			formName="fm"
-			id="<%= DesignLibraryAdminFDSNames.DESIGN_LIBRARY_DASHBOARD %>"
-			propsTransformer="{DesignLibraryDashboardFDSPropsTransformer} from design-library-web"
+			id="<%= DesignLibraryAdminFDSNames.DESIGN_LIBRARIES_RESOURCES %>"
+			propsTransformer="{DesignLibraryResourcesFDSPropsTransformer} from design-library-web"
 		/>
 	</div>
 </div>

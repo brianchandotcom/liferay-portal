@@ -34,6 +34,12 @@ export interface postTaxonomyVocabularyTaxonomyCategoryProps {
 	vocabularyId: number;
 }
 
+export type TTaxonomyVocabulary = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
 interface patchTaxonomyCategoryProps {
 	id: number;
 	name: string;
@@ -120,7 +126,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 		name,
 		siteId,
 		visibilityType,
-	}: postSiteTaxonomyVocabularyProps): Promise<{id: number}> {
+	}: postSiteTaxonomyVocabularyProps): Promise<TTaxonomyVocabulary> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/taxonomy-vocabularies`,
 			{

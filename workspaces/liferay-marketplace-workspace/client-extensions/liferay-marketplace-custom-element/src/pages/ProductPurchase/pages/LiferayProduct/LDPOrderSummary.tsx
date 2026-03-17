@@ -16,7 +16,7 @@ import ProductPurchaseLDP from '../../services/ProductPurchaseLDP';
 import {productPurchaseStore} from '../../store';
 import LicenseTermsCheckbox from '../App/License/LicenseTermsCheckbox';
 
-const OrderSummary = () => {
+const LDPOrderSummary = () => {
 	const {
 		actions: {previousStep},
 		form,
@@ -114,4 +114,4 @@ const OrderSummary = () => {
 	);
 };
 
-export default OrderSummary;
+export default LDPOrderSummary;

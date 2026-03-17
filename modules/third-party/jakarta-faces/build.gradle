@@ -5,7 +5,8 @@ ext {
 apply from: "../../build-jakarta-transformer.gradle"
 
 dependencies {
-	compileOnly group: "com.liferay.faces", name: "jakarta.faces", transitive: false, version: "2.3.21.LIFERAY-PATCHED-2"
+	// TODO 2.3.21.LIFERAY-PATCHED-2 needs to be in modules/third-party
+	compileOnly group: "com.liferay", name: "jakarta.faces", transitive: false, version: "2.3.21.LIFERAY-PATCHED-2"
 }
 
 jar {

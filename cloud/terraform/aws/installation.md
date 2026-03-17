@@ -138,7 +138,7 @@ This secret is created automatically when you run the Terraform auto-configurati
        --create-namespace \
        --install \
        --namespace $(terraform output -raw deployment_namespace) \
-       --set "liferay-default.serviceAccount.annotations.eks\.amazonaws\.com/role-arn=$(terraform output -raw liferay_sa_role)" \
+       --set "global.liferayServiceAccount.annotations.eks\.amazonaws\.com/role-arn=$(terraform output -raw liferay_sa_role)" \
        --values ../helm/values.yaml \
        --version ${LIFERAY_AWS_HELM_CHART_VERSION}
    ```

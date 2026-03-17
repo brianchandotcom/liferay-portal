@@ -288,7 +288,7 @@ export default function SaveButtons({
 						: Liferay.Language.get('publish-x'),
 					Liferay.Language.get('article')
 				)}
-				type="submit"
+				type="button"
 			>
 				{publishButtonLabel}
 			</ClayButton>

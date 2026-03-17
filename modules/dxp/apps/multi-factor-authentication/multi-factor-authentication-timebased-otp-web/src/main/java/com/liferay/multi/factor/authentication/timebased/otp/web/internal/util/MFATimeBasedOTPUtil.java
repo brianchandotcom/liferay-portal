@@ -5,9 +5,9 @@
 
 package com.liferay.multi.factor.authentication.timebased.otp.web.internal.util;
 
+import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 

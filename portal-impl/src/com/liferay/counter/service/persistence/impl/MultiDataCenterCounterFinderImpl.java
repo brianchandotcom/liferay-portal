@@ -5,8 +5,8 @@
 
 package com.liferay.counter.service.persistence.impl;
 
+import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.BigEndianCodec;
 
 /**
  * @author Michael C. Han

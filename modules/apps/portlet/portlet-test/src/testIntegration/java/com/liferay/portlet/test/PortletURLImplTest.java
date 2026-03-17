@@ -7,9 +7,9 @@ package com.liferay.portlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.encryptor.Encryptor;
-import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;

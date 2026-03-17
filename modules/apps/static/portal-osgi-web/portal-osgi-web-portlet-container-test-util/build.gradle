@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.13"
 	compileOnly group: "org.springframework", name: "spring-test", version: "6.2.9"
 	compileOnly group: "org.springframework", name: "spring-web", version: "6.2.9"
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-memory")
 }
 

@@ -349,9 +349,10 @@ test.describe('Folder Facet', () => {
 		searchPage,
 	}) => {
 		let folderFacetTerm: Locator;
-		let objectEntryFolder: any;
 		let objectEntryContent: any;
+		let objectEntryFolder: any;
 		let space: any;
+
 		const cmsId = `CMS_${getRandomString()}`;
 
 		await test.step('Create a new Space', async () => {

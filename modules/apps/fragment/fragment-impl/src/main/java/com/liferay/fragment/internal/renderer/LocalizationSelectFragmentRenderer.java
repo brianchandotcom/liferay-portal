@@ -11,10 +11,12 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -191,7 +194,9 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 					}
 				).put(
 					"defaultLanguageId",
-					LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
+					LocaleUtil.toLanguageId(
+						PortalUtil.getSiteDefaultLocale(
+							_getGroupId(httpServletRequest, themeDisplay)))
 				).put(
 					"editMode", fragmentRendererContext.isEditMode()
 				).put(
@@ -205,8 +210,8 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 				).put(
 					"locales",
 					JSONUtil.toJSONArray(
-						_language.getCompanyAvailableLocales(
-							themeDisplay.getCompanyId()),
+						_language.getAvailableLocales(
+							_getGroupId(httpServletRequest, themeDisplay)),
 						locale -> {
 							String w3cLanguageId = LocaleUtil.toW3cLanguageId(
 								locale);
@@ -242,6 +247,27 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 				_log.debug(exception);
 			}
 		}
+	}
+
+	private long _getGroupId(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (!group.isCMS()) {
+			return themeDisplay.getScopeGroupId();
+		}
+
+		Object infoItem = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+
+		if (infoItem instanceof ObjectEntry) {
+			ObjectEntry objectEntry = (ObjectEntry)infoItem;
+
+			return objectEntry.getGroupId();
+		}
+
+		return themeDisplay.getScopeGroupId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

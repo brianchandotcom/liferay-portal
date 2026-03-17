@@ -460,7 +460,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 						"ExportImportDescriptor with key ", key3,
 						"  declares shared model class ", className,
 						" but does not implement ",
-						"getApplicableModelFunction()"),
+						"getApplicableModelFunction"),
 					logEntry.getMessage());
 			}
 		}

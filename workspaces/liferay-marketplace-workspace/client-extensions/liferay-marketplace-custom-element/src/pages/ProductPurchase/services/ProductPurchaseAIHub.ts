@@ -31,7 +31,8 @@ export class ProductPurchaseAIHub extends ProductPurchase {
 				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
 					aiHubForm: {
-						administrationEmail: this.form?.administrationEmail,
+						administrationEmailAddress:
+							this.form?.administrationEmailAddress,
 						aiHubAccountName: this.form?.aiHubAccountName,
 						businessEmail: this.form?.businessEmail,
 						companyName: this.form?.companyName,

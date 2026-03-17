@@ -26,6 +26,11 @@ import {PURPOSE_OPTIONS} from './constants';
 
 import './ActivationKeyForm.scss';
 
+const setValuesOptions = {
+	shouldDirty: true,
+	shouldValidate: true,
+};
+
 const ActivationKeyFormDXP = () => {
 	const [active, setActive] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -282,7 +287,11 @@ const ActivationKeyFormDXP = () => {
 								onClick={() => {
 									setActive(false);
 
-									setValue('purpose', option.value);
+									setValue(
+										'purpose',
+										option.value,
+										setValuesOptions
+									);
 								}}
 							>
 								<strong>{option.title}</strong>
@@ -384,7 +393,8 @@ const ActivationKeyFormDXP = () => {
 						onChange={(event) => {
 							setValue(
 								'termsAndConditions',
-								event.target.checked
+								event.target.checked,
+								setValuesOptions
 							);
 						}}
 						required
@@ -409,7 +419,11 @@ const ActivationKeyFormDXP = () => {
 						checked={userAgreement}
 						id="user-agreement"
 						onChange={(event) => {
-							setValue('userAgreement', event.target.checked);
+							setValue(
+								'userAgreement',
+								event.target.checked,
+								setValuesOptions
+							);
 						}}
 						required
 					/>

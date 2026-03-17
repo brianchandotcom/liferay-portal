@@ -5,7 +5,7 @@
 
 export const productAgreements = {
 	agreement: `
-        (these terms and the eula together form the "agreement"). 
+        (these terms and the eula together form the "agreement").
         Please read these terms and the
         Liferay End User License Agreement carefully before
         accessing, downloading, installing or in any way using
@@ -21,6 +21,10 @@ export const productAgreements = {
         install or in any way use the software. I have read and
         agree to all the terms and conditions below (check all boxes).`,
 	links: {
+		aiHub: {
+			agreement:
+				'https://marketplace.liferay.com/documents/d/marketplace/evaluation-agreement-cloud-services-1202603_gl',
+		},
 		eula: `https://www.liferay.com/documents/d/guest/Liferay-EULA-2102602_GL`,
 		userAgreement: '',
 	},

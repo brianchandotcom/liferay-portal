@@ -41,6 +41,64 @@ public interface LikeFinderEntryPersistence
 		Set<Serializable> primaryKeys);
 
 	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or throws a <code>NoSuchLikeFinderEntryException</code> if it could not be found.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the matching like finder entry
+	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
+	 */
+	public LikeFinderEntry findByO_O_P(
+			long ownerId, int ownerType, String portletId)
+		throws NoSuchLikeFinderEntryException;
+
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
+	 */
+	public LikeFinderEntry fetchByO_O_P(
+		long ownerId, int ownerType, String portletId);
+
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
+	 */
+	public LikeFinderEntry fetchByO_O_P(
+		long ownerId, int ownerType, String portletId, boolean useFinderCache);
+
+	/**
+	 * Removes the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the like finder entry that was removed
+	 */
+	public LikeFinderEntry removeByO_O_P(
+			long ownerId, int ownerType, String portletId)
+		throws NoSuchLikeFinderEntryException;
+
+	/**
+	 * Returns the number of like finder entries where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the number of matching like finder entries
+	 */
+	public int countByO_O_P(long ownerId, int ownerType, String portletId);
+
+	/**
 	 * Returns all the like finder entries where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -222,64 +280,6 @@ public interface LikeFinderEntryPersistence
 	 */
 	public int countByC_O_O_LikeP(
 		long companyId, long ownerId, int ownerType, String portletId);
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or throws a <code>NoSuchLikeFinderEntryException</code> if it could not be found.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the matching like finder entry
-	 * @throws NoSuchLikeFinderEntryException if a matching like finder entry could not be found
-	 */
-	public LikeFinderEntry findByO_O_P(
-			long ownerId, int ownerType, String portletId)
-		throws NoSuchLikeFinderEntryException;
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	public LikeFinderEntry fetchByO_O_P(
-		long ownerId, int ownerType, String portletId);
-
-	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	public LikeFinderEntry fetchByO_O_P(
-		long ownerId, int ownerType, String portletId, boolean useFinderCache);
-
-	/**
-	 * Removes the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the like finder entry that was removed
-	 */
-	public LikeFinderEntry removeByO_O_P(
-			long ownerId, int ownerType, String portletId)
-		throws NoSuchLikeFinderEntryException;
-
-	/**
-	 * Returns the number of like finder entries where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the number of matching like finder entries
-	 */
-	public int countByO_O_P(long ownerId, int ownerType, String portletId);
 
 	/**
 	 * Caches the like finder entry in the entity cache if it is enabled.

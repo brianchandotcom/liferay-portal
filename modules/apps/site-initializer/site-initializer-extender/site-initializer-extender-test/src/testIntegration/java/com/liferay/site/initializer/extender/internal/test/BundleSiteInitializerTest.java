@@ -656,7 +656,7 @@ public class BundleSiteInitializerTest {
 				_group.getGroupId());
 
 		Assert.assertEquals(
-			assetListEntries.toString(), 4, assetListEntries.size());
+			assetListEntries.toString(), 5, assetListEntries.size());
 
 		AssetListEntry assetListEntry = assetListEntries.get(0);
 
@@ -714,6 +714,30 @@ public class BundleSiteInitializerTest {
 				assetListEntry.getAssetEntryType(),
 				ObjectDefinitionConstants.
 					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
+
+		assetListEntry = assetListEntries.get(4);
+
+		Assert.assertEquals(
+			"Test Asset List Entry 5", assetListEntry.getTitle());
+
+		assetListEntrySegmentsEntryRel =
+			_assetListEntrySegmentsEntryRelLocalService.
+				fetchAssetListEntrySegmentsEntryRel(
+					assetListEntry.getAssetListEntryId(), 0);
+
+		typeSettings = assetListEntrySegmentsEntryRel.getTypeSettings();
+
+		Assert.assertEquals("manual", assetListEntry.getTypeLabel());
+		Assert.assertTrue(
+			typeSettings.contains(
+				"classNameIds=" +
+					_portal.getClassNameId(JournalArticle.class.getName())));
+		Assert.assertTrue(
+			typeSettings.contains(
+				"classTypeIdsJournalArticleAssetRendererFactory"));
+		Assert.assertFalse(
+			typeSettings.contains(
+				"classTypeIdsObjectEntryAssetRendererFactory"));
 	}
 
 	private void _assertAssetVocabularies() throws Exception {

@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Role;
@@ -57,6 +56,7 @@ import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -87,9 +87,6 @@ public class InviteMemberMVCActionCommandTest {
 
 	@Test
 	public void testProcessAction() throws Exception {
-		Group group = _groupLocalService.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -118,12 +115,10 @@ public class InviteMemberMVCActionCommandTest {
 		objectEntry = _objectEntryLocalService.getObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		Group roomGroup = _groupLocalService.getGroup(
-			GetterUtil.getLong(
-				objectEntry.getValues(
-				).get(
-					"siteId"
-				)));
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Group group = _groupLocalService.getGroup(
+			GetterUtil.getLong(values.get("siteId")));
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(group);
@@ -144,7 +139,7 @@ public class InviteMemberMVCActionCommandTest {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			roomGroup.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
+			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
 			JSONUtil.put(
 				"accountEntryId", accountEntry.getAccountEntryId()
 			).put(
@@ -156,7 +151,7 @@ public class InviteMemberMVCActionCommandTest {
 			new ServiceContext());
 
 		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
-			roomGroup);
+			group);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"firstName", RandomTestUtil.randomString());
@@ -189,10 +184,9 @@ public class InviteMemberMVCActionCommandTest {
 		Assert.assertTrue(
 			ListUtil.exists(
 				_userGroupRoleLocalService.getUserGroupRoles(
-					user.getUserId(), roomGroup.getGroupId()),
+					user.getUserId(), group.getGroupId()),
 				userGroupRole ->
 					role.getRoleId() == userGroupRole.getRoleId()));
-
 		Assert.assertTrue(
 			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
 				accountEntry.getAccountEntryId(), user.getUserId()));

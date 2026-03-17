@@ -146,6 +146,7 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertEquals("/" + friendlyURL, group.getFriendlyURL());
 		Assert.assertEquals(name, group.getName(LocaleUtil.getDefault()));
 
+		DSRLayoutTestUtil.assertFragmentEntryLink(group.getGroupId());
 		DSRLayoutTestUtil.assertLayouts(
 			group.getGroupId(),
 			new String[] {"Documents", "Login", "Onboarding"}, false);

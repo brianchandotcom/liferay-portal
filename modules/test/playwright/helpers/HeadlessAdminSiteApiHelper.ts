@@ -6,6 +6,7 @@
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 export type TNavigationMenu = {
+	externalReferenceCode?: string;
 	name: string;
 	navigationMenuItems?: TNavigationMenuItem[];
 	navigationType?: 'Primary' | 'Secondary' | 'Social';

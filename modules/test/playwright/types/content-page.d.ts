@@ -57,6 +57,7 @@ type FormConfig = {
 
 type Layout = {
 	companyId: string;
+	externalReferenceCode: string;
 	friendlyURL: string;
 	friendlyUrlPath: string;
 	groupId: string;

@@ -97,7 +97,11 @@ const ActivationKeyFormCMP = () => {
 					Liferay End User License Agreement set forth at
 				</span>
 
-				<a className="ml-1" href={productAgreements.links.eula}>
+				<a
+					className="ml-1"
+					href={productAgreements.links.eula}
+					target="_blank"
+				>
 					{productAgreements.links.eula}
 				</a>
 

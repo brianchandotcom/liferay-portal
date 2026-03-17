@@ -6585,6 +6585,8 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
+				"richTextObjectFieldName", "<i>richTextObjectFieldNameValue</i>"
+			).put(
 				"textObjectFieldName", StringUtil.randomId()
 			).put(
 				"textObjectFieldNameExtension", StringUtil.randomId()

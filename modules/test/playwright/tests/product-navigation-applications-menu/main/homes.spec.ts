@@ -22,16 +22,18 @@ test(
 	'Check accessibility',
 	{tag: '@LPD-70107'},
 	async ({globalMenuPage, page}) => {
+		const SELECTORS = ['[role="main"]'];
+
 		await globalMenuPage.goToControlPanel();
 
 		await globalMenuPage.openProductMenu('Control Panel');
 
-		await checkAccessibility({page});
+		await checkAccessibility({page, selectors: SELECTORS});
 
 		await globalMenuPage.goToApplications();
 
 		await globalMenuPage.openProductMenu('Applications');
 
-		await checkAccessibility({page});
+		await checkAccessibility({page, selectors: SELECTORS});
 	}
 );

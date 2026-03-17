@@ -30,6 +30,14 @@ const renderComponent = () => {
 };
 
 describe('ContentEditorToolbar', () => {
+	it('does not render ObjectEntry_displayDate hidden input when there is no selected date', () => {
+		renderComponent();
+
+		expect(
+			document.querySelector('input[name="ObjectEntry_displayDate"]')
+		).not.toBeInTheDocument();
+	});
+
 	it('publishes the content pressing ctrl + alt + Enter', () => {
 		renderComponent();
 

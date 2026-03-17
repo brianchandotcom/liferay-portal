@@ -152,6 +152,51 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	@TestInfo("LPD-81592")
+	public void testIsLayoutSetMergeable() throws Exception {
+		setLinkEnabled(true);
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			group.getGroupId(), false);
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
+
+		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+
+		_layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+				_layoutSetPrototype.getLayoutSetPrototypeId());
+
+		_layoutSetPrototype.setModifiedDate(new Date());
+
+		_layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				_layoutSetPrototype);
+
+		Assert.assertTrue(_sites.isLayoutSetMergeable(group, layoutSet));
+
+		settingsUnicodeProperties = layoutSet.getSettingsProperties();
+
+		settingsUnicodeProperties.setProperty(
+			Sites.LAST_MERGE_TIME,
+			String.valueOf(System.currentTimeMillis() - Time.MINUTE));
+
+		_layoutSetPrototype.setModifiedDate(new Date());
+
+		_layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				_layoutSetPrototype);
+
+		Assert.assertFalse(
+			_sites.isLayoutSetMergeable(
+				group, LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet)));
+	}
+
+	@Test
 	public void testIsLayoutSortable() throws Exception {
 		Assert.assertFalse(layout.isLayoutSortable());
 

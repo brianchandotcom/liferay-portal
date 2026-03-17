@@ -46,6 +46,10 @@ public class ConsentPreferenceServiceUtil {
 		getService().deleteConsentPreference(userId, domain, name);
 	}
 
+	public static void deleteConsentPreferences(long userId) {
+		getService().deleteConsentPreferences(userId);
+	}
+
 	public static void deleteConsentPreferences(long userId, String domain) {
 		getService().deleteConsentPreferences(userId, domain);
 	}

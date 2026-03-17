@@ -51,6 +51,8 @@ public interface ConsentPreferenceService extends BaseService {
 	public void deleteConsentPreference(long userId, String domain, String name)
 		throws PortalException;
 
+	public void deleteConsentPreferences(long userId);
+
 	public void deleteConsentPreferences(long userId, String domain);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

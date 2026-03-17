@@ -46,6 +46,11 @@ public class ConsentPreferenceServiceWrapper
 	}
 
 	@Override
+	public void deleteConsentPreferences(long userId) {
+		_consentPreferenceService.deleteConsentPreferences(userId);
+	}
+
+	@Override
 	public void deleteConsentPreferences(long userId, String domain) {
 		_consentPreferenceService.deleteConsentPreferences(userId, domain);
 	}

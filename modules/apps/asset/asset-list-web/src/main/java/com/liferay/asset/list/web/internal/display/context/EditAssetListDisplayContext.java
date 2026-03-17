@@ -1064,15 +1064,23 @@ public class EditAssetListDisplayContext {
 			for (AssetVocabularyGroupRel assetVocabularyGroupRel :
 					assetVocabularyGroupRels) {
 
-				groupsVocabularies.add(
+				AssetVocabulary assetVocabulary =
 					_assetVocabularyService.fetchVocabulary(
-						assetVocabularyGroupRel.getVocabularyId()));
+						assetVocabularyGroupRel.getVocabularyId());
+
+				if (assetVocabulary != null) {
+					groupsVocabularies.add(assetVocabulary);
+				}
 			}
 		}
 
 		List<AssetVocabulary> assetVocabularies = ListUtil.filter(
 			new ArrayList<>(groupsVocabularies),
 			vocabulary -> {
+				if (vocabulary == null) {
+					return false;
+				}
+
 				long[] classNameIds = vocabulary.getSelectedClassNameIds();
 
 				for (long classNameId : classNameIds) {

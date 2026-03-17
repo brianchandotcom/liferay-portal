@@ -3,17 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {FDS_EVENT_UPDATE_DISPLAY} from '../../../common/utils/constants';
 import {openCMSModal} from '../../../common/utils/openCMSModal';
 import {executeAsyncItemAction} from '../utils/executeAsyncItemAction';
 
 export default function confirmAndDeleteEntryAction({
 	bodyHTML,
+	dataSetId,
 	deleteAction,
 	loadData,
 	successMessage,
 	title,
 }: {
 	bodyHTML: string;
+	dataSetId?: string;
 	deleteAction: {href: string; method: string};
 	loadData: () => void;
 	successMessage: string;
@@ -36,7 +39,13 @@ export default function confirmAndDeleteEntryAction({
 
 					executeAsyncItemAction({
 						method: deleteAction.method,
-						refreshData: loadData,
+						refreshData: (responseData) => {
+							loadData();
+
+							Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+								id: dataSetId,
+							});
+						},
 						successMessage,
 						url: deleteAction.href,
 					});

@@ -10,11 +10,27 @@ resource "google_compute_firewall" "allow_health_checks" {
 }
 resource "google_compute_firewall" "allow_internal" {
 	allow {
-		ports=["0-65535",]
+		ports=[
+			"53",
+			"80",
+			"443",
+			"8080",
+			"8443",
+			"9080",
+			"9443",
+			"10250",
+			"10255",
+			"10256",
+		]
 		protocol="tcp"
 	}
 	allow {
-		ports=["0-65535",]
+		ports=[
+			"53",
+			"4789",
+			"7800",
+			"8472",
+		]
 		protocol="udp"
 	}
 	allow {

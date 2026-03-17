@@ -6,12 +6,21 @@
 package com.liferay.portal.store.test.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -387,6 +396,43 @@ public abstract class BaseStoreTestCase {
 				_store.hasFile(
 					_companyId, _repositoryId, fileName, versionLabel + i));
 		}
+	}
+
+	@Test
+	public void testSmoke() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(group.getGroupId());
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		Assert.assertTrue(
+			_store.hasFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
+
+		DLTrashLocalServiceUtil.moveFileEntryToTrash(
+			dlFileEntry.getUserId(), dlFileEntry.getRepositoryId(),
+			dlFileEntry.getFileEntryId());
+
+		Assert.assertTrue(
+			_store.hasFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			DLFileEntry.class.getName());
+
+		trashHandler.deleteTrashEntry(dlFileEntry.getPrimaryKey());
+
+		Assert.assertFalse(
+			_store.hasFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
+
+		GroupTestUtil.deleteGroup(group);
 	}
 
 	@Test

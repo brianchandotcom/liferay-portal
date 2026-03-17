@@ -246,25 +246,6 @@ public class KaleoInstanceUtil {
 	}
 
 	/**
-	 * Returns the kaleo instances before and after the current kaleo instance in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoInstanceId the primary key of the current kaleo instance
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance
-	 * @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
-	 */
-	public static KaleoInstance[] findByCompanyId_PrevAndNext(
-			long kaleoInstanceId, long companyId,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			kaleoInstanceId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo instances where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -424,25 +405,6 @@ public class KaleoInstanceUtil {
 
 		return getPersistence().fetchByKaleoDefinitionVersionId_Last(
 			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo instances before and after the current kaleo instance in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoInstanceId the primary key of the current kaleo instance
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance
-	 * @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
-	 */
-	public static KaleoInstance[] findByKaleoDefinitionVersionId_PrevAndNext(
-			long kaleoInstanceId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceException {
-
-		return getPersistence().findByKaleoDefinitionVersionId_PrevAndNext(
-			kaleoInstanceId, kaleoDefinitionVersionId, orderByComparator);
 	}
 
 	/**
@@ -617,26 +579,6 @@ public class KaleoInstanceUtil {
 	}
 
 	/**
-	 * Returns the kaleo instances before and after the current kaleo instance in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param kaleoInstanceId the primary key of the current kaleo instance
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance
-	 * @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
-	 */
-	public static KaleoInstance[] findByC_U_PrevAndNext(
-			long kaleoInstanceId, long companyId, long userId,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceException {
-
-		return getPersistence().findByC_U_PrevAndNext(
-			kaleoInstanceId, companyId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo instances where companyId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -805,26 +747,6 @@ public class KaleoInstanceUtil {
 
 		return getPersistence().fetchByKDI_C_Last(
 			kaleoDefinitionId, completed, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo instances before and after the current kaleo instance in the ordered set where kaleoDefinitionId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceId the primary key of the current kaleo instance
-	 * @param kaleoDefinitionId the kaleo definition ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance
-	 * @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
-	 */
-	public static KaleoInstance[] findByKDI_C_PrevAndNext(
-			long kaleoInstanceId, long kaleoDefinitionId, boolean completed,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceException {
-
-		return getPersistence().findByKDI_C_PrevAndNext(
-			kaleoInstanceId, kaleoDefinitionId, completed, orderByComparator);
 	}
 
 	/**
@@ -1002,28 +924,6 @@ public class KaleoInstanceUtil {
 	}
 
 	/**
-	 * Returns the kaleo instances before and after the current kaleo instance in the ordered set where kaleoDefinitionVersionId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceId the primary key of the current kaleo instance
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance
-	 * @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
-	 */
-	public static KaleoInstance[] findByKDVI_C_PrevAndNext(
-			long kaleoInstanceId, long kaleoDefinitionVersionId,
-			boolean completed,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceException {
-
-		return getPersistence().findByKDVI_C_PrevAndNext(
-			kaleoInstanceId, kaleoDefinitionVersionId, completed,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo instances where kaleoDefinitionVersionId = &#63; and completed = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -1195,26 +1095,6 @@ public class KaleoInstanceUtil {
 
 		return getPersistence().fetchByCN_CPK_Last(
 			className, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo instances before and after the current kaleo instance in the ordered set where className = &#63; and classPK = &#63;.
-	 *
-	 * @param kaleoInstanceId the primary key of the current kaleo instance
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance
-	 * @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
-	 */
-	public static KaleoInstance[] findByCN_CPK_PrevAndNext(
-			long kaleoInstanceId, String className, long classPK,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceException {
-
-		return getPersistence().findByCN_CPK_PrevAndNext(
-			kaleoInstanceId, className, classPK, orderByComparator);
 	}
 
 	/**
@@ -1503,30 +1383,6 @@ public class KaleoInstanceUtil {
 	}
 
 	/**
-	 * Returns the kaleo instances before and after the current kaleo instance in the ordered set where companyId = &#63; and kaleoDefinitionName = &#63; and kaleoDefinitionVersion = &#63; and completionDate = &#63;.
-	 *
-	 * @param kaleoInstanceId the primary key of the current kaleo instance
-	 * @param companyId the company ID
-	 * @param kaleoDefinitionName the kaleo definition name
-	 * @param kaleoDefinitionVersion the kaleo definition version
-	 * @param completionDate the completion date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance
-	 * @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
-	 */
-	public static KaleoInstance[] findByC_KDN_KDV_CD_PrevAndNext(
-			long kaleoInstanceId, long companyId, String kaleoDefinitionName,
-			int kaleoDefinitionVersion, Date completionDate,
-			OrderByComparator<KaleoInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceException {
-
-		return getPersistence().findByC_KDN_KDV_CD_PrevAndNext(
-			kaleoInstanceId, companyId, kaleoDefinitionName,
-			kaleoDefinitionVersion, completionDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo instances where companyId = &#63; and kaleoDefinitionName = &#63; and kaleoDefinitionVersion = &#63; and completionDate = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1722,4 +1578,4 @@ public class KaleoInstanceUtil {
 	private static volatile KaleoInstancePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:795473882
+// LIFERAY-SERVICE-BUILDER-HASH:-2056284739

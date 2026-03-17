@@ -252,25 +252,6 @@ public class KaleoInstanceTokenUtil {
 	}
 
 	/**
-	 * Returns the kaleo instance tokens before and after the current kaleo instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the primary key of the current kaleo instance token
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
-	 */
-	public static KaleoInstanceToken[] findByCompanyId_PrevAndNext(
-			long kaleoInstanceTokenId, long companyId,
-			OrderByComparator<KaleoInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceTokenException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			kaleoInstanceTokenId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo instance tokens where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -430,26 +411,6 @@ public class KaleoInstanceTokenUtil {
 
 		return getPersistence().fetchByKaleoDefinitionVersionId_Last(
 			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo instance tokens before and after the current kaleo instance token in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the primary key of the current kaleo instance token
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
-	 */
-	public static KaleoInstanceToken[]
-			findByKaleoDefinitionVersionId_PrevAndNext(
-				long kaleoInstanceTokenId, long kaleoDefinitionVersionId,
-				OrderByComparator<KaleoInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceTokenException {
-
-		return getPersistence().findByKaleoDefinitionVersionId_PrevAndNext(
-			kaleoInstanceTokenId, kaleoDefinitionVersionId, orderByComparator);
 	}
 
 	/**
@@ -616,25 +577,6 @@ public class KaleoInstanceTokenUtil {
 
 		return getPersistence().fetchByKaleoInstanceId_Last(
 			kaleoInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo instance tokens before and after the current kaleo instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the primary key of the current kaleo instance token
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
-	 */
-	public static KaleoInstanceToken[] findByKaleoInstanceId_PrevAndNext(
-			long kaleoInstanceTokenId, long kaleoInstanceId,
-			OrderByComparator<KaleoInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceTokenException {
-
-		return getPersistence().findByKaleoInstanceId_PrevAndNext(
-			kaleoInstanceTokenId, kaleoInstanceId, orderByComparator);
 	}
 
 	/**
@@ -806,28 +748,6 @@ public class KaleoInstanceTokenUtil {
 
 		return getPersistence().fetchByC_PKITI_Last(
 			companyId, parentKaleoInstanceTokenId, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo instance tokens before and after the current kaleo instance token in the ordered set where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the primary key of the current kaleo instance token
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
-	 */
-	public static KaleoInstanceToken[] findByC_PKITI_PrevAndNext(
-			long kaleoInstanceTokenId, long companyId,
-			long parentKaleoInstanceTokenId,
-			OrderByComparator<KaleoInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceTokenException {
-
-		return getPersistence().findByC_PKITI_PrevAndNext(
-			kaleoInstanceTokenId, companyId, parentKaleoInstanceTokenId,
-			orderByComparator);
 	}
 
 	/**
@@ -1023,29 +943,6 @@ public class KaleoInstanceTokenUtil {
 		return getPersistence().fetchByC_PKITI_CD_Last(
 			companyId, parentKaleoInstanceTokenId, completionDate,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo instance tokens before and after the current kaleo instance token in the ordered set where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the primary key of the current kaleo instance token
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param completionDate the completion date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo instance token
-	 * @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
-	 */
-	public static KaleoInstanceToken[] findByC_PKITI_CD_PrevAndNext(
-			long kaleoInstanceTokenId, long companyId,
-			long parentKaleoInstanceTokenId, Date completionDate,
-			OrderByComparator<KaleoInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchInstanceTokenException {
-
-		return getPersistence().findByC_PKITI_CD_PrevAndNext(
-			kaleoInstanceTokenId, companyId, parentKaleoInstanceTokenId,
-			completionDate, orderByComparator);
 	}
 
 	/**
@@ -1247,4 +1144,4 @@ public class KaleoInstanceTokenUtil {
 	private static volatile KaleoInstanceTokenPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1789502197
+// LIFERAY-SERVICE-BUILDER-HASH:-972759068

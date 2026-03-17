@@ -240,25 +240,6 @@ public class CPOptionValueUtil {
 	}
 
 	/**
-	 * Returns the cp option values before and after the current cp option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPOptionValueId the primary key of the current cp option value
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	public static CPOptionValue[] findByUuid_PrevAndNext(
-			long CPOptionValueId, String uuid,
-			OrderByComparator<CPOptionValue> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPOptionValueException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			CPOptionValueId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp option values where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -426,26 +407,6 @@ public class CPOptionValueUtil {
 	}
 
 	/**
-	 * Returns the cp option values before and after the current cp option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPOptionValueId the primary key of the current cp option value
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	public static CPOptionValue[] findByUuid_C_PrevAndNext(
-			long CPOptionValueId, String uuid, long companyId,
-			OrderByComparator<CPOptionValue> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPOptionValueException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			CPOptionValueId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp option values where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -601,25 +562,6 @@ public class CPOptionValueUtil {
 	}
 
 	/**
-	 * Returns the cp option values before and after the current cp option value in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPOptionValueId the primary key of the current cp option value
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	public static CPOptionValue[] findByCompanyId_PrevAndNext(
-			long CPOptionValueId, long companyId,
-			OrderByComparator<CPOptionValue> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPOptionValueException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			CPOptionValueId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp option values where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -770,25 +712,6 @@ public class CPOptionValueUtil {
 
 		return getPersistence().fetchByCPOptionId_Last(
 			CPOptionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp option values before and after the current cp option value in the ordered set where CPOptionId = &#63;.
-	 *
-	 * @param CPOptionValueId the primary key of the current cp option value
-	 * @param CPOptionId the cp option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	public static CPOptionValue[] findByCPOptionId_PrevAndNext(
-			long CPOptionValueId, long CPOptionId,
-			OrderByComparator<CPOptionValue> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPOptionValueException {
-
-		return getPersistence().findByCPOptionId_PrevAndNext(
-			CPOptionValueId, CPOptionId, orderByComparator);
 	}
 
 	/**
@@ -1108,4 +1031,4 @@ public class CPOptionValueUtil {
 	private static volatile CPOptionValuePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:739634298
+// LIFERAY-SERVICE-BUILDER-HASH:2032114963

@@ -249,25 +249,6 @@ public class SocialActivitySettingUtil {
 	}
 
 	/**
-	 * Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63;.
-	 *
-	 * @param activitySettingId the primary key of the current social activity setting
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity setting
-	 * @throws NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	 */
-	public static SocialActivitySetting[] findByGroupId_PrevAndNext(
-			long activitySettingId, long groupId,
-			OrderByComparator<SocialActivitySetting> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivitySettingException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			activitySettingId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activity settings where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -433,26 +414,6 @@ public class SocialActivitySettingUtil {
 
 		return getPersistence().fetchByG_C_Last(
 			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param activitySettingId the primary key of the current social activity setting
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity setting
-	 * @throws NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	 */
-	public static SocialActivitySetting[] findByG_C_PrevAndNext(
-			long activitySettingId, long groupId, long classNameId,
-			OrderByComparator<SocialActivitySetting> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivitySettingException {
-
-		return getPersistence().findByG_C_PrevAndNext(
-			activitySettingId, groupId, classNameId, orderByComparator);
 	}
 
 	/**
@@ -623,26 +584,6 @@ public class SocialActivitySettingUtil {
 
 		return getPersistence().fetchByG_A_Last(
 			groupId, activityType, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63; and activityType = &#63;.
-	 *
-	 * @param activitySettingId the primary key of the current social activity setting
-	 * @param groupId the group ID
-	 * @param activityType the activity type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity setting
-	 * @throws NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	 */
-	public static SocialActivitySetting[] findByG_A_PrevAndNext(
-			long activitySettingId, long groupId, int activityType,
-			OrderByComparator<SocialActivitySetting> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivitySettingException {
-
-		return getPersistence().findByG_A_PrevAndNext(
-			activitySettingId, groupId, activityType, orderByComparator);
 	}
 
 	/**
@@ -822,29 +763,6 @@ public class SocialActivitySettingUtil {
 
 		return getPersistence().fetchByG_C_A_Last(
 			groupId, classNameId, activityType, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
-	 *
-	 * @param activitySettingId the primary key of the current social activity setting
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param activityType the activity type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity setting
-	 * @throws NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	 */
-	public static SocialActivitySetting[] findByG_C_A_PrevAndNext(
-			long activitySettingId, long groupId, long classNameId,
-			int activityType,
-			OrderByComparator<SocialActivitySetting> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivitySettingException {
-
-		return getPersistence().findByG_C_A_PrevAndNext(
-			activitySettingId, groupId, classNameId, activityType,
-			orderByComparator);
 	}
 
 	/**
@@ -1134,4 +1052,4 @@ public class SocialActivitySettingUtil {
 	private static volatile SocialActivitySettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1108069485
+// LIFERAY-SERVICE-BUILDER-HASH:-1011556773

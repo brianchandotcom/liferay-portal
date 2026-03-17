@@ -147,21 +147,6 @@ public interface CommerceDiscountRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce discount rels before and after the current commerce discount rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountRelId the primary key of the current commerce discount rel
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount rel
-	 * @throws NoSuchDiscountRelException if a commerce discount rel with the primary key could not be found
-	 */
-	public CommerceDiscountRel[] findByCommerceDiscountId_PrevAndNext(
-			long commerceDiscountRelId, long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountRel> orderByComparator)
-		throws NoSuchDiscountRelException;
-
-	/**
 	 * Removes all the commerce discount rels where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -297,23 +282,6 @@ public interface CommerceDiscountRelPersistence
 		long commerceDiscountId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRel>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce discount rels before and after the current commerce discount rel in the ordered set where commerceDiscountId = &#63; and classNameId = &#63;.
-	 *
-	 * @param commerceDiscountRelId the primary key of the current commerce discount rel
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount rel
-	 * @throws NoSuchDiscountRelException if a commerce discount rel with the primary key could not be found
-	 */
-	public CommerceDiscountRel[] findByCD_CN_PrevAndNext(
-			long commerceDiscountRelId, long commerceDiscountId,
-			long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountRel> orderByComparator)
-		throws NoSuchDiscountRelException;
 
 	/**
 	 * Removes all the commerce discount rels where commerceDiscountId = &#63; and classNameId = &#63; from the database.
@@ -453,22 +421,6 @@ public interface CommerceDiscountRelPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRel>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce discount rels before and after the current commerce discount rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commerceDiscountRelId the primary key of the current commerce discount rel
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount rel
-	 * @throws NoSuchDiscountRelException if a commerce discount rel with the primary key could not be found
-	 */
-	public CommerceDiscountRel[] findByCN_CPK_PrevAndNext(
-			long commerceDiscountRelId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountRel> orderByComparator)
-		throws NoSuchDiscountRelException;
 
 	/**
 	 * Removes all the commerce discount rels where classNameId = &#63; and classPK = &#63; from the database.
@@ -621,24 +573,6 @@ public interface CommerceDiscountRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce discount rels before and after the current commerce discount rel in the ordered set where commerceDiscountId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commerceDiscountRelId the primary key of the current commerce discount rel
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount rel
-	 * @throws NoSuchDiscountRelException if a commerce discount rel with the primary key could not be found
-	 */
-	public CommerceDiscountRel[] findByCD_CN_CPK_PrevAndNext(
-			long commerceDiscountRelId, long commerceDiscountId,
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountRel> orderByComparator)
-		throws NoSuchDiscountRelException;
-
-	/**
 	 * Removes all the commerce discount rels where commerceDiscountId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -782,4 +716,4 @@ public interface CommerceDiscountRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-185985569
+// LIFERAY-SERVICE-BUILDER-HASH:-402718297

@@ -252,25 +252,6 @@ public class CountryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the country localizations before and after the current country localization in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryLocalizationId the primary key of the current country localization
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country localization
-	 * @throws NoSuchCountryLocalizationException if a country localization with the primary key could not be found
-	 */
-	public static CountryLocalization[] findByCountryId_PrevAndNext(
-			long countryLocalizationId, long countryId,
-			OrderByComparator<CountryLocalization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchCountryLocalizationException {
-
-		return getPersistence().findByCountryId_PrevAndNext(
-			countryLocalizationId, countryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the country localizations where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -536,4 +517,4 @@ public class CountryLocalizationUtil {
 	private static volatile CountryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1378126217
+// LIFERAY-SERVICE-BUILDER-HASH:-1634184061

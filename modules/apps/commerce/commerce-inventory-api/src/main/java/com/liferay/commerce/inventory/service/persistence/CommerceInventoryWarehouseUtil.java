@@ -250,25 +250,6 @@ public class CommerceInventoryWarehouseUtil {
 	}
 
 	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] findByUuid_PrevAndNext(
-			long commerceInventoryWarehouseId, String uuid,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceInventoryWarehouseId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce inventory warehouses that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -317,25 +298,6 @@ public class CommerceInventoryWarehouseUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set of commerce inventory warehouses that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] filterFindByUuid_PrevAndNext(
-			long commerceInventoryWarehouseId, String uuid,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			commerceInventoryWarehouseId, uuid, orderByComparator);
 	}
 
 	/**
@@ -516,26 +478,6 @@ public class CommerceInventoryWarehouseUtil {
 	}
 
 	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] findByUuid_C_PrevAndNext(
-			long commerceInventoryWarehouseId, String uuid, long companyId,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceInventoryWarehouseId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce inventory warehouses that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -587,26 +529,6 @@ public class CommerceInventoryWarehouseUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set of commerce inventory warehouses that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] filterFindByUuid_C_PrevAndNext(
-			long commerceInventoryWarehouseId, String uuid, long companyId,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			commerceInventoryWarehouseId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -782,25 +704,6 @@ public class CommerceInventoryWarehouseUtil {
 	}
 
 	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] findByCompanyId_PrevAndNext(
-			long commerceInventoryWarehouseId, long companyId,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commerceInventoryWarehouseId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce inventory warehouses that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -849,26 +752,6 @@ public class CommerceInventoryWarehouseUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set of commerce inventory warehouses that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[]
-			filterFindByCompanyId_PrevAndNext(
-				long commerceInventoryWarehouseId, long companyId,
-				OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			commerceInventoryWarehouseId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1049,26 +932,6 @@ public class CommerceInventoryWarehouseUtil {
 	}
 
 	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] findByC_A_PrevAndNext(
-			long commerceInventoryWarehouseId, long companyId, boolean active,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().findByC_A_PrevAndNext(
-			commerceInventoryWarehouseId, companyId, active, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce inventory warehouses that the user has permission to view where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1120,26 +983,6 @@ public class CommerceInventoryWarehouseUtil {
 
 		return getPersistence().filterFindByC_A(
 			companyId, active, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set of commerce inventory warehouses that the user has permission to view where companyId = &#63; and active = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] filterFindByC_A_PrevAndNext(
-			long commerceInventoryWarehouseId, long companyId, boolean active,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().filterFindByC_A_PrevAndNext(
-			commerceInventoryWarehouseId, companyId, active, orderByComparator);
 	}
 
 	/**
@@ -1325,28 +1168,6 @@ public class CommerceInventoryWarehouseUtil {
 	}
 
 	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set where companyId = &#63; and countryTwoLettersISOCode = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param companyId the company ID
-	 * @param countryTwoLettersISOCode the country two letters iso code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] findByC_C_PrevAndNext(
-			long commerceInventoryWarehouseId, long companyId,
-			String countryTwoLettersISOCode,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			commerceInventoryWarehouseId, companyId, countryTwoLettersISOCode,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce inventory warehouses that the user has permission to view where companyId = &#63; and countryTwoLettersISOCode = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1400,28 +1221,6 @@ public class CommerceInventoryWarehouseUtil {
 
 		return getPersistence().filterFindByC_C(
 			companyId, countryTwoLettersISOCode, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set of commerce inventory warehouses that the user has permission to view where companyId = &#63; and countryTwoLettersISOCode = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param companyId the company ID
-	 * @param countryTwoLettersISOCode the country two letters iso code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] filterFindByC_C_PrevAndNext(
-			long commerceInventoryWarehouseId, long companyId,
-			String countryTwoLettersISOCode,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().filterFindByC_C_PrevAndNext(
-			commerceInventoryWarehouseId, companyId, countryTwoLettersISOCode,
-			orderByComparator);
 	}
 
 	/**
@@ -1627,29 +1426,6 @@ public class CommerceInventoryWarehouseUtil {
 	}
 
 	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set where companyId = &#63; and active = &#63; and countryTwoLettersISOCode = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param countryTwoLettersISOCode the country two letters iso code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] findByC_A_C_PrevAndNext(
-			long commerceInventoryWarehouseId, long companyId, boolean active,
-			String countryTwoLettersISOCode,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().findByC_A_C_PrevAndNext(
-			commerceInventoryWarehouseId, companyId, active,
-			countryTwoLettersISOCode, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce inventory warehouses that the user has permission to view where companyId = &#63; and active = &#63; and countryTwoLettersISOCode = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1709,29 +1485,6 @@ public class CommerceInventoryWarehouseUtil {
 		return getPersistence().filterFindByC_A_C(
 			companyId, active, countryTwoLettersISOCode, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouses before and after the current commerce inventory warehouse in the ordered set of commerce inventory warehouses that the user has permission to view where companyId = &#63; and active = &#63; and countryTwoLettersISOCode = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the primary key of the current commerce inventory warehouse
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param countryTwoLettersISOCode the country two letters iso code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse
-	 * @throws NoSuchInventoryWarehouseException if a commerce inventory warehouse with the primary key could not be found
-	 */
-	public static CommerceInventoryWarehouse[] filterFindByC_A_C_PrevAndNext(
-			long commerceInventoryWarehouseId, long companyId, boolean active,
-			String countryTwoLettersISOCode,
-			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws com.liferay.commerce.inventory.exception.
-			NoSuchInventoryWarehouseException {
-
-		return getPersistence().filterFindByC_A_C_PrevAndNext(
-			commerceInventoryWarehouseId, companyId, active,
-			countryTwoLettersISOCode, orderByComparator);
 	}
 
 	/**
@@ -2026,4 +1779,4 @@ public class CommerceInventoryWarehouseUtil {
 	private static volatile CommerceInventoryWarehousePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-243992156
+// LIFERAY-SERVICE-BUILDER-HASH:-538616772

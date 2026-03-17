@@ -148,21 +148,6 @@ public interface KaleoTaskAssignmentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo task assignments before and after the current kaleo task assignment in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoTaskAssignmentId the primary key of the current kaleo task assignment
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
-	 */
-	public KaleoTaskAssignment[] findByCompanyId_PrevAndNext(
-			long kaleoTaskAssignmentId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException;
-
-	/**
 	 * Removes all the kaleo task assignments where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -290,21 +275,6 @@ public interface KaleoTaskAssignmentPersistence
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo task assignments before and after the current kaleo task assignment in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoTaskAssignmentId the primary key of the current kaleo task assignment
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
-	 */
-	public KaleoTaskAssignment[] findByKaleoDefinitionVersionId_PrevAndNext(
-			long kaleoTaskAssignmentId, long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException;
 
 	/**
 	 * Removes all the kaleo task assignments where kaleoDefinitionVersionId = &#63; from the database.
@@ -442,23 +412,6 @@ public interface KaleoTaskAssignmentPersistence
 		String kaleoClassName, long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo task assignments before and after the current kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoTaskAssignmentId the primary key of the current kaleo task assignment
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
-	 */
-	public KaleoTaskAssignment[] findByKCN_KCPK_PrevAndNext(
-			long kaleoTaskAssignmentId, String kaleoClassName,
-			long kaleoClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException;
 
 	/**
 	 * Removes all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
@@ -611,24 +564,6 @@ public interface KaleoTaskAssignmentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo task assignments before and after the current kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
-	 *
-	 * @param kaleoTaskAssignmentId the primary key of the current kaleo task assignment
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param assigneeClassName the assignee class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task assignment
-	 * @throws NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
-	 */
-	public KaleoTaskAssignment[] findByKCN_KCPK_ACN_PrevAndNext(
-			long kaleoTaskAssignmentId, String kaleoClassName,
-			long kaleoClassPK, String assigneeClassName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoTaskAssignment> orderByComparator)
-		throws NoSuchTaskAssignmentException;
-
-	/**
 	 * Removes all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63; from the database.
 	 *
 	 * @param kaleoClassName the kaleo class name
@@ -772,4 +707,4 @@ public interface KaleoTaskAssignmentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-315920362
+// LIFERAY-SERVICE-BUILDER-HASH:-179764821

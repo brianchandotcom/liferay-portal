@@ -144,21 +144,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 			orderByComparator);
 
 	/**
-	 * Returns the modules before and after the current module in the ordered set where uuid = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public Module[] findByUuid_PrevAndNext(
-			long moduleId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
 	 * Removes all the modules where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -295,22 +280,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 			orderByComparator);
 
 	/**
-	 * Returns the modules before and after the current module in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public Module[] findByUuid_C_PrevAndNext(
-			long moduleId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
 	 * Removes all the modules where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,21 +407,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 		long appId,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator);
-
-	/**
-	 * Returns the modules before and after the current module in the ordered set where appId = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param appId the app ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public Module[] findByAppId_PrevAndNext(
-			long moduleId, long appId,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
 
 	/**
 	 * Removes all the modules where appId = &#63; from the database.
@@ -584,21 +538,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 			orderByComparator);
 
 	/**
-	 * Returns the modules before and after the current module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public Module[] findByBundleSymbolicName_PrevAndNext(
-			long moduleId, String bundleSymbolicName,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
 	 * Removes all the modules where bundleSymbolicName = &#63; from the database.
 	 *
 	 * @param bundleSymbolicName the bundle symbolic name
@@ -725,21 +664,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 		String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator);
-
-	/**
-	 * Returns the modules before and after the current module in the ordered set where contextName = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public Module[] findByContextName_PrevAndNext(
-			long moduleId, String contextName,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
 
 	/**
 	 * Removes all the modules where contextName = &#63; from the database.
@@ -876,22 +800,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 		long appId, String contextName,
 		com.liferay.portal.kernel.util.OrderByComparator<Module>
 			orderByComparator);
-
-	/**
-	 * Returns the modules before and after the current module in the ordered set where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param moduleId the primary key of the current module
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	public Module[] findByA_CN_PrevAndNext(
-			long moduleId, long appId, String contextName,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
 
 	/**
 	 * Removes all the modules where appId = &#63; and contextName = &#63; from the database.
@@ -1089,4 +997,4 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1762089487
+// LIFERAY-SERVICE-BUILDER-HASH:-44121994

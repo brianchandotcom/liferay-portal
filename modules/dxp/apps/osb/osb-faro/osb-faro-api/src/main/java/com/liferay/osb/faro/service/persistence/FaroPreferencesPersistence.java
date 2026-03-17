@@ -146,21 +146,6 @@ public interface FaroPreferencesPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the faro preferenceses before and after the current faro preferences in the ordered set where groupId = &#63;.
-	 *
-	 * @param faroPreferencesId the primary key of the current faro preferences
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro preferences
-	 * @throws NoSuchFaroPreferencesException if a faro preferences with the primary key could not be found
-	 */
-	public FaroPreferences[] findByGroupId_PrevAndNext(
-			long faroPreferencesId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroPreferences>
-				orderByComparator)
-		throws NoSuchFaroPreferencesException;
-
-	/**
 	 * Removes all the faro preferenceses where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -346,4 +331,4 @@ public interface FaroPreferencesPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:776105911
+// LIFERAY-SERVICE-BUILDER-HASH:1088816128

@@ -151,21 +151,6 @@ public interface AnalyticsDeleteMessagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the analytics delete messages before and after the current analytics delete message in the ordered set where companyId = &#63;.
-	 *
-	 * @param analyticsDeleteMessageId the primary key of the current analytics delete message
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics delete message
-	 * @throws NoSuchDeleteMessageException if a analytics delete message with the primary key could not be found
-	 */
-	public AnalyticsDeleteMessage[] findByCompanyId_PrevAndNext(
-			long analyticsDeleteMessageId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsDeleteMessage> orderByComparator)
-		throws NoSuchDeleteMessageException;
-
-	/**
 	 * Removes all the analytics delete messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -301,22 +286,6 @@ public interface AnalyticsDeleteMessagePersistence
 		long companyId, Date modifiedDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsDeleteMessage>
 			orderByComparator);
-
-	/**
-	 * Returns the analytics delete messages before and after the current analytics delete message in the ordered set where companyId = &#63; and modifiedDate &gt; &#63;.
-	 *
-	 * @param analyticsDeleteMessageId the primary key of the current analytics delete message
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics delete message
-	 * @throws NoSuchDeleteMessageException if a analytics delete message with the primary key could not be found
-	 */
-	public AnalyticsDeleteMessage[] findByC_GtM_PrevAndNext(
-			long analyticsDeleteMessageId, long companyId, Date modifiedDate,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsDeleteMessage> orderByComparator)
-		throws NoSuchDeleteMessageException;
 
 	/**
 	 * Removes all the analytics delete messages where companyId = &#63; and modifiedDate &gt; &#63; from the database.
@@ -460,4 +429,4 @@ public interface AnalyticsDeleteMessagePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2037299476
+// LIFERAY-SERVICE-BUILDER-HASH:1810958138

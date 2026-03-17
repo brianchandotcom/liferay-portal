@@ -249,25 +249,6 @@ public class OpenIdConnectSessionUtil {
 	}
 
 	/**
-	 * Returns the open ID connect sessions before and after the current open ID connect session in the ordered set where userId = &#63;.
-	 *
-	 * @param openIdConnectSessionId the primary key of the current open ID connect session
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next open ID connect session
-	 * @throws NoSuchSessionException if a open ID connect session with the primary key could not be found
-	 */
-	public static OpenIdConnectSession[] findByUserId_PrevAndNext(
-			long openIdConnectSessionId, long userId,
-			OrderByComparator<OpenIdConnectSession> orderByComparator)
-		throws com.liferay.portal.security.sso.openid.connect.persistence.
-			exception.NoSuchSessionException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			openIdConnectSessionId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the open ID connect sessions where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -427,27 +408,6 @@ public class OpenIdConnectSessionUtil {
 
 		return getPersistence().fetchByLtAccessTokenExpirationDate_Last(
 			accessTokenExpirationDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the open ID connect sessions before and after the current open ID connect session in the ordered set where accessTokenExpirationDate &lt; &#63;.
-	 *
-	 * @param openIdConnectSessionId the primary key of the current open ID connect session
-	 * @param accessTokenExpirationDate the access token expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next open ID connect session
-	 * @throws NoSuchSessionException if a open ID connect session with the primary key could not be found
-	 */
-	public static OpenIdConnectSession[]
-			findByLtAccessTokenExpirationDate_PrevAndNext(
-				long openIdConnectSessionId, Date accessTokenExpirationDate,
-				OrderByComparator<OpenIdConnectSession> orderByComparator)
-		throws com.liferay.portal.security.sso.openid.connect.persistence.
-			exception.NoSuchSessionException {
-
-		return getPersistence().findByLtAccessTokenExpirationDate_PrevAndNext(
-			openIdConnectSessionId, accessTokenExpirationDate,
-			orderByComparator);
 	}
 
 	/**
@@ -773,29 +733,6 @@ public class OpenIdConnectSessionUtil {
 	}
 
 	/**
-	 * Returns the open ID connect sessions before and after the current open ID connect session in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
-	 *
-	 * @param openIdConnectSessionId the primary key of the current open ID connect session
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next open ID connect session
-	 * @throws NoSuchSessionException if a open ID connect session with the primary key could not be found
-	 */
-	public static OpenIdConnectSession[] findByC_A_C_PrevAndNext(
-			long openIdConnectSessionId, long companyId,
-			String authServerWellKnownURI, String clientId,
-			OrderByComparator<OpenIdConnectSession> orderByComparator)
-		throws com.liferay.portal.security.sso.openid.connect.persistence.
-			exception.NoSuchSessionException {
-
-		return getPersistence().findByC_A_C_PrevAndNext(
-			openIdConnectSessionId, companyId, authServerWellKnownURI, clientId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1077,4 +1014,4 @@ public class OpenIdConnectSessionUtil {
 	private static volatile OpenIdConnectSessionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1987358836
+// LIFERAY-SERVICE-BUILDER-HASH:1633319663

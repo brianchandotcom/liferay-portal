@@ -268,28 +268,6 @@ public class CommerceTaxFixedRateAddressRelUtil {
 	}
 
 	/**
-	 * Returns the commerce tax fixed rate address rels before and after the current commerce tax fixed rate address rel in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxFixedRateAddressRelId the primary key of the current commerce tax fixed rate address rel
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
-	 */
-	public static CommerceTaxFixedRateAddressRel[]
-			findByCommerceTaxMethodId_PrevAndNext(
-				long commerceTaxFixedRateAddressRelId, long commerceTaxMethodId,
-				OrderByComparator<CommerceTaxFixedRateAddressRel>
-					orderByComparator)
-		throws com.liferay.commerce.tax.engine.fixed.exception.
-			NoSuchTaxFixedRateAddressRelException {
-
-		return getPersistence().findByCommerceTaxMethodId_PrevAndNext(
-			commerceTaxFixedRateAddressRelId, commerceTaxMethodId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce tax fixed rate address rels where commerceTaxMethodId = &#63; from the database.
 	 *
 	 * @param commerceTaxMethodId the commerce tax method ID
@@ -450,28 +428,6 @@ public class CommerceTaxFixedRateAddressRelUtil {
 	}
 
 	/**
-	 * Returns the commerce tax fixed rate address rels before and after the current commerce tax fixed rate address rel in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param commerceTaxFixedRateAddressRelId the primary key of the current commerce tax fixed rate address rel
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
-	 */
-	public static CommerceTaxFixedRateAddressRel[]
-			findByCPTaxCategoryId_PrevAndNext(
-				long commerceTaxFixedRateAddressRelId, long CPTaxCategoryId,
-				OrderByComparator<CommerceTaxFixedRateAddressRel>
-					orderByComparator)
-		throws com.liferay.commerce.tax.engine.fixed.exception.
-			NoSuchTaxFixedRateAddressRelException {
-
-		return getPersistence().findByCPTaxCategoryId_PrevAndNext(
-			commerceTaxFixedRateAddressRelId, CPTaxCategoryId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce tax fixed rate address rels where CPTaxCategoryId = &#63; from the database.
 	 *
 	 * @param CPTaxCategoryId the cp tax category ID
@@ -628,25 +584,6 @@ public class CommerceTaxFixedRateAddressRelUtil {
 
 		return getPersistence().fetchByCountryId_Last(
 			countryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce tax fixed rate address rels before and after the current commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
-	 *
-	 * @param commerceTaxFixedRateAddressRelId the primary key of the current commerce tax fixed rate address rel
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
-	 */
-	public static CommerceTaxFixedRateAddressRel[] findByCountryId_PrevAndNext(
-			long commerceTaxFixedRateAddressRelId, long countryId,
-			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
-		throws com.liferay.commerce.tax.engine.fixed.exception.
-			NoSuchTaxFixedRateAddressRelException {
-
-		return getPersistence().findByCountryId_PrevAndNext(
-			commerceTaxFixedRateAddressRelId, countryId, orderByComparator);
 	}
 
 	/**
@@ -849,4 +786,4 @@ public class CommerceTaxFixedRateAddressRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:944731825
+// LIFERAY-SERVICE-BUILDER-HASH:1671812327

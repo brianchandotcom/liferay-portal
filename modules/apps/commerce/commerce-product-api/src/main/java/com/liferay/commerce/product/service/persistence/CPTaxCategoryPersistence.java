@@ -147,21 +147,6 @@ public interface CPTaxCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp tax categories before and after the current cp tax category in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPTaxCategoryId the primary key of the current cp tax category
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a cp tax category with the primary key could not be found
-	 */
-	public CPTaxCategory[] findByUuid_PrevAndNext(
-			long CPTaxCategoryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -201,21 +186,6 @@ public interface CPTaxCategoryPersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the cp tax categories before and after the current cp tax category in the ordered set of cp tax categories that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param CPTaxCategoryId the primary key of the current cp tax category
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a cp tax category with the primary key could not be found
-	 */
-	public CPTaxCategory[] filterFindByUuid_PrevAndNext(
-			long CPTaxCategoryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
 
 	/**
 	 * Removes all the cp tax categories where uuid = &#63; from the database.
@@ -363,22 +333,6 @@ public interface CPTaxCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp tax categories before and after the current cp tax category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the primary key of the current cp tax category
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a cp tax category with the primary key could not be found
-	 */
-	public CPTaxCategory[] findByUuid_C_PrevAndNext(
-			long CPTaxCategoryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -422,22 +376,6 @@ public interface CPTaxCategoryPersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the cp tax categories before and after the current cp tax category in the ordered set of cp tax categories that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the primary key of the current cp tax category
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a cp tax category with the primary key could not be found
-	 */
-	public CPTaxCategory[] filterFindByUuid_C_PrevAndNext(
-			long CPTaxCategoryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
 
 	/**
 	 * Removes all the cp tax categories where uuid = &#63; and companyId = &#63; from the database.
@@ -579,21 +517,6 @@ public interface CPTaxCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp tax categories before and after the current cp tax category in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the primary key of the current cp tax category
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a cp tax category with the primary key could not be found
-	 */
-	public CPTaxCategory[] findByCompanyId_PrevAndNext(
-			long CPTaxCategoryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
-
-	/**
 	 * Returns all the cp tax categories that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -633,21 +556,6 @@ public interface CPTaxCategoryPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the cp tax categories before and after the current cp tax category in the ordered set of cp tax categories that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the primary key of the current cp tax category
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a cp tax category with the primary key could not be found
-	 */
-	public CPTaxCategory[] filterFindByCompanyId_PrevAndNext(
-			long CPTaxCategoryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPTaxCategory>
-				orderByComparator)
-		throws NoSuchCPTaxCategoryException;
 
 	/**
 	 * Removes all the cp tax categories where companyId = &#63; from the database.
@@ -846,4 +754,4 @@ public interface CPTaxCategoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-677022627
+// LIFERAY-SERVICE-BUILDER-HASH:-985559932

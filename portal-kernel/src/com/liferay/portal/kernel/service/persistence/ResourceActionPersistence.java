@@ -145,21 +145,6 @@ public interface ResourceActionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the resource actions before and after the current resource action in the ordered set where name = &#63;.
-	 *
-	 * @param resourceActionId the primary key of the current resource action
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource action
-	 * @throws NoSuchResourceActionException if a resource action with the primary key could not be found
-	 */
-	public ResourceAction[] findByName_PrevAndNext(
-			long resourceActionId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
-				orderByComparator)
-		throws NoSuchResourceActionException;
-
-	/**
 	 * Removes all the resource actions where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -345,4 +330,4 @@ public interface ResourceActionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1360430017
+// LIFERAY-SERVICE-BUILDER-HASH:-731677688

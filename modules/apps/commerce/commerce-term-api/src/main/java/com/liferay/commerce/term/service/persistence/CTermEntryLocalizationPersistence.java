@@ -147,21 +147,6 @@ public interface CTermEntryLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the c term entry localizations before and after the current c term entry localization in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param cTermEntryLocalizationId the primary key of the current c term entry localization
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next c term entry localization
-	 * @throws NoSuchCTermEntryLocalizationException if a c term entry localization with the primary key could not be found
-	 */
-	public CTermEntryLocalization[] findByCommerceTermEntryId_PrevAndNext(
-			long cTermEntryLocalizationId, long commerceTermEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTermEntryLocalization> orderByComparator)
-		throws NoSuchCTermEntryLocalizationException;
-
-	/**
 	 * Removes all the c term entry localizations where commerceTermEntryId = &#63; from the database.
 	 *
 	 * @param commerceTermEntryId the commerce term entry ID
@@ -355,4 +340,4 @@ public interface CTermEntryLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:84768965
+// LIFERAY-SERVICE-BUILDER-HASH:1178415042

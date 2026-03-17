@@ -148,21 +148,6 @@ public interface PortletPreferenceValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portlet preference values before and after the current portlet preference value in the ordered set where portletPreferencesId = &#63;.
-	 *
-	 * @param portletPreferenceValueId the primary key of the current portlet preference value
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a portlet preference value with the primary key could not be found
-	 */
-	public PortletPreferenceValue[] findByPortletPreferencesId_PrevAndNext(
-			long portletPreferenceValueId, long portletPreferencesId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException;
-
-	/**
 	 * Removes all the portlet preference values where portletPreferencesId = &#63; from the database.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
@@ -298,23 +283,6 @@ public interface PortletPreferenceValuePersistence
 		long portletPreferencesId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferenceValue>
 			orderByComparator);
-
-	/**
-	 * Returns the portlet preference values before and after the current portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63;.
-	 *
-	 * @param portletPreferenceValueId the primary key of the current portlet preference value
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a portlet preference value with the primary key could not be found
-	 */
-	public PortletPreferenceValue[] findByP_N_PrevAndNext(
-			long portletPreferenceValueId, long portletPreferencesId,
-			String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException;
 
 	/**
 	 * Removes all the portlet preference values where portletPreferencesId = &#63; and name = &#63; from the database.
@@ -462,24 +430,6 @@ public interface PortletPreferenceValuePersistence
 		long companyId, String name, String smallValue,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferenceValue>
 			orderByComparator);
-
-	/**
-	 * Returns the portlet preference values before and after the current portlet preference value in the ordered set where companyId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param portletPreferenceValueId the primary key of the current portlet preference value
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a portlet preference value with the primary key could not be found
-	 */
-	public PortletPreferenceValue[] findByC_N_SV_PrevAndNext(
-			long portletPreferenceValueId, long companyId, String name,
-			String smallValue,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException;
 
 	/**
 	 * Removes all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63; from the database.
@@ -693,24 +643,6 @@ public interface PortletPreferenceValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portlet preference values before and after the current portlet preference value in the ordered set where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param portletPreferenceValueId the primary key of the current portlet preference value
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a portlet preference value with the primary key could not be found
-	 */
-	public PortletPreferenceValue[] findByP_N_SV_PrevAndNext(
-			long portletPreferenceValueId, long portletPreferencesId,
-			String name, String smallValue,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PortletPreferenceValue> orderByComparator)
-		throws NoSuchPortletPreferenceValueException;
-
-	/**
 	 * Removes all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63; from the database.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
@@ -856,4 +788,4 @@ public interface PortletPreferenceValuePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1362441357
+// LIFERAY-SERVICE-BUILDER-HASH:700217328

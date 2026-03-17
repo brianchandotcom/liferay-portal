@@ -147,21 +147,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] findByUuid_PrevAndNext(
-			long folderId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Removes all the journal folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] findByUuid_C_PrevAndNext(
-			long folderId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Removes all the journal folders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] findByGroupId_PrevAndNext(
-			long folderId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the journal folders that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -549,21 +503,6 @@ public interface JournalFolderPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set of journal folders that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] filterFindByGroupId_PrevAndNext(
-			long folderId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the journal folders where groupId = &#63; from the database.
@@ -700,21 +639,6 @@ public interface JournalFolderPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] findByCompanyId_PrevAndNext(
-			long folderId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the journal folders where companyId = &#63; from the database.
@@ -854,22 +778,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] findByG_P_PrevAndNext(
-			long folderId, long groupId, long parentFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -913,22 +821,6 @@ public interface JournalFolderPersistence
 		long groupId, long parentFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] filterFindByG_P_PrevAndNext(
-			long folderId, long groupId, long parentFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the journal folders where groupId = &#63; and parentFolderId = &#63; from the database.
@@ -1127,22 +1019,6 @@ public interface JournalFolderPersistence
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] findByC_NotS_PrevAndNext(
-			long folderId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the journal folders where companyId = &#63; and status &ne; &#63; from the database.
@@ -1350,23 +1226,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] findByG_P_S_PrevAndNext(
-			long folderId, long groupId, long parentFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1413,23 +1272,6 @@ public interface JournalFolderPersistence
 		long groupId, long parentFolderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] filterFindByG_P_S_PrevAndNext(
-			long folderId, long groupId, long parentFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the journal folders where groupId = &#63; and parentFolderId = &#63; and status = &#63; from the database.
@@ -1592,23 +1434,6 @@ public interface JournalFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] findByG_P_NotS_PrevAndNext(
-			long folderId, long groupId, long parentFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
-
-	/**
 	 * Returns all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1655,23 +1480,6 @@ public interface JournalFolderPersistence
 		long groupId, long parentFolderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
 			orderByComparator);
-
-	/**
-	 * Returns the journal folders before and after the current journal folder in the ordered set of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current journal folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	public JournalFolder[] filterFindByG_P_NotS_PrevAndNext(
-			long folderId, long groupId, long parentFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<JournalFolder>
-				orderByComparator)
-		throws NoSuchFolderException;
 
 	/**
 	 * Removes all the journal folders where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63; from the database.
@@ -2039,4 +1847,4 @@ public interface JournalFolderPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:112623075
+// LIFERAY-SERVICE-BUILDER-HASH:1271307797

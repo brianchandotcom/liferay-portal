@@ -143,21 +143,6 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 			orderByComparator);
 
 	/**
-	 * Returns the list types before and after the current list type in the ordered set where uuid = &#63;.
-	 *
-	 * @param listTypeId the primary key of the current list type
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	public ListType[] findByUuid_PrevAndNext(
-			long listTypeId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ListType>
-				orderByComparator)
-		throws NoSuchListTypeException;
-
-	/**
 	 * Removes all the list types where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -294,22 +279,6 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 			orderByComparator);
 
 	/**
-	 * Returns the list types before and after the current list type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param listTypeId the primary key of the current list type
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	public ListType[] findByUuid_C_PrevAndNext(
-			long listTypeId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ListType>
-				orderByComparator)
-		throws NoSuchListTypeException;
-
-	/**
 	 * Removes all the list types where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -438,21 +407,6 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType>
 			orderByComparator);
-
-	/**
-	 * Returns the list types before and after the current list type in the ordered set where companyId = &#63;.
-	 *
-	 * @param listTypeId the primary key of the current list type
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	public ListType[] findByCompanyId_PrevAndNext(
-			long listTypeId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ListType>
-				orderByComparator)
-		throws NoSuchListTypeException;
 
 	/**
 	 * Removes all the list types where companyId = &#63; from the database.
@@ -589,22 +543,6 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 		long companyId, String type,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType>
 			orderByComparator);
-
-	/**
-	 * Returns the list types before and after the current list type in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param listTypeId the primary key of the current list type
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	public ListType[] findByC_T_PrevAndNext(
-			long listTypeId, long companyId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<ListType>
-				orderByComparator)
-		throws NoSuchListTypeException;
 
 	/**
 	 * Removes all the list types where companyId = &#63; and type = &#63; from the database.
@@ -798,4 +736,4 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-157285789
+// LIFERAY-SERVICE-BUILDER-HASH:14009242

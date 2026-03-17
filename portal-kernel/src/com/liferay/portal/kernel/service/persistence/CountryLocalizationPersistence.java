@@ -147,21 +147,6 @@ public interface CountryLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the country localizations before and after the current country localization in the ordered set where countryId = &#63;.
-	 *
-	 * @param countryLocalizationId the primary key of the current country localization
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country localization
-	 * @throws NoSuchCountryLocalizationException if a country localization with the primary key could not be found
-	 */
-	public CountryLocalization[] findByCountryId_PrevAndNext(
-			long countryLocalizationId, long countryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CountryLocalization> orderByComparator)
-		throws NoSuchCountryLocalizationException;
-
-	/**
 	 * Removes all the country localizations where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -352,4 +337,4 @@ public interface CountryLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-499078231
+// LIFERAY-SERVICE-BUILDER-HASH:-1875889494

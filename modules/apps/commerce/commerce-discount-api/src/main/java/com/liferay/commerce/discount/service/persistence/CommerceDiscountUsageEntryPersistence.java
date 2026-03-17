@@ -147,21 +147,6 @@ public interface CommerceDiscountUsageEntryPersistence
 			<CommerceDiscountUsageEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce discount usage entries before and after the current commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountUsageEntryId the primary key of the current commerce discount usage entry
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
-	 */
-	public CommerceDiscountUsageEntry[] findByCommerceDiscountId_PrevAndNext(
-			long commerceDiscountUsageEntryId, long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException;
-
-	/**
 	 * Removes all the commerce discount usage entries where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -297,23 +282,6 @@ public interface CommerceDiscountUsageEntryPersistence
 		long commerceAccountId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
-
-	/**
-	 * Returns the commerce discount usage entries before and after the current commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountUsageEntryId the primary key of the current commerce discount usage entry
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
-	 */
-	public CommerceDiscountUsageEntry[] findByCAI_CDI_PrevAndNext(
-			long commerceDiscountUsageEntryId, long commerceAccountId,
-			long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException;
 
 	/**
 	 * Removes all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63; from the database.
@@ -454,23 +422,6 @@ public interface CommerceDiscountUsageEntryPersistence
 		long commerceOrderId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceDiscountUsageEntry> orderByComparator);
-
-	/**
-	 * Returns the commerce discount usage entries before and after the current commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountUsageEntryId the primary key of the current commerce discount usage entry
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
-	 */
-	public CommerceDiscountUsageEntry[] findByCOI_CDI_PrevAndNext(
-			long commerceDiscountUsageEntryId, long commerceOrderId,
-			long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException;
 
 	/**
 	 * Removes all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63; from the database.
@@ -625,24 +576,6 @@ public interface CommerceDiscountUsageEntryPersistence
 			<CommerceDiscountUsageEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce discount usage entries before and after the current commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountUsageEntryId the primary key of the current commerce discount usage entry
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
-	 */
-	public CommerceDiscountUsageEntry[] findByCAI_COI_CDI_PrevAndNext(
-			long commerceDiscountUsageEntryId, long commerceAccountId,
-			long commerceOrderId, long commerceDiscountId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountUsageEntry> orderByComparator)
-		throws NoSuchDiscountUsageEntryException;
-
-	/**
 	 * Removes all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceAccountId the commerce account ID
@@ -791,4 +724,4 @@ public interface CommerceDiscountUsageEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:883383269
+// LIFERAY-SERVICE-BUILDER-HASH:-958539400

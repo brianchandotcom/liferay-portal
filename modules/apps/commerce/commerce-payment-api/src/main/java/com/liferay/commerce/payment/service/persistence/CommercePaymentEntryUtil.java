@@ -252,25 +252,6 @@ public class CommercePaymentEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public static CommercePaymentEntry[] findByCompanyId_PrevAndNext(
-			long commercePaymentEntryId, long companyId,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentEntryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commercePaymentEntryId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -319,25 +300,6 @@ public class CommercePaymentEntryUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public static CommercePaymentEntry[] filterFindByCompanyId_PrevAndNext(
-			long commercePaymentEntryId, long companyId,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentEntryException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			commercePaymentEntryId, companyId, orderByComparator);
 	}
 
 	/**
@@ -528,29 +490,6 @@ public class CommercePaymentEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public static CommercePaymentEntry[] findByC_C_C_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentEntryException {
-
-		return getPersistence().findByC_C_C_PrevAndNext(
-			commercePaymentEntryId, companyId, classNameId, classPK,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -607,29 +546,6 @@ public class CommercePaymentEntryUtil {
 
 		return getPersistence().filterFindByC_C_C(
 			companyId, classNameId, classPK, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public static CommercePaymentEntry[] filterFindByC_C_C_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentEntryException {
-
-		return getPersistence().filterFindByC_C_C_PrevAndNext(
-			commercePaymentEntryId, companyId, classNameId, classPK,
-			orderByComparator);
 	}
 
 	/**
@@ -844,30 +760,6 @@ public class CommercePaymentEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public static CommercePaymentEntry[] findByC_C_C_T_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK, int type,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentEntryException {
-
-		return getPersistence().findByC_C_C_T_PrevAndNext(
-			commercePaymentEntryId, companyId, classNameId, classPK, type,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -928,30 +820,6 @@ public class CommercePaymentEntryUtil {
 
 		return getPersistence().filterFindByC_C_C_T(
 			companyId, classNameId, classPK, type, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public static CommercePaymentEntry[] filterFindByC_C_C_T_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK, int type,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentEntryException {
-
-		return getPersistence().filterFindByC_C_C_T_PrevAndNext(
-			commercePaymentEntryId, companyId, classNameId, classPK, type,
 			orderByComparator);
 	}
 
@@ -1186,31 +1054,6 @@ public class CommercePaymentEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param paymentStatus the payment status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public static CommercePaymentEntry[] findByC_C_C_P_T_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK, int paymentStatus, int type,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentEntryException {
-
-		return getPersistence().findByC_C_C_P_T_PrevAndNext(
-			commercePaymentEntryId, companyId, classNameId, classPK,
-			paymentStatus, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1277,31 +1120,6 @@ public class CommercePaymentEntryUtil {
 		return getPersistence().filterFindByC_C_C_P_T(
 			companyId, classNameId, classPK, paymentStatus, type, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param paymentStatus the payment status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public static CommercePaymentEntry[] filterFindByC_C_C_P_T_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK, int paymentStatus, int type,
-			OrderByComparator<CommercePaymentEntry> orderByComparator)
-		throws com.liferay.commerce.payment.exception.
-			NoSuchPaymentEntryException {
-
-		return getPersistence().filterFindByC_C_C_P_T_PrevAndNext(
-			commercePaymentEntryId, companyId, classNameId, classPK,
-			paymentStatus, type, orderByComparator);
 	}
 
 	/**
@@ -1600,4 +1418,4 @@ public class CommercePaymentEntryUtil {
 	private static volatile CommercePaymentEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-887498144
+// LIFERAY-SERVICE-BUILDER-HASH:2032954960

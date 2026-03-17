@@ -164,24 +164,6 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 					orderByComparator);
 
 	/**
-	 * Returns the commerce notification template commerce account group rels before and after the current commerce notification template commerce account group rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRelId the primary key of the current commerce notification template commerce account group rel
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template commerce account group rel
-	 * @throws NoSuchNotificationTemplateCommerceAccountGroupRelException if a commerce notification template commerce account group rel with the primary key could not be found
-	 */
-	public CommerceNotificationTemplateCommerceAccountGroupRel[]
-			findByCommerceNotificationTemplateId_PrevAndNext(
-				long commerceNotificationTemplateCommerceAccountGroupRelId,
-				long commerceNotificationTemplateId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceNotificationTemplateCommerceAccountGroupRel>
-						orderByComparator)
-		throws NoSuchNotificationTemplateCommerceAccountGroupRelException;
-
-	/**
 	 * Removes all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63; from the database.
 	 *
 	 * @param commerceNotificationTemplateId the commerce notification template ID
@@ -324,24 +306,6 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceNotificationTemplateCommerceAccountGroupRel>
 					orderByComparator);
-
-	/**
-	 * Returns the commerce notification template commerce account group rels before and after the current commerce notification template commerce account group rel in the ordered set where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRelId the primary key of the current commerce notification template commerce account group rel
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification template commerce account group rel
-	 * @throws NoSuchNotificationTemplateCommerceAccountGroupRelException if a commerce notification template commerce account group rel with the primary key could not be found
-	 */
-	public CommerceNotificationTemplateCommerceAccountGroupRel[]
-			findByCommerceAccountGroupId_PrevAndNext(
-				long commerceNotificationTemplateCommerceAccountGroupRelId,
-				long commerceAccountGroupId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceNotificationTemplateCommerceAccountGroupRel>
-						orderByComparator)
-		throws NoSuchNotificationTemplateCommerceAccountGroupRelException;
 
 	/**
 	 * Removes all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63; from the database.
@@ -551,4 +515,4 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:289165280
+// LIFERAY-SERVICE-BUILDER-HASH:1221510069

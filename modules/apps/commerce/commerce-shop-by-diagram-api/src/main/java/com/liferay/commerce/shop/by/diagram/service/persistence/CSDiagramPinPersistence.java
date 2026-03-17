@@ -148,21 +148,6 @@ public interface CSDiagramPinPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cs diagram pins before and after the current cs diagram pin in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CSDiagramPinId the primary key of the current cs diagram pin
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram pin
-	 * @throws NoSuchCSDiagramPinException if a cs diagram pin with the primary key could not be found
-	 */
-	public CSDiagramPin[] findByCPDefinitionId_PrevAndNext(
-			long CSDiagramPinId, long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramPin>
-				orderByComparator)
-		throws NoSuchCSDiagramPinException;
-
-	/**
 	 * Removes all the cs diagram pins where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -298,4 +283,4 @@ public interface CSDiagramPinPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:822752573
+// LIFERAY-SERVICE-BUILDER-HASH:-2064149341

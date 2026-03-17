@@ -251,25 +251,6 @@ public class CommerceMLForecastAlertEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce ml forecast alert entries before and after the current commerce ml forecast alert entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceMLForecastAlertEntryId the primary key of the current commerce ml forecast alert entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce ml forecast alert entry
-	 * @throws NoSuchMLForecastAlertEntryException if a commerce ml forecast alert entry with the primary key could not be found
-	 */
-	public static CommerceMLForecastAlertEntry[] findByUuid_PrevAndNext(
-			long commerceMLForecastAlertEntryId, String uuid,
-			OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator)
-		throws com.liferay.commerce.machine.learning.forecast.alert.exception.
-			NoSuchMLForecastAlertEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceMLForecastAlertEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce ml forecast alert entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -434,26 +415,6 @@ public class CommerceMLForecastAlertEntryUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce ml forecast alert entries before and after the current commerce ml forecast alert entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceMLForecastAlertEntryId the primary key of the current commerce ml forecast alert entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce ml forecast alert entry
-	 * @throws NoSuchMLForecastAlertEntryException if a commerce ml forecast alert entry with the primary key could not be found
-	 */
-	public static CommerceMLForecastAlertEntry[] findByUuid_C_PrevAndNext(
-			long commerceMLForecastAlertEntryId, String uuid, long companyId,
-			OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator)
-		throws com.liferay.commerce.machine.learning.forecast.alert.exception.
-			NoSuchMLForecastAlertEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceMLForecastAlertEntryId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -718,29 +679,6 @@ public class CommerceMLForecastAlertEntryUtil {
 
 		return getPersistence().fetchByC_C_S_Last(
 			companyId, commerceAccountId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce ml forecast alert entries before and after the current commerce ml forecast alert entry in the ordered set where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
-	 *
-	 * @param commerceMLForecastAlertEntryId the primary key of the current commerce ml forecast alert entry
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce ml forecast alert entry
-	 * @throws NoSuchMLForecastAlertEntryException if a commerce ml forecast alert entry with the primary key could not be found
-	 */
-	public static CommerceMLForecastAlertEntry[] findByC_C_S_PrevAndNext(
-			long commerceMLForecastAlertEntryId, long companyId,
-			long commerceAccountId, int status,
-			OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator)
-		throws com.liferay.commerce.machine.learning.forecast.alert.exception.
-			NoSuchMLForecastAlertEntryException {
-
-		return getPersistence().findByC_C_S_PrevAndNext(
-			commerceMLForecastAlertEntryId, companyId, commerceAccountId,
-			status, orderByComparator);
 	}
 
 	/**
@@ -1057,30 +995,6 @@ public class CommerceMLForecastAlertEntryUtil {
 		return getPersistence().fetchByC_C_GtRc_S_Last(
 			companyId, commerceAccountId, relativeChange, status,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce ml forecast alert entries before and after the current commerce ml forecast alert entry in the ordered set where companyId = &#63; and commerceAccountId = &#63; and relativeChange &gt; &#63; and status = &#63;.
-	 *
-	 * @param commerceMLForecastAlertEntryId the primary key of the current commerce ml forecast alert entry
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param relativeChange the relative change
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce ml forecast alert entry
-	 * @throws NoSuchMLForecastAlertEntryException if a commerce ml forecast alert entry with the primary key could not be found
-	 */
-	public static CommerceMLForecastAlertEntry[] findByC_C_GtRc_S_PrevAndNext(
-			long commerceMLForecastAlertEntryId, long companyId,
-			long commerceAccountId, double relativeChange, int status,
-			OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator)
-		throws com.liferay.commerce.machine.learning.forecast.alert.exception.
-			NoSuchMLForecastAlertEntryException {
-
-		return getPersistence().findByC_C_GtRc_S_PrevAndNext(
-			commerceMLForecastAlertEntryId, companyId, commerceAccountId,
-			relativeChange, status, orderByComparator);
 	}
 
 	/**
@@ -1412,30 +1326,6 @@ public class CommerceMLForecastAlertEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce ml forecast alert entries before and after the current commerce ml forecast alert entry in the ordered set where companyId = &#63; and commerceAccountId = &#63; and relativeChange &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceMLForecastAlertEntryId the primary key of the current commerce ml forecast alert entry
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param relativeChange the relative change
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce ml forecast alert entry
-	 * @throws NoSuchMLForecastAlertEntryException if a commerce ml forecast alert entry with the primary key could not be found
-	 */
-	public static CommerceMLForecastAlertEntry[] findByC_C_LtRc_S_PrevAndNext(
-			long commerceMLForecastAlertEntryId, long companyId,
-			long commerceAccountId, double relativeChange, int status,
-			OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator)
-		throws com.liferay.commerce.machine.learning.forecast.alert.exception.
-			NoSuchMLForecastAlertEntryException {
-
-		return getPersistence().findByC_C_LtRc_S_PrevAndNext(
-			commerceMLForecastAlertEntryId, companyId, commerceAccountId,
-			relativeChange, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = any &#63; and relativeChange &lt; &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1764,4 +1654,4 @@ public class CommerceMLForecastAlertEntryUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1802738650
+// LIFERAY-SERVICE-BUILDER-HASH:-49077799

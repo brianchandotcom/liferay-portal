@@ -238,24 +238,6 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Returns the object fields before and after the current object field in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByUuid_PrevAndNext(
-			long objectFieldId, String uuid,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectFieldId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object fields where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -419,25 +401,6 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Returns the object fields before and after the current object field in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByUuid_C_PrevAndNext(
-			long objectFieldId, String uuid, long companyId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectFieldId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object fields where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -588,24 +551,6 @@ public class ObjectFieldUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object fields before and after the current object field in the ordered set where companyId = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByCompanyId_PrevAndNext(
-			long objectFieldId, long companyId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			objectFieldId, companyId, orderByComparator);
 	}
 
 	/**
@@ -769,24 +714,6 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Returns the object fields before and after the current object field in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByListTypeDefinitionId_PrevAndNext(
-			long objectFieldId, long listTypeDefinitionId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByListTypeDefinitionId_PrevAndNext(
-			objectFieldId, listTypeDefinitionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object fields where listTypeDefinitionId = &#63; from the database.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -943,24 +870,6 @@ public class ObjectFieldUtil {
 
 		return getPersistence().fetchByObjectDefinitionId_Last(
 			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByObjectDefinitionId_PrevAndNext(
-			long objectFieldId, long objectDefinitionId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByObjectDefinitionId_PrevAndNext(
-			objectFieldId, objectDefinitionId, orderByComparator);
 	}
 
 	/**
@@ -1124,25 +1033,6 @@ public class ObjectFieldUtil {
 
 		return getPersistence().fetchByC_U_Last(
 			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object fields before and after the current object field in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByC_U_PrevAndNext(
-			long objectFieldId, long companyId, long userId,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByC_U_PrevAndNext(
-			objectFieldId, companyId, userId, orderByComparator);
 	}
 
 	/**
@@ -1311,25 +1201,6 @@ public class ObjectFieldUtil {
 
 		return getPersistence().fetchByC_BT_Last(
 			companyId, businessType, orderByComparator);
-	}
-
-	/**
-	 * Returns the object fields before and after the current object field in the ordered set where companyId = &#63; and businessType = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param companyId the company ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByC_BT_PrevAndNext(
-			long objectFieldId, long companyId, String businessType,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByC_BT_PrevAndNext(
-			objectFieldId, companyId, businessType, orderByComparator);
 	}
 
 	/**
@@ -1502,25 +1373,6 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Returns the object fields before and after the current object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param state the state
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByLTDI_S_PrevAndNext(
-			long objectFieldId, long listTypeDefinitionId, boolean state,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByLTDI_S_PrevAndNext(
-			objectFieldId, listTypeDefinitionId, state, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object fields where listTypeDefinitionId = &#63; and state = &#63; from the database.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -1689,25 +1541,6 @@ public class ObjectFieldUtil {
 
 		return getPersistence().fetchByODI_BT_Last(
 			objectDefinitionId, businessType, orderByComparator);
-	}
-
-	/**
-	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param objectDefinitionId the object definition ID
-	 * @param businessType the business type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByODI_BT_PrevAndNext(
-			long objectFieldId, long objectDefinitionId, String businessType,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByODI_BT_PrevAndNext(
-			objectFieldId, objectDefinitionId, businessType, orderByComparator);
 	}
 
 	/**
@@ -1884,25 +1717,6 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63; and dbTableName = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbTableName the db table name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByODI_DTN_PrevAndNext(
-			long objectFieldId, long objectDefinitionId, String dbTableName,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByODI_DTN_PrevAndNext(
-			objectFieldId, objectDefinitionId, dbTableName, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and dbTableName = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -2076,25 +1890,6 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63; and indexed = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param objectDefinitionId the object definition ID
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByODI_I_PrevAndNext(
-			long objectFieldId, long objectDefinitionId, boolean indexed,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByODI_I_PrevAndNext(
-			objectFieldId, objectDefinitionId, indexed, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and indexed = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -2261,25 +2056,6 @@ public class ObjectFieldUtil {
 
 		return getPersistence().fetchByODI_L_Last(
 			objectDefinitionId, localized, orderByComparator);
-	}
-
-	/**
-	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63; and localized = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByODI_L_PrevAndNext(
-			long objectFieldId, long objectDefinitionId, boolean localized,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByODI_L_PrevAndNext(
-			objectFieldId, objectDefinitionId, localized, orderByComparator);
 	}
 
 	/**
@@ -2518,25 +2294,6 @@ public class ObjectFieldUtil {
 
 		return getPersistence().fetchByODI_S_Last(
 			objectDefinitionId, system, orderByComparator);
-	}
-
-	/**
-	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63; and system = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param objectDefinitionId the object definition ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByODI_S_PrevAndNext(
-			long objectFieldId, long objectDefinitionId, boolean system,
-			OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByODI_S_PrevAndNext(
-			objectFieldId, objectDefinitionId, system, orderByComparator);
 	}
 
 	/**
@@ -2802,27 +2559,6 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbType the db type
-	 * @param indexed the indexed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByODI_DBT_I_PrevAndNext(
-			long objectFieldId, long objectDefinitionId, String dbType,
-			boolean indexed, OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByODI_DBT_I_PrevAndNext(
-			objectFieldId, objectDefinitionId, dbType, indexed,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -3007,27 +2743,6 @@ public class ObjectFieldUtil {
 
 		return getPersistence().fetchByODI_L_S_Last(
 			objectDefinitionId, localized, system, orderByComparator);
-	}
-
-	/**
-	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
-	 *
-	 * @param objectFieldId the primary key of the current object field
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	public static ObjectField[] findByODI_L_S_PrevAndNext(
-			long objectFieldId, long objectDefinitionId, boolean localized,
-			boolean system, OrderByComparator<ObjectField> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldException {
-
-		return getPersistence().findByODI_L_S_PrevAndNext(
-			objectFieldId, objectDefinitionId, localized, system,
-			orderByComparator);
 	}
 
 	/**
@@ -3216,4 +2931,4 @@ public class ObjectFieldUtil {
 	private static volatile ObjectFieldPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1683120955
+// LIFERAY-SERVICE-BUILDER-HASH:1698375478

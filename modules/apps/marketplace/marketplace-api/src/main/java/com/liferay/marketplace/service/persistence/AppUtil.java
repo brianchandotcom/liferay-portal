@@ -231,23 +231,6 @@ public class AppUtil {
 	}
 
 	/**
-	 * Returns the apps before and after the current app in the ordered set where uuid = &#63;.
-	 *
-	 * @param appId the primary key of the current app
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next app
-	 * @throws NoSuchAppException if a app with the primary key could not be found
-	 */
-	public static App[] findByUuid_PrevAndNext(
-			long appId, String uuid, OrderByComparator<App> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchAppException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			appId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the apps where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -408,25 +391,6 @@ public class AppUtil {
 	}
 
 	/**
-	 * Returns the apps before and after the current app in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param appId the primary key of the current app
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next app
-	 * @throws NoSuchAppException if a app with the primary key could not be found
-	 */
-	public static App[] findByUuid_C_PrevAndNext(
-			long appId, String uuid, long companyId,
-			OrderByComparator<App> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchAppException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			appId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the apps where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -576,24 +540,6 @@ public class AppUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the apps before and after the current app in the ordered set where companyId = &#63;.
-	 *
-	 * @param appId the primary key of the current app
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next app
-	 * @throws NoSuchAppException if a app with the primary key could not be found
-	 */
-	public static App[] findByCompanyId_PrevAndNext(
-			long appId, long companyId,
-			OrderByComparator<App> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchAppException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			appId, companyId, orderByComparator);
 	}
 
 	/**
@@ -805,24 +751,6 @@ public class AppUtil {
 	}
 
 	/**
-	 * Returns the apps before and after the current app in the ordered set where category = &#63;.
-	 *
-	 * @param appId the primary key of the current app
-	 * @param category the category
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next app
-	 * @throws NoSuchAppException if a app with the primary key could not be found
-	 */
-	public static App[] findByCategory_PrevAndNext(
-			long appId, String category,
-			OrderByComparator<App> orderByComparator)
-		throws com.liferay.marketplace.exception.NoSuchAppException {
-
-		return getPersistence().findByCategory_PrevAndNext(
-			appId, category, orderByComparator);
-	}
-
-	/**
 	 * Removes all the apps where category = &#63; from the database.
 	 *
 	 * @param category the category
@@ -999,4 +927,4 @@ public class AppUtil {
 	private static volatile AppPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1877001732
+// LIFERAY-SERVICE-BUILDER-HASH:-1280921191

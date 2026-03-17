@@ -149,21 +149,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByUuid_PrevAndNext(
-			long CPDefinitionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
 	 * Removes all the cp definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -351,22 +336,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByUuid_C_PrevAndNext(
-			long CPDefinitionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
 	 * Removes all the cp definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -497,21 +466,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where groupId = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByGroupId_PrevAndNext(
-			long CPDefinitionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
 	 * Returns all the cp definitions that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -551,21 +505,6 @@ public interface CPDefinitionPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
-
-	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set of cp definitions that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] filterFindByGroupId_PrevAndNext(
-			long CPDefinitionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
 
 	/**
 	 * Removes all the cp definitions where groupId = &#63; from the database.
@@ -704,21 +643,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByCompanyId_PrevAndNext(
-			long CPDefinitionId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
 	 * Removes all the cp definitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -845,21 +769,6 @@ public interface CPDefinitionPersistence
 		long CProductId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
-
-	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByCProductId_PrevAndNext(
-			long CPDefinitionId, long CProductId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
 
 	/**
 	 * Removes all the cp definitions where CProductId = &#63; from the database.
@@ -989,21 +898,6 @@ public interface CPDefinitionPersistence
 		long CPTaxCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
-
-	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByCPTaxCategoryId_PrevAndNext(
-			long CPDefinitionId, long CPTaxCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
 
 	/**
 	 * Removes all the cp definitions where CPTaxCategoryId = &#63; from the database.
@@ -1143,22 +1037,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByG_SE_PrevAndNext(
-			long CPDefinitionId, long groupId, boolean subscriptionEnabled,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
 	 * Returns all the cp definitions that the user has permission to view where groupId = &#63; and subscriptionEnabled = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1202,22 +1080,6 @@ public interface CPDefinitionPersistence
 		long groupId, boolean subscriptionEnabled, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
-
-	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set of cp definitions that the user has permission to view where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] filterFindByG_SE_PrevAndNext(
-			long CPDefinitionId, long groupId, boolean subscriptionEnabled,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
 
 	/**
 	 * Removes all the cp definitions where groupId = &#63; and subscriptionEnabled = &#63; from the database.
@@ -1367,22 +1229,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByG_S_PrevAndNext(
-			long CPDefinitionId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
 	 * Returns all the cp definitions that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1426,22 +1272,6 @@ public interface CPDefinitionPersistence
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
 			orderByComparator);
-
-	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set of cp definitions that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] filterFindByG_S_PrevAndNext(
-			long CPDefinitionId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
 
 	/**
 	 * Removes all the cp definitions where groupId = &#63; and status = &#63; from the database.
@@ -1641,22 +1471,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByC_S_PrevAndNext(
-			long CPDefinitionId, long CProductId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
 	 * Removes all the cp definitions where CProductId = &#63; and status = &#63; from the database.
 	 *
 	 * @param CProductId the c product ID
@@ -1796,22 +1610,6 @@ public interface CPDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	public CPDefinition[] findByLtD_S_PrevAndNext(
-			long CPDefinitionId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CPDefinition>
-				orderByComparator)
-		throws NoSuchCPDefinitionException;
-
-	/**
 	 * Removes all the cp definitions where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -1949,4 +1747,4 @@ public interface CPDefinitionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2040473931
+// LIFERAY-SERVICE-BUILDER-HASH:1133765655

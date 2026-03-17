@@ -148,21 +148,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] findByUuid_PrevAndNext(
-			long commerceTermEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -202,21 +187,6 @@ public interface CommerceTermEntryPersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] filterFindByUuid_PrevAndNext(
-			long commerceTermEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
 
 	/**
 	 * Removes all the commerce term entries where uuid = &#63; from the database.
@@ -364,22 +334,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] findByUuid_C_PrevAndNext(
-			long commerceTermEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -423,22 +377,6 @@ public interface CommerceTermEntryPersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] filterFindByUuid_C_PrevAndNext(
-			long commerceTermEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
 
 	/**
 	 * Removes all the commerce term entries where uuid = &#63; and companyId = &#63; from the database.
@@ -589,22 +527,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] findByC_A_PrevAndNext(
-			long commerceTermEntryId, long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -648,22 +570,6 @@ public interface CommerceTermEntryPersistence
 		long companyId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] filterFindByC_A_PrevAndNext(
-			long commerceTermEntryId, long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
 
 	/**
 	 * Removes all the commerce term entries where companyId = &#63; and active = &#63; from the database.
@@ -864,22 +770,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] findByC_LikeType_PrevAndNext(
-			long commerceTermEntryId, long companyId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -923,22 +813,6 @@ public interface CommerceTermEntryPersistence
 		long companyId, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] filterFindByC_LikeType_PrevAndNext(
-			long commerceTermEntryId, long companyId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
 
 	/**
 	 * Removes all the commerce term entries where companyId = &#63; and type LIKE &#63; from the database.
@@ -1089,22 +963,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] findByLtD_S_PrevAndNext(
-			long commerceTermEntryId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -1148,22 +1006,6 @@ public interface CommerceTermEntryPersistence
 		Date displayDate, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] filterFindByLtD_S_PrevAndNext(
-			long commerceTermEntryId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
 
 	/**
 	 * Removes all the commerce term entries where displayDate &lt; &#63; and status = &#63; from the database.
@@ -1314,22 +1156,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] findByLtE_S_PrevAndNext(
-			long commerceTermEntryId, Date expirationDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param expirationDate the expiration date
@@ -1373,22 +1199,6 @@ public interface CommerceTermEntryPersistence
 		Date expirationDate, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] filterFindByLtE_S_PrevAndNext(
-			long commerceTermEntryId, Date expirationDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
 
 	/**
 	 * Removes all the commerce term entries where expirationDate &lt; &#63; and status = &#63; from the database.
@@ -1547,24 +1357,6 @@ public interface CommerceTermEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] findByC_A_LikeType_PrevAndNext(
-			long commerceTermEntryId, long companyId, boolean active,
-			String type,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
-
-	/**
 	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1611,24 +1403,6 @@ public interface CommerceTermEntryPersistence
 		long companyId, boolean active, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
-	 *
-	 * @param commerceTermEntryId the primary key of the current commerce term entry
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	public CommerceTermEntry[] filterFindByC_A_LikeType_PrevAndNext(
-			long commerceTermEntryId, long companyId, boolean active,
-			String type,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
-				orderByComparator)
-		throws NoSuchTermEntryException;
 
 	/**
 	 * Removes all the commerce term entries where companyId = &#63; and active = &#63; and type LIKE &#63; from the database.
@@ -1894,4 +1668,4 @@ public interface CommerceTermEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-650941915
+// LIFERAY-SERVICE-BUILDER-HASH:378756547

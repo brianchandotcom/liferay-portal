@@ -242,24 +242,6 @@ public class FragmentCollectionUtil {
 	}
 
 	/**
-	 * Returns the fragment collections before and after the current fragment collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param fragmentCollectionId the primary key of the current fragment collection
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	public static FragmentCollection[] findByUuid_PrevAndNext(
-			long fragmentCollectionId, String uuid,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCollectionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			fragmentCollectionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment collections where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -488,25 +470,6 @@ public class FragmentCollectionUtil {
 	}
 
 	/**
-	 * Returns the fragment collections before and after the current fragment collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param fragmentCollectionId the primary key of the current fragment collection
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	public static FragmentCollection[] findByUuid_C_PrevAndNext(
-			long fragmentCollectionId, String uuid, long companyId,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCollectionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			fragmentCollectionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment collections where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -656,24 +619,6 @@ public class FragmentCollectionUtil {
 		long groupId, OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment collections before and after the current fragment collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param fragmentCollectionId the primary key of the current fragment collection
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	public static FragmentCollection[] findByGroupId_PrevAndNext(
-			long fragmentCollectionId, long groupId,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCollectionException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			fragmentCollectionId, groupId, orderByComparator);
 	}
 
 	/**
@@ -996,25 +941,6 @@ public class FragmentCollectionUtil {
 	}
 
 	/**
-	 * Returns the fragment collections before and after the current fragment collection in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param fragmentCollectionId the primary key of the current fragment collection
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	public static FragmentCollection[] findByG_LikeN_PrevAndNext(
-			long fragmentCollectionId, long groupId, String name,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCollectionException {
-
-		return getPersistence().findByG_LikeN_PrevAndNext(
-			fragmentCollectionId, groupId, name, orderByComparator);
-	}
-
-	/**
 	 * Returns all the fragment collections where groupId = any &#63; and name LIKE &#63;.
 	 *
 	 * <p>
@@ -1273,25 +1199,6 @@ public class FragmentCollectionUtil {
 
 		return getPersistence().fetchByG_M_Last(
 			groupId, marketplace, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment collections before and after the current fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
-	 *
-	 * @param fragmentCollectionId the primary key of the current fragment collection
-	 * @param groupId the group ID
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	public static FragmentCollection[] findByG_M_PrevAndNext(
-			long fragmentCollectionId, long groupId, boolean marketplace,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCollectionException {
-
-		return getPersistence().findByG_M_PrevAndNext(
-			fragmentCollectionId, groupId, marketplace, orderByComparator);
 	}
 
 	/**
@@ -1563,28 +1470,6 @@ public class FragmentCollectionUtil {
 
 		return getPersistence().fetchByG_LikeN_M_Last(
 			groupId, name, marketplace, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment collections before and after the current fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
-	 *
-	 * @param fragmentCollectionId the primary key of the current fragment collection
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param marketplace the marketplace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	public static FragmentCollection[] findByG_LikeN_M_PrevAndNext(
-			long fragmentCollectionId, long groupId, String name,
-			boolean marketplace,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCollectionException {
-
-		return getPersistence().findByG_LikeN_M_PrevAndNext(
-			fragmentCollectionId, groupId, name, marketplace,
-			orderByComparator);
 	}
 
 	/**
@@ -1952,4 +1837,4 @@ public class FragmentCollectionUtil {
 	private static volatile FragmentCollectionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1914323479
+// LIFERAY-SERVICE-BUILDER-HASH:-923996457

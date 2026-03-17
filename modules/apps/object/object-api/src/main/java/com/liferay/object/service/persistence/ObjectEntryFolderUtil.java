@@ -240,24 +240,6 @@ public class ObjectEntryFolderUtil {
 	}
 
 	/**
-	 * Returns the object entry folders before and after the current object entry folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectEntryFolderId the primary key of the current object entry folder
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	public static ObjectEntryFolder[] findByUuid_PrevAndNext(
-			long objectEntryFolderId, String uuid,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryFolderException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectEntryFolderId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object entry folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -483,25 +465,6 @@ public class ObjectEntryFolderUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object entry folders before and after the current object entry folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectEntryFolderId the primary key of the current object entry folder
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	public static ObjectEntryFolder[] findByUuid_C_PrevAndNext(
-			long objectEntryFolderId, String uuid, long companyId,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryFolderException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectEntryFolderId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -765,28 +728,6 @@ public class ObjectEntryFolderUtil {
 	}
 
 	/**
-	 * Returns the object entry folders before and after the current object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * @param objectEntryFolderId the primary key of the current object entry folder
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	public static ObjectEntryFolder[] findByG_C_P_PrevAndNext(
-			long objectEntryFolderId, long groupId, long companyId,
-			long parentObjectEntryFolderId,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryFolderException {
-
-		return getPersistence().findByG_C_P_PrevAndNext(
-			objectEntryFolderId, groupId, companyId, parentObjectEntryFolderId,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -844,28 +785,6 @@ public class ObjectEntryFolderUtil {
 
 		return getPersistence().filterFindByG_C_P(
 			groupId, companyId, parentObjectEntryFolderId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the object entry folders before and after the current object entry folder in the ordered set of object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * @param objectEntryFolderId the primary key of the current object entry folder
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	public static ObjectEntryFolder[] filterFindByG_C_P_PrevAndNext(
-			long objectEntryFolderId, long groupId, long companyId,
-			long parentObjectEntryFolderId,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryFolderException {
-
-		return getPersistence().filterFindByG_C_P_PrevAndNext(
-			objectEntryFolderId, groupId, companyId, parentObjectEntryFolderId,
 			orderByComparator);
 	}
 
@@ -1070,28 +989,6 @@ public class ObjectEntryFolderUtil {
 	}
 
 	/**
-	 * Returns the object entry folders before and after the current object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param objectEntryFolderId the primary key of the current object entry folder
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	public static ObjectEntryFolder[] findByG_C_LikeT_PrevAndNext(
-			long objectEntryFolderId, long groupId, long companyId,
-			String treePath,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryFolderException {
-
-		return getPersistence().findByG_C_LikeT_PrevAndNext(
-			objectEntryFolderId, groupId, companyId, treePath,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and treePath LIKE &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1148,28 +1045,6 @@ public class ObjectEntryFolderUtil {
 
 		return getPersistence().filterFindByG_C_LikeT(
 			groupId, companyId, treePath, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the object entry folders before and after the current object entry folder in the ordered set of object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and treePath LIKE &#63;.
-	 *
-	 * @param objectEntryFolderId the primary key of the current object entry folder
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	public static ObjectEntryFolder[] filterFindByG_C_LikeT_PrevAndNext(
-			long objectEntryFolderId, long groupId, long companyId,
-			String treePath,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryFolderException {
-
-		return getPersistence().filterFindByG_C_LikeT_PrevAndNext(
-			objectEntryFolderId, groupId, companyId, treePath,
-			orderByComparator);
 	}
 
 	/**
@@ -1402,30 +1277,6 @@ public class ObjectEntryFolderUtil {
 	}
 
 	/**
-	 * Returns the object entry folders before and after the current object entry folder in the ordered set where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63; and name = &#63; and status &ne; &#63;.
-	 *
-	 * @param objectEntryFolderId the primary key of the current object entry folder
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	public static ObjectEntryFolder[] findByG_C_P_N_NotS_PrevAndNext(
-			long objectEntryFolderId, long groupId, long companyId,
-			long parentObjectEntryFolderId, String name, int status,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryFolderException {
-
-		return getPersistence().findByG_C_P_N_NotS_PrevAndNext(
-			objectEntryFolderId, groupId, companyId, parentObjectEntryFolderId,
-			name, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63; and name = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1493,30 +1344,6 @@ public class ObjectEntryFolderUtil {
 		return getPersistence().filterFindByG_C_P_N_NotS(
 			groupId, companyId, parentObjectEntryFolderId, name, status, start,
 			end, orderByComparator);
-	}
-
-	/**
-	 * Returns the object entry folders before and after the current object entry folder in the ordered set of object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63; and name = &#63; and status &ne; &#63;.
-	 *
-	 * @param objectEntryFolderId the primary key of the current object entry folder
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	public static ObjectEntryFolder[] filterFindByG_C_P_N_NotS_PrevAndNext(
-			long objectEntryFolderId, long groupId, long companyId,
-			long parentObjectEntryFolderId, String name, int status,
-			OrderByComparator<ObjectEntryFolder> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryFolderException {
-
-		return getPersistence().filterFindByG_C_P_N_NotS_PrevAndNext(
-			objectEntryFolderId, groupId, companyId, parentObjectEntryFolderId,
-			name, status, orderByComparator);
 	}
 
 	/**
@@ -1738,4 +1565,4 @@ public class ObjectEntryFolderUtil {
 	private static volatile ObjectEntryFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1943347305
+// LIFERAY-SERVICE-BUILDER-HASH:567115450

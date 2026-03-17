@@ -252,25 +252,6 @@ public class CommerceNotificationAttachmentUtil {
 	}
 
 	/**
-	 * Returns the commerce notification attachments before and after the current commerce notification attachment in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceNotificationAttachmentId the primary key of the current commerce notification attachment
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification attachment
-	 * @throws NoSuchNotificationAttachmentException if a commerce notification attachment with the primary key could not be found
-	 */
-	public static CommerceNotificationAttachment[] findByUuid_PrevAndNext(
-			long commerceNotificationAttachmentId, String uuid,
-			OrderByComparator<CommerceNotificationAttachment> orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationAttachmentException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceNotificationAttachmentId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce notification attachments where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -507,27 +488,6 @@ public class CommerceNotificationAttachmentUtil {
 	}
 
 	/**
-	 * Returns the commerce notification attachments before and after the current commerce notification attachment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceNotificationAttachmentId the primary key of the current commerce notification attachment
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification attachment
-	 * @throws NoSuchNotificationAttachmentException if a commerce notification attachment with the primary key could not be found
-	 */
-	public static CommerceNotificationAttachment[] findByUuid_C_PrevAndNext(
-			long commerceNotificationAttachmentId, String uuid, long companyId,
-			OrderByComparator<CommerceNotificationAttachment> orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationAttachmentException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceNotificationAttachmentId, uuid, companyId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce notification attachments where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -702,30 +662,6 @@ public class CommerceNotificationAttachmentUtil {
 
 		return getPersistence().fetchByCommerceNotificationQueueEntryId_Last(
 			commerceNotificationQueueEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce notification attachments before and after the current commerce notification attachment in the ordered set where commerceNotificationQueueEntryId = &#63;.
-	 *
-	 * @param commerceNotificationAttachmentId the primary key of the current commerce notification attachment
-	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification attachment
-	 * @throws NoSuchNotificationAttachmentException if a commerce notification attachment with the primary key could not be found
-	 */
-	public static CommerceNotificationAttachment[]
-			findByCommerceNotificationQueueEntryId_PrevAndNext(
-				long commerceNotificationAttachmentId,
-				long commerceNotificationQueueEntryId,
-				OrderByComparator<CommerceNotificationAttachment>
-					orderByComparator)
-		throws com.liferay.commerce.notification.exception.
-			NoSuchNotificationAttachmentException {
-
-		return getPersistence().
-			findByCommerceNotificationQueueEntryId_PrevAndNext(
-				commerceNotificationAttachmentId,
-				commerceNotificationQueueEntryId, orderByComparator);
 	}
 
 	/**
@@ -934,4 +870,4 @@ public class CommerceNotificationAttachmentUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001234462
+// LIFERAY-SERVICE-BUILDER-HASH:1542829510

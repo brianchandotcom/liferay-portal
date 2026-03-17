@@ -238,24 +238,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where uuid = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByUuid_PrevAndNext(
-			long relationId, String uuid,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			relationId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -421,25 +403,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByUuid_C_PrevAndNext(
-			long relationId, String uuid, long companyId,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			relationId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -593,24 +556,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where companyId = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByCompanyId_PrevAndNext(
-			long relationId, long companyId,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			relationId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -756,24 +701,6 @@ public class SocialRelationUtil {
 		long userId1, OrderByComparator<SocialRelation> orderByComparator) {
 
 		return getPersistence().fetchByUserId1_Last(userId1, orderByComparator);
-	}
-
-	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId1 the user id1
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByUserId1_PrevAndNext(
-			long relationId, long userId1,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByUserId1_PrevAndNext(
-			relationId, userId1, orderByComparator);
 	}
 
 	/**
@@ -925,24 +852,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId2 = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByUserId2_PrevAndNext(
-			long relationId, long userId2,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByUserId2_PrevAndNext(
-			relationId, userId2, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where userId2 = &#63; from the database.
 	 *
 	 * @param userId2 the user id2
@@ -1086,24 +995,6 @@ public class SocialRelationUtil {
 		int type, OrderByComparator<SocialRelation> orderByComparator) {
 
 		return getPersistence().fetchByType_Last(type, orderByComparator);
-	}
-
-	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where type = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByType_PrevAndNext(
-			long relationId, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByType_PrevAndNext(
-			relationId, type, orderByComparator);
 	}
 
 	/**
@@ -1267,25 +1158,6 @@ public class SocialRelationUtil {
 
 		return getPersistence().fetchByC_T_Last(
 			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByC_T_PrevAndNext(
-			long relationId, long companyId, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByC_T_PrevAndNext(
-			relationId, companyId, type, orderByComparator);
 	}
 
 	/**
@@ -1454,25 +1326,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63; and userId2 = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId1 the user id1
-	 * @param userId2 the user id2
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByU1_U2_PrevAndNext(
-			long relationId, long userId1, long userId2,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByU1_U2_PrevAndNext(
-			relationId, userId1, userId2, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; and userId2 = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -1638,25 +1491,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId1 = &#63; and type = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId1 the user id1
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByU1_T_PrevAndNext(
-			long relationId, long userId1, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByU1_T_PrevAndNext(
-			relationId, userId1, type, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social relations where userId1 = &#63; and type = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
@@ -1819,25 +1653,6 @@ public class SocialRelationUtil {
 
 		return getPersistence().fetchByU2_T_Last(
 			userId2, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the social relations before and after the current social relation in the ordered set where userId2 = &#63; and type = &#63;.
-	 *
-	 * @param relationId the primary key of the current social relation
-	 * @param userId2 the user id2
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	public static SocialRelation[] findByU2_T_PrevAndNext(
-			long relationId, long userId2, int type,
-			OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchRelationException {
-
-		return getPersistence().findByU2_T_PrevAndNext(
-			relationId, userId2, type, orderByComparator);
 	}
 
 	/**
@@ -2093,4 +1908,4 @@ public class SocialRelationUtil {
 	private static volatile SocialRelationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:39023430
+// LIFERAY-SERVICE-BUILDER-HASH:-88229531

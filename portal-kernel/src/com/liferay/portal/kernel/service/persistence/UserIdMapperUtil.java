@@ -239,24 +239,6 @@ public class UserIdMapperUtil {
 	}
 
 	/**
-	 * Returns the user ID mappers before and after the current user ID mapper in the ordered set where userId = &#63;.
-	 *
-	 * @param userIdMapperId the primary key of the current user ID mapper
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user ID mapper
-	 * @throws NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 */
-	public static UserIdMapper[] findByUserId_PrevAndNext(
-			long userIdMapperId, long userId,
-			OrderByComparator<UserIdMapper> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchUserIdMapperException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			userIdMapperId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user ID mappers where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -560,4 +542,4 @@ public class UserIdMapperUtil {
 	private static volatile UserIdMapperPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1597355601
+// LIFERAY-SERVICE-BUILDER-HASH:-907372806

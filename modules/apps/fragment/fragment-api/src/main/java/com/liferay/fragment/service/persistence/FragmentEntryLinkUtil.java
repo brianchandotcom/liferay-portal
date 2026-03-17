@@ -240,24 +240,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where uuid = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByUuid_PrevAndNext(
-			long fragmentEntryLinkId, String uuid,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			fragmentEntryLinkId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -486,25 +468,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByUuid_C_PrevAndNext(
-			long fragmentEntryLinkId, String uuid, long companyId,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			fragmentEntryLinkId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -654,24 +617,6 @@ public class FragmentEntryLinkUtil {
 		long groupId, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByGroupId_PrevAndNext(
-			long fragmentEntryLinkId, long groupId,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			fragmentEntryLinkId, groupId, orderByComparator);
 	}
 
 	/**
@@ -832,24 +777,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where rendererKey = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param rendererKey the renderer key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByRendererKey_PrevAndNext(
-			long fragmentEntryLinkId, String rendererKey,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByRendererKey_PrevAndNext(
-			fragmentEntryLinkId, rendererKey, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where rendererKey = &#63; from the database.
 	 *
 	 * @param rendererKey the renderer key
@@ -993,24 +920,6 @@ public class FragmentEntryLinkUtil {
 		int type, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
 		return getPersistence().fetchByType_Last(type, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where type = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByType_PrevAndNext(
-			long fragmentEntryLinkId, int type,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByType_PrevAndNext(
-			fragmentEntryLinkId, type, orderByComparator);
 	}
 
 	/**
@@ -1174,25 +1083,6 @@ public class FragmentEntryLinkUtil {
 
 		return getPersistence().fetchByG_P_Last(
 			groupId, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_P_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, long plid,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_P_PrevAndNext(
-			fragmentEntryLinkId, groupId, plid, orderByComparator);
 	}
 
 	/**
@@ -1361,25 +1251,6 @@ public class FragmentEntryLinkUtil {
 
 		return getPersistence().fetchByC_R_Last(
 			companyId, rendererKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where companyId = &#63; and rendererKey = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param companyId the company ID
-	 * @param rendererKey the renderer key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByC_R_PrevAndNext(
-			long fragmentEntryLinkId, long companyId, String rendererKey,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByC_R_PrevAndNext(
-			fragmentEntryLinkId, companyId, rendererKey, orderByComparator);
 	}
 
 	/**
@@ -1649,27 +1520,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByFEERC_FESERC_PrevAndNext(
-			long fragmentEntryLinkId, String fragmentEntryERC,
-			String fragmentEntryScopeERC,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByFEERC_FESERC_PrevAndNext(
-			fragmentEntryLinkId, fragmentEntryERC, fragmentEntryScopeERC,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; from the database.
 	 *
 	 * @param fragmentEntryERC the fragment entry erc
@@ -1853,28 +1703,6 @@ public class FragmentEntryLinkUtil {
 
 		return getPersistence().fetchByG_OFELERC_P_Last(
 			groupId, originalFragmentEntryLinkERC, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and originalFragmentEntryLinkERC = &#63; and plid = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param originalFragmentEntryLinkERC the original fragment entry link erc
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_OFELERC_P_PrevAndNext(
-			long fragmentEntryLinkId, long groupId,
-			String originalFragmentEntryLinkERC, long plid,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_OFELERC_P_PrevAndNext(
-			fragmentEntryLinkId, groupId, originalFragmentEntryLinkERC, plid,
-			orderByComparator);
 	}
 
 	/**
@@ -2072,28 +1900,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_FEERC_FESERC_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, String fragmentEntryERC,
-			String fragmentEntryScopeERC,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_FEERC_FESERC_PrevAndNext(
-			fragmentEntryLinkId, groupId, fragmentEntryERC,
-			fragmentEntryScopeERC, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2278,27 +2084,6 @@ public class FragmentEntryLinkUtil {
 
 		return getPersistence().fetchByG_S_P_Last(
 			groupId, segmentsExperienceId, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_S_P_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, long segmentsExperienceId,
-			long plid, OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_S_P_PrevAndNext(
-			fragmentEntryLinkId, groupId, segmentsExperienceId, plid,
-			orderByComparator);
 	}
 
 	/**
@@ -2592,28 +2377,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_C_C_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, long classNameId,
-			long classPK,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_C_C_PrevAndNext(
-			fragmentEntryLinkId, groupId, classNameId, classPK,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2793,26 +2556,6 @@ public class FragmentEntryLinkUtil {
 
 		return getPersistence().fetchByG_P_D_Last(
 			groupId, plid, deleted, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_P_D_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, long plid, boolean deleted,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_P_D_PrevAndNext(
-			fragmentEntryLinkId, groupId, plid, deleted, orderByComparator);
 	}
 
 	/**
@@ -3004,28 +2747,6 @@ public class FragmentEntryLinkUtil {
 		return getPersistence().fetchByFEERC_FESERC_D_Last(
 			fragmentEntryERC, fragmentEntryScopeERC, deleted,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByFEERC_FESERC_D_PrevAndNext(
-			long fragmentEntryLinkId, String fragmentEntryERC,
-			String fragmentEntryScopeERC, boolean deleted,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByFEERC_FESERC_D_PrevAndNext(
-			fragmentEntryLinkId, fragmentEntryERC, fragmentEntryScopeERC,
-			deleted, orderByComparator);
 	}
 
 	/**
@@ -3239,29 +2960,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_FEERC_FESERC_C_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, String fragmentEntryERC,
-			String fragmentEntryScopeERC, long classNameId,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_FEERC_FESERC_C_PrevAndNext(
-			fragmentEntryLinkId, groupId, fragmentEntryERC,
-			fragmentEntryScopeERC, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3466,29 +3164,6 @@ public class FragmentEntryLinkUtil {
 		return getPersistence().fetchByG_FEERC_FESERC_P_Last(
 			groupId, fragmentEntryERC, fragmentEntryScopeERC, plid,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_FEERC_FESERC_P_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, String fragmentEntryERC,
-			String fragmentEntryScopeERC, long plid,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_FEERC_FESERC_P_PrevAndNext(
-			fragmentEntryLinkId, groupId, fragmentEntryERC,
-			fragmentEntryScopeERC, plid, orderByComparator);
 	}
 
 	/**
@@ -3704,29 +3379,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_FEERC_FESERC_D_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, String fragmentEntryERC,
-			String fragmentEntryScopeERC, boolean deleted,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_FEERC_FESERC_D_PrevAndNext(
-			fragmentEntryLinkId, groupId, fragmentEntryERC,
-			fragmentEntryScopeERC, deleted, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3936,29 +3588,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_S_C_C_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, long segmentsExperienceId,
-			long classNameId, long classPK,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_S_C_C_PrevAndNext(
-			fragmentEntryLinkId, groupId, segmentsExperienceId, classNameId,
-			classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -4158,29 +3787,6 @@ public class FragmentEntryLinkUtil {
 
 		return getPersistence().fetchByG_S_P_D_Last(
 			groupId, segmentsExperienceId, plid, deleted, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_S_P_D_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, long segmentsExperienceId,
-			long plid, boolean deleted,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_S_P_D_PrevAndNext(
-			fragmentEntryLinkId, groupId, segmentsExperienceId, plid, deleted,
-			orderByComparator);
 	}
 
 	/**
@@ -4506,29 +4112,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and rendererKey = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param rendererKey the renderer key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_S_P_R_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, long segmentsExperienceId,
-			long plid, String rendererKey,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_S_P_R_PrevAndNext(
-			fragmentEntryLinkId, groupId, segmentsExperienceId, plid,
-			rendererKey, orderByComparator);
-	}
-
-	/**
 	 * Removes all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and rendererKey = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -4747,30 +4330,6 @@ public class FragmentEntryLinkUtil {
 		return getPersistence().fetchByG_FEERC_FESERC_C_C_Last(
 			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
 			classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	public static FragmentEntryLink[] findByG_FEERC_FESERC_C_C_PrevAndNext(
-			long fragmentEntryLinkId, long groupId, String fragmentEntryERC,
-			String fragmentEntryScopeERC, long classNameId, long classPK,
-			OrderByComparator<FragmentEntryLink> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
-
-		return getPersistence().findByG_FEERC_FESERC_C_C_PrevAndNext(
-			fragmentEntryLinkId, groupId, fragmentEntryERC,
-			fragmentEntryScopeERC, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -5044,4 +4603,4 @@ public class FragmentEntryLinkUtil {
 	private static volatile FragmentEntryLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2118622788
+// LIFERAY-SERVICE-BUILDER-HASH:655608310

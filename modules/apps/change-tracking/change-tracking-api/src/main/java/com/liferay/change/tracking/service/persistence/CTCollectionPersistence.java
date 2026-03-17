@@ -145,21 +145,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] findByUuid_PrevAndNext(
-			long ctCollectionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -199,21 +184,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
-
-	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set of ct collections that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] filterFindByUuid_PrevAndNext(
-			long ctCollectionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
 
 	/**
 	 * Removes all the ct collections where uuid = &#63; from the database.
@@ -361,22 +331,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] findByUuid_C_PrevAndNext(
-			long ctCollectionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -420,22 +374,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
-
-	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set of ct collections that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] filterFindByUuid_C_PrevAndNext(
-			long ctCollectionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
 
 	/**
 	 * Removes all the ct collections where uuid = &#63; and companyId = &#63; from the database.
@@ -577,21 +515,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set where companyId = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] findByCompanyId_PrevAndNext(
-			long ctCollectionId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -631,21 +554,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
-
-	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set of ct collections that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] filterFindByCompanyId_PrevAndNext(
-			long ctCollectionId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
 
 	/**
 	 * Removes all the ct collections where companyId = &#63; from the database.
@@ -792,22 +700,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] findByC_U_PrevAndNext(
-			long ctCollectionId, long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63; and userId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -851,22 +743,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 		long companyId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
-
-	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set of ct collections that the user has permission to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] filterFindByC_U_PrevAndNext(
-			long ctCollectionId, long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
 
 	/**
 	 * Removes all the ct collections where companyId = &#63; and userId = &#63; from the database.
@@ -1017,22 +893,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set where companyId = &#63; and schemaVersionId = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param companyId the company ID
-	 * @param schemaVersionId the schema version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] findByC_SVI_PrevAndNext(
-			long ctCollectionId, long companyId, long schemaVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63; and schemaVersionId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1076,22 +936,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 		long companyId, long schemaVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
-
-	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set of ct collections that the user has permission to view where companyId = &#63; and schemaVersionId = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param companyId the company ID
-	 * @param schemaVersionId the schema version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] filterFindByC_SVI_PrevAndNext(
-			long ctCollectionId, long companyId, long schemaVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
 
 	/**
 	 * Removes all the ct collections where companyId = &#63; and schemaVersionId = &#63; from the database.
@@ -1241,22 +1085,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] findByC_S_PrevAndNext(
-			long ctCollectionId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
-
-	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1300,22 +1128,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
 			orderByComparator);
-
-	/**
-	 * Returns the ct collections before and after the current ct collection in the ordered set of ct collections that the user has permission to view where companyId = &#63; and status = &#63;.
-	 *
-	 * @param ctCollectionId the primary key of the current ct collection
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	public CTCollection[] filterFindByC_S_PrevAndNext(
-			long ctCollectionId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
-		throws NoSuchCollectionException;
 
 	/**
 	 * Returns all the ct collections that the user has permission to view where companyId = &#63; and status = any &#63;.
@@ -1650,4 +1462,4 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1622687873
+// LIFERAY-SERVICE-BUILDER-HASH:2121147171

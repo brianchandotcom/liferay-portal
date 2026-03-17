@@ -247,25 +247,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where uuid = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public static MBSuspiciousActivity[] findByUuid_PrevAndNext(
-			long suspiciousActivityId, String uuid,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			suspiciousActivityId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the message boards suspicious activities where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -500,26 +481,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public static MBSuspiciousActivity[] findByUuid_C_PrevAndNext(
-			long suspiciousActivityId, String uuid, long companyId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			suspiciousActivityId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the message boards suspicious activities where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -679,25 +640,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public static MBSuspiciousActivity[] findByMessageId_PrevAndNext(
-			long suspiciousActivityId, long messageId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByMessageId_PrevAndNext(
-			suspiciousActivityId, messageId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the message boards suspicious activities where messageId = &#63; from the database.
 	 *
 	 * @param messageId the message ID
@@ -852,25 +794,6 @@ public class MBSuspiciousActivityUtil {
 
 		return getPersistence().fetchByThreadId_Last(
 			threadId, orderByComparator);
-	}
-
-	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where threadId = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public static MBSuspiciousActivity[] findByThreadId_PrevAndNext(
-			long suspiciousActivityId, long threadId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByThreadId_PrevAndNext(
-			suspiciousActivityId, threadId, orderByComparator);
 	}
 
 	/**
@@ -1193,4 +1116,4 @@ public class MBSuspiciousActivityUtil {
 	private static volatile MBSuspiciousActivityPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1296171409
+// LIFERAY-SERVICE-BUILDER-HASH:-325738310

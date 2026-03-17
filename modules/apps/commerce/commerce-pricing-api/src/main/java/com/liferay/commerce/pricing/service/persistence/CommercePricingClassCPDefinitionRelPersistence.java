@@ -156,23 +156,6 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 				<CommercePricingClassCPDefinitionRel> orderByComparator);
 
 	/**
-	 * Returns the commerce pricing class cp definition rels before and after the current commerce pricing class cp definition rel in the ordered set where commercePricingClassId = &#63;.
-	 *
-	 * @param CommercePricingClassCPDefinitionRelId the primary key of the current commerce pricing class cp definition rel
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce pricing class cp definition rel
-	 * @throws NoSuchPricingClassCPDefinitionRelException if a commerce pricing class cp definition rel with the primary key could not be found
-	 */
-	public CommercePricingClassCPDefinitionRel[]
-			findByCommercePricingClassId_PrevAndNext(
-				long CommercePricingClassCPDefinitionRelId,
-				long commercePricingClassId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommercePricingClassCPDefinitionRel> orderByComparator)
-		throws NoSuchPricingClassCPDefinitionRelException;
-
-	/**
 	 * Removes all the commerce pricing class cp definition rels where commercePricingClassId = &#63; from the database.
 	 *
 	 * @param commercePricingClassId the commerce pricing class ID
@@ -302,22 +285,6 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 		long CPDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePricingClassCPDefinitionRel> orderByComparator);
-
-	/**
-	 * Returns the commerce pricing class cp definition rels before and after the current commerce pricing class cp definition rel in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CommercePricingClassCPDefinitionRelId the primary key of the current commerce pricing class cp definition rel
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce pricing class cp definition rel
-	 * @throws NoSuchPricingClassCPDefinitionRelException if a commerce pricing class cp definition rel with the primary key could not be found
-	 */
-	public CommercePricingClassCPDefinitionRel[]
-			findByCPDefinitionId_PrevAndNext(
-				long CommercePricingClassCPDefinitionRelId, long CPDefinitionId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommercePricingClassCPDefinitionRel> orderByComparator)
-		throws NoSuchPricingClassCPDefinitionRelException;
 
 	/**
 	 * Removes all the commerce pricing class cp definition rels where CPDefinitionId = &#63; from the database.
@@ -520,4 +487,4 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:900398743
+// LIFERAY-SERVICE-BUILDER-HASH:1800439392

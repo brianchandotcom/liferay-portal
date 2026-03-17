@@ -247,25 +247,6 @@ public class DDMTemplateLinkUtil {
 	}
 
 	/**
-	 * Returns the ddm template links before and after the current ddm template link in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateLinkId the primary key of the current ddm template link
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm template link
-	 * @throws NoSuchTemplateLinkException if a ddm template link with the primary key could not be found
-	 */
-	public static DDMTemplateLink[] findByTemplateId_PrevAndNext(
-			long templateLinkId, long templateId,
-			OrderByComparator<DDMTemplateLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchTemplateLinkException {
-
-		return getPersistence().findByTemplateId_PrevAndNext(
-			templateLinkId, templateId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm template links where templateId = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -512,4 +493,4 @@ public class DDMTemplateLinkUtil {
 	private static volatile DDMTemplateLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1385011254
+// LIFERAY-SERVICE-BUILDER-HASH:1844203809

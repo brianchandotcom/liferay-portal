@@ -149,21 +149,6 @@ public interface CommerceChannelRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce channel rels before and after the current commerce channel rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelRelId the primary key of the current commerce channel rel
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel rel
-	 * @throws NoSuchChannelRelException if a commerce channel rel with the primary key could not be found
-	 */
-	public CommerceChannelRel[] findByCommerceChannelId_PrevAndNext(
-			long commerceChannelRelId, long commerceChannelId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannelRel>
-				orderByComparator)
-		throws NoSuchChannelRelException;
-
-	/**
 	 * Removes all the commerce channel rels where commerceChannelId = &#63; from the database.
 	 *
 	 * @param commerceChannelId the commerce channel ID
@@ -299,22 +284,6 @@ public interface CommerceChannelRelPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceChannelRel>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce channel rels before and after the current commerce channel rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commerceChannelRelId the primary key of the current commerce channel rel
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel rel
-	 * @throws NoSuchChannelRelException if a commerce channel rel with the primary key could not be found
-	 */
-	public CommerceChannelRel[] findByC_C_PrevAndNext(
-			long commerceChannelRelId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannelRel>
-				orderByComparator)
-		throws NoSuchChannelRelException;
 
 	/**
 	 * Removes all the commerce channel rels where classNameId = &#63; and classPK = &#63; from the database.
@@ -515,4 +484,4 @@ public interface CommerceChannelRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1260982549
+// LIFERAY-SERVICE-BUILDER-HASH:1162301570

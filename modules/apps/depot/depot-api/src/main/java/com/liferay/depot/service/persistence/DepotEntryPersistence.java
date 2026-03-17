@@ -147,21 +147,6 @@ public interface DepotEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entries before and after the current depot entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param depotEntryId the primary key of the current depot entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry
-	 * @throws NoSuchEntryException if a depot entry with the primary key could not be found
-	 */
-	public DepotEntry[] findByUuid_PrevAndNext(
-			long depotEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the depot entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -348,22 +333,6 @@ public interface DepotEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entries before and after the current depot entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param depotEntryId the primary key of the current depot entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry
-	 * @throws NoSuchEntryException if a depot entry with the primary key could not be found
-	 */
-	public DepotEntry[] findByUuid_C_PrevAndNext(
-			long depotEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the depot entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -544,22 +513,6 @@ public interface DepotEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entries before and after the current depot entry in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param depotEntryId the primary key of the current depot entry
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry
-	 * @throws NoSuchEntryException if a depot entry with the primary key could not be found
-	 */
-	public DepotEntry[] findByC_T_PrevAndNext(
-			long depotEntryId, long companyId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the depot entries where companyId = &#63; and type = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -696,4 +649,4 @@ public interface DepotEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:243420845
+// LIFERAY-SERVICE-BUILDER-HASH:-1837104525

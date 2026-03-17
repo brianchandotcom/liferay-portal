@@ -147,21 +147,6 @@ public interface AssetTagGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset tag group rels before and after the current asset tag group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetTagGroupRelId the primary key of the current asset tag group rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a asset tag group rel with the primary key could not be found
-	 */
-	public AssetTagGroupRel[] findByUuid_PrevAndNext(
-			long assetTagGroupRelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-				orderByComparator)
-		throws NoSuchTagGroupRelException;
-
-	/**
 	 * Removes all the asset tag group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface AssetTagGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset tag group rels before and after the current asset tag group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetTagGroupRelId the primary key of the current asset tag group rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a asset tag group rel with the primary key could not be found
-	 */
-	public AssetTagGroupRel[] findByUuid_C_PrevAndNext(
-			long assetTagGroupRelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-				orderByComparator)
-		throws NoSuchTagGroupRelException;
-
-	/**
 	 * Removes all the asset tag group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface AssetTagGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset tag group rels before and after the current asset tag group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param assetTagGroupRelId the primary key of the current asset tag group rel
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a asset tag group rel with the primary key could not be found
-	 */
-	public AssetTagGroupRel[] findByGroupId_PrevAndNext(
-			long assetTagGroupRelId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-				orderByComparator)
-		throws NoSuchTagGroupRelException;
-
-	/**
 	 * Removes all the asset tag group rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -636,21 +590,6 @@ public interface AssetTagGroupRelPersistence
 		long tagId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
 			orderByComparator);
-
-	/**
-	 * Returns the asset tag group rels before and after the current asset tag group rel in the ordered set where tagId = &#63;.
-	 *
-	 * @param assetTagGroupRelId the primary key of the current asset tag group rel
-	 * @param tagId the tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a asset tag group rel with the primary key could not be found
-	 */
-	public AssetTagGroupRel[] findByTagId_PrevAndNext(
-			long assetTagGroupRelId, long tagId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-				orderByComparator)
-		throws NoSuchTagGroupRelException;
 
 	/**
 	 * Removes all the asset tag group rels where tagId = &#63; from the database.
@@ -838,4 +777,4 @@ public interface AssetTagGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1410508336
+// LIFERAY-SERVICE-BUILDER-HASH:1632329678

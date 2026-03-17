@@ -146,21 +146,6 @@ public interface ObjectDefinitionSettingPersistence
 			<ObjectDefinitionSetting> orderByComparator);
 
 	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public ObjectDefinitionSetting[] findByUuid_PrevAndNext(
-			long objectDefinitionSettingId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException;
-
-	/**
 	 * Removes all the object definition settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectDefinitionSettingPersistence
 			<ObjectDefinitionSetting> orderByComparator);
 
 	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public ObjectDefinitionSetting[] findByUuid_C_PrevAndNext(
-			long objectDefinitionSettingId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException;
-
-	/**
 	 * Removes all the object definition settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,21 +412,6 @@ public interface ObjectDefinitionSettingPersistence
 		long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ObjectDefinitionSetting> orderByComparator);
-
-	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public ObjectDefinitionSetting[] findByObjectDefinitionId_PrevAndNext(
-			long objectDefinitionSettingId, long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException;
 
 	/**
 	 * Removes all the object definition settings where objectDefinitionId = &#63; from the database.
@@ -595,22 +549,6 @@ public interface ObjectDefinitionSettingPersistence
 		long companyId, String name,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ObjectDefinitionSetting> orderByComparator);
-
-	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public ObjectDefinitionSetting[] findByC_N_PrevAndNext(
-			long objectDefinitionSettingId, long companyId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException;
 
 	/**
 	 * Removes all the object definition settings where companyId = &#63; and name = &#63; from the database.
@@ -813,24 +751,6 @@ public interface ObjectDefinitionSettingPersistence
 			<ObjectDefinitionSetting> orderByComparator);
 
 	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where companyId = &#63; and name = &#63; and value = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param value the value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public ObjectDefinitionSetting[] findByC_N_V_PrevAndNext(
-			long objectDefinitionSettingId, long companyId, String name,
-			String value,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectDefinitionSetting> orderByComparator)
-		throws NoSuchObjectDefinitionSettingException;
-
-	/**
 	 * Removes all the object definition settings where companyId = &#63; and name = &#63; and value = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -974,4 +894,4 @@ public interface ObjectDefinitionSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1206333542
+// LIFERAY-SERVICE-BUILDER-HASH:1514815784

@@ -147,21 +147,6 @@ public interface SamlSpSessionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saml sp sessions before and after the current saml sp session in the ordered set where samlPeerBindingId = &#63;.
-	 *
-	 * @param samlSpSessionId the primary key of the current saml sp session
-	 * @param samlPeerBindingId the saml peer binding ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml sp session
-	 * @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
-	 */
-	public SamlSpSession[] findBySamlPeerBindingId_PrevAndNext(
-			long samlSpSessionId, long samlPeerBindingId,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession>
-				orderByComparator)
-		throws NoSuchSpSessionException;
-
-	/**
 	 * Removes all the saml sp sessions where samlPeerBindingId = &#63; from the database.
 	 *
 	 * @param samlPeerBindingId the saml peer binding ID
@@ -389,22 +374,6 @@ public interface SamlSpSessionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saml sp sessions before and after the current saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
-	 *
-	 * @param samlSpSessionId the primary key of the current saml sp session
-	 * @param companyId the company ID
-	 * @param sessionIndex the session index
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml sp session
-	 * @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
-	 */
-	public SamlSpSession[] findByC_SI_PrevAndNext(
-			long samlSpSessionId, long companyId, String sessionIndex,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlSpSession>
-				orderByComparator)
-		throws NoSuchSpSessionException;
-
-	/**
 	 * Removes all the saml sp sessions where companyId = &#63; and sessionIndex = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -542,4 +511,4 @@ public interface SamlSpSessionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-398904074
+// LIFERAY-SERVICE-BUILDER-HASH:-577049839

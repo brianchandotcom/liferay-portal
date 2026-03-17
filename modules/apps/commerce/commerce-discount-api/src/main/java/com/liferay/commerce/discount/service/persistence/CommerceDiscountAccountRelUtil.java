@@ -250,25 +250,6 @@ public class CommerceDiscountAccountRelUtil {
 	}
 
 	/**
-	 * Returns the commerce discount account rels before and after the current commerce discount account rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceDiscountAccountRelId the primary key of the current commerce discount account rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a commerce discount account rel with the primary key could not be found
-	 */
-	public static CommerceDiscountAccountRel[] findByUuid_PrevAndNext(
-			long commerceDiscountAccountRelId, String uuid,
-			OrderByComparator<CommerceDiscountAccountRel> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountAccountRelException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceDiscountAccountRelId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce discount account rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -436,26 +417,6 @@ public class CommerceDiscountAccountRelUtil {
 	}
 
 	/**
-	 * Returns the commerce discount account rels before and after the current commerce discount account rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceDiscountAccountRelId the primary key of the current commerce discount account rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a commerce discount account rel with the primary key could not be found
-	 */
-	public static CommerceDiscountAccountRel[] findByUuid_C_PrevAndNext(
-			long commerceDiscountAccountRelId, String uuid, long companyId,
-			OrderByComparator<CommerceDiscountAccountRel> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountAccountRelException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceDiscountAccountRelId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce discount account rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -618,26 +579,6 @@ public class CommerceDiscountAccountRelUtil {
 	}
 
 	/**
-	 * Returns the commerce discount account rels before and after the current commerce discount account rel in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceDiscountAccountRelId the primary key of the current commerce discount account rel
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a commerce discount account rel with the primary key could not be found
-	 */
-	public static CommerceDiscountAccountRel[]
-			findByCommerceAccountId_PrevAndNext(
-				long commerceDiscountAccountRelId, long commerceAccountId,
-				OrderByComparator<CommerceDiscountAccountRel> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountAccountRelException {
-
-		return getPersistence().findByCommerceAccountId_PrevAndNext(
-			commerceDiscountAccountRelId, commerceAccountId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce discount account rels where commerceAccountId = &#63; from the database.
 	 *
 	 * @param commerceAccountId the commerce account ID
@@ -795,27 +736,6 @@ public class CommerceDiscountAccountRelUtil {
 
 		return getPersistence().fetchByCommerceDiscountId_Last(
 			commerceDiscountId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce discount account rels before and after the current commerce discount account rel in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountAccountRelId the primary key of the current commerce discount account rel
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a commerce discount account rel with the primary key could not be found
-	 */
-	public static CommerceDiscountAccountRel[]
-			findByCommerceDiscountId_PrevAndNext(
-				long commerceDiscountAccountRelId, long commerceDiscountId,
-				OrderByComparator<CommerceDiscountAccountRel> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountAccountRelException {
-
-		return getPersistence().findByCommerceDiscountId_PrevAndNext(
-			commerceDiscountAccountRelId, commerceDiscountId,
-			orderByComparator);
 	}
 
 	/**
@@ -1090,4 +1010,4 @@ public class CommerceDiscountAccountRelUtil {
 	private static volatile CommerceDiscountAccountRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-627463759
+// LIFERAY-SERVICE-BUILDER-HASH:-1261024559

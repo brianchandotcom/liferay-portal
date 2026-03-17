@@ -147,21 +147,6 @@ public interface AccountEntryUserRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the account entry user rels before and after the current account entry user rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryUserRelId the primary key of the current account entry user rel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry user rel
-	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
-	 */
-	public AccountEntryUserRel[] findByAccountEntryId_PrevAndNext(
-			long accountEntryUserRelId, long accountEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AccountEntryUserRel> orderByComparator)
-		throws NoSuchEntryUserRelException;
-
-	/**
 	 * Removes all the account entry user rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -289,21 +274,6 @@ public interface AccountEntryUserRelPersistence
 		long accountUserId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
 			orderByComparator);
-
-	/**
-	 * Returns the account entry user rels before and after the current account entry user rel in the ordered set where accountUserId = &#63;.
-	 *
-	 * @param accountEntryUserRelId the primary key of the current account entry user rel
-	 * @param accountUserId the account user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry user rel
-	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
-	 */
-	public AccountEntryUserRel[] findByAccountUserId_PrevAndNext(
-			long accountEntryUserRelId, long accountUserId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AccountEntryUserRel> orderByComparator)
-		throws NoSuchEntryUserRelException;
 
 	/**
 	 * Removes all the account entry user rels where accountUserId = &#63; from the database.
@@ -496,4 +466,4 @@ public interface AccountEntryUserRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1495070821
+// LIFERAY-SERVICE-BUILDER-HASH:-913847816

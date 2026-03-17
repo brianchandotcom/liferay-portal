@@ -240,25 +240,6 @@ public class CPDisplayLayoutUtil {
 	}
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByUuid_PrevAndNext(
-			long CPDisplayLayoutId, String uuid,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			CPDisplayLayoutId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp display layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -491,26 +472,6 @@ public class CPDisplayLayoutUtil {
 	}
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByUuid_C_PrevAndNext(
-			long CPDisplayLayoutId, String uuid, long companyId,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			CPDisplayLayoutId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp display layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -660,25 +621,6 @@ public class CPDisplayLayoutUtil {
 		long groupId, OrderByComparator<CPDisplayLayout> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where groupId = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByGroupId_PrevAndNext(
-			long CPDisplayLayoutId, long groupId,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			CPDisplayLayoutId, groupId, orderByComparator);
 	}
 
 	/**
@@ -847,26 +789,6 @@ public class CPDisplayLayoutUtil {
 
 		return getPersistence().fetchByG_C_Last(
 			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByG_C_PrevAndNext(
-			long CPDisplayLayoutId, long groupId, long classNameId,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByG_C_PrevAndNext(
-			CPDisplayLayoutId, groupId, classNameId, orderByComparator);
 	}
 
 	/**
@@ -1040,28 +962,6 @@ public class CPDisplayLayoutUtil {
 
 		return getPersistence().fetchByG_LPTEU_Last(
 			groupId, layoutPageTemplateEntryUuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where groupId = &#63; and layoutPageTemplateEntryUuid = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateEntryUuid the layout page template entry uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByG_LPTEU_PrevAndNext(
-			long CPDisplayLayoutId, long groupId,
-			String layoutPageTemplateEntryUuid,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByG_LPTEU_PrevAndNext(
-			CPDisplayLayoutId, groupId, layoutPageTemplateEntryUuid,
-			orderByComparator);
 	}
 
 	/**
@@ -1239,26 +1139,6 @@ public class CPDisplayLayoutUtil {
 	}
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where groupId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param groupId the group ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByG_L_PrevAndNext(
-			long CPDisplayLayoutId, long groupId, String layoutUuid,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByG_L_PrevAndNext(
-			CPDisplayLayoutId, groupId, layoutUuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp display layouts where groupId = &#63; and layoutUuid = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1426,26 +1306,6 @@ public class CPDisplayLayoutUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByC_C_PrevAndNext(
-			long CPDisplayLayoutId, long classNameId, long classPK,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			CPDisplayLayoutId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -1620,26 +1480,6 @@ public class CPDisplayLayoutUtil {
 	}
 
 	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByC_C_LPTEU_PrevAndNext(
-			long CPDisplayLayoutId, long classNameId, long classPK,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByC_C_LPTEU_PrevAndNext(
-			CPDisplayLayoutId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp display layouts where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1807,26 +1647,6 @@ public class CPDisplayLayoutUtil {
 
 		return getPersistence().fetchByC_C_L_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param CPDisplayLayoutId the primary key of the current cp display layout
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	public static CPDisplayLayout[] findByC_C_L_PrevAndNext(
-			long CPDisplayLayoutId, long classNameId, long classPK,
-			OrderByComparator<CPDisplayLayout> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDisplayLayoutException {
-
-		return getPersistence().findByC_C_L_PrevAndNext(
-			CPDisplayLayoutId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -2089,4 +1909,4 @@ public class CPDisplayLayoutUtil {
 	private static volatile CPDisplayLayoutPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1369809914
+// LIFERAY-SERVICE-BUILDER-HASH:1222091434

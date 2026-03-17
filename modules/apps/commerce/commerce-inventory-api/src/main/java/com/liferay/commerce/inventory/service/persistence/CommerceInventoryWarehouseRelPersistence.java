@@ -154,23 +154,6 @@ public interface CommerceInventoryWarehouseRelPersistence
 				<CommerceInventoryWarehouseRel> orderByComparator);
 
 	/**
-	 * Returns the commerce inventory warehouse rels before and after the current commerce inventory warehouse rel in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseRelId the primary key of the current commerce inventory warehouse rel
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse rel
-	 * @throws NoSuchInventoryWarehouseRelException if a commerce inventory warehouse rel with the primary key could not be found
-	 */
-	public CommerceInventoryWarehouseRel[]
-			findByCommerceInventoryWarehouseId_PrevAndNext(
-				long commerceInventoryWarehouseRelId,
-				long commerceInventoryWarehouseId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceInventoryWarehouseRel> orderByComparator)
-		throws NoSuchInventoryWarehouseRelException;
-
-	/**
 	 * Removes all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63; from the database.
 	 *
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
@@ -309,23 +292,6 @@ public interface CommerceInventoryWarehouseRelPersistence
 		long classNameId, long commerceInventoryWarehouseId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryWarehouseRel> orderByComparator);
-
-	/**
-	 * Returns the commerce inventory warehouse rels before and after the current commerce inventory warehouse rel in the ordered set where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseRelId the primary key of the current commerce inventory warehouse rel
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse rel
-	 * @throws NoSuchInventoryWarehouseRelException if a commerce inventory warehouse rel with the primary key could not be found
-	 */
-	public CommerceInventoryWarehouseRel[] findByC_C_PrevAndNext(
-			long commerceInventoryWarehouseRelId, long classNameId,
-			long commerceInventoryWarehouseId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouseRel> orderByComparator)
-		throws NoSuchInventoryWarehouseRelException;
 
 	/**
 	 * Removes all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63; from the database.
@@ -535,4 +501,4 @@ public interface CommerceInventoryWarehouseRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-573333944
+// LIFERAY-SERVICE-BUILDER-HASH:-194843879

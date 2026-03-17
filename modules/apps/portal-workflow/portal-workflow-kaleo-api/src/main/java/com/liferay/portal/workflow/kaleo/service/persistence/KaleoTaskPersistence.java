@@ -147,21 +147,6 @@ public interface KaleoTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo tasks before and after the current kaleo task in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoTaskId the primary key of the current kaleo task
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task
-	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
-	 */
-	public KaleoTask[] findByCompanyId_PrevAndNext(
-			long kaleoTaskId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
-				orderByComparator)
-		throws NoSuchTaskException;
-
-	/**
 	 * Removes all the kaleo tasks where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -289,21 +274,6 @@ public interface KaleoTaskPersistence
 		long kaleoDefinitionVersionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo tasks before and after the current kaleo task in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoTaskId the primary key of the current kaleo task
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task
-	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
-	 */
-	public KaleoTask[] findByKaleoDefinitionVersionId_PrevAndNext(
-			long kaleoTaskId, long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTask>
-				orderByComparator)
-		throws NoSuchTaskException;
 
 	/**
 	 * Removes all the kaleo tasks where kaleoDefinitionVersionId = &#63; from the database.
@@ -485,4 +455,4 @@ public interface KaleoTaskPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1543728826
+// LIFERAY-SERVICE-BUILDER-HASH:970266576

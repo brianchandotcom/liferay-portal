@@ -252,25 +252,6 @@ public class CSDiagramEntryUtil {
 	}
 
 	/**
-	 * Returns the cs diagram entries before and after the current cs diagram entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CSDiagramEntryId the primary key of the current cs diagram entry
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
-	 */
-	public static CSDiagramEntry[] findByCPDefinitionId_PrevAndNext(
-			long CSDiagramEntryId, long CPDefinitionId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws com.liferay.commerce.shop.by.diagram.exception.
-			NoSuchCSDiagramEntryException {
-
-		return getPersistence().findByCPDefinitionId_PrevAndNext(
-			CSDiagramEntryId, CPDefinitionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cs diagram entries where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -428,25 +409,6 @@ public class CSDiagramEntryUtil {
 	}
 
 	/**
-	 * Returns the cs diagram entries before and after the current cs diagram entry in the ordered set where CPInstanceId = &#63;.
-	 *
-	 * @param CSDiagramEntryId the primary key of the current cs diagram entry
-	 * @param CPInstanceId the cp instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
-	 */
-	public static CSDiagramEntry[] findByCPInstanceId_PrevAndNext(
-			long CSDiagramEntryId, long CPInstanceId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws com.liferay.commerce.shop.by.diagram.exception.
-			NoSuchCSDiagramEntryException {
-
-		return getPersistence().findByCPInstanceId_PrevAndNext(
-			CSDiagramEntryId, CPInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cs diagram entries where CPInstanceId = &#63; from the database.
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -599,25 +561,6 @@ public class CSDiagramEntryUtil {
 
 		return getPersistence().fetchByCProductId_Last(
 			CProductId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cs diagram entries before and after the current cs diagram entry in the ordered set where CProductId = &#63;.
-	 *
-	 * @param CSDiagramEntryId the primary key of the current cs diagram entry
-	 * @param CProductId the c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
-	 */
-	public static CSDiagramEntry[] findByCProductId_PrevAndNext(
-			long CSDiagramEntryId, long CProductId,
-			OrderByComparator<CSDiagramEntry> orderByComparator)
-		throws com.liferay.commerce.shop.by.diagram.exception.
-			NoSuchCSDiagramEntryException {
-
-		return getPersistence().findByCProductId_PrevAndNext(
-			CSDiagramEntryId, CProductId, orderByComparator);
 	}
 
 	/**
@@ -942,4 +885,4 @@ public class CSDiagramEntryUtil {
 	private static volatile CSDiagramEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1500918540
+// LIFERAY-SERVICE-BUILDER-HASH:1172261357

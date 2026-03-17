@@ -240,25 +240,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByUuid_PrevAndNext(
-			long fileEntryId, String uuid,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			fileEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -489,26 +470,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByUuid_C_PrevAndNext(
-			long fileEntryId, String uuid, long companyId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			fileEntryId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -661,25 +622,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByGroupId_PrevAndNext(
-			long fileEntryId, long groupId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			fileEntryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -726,25 +668,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] filterFindByGroupId_PrevAndNext(
-			long fileEntryId, long groupId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			fileEntryId, groupId, orderByComparator);
 	}
 
 	/**
@@ -911,25 +834,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByCompanyId_PrevAndNext(
-			long fileEntryId, long companyId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			fileEntryId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1083,25 +987,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByRepositoryId_PrevAndNext(
-			long fileEntryId, long repositoryId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByRepositoryId_PrevAndNext(
-			fileEntryId, repositoryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where repositoryId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -1252,25 +1137,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().fetchByMimeType_Last(
 			mimeType, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where mimeType = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param mimeType the mime type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByMimeType_PrevAndNext(
-			long fileEntryId, String mimeType,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByMimeType_PrevAndNext(
-			fileEntryId, mimeType, orderByComparator);
 	}
 
 	/**
@@ -1434,25 +1300,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where fileEntryTypeId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByFileEntryTypeId_PrevAndNext(
-			long fileEntryId, long fileEntryTypeId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByFileEntryTypeId_PrevAndNext(
-			fileEntryId, fileEntryTypeId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where fileEntryTypeId = &#63; from the database.
 	 *
 	 * @param fileEntryTypeId the file entry type ID
@@ -1606,25 +1453,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where smallImageId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param smallImageId the small image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findBySmallImageId_PrevAndNext(
-			long fileEntryId, long smallImageId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findBySmallImageId_PrevAndNext(
-			fileEntryId, smallImageId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where smallImageId = &#63; from the database.
 	 *
 	 * @param smallImageId the small image ID
@@ -1775,25 +1603,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().fetchByLargeImageId_Last(
 			largeImageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where largeImageId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param largeImageId the large image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByLargeImageId_PrevAndNext(
-			long fileEntryId, long largeImageId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByLargeImageId_PrevAndNext(
-			fileEntryId, largeImageId, orderByComparator);
 	}
 
 	/**
@@ -1953,25 +1762,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where custom1ImageId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param custom1ImageId the custom1 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByCustom1ImageId_PrevAndNext(
-			long fileEntryId, long custom1ImageId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByCustom1ImageId_PrevAndNext(
-			fileEntryId, custom1ImageId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where custom1ImageId = &#63; from the database.
 	 *
 	 * @param custom1ImageId the custom1 image ID
@@ -2125,25 +1915,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().fetchByCustom2ImageId_Last(
 			custom2ImageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where custom2ImageId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByCustom2ImageId_PrevAndNext(
-			long fileEntryId, long custom2ImageId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByCustom2ImageId_PrevAndNext(
-			fileEntryId, custom2ImageId, orderByComparator);
 	}
 
 	/**
@@ -2312,26 +2083,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByG_U_PrevAndNext(
-			long fileEntryId, long groupId, long userId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByG_U_PrevAndNext(
-			fileEntryId, groupId, userId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2381,26 +2132,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().filterFindByG_U(
 			groupId, userId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] filterFindByG_U_PrevAndNext(
-			long fileEntryId, long groupId, long userId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().filterFindByG_U_PrevAndNext(
-			fileEntryId, groupId, userId, orderByComparator);
 	}
 
 	/**
@@ -2582,26 +2313,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByG_F_PrevAndNext(
-			long fileEntryId, long groupId, long folderId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByG_F_PrevAndNext(
-			fileEntryId, groupId, folderId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2653,26 +2364,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().filterFindByG_F(
 			groupId, folderId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] filterFindByG_F_PrevAndNext(
-			long fileEntryId, long groupId, long folderId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().filterFindByG_F_PrevAndNext(
-			fileEntryId, groupId, folderId, orderByComparator);
 	}
 
 	/**
@@ -3013,26 +2704,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param repositoryId the repository ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByR_F_PrevAndNext(
-			long fileEntryId, long repositoryId, long folderId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByR_F_PrevAndNext(
-			fileEntryId, repositoryId, folderId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where repositoryId = &#63; and folderId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -3197,26 +2868,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().fetchByF_N_Last(
 			folderId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where folderId = &#63; and name = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param folderId the folder ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByF_N_PrevAndNext(
-			long fileEntryId, long folderId, String name,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByF_N_PrevAndNext(
-			fileEntryId, folderId, name, orderByComparator);
 	}
 
 	/**
@@ -3399,27 +3050,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByG_U_F_PrevAndNext(
-			long fileEntryId, long groupId, long userId, long folderId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByG_U_F_PrevAndNext(
-			fileEntryId, groupId, userId, folderId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3475,27 +3105,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().filterFindByG_U_F(
 			groupId, userId, folderId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] filterFindByG_U_F_PrevAndNext(
-			long fileEntryId, long groupId, long userId, long folderId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().filterFindByG_U_F_PrevAndNext(
-			fileEntryId, groupId, userId, folderId, orderByComparator);
 	}
 
 	/**
@@ -4095,27 +3704,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByG_F_F_PrevAndNext(
-			long fileEntryId, long groupId, long folderId, long fileEntryTypeId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByG_F_F_PrevAndNext(
-			fileEntryId, groupId, folderId, fileEntryTypeId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4172,27 +3760,6 @@ public class DLFileEntryUtil {
 
 		return getPersistence().filterFindByG_F_F(
 			groupId, folderId, fileEntryTypeId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set of document library file entries that the user has permission to view where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param fileEntryTypeId the file entry type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] filterFindByG_F_F_PrevAndNext(
-			long fileEntryId, long groupId, long folderId, long fileEntryTypeId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().filterFindByG_F_F_PrevAndNext(
-			fileEntryId, groupId, folderId, fileEntryTypeId, orderByComparator);
 	}
 
 	/**
@@ -4577,27 +4144,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByC_C_C_PrevAndNext(
-			long fileEntryId, long companyId, long classNameId, long classPK,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByC_C_C_PrevAndNext(
-			fileEntryId, companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4801,30 +4347,6 @@ public class DLFileEntryUtil {
 		return getPersistence().fetchByS_L_C1_C2_Last(
 			smallImageId, largeImageId, custom1ImageId, custom2ImageId,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file entries before and after the current document library file entry in the ordered set where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
-	 *
-	 * @param fileEntryId the primary key of the current document library file entry
-	 * @param smallImageId the small image ID
-	 * @param largeImageId the large image ID
-	 * @param custom1ImageId the custom1 image ID
-	 * @param custom2ImageId the custom2 image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	public static DLFileEntry[] findByS_L_C1_C2_PrevAndNext(
-			long fileEntryId, long smallImageId, long largeImageId,
-			long custom1ImageId, long custom2ImageId,
-			OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getPersistence().findByS_L_C1_C2_PrevAndNext(
-			fileEntryId, smallImageId, largeImageId, custom1ImageId,
-			custom2ImageId, orderByComparator);
 	}
 
 	/**
@@ -5090,4 +4612,4 @@ public class DLFileEntryUtil {
 	private static volatile DLFileEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2045531569
+// LIFERAY-SERVICE-BUILDER-HASH:-702150245

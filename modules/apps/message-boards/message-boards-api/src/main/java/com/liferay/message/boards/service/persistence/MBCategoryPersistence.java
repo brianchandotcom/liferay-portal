@@ -147,21 +147,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where uuid = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByUuid_PrevAndNext(
-			long categoryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
 	 * Removes all the message boards categories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -348,22 +333,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByUuid_C_PrevAndNext(
-			long categoryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
 	 * Removes all the message boards categories where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where groupId = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByGroupId_PrevAndNext(
-			long categoryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -548,21 +502,6 @@ public interface MBCategoryPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] filterFindByGroupId_PrevAndNext(
-			long categoryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
 
 	/**
 	 * Removes all the message boards categories where groupId = &#63; from the database.
@@ -699,21 +638,6 @@ public interface MBCategoryPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByCompanyId_PrevAndNext(
-			long categoryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
 
 	/**
 	 * Removes all the message boards categories where companyId = &#63; from the database.
@@ -853,22 +777,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByG_P_PrevAndNext(
-			long categoryId, long groupId, long parentCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -912,22 +820,6 @@ public interface MBCategoryPersistence
 		long groupId, long parentCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] filterFindByG_P_PrevAndNext(
-			long categoryId, long groupId, long parentCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
 
 	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63;.
@@ -1260,22 +1152,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByG_S_PrevAndNext(
-			long categoryId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1318,22 +1194,6 @@ public interface MBCategoryPersistence
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] filterFindByG_S_PrevAndNext(
-			long categoryId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
 
 	/**
 	 * Removes all the message boards categories where groupId = &#63; and status = &#63; from the database.
@@ -1481,22 +1341,6 @@ public interface MBCategoryPersistence
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByC_S_PrevAndNext(
-			long categoryId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
 
 	/**
 	 * Removes all the message boards categories where companyId = &#63; and status = &#63; from the database.
@@ -2010,23 +1854,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByG_P_S_PrevAndNext(
-			long categoryId, long groupId, long parentCategoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2073,23 +1900,6 @@ public interface MBCategoryPersistence
 		long groupId, long parentCategoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] filterFindByG_P_S_PrevAndNext(
-			long categoryId, long groupId, long parentCategoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
 
 	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
@@ -2395,23 +2205,6 @@ public interface MBCategoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] findByG_P_NotS_PrevAndNext(
-			long categoryId, long groupId, long parentCategoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
-
-	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2458,23 +2251,6 @@ public interface MBCategoryPersistence
 		long groupId, long parentCategoryId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards categories before and after the current message boards category in the ordered set of message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;.
-	 *
-	 * @param categoryId the primary key of the current message boards category
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	public MBCategory[] filterFindByG_P_NotS_PrevAndNext(
-			long categoryId, long groupId, long parentCategoryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<MBCategory>
-				orderByComparator)
-		throws NoSuchCategoryException;
 
 	/**
 	 * Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63; and status &ne; &#63;.
@@ -3208,4 +2984,4 @@ public interface MBCategoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-959932852
+// LIFERAY-SERVICE-BUILDER-HASH:-2136902595

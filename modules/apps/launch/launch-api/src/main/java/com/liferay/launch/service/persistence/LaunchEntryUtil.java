@@ -238,24 +238,6 @@ public class LaunchEntryUtil {
 	}
 
 	/**
-	 * Returns the launch entries before and after the current launch entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param launchEntryId the primary key of the current launch entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next launch entry
-	 * @throws NoSuchLaunchEntryException if a launch entry with the primary key could not be found
-	 */
-	public static LaunchEntry[] findByUuid_PrevAndNext(
-			long launchEntryId, String uuid,
-			OrderByComparator<LaunchEntry> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			launchEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the launch entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -419,25 +401,6 @@ public class LaunchEntryUtil {
 	}
 
 	/**
-	 * Returns the launch entries before and after the current launch entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param launchEntryId the primary key of the current launch entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next launch entry
-	 * @throws NoSuchLaunchEntryException if a launch entry with the primary key could not be found
-	 */
-	public static LaunchEntry[] findByUuid_C_PrevAndNext(
-			long launchEntryId, String uuid, long companyId,
-			OrderByComparator<LaunchEntry> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			launchEntryId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the launch entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -588,24 +551,6 @@ public class LaunchEntryUtil {
 
 		return getPersistence().fetchByLaunchSetId_Last(
 			launchSetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the launch entries before and after the current launch entry in the ordered set where launchSetId = &#63;.
-	 *
-	 * @param launchEntryId the primary key of the current launch entry
-	 * @param launchSetId the launch set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next launch entry
-	 * @throws NoSuchLaunchEntryException if a launch entry with the primary key could not be found
-	 */
-	public static LaunchEntry[] findByLaunchSetId_PrevAndNext(
-			long launchEntryId, long launchSetId,
-			OrderByComparator<LaunchEntry> orderByComparator)
-		throws com.liferay.launch.exception.NoSuchLaunchEntryException {
-
-		return getPersistence().findByLaunchSetId_PrevAndNext(
-			launchEntryId, launchSetId, orderByComparator);
 	}
 
 	/**
@@ -934,4 +879,4 @@ public class LaunchEntryUtil {
 	private static volatile LaunchEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:479587046
+// LIFERAY-SERVICE-BUILDER-HASH:576027500

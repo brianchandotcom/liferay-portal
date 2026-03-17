@@ -242,25 +242,6 @@ public class CacheFieldEntryUtil {
 	}
 
 	/**
-	 * Returns the cache field entries before and after the current cache field entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param cacheFieldEntryId the primary key of the current cache field entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cache field entry
-	 * @throws NoSuchCacheFieldEntryException if a cache field entry with the primary key could not be found
-	 */
-	public static CacheFieldEntry[] findByGroupId_PrevAndNext(
-			long cacheFieldEntryId, long groupId,
-			OrderByComparator<CacheFieldEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchCacheFieldEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			cacheFieldEntryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cache field entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -441,4 +422,4 @@ public class CacheFieldEntryUtil {
 	private static volatile CacheFieldEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:450386421
+// LIFERAY-SERVICE-BUILDER-HASH:-745144819

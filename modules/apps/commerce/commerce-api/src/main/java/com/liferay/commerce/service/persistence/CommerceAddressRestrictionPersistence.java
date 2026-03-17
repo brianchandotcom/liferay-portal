@@ -147,21 +147,6 @@ public interface CommerceAddressRestrictionPersistence
 			<CommerceAddressRestriction> orderByComparator);
 
 	/**
-	 * Returns the commerce address restrictions before and after the current commerce address restriction in the ordered set where countryId = &#63;.
-	 *
-	 * @param commerceAddressRestrictionId the primary key of the current commerce address restriction
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a commerce address restriction with the primary key could not be found
-	 */
-	public CommerceAddressRestriction[] findByCountryId_PrevAndNext(
-			long commerceAddressRestrictionId, long countryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceAddressRestriction> orderByComparator)
-		throws NoSuchAddressRestrictionException;
-
-	/**
 	 * Removes all the commerce address restrictions where countryId = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -297,22 +282,6 @@ public interface CommerceAddressRestrictionPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceAddressRestriction> orderByComparator);
-
-	/**
-	 * Returns the commerce address restrictions before and after the current commerce address restriction in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commerceAddressRestrictionId the primary key of the current commerce address restriction
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a commerce address restriction with the primary key could not be found
-	 */
-	public CommerceAddressRestriction[] findByC_C_PrevAndNext(
-			long commerceAddressRestrictionId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceAddressRestriction> orderByComparator)
-		throws NoSuchAddressRestrictionException;
 
 	/**
 	 * Removes all the commerce address restrictions where classNameId = &#63; and classPK = &#63; from the database.
@@ -516,4 +485,4 @@ public interface CommerceAddressRestrictionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:149544328
+// LIFERAY-SERVICE-BUILDER-HASH:-722319053

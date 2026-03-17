@@ -279,29 +279,6 @@ public class CommerceShippingFixedOptionQualifierUtil {
 	}
 
 	/**
-	 * Returns the commerce shipping fixed option qualifiers before and after the current commerce shipping fixed option qualifier in the ordered set where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionQualifierId the primary key of the current commerce shipping fixed option qualifier
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping fixed option qualifier
-	 * @throws NoSuchShippingFixedOptionQualifierException if a commerce shipping fixed option qualifier with the primary key could not be found
-	 */
-	public static CommerceShippingFixedOptionQualifier[]
-			findByCommerceShippingFixedOptionId_PrevAndNext(
-				long commerceShippingFixedOptionQualifierId,
-				long commerceShippingFixedOptionId,
-				OrderByComparator<CommerceShippingFixedOptionQualifier>
-					orderByComparator)
-		throws com.liferay.commerce.shipping.engine.fixed.exception.
-			NoSuchShippingFixedOptionQualifierException {
-
-		return getPersistence().findByCommerceShippingFixedOptionId_PrevAndNext(
-			commerceShippingFixedOptionQualifierId,
-			commerceShippingFixedOptionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63; from the database.
 	 *
 	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
@@ -485,29 +462,6 @@ public class CommerceShippingFixedOptionQualifierUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, commerceShippingFixedOptionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option qualifiers before and after the current commerce shipping fixed option qualifier in the ordered set where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionQualifierId the primary key of the current commerce shipping fixed option qualifier
-	 * @param classNameId the class name ID
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping fixed option qualifier
-	 * @throws NoSuchShippingFixedOptionQualifierException if a commerce shipping fixed option qualifier with the primary key could not be found
-	 */
-	public static CommerceShippingFixedOptionQualifier[] findByC_C_PrevAndNext(
-			long commerceShippingFixedOptionQualifierId, long classNameId,
-			long commerceShippingFixedOptionId,
-			OrderByComparator<CommerceShippingFixedOptionQualifier>
-				orderByComparator)
-		throws com.liferay.commerce.shipping.engine.fixed.exception.
-			NoSuchShippingFixedOptionQualifierException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			commerceShippingFixedOptionQualifierId, classNameId,
-			commerceShippingFixedOptionId, orderByComparator);
 	}
 
 	/**
@@ -809,4 +763,4 @@ public class CommerceShippingFixedOptionQualifierUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-765429527
+// LIFERAY-SERVICE-BUILDER-HASH:-1492790475

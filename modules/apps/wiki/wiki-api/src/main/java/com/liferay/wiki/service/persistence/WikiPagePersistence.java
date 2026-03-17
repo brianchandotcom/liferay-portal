@@ -147,21 +147,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param resourcePrimKey the resource prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByResourcePrimKey_PrevAndNext(
-			long pageId, long resourcePrimKey,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where resourcePrimKey = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -287,21 +272,6 @@ public interface WikiPagePersistence
 		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where uuid = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByUuid_PrevAndNext(
-			long pageId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where uuid = &#63; from the database.
@@ -490,22 +460,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByUuid_C_PrevAndNext(
-			long pageId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -636,21 +590,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where companyId = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByCompanyId_PrevAndNext(
-			long pageId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -779,21 +718,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByNodeId_PrevAndNext(
-			long pageId, long nodeId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -920,21 +844,6 @@ public interface WikiPagePersistence
 		String format,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where format = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param format the format
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByFormat_PrevAndNext(
-			long pageId, String format,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where format = &#63; from the database.
@@ -1074,22 +983,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param resourcePrimKey the resource prim key
-	 * @param nodeId the node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByR_N_PrevAndNext(
-			long pageId, long resourcePrimKey, long nodeId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -1226,22 +1119,6 @@ public interface WikiPagePersistence
 		long resourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByR_S_PrevAndNext(
-			long pageId, long resourcePrimKey, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where resourcePrimKey = &#63; and status = &#63; from the database.
@@ -1383,22 +1260,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByG_ERC_PrevAndNext(
-			long pageId, long groupId, String externalReferenceCode,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1442,22 +1303,6 @@ public interface WikiPagePersistence
 		long groupId, String externalReferenceCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] filterFindByG_ERC_PrevAndNext(
-			long pageId, long groupId, String externalReferenceCode,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where groupId = &#63; and externalReferenceCode = &#63; from the database.
@@ -1607,22 +1452,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param title the title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_T_PrevAndNext(
-			long pageId, long nodeId, String title,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; and title = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -1761,22 +1590,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_PrevAndNext(
-			long pageId, long nodeId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -1913,22 +1726,6 @@ public interface WikiPagePersistence
 		long nodeId, String parentTitle,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param parentTitle the parent title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_P_PrevAndNext(
-			long pageId, long nodeId, String parentTitle,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where nodeId = &#63; and parentTitle = &#63; from the database.
@@ -2070,22 +1867,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param redirectTitle the redirect title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_R_PrevAndNext(
-			long pageId, long nodeId, String redirectTitle,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; and redirectTitle = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -2222,22 +2003,6 @@ public interface WikiPagePersistence
 		long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_S_PrevAndNext(
-			long pageId, long nodeId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where nodeId = &#63; and status = &#63; from the database.
@@ -2446,23 +2211,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param resourcePrimKey the resource prim key
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByR_N_H_PrevAndNext(
-			long pageId, long resourcePrimKey, long nodeId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -2610,23 +2358,6 @@ public interface WikiPagePersistence
 		long resourcePrimKey, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param resourcePrimKey the resource prim key
-	 * @param nodeId the node ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByR_N_S_PrevAndNext(
-			long pageId, long resourcePrimKey, long nodeId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63; from the database.
@@ -2838,23 +2569,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByG_N_H_PrevAndNext(
-			long pageId, long groupId, long nodeId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2901,23 +2615,6 @@ public interface WikiPagePersistence
 		long groupId, long nodeId, boolean head, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] filterFindByG_N_H_PrevAndNext(
-			long pageId, long groupId, long nodeId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; from the database.
@@ -3079,23 +2776,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByG_N_S_PrevAndNext(
-			long pageId, long groupId, long nodeId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3142,23 +2822,6 @@ public interface WikiPagePersistence
 		long groupId, long nodeId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] filterFindByG_N_S_PrevAndNext(
-			long pageId, long groupId, long nodeId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63; from the database.
@@ -3318,23 +2981,6 @@ public interface WikiPagePersistence
 		long userId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param userId the user ID
-	 * @param nodeId the node ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByU_N_S_PrevAndNext(
-			long pageId, long userId, long nodeId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63; from the database.
@@ -3541,23 +3187,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param title the title
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_T_H_PrevAndNext(
-			long pageId, long nodeId, String title, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -3705,23 +3334,6 @@ public interface WikiPagePersistence
 		long nodeId, String title, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param title the title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_T_S_PrevAndNext(
-			long pageId, long nodeId, String title, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63; from the database.
@@ -3873,23 +3485,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param parentTitle the parent title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_P_PrevAndNext(
-			long pageId, long nodeId, boolean head, String parentTitle,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -4037,23 +3632,6 @@ public interface WikiPagePersistence
 		long nodeId, boolean head, String redirectTitle,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param redirectTitle the redirect title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_R_PrevAndNext(
-			long pageId, long nodeId, boolean head, String redirectTitle,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; from the database.
@@ -4205,23 +3783,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_S_PrevAndNext(
-			long pageId, long nodeId, boolean head, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -4369,23 +3930,6 @@ public interface WikiPagePersistence
 		long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_NotS_PrevAndNext(
-			long pageId, long nodeId, boolean head, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; and status &ne; &#63; from the database.
@@ -4545,24 +4089,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param nodeId the node ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByG_U_N_S_PrevAndNext(
-			long pageId, long groupId, long userId, long nodeId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4612,24 +4138,6 @@ public interface WikiPagePersistence
 		long groupId, long userId, long nodeId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param nodeId the node ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] filterFindByG_U_N_S_PrevAndNext(
-			long pageId, long groupId, long userId, long nodeId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63; from the database.
@@ -4808,24 +4316,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param title the title
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByG_N_T_H_PrevAndNext(
-			long pageId, long groupId, long nodeId, String title, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4877,24 +4367,6 @@ public interface WikiPagePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param title the title
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] filterFindByG_N_T_H_PrevAndNext(
-			long pageId, long groupId, long nodeId, String title, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63; from the database.
@@ -5071,24 +4543,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByG_N_H_S_PrevAndNext(
-			long pageId, long groupId, long nodeId, boolean head, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -5139,24 +4593,6 @@ public interface WikiPagePersistence
 		long groupId, long nodeId, boolean head, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] filterFindByG_N_H_S_PrevAndNext(
-			long pageId, long groupId, long nodeId, boolean head, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63; from the database.
@@ -5335,25 +4771,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param parentTitle the parent title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_P_S_PrevAndNext(
-			long pageId, long nodeId, boolean head, String parentTitle,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -5516,25 +4933,6 @@ public interface WikiPagePersistence
 		long nodeId, boolean head, String parentTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param parentTitle the parent title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_P_NotS_PrevAndNext(
-			long pageId, long nodeId, boolean head, String parentTitle,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63; from the database.
@@ -5701,25 +5099,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param redirectTitle the redirect title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_R_S_PrevAndNext(
-			long pageId, long nodeId, boolean head, String redirectTitle,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63; from the database.
 	 *
 	 * @param nodeId the node ID
@@ -5882,25 +5261,6 @@ public interface WikiPagePersistence
 		long nodeId, boolean head, String redirectTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param redirectTitle the redirect title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByN_H_R_NotS_PrevAndNext(
-			long pageId, long nodeId, boolean head, String redirectTitle,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63; from the database.
@@ -6078,26 +5438,6 @@ public interface WikiPagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param parentTitle the parent title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] findByG_N_H_P_S_PrevAndNext(
-			long pageId, long groupId, long nodeId, boolean head,
-			String parentTitle, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
-
-	/**
 	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6153,26 +5493,6 @@ public interface WikiPagePersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
 			orderByComparator);
-
-	/**
-	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
-	 *
-	 * @param pageId the primary key of the current wiki page
-	 * @param groupId the group ID
-	 * @param nodeId the node ID
-	 * @param head the head
-	 * @param parentTitle the parent title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	public WikiPage[] filterFindByG_N_H_P_S_PrevAndNext(
-			long pageId, long groupId, long nodeId, boolean head,
-			String parentTitle, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPage>
-				orderByComparator)
-		throws NoSuchPageException;
 
 	/**
 	 * Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63; from the database.
@@ -6334,4 +5654,4 @@ public interface WikiPagePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1663500093
+// LIFERAY-SERVICE-BUILDER-HASH:783161265

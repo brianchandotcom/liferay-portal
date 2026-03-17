@@ -255,25 +255,6 @@ public class PatcherProductVersionUtil {
 	}
 
 	/**
-	 * Returns the patcher product versions before and after the current patcher product version in the ordered set where fixDeliveryMethod = &#63;.
-	 *
-	 * @param patcherProductVersionId the primary key of the current patcher product version
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher product version
-	 * @throws NoSuchPatcherProductVersionException if a patcher product version with the primary key could not be found
-	 */
-	public static PatcherProductVersion[] findByFixDeliveryMethod_PrevAndNext(
-			long patcherProductVersionId, int fixDeliveryMethod,
-			OrderByComparator<PatcherProductVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProductVersionException {
-
-		return getPersistence().findByFixDeliveryMethod_PrevAndNext(
-			patcherProductVersionId, fixDeliveryMethod, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
 	 *
 	 * @param fixDeliveryMethod the fix delivery method
@@ -324,26 +305,6 @@ public class PatcherProductVersionUtil {
 
 		return getPersistence().filterFindByFixDeliveryMethod(
 			fixDeliveryMethod, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher product versions before and after the current patcher product version in the ordered set of patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
-	 *
-	 * @param patcherProductVersionId the primary key of the current patcher product version
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher product version
-	 * @throws NoSuchPatcherProductVersionException if a patcher product version with the primary key could not be found
-	 */
-	public static PatcherProductVersion[]
-			filterFindByFixDeliveryMethod_PrevAndNext(
-				long patcherProductVersionId, int fixDeliveryMethod,
-				OrderByComparator<PatcherProductVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProductVersionException {
-
-		return getPersistence().filterFindByFixDeliveryMethod_PrevAndNext(
-			patcherProductVersionId, fixDeliveryMethod, orderByComparator);
 	}
 
 	/**
@@ -609,4 +570,4 @@ public class PatcherProductVersionUtil {
 	private static volatile PatcherProductVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1706146603
+// LIFERAY-SERVICE-BUILDER-HASH:-1709392973

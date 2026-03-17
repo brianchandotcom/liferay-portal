@@ -159,23 +159,6 @@ public interface AnalyticsAssociationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the analytics associations before and after the current analytics association in the ordered set where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * @param analyticsAssociationId the primary key of the current analytics association
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics association
-	 * @throws NoSuchAssociationException if a analytics association with the primary key could not be found
-	 */
-	public AnalyticsAssociation[] findByC_A_PrevAndNext(
-			long analyticsAssociationId, long companyId,
-			String associationClassName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException;
-
-	/**
 	 * Removes all the analytics associations where companyId = &#63; and associationClassName = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -324,24 +307,6 @@ public interface AnalyticsAssociationPersistence
 		long companyId, Date modifiedDate, String associationClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsAssociation>
 			orderByComparator);
-
-	/**
-	 * Returns the analytics associations before and after the current analytics association in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and associationClassName = &#63;.
-	 *
-	 * @param analyticsAssociationId the primary key of the current analytics association
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics association
-	 * @throws NoSuchAssociationException if a analytics association with the primary key could not be found
-	 */
-	public AnalyticsAssociation[] findByC_GtM_A_PrevAndNext(
-			long analyticsAssociationId, long companyId, Date modifiedDate,
-			String associationClassName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException;
 
 	/**
 	 * Removes all the analytics associations where companyId = &#63; and modifiedDate &gt; &#63; and associationClassName = &#63; from the database.
@@ -500,24 +465,6 @@ public interface AnalyticsAssociationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the analytics associations before and after the current analytics association in the ordered set where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * @param analyticsAssociationId the primary key of the current analytics association
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics association
-	 * @throws NoSuchAssociationException if a analytics association with the primary key could not be found
-	 */
-	public AnalyticsAssociation[] findByC_A_A_PrevAndNext(
-			long analyticsAssociationId, long companyId,
-			String associationClassName, long associationClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AnalyticsAssociation> orderByComparator)
-		throws NoSuchAssociationException;
-
-	/**
 	 * Removes all the analytics associations where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -661,4 +608,4 @@ public interface AnalyticsAssociationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1737883035
+// LIFERAY-SERVICE-BUILDER-HASH:751612227

@@ -145,21 +145,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 			orderByComparator);
 
 	/**
-	 * Returns the faro channels before and after the current faro channel in the ordered set where groupId = &#63;.
-	 *
-	 * @param faroChannelId the primary key of the current faro channel
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro channel
-	 * @throws NoSuchFaroChannelException if a faro channel with the primary key could not be found
-	 */
-	public FaroChannel[] findByGroupId_PrevAndNext(
-			long faroChannelId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-				orderByComparator)
-		throws NoSuchFaroChannelException;
-
-	/**
 	 * Removes all the faro channels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -287,21 +272,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 		long workspaceGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
 			orderByComparator);
-
-	/**
-	 * Returns the faro channels before and after the current faro channel in the ordered set where workspaceGroupId = &#63;.
-	 *
-	 * @param faroChannelId the primary key of the current faro channel
-	 * @param workspaceGroupId the workspace group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro channel
-	 * @throws NoSuchFaroChannelException if a faro channel with the primary key could not be found
-	 */
-	public FaroChannel[] findByWorkspaceGroupId_PrevAndNext(
-			long faroChannelId, long workspaceGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-				orderByComparator)
-		throws NoSuchFaroChannelException;
 
 	/**
 	 * Removes all the faro channels where workspaceGroupId = &#63; from the database.
@@ -438,22 +408,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
 			orderByComparator);
-
-	/**
-	 * Returns the faro channels before and after the current faro channel in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param faroChannelId the primary key of the current faro channel
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro channel
-	 * @throws NoSuchFaroChannelException if a faro channel with the primary key could not be found
-	 */
-	public FaroChannel[] findByG_U_PrevAndNext(
-			long faroChannelId, long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroChannel>
-				orderByComparator)
-		throws NoSuchFaroChannelException;
 
 	/**
 	 * Removes all the faro channels where groupId = &#63; and userId = &#63; from the database.
@@ -643,4 +597,4 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:12445404
+// LIFERAY-SERVICE-BUILDER-HASH:-221580786

@@ -146,21 +146,6 @@ public interface CommercePaymentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public CommercePaymentEntry[] findByCompanyId_PrevAndNext(
-			long commercePaymentEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException;
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -201,21 +186,6 @@ public interface CommercePaymentEntryPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePaymentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public CommercePaymentEntry[] filterFindByCompanyId_PrevAndNext(
-			long commercePaymentEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException;
 
 	/**
 	 * Removes all the commerce payment entries where companyId = &#63; from the database.
@@ -371,24 +341,6 @@ public interface CommercePaymentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public CommercePaymentEntry[] findByC_C_C_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException;
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -435,24 +387,6 @@ public interface CommercePaymentEntryPersistence
 		long companyId, long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePaymentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public CommercePaymentEntry[] filterFindByC_C_C_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException;
 
 	/**
 	 * Removes all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -626,25 +560,6 @@ public interface CommercePaymentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public CommercePaymentEntry[] findByC_C_C_T_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException;
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -696,25 +611,6 @@ public interface CommercePaymentEntryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePaymentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public CommercePaymentEntry[] filterFindByC_C_C_T_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException;
 
 	/**
 	 * Removes all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
@@ -906,26 +802,6 @@ public interface CommercePaymentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param paymentStatus the payment status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public CommercePaymentEntry[] findByC_C_C_P_T_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK, int paymentStatus, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException;
-
-	/**
 	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -981,26 +857,6 @@ public interface CommercePaymentEntryPersistence
 		int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePaymentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
-	 *
-	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param paymentStatus the payment status
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	public CommercePaymentEntry[] filterFindByC_C_C_P_T_PrevAndNext(
-			long commercePaymentEntryId, long companyId, long classNameId,
-			long classPK, int paymentStatus, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntry> orderByComparator)
-		throws NoSuchPaymentEntryException;
 
 	/**
 	 * Removes all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63; from the database.
@@ -1219,4 +1075,4 @@ public interface CommercePaymentEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1707479862
+// LIFERAY-SERVICE-BUILDER-HASH:1170708232

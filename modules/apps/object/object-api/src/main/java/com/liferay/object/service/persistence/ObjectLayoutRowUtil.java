@@ -238,24 +238,6 @@ public class ObjectLayoutRowUtil {
 	}
 
 	/**
-	 * Returns the object layout rows before and after the current object layout row in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectLayoutRowId the primary key of the current object layout row
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout row
-	 * @throws NoSuchObjectLayoutRowException if a object layout row with the primary key could not be found
-	 */
-	public static ObjectLayoutRow[] findByUuid_PrevAndNext(
-			long objectLayoutRowId, String uuid,
-			OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutRowException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectLayoutRowId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout rows where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -421,25 +403,6 @@ public class ObjectLayoutRowUtil {
 	}
 
 	/**
-	 * Returns the object layout rows before and after the current object layout row in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectLayoutRowId the primary key of the current object layout row
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout row
-	 * @throws NoSuchObjectLayoutRowException if a object layout row with the primary key could not be found
-	 */
-	public static ObjectLayoutRow[] findByUuid_C_PrevAndNext(
-			long objectLayoutRowId, String uuid, long companyId,
-			OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutRowException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectLayoutRowId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout rows where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -597,24 +560,6 @@ public class ObjectLayoutRowUtil {
 
 		return getPersistence().fetchByObjectLayoutBoxId_Last(
 			objectLayoutBoxId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object layout rows before and after the current object layout row in the ordered set where objectLayoutBoxId = &#63;.
-	 *
-	 * @param objectLayoutRowId the primary key of the current object layout row
-	 * @param objectLayoutBoxId the object layout box ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout row
-	 * @throws NoSuchObjectLayoutRowException if a object layout row with the primary key could not be found
-	 */
-	public static ObjectLayoutRow[] findByObjectLayoutBoxId_PrevAndNext(
-			long objectLayoutRowId, long objectLayoutBoxId,
-			OrderByComparator<ObjectLayoutRow> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutRowException {
-
-		return getPersistence().findByObjectLayoutBoxId_PrevAndNext(
-			objectLayoutRowId, objectLayoutBoxId, orderByComparator);
 	}
 
 	/**
@@ -796,4 +741,4 @@ public class ObjectLayoutRowUtil {
 	private static volatile ObjectLayoutRowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1993566986
+// LIFERAY-SERVICE-BUILDER-HASH:1210624594

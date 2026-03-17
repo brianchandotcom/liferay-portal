@@ -145,21 +145,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo processes before and after the current kaleo process in the ordered set where uuid = &#63;.
-	 *
-	 * @param kaleoProcessId the primary key of the current kaleo process
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	public KaleoProcess[] findByUuid_PrevAndNext(
-			long kaleoProcessId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-				orderByComparator)
-		throws NoSuchKaleoProcessException;
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -347,22 +332,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo processes before and after the current kaleo process in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param kaleoProcessId the primary key of the current kaleo process
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	public KaleoProcess[] findByUuid_C_PrevAndNext(
-			long kaleoProcessId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-				orderByComparator)
-		throws NoSuchKaleoProcessException;
-
-	/**
 	 * Removes all the kaleo processes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -493,21 +462,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo processes before and after the current kaleo process in the ordered set where groupId = &#63;.
-	 *
-	 * @param kaleoProcessId the primary key of the current kaleo process
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	public KaleoProcess[] findByGroupId_PrevAndNext(
-			long kaleoProcessId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-				orderByComparator)
-		throws NoSuchKaleoProcessException;
-
-	/**
 	 * Returns all the kaleo processes that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -547,21 +501,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo processes before and after the current kaleo process in the ordered set of kaleo processes that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param kaleoProcessId the primary key of the current kaleo process
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	public KaleoProcess[] filterFindByGroupId_PrevAndNext(
-			long kaleoProcessId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoProcess>
-				orderByComparator)
-		throws NoSuchKaleoProcessException;
 
 	/**
 	 * Removes all the kaleo processes where groupId = &#63; from the database.
@@ -752,4 +691,4 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-643725132
+// LIFERAY-SERVICE-BUILDER-HASH:255566257

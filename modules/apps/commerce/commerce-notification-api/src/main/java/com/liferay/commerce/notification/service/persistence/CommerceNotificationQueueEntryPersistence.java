@@ -151,21 +151,6 @@ public interface CommerceNotificationQueueEntryPersistence
 			<CommerceNotificationQueueEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce notification queue entries before and after the current commerce notification queue entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceNotificationQueueEntryId the primary key of the current commerce notification queue entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
-	 */
-	public CommerceNotificationQueueEntry[] findByGroupId_PrevAndNext(
-			long commerceNotificationQueueEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException;
-
-	/**
 	 * Removes all the commerce notification queue entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -303,23 +288,6 @@ public interface CommerceNotificationQueueEntryPersistence
 				<CommerceNotificationQueueEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce notification queue entries before and after the current commerce notification queue entry in the ordered set where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationQueueEntryId the primary key of the current commerce notification queue entry
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
-	 */
-	public CommerceNotificationQueueEntry[]
-			findByCommerceNotificationTemplateId_PrevAndNext(
-				long commerceNotificationQueueEntryId,
-				long commerceNotificationTemplateId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException;
-
-	/**
 	 * Removes all the commerce notification queue entries where commerceNotificationTemplateId = &#63; from the database.
 	 *
 	 * @param commerceNotificationTemplateId the commerce notification template ID
@@ -451,21 +419,6 @@ public interface CommerceNotificationQueueEntryPersistence
 			<CommerceNotificationQueueEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce notification queue entries before and after the current commerce notification queue entry in the ordered set where sent = &#63;.
-	 *
-	 * @param commerceNotificationQueueEntryId the primary key of the current commerce notification queue entry
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
-	 */
-	public CommerceNotificationQueueEntry[] findBySent_PrevAndNext(
-			long commerceNotificationQueueEntryId, boolean sent,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException;
-
-	/**
 	 * Removes all the commerce notification queue entries where sent = &#63; from the database.
 	 *
 	 * @param sent the sent
@@ -593,21 +546,6 @@ public interface CommerceNotificationQueueEntryPersistence
 		Date sentDate,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceNotificationQueueEntry> orderByComparator);
-
-	/**
-	 * Returns the commerce notification queue entries before and after the current commerce notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param commerceNotificationQueueEntryId the primary key of the current commerce notification queue entry
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
-	 */
-	public CommerceNotificationQueueEntry[] findByLtSentDate_PrevAndNext(
-			long commerceNotificationQueueEntryId, Date sentDate,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException;
 
 	/**
 	 * Removes all the commerce notification queue entries where sentDate &lt; &#63; from the database.
@@ -766,25 +704,6 @@ public interface CommerceNotificationQueueEntryPersistence
 			<CommerceNotificationQueueEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce notification queue entries before and after the current commerce notification queue entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
-	 *
-	 * @param commerceNotificationQueueEntryId the primary key of the current commerce notification queue entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param sent the sent
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
-	 */
-	public CommerceNotificationQueueEntry[] findByG_C_C_S_PrevAndNext(
-			long commerceNotificationQueueEntryId, long groupId,
-			long classNameId, long classPK, boolean sent,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationQueueEntry> orderByComparator)
-		throws NoSuchNotificationQueueEntryException;
-
-	/**
 	 * Removes all the commerce notification queue entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -937,4 +856,4 @@ public interface CommerceNotificationQueueEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1024573672
+// LIFERAY-SERVICE-BUILDER-HASH:-1212104515

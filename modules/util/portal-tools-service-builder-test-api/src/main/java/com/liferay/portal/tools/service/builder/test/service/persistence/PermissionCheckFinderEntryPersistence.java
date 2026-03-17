@@ -147,21 +147,6 @@ public interface PermissionCheckFinderEntryPersistence
 			<PermissionCheckFinderEntry> orderByComparator);
 
 	/**
-	 * Returns the permission check finder entries before and after the current permission check finder entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param permissionCheckFinderEntryId the primary key of the current permission check finder entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next permission check finder entry
-	 * @throws NoSuchPermissionCheckFinderEntryException if a permission check finder entry with the primary key could not be found
-	 */
-	public PermissionCheckFinderEntry[] findByGroupId_PrevAndNext(
-			long permissionCheckFinderEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PermissionCheckFinderEntry> orderByComparator)
-		throws NoSuchPermissionCheckFinderEntryException;
-
-	/**
 	 * Returns all the permission check finder entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -202,21 +187,6 @@ public interface PermissionCheckFinderEntryPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<PermissionCheckFinderEntry> orderByComparator);
-
-	/**
-	 * Returns the permission check finder entries before and after the current permission check finder entry in the ordered set of permission check finder entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param permissionCheckFinderEntryId the primary key of the current permission check finder entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next permission check finder entry
-	 * @throws NoSuchPermissionCheckFinderEntryException if a permission check finder entry with the primary key could not be found
-	 */
-	public PermissionCheckFinderEntry[] filterFindByGroupId_PrevAndNext(
-			long permissionCheckFinderEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<PermissionCheckFinderEntry> orderByComparator)
-		throws NoSuchPermissionCheckFinderEntryException;
 
 	/**
 	 * Returns all the permission check finder entries that the user has permission to view where groupId = any &#63;.
@@ -493,4 +463,4 @@ public interface PermissionCheckFinderEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1025880901
+// LIFERAY-SERVICE-BUILDER-HASH:546731565

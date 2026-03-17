@@ -147,21 +147,6 @@ public interface CommerceInventoryWarehouseItemPersistence
 			<CommerceInventoryWarehouseItem> orderByComparator);
 
 	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public CommerceInventoryWarehouseItem[] findByUuid_PrevAndNext(
-			long commerceInventoryWarehouseItemId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException;
-
-	/**
 	 * Removes all the commerce inventory warehouse items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -299,22 +284,6 @@ public interface CommerceInventoryWarehouseItemPersistence
 			<CommerceInventoryWarehouseItem> orderByComparator);
 
 	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public CommerceInventoryWarehouseItem[] findByUuid_C_PrevAndNext(
-			long commerceInventoryWarehouseItemId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException;
-
-	/**
 	 * Removes all the commerce inventory warehouse items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -444,21 +413,6 @@ public interface CommerceInventoryWarehouseItemPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryWarehouseItem> orderByComparator);
-
-	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public CommerceInventoryWarehouseItem[] findByCompanyId_PrevAndNext(
-			long commerceInventoryWarehouseItemId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException;
 
 	/**
 	 * Removes all the commerce inventory warehouse items where companyId = &#63; from the database.
@@ -595,23 +549,6 @@ public interface CommerceInventoryWarehouseItemPersistence
 			long commerceInventoryWarehouseId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceInventoryWarehouseItem> orderByComparator);
-
-	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public CommerceInventoryWarehouseItem[]
-			findByCommerceInventoryWarehouseId_PrevAndNext(
-				long commerceInventoryWarehouseItemId,
-				long commerceInventoryWarehouseId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException;
 
 	/**
 	 * Removes all the commerce inventory warehouse items where commerceInventoryWarehouseId = &#63; from the database.
@@ -760,24 +697,6 @@ public interface CommerceInventoryWarehouseItemPersistence
 		long companyId, String sku, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryWarehouseItem> orderByComparator);
-
-	/**
-	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	public CommerceInventoryWarehouseItem[] findByC_S_U_PrevAndNext(
-			long commerceInventoryWarehouseItemId, long companyId, String sku,
-			String unitOfMeasureKey,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryWarehouseItem> orderByComparator)
-		throws NoSuchInventoryWarehouseItemException;
 
 	/**
 	 * Removes all the commerce inventory warehouse items where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63; from the database.
@@ -1045,4 +964,4 @@ public interface CommerceInventoryWarehouseItemPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-602086747
+// LIFERAY-SERVICE-BUILDER-HASH:-1939338650

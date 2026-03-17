@@ -254,25 +254,6 @@ public class DDLRecordSetVersionUtil {
 	}
 
 	/**
-	 * Returns the ddl record set versions before and after the current ddl record set version in the ordered set where recordSetId = &#63;.
-	 *
-	 * @param recordSetVersionId the primary key of the current ddl record set version
-	 * @param recordSetId the record set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record set version
-	 * @throws NoSuchRecordSetVersionException if a ddl record set version with the primary key could not be found
-	 */
-	public static DDLRecordSetVersion[] findByRecordSetId_PrevAndNext(
-			long recordSetVersionId, long recordSetId,
-			OrderByComparator<DDLRecordSetVersion> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.
-			NoSuchRecordSetVersionException {
-
-		return getPersistence().findByRecordSetId_PrevAndNext(
-			recordSetVersionId, recordSetId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl record set versions where recordSetId = &#63; from the database.
 	 *
 	 * @param recordSetId the record set ID
@@ -510,26 +491,6 @@ public class DDLRecordSetVersionUtil {
 	}
 
 	/**
-	 * Returns the ddl record set versions before and after the current ddl record set version in the ordered set where recordSetId = &#63; and status = &#63;.
-	 *
-	 * @param recordSetVersionId the primary key of the current ddl record set version
-	 * @param recordSetId the record set ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record set version
-	 * @throws NoSuchRecordSetVersionException if a ddl record set version with the primary key could not be found
-	 */
-	public static DDLRecordSetVersion[] findByRS_S_PrevAndNext(
-			long recordSetVersionId, long recordSetId, int status,
-			OrderByComparator<DDLRecordSetVersion> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.
-			NoSuchRecordSetVersionException {
-
-		return getPersistence().findByRS_S_PrevAndNext(
-			recordSetVersionId, recordSetId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddl record set versions where recordSetId = &#63; and status = &#63; from the database.
 	 *
 	 * @param recordSetId the record set ID
@@ -720,4 +681,4 @@ public class DDLRecordSetVersionUtil {
 	private static volatile DDLRecordSetVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-14006169
+// LIFERAY-SERVICE-BUILDER-HASH:-1453593306

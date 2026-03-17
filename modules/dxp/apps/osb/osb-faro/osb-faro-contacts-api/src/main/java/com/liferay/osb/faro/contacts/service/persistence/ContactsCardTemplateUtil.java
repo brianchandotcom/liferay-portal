@@ -249,25 +249,6 @@ public class ContactsCardTemplateUtil {
 	}
 
 	/**
-	 * Returns the contacts card templates before and after the current contacts card template in the ordered set where groupId = &#63;.
-	 *
-	 * @param contactsCardTemplateId the primary key of the current contacts card template
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next contacts card template
-	 * @throws NoSuchContactsCardTemplateException if a contacts card template with the primary key could not be found
-	 */
-	public static ContactsCardTemplate[] findByGroupId_PrevAndNext(
-			long contactsCardTemplateId, long groupId,
-			OrderByComparator<ContactsCardTemplate> orderByComparator)
-		throws com.liferay.osb.faro.contacts.exception.
-			NoSuchContactsCardTemplateException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			contactsCardTemplateId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the contacts card templates where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -457,4 +438,4 @@ public class ContactsCardTemplateUtil {
 	private static volatile ContactsCardTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-317074361
+// LIFERAY-SERVICE-BUILDER-HASH:-127509112

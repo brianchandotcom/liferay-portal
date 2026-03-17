@@ -257,27 +257,6 @@ public class PatcherProjectVersionUtil {
 	}
 
 	/**
-	 * Returns the patcher project versions before and after the current patcher project version in the ordered set where patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the primary key of the current patcher project version
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	public static PatcherProjectVersion[]
-			findByPatcherProductVersionId_PrevAndNext(
-				long patcherProjectVersionId, long patcherProductVersionId,
-				OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().findByPatcherProductVersionId_PrevAndNext(
-			patcherProjectVersionId, patcherProductVersionId,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher project versions that the user has permission to view where patcherProductVersionId = &#63;.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -330,27 +309,6 @@ public class PatcherProjectVersionUtil {
 
 		return getPersistence().filterFindByPatcherProductVersionId(
 			patcherProductVersionId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher project versions before and after the current patcher project version in the ordered set of patcher project versions that the user has permission to view where patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the primary key of the current patcher project version
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	public static PatcherProjectVersion[]
-			filterFindByPatcherProductVersionId_PrevAndNext(
-				long patcherProjectVersionId, long patcherProductVersionId,
-				OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().filterFindByPatcherProductVersionId_PrevAndNext(
-			patcherProjectVersionId, patcherProductVersionId,
-			orderByComparator);
 	}
 
 	/**
@@ -536,27 +494,6 @@ public class PatcherProjectVersionUtil {
 	}
 
 	/**
-	 * Returns the patcher project versions before and after the current patcher project version in the ordered set where rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the primary key of the current patcher project version
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	public static PatcherProjectVersion[]
-			findByRootPatcherProjectVersionId_PrevAndNext(
-				long patcherProjectVersionId, long rootPatcherProjectVersionId,
-				OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().findByRootPatcherProjectVersionId_PrevAndNext(
-			patcherProjectVersionId, rootPatcherProjectVersionId,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher project versions that the user has permission to view where rootPatcherProjectVersionId = &#63;.
 	 *
 	 * @param rootPatcherProjectVersionId the root patcher project version ID
@@ -610,28 +547,6 @@ public class PatcherProjectVersionUtil {
 
 		return getPersistence().filterFindByRootPatcherProjectVersionId(
 			rootPatcherProjectVersionId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher project versions before and after the current patcher project version in the ordered set of patcher project versions that the user has permission to view where rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the primary key of the current patcher project version
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	public static PatcherProjectVersion[]
-			filterFindByRootPatcherProjectVersionId_PrevAndNext(
-				long patcherProjectVersionId, long rootPatcherProjectVersionId,
-				OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().
-			filterFindByRootPatcherProjectVersionId_PrevAndNext(
-				patcherProjectVersionId, rootPatcherProjectVersionId,
-				orderByComparator);
 	}
 
 	/**
@@ -952,28 +867,6 @@ public class PatcherProjectVersionUtil {
 	}
 
 	/**
-	 * Returns the patcher project versions before and after the current patcher project version in the ordered set where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the primary key of the current patcher project version
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	public static PatcherProjectVersion[] findByP_R_PrevAndNext(
-			long patcherProjectVersionId, long patcherProductVersionId,
-			long rootPatcherProjectVersionId,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().findByP_R_PrevAndNext(
-			patcherProjectVersionId, patcherProductVersionId,
-			rootPatcherProjectVersionId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher project versions that the user has permission to view where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -1030,28 +923,6 @@ public class PatcherProjectVersionUtil {
 		return getPersistence().filterFindByP_R(
 			patcherProductVersionId, rootPatcherProjectVersionId, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher project versions before and after the current patcher project version in the ordered set of patcher project versions that the user has permission to view where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the primary key of the current patcher project version
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param rootPatcherProjectVersionId the root patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	public static PatcherProjectVersion[] filterFindByP_R_PrevAndNext(
-			long patcherProjectVersionId, long patcherProductVersionId,
-			long rootPatcherProjectVersionId,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().filterFindByP_R_PrevAndNext(
-			patcherProjectVersionId, patcherProductVersionId,
-			rootPatcherProjectVersionId, orderByComparator);
 	}
 
 	/**
@@ -1249,28 +1120,6 @@ public class PatcherProjectVersionUtil {
 	}
 
 	/**
-	 * Returns the patcher project versions before and after the current patcher project version in the ordered set where patcherProductVersionId = &#63; and repositoryName = &#63;.
-	 *
-	 * @param patcherProjectVersionId the primary key of the current patcher project version
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param repositoryName the repository name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	public static PatcherProjectVersion[] findByP_RN_PrevAndNext(
-			long patcherProjectVersionId, long patcherProductVersionId,
-			String repositoryName,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().findByP_RN_PrevAndNext(
-			patcherProjectVersionId, patcherProductVersionId, repositoryName,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the patcher project versions that the user has permission to view where patcherProductVersionId = &#63; and repositoryName = &#63;.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -1325,28 +1174,6 @@ public class PatcherProjectVersionUtil {
 
 		return getPersistence().filterFindByP_RN(
 			patcherProductVersionId, repositoryName, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the patcher project versions before and after the current patcher project version in the ordered set of patcher project versions that the user has permission to view where patcherProductVersionId = &#63; and repositoryName = &#63;.
-	 *
-	 * @param patcherProjectVersionId the primary key of the current patcher project version
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param repositoryName the repository name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	public static PatcherProjectVersion[] filterFindByP_RN_PrevAndNext(
-			long patcherProjectVersionId, long patcherProductVersionId,
-			String repositoryName,
-			OrderByComparator<PatcherProjectVersion> orderByComparator)
-		throws com.liferay.osb.patcher.exception.
-			NoSuchPatcherProjectVersionException {
-
-		return getPersistence().filterFindByP_RN_PrevAndNext(
-			patcherProjectVersionId, patcherProductVersionId, repositoryName,
 			orderByComparator);
 	}
 
@@ -1563,4 +1390,4 @@ public class PatcherProjectVersionUtil {
 	private static volatile PatcherProjectVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2125427332
+// LIFERAY-SERVICE-BUILDER-HASH:1195338366

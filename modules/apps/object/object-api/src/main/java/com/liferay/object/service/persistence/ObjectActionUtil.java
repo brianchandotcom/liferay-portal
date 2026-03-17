@@ -238,24 +238,6 @@ public class ObjectActionUtil {
 	}
 
 	/**
-	 * Returns the object actions before and after the current object action in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public static ObjectAction[] findByUuid_PrevAndNext(
-			long objectActionId, String uuid,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectActionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object actions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -419,25 +401,6 @@ public class ObjectActionUtil {
 	}
 
 	/**
-	 * Returns the object actions before and after the current object action in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public static ObjectAction[] findByUuid_C_PrevAndNext(
-			long objectActionId, String uuid, long companyId,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectActionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object actions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -595,24 +558,6 @@ public class ObjectActionUtil {
 
 		return getPersistence().fetchByObjectDefinitionId_Last(
 			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object actions before and after the current object action in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public static ObjectAction[] findByObjectDefinitionId_PrevAndNext(
-			long objectActionId, long objectDefinitionId,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByObjectDefinitionId_PrevAndNext(
-			objectActionId, objectDefinitionId, orderByComparator);
 	}
 
 	/**
@@ -847,25 +792,6 @@ public class ObjectActionUtil {
 
 		return getPersistence().fetchByA_OAEK_Last(
 			active, objectActionExecutorKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the object actions before and after the current object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public static ObjectAction[] findByA_OAEK_PrevAndNext(
-			long objectActionId, boolean active, String objectActionExecutorKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByA_OAEK_PrevAndNext(
-			objectActionId, active, objectActionExecutorKey, orderByComparator);
 	}
 
 	/**
@@ -1136,28 +1062,6 @@ public class ObjectActionUtil {
 	}
 
 	/**
-	 * Returns the object actions before and after the current object action in the ordered set where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public static ObjectAction[] findByC_A_OATK_PrevAndNext(
-			long objectActionId, long companyId, boolean active,
-			String objectActionTriggerKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByC_A_OATK_PrevAndNext(
-			objectActionId, companyId, active, objectActionTriggerKey,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the object actions where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1349,28 +1253,6 @@ public class ObjectActionUtil {
 
 		return getPersistence().fetchByO_A_OATK_Last(
 			objectDefinitionId, active, objectActionTriggerKey,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the object actions before and after the current object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public static ObjectAction[] findByO_A_OATK_PrevAndNext(
-			long objectActionId, long objectDefinitionId, boolean active,
-			String objectActionTriggerKey,
-			OrderByComparator<ObjectAction> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectActionException {
-
-		return getPersistence().findByO_A_OATK_PrevAndNext(
-			objectActionId, objectDefinitionId, active, objectActionTriggerKey,
 			orderByComparator);
 	}
 
@@ -1653,4 +1535,4 @@ public class ObjectActionUtil {
 	private static volatile ObjectActionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1460733553
+// LIFERAY-SERVICE-BUILDER-HASH:763187579

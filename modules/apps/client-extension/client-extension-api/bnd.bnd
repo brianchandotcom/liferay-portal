@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Client Extension API
 Bundle-SymbolicName: com.liferay.client.extension.api
-Bundle-Version: 12.1.3
+Bundle-Version: 13.0.0
 Export-Package:\
 	com.liferay.client.extension.constants,\
 	com.liferay.client.extension.exception,\

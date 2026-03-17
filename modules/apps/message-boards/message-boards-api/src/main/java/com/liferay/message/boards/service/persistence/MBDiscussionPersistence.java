@@ -147,21 +147,6 @@ public interface MBDiscussionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards discussions before and after the current message boards discussion in the ordered set where uuid = &#63;.
-	 *
-	 * @param discussionId the primary key of the current message boards discussion
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards discussion
-	 * @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	 */
-	public MBDiscussion[] findByUuid_PrevAndNext(
-			long discussionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
-				orderByComparator)
-		throws NoSuchDiscussionException;
-
-	/**
 	 * Removes all the message boards discussions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -347,22 +332,6 @@ public interface MBDiscussionPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards discussions before and after the current message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param discussionId the primary key of the current message boards discussion
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards discussion
-	 * @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	 */
-	public MBDiscussion[] findByUuid_C_PrevAndNext(
-			long discussionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
-				orderByComparator)
-		throws NoSuchDiscussionException;
 
 	/**
 	 * Removes all the message boards discussions where uuid = &#63; and companyId = &#63; from the database.
@@ -596,4 +565,4 @@ public interface MBDiscussionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1703702295
+// LIFERAY-SERVICE-BUILDER-HASH:1703448626

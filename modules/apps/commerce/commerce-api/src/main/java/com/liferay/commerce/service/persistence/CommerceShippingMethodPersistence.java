@@ -146,21 +146,6 @@ public interface CommerceShippingMethodPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce shipping methods before and after the current commerce shipping method in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the primary key of the current commerce shipping method
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping method
-	 * @throws NoSuchShippingMethodException if a commerce shipping method with the primary key could not be found
-	 */
-	public CommerceShippingMethod[] findByGroupId_PrevAndNext(
-			long commerceShippingMethodId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceShippingMethod> orderByComparator)
-		throws NoSuchShippingMethodException;
-
-	/**
 	 * Removes all the commerce shipping methods where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -296,22 +281,6 @@ public interface CommerceShippingMethodPersistence
 		long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceShippingMethod>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce shipping methods before and after the current commerce shipping method in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param commerceShippingMethodId the primary key of the current commerce shipping method
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping method
-	 * @throws NoSuchShippingMethodException if a commerce shipping method with the primary key could not be found
-	 */
-	public CommerceShippingMethod[] findByG_A_PrevAndNext(
-			long commerceShippingMethodId, long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceShippingMethod> orderByComparator)
-		throws NoSuchShippingMethodException;
 
 	/**
 	 * Removes all the commerce shipping methods where groupId = &#63; and active = &#63; from the database.
@@ -505,4 +474,4 @@ public interface CommerceShippingMethodPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1622774502
+// LIFERAY-SERVICE-BUILDER-HASH:-349994074

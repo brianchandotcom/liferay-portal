@@ -145,21 +145,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the account entries before and after the current account entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] findByUuid_PrevAndNext(
-			long accountEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the account entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -199,21 +184,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the account entries before and after the current account entry in the ordered set of account entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] filterFindByUuid_PrevAndNext(
-			long accountEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the account entries where uuid = &#63; from the database.
@@ -361,22 +331,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the account entries before and after the current account entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] findByUuid_C_PrevAndNext(
-			long accountEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the account entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -420,22 +374,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the account entries before and after the current account entry in the ordered set of account entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] filterFindByUuid_C_PrevAndNext(
-			long accountEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the account entries where uuid = &#63; and companyId = &#63; from the database.
@@ -577,21 +515,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the account entries before and after the current account entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] findByCompanyId_PrevAndNext(
-			long accountEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the account entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -631,21 +554,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the account entries before and after the current account entry in the ordered set of account entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] filterFindByCompanyId_PrevAndNext(
-			long accountEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the account entries where companyId = &#63; from the database.
@@ -792,22 +700,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the account entries before and after the current account entry in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] findByC_S_PrevAndNext(
-			long accountEntryId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the account entries that the user has permission to view where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -851,22 +743,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 		long companyId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the account entries before and after the current account entry in the ordered set of account entries that the user has permission to view where companyId = &#63; and status = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] filterFindByC_S_PrevAndNext(
-			long accountEntryId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the account entries where companyId = &#63; and status = &#63; from the database.
@@ -1016,22 +892,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the account entries before and after the current account entry in the ordered set where userId = &#63; and type = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] findByU_T_PrevAndNext(
-			long accountEntryId, long userId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the account entries that the user has permission to view where userId = &#63; and type = &#63;.
 	 *
 	 * @param userId the user ID
@@ -1075,22 +935,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 		long userId, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the account entries before and after the current account entry in the ordered set of account entries that the user has permission to view where userId = &#63; and type = &#63;.
-	 *
-	 * @param accountEntryId the primary key of the current account entry
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	public AccountEntry[] filterFindByU_T_PrevAndNext(
-			long accountEntryId, long userId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the account entries where userId = &#63; and type = &#63; from the database.
@@ -1291,4 +1135,4 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1216049889
+// LIFERAY-SERVICE-BUILDER-HASH:1662850213

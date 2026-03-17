@@ -232,24 +232,6 @@ public class EntryUtil {
 	}
 
 	/**
-	 * Returns the entries before and after the current entry in the ordered set where userId = &#63;.
-	 *
-	 * @param entryId the primary key of the current entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next entry
-	 * @throws NoSuchEntryException if a entry with the primary key could not be found
-	 */
-	public static Entry[] findByUserId_PrevAndNext(
-			long entryId, long userId,
-			OrderByComparator<Entry> orderByComparator)
-		throws com.liferay.contacts.exception.NoSuchEntryException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			entryId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -490,4 +472,4 @@ public class EntryUtil {
 	private static volatile EntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2115172981
+// LIFERAY-SERVICE-BUILDER-HASH:-1877377843

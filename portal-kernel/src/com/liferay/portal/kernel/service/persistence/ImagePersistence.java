@@ -145,21 +145,6 @@ public interface ImagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the images before and after the current image in the ordered set where size &lt; &#63;.
-	 *
-	 * @param imageId the primary key of the current image
-	 * @param size the size
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next image
-	 * @throws NoSuchImageException if a image with the primary key could not be found
-	 */
-	public Image[] findByLtSize_PrevAndNext(
-			long imageId, int size,
-			com.liferay.portal.kernel.util.OrderByComparator<Image>
-				orderByComparator)
-		throws NoSuchImageException;
-
-	/**
 	 * Removes all the images where size &lt; &#63; from the database.
 	 *
 	 * @param size the size
@@ -293,4 +278,4 @@ public interface ImagePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-505260372
+// LIFERAY-SERVICE-BUILDER-HASH:1951113708

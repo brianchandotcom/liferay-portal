@@ -235,24 +235,6 @@ public class CTEntryUtil {
 	}
 
 	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public static CTEntry[] findByUuid_PrevAndNext(
-			long ctEntryId, String uuid,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			ctEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ct entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -415,25 +397,6 @@ public class CTEntryUtil {
 	}
 
 	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public static CTEntry[] findByUuid_C_PrevAndNext(
-			long ctEntryId, String uuid, long companyId,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			ctEntryId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ct entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -577,24 +540,6 @@ public class CTEntryUtil {
 		long userId, OrderByComparator<CTEntry> orderByComparator) {
 
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where userId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public static CTEntry[] findByUserId_PrevAndNext(
-			long ctEntryId, long userId,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			ctEntryId, userId, orderByComparator);
 	}
 
 	/**
@@ -746,24 +691,6 @@ public class CTEntryUtil {
 
 		return getPersistence().fetchByCtCollectionId_Last(
 			ctCollectionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public static CTEntry[] findByCtCollectionId_PrevAndNext(
-			long ctEntryId, long ctCollectionId,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByCtCollectionId_PrevAndNext(
-			ctEntryId, ctCollectionId, orderByComparator);
 	}
 
 	/**
@@ -930,25 +857,6 @@ public class CTEntryUtil {
 
 		return getPersistence().fetchByC_MCNI_Last(
 			ctCollectionId, modelClassNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where ctCollectionId = &#63; and modelClassNameId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public static CTEntry[] findByC_MCNI_PrevAndNext(
-			long ctEntryId, long ctCollectionId, long modelClassNameId,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_MCNI_PrevAndNext(
-			ctEntryId, ctCollectionId, modelClassNameId, orderByComparator);
 	}
 
 	/**
@@ -1213,27 +1121,6 @@ public class CTEntryUtil {
 
 		return getPersistence().fetchByNotC_MCNI_MCPK_Last(
 			ctCollectionId, modelClassNameId, modelClassPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where ctCollectionId &ne; &#63; and modelClassNameId = &#63; and modelClassPK = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param modelClassPK the model class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	public static CTEntry[] findByNotC_MCNI_MCPK_PrevAndNext(
-			long ctEntryId, long ctCollectionId, long modelClassNameId,
-			long modelClassPK, OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchEntryException {
-
-		return getPersistence().findByNotC_MCNI_MCPK_PrevAndNext(
-			ctEntryId, ctCollectionId, modelClassNameId, modelClassPK,
-			orderByComparator);
 	}
 
 	/**
@@ -1599,4 +1486,4 @@ public class CTEntryUtil {
 	private static volatile CTEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-562041472
+// LIFERAY-SERVICE-BUILDER-HASH:-1516543969

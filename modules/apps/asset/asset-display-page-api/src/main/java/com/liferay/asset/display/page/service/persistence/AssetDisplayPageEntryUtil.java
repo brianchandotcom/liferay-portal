@@ -247,25 +247,6 @@ public class AssetDisplayPageEntryUtil {
 	}
 
 	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public static AssetDisplayPageEntry[] findByUuid_PrevAndNext(
-			long assetDisplayPageEntryId, String uuid,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws com.liferay.asset.display.page.exception.
-			NoSuchDisplayPageEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			assetDisplayPageEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset display page entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -501,26 +482,6 @@ public class AssetDisplayPageEntryUtil {
 	}
 
 	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public static AssetDisplayPageEntry[] findByUuid_C_PrevAndNext(
-			long assetDisplayPageEntryId, String uuid, long companyId,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws com.liferay.asset.display.page.exception.
-			NoSuchDisplayPageEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			assetDisplayPageEntryId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset display page entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -674,25 +635,6 @@ public class AssetDisplayPageEntryUtil {
 		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public static AssetDisplayPageEntry[] findByGroupId_PrevAndNext(
-			long assetDisplayPageEntryId, long groupId,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws com.liferay.asset.display.page.exception.
-			NoSuchDisplayPageEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			assetDisplayPageEntryId, groupId, orderByComparator);
 	}
 
 	/**
@@ -855,27 +797,6 @@ public class AssetDisplayPageEntryUtil {
 
 		return getPersistence().fetchByLayoutPageTemplateEntryId_Last(
 			layoutPageTemplateEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where layoutPageTemplateEntryId = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param layoutPageTemplateEntryId the layout page template entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public static AssetDisplayPageEntry[]
-			findByLayoutPageTemplateEntryId_PrevAndNext(
-				long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
-				OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws com.liferay.asset.display.page.exception.
-			NoSuchDisplayPageEntryException {
-
-		return getPersistence().findByLayoutPageTemplateEntryId_PrevAndNext(
-			assetDisplayPageEntryId, layoutPageTemplateEntryId,
-			orderByComparator);
 	}
 
 	/**
@@ -1050,26 +971,6 @@ public class AssetDisplayPageEntryUtil {
 
 		return getPersistence().fetchByG_CN_Last(
 			groupId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	public static AssetDisplayPageEntry[] findByG_CN_PrevAndNext(
-			long assetDisplayPageEntryId, long groupId, long classNameId,
-			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws com.liferay.asset.display.page.exception.
-			NoSuchDisplayPageEntryException {
-
-		return getPersistence().findByG_CN_PrevAndNext(
-			assetDisplayPageEntryId, groupId, classNameId, orderByComparator);
 	}
 
 	/**
@@ -1343,4 +1244,4 @@ public class AssetDisplayPageEntryUtil {
 	private static volatile AssetDisplayPageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1753376807
+// LIFERAY-SERVICE-BUILDER-HASH:-1191997117

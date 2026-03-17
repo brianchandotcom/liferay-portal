@@ -148,21 +148,6 @@ public interface LayoutPageTemplateCollectionPersistence
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where uuid = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] findByUuid_PrevAndNext(
-			long layoutPageTemplateCollectionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
 	 * Removes all the layout page template collections where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -352,22 +337,6 @@ public interface LayoutPageTemplateCollectionPersistence
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] findByUuid_C_PrevAndNext(
-			long layoutPageTemplateCollectionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
 	 * Removes all the layout page template collections where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -499,21 +468,6 @@ public interface LayoutPageTemplateCollectionPersistence
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] findByGroupId_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
 	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -554,21 +508,6 @@ public interface LayoutPageTemplateCollectionPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
-
-	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] filterFindByGroupId_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
 
 	/**
 	 * Removes all the layout page template collections where groupId = &#63; from the database.
@@ -719,23 +658,6 @@ public interface LayoutPageTemplateCollectionPersistence
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] findByG_P_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId,
-			long parentLayoutPageTemplateCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
 	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -781,23 +703,6 @@ public interface LayoutPageTemplateCollectionPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
-
-	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] filterFindByG_P_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId,
-			long parentLayoutPageTemplateCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
 
 	/**
 	 * Removes all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; from the database.
@@ -951,22 +856,6 @@ public interface LayoutPageTemplateCollectionPersistence
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] findByG_T_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
 	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1010,22 +899,6 @@ public interface LayoutPageTemplateCollectionPersistence
 		long groupId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
-
-	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] filterFindByG_T_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
 
 	/**
 	 * Removes all the layout page template collections where groupId = &#63; and type = &#63; from the database.
@@ -1187,24 +1060,6 @@ public interface LayoutPageTemplateCollectionPersistence
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] findByG_P_T_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId,
-			long parentLayoutPageTemplateCollectionId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
 	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1253,24 +1108,6 @@ public interface LayoutPageTemplateCollectionPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
-
-	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] filterFindByG_P_T_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId,
-			long parentLayoutPageTemplateCollectionId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
 
 	/**
 	 * Removes all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63; from the database.
@@ -1495,24 +1332,6 @@ public interface LayoutPageTemplateCollectionPersistence
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] findByG_N_T_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId, String name,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
 	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and name = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1559,24 +1378,6 @@ public interface LayoutPageTemplateCollectionPersistence
 		long groupId, String name, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
-
-	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] filterFindByG_N_T_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId, String name,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
 
 	/**
 	 * Removes all the layout page template collections where groupId = &#63; and name = &#63; and type = &#63; from the database.
@@ -1738,24 +1539,6 @@ public interface LayoutPageTemplateCollectionPersistence
 			<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] findByG_LikeN_T_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId, String name,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
-
-	/**
 	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1802,24 +1585,6 @@ public interface LayoutPageTemplateCollectionPersistence
 		long groupId, String name, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutPageTemplateCollection> orderByComparator);
-
-	/**
-	 * Returns the layout page template collections before and after the current layout page template collection in the ordered set of layout page template collections that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63;.
-	 *
-	 * @param layoutPageTemplateCollectionId the primary key of the current layout page template collection
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout page template collection
-	 * @throws NoSuchPageTemplateCollectionException if a layout page template collection with the primary key could not be found
-	 */
-	public LayoutPageTemplateCollection[] filterFindByG_LikeN_T_PrevAndNext(
-			long layoutPageTemplateCollectionId, long groupId, String name,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateCollection> orderByComparator)
-		throws NoSuchPageTemplateCollectionException;
 
 	/**
 	 * Removes all the layout page template collections where groupId = &#63; and name LIKE &#63; and type = &#63; from the database.
@@ -2102,4 +1867,4 @@ public interface LayoutPageTemplateCollectionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2062240544
+// LIFERAY-SERVICE-BUILDER-HASH:-1296406835

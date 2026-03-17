@@ -147,21 +147,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 			<CommercePaymentMethodGroupRel> orderByComparator);
 
 	/**
-	 * Returns the commerce payment method group rels before and after the current commerce payment method group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the primary key of the current commerce payment method group rel
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a commerce payment method group rel with the primary key could not be found
-	 */
-	public CommercePaymentMethodGroupRel[] findByGroupId_PrevAndNext(
-			long commercePaymentMethodGroupRelId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentMethodGroupRel> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelException;
-
-	/**
 	 * Returns all the commerce payment method group rels that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -202,21 +187,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePaymentMethodGroupRel> orderByComparator);
-
-	/**
-	 * Returns the commerce payment method group rels before and after the current commerce payment method group rel in the ordered set of commerce payment method group rels that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the primary key of the current commerce payment method group rel
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a commerce payment method group rel with the primary key could not be found
-	 */
-	public CommercePaymentMethodGroupRel[] filterFindByGroupId_PrevAndNext(
-			long commercePaymentMethodGroupRelId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentMethodGroupRel> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelException;
 
 	/**
 	 * Removes all the commerce payment method group rels where groupId = &#63; from the database.
@@ -364,22 +334,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 			<CommercePaymentMethodGroupRel> orderByComparator);
 
 	/**
-	 * Returns the commerce payment method group rels before and after the current commerce payment method group rel in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the primary key of the current commerce payment method group rel
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a commerce payment method group rel with the primary key could not be found
-	 */
-	public CommercePaymentMethodGroupRel[] findByG_A_PrevAndNext(
-			long commercePaymentMethodGroupRelId, long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentMethodGroupRel> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelException;
-
-	/**
 	 * Returns all the commerce payment method group rels that the user has permission to view where groupId = &#63; and active = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -423,22 +377,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePaymentMethodGroupRel> orderByComparator);
-
-	/**
-	 * Returns the commerce payment method group rels before and after the current commerce payment method group rel in the ordered set of commerce payment method group rels that the user has permission to view where groupId = &#63; and active = &#63;.
-	 *
-	 * @param commercePaymentMethodGroupRelId the primary key of the current commerce payment method group rel
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a commerce payment method group rel with the primary key could not be found
-	 */
-	public CommercePaymentMethodGroupRel[] filterFindByG_A_PrevAndNext(
-			long commercePaymentMethodGroupRelId, long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentMethodGroupRel> orderByComparator)
-		throws NoSuchPaymentMethodGroupRelException;
 
 	/**
 	 * Removes all the commerce payment method group rels where groupId = &#63; and active = &#63; from the database.
@@ -649,4 +587,4 @@ public interface CommercePaymentMethodGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1786100742
+// LIFERAY-SERVICE-BUILDER-HASH:1431326640

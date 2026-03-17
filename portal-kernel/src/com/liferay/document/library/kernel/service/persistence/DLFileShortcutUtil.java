@@ -240,25 +240,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByUuid_PrevAndNext(
-			long fileShortcutId, String uuid,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			fileShortcutId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file shortcuts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -491,26 +472,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByUuid_C_PrevAndNext(
-			long fileShortcutId, String uuid, long companyId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			fileShortcutId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file shortcuts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -663,25 +624,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByGroupId_PrevAndNext(
-			long fileShortcutId, long groupId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			fileShortcutId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file shortcuts that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -728,25 +670,6 @@ public class DLFileShortcutUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] filterFindByGroupId_PrevAndNext(
-			long fileShortcutId, long groupId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			fileShortcutId, groupId, orderByComparator);
 	}
 
 	/**
@@ -913,25 +836,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where companyId = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByCompanyId_PrevAndNext(
-			long fileShortcutId, long companyId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			fileShortcutId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file shortcuts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1086,25 +990,6 @@ public class DLFileShortcutUtil {
 
 		return getPersistence().fetchByToFileEntryId_Last(
 			toFileEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where toFileEntryId = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param toFileEntryId the to file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByToFileEntryId_PrevAndNext(
-			long fileShortcutId, long toFileEntryId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByToFileEntryId_PrevAndNext(
-			fileShortcutId, toFileEntryId, orderByComparator);
 	}
 
 	/**
@@ -1273,26 +1158,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByG_F_PrevAndNext(
-			long fileShortcutId, long groupId, long folderId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByG_F_PrevAndNext(
-			fileShortcutId, groupId, folderId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1344,26 +1209,6 @@ public class DLFileShortcutUtil {
 
 		return getPersistence().filterFindByG_F(
 			groupId, folderId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] filterFindByG_F_PrevAndNext(
-			long fileShortcutId, long groupId, long folderId,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().filterFindByG_F_PrevAndNext(
-			fileShortcutId, groupId, folderId, orderByComparator);
 	}
 
 	/**
@@ -1547,26 +1392,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByC_NotS_PrevAndNext(
-			long fileShortcutId, long companyId, int status,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByC_NotS_PrevAndNext(
-			fileShortcutId, companyId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library file shortcuts where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1746,27 +1571,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByG_F_A_PrevAndNext(
-			long fileShortcutId, long groupId, long folderId, boolean active,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByG_F_A_PrevAndNext(
-			fileShortcutId, groupId, folderId, active, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1822,27 +1626,6 @@ public class DLFileShortcutUtil {
 
 		return getPersistence().filterFindByG_F_A(
 			groupId, folderId, active, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] filterFindByG_F_A_PrevAndNext(
-			long fileShortcutId, long groupId, long folderId, boolean active,
-			OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().filterFindByG_F_A_PrevAndNext(
-			fileShortcutId, groupId, folderId, active, orderByComparator);
 	}
 
 	/**
@@ -2055,29 +1838,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] findByG_F_A_S_PrevAndNext(
-			long fileShortcutId, long groupId, long folderId, boolean active,
-			int status, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().findByG_F_A_S_PrevAndNext(
-			fileShortcutId, groupId, folderId, active, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2138,29 +1898,6 @@ public class DLFileShortcutUtil {
 
 		return getPersistence().filterFindByG_F_A_S(
 			groupId, folderId, active, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
-	 *
-	 * @param fileShortcutId the primary key of the current document library file shortcut
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param active the active
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	public static DLFileShortcut[] filterFindByG_F_A_S_PrevAndNext(
-			long fileShortcutId, long groupId, long folderId, boolean active,
-			int status, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileShortcutException {
-
-		return getPersistence().filterFindByG_F_A_S_PrevAndNext(
-			fileShortcutId, groupId, folderId, active, status,
-			orderByComparator);
 	}
 
 	/**
@@ -2440,4 +2177,4 @@ public class DLFileShortcutUtil {
 	private static volatile DLFileShortcutPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1699566446
+// LIFERAY-SERVICE-BUILDER-HASH:1602955909

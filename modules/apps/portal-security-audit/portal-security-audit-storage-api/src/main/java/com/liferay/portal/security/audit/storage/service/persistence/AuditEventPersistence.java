@@ -145,21 +145,6 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 			orderByComparator);
 
 	/**
-	 * Returns the audit events before and after the current audit event in the ordered set where companyId = &#63;.
-	 *
-	 * @param auditEventId the primary key of the current audit event
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next audit event
-	 * @throws NoSuchEventException if a audit event with the primary key could not be found
-	 */
-	public AuditEvent[] findByCompanyId_PrevAndNext(
-			long auditEventId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AuditEvent>
-				orderByComparator)
-		throws NoSuchEventException;
-
-	/**
 	 * Removes all the audit events where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -294,4 +279,4 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2032316797
+// LIFERAY-SERVICE-BUILDER-HASH:-503324020

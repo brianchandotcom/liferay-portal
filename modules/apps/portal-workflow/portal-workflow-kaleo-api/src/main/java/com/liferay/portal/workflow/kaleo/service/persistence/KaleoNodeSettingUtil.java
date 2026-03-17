@@ -249,25 +249,6 @@ public class KaleoNodeSettingUtil {
 	}
 
 	/**
-	 * Returns the kaleo node settings before and after the current kaleo node setting in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeSettingId the primary key of the current kaleo node setting
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo node setting
-	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
-	 */
-	public static KaleoNodeSetting[] findByKaleoNodeId_PrevAndNext(
-			long kaleoNodeSettingId, long kaleoNodeId,
-			OrderByComparator<KaleoNodeSetting> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchNodeSettingException {
-
-		return getPersistence().findByKaleoNodeId_PrevAndNext(
-			kaleoNodeSettingId, kaleoNodeId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo node settings where kaleoNodeId = &#63; from the database.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
@@ -515,4 +496,4 @@ public class KaleoNodeSettingUtil {
 	private static volatile KaleoNodeSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-727849491
+// LIFERAY-SERVICE-BUILDER-HASH:1318026687

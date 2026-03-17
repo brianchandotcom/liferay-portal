@@ -269,29 +269,6 @@ public class CommerceShippingFixedOptionUtil {
 	}
 
 	/**
-	 * Returns the commerce shipping fixed options before and after the current commerce shipping fixed option in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the primary key of the current commerce shipping fixed option
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping fixed option
-	 * @throws NoSuchShippingFixedOptionException if a commerce shipping fixed option with the primary key could not be found
-	 */
-	public static CommerceShippingFixedOption[]
-			findByCommerceShippingMethodId_PrevAndNext(
-				long commerceShippingFixedOptionId,
-				long commerceShippingMethodId,
-				OrderByComparator<CommerceShippingFixedOption>
-					orderByComparator)
-		throws com.liferay.commerce.shipping.engine.fixed.exception.
-			NoSuchShippingFixedOptionException {
-
-		return getPersistence().findByCommerceShippingMethodId_PrevAndNext(
-			commerceShippingFixedOptionId, commerceShippingMethodId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce shipping fixed options where commerceShippingMethodId = &#63; from the database.
 	 *
 	 * @param commerceShippingMethodId the commerce shipping method ID
@@ -564,4 +541,4 @@ public class CommerceShippingFixedOptionUtil {
 	private static volatile CommerceShippingFixedOptionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:109916410
+// LIFERAY-SERVICE-BUILDER-HASH:-176575458

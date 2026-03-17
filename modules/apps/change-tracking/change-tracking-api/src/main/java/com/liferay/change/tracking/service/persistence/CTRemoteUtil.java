@@ -242,24 +242,6 @@ public class CTRemoteUtil {
 	}
 
 	/**
-	 * Returns the ct remotes before and after the current ct remote in the ordered set where companyId = &#63;.
-	 *
-	 * @param ctRemoteId the primary key of the current ct remote
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct remote
-	 * @throws NoSuchRemoteException if a ct remote with the primary key could not be found
-	 */
-	public static CTRemote[] findByCompanyId_PrevAndNext(
-			long ctRemoteId, long companyId,
-			OrderByComparator<CTRemote> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchRemoteException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			ctRemoteId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the ct remotes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -306,24 +288,6 @@ public class CTRemoteUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct remotes before and after the current ct remote in the ordered set of ct remotes that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param ctRemoteId the primary key of the current ct remote
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct remote
-	 * @throws NoSuchRemoteException if a ct remote with the primary key could not be found
-	 */
-	public static CTRemote[] filterFindByCompanyId_PrevAndNext(
-			long ctRemoteId, long companyId,
-			OrderByComparator<CTRemote> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchRemoteException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			ctRemoteId, companyId, orderByComparator);
 	}
 
 	/**
@@ -513,4 +477,4 @@ public class CTRemoteUtil {
 	private static volatile CTRemotePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1153137874
+// LIFERAY-SERVICE-BUILDER-HASH:1720970539

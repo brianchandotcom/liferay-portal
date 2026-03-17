@@ -148,21 +148,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByUuid_PrevAndNext(
-			long commerceOrderId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Removes all the commerce orders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByUuid_C_PrevAndNext(
-			long commerceOrderId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Removes all the commerce orders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByGroupId_PrevAndNext(
-			long commerceOrderId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Returns all the commerce orders that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -550,21 +504,6 @@ public interface CommerceOrderPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set of commerce orders that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] filterFindByGroupId_PrevAndNext(
-			long commerceOrderId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
 
 	/**
 	 * Removes all the commerce orders where groupId = &#63; from the database.
@@ -703,21 +642,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where userId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByUserId_PrevAndNext(
-			long commerceOrderId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Removes all the commerce orders where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -845,21 +769,6 @@ public interface CommerceOrderPersistence
 		long billingAddressId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where billingAddressId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param billingAddressId the billing address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByBillingAddressId_PrevAndNext(
-			long commerceOrderId, long billingAddressId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
 
 	/**
 	 * Removes all the commerce orders where billingAddressId = &#63; from the database.
@@ -991,21 +900,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByCommerceAccountId_PrevAndNext(
-			long commerceOrderId, long commerceAccountId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Removes all the commerce orders where commerceAccountId = &#63; from the database.
 	 *
 	 * @param commerceAccountId the commerce account ID
@@ -1133,21 +1027,6 @@ public interface CommerceOrderPersistence
 		long shippingAddressId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where shippingAddressId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param shippingAddressId the shipping address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByShippingAddressId_PrevAndNext(
-			long commerceOrderId, long shippingAddressId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
 
 	/**
 	 * Removes all the commerce orders where shippingAddressId = &#63; from the database.
@@ -1287,22 +1166,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where groupId = &#63; and commerceAccountId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByG_C_PrevAndNext(
-			long commerceOrderId, long groupId, long commerceAccountId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Returns all the commerce orders that the user has permission to view where groupId = &#63; and commerceAccountId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1346,22 +1209,6 @@ public interface CommerceOrderPersistence
 		long groupId, long commerceAccountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set of commerce orders that the user has permission to view where groupId = &#63; and commerceAccountId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] filterFindByG_C_PrevAndNext(
-			long commerceOrderId, long groupId, long commerceAccountId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
 
 	/**
 	 * Removes all the commerce orders where groupId = &#63; and commerceAccountId = &#63; from the database.
@@ -1512,22 +1359,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where groupId = &#63; and commercePaymentMethodKey = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param commercePaymentMethodKey the commerce payment method key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByG_CP_PrevAndNext(
-			long commerceOrderId, long groupId, String commercePaymentMethodKey,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Returns all the commerce orders that the user has permission to view where groupId = &#63; and commercePaymentMethodKey = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1571,22 +1402,6 @@ public interface CommerceOrderPersistence
 		long groupId, String commercePaymentMethodKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set of commerce orders that the user has permission to view where groupId = &#63; and commercePaymentMethodKey = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param commercePaymentMethodKey the commerce payment method key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] filterFindByG_CP_PrevAndNext(
-			long commerceOrderId, long groupId, String commercePaymentMethodKey,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
 
 	/**
 	 * Removes all the commerce orders where groupId = &#63; and commercePaymentMethodKey = &#63; from the database.
@@ -1745,23 +1560,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where groupId = &#63; and userId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByG_U_O_PrevAndNext(
-			long commerceOrderId, long groupId, long userId, int orderStatus,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Returns all the commerce orders that the user has permission to view where groupId = &#63; and userId = &#63; and orderStatus = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1808,23 +1606,6 @@ public interface CommerceOrderPersistence
 		long groupId, long userId, int orderStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set of commerce orders that the user has permission to view where groupId = &#63; and userId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] filterFindByG_U_O_PrevAndNext(
-			long commerceOrderId, long groupId, long userId, int orderStatus,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
 
 	/**
 	 * Removes all the commerce orders where groupId = &#63; and userId = &#63; and orderStatus = &#63; from the database.
@@ -1989,24 +1770,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where groupId = &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByG_C_O_PrevAndNext(
-			long commerceOrderId, long groupId, long commerceAccountId,
-			int orderStatus,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Returns all the commerce orders that the user has permission to view where groupId = &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2055,24 +1818,6 @@ public interface CommerceOrderPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set of commerce orders that the user has permission to view where groupId = &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param groupId the group ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] filterFindByG_C_O_PrevAndNext(
-			long commerceOrderId, long groupId, long commerceAccountId,
-			int orderStatus,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
 
 	/**
 	 * Removes all the commerce orders where groupId = &#63; and commerceAccountId = &#63; and orderStatus = &#63; from the database.
@@ -2237,23 +1982,6 @@ public interface CommerceOrderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByU_LtC_O_PrevAndNext(
-			long commerceOrderId, long userId, Date createDate, int orderStatus,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
 	 * Removes all the commerce orders where userId = &#63; and createDate &lt; &#63; and orderStatus = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -2404,24 +2132,6 @@ public interface CommerceOrderPersistence
 		Date createDate, long commerceAccountId, int orderStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param createDate the create date
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderStatus the order status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByC_LtC_O_PrevAndNext(
-			long commerceOrderId, Date createDate, long commerceAccountId,
-			int orderStatus,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
 
 	/**
 	 * Removes all the commerce orders where createDate &lt; &#63; and commerceAccountId = &#63; and orderStatus = &#63; from the database.
@@ -2618,4 +2328,4 @@ public interface CommerceOrderPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:404626711
+// LIFERAY-SERVICE-BUILDER-HASH:332993275

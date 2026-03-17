@@ -149,22 +149,6 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 			<CommerceTaxFixedRateAddressRel> orderByComparator);
 
 	/**
-	 * Returns the commerce tax fixed rate address rels before and after the current commerce tax fixed rate address rel in the ordered set where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxFixedRateAddressRelId the primary key of the current commerce tax fixed rate address rel
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
-	 */
-	public CommerceTaxFixedRateAddressRel[]
-			findByCommerceTaxMethodId_PrevAndNext(
-				long commerceTaxFixedRateAddressRelId, long commerceTaxMethodId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceTaxFixedRateAddressRel> orderByComparator)
-		throws NoSuchTaxFixedRateAddressRelException;
-
-	/**
 	 * Removes all the commerce tax fixed rate address rels where commerceTaxMethodId = &#63; from the database.
 	 *
 	 * @param commerceTaxMethodId the commerce tax method ID
@@ -294,21 +278,6 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 			<CommerceTaxFixedRateAddressRel> orderByComparator);
 
 	/**
-	 * Returns the commerce tax fixed rate address rels before and after the current commerce tax fixed rate address rel in the ordered set where CPTaxCategoryId = &#63;.
-	 *
-	 * @param commerceTaxFixedRateAddressRelId the primary key of the current commerce tax fixed rate address rel
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
-	 */
-	public CommerceTaxFixedRateAddressRel[] findByCPTaxCategoryId_PrevAndNext(
-			long commerceTaxFixedRateAddressRelId, long CPTaxCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceTaxFixedRateAddressRel> orderByComparator)
-		throws NoSuchTaxFixedRateAddressRelException;
-
-	/**
 	 * Removes all the commerce tax fixed rate address rels where CPTaxCategoryId = &#63; from the database.
 	 *
 	 * @param CPTaxCategoryId the cp tax category ID
@@ -436,21 +405,6 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 		long countryId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceTaxFixedRateAddressRel> orderByComparator);
-
-	/**
-	 * Returns the commerce tax fixed rate address rels before and after the current commerce tax fixed rate address rel in the ordered set where countryId = &#63;.
-	 *
-	 * @param commerceTaxFixedRateAddressRelId the primary key of the current commerce tax fixed rate address rel
-	 * @param countryId the country ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
-	 */
-	public CommerceTaxFixedRateAddressRel[] findByCountryId_PrevAndNext(
-			long commerceTaxFixedRateAddressRelId, long countryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceTaxFixedRateAddressRel> orderByComparator)
-		throws NoSuchTaxFixedRateAddressRelException;
 
 	/**
 	 * Removes all the commerce tax fixed rate address rels where countryId = &#63; from the database.
@@ -597,4 +551,4 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1730835883
+// LIFERAY-SERVICE-BUILDER-HASH:750602638

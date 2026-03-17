@@ -147,21 +147,6 @@ public interface DDMContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm contents before and after the current ddm content in the ordered set where uuid = &#63;.
-	 *
-	 * @param contentId the primary key of the current ddm content
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm content
-	 * @throws NoSuchContentException if a ddm content with the primary key could not be found
-	 */
-	public DDMContent[] findByUuid_PrevAndNext(
-			long contentId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
 	 * Removes all the ddm contents where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -348,22 +333,6 @@ public interface DDMContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm contents before and after the current ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param contentId the primary key of the current ddm content
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm content
-	 * @throws NoSuchContentException if a ddm content with the primary key could not be found
-	 */
-	public DDMContent[] findByUuid_C_PrevAndNext(
-			long contentId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
 	 * Removes all the ddm contents where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface DDMContentPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm contents before and after the current ddm content in the ordered set where groupId = &#63;.
-	 *
-	 * @param contentId the primary key of the current ddm content
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm content
-	 * @throws NoSuchContentException if a ddm content with the primary key could not be found
-	 */
-	public DDMContent[] findByGroupId_PrevAndNext(
-			long contentId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-				orderByComparator)
-		throws NoSuchContentException;
-
-	/**
 	 * Removes all the ddm contents where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -635,21 +589,6 @@ public interface DDMContentPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm contents before and after the current ddm content in the ordered set where companyId = &#63;.
-	 *
-	 * @param contentId the primary key of the current ddm content
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm content
-	 * @throws NoSuchContentException if a ddm content with the primary key could not be found
-	 */
-	public DDMContent[] findByCompanyId_PrevAndNext(
-			long contentId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMContent>
-				orderByComparator)
-		throws NoSuchContentException;
 
 	/**
 	 * Removes all the ddm contents where companyId = &#63; from the database.
@@ -786,4 +725,4 @@ public interface DDMContentPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-833708175
+// LIFERAY-SERVICE-BUILDER-HASH:493174120

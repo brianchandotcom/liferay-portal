@@ -150,22 +150,6 @@ public interface BatchEngineImportTaskErrorPersistence
 			<BatchEngineImportTaskError> orderByComparator);
 
 	/**
-	 * Returns the batch engine import task errors before and after the current batch engine import task error in the ordered set where batchEngineImportTaskId = &#63;.
-	 *
-	 * @param batchEngineImportTaskErrorId the primary key of the current batch engine import task error
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch engine import task error
-	 * @throws NoSuchImportTaskErrorException if a batch engine import task error with the primary key could not be found
-	 */
-	public BatchEngineImportTaskError[]
-			findByBatchEngineImportTaskId_PrevAndNext(
-				long batchEngineImportTaskErrorId, long batchEngineImportTaskId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<BatchEngineImportTaskError> orderByComparator)
-		throws NoSuchImportTaskErrorException;
-
-	/**
 	 * Removes all the batch engine import task errors where batchEngineImportTaskId = &#63; from the database.
 	 *
 	 * @param batchEngineImportTaskId the batch engine import task ID
@@ -307,4 +291,4 @@ public interface BatchEngineImportTaskErrorPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2093759747
+// LIFERAY-SERVICE-BUILDER-HASH:779915802

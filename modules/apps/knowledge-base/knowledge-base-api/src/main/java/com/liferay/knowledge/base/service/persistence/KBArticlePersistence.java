@@ -150,21 +150,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByResourcePrimKey_PrevAndNext(
-			long kbArticleId, long resourcePrimKey,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Removes all the kb articles where resourcePrimKey = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -291,21 +276,6 @@ public interface KBArticlePersistence
 		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where uuid = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByUuid_PrevAndNext(
-			long kbArticleId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where uuid = &#63; from the database.
@@ -494,22 +464,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByUuid_C_PrevAndNext(
-			long kbArticleId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Removes all the kb articles where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -649,22 +603,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_G_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -708,22 +646,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByR_G_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where resourcePrimKey = &#63; and groupId = &#63; from the database.
@@ -922,22 +844,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_L_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = any &#63; and latest = &#63;.
@@ -1158,22 +1064,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_M_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles where resourcePrimKey = any &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -1390,22 +1280,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_S_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = any &#63; and status = any &#63;.
@@ -1626,22 +1500,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_ERC_PrevAndNext(
-			long kbArticleId, long groupId, String externalReferenceCode,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1685,22 +1543,6 @@ public interface KBArticlePersistence
 		long groupId, String externalReferenceCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_ERC_PrevAndNext(
-			long kbArticleId, long groupId, String externalReferenceCode,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and externalReferenceCode = &#63; from the database.
@@ -1850,22 +1692,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_L_PrevAndNext(
-			long kbArticleId, long groupId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and latest = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1909,22 +1735,6 @@ public interface KBArticlePersistence
 		long groupId, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_L_PrevAndNext(
-			long kbArticleId, long groupId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and latest = &#63; from the database.
@@ -2074,22 +1884,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_M_PrevAndNext(
-			long kbArticleId, long groupId, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2133,22 +1927,6 @@ public interface KBArticlePersistence
 		long groupId, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_M_PrevAndNext(
-			long kbArticleId, long groupId, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and main = &#63; from the database.
@@ -2298,22 +2076,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_S_PrevAndNext(
-			long kbArticleId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2356,22 +2118,6 @@ public interface KBArticlePersistence
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_S_PrevAndNext(
-			long kbArticleId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and status = &#63; from the database.
@@ -2521,22 +2267,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where companyId = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByC_L_PrevAndNext(
-			long kbArticleId, long companyId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Removes all the kb articles where companyId = &#63; and latest = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2673,22 +2403,6 @@ public interface KBArticlePersistence
 		long companyId, boolean main,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where companyId = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByC_M_PrevAndNext(
-			long kbArticleId, long companyId, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where companyId = &#63; and main = &#63; from the database.
@@ -2829,22 +2543,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByC_S_PrevAndNext(
-			long kbArticleId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Removes all the kb articles where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2982,22 +2680,6 @@ public interface KBArticlePersistence
 		long parentResourcePrimKey, boolean latest,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByP_L_PrevAndNext(
-			long kbArticleId, long parentResourcePrimKey, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and latest = &#63;.
@@ -3218,22 +2900,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByP_M_PrevAndNext(
-			long kbArticleId, long parentResourcePrimKey, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -3450,22 +3116,6 @@ public interface KBArticlePersistence
 		long parentResourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByP_S_PrevAndNext(
-			long kbArticleId, long parentResourcePrimKey, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and status = &#63;.
@@ -3685,22 +3335,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByLtD_S_PrevAndNext(
-			long kbArticleId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Removes all the kb articles where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -3907,24 +3541,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_G_L_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId,
-			boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -3971,24 +3587,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, long groupId, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByR_G_L_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId,
-			boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
@@ -4301,23 +3899,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_G_M_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -4364,23 +3945,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, long groupId, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByR_G_M_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
@@ -4689,23 +4253,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_G_S_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -4752,23 +4299,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByR_G_S_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
@@ -5074,23 +4604,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_G_NotS_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status &ne; &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -5137,23 +4650,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByR_G_NotS_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and status &ne; &#63; from the database.
@@ -5315,23 +4811,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, boolean latest, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_L_NotS_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = any &#63; and latest = &#63; and status &ne; &#63;.
@@ -5569,23 +5048,6 @@ public interface KBArticlePersistence
 		long resourcePrimKey, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_M_NotS_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = any &#63; and main = &#63; and status &ne; &#63;.
@@ -5886,24 +5348,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_ERC_S_PrevAndNext(
-			long kbArticleId, long groupId, String externalReferenceCode,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -5952,24 +5396,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_ERC_S_PrevAndNext(
-			long kbArticleId, long groupId, String externalReferenceCode,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and externalReferenceCode = &#63; and status = &#63; from the database.
@@ -6137,24 +5563,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_P_L_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6203,24 +5611,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_P_L_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
@@ -6537,24 +5927,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_P_M_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6603,24 +5975,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_P_M_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
@@ -6937,24 +6291,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_P_S_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7003,24 +6339,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_P_S_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
@@ -7334,23 +6652,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_KBFI_UT_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, String urlTitle,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7397,23 +6698,6 @@ public interface KBArticlePersistence
 		long groupId, long kbFolderId, String urlTitle, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_KBFI_UT_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, String urlTitle,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; from the database.
@@ -7577,23 +6861,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_KBFI_L_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7640,23 +6907,6 @@ public interface KBArticlePersistence
 		long groupId, long kbFolderId, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_KBFI_L_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63; from the database.
@@ -7819,23 +7069,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_KBFI_S_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7882,23 +7115,6 @@ public interface KBArticlePersistence
 		long groupId, long kbFolderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_KBFI_S_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and kbFolderId = &#63; and status = &#63; from the database.
@@ -8060,23 +7276,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_LikeS_L_PrevAndNext(
-			long kbArticleId, long groupId, String sections, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -8123,23 +7322,6 @@ public interface KBArticlePersistence
 		long groupId, String sections, boolean latest, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param latest the latest
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_LikeS_L_PrevAndNext(
-			long kbArticleId, long groupId, String sections, boolean latest,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
@@ -8447,23 +7629,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_LikeS_M_PrevAndNext(
-			long kbArticleId, long groupId, String sections, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -8510,23 +7675,6 @@ public interface KBArticlePersistence
 		long groupId, String sections, boolean main, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param main the main
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_LikeS_M_PrevAndNext(
-			long kbArticleId, long groupId, String sections, boolean main,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
@@ -8833,23 +7981,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_LikeS_S_PrevAndNext(
-			long kbArticleId, long groupId, String sections, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -8896,23 +8027,6 @@ public interface KBArticlePersistence
 		long groupId, String sections, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_LikeS_S_PrevAndNext(
-			long kbArticleId, long groupId, String sections, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
@@ -9218,23 +8332,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_L_NotS_PrevAndNext(
-			long kbArticleId, long groupId, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and latest = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -9281,23 +8378,6 @@ public interface KBArticlePersistence
 		long groupId, boolean latest, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_L_NotS_PrevAndNext(
-			long kbArticleId, long groupId, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and latest = &#63; and status &ne; &#63; from the database.
@@ -9459,23 +8539,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_M_NotS_PrevAndNext(
-			long kbArticleId, long groupId, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and main = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -9522,23 +8585,6 @@ public interface KBArticlePersistence
 		long groupId, boolean main, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_M_NotS_PrevAndNext(
-			long kbArticleId, long groupId, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and main = &#63; and status &ne; &#63; from the database.
@@ -9700,23 +8746,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where companyId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByC_L_NotS_PrevAndNext(
-			long kbArticleId, long companyId, boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Removes all the kb articles where companyId = &#63; and latest = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -9864,23 +8893,6 @@ public interface KBArticlePersistence
 		long companyId, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where companyId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByC_M_NotS_PrevAndNext(
-			long kbArticleId, long companyId, boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where companyId = &#63; and main = &#63; and status &ne; &#63; from the database.
@@ -10033,24 +9045,6 @@ public interface KBArticlePersistence
 		long parentResourcePrimKey, boolean latest, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByP_L_NotS_PrevAndNext(
-			long kbArticleId, long parentResourcePrimKey, boolean latest,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and latest = &#63; and status &ne; &#63;.
@@ -10293,24 +9287,6 @@ public interface KBArticlePersistence
 		long parentResourcePrimKey, boolean main, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByP_M_NotS_PrevAndNext(
-			long kbArticleId, long parentResourcePrimKey, boolean main,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and main = &#63; and status &ne; &#63;.
@@ -10563,25 +9539,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_G_L_NotS_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId,
-			boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63; and status &ne; &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -10633,25 +9590,6 @@ public interface KBArticlePersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByR_G_L_NotS_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId,
-			boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63; and status &ne; &#63;.
@@ -10988,25 +9926,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where resourcePrimKey = &#63; and groupId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByR_G_M_NotS_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId, boolean main,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63; and status &ne; &#63;.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -11058,25 +9977,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByR_G_M_NotS_PrevAndNext(
-			long kbArticleId, long resourcePrimKey, long groupId, boolean main,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63; and status &ne; &#63;.
@@ -11415,25 +10315,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_P_L_S_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -11485,25 +10366,6 @@ public interface KBArticlePersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_P_L_S_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
@@ -11846,25 +10708,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_P_L_NotS_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -11916,25 +10759,6 @@ public interface KBArticlePersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_P_L_NotS_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean latest, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status &ne; &#63;.
@@ -12275,25 +11099,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_P_M_S_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -12345,25 +11150,6 @@ public interface KBArticlePersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_P_M_S_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63; and status = &#63;.
@@ -12700,25 +11486,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_P_M_NotS_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -12770,25 +11537,6 @@ public interface KBArticlePersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_P_M_NotS_PrevAndNext(
-			long kbArticleId, long groupId, long parentResourcePrimKey,
-			boolean main, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63; and status &ne; &#63;.
@@ -13125,25 +11873,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_KBFI_UT_S_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, String urlTitle,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -13195,25 +11924,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_KBFI_UT_S_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, String urlTitle,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
@@ -13550,25 +12260,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_KBFI_UT_NotS_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, String urlTitle,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -13620,25 +12311,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_KBFI_UT_NotS_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, String urlTitle,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status &ne; &#63; from the database.
@@ -13817,25 +12489,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and kbFolderId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_KBFI_L_NotS_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, boolean latest,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and latest = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -13887,25 +12540,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_KBFI_L_NotS_PrevAndNext(
-			long kbArticleId, long groupId, long kbFolderId, boolean latest,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Removes all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63; and status &ne; &#63; from the database.
@@ -14084,25 +12718,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_LikeS_L_NotS_PrevAndNext(
-			long kbArticleId, long groupId, String sections, boolean latest,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -14154,25 +12769,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param latest the latest
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_LikeS_L_NotS_PrevAndNext(
-			long kbArticleId, long groupId, String sections, boolean latest,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63; and status &ne; &#63;.
@@ -14509,25 +13105,6 @@ public interface KBArticlePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and sections LIKE &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] findByG_LikeS_M_NotS_PrevAndNext(
-			long kbArticleId, long groupId, String sections, boolean main,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
-
-	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -14579,25 +13156,6 @@ public interface KBArticlePersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
-
-	/**
-	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63; and status &ne; &#63;.
-	 *
-	 * @param kbArticleId the primary key of the current kb article
-	 * @param groupId the group ID
-	 * @param sections the sections
-	 * @param main the main
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	public KBArticle[] filterFindByG_LikeS_M_NotS_PrevAndNext(
-			long kbArticleId, long groupId, String sections, boolean main,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
-				orderByComparator)
-		throws NoSuchArticleException;
 
 	/**
 	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63; and status &ne; &#63;.
@@ -14912,4 +13470,4 @@ public interface KBArticlePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-999982482
+// LIFERAY-SERVICE-BUILDER-HASH:-1455134585

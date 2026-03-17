@@ -258,26 +258,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce virtual order item file entries before and after the current commerce virtual order item file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemFileEntryId the primary key of the current commerce virtual order item file entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry[] findByUuid_PrevAndNext(
-			long commerceVirtualOrderItemFileEntryId, String uuid,
-			OrderByComparator<CommerceVirtualOrderItemFileEntry>
-				orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.order.exception.
-			NoSuchVirtualOrderItemFileEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceVirtualOrderItemFileEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce virtual order item file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -519,29 +499,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce virtual order item file entries before and after the current commerce virtual order item file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemFileEntryId the primary key of the current commerce virtual order item file entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry[] findByUuid_C_PrevAndNext(
-			long commerceVirtualOrderItemFileEntryId, String uuid,
-			long companyId,
-			OrderByComparator<CommerceVirtualOrderItemFileEntry>
-				orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.order.exception.
-			NoSuchVirtualOrderItemFileEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceVirtualOrderItemFileEntryId, uuid, companyId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -716,29 +673,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 
 		return getPersistence().fetchByCommerceVirtualOrderItemId_Last(
 			commerceVirtualOrderItemId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce virtual order item file entries before and after the current commerce virtual order item file entry in the ordered set where commerceVirtualOrderItemId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemFileEntryId the primary key of the current commerce virtual order item file entry
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry[]
-			findByCommerceVirtualOrderItemId_PrevAndNext(
-				long commerceVirtualOrderItemFileEntryId,
-				long commerceVirtualOrderItemId,
-				OrderByComparator<CommerceVirtualOrderItemFileEntry>
-					orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.order.exception.
-			NoSuchVirtualOrderItemFileEntryException {
-
-		return getPersistence().findByCommerceVirtualOrderItemId_PrevAndNext(
-			commerceVirtualOrderItemFileEntryId, commerceVirtualOrderItemId,
-			orderByComparator);
 	}
 
 	/**
@@ -921,29 +855,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 
 		return getPersistence().fetchByC_F_Last(
 			commerceVirtualOrderItemId, fileEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce virtual order item file entries before and after the current commerce virtual order item file entry in the ordered set where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemFileEntryId the primary key of the current commerce virtual order item file entry
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	public static CommerceVirtualOrderItemFileEntry[] findByC_F_PrevAndNext(
-			long commerceVirtualOrderItemFileEntryId,
-			long commerceVirtualOrderItemId, long fileEntryId,
-			OrderByComparator<CommerceVirtualOrderItemFileEntry>
-				orderByComparator)
-		throws com.liferay.commerce.product.type.virtual.order.exception.
-			NoSuchVirtualOrderItemFileEntryException {
-
-		return getPersistence().findByC_F_PrevAndNext(
-			commerceVirtualOrderItemFileEntryId, commerceVirtualOrderItemId,
-			fileEntryId, orderByComparator);
 	}
 
 	/**
@@ -1157,4 +1068,4 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-900568495
+// LIFERAY-SERVICE-BUILDER-HASH:-1496752768

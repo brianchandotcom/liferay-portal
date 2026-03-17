@@ -148,21 +148,6 @@ public interface CommerceWishListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce wish lists before and after the current commerce wish list in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceWishListId the primary key of the current commerce wish list
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	public CommerceWishList[] findByUuid_PrevAndNext(
-			long commerceWishListId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
-				orderByComparator)
-		throws NoSuchWishListException;
-
-	/**
 	 * Removes all the commerce wish lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface CommerceWishListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce wish lists before and after the current commerce wish list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceWishListId the primary key of the current commerce wish list
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	public CommerceWishList[] findByUuid_C_PrevAndNext(
-			long commerceWishListId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
-				orderByComparator)
-		throws NoSuchWishListException;
-
-	/**
 	 * Removes all the commerce wish lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface CommerceWishListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce wish lists before and after the current commerce wish list in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceWishListId the primary key of the current commerce wish list
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	public CommerceWishList[] findByGroupId_PrevAndNext(
-			long commerceWishListId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
-				orderByComparator)
-		throws NoSuchWishListException;
-
-	/**
 	 * Removes all the commerce wish lists where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -637,21 +591,6 @@ public interface CommerceWishListPersistence
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce wish lists before and after the current commerce wish list in the ordered set where userId = &#63;.
-	 *
-	 * @param commerceWishListId the primary key of the current commerce wish list
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	public CommerceWishList[] findByUserId_PrevAndNext(
-			long commerceWishListId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
-				orderByComparator)
-		throws NoSuchWishListException;
 
 	/**
 	 * Removes all the commerce wish lists where userId = &#63; from the database.
@@ -791,22 +730,6 @@ public interface CommerceWishListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce wish lists before and after the current commerce wish list in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param commerceWishListId the primary key of the current commerce wish list
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	public CommerceWishList[] findByG_U_PrevAndNext(
-			long commerceWishListId, long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
-				orderByComparator)
-		throws NoSuchWishListException;
-
-	/**
 	 * Removes all the commerce wish lists where groupId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -944,22 +867,6 @@ public interface CommerceWishListPersistence
 		long userId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce wish lists before and after the current commerce wish list in the ordered set where userId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param commerceWishListId the primary key of the current commerce wish list
-	 * @param userId the user ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	public CommerceWishList[] findByU_LtC_PrevAndNext(
-			long commerceWishListId, long userId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
-				orderByComparator)
-		throws NoSuchWishListException;
 
 	/**
 	 * Removes all the commerce wish lists where userId = &#63; and createDate &lt; &#63; from the database.
@@ -1109,24 +1016,6 @@ public interface CommerceWishListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce wish lists before and after the current commerce wish list in the ordered set where groupId = &#63; and userId = &#63; and defaultWishList = &#63;.
-	 *
-	 * @param commerceWishListId the primary key of the current commerce wish list
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param defaultWishList the default wish list
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce wish list
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	public CommerceWishList[] findByG_U_D_PrevAndNext(
-			long commerceWishListId, long groupId, long userId,
-			boolean defaultWishList,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceWishList>
-				orderByComparator)
-		throws NoSuchWishListException;
-
-	/**
 	 * Removes all the commerce wish lists where groupId = &#63; and userId = &#63; and defaultWishList = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1267,4 +1156,4 @@ public interface CommerceWishListPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-750080124
+// LIFERAY-SERVICE-BUILDER-HASH:-1955986165

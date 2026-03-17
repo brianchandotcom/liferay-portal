@@ -147,21 +147,6 @@ public interface KaleoNodeSettingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo node settings before and after the current kaleo node setting in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeSettingId the primary key of the current kaleo node setting
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo node setting
-	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
-	 */
-	public KaleoNodeSetting[] findByKaleoNodeId_PrevAndNext(
-			long kaleoNodeSettingId, long kaleoNodeId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoNodeSetting>
-				orderByComparator)
-		throws NoSuchNodeSettingException;
-
-	/**
 	 * Removes all the kaleo node settings where kaleoNodeId = &#63; from the database.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
@@ -347,4 +332,4 @@ public interface KaleoNodeSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:552981433
+// LIFERAY-SERVICE-BUILDER-HASH:857214089

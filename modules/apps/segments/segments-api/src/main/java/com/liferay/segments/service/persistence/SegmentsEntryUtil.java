@@ -238,24 +238,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] findByUuid_PrevAndNext(
-			long segmentsEntryId, String uuid,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			segmentsEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the segments entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -481,25 +463,6 @@ public class SegmentsEntryUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] findByUuid_C_PrevAndNext(
-			long segmentsEntryId, String uuid, long companyId,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			segmentsEntryId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -900,24 +863,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] findByGroupId_PrevAndNext(
-			long segmentsEntryId, long groupId,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			segmentsEntryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the segments entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -964,24 +909,6 @@ public class SegmentsEntryUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set of segments entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] filterFindByGroupId_PrevAndNext(
-			long segmentsEntryId, long groupId,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			segmentsEntryId, groupId, orderByComparator);
 	}
 
 	/**
@@ -1287,24 +1214,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set where active = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] findByActive_PrevAndNext(
-			long segmentsEntryId, boolean active,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByActive_PrevAndNext(
-			segmentsEntryId, active, orderByComparator);
-	}
-
-	/**
 	 * Removes all the segments entries where active = &#63; from the database.
 	 *
 	 * @param active the active
@@ -1449,24 +1358,6 @@ public class SegmentsEntryUtil {
 		String source, OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getPersistence().fetchBySource_Last(source, orderByComparator);
-	}
-
-	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set where source = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] findBySource_PrevAndNext(
-			long segmentsEntryId, String source,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findBySource_PrevAndNext(
-			segmentsEntryId, source, orderByComparator);
 	}
 
 	/**
@@ -1700,25 +1591,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] findByG_A_PrevAndNext(
-			long segmentsEntryId, long groupId, boolean active,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_A_PrevAndNext(
-			segmentsEntryId, groupId, active, orderByComparator);
-	}
-
-	/**
 	 * Returns all the segments entries that the user has permission to view where groupId = &#63; and active = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1770,25 +1642,6 @@ public class SegmentsEntryUtil {
 
 		return getPersistence().filterFindByG_A(
 			groupId, active, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set of segments entries that the user has permission to view where groupId = &#63; and active = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] filterFindByG_A_PrevAndNext(
-			long segmentsEntryId, long groupId, boolean active,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().filterFindByG_A_PrevAndNext(
-			segmentsEntryId, groupId, active, orderByComparator);
 	}
 
 	/**
@@ -2126,25 +1979,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set where groupId = &#63; and source = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param groupId the group ID
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] findByG_SRC_PrevAndNext(
-			long segmentsEntryId, long groupId, String source,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().findByG_SRC_PrevAndNext(
-			segmentsEntryId, groupId, source, orderByComparator);
-	}
-
-	/**
 	 * Returns all the segments entries that the user has permission to view where groupId = &#63; and source = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2196,25 +2030,6 @@ public class SegmentsEntryUtil {
 
 		return getPersistence().filterFindByG_SRC(
 			groupId, source, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set of segments entries that the user has permission to view where groupId = &#63; and source = &#63;.
-	 *
-	 * @param segmentsEntryId the primary key of the current segments entry
-	 * @param groupId the group ID
-	 * @param source the source
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	public static SegmentsEntry[] filterFindByG_SRC_PrevAndNext(
-			long segmentsEntryId, long groupId, String source,
-			OrderByComparator<SegmentsEntry> orderByComparator)
-		throws com.liferay.segments.exception.NoSuchEntryException {
-
-		return getPersistence().filterFindByG_SRC_PrevAndNext(
-			segmentsEntryId, groupId, source, orderByComparator);
 	}
 
 	/**
@@ -2634,4 +2449,4 @@ public class SegmentsEntryUtil {
 	private static volatile SegmentsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1734700424
+// LIFERAY-SERVICE-BUILDER-HASH:1959586873

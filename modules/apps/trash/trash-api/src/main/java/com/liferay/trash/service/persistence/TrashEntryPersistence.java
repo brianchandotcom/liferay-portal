@@ -149,21 +149,6 @@ public interface TrashEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the trash entries before and after the current trash entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param entryId the primary key of the current trash entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next trash entry
-	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
-	 */
-	public TrashEntry[] findByGroupId_PrevAndNext(
-			long entryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the trash entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -290,21 +275,6 @@ public interface TrashEntryPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the trash entries before and after the current trash entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current trash entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next trash entry
-	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
-	 */
-	public TrashEntry[] findByCompanyId_PrevAndNext(
-			long entryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the trash entries where companyId = &#63; from the database.
@@ -442,22 +412,6 @@ public interface TrashEntryPersistence
 		long groupId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the trash entries before and after the current trash entry in the ordered set where groupId = &#63; and createDate &lt; &#63;.
-	 *
-	 * @param entryId the primary key of the current trash entry
-	 * @param groupId the group ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next trash entry
-	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
-	 */
-	public TrashEntry[] findByG_LtCD_PrevAndNext(
-			long entryId, long groupId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the trash entries where groupId = &#63; and createDate &lt; &#63; from the database.
@@ -599,22 +553,6 @@ public interface TrashEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the trash entries before and after the current trash entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the primary key of the current trash entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next trash entry
-	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
-	 */
-	public TrashEntry[] findByG_CN_PrevAndNext(
-			long entryId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the trash entries where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -752,22 +690,6 @@ public interface TrashEntryPersistence
 		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the trash entries before and after the current trash entry in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the primary key of the current trash entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next trash entry
-	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
-	 */
-	public TrashEntry[] findByC_CN_PrevAndNext(
-			long entryId, long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the trash entries where companyId = &#63; and classNameId = &#63; from the database.
@@ -956,4 +878,4 @@ public interface TrashEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-139497810
+// LIFERAY-SERVICE-BUILDER-HASH:2147319765

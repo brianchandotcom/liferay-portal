@@ -145,21 +145,6 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 			orderByComparator);
 
 	/**
-	 * Returns the object actions before and after the current object action in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public ObjectAction[] findByUuid_PrevAndNext(
-			long objectActionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
-				orderByComparator)
-		throws NoSuchObjectActionException;
-
-	/**
 	 * Removes all the object actions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -297,22 +282,6 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 			orderByComparator);
 
 	/**
-	 * Returns the object actions before and after the current object action in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public ObjectAction[] findByUuid_C_PrevAndNext(
-			long objectActionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
-				orderByComparator)
-		throws NoSuchObjectActionException;
-
-	/**
 	 * Removes all the object actions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -442,21 +411,6 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 		long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
 			orderByComparator);
-
-	/**
-	 * Returns the object actions before and after the current object action in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public ObjectAction[] findByObjectDefinitionId_PrevAndNext(
-			long objectActionId, long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
-				orderByComparator)
-		throws NoSuchObjectActionException;
 
 	/**
 	 * Removes all the object actions where objectDefinitionId = &#63; from the database.
@@ -644,22 +598,6 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 		boolean active, String objectActionExecutorKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
 			orderByComparator);
-
-	/**
-	 * Returns the object actions before and after the current object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public ObjectAction[] findByA_OAEK_PrevAndNext(
-			long objectActionId, boolean active, String objectActionExecutorKey,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
-				orderByComparator)
-		throws NoSuchObjectActionException;
 
 	/**
 	 * Removes all the object actions where active = &#63; and objectActionExecutorKey = &#63; from the database.
@@ -874,24 +812,6 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 			orderByComparator);
 
 	/**
-	 * Returns the object actions before and after the current object action in the ordered set where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public ObjectAction[] findByC_A_OATK_PrevAndNext(
-			long objectActionId, long companyId, boolean active,
-			String objectActionTriggerKey,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
-				orderByComparator)
-		throws NoSuchObjectActionException;
-
-	/**
 	 * Removes all the object actions where companyId = &#63; and active = &#63; and objectActionTriggerKey = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1046,24 +966,6 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 		long objectDefinitionId, boolean active, String objectActionTriggerKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
 			orderByComparator);
-
-	/**
-	 * Returns the object actions before and after the current object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
-	 *
-	 * @param objectActionId the primary key of the current object action
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param objectActionTriggerKey the object action trigger key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	public ObjectAction[] findByO_A_OATK_PrevAndNext(
-			long objectActionId, long objectDefinitionId, boolean active,
-			String objectActionTriggerKey,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
-				orderByComparator)
-		throws NoSuchObjectActionException;
 
 	/**
 	 * Removes all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63; from the database.
@@ -1276,4 +1178,4 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1908738542
+// LIFERAY-SERVICE-BUILDER-HASH:-698093464

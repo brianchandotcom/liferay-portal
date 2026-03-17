@@ -147,21 +147,6 @@ public interface PatcherFixRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the patcher fix rels before and after the current patcher fix rel in the ordered set where childPatcherFixId = &#63;.
-	 *
-	 * @param patcherFixRelId the primary key of the current patcher fix rel
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a patcher fix rel with the primary key could not be found
-	 */
-	public PatcherFixRel[] findByChildPatcherFixId_PrevAndNext(
-			long patcherFixRelId, long childPatcherFixId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixRel>
-				orderByComparator)
-		throws NoSuchPatcherFixRelException;
-
-	/**
 	 * Removes all the patcher fix rels where childPatcherFixId = &#63; from the database.
 	 *
 	 * @param childPatcherFixId the child patcher fix ID
@@ -289,21 +274,6 @@ public interface PatcherFixRelPersistence
 		long parentPatcherFixId,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherFixRel>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher fix rels before and after the current patcher fix rel in the ordered set where parentPatcherFixId = &#63;.
-	 *
-	 * @param patcherFixRelId the primary key of the current patcher fix rel
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a patcher fix rel with the primary key could not be found
-	 */
-	public PatcherFixRel[] findByParentPatcherFixId_PrevAndNext(
-			long patcherFixRelId, long parentPatcherFixId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherFixRel>
-				orderByComparator)
-		throws NoSuchPatcherFixRelException;
 
 	/**
 	 * Removes all the patcher fix rels where parentPatcherFixId = &#63; from the database.
@@ -441,4 +411,4 @@ public interface PatcherFixRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:973466868
+// LIFERAY-SERVICE-BUILDER-HASH:1804905560

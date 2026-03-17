@@ -254,25 +254,6 @@ public class DLFileVersionPreviewUtil {
 	}
 
 	/**
-	 * Returns the dl file version previews before and after the current dl file version preview in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param dlFileVersionPreviewId the primary key of the current dl file version preview
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a dl file version preview with the primary key could not be found
-	 */
-	public static DLFileVersionPreview[] findByFileEntryId_PrevAndNext(
-			long dlFileVersionPreviewId, long fileEntryId,
-			OrderByComparator<DLFileVersionPreview> orderByComparator)
-		throws com.liferay.document.library.exception.
-			NoSuchFileVersionPreviewException {
-
-		return getPersistence().findByFileEntryId_PrevAndNext(
-			dlFileVersionPreviewId, fileEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the dl file version previews where fileEntryId = &#63; from the database.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -429,25 +410,6 @@ public class DLFileVersionPreviewUtil {
 
 		return getPersistence().fetchByFileVersionId_Last(
 			fileVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the dl file version previews before and after the current dl file version preview in the ordered set where fileVersionId = &#63;.
-	 *
-	 * @param dlFileVersionPreviewId the primary key of the current dl file version preview
-	 * @param fileVersionId the file version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a dl file version preview with the primary key could not be found
-	 */
-	public static DLFileVersionPreview[] findByFileVersionId_PrevAndNext(
-			long dlFileVersionPreviewId, long fileVersionId,
-			OrderByComparator<DLFileVersionPreview> orderByComparator)
-		throws com.liferay.document.library.exception.
-			NoSuchFileVersionPreviewException {
-
-		return getPersistence().findByFileVersionId_PrevAndNext(
-			dlFileVersionPreviewId, fileVersionId, orderByComparator);
 	}
 
 	/**
@@ -792,4 +754,4 @@ public class DLFileVersionPreviewUtil {
 	private static volatile DLFileVersionPreviewPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1815931341
+// LIFERAY-SERVICE-BUILDER-HASH:291420537

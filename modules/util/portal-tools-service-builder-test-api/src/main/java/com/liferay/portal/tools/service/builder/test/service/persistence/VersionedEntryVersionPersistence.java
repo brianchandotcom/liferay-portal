@@ -147,21 +147,6 @@ public interface VersionedEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the versioned entry versions before and after the current versioned entry version in the ordered set where versionedEntryId = &#63;.
-	 *
-	 * @param versionedEntryVersionId the primary key of the current versioned entry version
-	 * @param versionedEntryId the versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a versioned entry version with the primary key could not be found
-	 */
-	public VersionedEntryVersion[] findByVersionedEntryId_PrevAndNext(
-			long versionedEntryVersionId, long versionedEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException;
-
-	/**
 	 * Removes all the versioned entry versions where versionedEntryId = &#63; from the database.
 	 *
 	 * @param versionedEntryId the versioned entry ID
@@ -344,21 +329,6 @@ public interface VersionedEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the versioned entry versions before and after the current versioned entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param versionedEntryVersionId the primary key of the current versioned entry version
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a versioned entry version with the primary key could not be found
-	 */
-	public VersionedEntryVersion[] findByGroupId_PrevAndNext(
-			long versionedEntryVersionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException;
-
-	/**
 	 * Removes all the versioned entry versions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -494,22 +464,6 @@ public interface VersionedEntryVersionPersistence
 		long groupId, int version,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the versioned entry versions before and after the current versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param versionedEntryVersionId the primary key of the current versioned entry version
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a versioned entry version with the primary key could not be found
-	 */
-	public VersionedEntryVersion[] findByGroupId_Version_PrevAndNext(
-			long versionedEntryVersionId, long groupId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<VersionedEntryVersion> orderByComparator)
-		throws NoSuchVersionedEntryVersionException;
 
 	/**
 	 * Removes all the versioned entry versions where groupId = &#63; and version = &#63; from the database.
@@ -652,4 +606,4 @@ public interface VersionedEntryVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2063339088
+// LIFERAY-SERVICE-BUILDER-HASH:560236595

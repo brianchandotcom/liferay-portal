@@ -149,21 +149,6 @@ public interface SegmentsExperimentRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the segments experiment rels before and after the current segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
-	 *
-	 * @param segmentsExperimentRelId the primary key of the current segments experiment rel
-	 * @param segmentsExperimentId the segments experiment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments experiment rel
-	 * @throws NoSuchExperimentRelException if a segments experiment rel with the primary key could not be found
-	 */
-	public SegmentsExperimentRel[] findBySegmentsExperimentId_PrevAndNext(
-			long segmentsExperimentRelId, long segmentsExperimentId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SegmentsExperimentRel> orderByComparator)
-		throws NoSuchExperimentRelException;
-
-	/**
 	 * Removes all the segments experiment rels where segmentsExperimentId = &#63; from the database.
 	 *
 	 * @param segmentsExperimentId the segments experiment ID
@@ -291,21 +276,6 @@ public interface SegmentsExperimentRelPersistence
 		long segmentsExperienceId,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
 			orderByComparator);
-
-	/**
-	 * Returns the segments experiment rels before and after the current segments experiment rel in the ordered set where segmentsExperienceId = &#63;.
-	 *
-	 * @param segmentsExperimentRelId the primary key of the current segments experiment rel
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments experiment rel
-	 * @throws NoSuchExperimentRelException if a segments experiment rel with the primary key could not be found
-	 */
-	public SegmentsExperimentRel[] findBySegmentsExperienceId_PrevAndNext(
-			long segmentsExperimentRelId, long segmentsExperienceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SegmentsExperimentRel> orderByComparator)
-		throws NoSuchExperimentRelException;
 
 	/**
 	 * Removes all the segments experiment rels where segmentsExperienceId = &#63; from the database.
@@ -500,4 +470,4 @@ public interface SegmentsExperimentRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-596845103
+// LIFERAY-SERVICE-BUILDER-HASH:1540404338

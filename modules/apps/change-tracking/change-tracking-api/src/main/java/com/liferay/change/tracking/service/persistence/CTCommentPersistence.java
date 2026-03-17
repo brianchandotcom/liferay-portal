@@ -145,21 +145,6 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 			orderByComparator);
 
 	/**
-	 * Returns the ct comments before and after the current ct comment in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctCommentId the primary key of the current ct comment
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct comment
-	 * @throws NoSuchCommentException if a ct comment with the primary key could not be found
-	 */
-	public CTComment[] findByCtCollectionId_PrevAndNext(
-			long ctCommentId, long ctCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
-				orderByComparator)
-		throws NoSuchCommentException;
-
-	/**
 	 * Removes all the ct comments where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -286,21 +271,6 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 		long ctEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
 			orderByComparator);
-
-	/**
-	 * Returns the ct comments before and after the current ct comment in the ordered set where ctEntryId = &#63;.
-	 *
-	 * @param ctCommentId the primary key of the current ct comment
-	 * @param ctEntryId the ct entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct comment
-	 * @throws NoSuchCommentException if a ct comment with the primary key could not be found
-	 */
-	public CTComment[] findByCtEntryId_PrevAndNext(
-			long ctCommentId, long ctEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<CTComment>
-				orderByComparator)
-		throws NoSuchCommentException;
 
 	/**
 	 * Removes all the ct comments where ctEntryId = &#63; from the database.
@@ -437,4 +407,4 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:711124635
+// LIFERAY-SERVICE-BUILDER-HASH:-1370572065

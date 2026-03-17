@@ -235,24 +235,6 @@ public class ListTypeUtil {
 	}
 
 	/**
-	 * Returns the list types before and after the current list type in the ordered set where uuid = &#63;.
-	 *
-	 * @param listTypeId the primary key of the current list type
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	public static ListType[] findByUuid_PrevAndNext(
-			long listTypeId, String uuid,
-			OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			listTypeId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the list types where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -415,25 +397,6 @@ public class ListTypeUtil {
 	}
 
 	/**
-	 * Returns the list types before and after the current list type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param listTypeId the primary key of the current list type
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	public static ListType[] findByUuid_C_PrevAndNext(
-			long listTypeId, String uuid, long companyId,
-			OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			listTypeId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the list types where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -583,24 +546,6 @@ public class ListTypeUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the list types before and after the current list type in the ordered set where companyId = &#63;.
-	 *
-	 * @param listTypeId the primary key of the current list type
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	public static ListType[] findByCompanyId_PrevAndNext(
-			long listTypeId, long companyId,
-			OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			listTypeId, companyId, orderByComparator);
 	}
 
 	/**
@@ -763,25 +708,6 @@ public class ListTypeUtil {
 
 		return getPersistence().fetchByC_T_Last(
 			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the list types before and after the current list type in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param listTypeId the primary key of the current list type
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	public static ListType[] findByC_T_PrevAndNext(
-			long listTypeId, long companyId, String type,
-			OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
-
-		return getPersistence().findByC_T_PrevAndNext(
-			listTypeId, companyId, type, orderByComparator);
 	}
 
 	/**
@@ -1035,4 +961,4 @@ public class ListTypeUtil {
 	private static volatile ListTypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1842427333
+// LIFERAY-SERVICE-BUILDER-HASH:399900394

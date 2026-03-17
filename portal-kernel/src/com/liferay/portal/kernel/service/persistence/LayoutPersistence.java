@@ -145,21 +145,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where uuid = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByUuid_PrevAndNext(
-			long plid, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Removes all the layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -356,22 +341,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByUuid_C_PrevAndNext(
-			long plid, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Removes all the layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -502,21 +471,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByGroupId_PrevAndNext(
-			long plid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -556,21 +510,6 @@ public interface LayoutPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByGroupId_PrevAndNext(
-			long plid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where groupId = &#63; from the database.
@@ -709,21 +648,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where companyId = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByCompanyId_PrevAndNext(
-			long plid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Removes all the layouts where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -850,21 +774,6 @@ public interface LayoutPersistence
 		long parentPlid,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set where parentPlid = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param parentPlid the parent plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByParentPlid_PrevAndNext(
-			long plid, long parentPlid,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where parentPlid = &#63; from the database.
@@ -995,21 +904,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where iconImageId = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param iconImageId the icon image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByIconImageId_PrevAndNext(
-			long plid, long iconImageId,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Removes all the layouts where iconImageId = &#63; from the database.
 	 *
 	 * @param iconImageId the icon image ID
@@ -1137,21 +1031,6 @@ public interface LayoutPersistence
 		String layoutSetPrototypeLayoutERC,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set where layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByLayoutSetPrototypeLayoutERC_PrevAndNext(
-			long plid, String layoutSetPrototypeLayoutERC,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where layoutSetPrototypeLayoutERC = &#63; from the database.
@@ -1293,22 +1172,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_PrevAndNext(
-			long plid, long groupId, boolean privateLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1352,22 +1215,6 @@ public interface LayoutPersistence
 		long groupId, boolean privateLayout, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_PrevAndNext(
-			long plid, long groupId, boolean privateLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; from the database.
@@ -1517,22 +1364,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_T_PrevAndNext(
-			long plid, long groupId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1575,22 +1406,6 @@ public interface LayoutPersistence
 		long groupId, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_T_PrevAndNext(
-			long plid, long groupId, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where groupId = &#63; and type = &#63; from the database.
@@ -1744,22 +1559,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_MLPTEERC_PrevAndNext(
-			long plid, long groupId, String masterLayoutPageTemplateEntryERC,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1805,22 +1604,6 @@ public interface LayoutPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_MLPTEERC_PrevAndNext(
-			long plid, long groupId, String masterLayoutPageTemplateEntryERC,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63; from the database.
@@ -1974,22 +1757,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByP_I_PrevAndNext(
-			long plid, boolean privateLayout, long iconImageId,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Removes all the layouts where privateLayout = &#63; and iconImageId = &#63; from the database.
 	 *
 	 * @param privateLayout the private layout
@@ -2126,22 +1893,6 @@ public interface LayoutPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByC_C_PrevAndNext(
-			long plid, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Returns all the layouts where classNameId = &#63; and classPK = any &#63;.
@@ -2369,23 +2120,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where portletLayoutPageTemplateEntryERC = &#63; and portletLayoutPageTemplateEntryScopeERC = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param portletLayoutPageTemplateEntryERC the portlet layout page template entry erc
-	 * @param portletLayoutPageTemplateEntryScopeERC the portlet layout page template entry scope erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByPLPTEERC_PLPTESERC_PrevAndNext(
-			long plid, String portletLayoutPageTemplateEntryERC,
-			String portletLayoutPageTemplateEntryScopeERC,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Removes all the layouts where portletLayoutPageTemplateEntryERC = &#63; and portletLayoutPageTemplateEntryScopeERC = &#63; from the database.
 	 *
 	 * @param portletLayoutPageTemplateEntryERC the portlet layout page template entry erc
@@ -2599,23 +2333,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_P_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2664,23 +2381,6 @@ public interface LayoutPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_P_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63;.
@@ -2994,23 +2694,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_T_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3057,23 +2740,6 @@ public interface LayoutPersistence
 		long groupId, boolean privateLayout, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_T_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, String type,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
@@ -3383,23 +3049,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and system = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_S_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, boolean system,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and system = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3447,23 +3096,6 @@ public interface LayoutPersistence
 		long groupId, boolean privateLayout, boolean system, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and system = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_S_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, boolean system,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and system = &#63; from the database.
@@ -3694,24 +3326,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_LSPLE_PrevAndNext(
-			long plid, long groupId, boolean privateLayout,
-			String layoutSetPrototypeLayoutERC,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3761,24 +3375,6 @@ public interface LayoutPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_LSPLE_PrevAndNext(
-			long plid, long groupId, boolean privateLayout,
-			String layoutSetPrototypeLayoutERC,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63; from the database.
@@ -3946,23 +3542,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and status = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_ST_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4009,23 +3588,6 @@ public interface LayoutPersistence
 		long groupId, boolean privateLayout, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and status = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_ST_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and status = any &#63;.
@@ -4350,25 +3912,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_P_H_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			boolean hidden,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4421,25 +3964,6 @@ public interface LayoutPersistence
 		boolean hidden, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_P_H_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			boolean hidden,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and hidden = &#63;.
@@ -4788,25 +4312,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_P_S_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			boolean system,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4859,25 +4364,6 @@ public interface LayoutPersistence
 		boolean system, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param system the system
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_P_S_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			boolean system,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and system = &#63;.
@@ -5223,25 +4709,6 @@ public interface LayoutPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] findByG_P_P_LteP_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			int priority,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
-
-	/**
 	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -5293,25 +4760,6 @@ public interface LayoutPersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Layout>
 			orderByComparator);
-
-	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
-	 *
-	 * @param plid the primary key of the current layout
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param priority the priority
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	public Layout[] filterFindByG_P_P_LteP_PrevAndNext(
-			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			int priority,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws NoSuchLayoutException;
 
 	/**
 	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; from the database.
@@ -5517,4 +4965,4 @@ public interface LayoutPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:834152572
+// LIFERAY-SERVICE-BUILDER-HASH:1986214387

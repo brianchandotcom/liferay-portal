@@ -204,22 +204,6 @@ public interface WorkflowInstanceLinkPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the workflow instance links before and after the current workflow instance link in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the current workflow instance link
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 */
-	public WorkflowInstanceLink[] findByC_C_PrevAndNext(
-			long workflowInstanceLinkId, long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowInstanceLink> orderByComparator)
-		throws NoSuchWorkflowInstanceLinkException;
-
-	/**
 	 * Removes all the workflow instance links where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -365,24 +349,6 @@ public interface WorkflowInstanceLinkPersistence
 		long groupId, long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowInstanceLink>
 			orderByComparator);
-
-	/**
-	 * Returns the workflow instance links before and after the current workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the current workflow instance link
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 */
-	public WorkflowInstanceLink[] findByG_C_C_PrevAndNext(
-			long workflowInstanceLinkId, long groupId, long companyId,
-			long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowInstanceLink> orderByComparator)
-		throws NoSuchWorkflowInstanceLinkException;
 
 	/**
 	 * Removes all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; from the database.
@@ -545,25 +511,6 @@ public interface WorkflowInstanceLinkPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the workflow instance links before and after the current workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the current workflow instance link
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 */
-	public WorkflowInstanceLink[] findByG_C_C_C_PrevAndNext(
-			long workflowInstanceLinkId, long groupId, long companyId,
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowInstanceLink> orderByComparator)
-		throws NoSuchWorkflowInstanceLinkException;
-
-	/**
 	 * Removes all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -709,4 +656,4 @@ public interface WorkflowInstanceLinkPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1547321976
+// LIFERAY-SERVICE-BUILDER-HASH:1875119698

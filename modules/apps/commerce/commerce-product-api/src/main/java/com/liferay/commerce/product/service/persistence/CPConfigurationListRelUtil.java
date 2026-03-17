@@ -259,26 +259,6 @@ public class CPConfigurationListRelUtil {
 	}
 
 	/**
-	 * Returns the cp configuration list rels before and after the current cp configuration list rel in the ordered set where CPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListRelId the primary key of the current cp configuration list rel
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list rel
-	 * @throws NoSuchCPConfigurationListRelException if a cp configuration list rel with the primary key could not be found
-	 */
-	public static CPConfigurationListRel[]
-			findByCPConfigurationListId_PrevAndNext(
-				long CPConfigurationListRelId, long CPConfigurationListId,
-				OrderByComparator<CPConfigurationListRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListRelException {
-
-		return getPersistence().findByCPConfigurationListId_PrevAndNext(
-			CPConfigurationListRelId, CPConfigurationListId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp configuration list rels where CPConfigurationListId = &#63; from the database.
 	 *
 	 * @param CPConfigurationListId the cp configuration list ID
@@ -448,28 +428,6 @@ public class CPConfigurationListRelUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, CPConfigurationListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp configuration list rels before and after the current cp configuration list rel in the ordered set where classNameId = &#63; and CPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListRelId the primary key of the current cp configuration list rel
-	 * @param classNameId the class name ID
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp configuration list rel
-	 * @throws NoSuchCPConfigurationListRelException if a cp configuration list rel with the primary key could not be found
-	 */
-	public static CPConfigurationListRel[] findByC_C_PrevAndNext(
-			long CPConfigurationListRelId, long classNameId,
-			long CPConfigurationListId,
-			OrderByComparator<CPConfigurationListRel> orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPConfigurationListRelException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			CPConfigurationListRelId, classNameId, CPConfigurationListId,
-			orderByComparator);
 	}
 
 	/**
@@ -750,4 +708,4 @@ public class CPConfigurationListRelUtil {
 	private static volatile CPConfigurationListRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:650337347
+// LIFERAY-SERVICE-BUILDER-HASH:-184820119

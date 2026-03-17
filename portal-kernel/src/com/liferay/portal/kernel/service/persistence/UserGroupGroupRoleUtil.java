@@ -251,25 +251,6 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	 * Returns the user group group roles before and after the current user group group role in the ordered set where userGroupId = &#63;.
-	 *
-	 * @param userGroupGroupRoleId the primary key of the current user group group role
-	 * @param userGroupId the user group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
-	 */
-	public static UserGroupGroupRole[] findByUserGroupId_PrevAndNext(
-			long userGroupGroupRoleId, long userGroupId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupGroupRoleException {
-
-		return getPersistence().findByUserGroupId_PrevAndNext(
-			userGroupGroupRoleId, userGroupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user group group roles where userGroupId = &#63; from the database.
 	 *
 	 * @param userGroupId the user group ID
@@ -422,25 +403,6 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	 * Returns the user group group roles before and after the current user group group role in the ordered set where groupId = &#63;.
-	 *
-	 * @param userGroupGroupRoleId the primary key of the current user group group role
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
-	 */
-	public static UserGroupGroupRole[] findByGroupId_PrevAndNext(
-			long userGroupGroupRoleId, long groupId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupGroupRoleException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			userGroupGroupRoleId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user group group roles where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -589,25 +551,6 @@ public class UserGroupGroupRoleUtil {
 		long roleId, OrderByComparator<UserGroupGroupRole> orderByComparator) {
 
 		return getPersistence().fetchByRoleId_Last(roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the user group group roles before and after the current user group group role in the ordered set where roleId = &#63;.
-	 *
-	 * @param userGroupGroupRoleId the primary key of the current user group group role
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
-	 */
-	public static UserGroupGroupRole[] findByRoleId_PrevAndNext(
-			long userGroupGroupRoleId, long roleId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupGroupRoleException {
-
-		return getPersistence().findByRoleId_PrevAndNext(
-			userGroupGroupRoleId, roleId, orderByComparator);
 	}
 
 	/**
@@ -779,26 +722,6 @@ public class UserGroupGroupRoleUtil {
 	}
 
 	/**
-	 * Returns the user group group roles before and after the current user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
-	 *
-	 * @param userGroupGroupRoleId the primary key of the current user group group role
-	 * @param userGroupId the user group ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
-	 */
-	public static UserGroupGroupRole[] findByU_G_PrevAndNext(
-			long userGroupGroupRoleId, long userGroupId, long groupId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupGroupRoleException {
-
-		return getPersistence().findByU_G_PrevAndNext(
-			userGroupGroupRoleId, userGroupId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the user group group roles where userGroupId = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param userGroupId the user group ID
@@ -965,26 +888,6 @@ public class UserGroupGroupRoleUtil {
 
 		return getPersistence().fetchByG_R_Last(
 			groupId, roleId, orderByComparator);
-	}
-
-	/**
-	 * Returns the user group group roles before and after the current user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param userGroupGroupRoleId the primary key of the current user group group role
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next user group group role
-	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
-	 */
-	public static UserGroupGroupRole[] findByG_R_PrevAndNext(
-			long userGroupGroupRoleId, long groupId, long roleId,
-			OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchUserGroupGroupRoleException {
-
-		return getPersistence().findByG_R_PrevAndNext(
-			userGroupGroupRoleId, groupId, roleId, orderByComparator);
 	}
 
 	/**
@@ -1255,4 +1158,4 @@ public class UserGroupGroupRoleUtil {
 	private static volatile UserGroupGroupRolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:648051019
+// LIFERAY-SERVICE-BUILDER-HASH:236897056

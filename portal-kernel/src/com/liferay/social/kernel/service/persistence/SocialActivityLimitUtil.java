@@ -249,25 +249,6 @@ public class SocialActivityLimitUtil {
 	}
 
 	/**
-	 * Returns the social activity limits before and after the current social activity limit in the ordered set where groupId = &#63;.
-	 *
-	 * @param activityLimitId the primary key of the current social activity limit
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity limit
-	 * @throws NoSuchActivityLimitException if a social activity limit with the primary key could not be found
-	 */
-	public static SocialActivityLimit[] findByGroupId_PrevAndNext(
-			long activityLimitId, long groupId,
-			OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityLimitException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			activityLimitId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activity limits where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -416,25 +397,6 @@ public class SocialActivityLimitUtil {
 		long userId, OrderByComparator<SocialActivityLimit> orderByComparator) {
 
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity limits before and after the current social activity limit in the ordered set where userId = &#63;.
-	 *
-	 * @param activityLimitId the primary key of the current social activity limit
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity limit
-	 * @throws NoSuchActivityLimitException if a social activity limit with the primary key could not be found
-	 */
-	public static SocialActivityLimit[] findByUserId_PrevAndNext(
-			long activityLimitId, long userId,
-			OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityLimitException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			activityLimitId, userId, orderByComparator);
 	}
 
 	/**
@@ -603,26 +565,6 @@ public class SocialActivityLimitUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity limits before and after the current social activity limit in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param activityLimitId the primary key of the current social activity limit
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity limit
-	 * @throws NoSuchActivityLimitException if a social activity limit with the primary key could not be found
-	 */
-	public static SocialActivityLimit[] findByC_C_PrevAndNext(
-			long activityLimitId, long classNameId, long classPK,
-			OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityLimitException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			activityLimitId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -920,4 +862,4 @@ public class SocialActivityLimitUtil {
 	private static volatile SocialActivityLimitPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2108058992
+// LIFERAY-SERVICE-BUILDER-HASH:-1026707670

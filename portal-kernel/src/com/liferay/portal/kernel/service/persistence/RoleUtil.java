@@ -231,23 +231,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the roles before and after the current role in the ordered set where uuid = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] findByUuid_PrevAndNext(
-			long roleId, String uuid, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			roleId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -292,23 +275,6 @@ public class RoleUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] filterFindByUuid_PrevAndNext(
-			long roleId, String uuid, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			roleId, uuid, orderByComparator);
 	}
 
 	/**
@@ -484,25 +450,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the roles before and after the current role in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] findByUuid_C_PrevAndNext(
-			long roleId, String uuid, long companyId,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			roleId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -552,25 +499,6 @@ public class RoleUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] filterFindByUuid_C_PrevAndNext(
-			long roleId, String uuid, long companyId,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			roleId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -737,24 +665,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the roles before and after the current role in the ordered set where companyId = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] findByCompanyId_PrevAndNext(
-			long roleId, long companyId,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			roleId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -801,24 +711,6 @@ public class RoleUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] filterFindByCompanyId_PrevAndNext(
-			long roleId, long companyId,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			roleId, companyId, orderByComparator);
 	}
 
 	/**
@@ -975,23 +867,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the roles before and after the current role in the ordered set where name = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] findByName_PrevAndNext(
-			long roleId, String name, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByName_PrevAndNext(
-			roleId, name, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where name = &#63;.
 	 *
 	 * @param name the name
@@ -1036,23 +911,6 @@ public class RoleUtil {
 
 		return getPersistence().filterFindByName(
 			name, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where name = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] filterFindByName_PrevAndNext(
-			long roleId, String name, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().filterFindByName_PrevAndNext(
-			roleId, name, orderByComparator);
 	}
 
 	/**
@@ -1209,23 +1067,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the roles before and after the current role in the ordered set where type = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] findByType_PrevAndNext(
-			long roleId, int type, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByType_PrevAndNext(
-			roleId, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where type = &#63;.
 	 *
 	 * @param type the type
@@ -1270,23 +1111,6 @@ public class RoleUtil {
 
 		return getPersistence().filterFindByType(
 			type, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where type = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] filterFindByType_PrevAndNext(
-			long roleId, int type, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().filterFindByType_PrevAndNext(
-			roleId, type, orderByComparator);
 	}
 
 	/**
@@ -1445,24 +1269,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the roles before and after the current role in the ordered set where subtype = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] findBySubtype_PrevAndNext(
-			long roleId, String subtype,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findBySubtype_PrevAndNext(
-			roleId, subtype, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where subtype = &#63;.
 	 *
 	 * @param subtype the subtype
@@ -1509,24 +1315,6 @@ public class RoleUtil {
 
 		return getPersistence().filterFindBySubtype(
 			subtype, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where subtype = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] filterFindBySubtype_PrevAndNext(
-			long roleId, String subtype,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().filterFindBySubtype_PrevAndNext(
-			roleId, subtype, orderByComparator);
 	}
 
 	/**
@@ -1761,25 +1549,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the roles before and after the current role in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] findByC_T_PrevAndNext(
-			long roleId, long companyId, int type,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByC_T_PrevAndNext(
-			roleId, companyId, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where companyId = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1829,25 +1598,6 @@ public class RoleUtil {
 
 		return getPersistence().filterFindByC_T(
 			companyId, type, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where companyId = &#63; and type = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] filterFindByC_T_PrevAndNext(
-			long roleId, long companyId, int type,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().filterFindByC_T_PrevAndNext(
-			roleId, companyId, type, orderByComparator);
 	}
 
 	/**
@@ -2175,25 +1925,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Returns the roles before and after the current role in the ordered set where type = &#63; and subtype = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] findByT_S_PrevAndNext(
-			long roleId, int type, String subtype,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().findByT_S_PrevAndNext(
-			roleId, type, subtype, orderByComparator);
-	}
-
-	/**
 	 * Returns all the roles that the user has permission to view where type = &#63; and subtype = &#63;.
 	 *
 	 * @param type the type
@@ -2243,25 +1974,6 @@ public class RoleUtil {
 
 		return getPersistence().filterFindByT_S(
 			type, subtype, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where type = &#63; and subtype = &#63;.
-	 *
-	 * @param roleId the primary key of the current role
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next role
-	 * @throws NoSuchRoleException if a role with the primary key could not be found
-	 */
-	public static Role[] filterFindByT_S_PrevAndNext(
-			long roleId, int type, String subtype,
-			OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException {
-
-		return getPersistence().filterFindByT_S_PrevAndNext(
-			roleId, type, subtype, orderByComparator);
 	}
 
 	/**
@@ -3386,4 +3098,4 @@ public class RoleUtil {
 	private static volatile RolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1213684746
+// LIFERAY-SERVICE-BUILDER-HASH:-2016363370

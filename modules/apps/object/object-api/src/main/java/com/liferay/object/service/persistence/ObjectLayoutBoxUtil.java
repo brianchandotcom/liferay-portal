@@ -238,24 +238,6 @@ public class ObjectLayoutBoxUtil {
 	}
 
 	/**
-	 * Returns the object layout boxes before and after the current object layout box in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectLayoutBoxId the primary key of the current object layout box
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a object layout box with the primary key could not be found
-	 */
-	public static ObjectLayoutBox[] findByUuid_PrevAndNext(
-			long objectLayoutBoxId, String uuid,
-			OrderByComparator<ObjectLayoutBox> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutBoxException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectLayoutBoxId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout boxes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -421,25 +403,6 @@ public class ObjectLayoutBoxUtil {
 	}
 
 	/**
-	 * Returns the object layout boxes before and after the current object layout box in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectLayoutBoxId the primary key of the current object layout box
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a object layout box with the primary key could not be found
-	 */
-	public static ObjectLayoutBox[] findByUuid_C_PrevAndNext(
-			long objectLayoutBoxId, String uuid, long companyId,
-			OrderByComparator<ObjectLayoutBox> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutBoxException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectLayoutBoxId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout boxes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -597,24 +560,6 @@ public class ObjectLayoutBoxUtil {
 
 		return getPersistence().fetchByObjectLayoutTabId_Last(
 			objectLayoutTabId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object layout boxes before and after the current object layout box in the ordered set where objectLayoutTabId = &#63;.
-	 *
-	 * @param objectLayoutBoxId the primary key of the current object layout box
-	 * @param objectLayoutTabId the object layout tab ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a object layout box with the primary key could not be found
-	 */
-	public static ObjectLayoutBox[] findByObjectLayoutTabId_PrevAndNext(
-			long objectLayoutBoxId, long objectLayoutTabId,
-			OrderByComparator<ObjectLayoutBox> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutBoxException {
-
-		return getPersistence().findByObjectLayoutTabId_PrevAndNext(
-			objectLayoutBoxId, objectLayoutTabId, orderByComparator);
 	}
 
 	/**
@@ -796,4 +741,4 @@ public class ObjectLayoutBoxUtil {
 	private static volatile ObjectLayoutBoxPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:623378501
+// LIFERAY-SERVICE-BUILDER-HASH:-1274207002

@@ -148,21 +148,6 @@ public interface FragmentCompositionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where uuid = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public FragmentComposition[] findByUuid_PrevAndNext(
-			long fragmentCompositionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException;
-
-	/**
 	 * Removes all the fragment compositions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface FragmentCompositionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public FragmentComposition[] findByUuid_C_PrevAndNext(
-			long fragmentCompositionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException;
-
-	/**
 	 * Removes all the fragment compositions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface FragmentCompositionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public FragmentComposition[] findByGroupId_PrevAndNext(
-			long fragmentCompositionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException;
-
-	/**
 	 * Removes all the fragment compositions where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -638,21 +592,6 @@ public interface FragmentCompositionPersistence
 		long fragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentComposition>
 			orderByComparator);
-
-	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public FragmentComposition[] findByFragmentCollectionId_PrevAndNext(
-			long fragmentCompositionId, long fragmentCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException;
 
 	/**
 	 * Removes all the fragment compositions where fragmentCollectionId = &#63; from the database.
@@ -790,22 +729,6 @@ public interface FragmentCompositionPersistence
 		long groupId, long fragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentComposition>
 			orderByComparator);
-
-	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public FragmentComposition[] findByG_FCI_PrevAndNext(
-			long fragmentCompositionId, long groupId, long fragmentCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException;
 
 	/**
 	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; from the database.
@@ -1011,24 +934,6 @@ public interface FragmentCompositionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public FragmentComposition[] findByG_FCI_LikeN_PrevAndNext(
-			long fragmentCompositionId, long groupId, long fragmentCollectionId,
-			String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException;
-
-	/**
 	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1179,24 +1084,6 @@ public interface FragmentCompositionPersistence
 		long groupId, long fragmentCollectionId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentComposition>
 			orderByComparator);
-
-	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public FragmentComposition[] findByG_FCI_S_PrevAndNext(
-			long fragmentCompositionId, long groupId, long fragmentCollectionId,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException;
 
 	/**
 	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; from the database.
@@ -1359,25 +1246,6 @@ public interface FragmentCompositionPersistence
 		long groupId, long fragmentCollectionId, String name, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<FragmentComposition>
 			orderByComparator);
-
-	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public FragmentComposition[] findByG_FCI_LikeN_S_PrevAndNext(
-			long fragmentCompositionId, long groupId, long fragmentCollectionId,
-			String name, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException;
 
 	/**
 	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63; from the database.
@@ -1578,4 +1446,4 @@ public interface FragmentCompositionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:390327725
+// LIFERAY-SERVICE-BUILDER-HASH:1032026683

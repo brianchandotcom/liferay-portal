@@ -279,29 +279,6 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 	}
 
 	/**
-	 * Returns the cp specification option list type definition rels before and after the current cp specification option list type definition rel in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionListTypeDefinitionRelId the primary key of the current cp specification option list type definition rel
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a cp specification option list type definition rel with the primary key could not be found
-	 */
-	public static CPSpecificationOptionListTypeDefinitionRel[]
-			findByCPSpecificationOptionId_PrevAndNext(
-				long CPSpecificationOptionListTypeDefinitionRelId,
-				long CPSpecificationOptionId,
-				OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPSpecificationOptionListTypeDefinitionRelException {
-
-		return getPersistence().findByCPSpecificationOptionId_PrevAndNext(
-			CPSpecificationOptionListTypeDefinitionRelId,
-			CPSpecificationOptionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp specification option list type definition rels where CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPSpecificationOptionId the cp specification option ID
@@ -480,29 +457,6 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 
 		return getPersistence().fetchByListTypeDefinitionId_Last(
 			listTypeDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp specification option list type definition rels before and after the current cp specification option list type definition rel in the ordered set where listTypeDefinitionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionListTypeDefinitionRelId the primary key of the current cp specification option list type definition rel
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a cp specification option list type definition rel with the primary key could not be found
-	 */
-	public static CPSpecificationOptionListTypeDefinitionRel[]
-			findByListTypeDefinitionId_PrevAndNext(
-				long CPSpecificationOptionListTypeDefinitionRelId,
-				long listTypeDefinitionId,
-				OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPSpecificationOptionListTypeDefinitionRelException {
-
-		return getPersistence().findByListTypeDefinitionId_PrevAndNext(
-			CPSpecificationOptionListTypeDefinitionRelId, listTypeDefinitionId,
-			orderByComparator);
 	}
 
 	/**
@@ -795,4 +749,4 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 		CPSpecificationOptionListTypeDefinitionRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1544132368
+// LIFERAY-SERVICE-BUILDER-HASH:681205312

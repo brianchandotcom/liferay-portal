@@ -250,25 +250,6 @@ public class CommercePriceListDiscountRelUtil {
 	}
 
 	/**
-	 * Returns the commerce price list discount rels before and after the current commerce price list discount rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param commercePriceListDiscountRelId the primary key of the current commerce price list discount rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list discount rel
-	 * @throws NoSuchPriceListDiscountRelException if a commerce price list discount rel with the primary key could not be found
-	 */
-	public static CommercePriceListDiscountRel[] findByUuid_PrevAndNext(
-			long commercePriceListDiscountRelId, String uuid,
-			OrderByComparator<CommercePriceListDiscountRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListDiscountRelException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commercePriceListDiscountRelId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price list discount rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -436,26 +417,6 @@ public class CommercePriceListDiscountRelUtil {
 	}
 
 	/**
-	 * Returns the commerce price list discount rels before and after the current commerce price list discount rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commercePriceListDiscountRelId the primary key of the current commerce price list discount rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list discount rel
-	 * @throws NoSuchPriceListDiscountRelException if a commerce price list discount rel with the primary key could not be found
-	 */
-	public static CommercePriceListDiscountRel[] findByUuid_C_PrevAndNext(
-			long commercePriceListDiscountRelId, String uuid, long companyId,
-			OrderByComparator<CommercePriceListDiscountRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListDiscountRelException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commercePriceListDiscountRelId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price list discount rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -615,28 +576,6 @@ public class CommercePriceListDiscountRelUtil {
 
 		return getPersistence().fetchByCommercePriceListId_Last(
 			commercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price list discount rels before and after the current commerce price list discount rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListDiscountRelId the primary key of the current commerce price list discount rel
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list discount rel
-	 * @throws NoSuchPriceListDiscountRelException if a commerce price list discount rel with the primary key could not be found
-	 */
-	public static CommercePriceListDiscountRel[]
-			findByCommercePriceListId_PrevAndNext(
-				long commercePriceListDiscountRelId, long commercePriceListId,
-				OrderByComparator<CommercePriceListDiscountRel>
-					orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListDiscountRelException {
-
-		return getPersistence().findByCommercePriceListId_PrevAndNext(
-			commercePriceListDiscountRelId, commercePriceListId,
-			orderByComparator);
 	}
 
 	/**
@@ -916,4 +855,4 @@ public class CommercePriceListDiscountRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2021275938
+// LIFERAY-SERVICE-BUILDER-HASH:-1749195803

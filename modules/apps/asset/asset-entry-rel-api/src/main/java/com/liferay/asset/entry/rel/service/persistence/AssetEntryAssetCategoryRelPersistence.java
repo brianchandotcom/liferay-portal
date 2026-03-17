@@ -149,21 +149,6 @@ public interface AssetEntryAssetCategoryRelPersistence
 			<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
-	 * Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryAssetCategoryRelId the primary key of the current asset entry asset category rel
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a asset entry asset category rel with the primary key could not be found
-	 */
-	public AssetEntryAssetCategoryRel[] findByAssetEntryId_PrevAndNext(
-			long assetEntryAssetCategoryRelId, long assetEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException;
-
-	/**
 	 * Removes all the asset entry asset category rels where assetEntryId = &#63; from the database.
 	 *
 	 * @param assetEntryId the asset entry ID
@@ -291,21 +276,6 @@ public interface AssetEntryAssetCategoryRelPersistence
 		long assetCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetEntryAssetCategoryRel> orderByComparator);
-
-	/**
-	 * Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
-	 *
-	 * @param assetEntryAssetCategoryRelId the primary key of the current asset entry asset category rel
-	 * @param assetCategoryId the asset category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a asset entry asset category rel with the primary key could not be found
-	 */
-	public AssetEntryAssetCategoryRel[] findByAssetCategoryId_PrevAndNext(
-			long assetEntryAssetCategoryRelId, long assetCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException;
 
 	/**
 	 * Removes all the asset entry asset category rels where assetCategoryId = &#63; from the database.
@@ -502,4 +472,4 @@ public interface AssetEntryAssetCategoryRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1858101119
+// LIFERAY-SERVICE-BUILDER-HASH:10275155

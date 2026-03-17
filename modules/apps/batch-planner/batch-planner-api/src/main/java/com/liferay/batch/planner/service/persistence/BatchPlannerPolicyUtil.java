@@ -252,24 +252,6 @@ public class BatchPlannerPolicyUtil {
 	}
 
 	/**
-	 * Returns the batch planner policies before and after the current batch planner policy in the ordered set where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPolicyId the primary key of the current batch planner policy
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch planner policy
-	 * @throws NoSuchPolicyException if a batch planner policy with the primary key could not be found
-	 */
-	public static BatchPlannerPolicy[] findByBatchPlannerPlanId_PrevAndNext(
-			long batchPlannerPolicyId, long batchPlannerPlanId,
-			OrderByComparator<BatchPlannerPolicy> orderByComparator)
-		throws com.liferay.batch.planner.exception.NoSuchPolicyException {
-
-		return getPersistence().findByBatchPlannerPlanId_PrevAndNext(
-			batchPlannerPolicyId, batchPlannerPlanId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the batch planner policies where batchPlannerPlanId = &#63; from the database.
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
@@ -524,4 +506,4 @@ public class BatchPlannerPolicyUtil {
 	private static volatile BatchPlannerPolicyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-60913620
+// LIFERAY-SERVICE-BUILDER-HASH:197028773

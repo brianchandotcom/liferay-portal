@@ -146,21 +146,6 @@ public interface ObjectFolderItemPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object folder items before and after the current object folder item in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectFolderItemId the primary key of the current object folder item
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object folder item
-	 * @throws NoSuchObjectFolderItemException if a object folder item with the primary key could not be found
-	 */
-	public ObjectFolderItem[] findByUuid_PrevAndNext(
-			long objectFolderItemId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-				orderByComparator)
-		throws NoSuchObjectFolderItemException;
-
-	/**
 	 * Removes all the object folder items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectFolderItemPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object folder items before and after the current object folder item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectFolderItemId the primary key of the current object folder item
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object folder item
-	 * @throws NoSuchObjectFolderItemException if a object folder item with the primary key could not be found
-	 */
-	public ObjectFolderItem[] findByUuid_C_PrevAndNext(
-			long objectFolderItemId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-				orderByComparator)
-		throws NoSuchObjectFolderItemException;
-
-	/**
 	 * Removes all the object folder items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -445,21 +414,6 @@ public interface ObjectFolderItemPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object folder items before and after the current object folder item in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectFolderItemId the primary key of the current object folder item
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object folder item
-	 * @throws NoSuchObjectFolderItemException if a object folder item with the primary key could not be found
-	 */
-	public ObjectFolderItem[] findByObjectDefinitionId_PrevAndNext(
-			long objectFolderItemId, long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-				orderByComparator)
-		throws NoSuchObjectFolderItemException;
-
-	/**
 	 * Removes all the object folder items where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -587,21 +541,6 @@ public interface ObjectFolderItemPersistence
 		long objectFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
 			orderByComparator);
-
-	/**
-	 * Returns the object folder items before and after the current object folder item in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderItemId the primary key of the current object folder item
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object folder item
-	 * @throws NoSuchObjectFolderItemException if a object folder item with the primary key could not be found
-	 */
-	public ObjectFolderItem[] findByObjectFolderId_PrevAndNext(
-			long objectFolderItemId, long objectFolderId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFolderItem>
-				orderByComparator)
-		throws NoSuchObjectFolderItemException;
 
 	/**
 	 * Removes all the object folder items where objectFolderId = &#63; from the database.
@@ -792,4 +731,4 @@ public interface ObjectFolderItemPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:372355483
+// LIFERAY-SERVICE-BUILDER-HASH:1500611931

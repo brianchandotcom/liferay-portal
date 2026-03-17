@@ -240,25 +240,6 @@ public class PasswordPolicyUtil {
 	}
 
 	/**
-	 * Returns the password policies before and after the current password policy in the ordered set where uuid = &#63;.
-	 *
-	 * @param passwordPolicyId the primary key of the current password policy
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next password policy
-	 * @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
-	 */
-	public static PasswordPolicy[] findByUuid_PrevAndNext(
-			long passwordPolicyId, String uuid,
-			OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPasswordPolicyException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			passwordPolicyId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the password policies that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -305,25 +286,6 @@ public class PasswordPolicyUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the password policies before and after the current password policy in the ordered set of password policies that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param passwordPolicyId the primary key of the current password policy
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next password policy
-	 * @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
-	 */
-	public static PasswordPolicy[] filterFindByUuid_PrevAndNext(
-			long passwordPolicyId, String uuid,
-			OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPasswordPolicyException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			passwordPolicyId, uuid, orderByComparator);
 	}
 
 	/**
@@ -504,26 +466,6 @@ public class PasswordPolicyUtil {
 	}
 
 	/**
-	 * Returns the password policies before and after the current password policy in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param passwordPolicyId the primary key of the current password policy
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next password policy
-	 * @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
-	 */
-	public static PasswordPolicy[] findByUuid_C_PrevAndNext(
-			long passwordPolicyId, String uuid, long companyId,
-			OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPasswordPolicyException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			passwordPolicyId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the password policies that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -575,26 +517,6 @@ public class PasswordPolicyUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the password policies before and after the current password policy in the ordered set of password policies that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param passwordPolicyId the primary key of the current password policy
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next password policy
-	 * @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
-	 */
-	public static PasswordPolicy[] filterFindByUuid_C_PrevAndNext(
-			long passwordPolicyId, String uuid, long companyId,
-			OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPasswordPolicyException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			passwordPolicyId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -764,25 +686,6 @@ public class PasswordPolicyUtil {
 	}
 
 	/**
-	 * Returns the password policies before and after the current password policy in the ordered set where companyId = &#63;.
-	 *
-	 * @param passwordPolicyId the primary key of the current password policy
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next password policy
-	 * @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
-	 */
-	public static PasswordPolicy[] findByCompanyId_PrevAndNext(
-			long passwordPolicyId, long companyId,
-			OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPasswordPolicyException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			passwordPolicyId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the password policies that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -829,25 +732,6 @@ public class PasswordPolicyUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the password policies before and after the current password policy in the ordered set of password policies that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param passwordPolicyId the primary key of the current password policy
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next password policy
-	 * @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
-	 */
-	public static PasswordPolicy[] filterFindByCompanyId_PrevAndNext(
-			long passwordPolicyId, long companyId,
-			OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPasswordPolicyException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			passwordPolicyId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1105,4 +989,4 @@ public class PasswordPolicyUtil {
 	private static volatile PasswordPolicyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2013258288
+// LIFERAY-SERVICE-BUILDER-HASH:-742420960

@@ -245,25 +245,6 @@ public class PluginSettingUtil {
 	}
 
 	/**
-	 * Returns the plugin settings before and after the current plugin setting in the ordered set where companyId = &#63;.
-	 *
-	 * @param pluginSettingId the primary key of the current plugin setting
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next plugin setting
-	 * @throws NoSuchPluginSettingException if a plugin setting with the primary key could not be found
-	 */
-	public static PluginSetting[] findByCompanyId_PrevAndNext(
-			long pluginSettingId, long companyId,
-			OrderByComparator<PluginSetting> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPluginSettingException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			pluginSettingId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the plugin settings where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -521,4 +502,4 @@ public class PluginSettingUtil {
 	private static volatile PluginSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:546632916
+// LIFERAY-SERVICE-BUILDER-HASH:130383983

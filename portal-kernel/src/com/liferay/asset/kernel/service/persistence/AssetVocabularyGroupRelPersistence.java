@@ -148,21 +148,6 @@ public interface AssetVocabularyGroupRelPersistence
 			<AssetVocabularyGroupRel> orderByComparator);
 
 	/**
-	 * Returns the asset vocabulary group rels before and after the current asset vocabulary group rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param assetVocabularyGroupRelId the primary key of the current asset vocabulary group rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a asset vocabulary group rel with the primary key could not be found
-	 */
-	public AssetVocabularyGroupRel[] findByUuid_PrevAndNext(
-			long assetVocabularyGroupRelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException;
-
-	/**
 	 * Removes all the asset vocabulary group rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface AssetVocabularyGroupRelPersistence
 			<AssetVocabularyGroupRel> orderByComparator);
 
 	/**
-	 * Returns the asset vocabulary group rels before and after the current asset vocabulary group rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param assetVocabularyGroupRelId the primary key of the current asset vocabulary group rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a asset vocabulary group rel with the primary key could not be found
-	 */
-	public AssetVocabularyGroupRel[] findByUuid_C_PrevAndNext(
-			long assetVocabularyGroupRelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException;
-
-	/**
 	 * Removes all the asset vocabulary group rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface AssetVocabularyGroupRelPersistence
 			<AssetVocabularyGroupRel> orderByComparator);
 
 	/**
-	 * Returns the asset vocabulary group rels before and after the current asset vocabulary group rel in the ordered set where groupId = &#63;.
-	 *
-	 * @param assetVocabularyGroupRelId the primary key of the current asset vocabulary group rel
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a asset vocabulary group rel with the primary key could not be found
-	 */
-	public AssetVocabularyGroupRel[] findByGroupId_PrevAndNext(
-			long assetVocabularyGroupRelId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException;
-
-	/**
 	 * Removes all the asset vocabulary group rels where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -638,21 +592,6 @@ public interface AssetVocabularyGroupRelPersistence
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<AssetVocabularyGroupRel> orderByComparator);
-
-	/**
-	 * Returns the asset vocabulary group rels before and after the current asset vocabulary group rel in the ordered set where vocabularyId = &#63;.
-	 *
-	 * @param assetVocabularyGroupRelId the primary key of the current asset vocabulary group rel
-	 * @param vocabularyId the vocabulary ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a asset vocabulary group rel with the primary key could not be found
-	 */
-	public AssetVocabularyGroupRel[] findByVocabularyId_PrevAndNext(
-			long assetVocabularyGroupRelId, long vocabularyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetVocabularyGroupRel> orderByComparator)
-		throws NoSuchVocabularyGroupRelException;
 
 	/**
 	 * Removes all the asset vocabulary group rels where vocabularyId = &#63; from the database.
@@ -844,4 +783,4 @@ public interface AssetVocabularyGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1712648980
+// LIFERAY-SERVICE-BUILDER-HASH:1372714124

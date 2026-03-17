@@ -255,25 +255,6 @@ public class NotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param notificationQueueEntryId the primary key of the current notification queue entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	public static NotificationQueueEntry[] findByCompanyId_PrevAndNext(
-			long notificationQueueEntryId, long companyId,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			notificationQueueEntryId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the notification queue entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -322,25 +303,6 @@ public class NotificationQueueEntryUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set of notification queue entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param notificationQueueEntryId the primary key of the current notification queue entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	public static NotificationQueueEntry[] filterFindByCompanyId_PrevAndNext(
-			long notificationQueueEntryId, long companyId,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			notificationQueueEntryId, companyId, orderByComparator);
 	}
 
 	/**
@@ -516,27 +478,6 @@ public class NotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationQueueEntryId the primary key of the current notification queue entry
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	public static NotificationQueueEntry[]
-			findByNotificationTemplateId_PrevAndNext(
-				long notificationQueueEntryId, long notificationTemplateId,
-				OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByNotificationTemplateId_PrevAndNext(
-			notificationQueueEntryId, notificationTemplateId,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the notification queue entries that the user has permission to view where notificationTemplateId = &#63;.
 	 *
 	 * @param notificationTemplateId the notification template ID
@@ -589,27 +530,6 @@ public class NotificationQueueEntryUtil {
 
 		return getPersistence().filterFindByNotificationTemplateId(
 			notificationTemplateId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set of notification queue entries that the user has permission to view where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationQueueEntryId the primary key of the current notification queue entry
-	 * @param notificationTemplateId the notification template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	public static NotificationQueueEntry[]
-			filterFindByNotificationTemplateId_PrevAndNext(
-				long notificationQueueEntryId, long notificationTemplateId,
-				OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().filterFindByNotificationTemplateId_PrevAndNext(
-			notificationQueueEntryId, notificationTemplateId,
-			orderByComparator);
 	}
 
 	/**
@@ -788,25 +708,6 @@ public class NotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where sentDate &lt; &#63;.
-	 *
-	 * @param notificationQueueEntryId the primary key of the current notification queue entry
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	public static NotificationQueueEntry[] findByLtSentDate_PrevAndNext(
-			long notificationQueueEntryId, Date sentDate,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByLtSentDate_PrevAndNext(
-			notificationQueueEntryId, sentDate, orderByComparator);
-	}
-
-	/**
 	 * Returns all the notification queue entries that the user has permission to view where sentDate &lt; &#63;.
 	 *
 	 * @param sentDate the sent date
@@ -855,25 +756,6 @@ public class NotificationQueueEntryUtil {
 
 		return getPersistence().filterFindByLtSentDate(
 			sentDate, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set of notification queue entries that the user has permission to view where sentDate &lt; &#63;.
-	 *
-	 * @param notificationQueueEntryId the primary key of the current notification queue entry
-	 * @param sentDate the sent date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	public static NotificationQueueEntry[] filterFindByLtSentDate_PrevAndNext(
-			long notificationQueueEntryId, Date sentDate,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().filterFindByLtSentDate_PrevAndNext(
-			notificationQueueEntryId, sentDate, orderByComparator);
 	}
 
 	/**
@@ -1053,26 +935,6 @@ public class NotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set where type = &#63; and status = &#63;.
-	 *
-	 * @param notificationQueueEntryId the primary key of the current notification queue entry
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	public static NotificationQueueEntry[] findByT_S_PrevAndNext(
-			long notificationQueueEntryId, String type, int status,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().findByT_S_PrevAndNext(
-			notificationQueueEntryId, type, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the notification queue entries that the user has permission to view where type = &#63; and status = &#63;.
 	 *
 	 * @param type the type
@@ -1124,26 +986,6 @@ public class NotificationQueueEntryUtil {
 
 		return getPersistence().filterFindByT_S(
 			type, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the notification queue entries before and after the current notification queue entry in the ordered set of notification queue entries that the user has permission to view where type = &#63; and status = &#63;.
-	 *
-	 * @param notificationQueueEntryId the primary key of the current notification queue entry
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	public static NotificationQueueEntry[] filterFindByT_S_PrevAndNext(
-			long notificationQueueEntryId, String type, int status,
-			OrderByComparator<NotificationQueueEntry> orderByComparator)
-		throws com.liferay.notification.exception.
-			NoSuchNotificationQueueEntryException {
-
-		return getPersistence().filterFindByT_S_PrevAndNext(
-			notificationQueueEntryId, type, status, orderByComparator);
 	}
 
 	/**
@@ -1351,4 +1193,4 @@ public class NotificationQueueEntryUtil {
 	private static volatile NotificationQueueEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:457553654
+// LIFERAY-SERVICE-BUILDER-HASH:-607089706

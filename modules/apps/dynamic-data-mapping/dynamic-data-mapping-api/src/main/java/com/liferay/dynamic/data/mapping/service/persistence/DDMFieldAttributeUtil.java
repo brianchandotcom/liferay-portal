@@ -251,25 +251,6 @@ public class DDMFieldAttributeUtil {
 	}
 
 	/**
-	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where storageId = &#63;.
-	 *
-	 * @param fieldAttributeId the primary key of the current ddm field attribute
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	public static DDMFieldAttribute[] findByStorageId_PrevAndNext(
-			long fieldAttributeId, long storageId,
-			OrderByComparator<DDMFieldAttribute> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFieldAttributeException {
-
-		return getPersistence().findByStorageId_PrevAndNext(
-			fieldAttributeId, storageId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm field attributes where storageId = &#63; from the database.
 	 *
 	 * @param storageId the storage ID
@@ -436,26 +417,6 @@ public class DDMFieldAttributeUtil {
 
 		return getPersistence().fetchByS_AN_Last(
 			storageId, attributeName, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * @param fieldAttributeId the primary key of the current ddm field attribute
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	public static DDMFieldAttribute[] findByS_AN_PrevAndNext(
-			long fieldAttributeId, long storageId, String attributeName,
-			OrderByComparator<DDMFieldAttribute> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFieldAttributeException {
-
-		return getPersistence().findByS_AN_PrevAndNext(
-			fieldAttributeId, storageId, attributeName, orderByComparator);
 	}
 
 	/**
@@ -626,26 +587,6 @@ public class DDMFieldAttributeUtil {
 
 		return getPersistence().fetchByS_L_Last(
 			storageId, languageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where storageId = &#63; and languageId = &#63;.
-	 *
-	 * @param fieldAttributeId the primary key of the current ddm field attribute
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	public static DDMFieldAttribute[] findByS_L_PrevAndNext(
-			long fieldAttributeId, long storageId, String languageId,
-			OrderByComparator<DDMFieldAttribute> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFieldAttributeException {
-
-		return getPersistence().findByS_L_PrevAndNext(
-			fieldAttributeId, storageId, languageId, orderByComparator);
 	}
 
 	/**
@@ -912,28 +853,6 @@ public class DDMFieldAttributeUtil {
 
 		return getPersistence().fetchByAN_SAV_Last(
 			attributeName, smallAttributeValue, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * @param fieldAttributeId the primary key of the current ddm field attribute
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	public static DDMFieldAttribute[] findByAN_SAV_PrevAndNext(
-			long fieldAttributeId, String attributeName,
-			String smallAttributeValue,
-			OrderByComparator<DDMFieldAttribute> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFieldAttributeException {
-
-		return getPersistence().findByAN_SAV_PrevAndNext(
-			fieldAttributeId, attributeName, smallAttributeValue,
-			orderByComparator);
 	}
 
 	/**
@@ -1210,4 +1129,4 @@ public class DDMFieldAttributeUtil {
 	private static volatile DDMFieldAttributePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:511417190
+// LIFERAY-SERVICE-BUILDER-HASH:-1559000259

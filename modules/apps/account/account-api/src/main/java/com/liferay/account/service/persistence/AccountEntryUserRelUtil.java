@@ -253,24 +253,6 @@ public class AccountEntryUserRelUtil {
 	}
 
 	/**
-	 * Returns the account entry user rels before and after the current account entry user rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryUserRelId the primary key of the current account entry user rel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry user rel
-	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
-	 */
-	public static AccountEntryUserRel[] findByAccountEntryId_PrevAndNext(
-			long accountEntryUserRelId, long accountEntryId,
-			OrderByComparator<AccountEntryUserRel> orderByComparator)
-		throws com.liferay.account.exception.NoSuchEntryUserRelException {
-
-		return getPersistence().findByAccountEntryId_PrevAndNext(
-			accountEntryUserRelId, accountEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the account entry user rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -425,24 +407,6 @@ public class AccountEntryUserRelUtil {
 
 		return getPersistence().fetchByAccountUserId_Last(
 			accountUserId, orderByComparator);
-	}
-
-	/**
-	 * Returns the account entry user rels before and after the current account entry user rel in the ordered set where accountUserId = &#63;.
-	 *
-	 * @param accountEntryUserRelId the primary key of the current account entry user rel
-	 * @param accountUserId the account user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account entry user rel
-	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
-	 */
-	public static AccountEntryUserRel[] findByAccountUserId_PrevAndNext(
-			long accountEntryUserRelId, long accountUserId,
-			OrderByComparator<AccountEntryUserRel> orderByComparator)
-		throws com.liferay.account.exception.NoSuchEntryUserRelException {
-
-		return getPersistence().findByAccountUserId_PrevAndNext(
-			accountEntryUserRelId, accountUserId, orderByComparator);
 	}
 
 	/**
@@ -701,4 +665,4 @@ public class AccountEntryUserRelUtil {
 	private static volatile AccountEntryUserRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1597202723
+// LIFERAY-SERVICE-BUILDER-HASH:1893787376

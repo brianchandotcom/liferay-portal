@@ -251,25 +251,6 @@ public class SharepointOAuth2TokenEntryUtil {
 	}
 
 	/**
-	 * Returns the sharepoint o auth2 token entries before and after the current sharepoint o auth2 token entry in the ordered set where userId = &#63;.
-	 *
-	 * @param sharepointOAuth2TokenEntryId the primary key of the current sharepoint o auth2 token entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sharepoint o auth2 token entry
-	 * @throws NoSuch2TokenEntryException if a sharepoint o auth2 token entry with the primary key could not be found
-	 */
-	public static SharepointOAuth2TokenEntry[] findByUserId_PrevAndNext(
-			long sharepointOAuth2TokenEntryId, long userId,
-			OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator)
-		throws com.liferay.sharepoint.rest.oauth2.exception.
-			NoSuch2TokenEntryException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			sharepointOAuth2TokenEntryId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the sharepoint o auth2 token entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -534,4 +515,4 @@ public class SharepointOAuth2TokenEntryUtil {
 	private static volatile SharepointOAuth2TokenEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1982617516
+// LIFERAY-SERVICE-BUILDER-HASH:-586759697

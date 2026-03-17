@@ -231,24 +231,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where uuid = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByUuid_PrevAndNext(
-			long groupId, String uuid,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			groupId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -474,25 +456,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByUuid_C_PrevAndNext(
-			long groupId, String uuid, long companyId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			groupId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -645,24 +608,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByCompanyId_PrevAndNext(
-			long groupId, long companyId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -810,24 +755,6 @@ public class GroupUtil {
 
 		return getPersistence().fetchByLiveGroupId_Last(
 			liveGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the groups before and after the current group in the ordered set where liveGroupId = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param liveGroupId the live group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByLiveGroupId_PrevAndNext(
-			long groupId, long liveGroupId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByLiveGroupId_PrevAndNext(
-			groupId, liveGroupId, orderByComparator);
 	}
 
 	/**
@@ -994,25 +921,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_C_PrevAndNext(
-			long groupId, long companyId, long classNameId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			groupId, companyId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1175,25 +1083,6 @@ public class GroupUtil {
 
 		return getPersistence().fetchByC_P_Last(
 			companyId, parentGroupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_P_PrevAndNext(
-			long groupId, long companyId, long parentGroupId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_P_PrevAndNext(
-			groupId, companyId, parentGroupId, orderByComparator);
 	}
 
 	/**
@@ -1580,25 +1469,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and site = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_S_PrevAndNext(
-			long groupId, long companyId, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_S_PrevAndNext(
-			groupId, companyId, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1760,25 +1630,6 @@ public class GroupUtil {
 
 		return getPersistence().fetchByC_A_Last(
 			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_A_PrevAndNext(
-			long groupId, long companyId, boolean active,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_A_PrevAndNext(
-			groupId, companyId, active, orderByComparator);
 	}
 
 	/**
@@ -1947,25 +1798,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_CPK_PrevAndNext(
-			long groupId, long classNameId, long classPK,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_CPK_PrevAndNext(
-			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -2124,25 +1956,6 @@ public class GroupUtil {
 
 		return getPersistence().fetchByT_A_Last(
 			type, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the groups before and after the current group in the ordered set where type = &#63; and active = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param type the type
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByT_A_PrevAndNext(
-			long groupId, int type, boolean active,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByT_A_PrevAndNext(
-			groupId, type, active, orderByComparator);
 	}
 
 	/**
@@ -2586,26 +2399,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param parentGroupId the parent group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_C_P_PrevAndNext(
-			long groupId, long companyId, long classNameId, long parentGroupId,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_C_P_PrevAndNext(
-			groupId, companyId, classNameId, parentGroupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2789,26 +2582,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and classNameId = &#63; and site = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_C_S_PrevAndNext(
-			long groupId, long companyId, long classNameId, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_C_S_PrevAndNext(
-			groupId, companyId, classNameId, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and classNameId = &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2988,26 +2761,6 @@ public class GroupUtil {
 
 		return getPersistence().fetchByC_P_S_Last(
 			companyId, parentGroupId, site, orderByComparator);
-	}
-
-	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_P_S_PrevAndNext(
-			long groupId, long companyId, long parentGroupId, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_P_S_PrevAndNext(
-			groupId, companyId, parentGroupId, site, orderByComparator);
 	}
 
 	/**
@@ -3270,26 +3023,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and treePath LIKE &#63; and site = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param treePath the tree path
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_LikeT_S_PrevAndNext(
-			long groupId, long companyId, String treePath, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_LikeT_S_PrevAndNext(
-			groupId, companyId, treePath, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and treePath LIKE &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3472,26 +3205,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and name LIKE &#63; and site = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_LikeN_S_PrevAndNext(
-			long groupId, long companyId, String name, boolean site,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_LikeN_S_PrevAndNext(
-			groupId, companyId, name, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and name LIKE &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -3671,26 +3384,6 @@ public class GroupUtil {
 
 		return getPersistence().fetchByC_S_A_Last(
 			companyId, site, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and site = &#63; and active = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_S_A_PrevAndNext(
-			long groupId, long companyId, boolean site, boolean active,
-			OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_S_A_PrevAndNext(
-			groupId, companyId, site, active, orderByComparator);
 	}
 
 	/**
@@ -4369,27 +4062,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63; and name LIKE &#63; and site = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param name the name
-	 * @param site the site
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_P_LikeN_S_PrevAndNext(
-			long groupId, long companyId, long parentGroupId, String name,
-			boolean site, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_P_LikeN_S_PrevAndNext(
-			groupId, companyId, parentGroupId, name, site, orderByComparator);
-	}
-
-	/**
 	 * Removes all the groups where companyId = &#63; and parentGroupId = &#63; and name LIKE &#63; and site = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -4587,28 +4259,6 @@ public class GroupUtil {
 
 		return getPersistence().fetchByC_P_S_I_Last(
 			companyId, parentGroupId, site, inheritContent, orderByComparator);
-	}
-
-	/**
-	 * Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63; and site = &#63; and inheritContent = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param inheritContent the inherit content
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	public static Group[] findByC_P_S_I_PrevAndNext(
-			long groupId, long companyId, long parentGroupId, boolean site,
-			boolean inheritContent, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
-		return getPersistence().findByC_P_S_I_PrevAndNext(
-			groupId, companyId, parentGroupId, site, inheritContent,
-			orderByComparator);
 	}
 
 	/**
@@ -5734,4 +5384,4 @@ public class GroupUtil {
 	private static volatile GroupPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1008812383
+// LIFERAY-SERVICE-BUILDER-HASH:249018205

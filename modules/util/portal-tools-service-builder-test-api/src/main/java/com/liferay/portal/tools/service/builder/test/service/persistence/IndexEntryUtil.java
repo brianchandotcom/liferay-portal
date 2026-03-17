@@ -242,25 +242,6 @@ public class IndexEntryUtil {
 	}
 
 	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByOwnerId_PrevAndNext(
-			long indexEntryId, long ownerId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByOwnerId_PrevAndNext(
-			indexEntryId, ownerId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the index entries where ownerId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -404,25 +385,6 @@ public class IndexEntryUtil {
 		long plid, OrderByComparator<IndexEntry> orderByComparator) {
 
 		return getPersistence().fetchByPlid_Last(plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where plid = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByPlid_PrevAndNext(
-			long indexEntryId, long plid,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByPlid_PrevAndNext(
-			indexEntryId, plid, orderByComparator);
 	}
 
 	/**
@@ -576,25 +538,6 @@ public class IndexEntryUtil {
 
 		return getPersistence().fetchByPortletId_Last(
 			portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByPortletId_PrevAndNext(
-			long indexEntryId, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByPortletId_PrevAndNext(
-			indexEntryId, portletId, orderByComparator);
 	}
 
 	/**
@@ -764,26 +707,6 @@ public class IndexEntryUtil {
 	}
 
 	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByO_P_PrevAndNext(
-			long indexEntryId, int ownerType, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByO_P_PrevAndNext(
-			indexEntryId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the index entries where ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -948,26 +871,6 @@ public class IndexEntryUtil {
 
 		return getPersistence().fetchByP_P_Last(
 			plid, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByP_P_PrevAndNext(
-			long indexEntryId, long plid, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByP_P_PrevAndNext(
-			indexEntryId, plid, portletId, orderByComparator);
 	}
 
 	/**
@@ -1150,27 +1053,6 @@ public class IndexEntryUtil {
 	}
 
 	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByO_O_P_PrevAndNext(
-			long indexEntryId, long ownerId, int ownerType, long plid,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByO_O_P_PrevAndNext(
-			indexEntryId, ownerId, ownerType, plid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the index entries where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -1349,27 +1231,6 @@ public class IndexEntryUtil {
 
 		return getPersistence().fetchByO_O_PI_Last(
 			ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByO_O_PI_PrevAndNext(
-			long indexEntryId, long ownerId, int ownerType, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByO_O_PI_PrevAndNext(
-			indexEntryId, ownerId, ownerType, portletId, orderByComparator);
 	}
 
 	/**
@@ -1555,27 +1416,6 @@ public class IndexEntryUtil {
 
 		return getPersistence().fetchByO_P_P_Last(
 			ownerType, plid, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByO_P_P_PrevAndNext(
-			long indexEntryId, int ownerType, long plid, String portletId,
-			OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByO_P_P_PrevAndNext(
-			indexEntryId, ownerType, plid, portletId, orderByComparator);
 	}
 
 	/**
@@ -1770,29 +1610,6 @@ public class IndexEntryUtil {
 
 		return getPersistence().fetchByC_O_O_LikeP_Last(
 			companyId, ownerId, ownerType, portletId, orderByComparator);
-	}
-
-	/**
-	 * Returns the index entries before and after the current index entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param indexEntryId the primary key of the current index entry
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	public static IndexEntry[] findByC_O_O_LikeP_PrevAndNext(
-			long indexEntryId, long companyId, long ownerId, int ownerType,
-			String portletId, OrderByComparator<IndexEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchIndexEntryException {
-
-		return getPersistence().findByC_O_O_LikeP_PrevAndNext(
-			indexEntryId, companyId, ownerId, ownerType, portletId,
-			orderByComparator);
 	}
 
 	/**
@@ -2145,4 +1962,4 @@ public class IndexEntryUtil {
 	private static volatile IndexEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-761769202
+// LIFERAY-SERVICE-BUILDER-HASH:937572408

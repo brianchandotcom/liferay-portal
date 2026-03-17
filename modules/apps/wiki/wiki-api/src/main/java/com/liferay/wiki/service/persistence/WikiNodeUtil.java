@@ -235,24 +235,6 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set where uuid = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	public static WikiNode[] findByUuid_PrevAndNext(
-			long nodeId, String uuid,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			nodeId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the wiki nodes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -478,25 +460,6 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	public static WikiNode[] findByUuid_C_PrevAndNext(
-			long nodeId, String uuid, long companyId,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			nodeId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the wiki nodes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -646,24 +609,6 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set where groupId = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	public static WikiNode[] findByGroupId_PrevAndNext(
-			long nodeId, long groupId,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			nodeId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the wiki nodes that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -710,24 +655,6 @@ public class WikiNodeUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set of wiki nodes that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	public static WikiNode[] filterFindByGroupId_PrevAndNext(
-			long nodeId, long groupId,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			nodeId, groupId, orderByComparator);
 	}
 
 	/**
@@ -888,24 +815,6 @@ public class WikiNodeUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	public static WikiNode[] findByCompanyId_PrevAndNext(
-			long nodeId, long companyId,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			nodeId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1134,25 +1043,6 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	public static WikiNode[] findByG_S_PrevAndNext(
-			long nodeId, long groupId, int status,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByG_S_PrevAndNext(
-			nodeId, groupId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1202,25 +1092,6 @@ public class WikiNodeUtil {
 
 		return getPersistence().filterFindByG_S(
 			groupId, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set of wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	public static WikiNode[] filterFindByG_S_PrevAndNext(
-			long nodeId, long groupId, int status,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().filterFindByG_S_PrevAndNext(
-			nodeId, groupId, status, orderByComparator);
 	}
 
 	/**
@@ -1396,25 +1267,6 @@ public class WikiNodeUtil {
 
 		return getPersistence().fetchByC_S_Last(
 			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param nodeId the primary key of the current wiki node
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	public static WikiNode[] findByC_S_PrevAndNext(
-			long nodeId, long companyId, int status,
-			OrderByComparator<WikiNode> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchNodeException {
-
-		return getPersistence().findByC_S_PrevAndNext(
-			nodeId, companyId, status, orderByComparator);
 	}
 
 	/**
@@ -1664,4 +1516,4 @@ public class WikiNodeUtil {
 	private static volatile WikiNodePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1874933508
+// LIFERAY-SERVICE-BUILDER-HASH:1542665309

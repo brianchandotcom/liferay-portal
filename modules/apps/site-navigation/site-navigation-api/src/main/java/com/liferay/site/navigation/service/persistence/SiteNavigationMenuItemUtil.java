@@ -247,24 +247,6 @@ public class SiteNavigationMenuItemUtil {
 	}
 
 	/**
-	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where uuid = &#63;.
-	 *
-	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	public static SiteNavigationMenuItem[] findByUuid_PrevAndNext(
-			long siteNavigationMenuItemId, String uuid,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			siteNavigationMenuItemId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the site navigation menu items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,25 +478,6 @@ public class SiteNavigationMenuItemUtil {
 	}
 
 	/**
-	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	public static SiteNavigationMenuItem[] findByUuid_C_PrevAndNext(
-			long siteNavigationMenuItemId, String uuid, long companyId,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			siteNavigationMenuItemId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the site navigation menu items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -669,24 +632,6 @@ public class SiteNavigationMenuItemUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where companyId = &#63;.
-	 *
-	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	public static SiteNavigationMenuItem[] findByCompanyId_PrevAndNext(
-			long siteNavigationMenuItemId, long companyId,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			siteNavigationMenuItemId, companyId, orderByComparator);
 	}
 
 	/**
@@ -847,25 +792,6 @@ public class SiteNavigationMenuItemUtil {
 
 		return getPersistence().fetchBySiteNavigationMenuId_Last(
 			siteNavigationMenuId, orderByComparator);
-	}
-
-	/**
-	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where siteNavigationMenuId = &#63;.
-	 *
-	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	public static SiteNavigationMenuItem[]
-			findBySiteNavigationMenuId_PrevAndNext(
-				long siteNavigationMenuItemId, long siteNavigationMenuId,
-				OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
-
-		return getPersistence().findBySiteNavigationMenuId_PrevAndNext(
-			siteNavigationMenuItemId, siteNavigationMenuId, orderByComparator);
 	}
 
 	/**
@@ -1038,28 +964,6 @@ public class SiteNavigationMenuItemUtil {
 	}
 
 	/**
-	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	public static SiteNavigationMenuItem[]
-			findByParentSiteNavigationMenuItemId_PrevAndNext(
-				long siteNavigationMenuItemId,
-				long parentSiteNavigationMenuItemId,
-				OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
-
-		return getPersistence().
-			findByParentSiteNavigationMenuItemId_PrevAndNext(
-				siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-				orderByComparator);
-	}
-
-	/**
 	 * Removes all the site navigation menu items where parentSiteNavigationMenuItemId = &#63; from the database.
 	 *
 	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
@@ -1213,24 +1117,6 @@ public class SiteNavigationMenuItemUtil {
 		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
 
 		return getPersistence().fetchByType_Last(type, orderByComparator);
-	}
-
-	/**
-	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where type = &#63;.
-	 *
-	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	public static SiteNavigationMenuItem[] findByType_PrevAndNext(
-			long siteNavigationMenuItemId, String type,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
-
-		return getPersistence().findByType_PrevAndNext(
-			siteNavigationMenuItemId, type, orderByComparator);
 	}
 
 	/**
@@ -1410,27 +1296,6 @@ public class SiteNavigationMenuItemUtil {
 	}
 
 	/**
-	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	public static SiteNavigationMenuItem[] findByS_P_PrevAndNext(
-			long siteNavigationMenuItemId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
-
-		return getPersistence().findByS_P_PrevAndNext(
-			siteNavigationMenuItemId, siteNavigationMenuId,
-			parentSiteNavigationMenuItemId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63; from the database.
 	 *
 	 * @param siteNavigationMenuId the site navigation menu ID
@@ -1603,27 +1468,6 @@ public class SiteNavigationMenuItemUtil {
 
 		return getPersistence().fetchByS_LikeN_Last(
 			siteNavigationMenuId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	public static SiteNavigationMenuItem[] findByS_LikeN_PrevAndNext(
-			long siteNavigationMenuItemId, long siteNavigationMenuId,
-			String name,
-			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
-		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
-
-		return getPersistence().findByS_LikeN_PrevAndNext(
-			siteNavigationMenuItemId, siteNavigationMenuId, name,
-			orderByComparator);
 	}
 
 	/**
@@ -1886,4 +1730,4 @@ public class SiteNavigationMenuItemUtil {
 	private static volatile SiteNavigationMenuItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:984769731
+// LIFERAY-SERVICE-BUILDER-HASH:360514061

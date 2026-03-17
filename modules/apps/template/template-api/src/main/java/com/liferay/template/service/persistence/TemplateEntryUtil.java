@@ -238,24 +238,6 @@ public class TemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the template entries before and after the current template entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param templateEntryId the primary key of the current template entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next template entry
-	 * @throws NoSuchTemplateEntryException if a template entry with the primary key could not be found
-	 */
-	public static TemplateEntry[] findByUuid_PrevAndNext(
-			long templateEntryId, String uuid,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			templateEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the template entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -484,25 +466,6 @@ public class TemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the template entries before and after the current template entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param templateEntryId the primary key of the current template entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next template entry
-	 * @throws NoSuchTemplateEntryException if a template entry with the primary key could not be found
-	 */
-	public static TemplateEntry[] findByUuid_C_PrevAndNext(
-			long templateEntryId, String uuid, long companyId,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			templateEntryId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the template entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -650,24 +613,6 @@ public class TemplateEntryUtil {
 		long groupId, OrderByComparator<TemplateEntry> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the template entries before and after the current template entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param templateEntryId the primary key of the current template entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next template entry
-	 * @throws NoSuchTemplateEntryException if a template entry with the primary key could not be found
-	 */
-	public static TemplateEntry[] findByGroupId_PrevAndNext(
-			long templateEntryId, long groupId,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			templateEntryId, groupId, orderByComparator);
 	}
 
 	/**
@@ -983,25 +928,6 @@ public class TemplateEntryUtil {
 	}
 
 	/**
-	 * Returns the template entries before and after the current template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63;.
-	 *
-	 * @param templateEntryId the primary key of the current template entry
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next template entry
-	 * @throws NoSuchTemplateEntryException if a template entry with the primary key could not be found
-	 */
-	public static TemplateEntry[] findByG_IICN_PrevAndNext(
-			long templateEntryId, long groupId, String infoItemClassName,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByG_IICN_PrevAndNext(
-			templateEntryId, groupId, infoItemClassName, orderByComparator);
-	}
-
-	/**
 	 * Removes all the template entries where groupId = &#63; and infoItemClassName = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1187,28 +1113,6 @@ public class TemplateEntryUtil {
 		return getPersistence().fetchByG_IICN_IIFVK_Last(
 			groupId, infoItemClassName, infoItemFormVariationKey,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the template entries before and after the current template entry in the ordered set where groupId = &#63; and infoItemClassName = &#63; and infoItemFormVariationKey = &#63;.
-	 *
-	 * @param templateEntryId the primary key of the current template entry
-	 * @param groupId the group ID
-	 * @param infoItemClassName the info item class name
-	 * @param infoItemFormVariationKey the info item form variation key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next template entry
-	 * @throws NoSuchTemplateEntryException if a template entry with the primary key could not be found
-	 */
-	public static TemplateEntry[] findByG_IICN_IIFVK_PrevAndNext(
-			long templateEntryId, long groupId, String infoItemClassName,
-			String infoItemFormVariationKey,
-			OrderByComparator<TemplateEntry> orderByComparator)
-		throws com.liferay.template.exception.NoSuchTemplateEntryException {
-
-		return getPersistence().findByG_IICN_IIFVK_PrevAndNext(
-			templateEntryId, groupId, infoItemClassName,
-			infoItemFormVariationKey, orderByComparator);
 	}
 
 	/**
@@ -1579,4 +1483,4 @@ public class TemplateEntryUtil {
 	private static volatile TemplateEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1667805149
+// LIFERAY-SERVICE-BUILDER-HASH:247753044

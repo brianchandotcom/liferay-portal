@@ -240,24 +240,6 @@ public class ExpandoValueUtil {
 	}
 
 	/**
-	 * Returns the expando values before and after the current expando value in the ordered set where tableId = &#63;.
-	 *
-	 * @param valueId the primary key of the current expando value
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	public static ExpandoValue[] findByTableId_PrevAndNext(
-			long valueId, long tableId,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchValueException {
-
-		return getPersistence().findByTableId_PrevAndNext(
-			valueId, tableId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the expando values where tableId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -409,24 +391,6 @@ public class ExpandoValueUtil {
 	}
 
 	/**
-	 * Returns the expando values before and after the current expando value in the ordered set where columnId = &#63;.
-	 *
-	 * @param valueId the primary key of the current expando value
-	 * @param columnId the column ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	public static ExpandoValue[] findByColumnId_PrevAndNext(
-			long valueId, long columnId,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchValueException {
-
-		return getPersistence().findByColumnId_PrevAndNext(
-			valueId, columnId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the expando values where columnId = &#63; from the database.
 	 *
 	 * @param columnId the column ID
@@ -571,24 +535,6 @@ public class ExpandoValueUtil {
 		long rowId, OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().fetchByRowId_Last(rowId, orderByComparator);
-	}
-
-	/**
-	 * Returns the expando values before and after the current expando value in the ordered set where rowId = &#63;.
-	 *
-	 * @param valueId the primary key of the current expando value
-	 * @param rowId the row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	public static ExpandoValue[] findByRowId_PrevAndNext(
-			long valueId, long rowId,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchValueException {
-
-		return getPersistence().findByRowId_PrevAndNext(
-			valueId, rowId, orderByComparator);
 	}
 
 	/**
@@ -752,25 +698,6 @@ public class ExpandoValueUtil {
 
 		return getPersistence().fetchByT_C_Last(
 			tableId, columnId, orderByComparator);
-	}
-
-	/**
-	 * Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and columnId = &#63;.
-	 *
-	 * @param valueId the primary key of the current expando value
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	public static ExpandoValue[] findByT_C_PrevAndNext(
-			long valueId, long tableId, long columnId,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchValueException {
-
-		return getPersistence().findByT_C_PrevAndNext(
-			valueId, tableId, columnId, orderByComparator);
 	}
 
 	/**
@@ -939,25 +866,6 @@ public class ExpandoValueUtil {
 	}
 
 	/**
-	 * Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and rowId = &#63;.
-	 *
-	 * @param valueId the primary key of the current expando value
-	 * @param tableId the table ID
-	 * @param rowId the row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	public static ExpandoValue[] findByT_R_PrevAndNext(
-			long valueId, long tableId, long rowId,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchValueException {
-
-		return getPersistence().findByT_R_PrevAndNext(
-			valueId, tableId, rowId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the expando values where tableId = &#63; and rowId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -1120,25 +1028,6 @@ public class ExpandoValueUtil {
 
 		return getPersistence().fetchByT_CPK_Last(
 			tableId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and classPK = &#63;.
-	 *
-	 * @param valueId the primary key of the current expando value
-	 * @param tableId the table ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	public static ExpandoValue[] findByT_CPK_PrevAndNext(
-			long valueId, long tableId, long classPK,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchValueException {
-
-		return getPersistence().findByT_CPK_PrevAndNext(
-			valueId, tableId, classPK, orderByComparator);
 	}
 
 	/**
@@ -1368,25 +1257,6 @@ public class ExpandoValueUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the expando values before and after the current expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param valueId the primary key of the current expando value
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	public static ExpandoValue[] findByC_C_PrevAndNext(
-			long valueId, long classNameId, long classPK,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchValueException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			valueId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -1640,26 +1510,6 @@ public class ExpandoValueUtil {
 	}
 
 	/**
-	 * Returns the expando values before and after the current expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
-	 *
-	 * @param valueId the primary key of the current expando value
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param data the data
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	public static ExpandoValue[] findByT_C_D_PrevAndNext(
-			long valueId, long tableId, long columnId, String data,
-			OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.expando.kernel.exception.NoSuchValueException {
-
-		return getPersistence().findByT_C_D_PrevAndNext(
-			valueId, tableId, columnId, data, orderByComparator);
-	}
-
-	/**
 	 * Removes all the expando values where tableId = &#63; and columnId = &#63; and data = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -1840,4 +1690,4 @@ public class ExpandoValueUtil {
 	private static volatile ExpandoValuePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:495744124
+// LIFERAY-SERVICE-BUILDER-HASH:-1482954181

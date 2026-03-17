@@ -232,23 +232,6 @@ public class ImageUtil {
 	}
 
 	/**
-	 * Returns the images before and after the current image in the ordered set where size &lt; &#63;.
-	 *
-	 * @param imageId the primary key of the current image
-	 * @param size the size
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next image
-	 * @throws NoSuchImageException if a image with the primary key could not be found
-	 */
-	public static Image[] findByLtSize_PrevAndNext(
-			long imageId, int size, OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchImageException {
-
-		return getPersistence().findByLtSize_PrevAndNext(
-			imageId, size, orderByComparator);
-	}
-
-	/**
 	 * Removes all the images where size &lt; &#63; from the database.
 	 *
 	 * @param size the size
@@ -425,4 +408,4 @@ public class ImageUtil {
 	private static volatile ImagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:176042173
+// LIFERAY-SERVICE-BUILDER-HASH:435433232

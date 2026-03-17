@@ -239,24 +239,6 @@ public class FaroUserUtil {
 	}
 
 	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where groupId = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public static FaroUser[] findByGroupId_PrevAndNext(
-			long faroUserId, long groupId,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			faroUserId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -404,24 +386,6 @@ public class FaroUserUtil {
 
 		return getPersistence().fetchByLiveUserId_Last(
 			liveUserId, orderByComparator);
-	}
-
-	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where liveUserId = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param liveUserId the live user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public static FaroUser[] findByLiveUserId_PrevAndNext(
-			long faroUserId, long liveUserId,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByLiveUserId_PrevAndNext(
-			faroUserId, liveUserId, orderByComparator);
 	}
 
 	/**
@@ -706,25 +670,6 @@ public class FaroUserUtil {
 	}
 
 	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public static FaroUser[] findByG_R_PrevAndNext(
-			long faroUserId, long groupId, long roleId,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByG_R_PrevAndNext(
-			faroUserId, groupId, roleId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; and roleId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -953,25 +898,6 @@ public class FaroUserUtil {
 	}
 
 	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public static FaroUser[] findByG_S_PrevAndNext(
-			long faroUserId, long groupId, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByG_S_PrevAndNext(
-			faroUserId, groupId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro users where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1133,25 +1059,6 @@ public class FaroUserUtil {
 
 		return getPersistence().fetchByL_S_Last(
 			liveUserId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where liveUserId = &#63; and status = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public static FaroUser[] findByL_S_PrevAndNext(
-			long faroUserId, long liveUserId, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByL_S_PrevAndNext(
-			faroUserId, liveUserId, status, orderByComparator);
 	}
 
 	/**
@@ -1317,25 +1224,6 @@ public class FaroUserUtil {
 
 		return getPersistence().fetchByE_S_Last(
 			emailAddress, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where emailAddress = &#63; and status = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public static FaroUser[] findByE_S_PrevAndNext(
-			long faroUserId, String emailAddress, int status,
-			OrderByComparator<FaroUser> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroUserException {
-
-		return getPersistence().findByE_S_PrevAndNext(
-			faroUserId, emailAddress, status, orderByComparator);
 	}
 
 	/**
@@ -1517,4 +1405,4 @@ public class FaroUserUtil {
 	private static volatile FaroUserPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-192988803
+// LIFERAY-SERVICE-BUILDER-HASH:-1630100818

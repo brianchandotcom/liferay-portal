@@ -146,21 +146,6 @@ public interface ObjectLayoutColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object layout columns before and after the current object layout column in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectLayoutColumnId the primary key of the current object layout column
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	public ObjectLayoutColumn[] findByUuid_PrevAndNext(
-			long objectLayoutColumnId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
-				orderByComparator)
-		throws NoSuchObjectLayoutColumnException;
-
-	/**
 	 * Removes all the object layout columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectLayoutColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object layout columns before and after the current object layout column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectLayoutColumnId the primary key of the current object layout column
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	public ObjectLayoutColumn[] findByUuid_C_PrevAndNext(
-			long objectLayoutColumnId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
-				orderByComparator)
-		throws NoSuchObjectLayoutColumnException;
-
-	/**
 	 * Removes all the object layout columns where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -445,21 +414,6 @@ public interface ObjectLayoutColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object layout columns before and after the current object layout column in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectLayoutColumnId the primary key of the current object layout column
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	public ObjectLayoutColumn[] findByObjectFieldId_PrevAndNext(
-			long objectLayoutColumnId, long objectFieldId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
-				orderByComparator)
-		throws NoSuchObjectLayoutColumnException;
-
-	/**
 	 * Removes all the object layout columns where objectFieldId = &#63; from the database.
 	 *
 	 * @param objectFieldId the object field ID
@@ -587,21 +541,6 @@ public interface ObjectLayoutColumnPersistence
 		long objectLayoutRowId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
 			orderByComparator);
-
-	/**
-	 * Returns the object layout columns before and after the current object layout column in the ordered set where objectLayoutRowId = &#63;.
-	 *
-	 * @param objectLayoutColumnId the primary key of the current object layout column
-	 * @param objectLayoutRowId the object layout row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	public ObjectLayoutColumn[] findByObjectLayoutRowId_PrevAndNext(
-			long objectLayoutColumnId, long objectLayoutRowId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutColumn>
-				orderByComparator)
-		throws NoSuchObjectLayoutColumnException;
 
 	/**
 	 * Removes all the object layout columns where objectLayoutRowId = &#63; from the database.
@@ -740,4 +679,4 @@ public interface ObjectLayoutColumnPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2066288547
+// LIFERAY-SERVICE-BUILDER-HASH:-525739704

@@ -147,21 +147,6 @@ public interface PortletPreferencesPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerId the owner ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByOwnerId_PrevAndNext(
-			long portletPreferencesId, long ownerId,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
-
-	/**
 	 * Removes all the portlet preferenceses where ownerId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -290,21 +275,6 @@ public interface PortletPreferencesPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByPlid_PrevAndNext(
-			long portletPreferencesId, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
-
-	/**
 	 * Removes all the portlet preferenceses where plid = &#63; from the database.
 	 *
 	 * @param plid the plid
@@ -431,21 +401,6 @@ public interface PortletPreferencesPersistence
 		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator);
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByPortletId_PrevAndNext(
-			long portletPreferencesId, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
 
 	/**
 	 * Removes all the portlet preferenceses where portletId = &#63; from the database.
@@ -585,22 +540,6 @@ public interface PortletPreferencesPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByO_P_PrevAndNext(
-			long portletPreferencesId, int ownerType, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
-
-	/**
 	 * Removes all the portlet preferenceses where ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerType the owner type
@@ -738,22 +677,6 @@ public interface PortletPreferencesPersistence
 		long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator);
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByP_P_PrevAndNext(
-			long portletPreferencesId, long plid, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
 
 	/**
 	 * Removes all the portlet preferenceses where plid = &#63; and portletId = &#63; from the database.
@@ -901,23 +824,6 @@ public interface PortletPreferencesPersistence
 		long ownerId, int ownerType, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator);
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByO_O_P_PrevAndNext(
-			long portletPreferencesId, long ownerId, int ownerType, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
 
 	/**
 	 * Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
@@ -1069,24 +975,6 @@ public interface PortletPreferencesPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByO_O_PI_PrevAndNext(
-			long portletPreferencesId, long ownerId, int ownerType,
-			String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
-
-	/**
 	 * Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
 	 *
 	 * @param ownerId the owner ID
@@ -1234,24 +1122,6 @@ public interface PortletPreferencesPersistence
 		int ownerType, long plid, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator);
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param ownerType the owner type
-	 * @param plid the plid
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByO_P_P_PrevAndNext(
-			long portletPreferencesId, int ownerType, long plid,
-			String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
 
 	/**
 	 * Removes all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
@@ -1412,25 +1282,6 @@ public interface PortletPreferencesPersistence
 		long companyId, long ownerId, int ownerType, String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
 			orderByComparator);
-
-	/**
-	 * Returns the portlet preferenceses before and after the current portlet preferences in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param portletPreferencesId the primary key of the current portlet preferences
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next portlet preferences
-	 * @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
-	 */
-	public PortletPreferences[] findByC_O_O_LikeP_PrevAndNext(
-			long portletPreferencesId, long companyId, long ownerId,
-			int ownerType, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences>
-				orderByComparator)
-		throws NoSuchPortletPreferencesException;
 
 	/**
 	 * Removes all the portlet preferenceses where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63; from the database.
@@ -1642,4 +1493,4 @@ public interface PortletPreferencesPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:634483723
+// LIFERAY-SERVICE-BUILDER-HASH:162030637

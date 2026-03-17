@@ -243,24 +243,6 @@ public class KaleoNodeUtil {
 	}
 
 	/**
-	 * Returns the kaleo nodes before and after the current kaleo node in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoNodeId the primary key of the current kaleo node
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
-	 */
-	public static KaleoNode[] findByCompanyId_PrevAndNext(
-			long kaleoNodeId, long companyId,
-			OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			kaleoNodeId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo nodes where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -418,24 +400,6 @@ public class KaleoNodeUtil {
 
 		return getPersistence().fetchByKaleoDefinitionVersionId_Last(
 			kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo nodes before and after the current kaleo node in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoNodeId the primary key of the current kaleo node
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
-	 */
-	public static KaleoNode[] findByKaleoDefinitionVersionId_PrevAndNext(
-			long kaleoNodeId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
-
-		return getPersistence().findByKaleoDefinitionVersionId_PrevAndNext(
-			kaleoNodeId, kaleoDefinitionVersionId, orderByComparator);
 	}
 
 	/**
@@ -610,26 +574,6 @@ public class KaleoNodeUtil {
 
 		return getPersistence().fetchByC_KDVI_Last(
 			companyId, kaleoDefinitionVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo nodes before and after the current kaleo node in the ordered set where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoNodeId the primary key of the current kaleo node
-	 * @param companyId the company ID
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
-	 */
-	public static KaleoNode[] findByC_KDVI_PrevAndNext(
-			long kaleoNodeId, long companyId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
-
-		return getPersistence().findByC_KDVI_PrevAndNext(
-			kaleoNodeId, companyId, kaleoDefinitionVersionId,
-			orderByComparator);
 	}
 
 	/**
@@ -816,4 +760,4 @@ public class KaleoNodeUtil {
 	private static volatile KaleoNodePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:489266277
+// LIFERAY-SERVICE-BUILDER-HASH:-438811024

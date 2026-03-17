@@ -147,21 +147,6 @@ public interface ExportImportConfigurationPersistence
 			<ExportImportConfiguration> orderByComparator);
 
 	/**
-	 * Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63;.
-	 *
-	 * @param exportImportConfigurationId the primary key of the current export import configuration
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next export import configuration
-	 * @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
-	 */
-	public ExportImportConfiguration[] findByGroupId_PrevAndNext(
-			long exportImportConfigurationId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException;
-
-	/**
 	 * Removes all the export import configurations where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -289,21 +274,6 @@ public interface ExportImportConfigurationPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ExportImportConfiguration> orderByComparator);
-
-	/**
-	 * Returns the export import configurations before and after the current export import configuration in the ordered set where companyId = &#63;.
-	 *
-	 * @param exportImportConfigurationId the primary key of the current export import configuration
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next export import configuration
-	 * @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
-	 */
-	public ExportImportConfiguration[] findByCompanyId_PrevAndNext(
-			long exportImportConfigurationId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException;
 
 	/**
 	 * Removes all the export import configurations where companyId = &#63; from the database.
@@ -443,22 +413,6 @@ public interface ExportImportConfigurationPersistence
 			<ExportImportConfiguration> orderByComparator);
 
 	/**
-	 * Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param exportImportConfigurationId the primary key of the current export import configuration
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next export import configuration
-	 * @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
-	 */
-	public ExportImportConfiguration[] findByG_T_PrevAndNext(
-			long exportImportConfigurationId, long groupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException;
-
-	/**
 	 * Removes all the export import configurations where groupId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -596,22 +550,6 @@ public interface ExportImportConfigurationPersistence
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<ExportImportConfiguration> orderByComparator);
-
-	/**
-	 * Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param exportImportConfigurationId the primary key of the current export import configuration
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next export import configuration
-	 * @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
-	 */
-	public ExportImportConfiguration[] findByG_S_PrevAndNext(
-			long exportImportConfigurationId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException;
 
 	/**
 	 * Removes all the export import configurations where groupId = &#63; and status = &#63; from the database.
@@ -761,24 +699,6 @@ public interface ExportImportConfigurationPersistence
 			<ExportImportConfiguration> orderByComparator);
 
 	/**
-	 * Returns the export import configurations before and after the current export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param exportImportConfigurationId the primary key of the current export import configuration
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next export import configuration
-	 * @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
-	 */
-	public ExportImportConfiguration[] findByG_T_S_PrevAndNext(
-			long exportImportConfigurationId, long groupId, int type,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ExportImportConfiguration> orderByComparator)
-		throws NoSuchConfigurationException;
-
-	/**
 	 * Removes all the export import configurations where groupId = &#63; and type = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -924,4 +844,4 @@ public interface ExportImportConfigurationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-226768938
+// LIFERAY-SERVICE-BUILDER-HASH:-1362307736

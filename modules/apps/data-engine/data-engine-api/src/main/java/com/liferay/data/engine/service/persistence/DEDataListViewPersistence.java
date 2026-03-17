@@ -147,21 +147,6 @@ public interface DEDataListViewPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the de data list views before and after the current de data list view in the ordered set where uuid = &#63;.
-	 *
-	 * @param deDataListViewId the primary key of the current de data list view
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data list view
-	 * @throws NoSuchDataListViewException if a de data list view with the primary key could not be found
-	 */
-	public DEDataListView[] findByUuid_PrevAndNext(
-			long deDataListViewId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-				orderByComparator)
-		throws NoSuchDataListViewException;
-
-	/**
 	 * Removes all the de data list views where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface DEDataListViewPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the de data list views before and after the current de data list view in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param deDataListViewId the primary key of the current de data list view
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data list view
-	 * @throws NoSuchDataListViewException if a de data list view with the primary key could not be found
-	 */
-	public DEDataListView[] findByUuid_C_PrevAndNext(
-			long deDataListViewId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-				orderByComparator)
-		throws NoSuchDataListViewException;
-
-	/**
 	 * Removes all the de data list views where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface DEDataListViewPersistence
 		long ddmStructureId,
 		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
 			orderByComparator);
-
-	/**
-	 * Returns the de data list views before and after the current de data list view in the ordered set where ddmStructureId = &#63;.
-	 *
-	 * @param deDataListViewId the primary key of the current de data list view
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data list view
-	 * @throws NoSuchDataListViewException if a de data list view with the primary key could not be found
-	 */
-	public DEDataListView[] findByDDMStructureId_PrevAndNext(
-			long deDataListViewId, long ddmStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-				orderByComparator)
-		throws NoSuchDataListViewException;
 
 	/**
 	 * Removes all the de data list views where ddmStructureId = &#63; from the database.
@@ -656,24 +610,6 @@ public interface DEDataListViewPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the de data list views before and after the current de data list view in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
-	 *
-	 * @param deDataListViewId the primary key of the current de data list view
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data list view
-	 * @throws NoSuchDataListViewException if a de data list view with the primary key could not be found
-	 */
-	public DEDataListView[] findByG_C_DDMSI_PrevAndNext(
-			long deDataListViewId, long groupId, long companyId,
-			long ddmStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
-				orderByComparator)
-		throws NoSuchDataListViewException;
-
-	/**
 	 * Removes all the de data list views where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -815,4 +751,4 @@ public interface DEDataListViewPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:517160074
+// LIFERAY-SERVICE-BUILDER-HASH:-1000913111

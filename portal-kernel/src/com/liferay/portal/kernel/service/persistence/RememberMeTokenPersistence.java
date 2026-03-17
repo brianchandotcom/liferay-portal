@@ -147,21 +147,6 @@ public interface RememberMeTokenPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the remember me tokens before and after the current remember me token in the ordered set where userId = &#63;.
-	 *
-	 * @param rememberMeTokenId the primary key of the current remember me token
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next remember me token
-	 * @throws NoSuchRememberMeTokenException if a remember me token with the primary key could not be found
-	 */
-	public RememberMeToken[] findByUserId_PrevAndNext(
-			long rememberMeTokenId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<RememberMeToken>
-				orderByComparator)
-		throws NoSuchRememberMeTokenException;
-
-	/**
 	 * Removes all the remember me tokens where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -289,21 +274,6 @@ public interface RememberMeTokenPersistence
 		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<RememberMeToken>
 			orderByComparator);
-
-	/**
-	 * Returns the remember me tokens before and after the current remember me token in the ordered set where expirationDate &le; &#63;.
-	 *
-	 * @param rememberMeTokenId the primary key of the current remember me token
-	 * @param expirationDate the expiration date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next remember me token
-	 * @throws NoSuchRememberMeTokenException if a remember me token with the primary key could not be found
-	 */
-	public RememberMeToken[] findByLteExpirationDate_PrevAndNext(
-			long rememberMeTokenId, Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<RememberMeToken>
-				orderByComparator)
-		throws NoSuchRememberMeTokenException;
 
 	/**
 	 * Removes all the remember me tokens where expirationDate &le; &#63; from the database.
@@ -441,4 +411,4 @@ public interface RememberMeTokenPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:901380234
+// LIFERAY-SERVICE-BUILDER-HASH:611942789

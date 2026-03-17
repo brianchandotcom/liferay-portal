@@ -70,18 +70,10 @@ function createComponentsCollection() {
 	});
 }
 
-// Proxy that lazily creates the ComponentsCollection only when accessed
-export const ComponentsCollection = new Proxy({} as ReturnType<typeof createComponentsCollection>, {
-	get(target, prop) {
-		// Skip creation during build phase
-		if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NEXT_PHASE === 'phase-development-server') {
-			return undefined;
-		}
-		
-		if (!componentsCollectionInstance) {
-			componentsCollectionInstance = createComponentsCollection();
-		}
-		// @ts-ignore
-		return componentsCollectionInstance[prop];
-	},
-});
+export function getComponentsCollection() {
+	if (!componentsCollectionInstance) {
+		componentsCollectionInstance = createComponentsCollection();
+	}
+
+	return componentsCollectionInstance;
+}

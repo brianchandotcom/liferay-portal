@@ -6,11 +6,11 @@
 package com.liferay.portal.spring.extender.internal;
 
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;

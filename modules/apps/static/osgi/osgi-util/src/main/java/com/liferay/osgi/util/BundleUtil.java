@@ -6,10 +6,10 @@
 package com.liferay.osgi.util;
 
 import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;

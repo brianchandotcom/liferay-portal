@@ -5,6 +5,7 @@
 
 package com.liferay.portal.cluster.multiple.internal.portal.profile;
 
+import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.portal.cluster.multiple.internal.ClusterExecutorImpl;
 import com.liferay.portal.cluster.multiple.internal.ClusterLinkImpl;
 import com.liferay.portal.cluster.multiple.internal.ClusterMasterExecutorImpl;
@@ -15,7 +16,6 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MethodHandler;

@@ -1,5 +1,5 @@
 ext {
-	isFacesModule = true
+	jakartaFacesModule = true
 }
 
 apply from: "../../build-jakarta-transformer.gradle"

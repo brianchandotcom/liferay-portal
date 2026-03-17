@@ -52,6 +52,7 @@ describe('SaveButtons', () => {
 			reactComponentRef: {
 				current: {
 					getFields: () => [{valid: true}],
+					validate: jest.fn().mockResolvedValue([null, true]),
 				},
 			},
 		});

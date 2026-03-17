@@ -13,8 +13,8 @@ public class DesignLibraryAdminFDSNames {
 	public static final String DESIGN_LIBRARIES =
 		DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN + "-designLibraries";
 
-	public static final String DESIGN_LIBRARY_DASHBOARD =
+	public static final String DESIGN_LIBRARIES_RESOURCES =
 		DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN +
-			"-designLibraryDashboard";
+			"-designLibrariesResources";
 
 }

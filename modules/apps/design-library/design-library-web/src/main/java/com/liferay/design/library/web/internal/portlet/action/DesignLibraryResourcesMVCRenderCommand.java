@@ -21,11 +21,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"jakarta.portlet.name=" + DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN,
-		"mvc.command.name=/design_library/design_library_dashboard"
+		"mvc.command.name=/design_library/design_library_resources"
 	},
 	service = MVCRenderCommand.class
 )
-public class DesignLibraryDashboardMVCRenderCommand
+public class DesignLibraryResourcesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -39,7 +39,7 @@ public class DesignLibraryDashboardMVCRenderCommand
 			DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY,
 			designLibraryEntryId);
 
-		return "/view_design_library_dashboard.jsp";
+		return "/view_resources.jsp";
 	}
 
 }

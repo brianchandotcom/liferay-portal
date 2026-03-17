@@ -151,6 +151,7 @@ export enum SkuOptions {
 }
 
 export enum SolutionTypes {
+	AI_HUB = 'ai-hub',
 	ANALYTICS = 'analytics',
 	CMP = 'cmp',
 	DXP = 'dxp',

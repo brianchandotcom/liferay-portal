@@ -7,22 +7,26 @@ import ClayButton from '@clayui/button';
 import ClayCard from '@clayui/card';
 import Icon from '@clayui/icon';
 import classNames from 'classnames';
-import {useState} from 'react';
+import {ReactNode, useState} from 'react';
 
 export type LiferayProductLicenseAlertProps = {
-	children?: string;
+	children?: ReactNode;
 	className?: string;
+	dismissible?: boolean;
 	onClose?: () => void;
 	symbol?: string;
 	title: string;
+	type?: 'success' | 'info';
 };
 
 export default function LiferayProductLicenseAlert({
 	children,
 	className,
+	dismissible = true,
 	onClose,
 	symbol,
 	title,
+	type = 'success',
 }: LiferayProductLicenseAlertProps) {
 	const [visible, setVisible] = useState(true);
 
@@ -39,6 +43,7 @@ export default function LiferayProductLicenseAlert({
 		<ClayCard
 			className={classNames(
 				'license-alert-card d-flex align-items-start',
+				`license-alert-card-${type}`,
 				className
 			)}
 		>
@@ -51,14 +56,16 @@ export default function LiferayProductLicenseAlert({
 				<p className="license-alert-subtitle">{children}</p>
 			</div>
 
-			<ClayButton
-				aria-label="Close"
-				className="close"
-				displayType="unstyled"
-				onClick={handleClose}
-			>
-				<Icon className="close-license-alert-icon" symbol="times" />
-			</ClayButton>
+			{dismissible && (
+				<ClayButton
+					aria-label="Close"
+					className="close"
+					displayType="unstyled"
+					onClick={handleClose}
+				>
+					<Icon className="close-license-alert-icon" symbol="times" />
+				</ClayButton>
+			)}
 		</ClayCard>
 	);
 }

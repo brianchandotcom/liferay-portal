@@ -89,12 +89,6 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 
 		return order;
 	}
-
-	async provisionCMPBeta(payload: any) {
-		return this.post('/cmp-beta-license-key', payload, {
-			earlyReturn: true,
-		});
-	}
 }
 
 const marketplaceOAuth2 = new MarketplaceOAuth2('/marketplace');

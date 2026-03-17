@@ -56,7 +56,8 @@ public class DesignLibraryDashboardDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"actionItems", _getActionItemsJSONArray()
 		).put(
-			"breadcrumbProps", _getBreadcrumbProps(designLibraryEntryId)
+			"breadcrumbItems",
+			_getBreadcrumbItemsJSONArray(designLibraryEntryId)
 		).build();
 	}
 
@@ -107,25 +108,9 @@ public class DesignLibraryDashboardDisplayContext {
 			));
 	}
 
-	private Map<String, Object> _getBreadcrumbProps(long designLibraryEntryId) {
-		return HashMapBuilder.<String, Object>put(
-			"current",
-			() -> HashMapBuilder.<String, Object>put(
-				"active", true
-			).put(
-				"href", "#top"
-			).put(
-				"label",
-				DepotEntryLocalServiceUtil.fetchDepotEntry(
-					designLibraryEntryId
-				).getGroup(
-				).getName(
-					_httpServletRequest.getLocale()
-				)
-			).build()
-		).put(
-			"redirect",
-			HashMapBuilder.<String, Object>put(
+	private JSONArray _getBreadcrumbItemsJSONArray(long designLibraryEntryId) {
+		return JSONUtil.putAll(
+			JSONUtil.put(
 				"active", false
 			).put(
 				"href",
@@ -135,8 +120,20 @@ public class DesignLibraryDashboardDisplayContext {
 			).put(
 				"label",
 				LanguageUtil.get(_httpServletRequest, "design-libraries")
-			).build()
-		).build();
+			),
+			JSONUtil.put(
+				"active", true
+			).put(
+				"href", "#top"
+			).put(
+				"label",
+				() -> DepotEntryLocalServiceUtil.fetchDepotEntry(
+					designLibraryEntryId
+				).getGroup(
+				).getName(
+					_httpServletRequest.getLocale()
+				)
+			));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

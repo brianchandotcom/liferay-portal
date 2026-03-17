@@ -293,8 +293,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			if (!Objects.equals(
-					fragmentEntryLink.getRendererKey(),
-					_MENU_DISPLAY_FRAGMENT_RENDERER_KEY)) {
+					fragmentEntryLink.getRendererKey(), _RENDERER_KEY)) {
 
 				continue;
 			}
@@ -324,7 +323,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
-	private static final String _MENU_DISPLAY_FRAGMENT_RENDERER_KEY =
+	private static final String _RENDERER_KEY =
 		"com.liferay.fragment.renderer.menu.display.internal." +
 			"MenuDisplayFragmentRenderer";
 

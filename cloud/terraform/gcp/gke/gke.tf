@@ -49,15 +49,6 @@ resource "google_container_cluster" "primary" {
 	name="${var.deployment_name}-gke"
 	network=google_compute_network.vpc.id
 	networking_mode="VPC_NATIVE"
-	node_config {
-		shielded_instance_config {
-			enable_integrity_monitoring=true
-			enable_secure_boot=true
-		}
-		workload_metadata_config {
-			mode="GKE_METADATA"
-		}
-	}
 	node_pool_defaults {
 		node_config_defaults {
 			logging_variant="DEFAULT"

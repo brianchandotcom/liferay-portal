@@ -53,6 +53,19 @@ export default function DateFilter({
 		}
 	};
 
+	const handleClearFilters = () => {
+		dispatch({type: 'RESET'});
+		onApplyFilter?.({filterType: FilterType.All});
+	};
+
+	const handleUpdateFilter = (payload: Partial<typeof editing>) => {
+		dispatch({payload, type: 'UPDATE_FILTER'});
+	};
+
+	const handleUpdateTouched = (payload: Partial<typeof touchedFields>) => {
+		dispatch({payload, type: 'UPDATE_TOUCHED'});
+	};
+
 	return (
 		<>
 			<ClayLayout.ContentRow className="flex-column flex-lg-row" padded>
@@ -62,12 +75,8 @@ export default function DateFilter({
 						label={Liferay.Language.get('filter-content-by')}
 						name="filterContentBy"
 						onChange={(event) =>
-							dispatch({
-								payload: {
-									filterType: event.target
-										.value as FilterType,
-								},
-								type: 'UPDATE_FILTER',
+							handleUpdateFilter({
+								filterType: event.target.value as FilterType,
 							})
 						}
 						options={FILTER_OPTIONS}
@@ -77,16 +86,17 @@ export default function DateFilter({
 
 				{editing.filterType === FilterType.Last && (
 					<ModifiedLastFields
-						dispatch={dispatch}
+						handleUpdateFilter={handleUpdateFilter}
 						value={editing.modifiedLast}
 					/>
 				)}
 
 				{editing.filterType === FilterType.Range && (
 					<DateRangeFields
-						dispatch={dispatch}
 						editing={editing}
 						errors={validation.errors}
+						handleUpdateFilter={handleUpdateFilter}
+						handleUpdateTouched={handleUpdateTouched}
 						touchedFields={touchedFields}
 					/>
 				)}
@@ -118,12 +128,7 @@ export default function DateFilter({
 							actions={
 								<ClayButton
 									borderless
-									onClick={() => {
-										dispatch({type: 'RESET'});
-										onApplyFilter?.({
-											filterType: FilterType.All,
-										});
-									}}
+									onClick={handleClearFilters}
 									size="sm"
 								>
 									{Liferay.Language.get('clear-filters')}

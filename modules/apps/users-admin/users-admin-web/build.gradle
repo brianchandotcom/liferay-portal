@@ -40,6 +40,7 @@ dependencies {
 	compileOnly project(":apps:users-admin:users-admin-api")
 	compileOnly project(":apps:users-admin:users-admin-item-selector-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-lang")

@@ -147,3 +147,15 @@ test(
 		});
 	}
 );
+
+// GUARANTEED MERGE CONFLICT
+// This change is added to the end of the file
+// in conflict-demo branch, while brianchandotcom/master
+// also added content to the end of the same file.
+
+test(
+	'Conflicting test case',
+	async () => {
+		console.log('This will conflict');
+	}
+);

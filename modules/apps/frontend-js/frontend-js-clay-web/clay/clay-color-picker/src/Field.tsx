@@ -16,10 +16,10 @@ interface IProps
 	/**
 	 * Labels for the aria attributes
 	 */
-	ariaLabels?: {
+	ariaLabels?: Partial<{
 		selectColor: string;
 		selectionIs: string;
-	};
+	}>;
 
 	/**
 	 * Flag for adding ColorPicker in disabled state

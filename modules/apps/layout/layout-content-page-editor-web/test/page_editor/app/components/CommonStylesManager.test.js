@@ -68,6 +68,10 @@ const COMMON_CSS_STYLE = `
 	.portlet-borderless .portlet-content{
 		padding: 0;
 	}
+
+	[data-lfr-editable-type="rich-text"] > p:only-child {
+		margin-bottom: 0;
+	}
 `;
 const FRAGMENT_ID = 'FRAGMENT_ID';
 const ITEM_ID = 'ITEM_ID';

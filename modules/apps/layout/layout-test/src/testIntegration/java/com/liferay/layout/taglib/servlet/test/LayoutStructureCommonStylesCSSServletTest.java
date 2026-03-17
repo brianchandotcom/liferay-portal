@@ -8,6 +8,7 @@ package com.liferay.layout.taglib.servlet.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -48,10 +49,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(Arquillian.class)
 public class LayoutStructureCommonStylesCSSServletTest {
 
-	public static final String COMMON_CSS_STYLE =
-		".lfr-layout-structure-item-container {padding: 0;} " +
-			".lfr-layout-structure-item-row {overflow: hidden;} " +
-				".portlet-borderless .portlet-content {padding: 0;}";
+	public static final String COMMON_CSS_STYLE = StringBundler.concat(
+		".lfr-layout-structure-item-container {padding: 0;} ",
+		".lfr-layout-structure-item-row {overflow: hidden;} ",
+		".portlet-borderless .portlet-content {padding: 0;}",
+		"[data-lfr-editable-type=\"rich-text\"] > p:only-child ",
+		"{margin-bottom:0;}");
 
 	@ClassRule
 	@Rule

@@ -190,6 +190,21 @@ envFrom:
     -   secretRef:
             name: liferay-default
 fullnameOverride: ""
+global:
+    liferayServiceAccount:
+        annotations: {}
+        automount: true
+        create: true
+        name: ""
+        role:
+            annotations: {}
+            rules:
+                -   apiGroups:
+                        -   ""
+                    resources:
+                        -   configmaps
+                    verbs:
+                        -   "*"
 image:
     pullPolicy: IfNotPresent
     pullSecrets: []
@@ -271,20 +286,6 @@ service:
             protocol: TCP
             targetPort: http
     type: ClusterIP
-serviceAccount:
-    annotations: {}
-    automount: true
-    create: true
-    name: ""
-    role:
-        annotations: {}
-        rules:
-            -   apiGroups:
-                    -   ""
-                resources:
-                    -   configmaps
-                verbs:
-                    -   "*"
 startupProbe:
     failureThreshold: 90
     httpGet:

@@ -50,13 +50,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getFDSAdditionalProps() {
-		return HashMapBuilder.<String, Object>put(
-			"itemsActions", _getFDSActionDropdownItems()
-		).build();
-	}
-
-	private List<FDSActionDropdownItem> _getFDSActionDropdownItems() {
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createActionURL(

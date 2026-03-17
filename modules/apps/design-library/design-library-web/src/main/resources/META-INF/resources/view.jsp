@@ -18,5 +18,7 @@ ViewDesignLibraryAdminDisplayContext viewDesignLibraryAdminDisplayContext = new 
 		formName="fm"
 		id="<%= DesignLibraryAdminFDSNames.DESIGN_LIBRARIES %>"
 		propsTransformer="{DesignLibraryAdminFDSPropsTransformer} from design-library-web"
+		selectedItemsKey="id"
+		selectionType="multiple"
 	/>
 </div>

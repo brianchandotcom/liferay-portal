@@ -15,25 +15,29 @@ export type NavbarProps = {
 };
 
 const Navbar: React.FC<NavbarProps> = ({routes}) => {
+	const navItems = routes.filter(({visible = true}) => visible);
+
+	if (!navItems.length) {
+		return null;
+	}
+
 	return (
 		<div className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 			<ul className="navbar-nav">
-				{routes
-					.filter(({visible = true}) => visible)
-					.map((route, index) => (
-						<NavLink
-							className={({isActive}) =>
-								classNames('nav-link', {
-									active: isActive,
-								})
-							}
-							end={route.path === ''}
-							key={index}
-							to={route.path}
-						>
-							{route.name}
-						</NavLink>
-					))}
+				{navItems.map((route, index) => (
+					<NavLink
+						className={({isActive}) =>
+							classNames('nav-link', {
+								active: isActive,
+							})
+						}
+						end={route.path === ''}
+						key={index}
+						to={route.path}
+					>
+						{route.name}
+					</NavLink>
+				))}
 			</ul>
 		</div>
 	);

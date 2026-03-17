@@ -43,11 +43,36 @@ public class ProvisioningHubService extends BaseService {
 					","
 				),
 				accountProperties.get("ldpWorkspaceName"),
-				accountProperties.get("dataCenterLocation"),
+				_getServerLocation(accountProperties.get("dataCenterLocation")),
 				accountProperties.get("securityContactEmailAddress"));
 
 			_analyticsService.provision(analyticsForm, order.getId());
 		}
+	}
+
+	private String _getServerLocation(String dataCenterLocation) {
+		if (Objects.equals(dataCenterLocation, "asiasouth1")) {
+			return "asia-south1-ac5-c1";
+		}
+
+		if (Objects.equals(dataCenterLocation, "europewest2")) {
+			return "europe-west2-ac2-c1";
+		}
+
+		if (Objects.equals(dataCenterLocation, "europewest3")) {
+			return "europe-west3-ac3-c1";
+		}
+
+		if (Objects.equals(dataCenterLocation, "southamericaeast1")) {
+			return "southamerica-east1-ac1-c1";
+		}
+
+		if (Objects.equals(dataCenterLocation, "uswest1")) {
+			return "us-west1-ac4-c1";
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid data center location: " + dataCenterLocation);
 	}
 
 	@Autowired

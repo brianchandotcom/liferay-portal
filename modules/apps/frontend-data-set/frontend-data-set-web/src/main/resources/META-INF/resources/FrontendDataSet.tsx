@@ -666,6 +666,12 @@ const FrontendDataSetContent = ({
 		...currentViewProps
 	} = activeView;
 
+	const paginationEnabled =
+		(activeView.showPagination ?? showPagination) &&
+		!!pagination &&
+		!!items?.length &&
+		!!total;
+
 	const requestData = useCallback(() => {
 		if (!apiURL) {
 			return;
@@ -1055,32 +1061,27 @@ const FrontendDataSetContent = ({
 					)
 				: itemsProp;
 
-		const shouldPaginate =
-			(activeView.showPagination ?? showPagination) && !!pagination;
-
 		const start = (pageNumber - 1) * paginationDelta;
 		const end = start + paginationDelta;
 
 		updateDataSetItems({
-			items: shouldPaginate
+			items: paginationEnabled
 				? filteredItems.slice(start, end)
 				: filteredItems,
-			lastPage: shouldPaginate
+			lastPage: paginationEnabled
 				? Math.ceil(filteredItems.length / paginationDelta) || 1
 				: 1,
 			page: pageNumber,
 			totalCount: filteredItems.length,
 		});
 	}, [
-		activeView.showPagination,
 		apiURL,
 		globalFDSState.search.query,
 		itemsProp,
 		onItemsPropSearch,
 		pageNumber,
-		pagination,
+		paginationEnabled,
 		paginationDelta,
-		showPagination,
 		updateDataSetItems,
 	]);
 
@@ -1654,33 +1655,29 @@ const FrontendDataSetContent = ({
 			<ClayLoadingIndicator className="my-7" />
 		);
 
-	const paginationComponent =
-		(activeView.showPagination ?? showPagination) &&
-		pagination &&
-		items?.length &&
-		total ? (
-			<div className="data-set-pagination-wrapper">
-				<ClayPaginationBarWithBasicItems
-					active={pageNumber}
-					activeDelta={paginationDelta}
-					deltas={pagination?.deltas}
-					disableEllipsis={items.length / paginationDelta - 5 > 999}
-					ellipsisBuffer={3}
-					labels={{
-						paginationResults: Liferay.Language.get(
-							'showing-x-to-x-of-x-entries'
-						),
-						perPageItems: Liferay.Language.get('x-items'),
-						selectPerPageItems: Liferay.Language.get('x-items'),
-					}}
-					onActiveChange={(page: number) =>
-						viewsDispatch(updatePageNumber(page))
-					}
-					onDeltaChange={handleDeltaChange}
-					totalItems={total}
-				/>
-			</div>
-		) : null;
+	const paginationComponent = paginationEnabled ? (
+		<div className="data-set-pagination-wrapper">
+			<ClayPaginationBarWithBasicItems
+				active={pageNumber}
+				activeDelta={paginationDelta}
+				deltas={pagination?.deltas}
+				disableEllipsis={items.length / paginationDelta - 5 > 999}
+				ellipsisBuffer={3}
+				labels={{
+					paginationResults: Liferay.Language.get(
+						'showing-x-to-x-of-x-entries'
+					),
+					perPageItems: Liferay.Language.get('x-items'),
+					selectPerPageItems: Liferay.Language.get('x-items'),
+				}}
+				onActiveChange={(page: number) =>
+					viewsDispatch(updatePageNumber(page))
+				}
+				onDeltaChange={handleDeltaChange}
+				totalItems={total}
+			/>
+		</div>
+	) : null;
 
 	function executeAsyncItemAction({
 		errorMessage,

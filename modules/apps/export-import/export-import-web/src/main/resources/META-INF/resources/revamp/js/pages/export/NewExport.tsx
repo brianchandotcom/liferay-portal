@@ -8,8 +8,8 @@ import ClayIcon from '@clayui/icon';
 import {FormikValues} from 'formik';
 import React from 'react';
 
-import {DateFilterValues} from '../../components/DateFilter';
 import {Wizard, WizardStep} from '../../components/Wizard';
+import {DateFilterValues} from '../../components/date-filter';
 import DataSelectionStep from './steps/DataSelectionStep';
 import SettingsStep from './steps/SettingsStep';
 import SetupStep from './steps/SetupStep';

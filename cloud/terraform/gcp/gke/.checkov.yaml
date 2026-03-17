@@ -1,0 +1,13 @@
+compact: true
+directory:
+    - .
+download-external-modules: true
+framework:
+  - helm
+  - kubernetes
+  - terraform
+  - secrets
+quiet: true
+skip-check:
+    - CKV_GCP_12
+soft-fail: false

@@ -61,6 +61,10 @@ public class ConsentPreferenceServiceImpl
 		consentPreferencePersistence.removeByU_D_N(userId, domain, name);
 	}
 
+	public void deleteConsentPreferences(long userId) {
+		consentPreferencePersistence.removeByUserId(userId);
+	}
+
 	public void deleteConsentPreferences(long userId, String domain) {
 		consentPreferencePersistence.removeByU_D(userId, domain);
 	}

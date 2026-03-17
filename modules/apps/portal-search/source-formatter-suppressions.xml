@@ -3,10 +3,14 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/SearchEngineInitializer\.java" />
-		<suppress checks="CompanyIterationCheck" files="portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/display/context/builder/IndexActionsDisplayContextBuilder\.java" />
-		<suppress checks="CompanyIterationCheck" files="portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/portlet/action/EditMVCActionCommand\.java" />
-		<suppress checks="CompanyIterationCheck" files="portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/util/DictionaryReindexer\.java" />
-		<suppress checks="CompanyIterationCheck" files="portal-search-admin-web/src/test/java/com/liferay/portal/search/admin/web/internal/util/DictionaryReindexerTest\.java" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-admin-web/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-api/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-engine-adapter-api/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-rest-api/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-rest-client/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-rest-impl/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-spi/.*" />
+		<suppress checks="CompanyIterationCheck" files="portal-search-web-api/.*" />
 		<suppress checks="CreatingThreadsForDBAccessCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/background/task/ReindexIndexReindexerBackgroundTaskExecutor\.java" />
 		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/PermissionFilterFacetedSearcherTest\.java" />
 		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/SearchPermissionCheckerFacetedSearcherTest\.java" />

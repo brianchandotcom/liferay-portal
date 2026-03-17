@@ -23,9 +23,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Email"
+				"en_US": "Email Address"
 			},
-			"name": "email",
+			"name": "emailAddress",
 			"required": true,
 			"type": "String"
 		},

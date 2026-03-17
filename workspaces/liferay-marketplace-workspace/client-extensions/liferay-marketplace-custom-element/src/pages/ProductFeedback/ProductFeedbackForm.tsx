@@ -33,7 +33,7 @@ const ProductFeedbackForm = ({
 	>({
 		defaultValues: {
 			companyName: '',
-			email: '',
+			emailAddress: '',
 			fullName: '',
 			jobTitle: '',
 			notify: false,
@@ -72,9 +72,11 @@ const ProductFeedbackForm = ({
 
 					<div className="form-group mb-0 pl-2 w-50">
 						<Input
-							{...register('email')}
-							errorMessage={formState.errors.email?.message}
-							label={i18n.translate('email')}
+							{...register('emailAddress')}
+							errorMessage={
+								formState.errors.emailAddress?.message
+							}
+							label={i18n.translate('email-address')}
 							required
 						/>
 					</div>

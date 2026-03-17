@@ -331,7 +331,7 @@ const zodSchema = {
 	}),
 	productFeedback: z.object({
 		companyName: z.string().optional(),
-		email: z
+		emailAddress: z
 			.string()
 			.email('Invalid email address')
 			.min(1, 'Email is required'),

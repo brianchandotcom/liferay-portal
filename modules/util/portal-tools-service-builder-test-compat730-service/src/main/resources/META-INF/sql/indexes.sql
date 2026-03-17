@@ -27,6 +27,8 @@ create unique index IX_AE0448CB on LikeFinderEntry (ownerId, ownerType, portletI
 
 create unique index IX_2E833843 on LocalizedEntryLocalization (localizedEntryId, languageId[$COLUMN_LENGTH:75$]);
 
+create unique index IX_F8852A18 on MVCCEntry (companyId, name[$COLUMN_LENGTH:75$]);
+
 create index IX_AD13D943 on MappingEntries_BasicEntries (companyId);
 create index IX_824399F8 on MappingEntries_BasicEntries (mappingEntryId);
 

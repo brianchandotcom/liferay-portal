@@ -156,7 +156,7 @@
 		<field name="companyId" type="long" />
 		<field name="name" type="String" />
 	</model>
-	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.MvccEntry">
+	<model name="com.liferay.portal.tools.service.builder.test.compat710.model.MVCCEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="mvccEntryId" type="long" />
 		<field name="companyId" type="long" />

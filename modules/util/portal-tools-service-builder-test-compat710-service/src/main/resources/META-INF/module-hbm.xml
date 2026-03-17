@@ -16,7 +16,7 @@
 	<import class="com.liferay.portal.tools.service.builder.test.compat710.model.LocalizedEntryLocalization" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat710.model.ManyColumnsEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat710.model.MappingEntry" />
-	<import class="com.liferay.portal.tools.service.builder.test.compat710.model.MvccEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.compat710.model.MVCCEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat710.model.TrashEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat710.model.TreeEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat710.model.VersionedEntry" />
@@ -221,7 +221,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.portal.tools.service.builder.test.compat710.model.impl.MvccEntryImpl" table="MvccEntry">
+	<class dynamic-update="true" name="com.liferay.portal.tools.service.builder.test.compat710.model.impl.MVCCEntryImpl" table="MVCCEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="mvccEntryId" type="long">
 			<generator class="assigned" />
 		</id>

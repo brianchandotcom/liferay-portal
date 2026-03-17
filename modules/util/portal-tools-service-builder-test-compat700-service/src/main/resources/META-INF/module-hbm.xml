@@ -11,7 +11,7 @@
 	<import class="com.liferay.portal.tools.service.builder.test.compat700.model.LikeFinderEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat700.model.ManyColumnsEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat700.model.MappingEntry" />
-	<import class="com.liferay.portal.tools.service.builder.test.compat700.model.MvccEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.compat700.model.MVCCEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat700.model.TrashEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat700.model.TreeEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.compat700.model.WhereClauseEntry" />
@@ -169,7 +169,7 @@
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.portal.tools.service.builder.test.compat700.model.impl.MvccEntryImpl" table="MvccEntry">
+	<class dynamic-update="true" name="com.liferay.portal.tools.service.builder.test.compat700.model.impl.MVCCEntryImpl" table="MVCCEntry">
 		<id name="mvccEntryId" type="long">
 			<generator class="assigned" />
 		</id>

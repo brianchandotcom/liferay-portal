@@ -115,6 +115,13 @@ create table LocalizedEntryLocalization (
 	content VARCHAR(75) null
 );
 
+create table MVCCEntry (
+	mvccVersion LONG default 0 not null,
+	mvccEntryId LONG not null primary key,
+	companyId LONG,
+	name VARCHAR(75) null
+);
+
 create table ManyColumnsEntry (
 	manyColumnsEntryId LONG not null primary key,
 	column1 INTEGER,

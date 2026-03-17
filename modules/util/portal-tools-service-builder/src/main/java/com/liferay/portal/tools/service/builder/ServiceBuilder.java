@@ -3761,22 +3761,18 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplService, context);
 
-		int bodyIndex = content.indexOf("\npublic ");
-
-		if (bodyIndex == -1) {
-			bodyIndex = content.indexOf("\n@");
-		}
-
-		String body = content.substring(bodyIndex);
-
 		for (String importValue : imports) {
+			String importLine = "import " + importValue + ";\n";
+
 			int x = importValue.lastIndexOf('.');
 
 			String simpleName = importValue.substring(x + 1);
 
-			if (!body.contains(simpleName)) {
-				content = StringUtil.removeSubstring(
-					content, "import " + importValue + ";\n");
+			String contentWithoutImport = StringUtil.removeSubstring(
+				content, importLine);
+
+			if (!contentWithoutImport.contains(simpleName)) {
+				content = contentWithoutImport;
 			}
 		}
 

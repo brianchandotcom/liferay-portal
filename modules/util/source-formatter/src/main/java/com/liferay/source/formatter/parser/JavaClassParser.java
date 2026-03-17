@@ -253,9 +253,17 @@ public class JavaClassParser {
 
 			DetailAST lastChildDetailAST = objBlockDetailAST.getLastChild();
 
-			if ((lastChildDetailAST == null) ||
-				(lastChildDetailAST.getType() != TokenTypes.RCURLY)) {
+			if (lastChildDetailAST == null) {
+				return null;
+			}
 
+			if (lastChildDetailAST.getType() ==
+					TokenTypes.SINGLE_LINE_COMMENT) {
+
+				lastChildDetailAST = lastChildDetailAST.getPreviousSibling();
+			}
+
+			if (lastChildDetailAST.getType() != TokenTypes.RCURLY) {
 				return null;
 			}
 

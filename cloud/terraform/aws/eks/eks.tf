@@ -201,36 +201,37 @@ resource "aws_kms_alias" "eks_kms_alias" {
 resource "aws_kms_key" "eks_secrets" {
 	deletion_window_in_days=7
 	description="KMS key for EKS secrets encryption"
-	policy=jsonencode({
-		Statement=[
-			{
-				Action="kms:*"
-				Effect="Allow"
-				Principal={
-					AWS="arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-				}
-				Resource="*"
-				Sid="EnableIAMUserPermissions"
-			},
-			{
-				Action=[
-					"kms:CreateGrant",
-					"kms:Decrypt",
-					"kms:DescribeKey",
-					"kms:Encrypt",
-					"kms:GenerateDataKey*",
-					"kms:ReEncrypt*",
-				]
-				Effect="Allow"
-				Principal={
-					Service="eks.amazonaws.com"
-				}
-				Resource="*"
-				Sid="KMSAllowEKS"
-			}
-		]
-		Version="2012-10-17"
-	})
+	policy=jsonencode(
+		{
+			Statement=[
+				{
+					Action="kms:*"
+					Effect="Allow"
+					Principal={
+						AWS="arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+					}
+					Resource="*"
+					Sid="EnableIAMUserPermissions"
+				},
+				{
+					Action=[
+						"kms:CreateGrant",
+						"kms:Decrypt",
+						"kms:DescribeKey",
+						"kms:Encrypt",
+						"kms:GenerateDataKey*",
+						"kms:ReEncrypt*",
+					]
+					Effect="Allow"
+					Principal={
+						Service="eks.amazonaws.com"
+					}
+					Resource="*"
+					Sid="KMSAllowEKS"
+				},
+			]
+			Version="2012-10-17"
+		})
 }
 resource "kubernetes_storage_class_v1" "gp3_storage_class" {
 	allowed_topologies {

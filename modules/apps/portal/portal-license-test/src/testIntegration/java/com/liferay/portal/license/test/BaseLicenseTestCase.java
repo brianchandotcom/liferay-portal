@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -41,8 +42,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
-
-import jodd.io.FileUtil;
 
 import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.agent.builder.AgentBuilder;
@@ -187,7 +186,7 @@ public abstract class BaseLicenseTestCase {
 		File dir = new File(LicenseUtil.LICENSE_REPOSITORY_DIR);
 
 		if (dir.exists()) {
-			FileUtil.deleteDir(dir);
+			FileUtil.deltree(dir);
 		}
 
 		LicenseManagerUtil.checkLicense(getPortalProductId());

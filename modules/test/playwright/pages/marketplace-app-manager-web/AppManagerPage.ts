@@ -87,8 +87,8 @@ export class AppManagerPage {
 		this.uploadFrameInstallButton = this.uploadFrame.getByRole('button', {
 			name: 'Install',
 		});
-		this.uploadFrameFileInput = this.uploadFrame.getByRole('textbox', {
-			name: 'File',
+		this.uploadFrameFileInput = this.uploadFrame.getByRole('button', {
+			name: 'Choose File',
 		});
 		this.uploadMenuItem = page.getByRole('menuitem', {name: 'Upload'});
 	}

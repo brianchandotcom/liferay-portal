@@ -194,12 +194,43 @@ resource "aws_iam_role_policy_attachment" "role_policy_attachment_ebs_csi_driver
 	role=aws_iam_role.ebs_csi_driver.name
 }
 resource "aws_kms_alias" "eks_kms_alias" {
+	depends_on=[aws_kms_key.eks_secrets]
 	name="alias/${local.cluster_name}_kms"
 	target_key_id=aws_kms_key.eks_secrets.key_id
 }
 resource "aws_kms_key" "eks_secrets" {
 	deletion_window_in_days=7
 	description="KMS key for EKS secrets encryption"
+	policy=jsonencode({
+		Statement=[
+			{
+				Action="kms:*"
+				Effect="Allow"
+				Principal={
+					AWS="arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+				}
+				Resource="*"
+				Sid="EnableIAMUserPermissions"
+			},
+			{
+				Action=[
+					"kms:CreateGrant",
+					"kms:Decrypt",
+					"kms:DescribeKey",
+					"kms:Encrypt",
+					"kms:GenerateDataKey*",
+					"kms:ReEncrypt*",
+				]
+				Effect="Allow"
+				Principal={
+					Service="eks.amazonaws.com"
+				}
+				Resource="*"
+				Sid="KMSAllowEKS"
+			}
+		]
+		Version="2012-10-17"
+	})
 }
 resource "kubernetes_storage_class_v1" "gp3_storage_class" {
 	allowed_topologies {

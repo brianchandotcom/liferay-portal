@@ -36,6 +36,17 @@ public class DesignLibraryDashboardDisplayContext {
 			"filter=error eq true&nestedFields=embedded";
 	}
 
+	public Map<String, Object> getBreadcrumbProps(long designLibraryEntryId)
+		throws PortalException {
+
+		return HashMapBuilder.<String, Object>put(
+			"actionItems", _getActionItemsJSONArray()
+		).put(
+			"breadcrumbItems",
+			_getBreadcrumbItemsJSONArray(designLibraryEntryId)
+		).build();
+	}
+
 	public Map<String, Object> getEmptyState() {
 		return HashMapBuilder.<String, Object>put(
 			"description",
@@ -47,17 +58,6 @@ public class DesignLibraryDashboardDisplayContext {
 		).put(
 			"title",
 			LanguageUtil.get(_httpServletRequest, "no-design-resources-yet")
-		).build();
-	}
-
-	public Map<String, Object> getHeaderProps(long designLibraryEntryId)
-		throws PortalException {
-
-		return HashMapBuilder.<String, Object>put(
-			"actionItems", _getActionItemsJSONArray()
-		).put(
-			"breadcrumbItems",
-			_getBreadcrumbItemsJSONArray(designLibraryEntryId)
 		).build();
 	}
 

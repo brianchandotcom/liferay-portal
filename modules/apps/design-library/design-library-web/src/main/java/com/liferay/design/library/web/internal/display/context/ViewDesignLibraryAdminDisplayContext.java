@@ -7,6 +7,8 @@ package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -36,6 +38,14 @@ public class ViewDesignLibraryAdminDisplayContext {
 			"eq 'DesignLibrary'";
 	}
 
+	public Map<String, Object> getBreadcrumbProps() {
+		return HashMapBuilder.<String, Object>put(
+			"actionItems", _getActionItemsJSONArray()
+		).put(
+			"breadcrumbItems", _getBreadcrumbItemsJSONArray()
+		).build();
+	}
+
 	public Map<String, Object> getEmptyState() {
 		return HashMapBuilder.<String, Object>put(
 			"description",
@@ -62,6 +72,27 @@ public class ViewDesignLibraryAdminDisplayContext {
 				).buildString(),
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
 				null, null, "link"));
+	}
+
+	private JSONArray _getActionItemsJSONArray() {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"href", "#import"
+			).put(
+				"symbolLeft", "import"
+			).put(
+				"title", LanguageUtil.get(_httpServletRequest, "import")
+			));
+	}
+
+	private JSONArray _getBreadcrumbItemsJSONArray() {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"active", true
+			).put(
+				"label",
+				LanguageUtil.get(_httpServletRequest, "design-libraries")
+			));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

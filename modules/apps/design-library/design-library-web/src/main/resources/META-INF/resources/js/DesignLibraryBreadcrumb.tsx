@@ -5,27 +5,18 @@
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown from '@clayui/drop-down';
 import React, {ComponentProps} from 'react';
 
-type ActionDropdownItemProps = ComponentProps<
-	typeof ClayDropDownWithItems
->['items'][number];
+type ActionDropdownItemProps = ComponentProps<typeof ClayDropDown.Item>;
 
 interface DesignLibraryBreadcrumbProps {
 	actionItems?: ActionDropdownItemProps[];
 	breadcrumbItems: {active: boolean; href?: string; label: string}[];
 }
 
-function ActionDropdownItem({
-	href,
-	symbolLeft,
-	symbolRight,
-	title,
-}: ActionDropdownItemProps) {
-	const props = {href, symbolLeft, symbolRight, title};
-
-	return <ClayDropDown.Item {...props}>{title}</ClayDropDown.Item>;
+function ActionDropdownItem(props: ActionDropdownItemProps) {
+	return <ClayDropDown.Item {...props}>{props.title}</ClayDropDown.Item>;
 }
 
 export default function DesignLibraryBreadcrumb({

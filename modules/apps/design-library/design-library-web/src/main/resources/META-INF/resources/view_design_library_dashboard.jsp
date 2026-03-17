@@ -17,7 +17,7 @@ DesignLibraryDashboardDisplayContext designLibraryDashboardDisplayContext = new 
 	<div>
 		<react:component
 			module="{DesignLibraryBreadcrumb} from design-library-web"
-			props="<%= designLibraryDashboardDisplayContext.getHeaderProps(designLibraryEntryId) %>"
+			props="<%= designLibraryDashboardDisplayContext.getBreadcrumbProps(designLibraryEntryId) %>"
 		/>
 	</div>
 

@@ -139,6 +139,7 @@ public class JspServletPerformanceTest {
 	private static InputStream _createBundle() throws Exception {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
+
 			JarOutputStream jarOutputStream = new JarOutputStream(
 				unsyncByteArrayOutputStream)) {
 

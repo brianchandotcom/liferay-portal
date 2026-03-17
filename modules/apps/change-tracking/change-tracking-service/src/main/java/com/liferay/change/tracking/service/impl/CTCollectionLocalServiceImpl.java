@@ -856,6 +856,7 @@ public class CTCollectionLocalServiceImpl
 			DataSource dataSource = ctPersistence.getDataSource();
 
 			try (Connection connection = dataSource.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						StringBundler.concat(

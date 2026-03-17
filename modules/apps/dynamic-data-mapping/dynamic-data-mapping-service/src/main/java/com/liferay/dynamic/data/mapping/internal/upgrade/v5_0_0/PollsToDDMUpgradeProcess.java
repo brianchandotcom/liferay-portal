@@ -946,6 +946,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	private void _upgradePollsQuestions() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from PollsQuestion");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

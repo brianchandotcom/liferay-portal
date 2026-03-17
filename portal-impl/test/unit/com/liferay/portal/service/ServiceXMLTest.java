@@ -64,6 +64,7 @@ public class ServiceXMLTest {
 
 	private void _assertNoTXRequiredElement(File file) throws IOException {
 		try (FileInputStream fileInputStream = new FileInputStream(file);
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
 					new InputStreamReader(fileInputStream))) {

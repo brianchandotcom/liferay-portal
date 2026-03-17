@@ -69,6 +69,7 @@ public class UpgradeWikiAttachments extends BaseAttachmentsUpgradeProcess {
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(sb.toString());
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

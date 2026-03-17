@@ -67,6 +67,7 @@ public class SQLTransformerOracleCastClobTextTest {
 		String createTableSQL = "insert into TestCastClobText values (?, ?)";
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				createTableSQL)) {
 
@@ -167,6 +168,7 @@ public class SQLTransformerOracleCastClobTextTest {
 					"id";
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(sql))) {
 

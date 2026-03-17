@@ -287,6 +287,7 @@ public class DBCopyTablesProcess {
 			}
 
 			try (Reader reader = value.getCharacterStream();
+
 				UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(reader)) {
 

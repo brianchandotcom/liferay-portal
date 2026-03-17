@@ -44,6 +44,7 @@ public class PropertiesImportedFilesContentCheck extends BaseFileCheck {
 		Map<String, Set<String>> map = new TreeMap<>();
 
 		try (FileReader fileReader = new FileReader(new File(absolutePath));
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(fileReader)) {
 

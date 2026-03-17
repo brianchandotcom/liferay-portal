@@ -467,8 +467,10 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 
 	private int _getRowsCount(String tableName) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) from " + tableName);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -486,6 +488,7 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into LayoutFriendlyURL (mvccVersion, ",

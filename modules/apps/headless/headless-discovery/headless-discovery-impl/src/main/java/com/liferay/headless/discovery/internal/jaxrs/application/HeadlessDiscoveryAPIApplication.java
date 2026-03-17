@@ -100,6 +100,7 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 			}
 
 			try (InputStream urlInputStream = url.openStream();
+
 				Scanner scanner = new Scanner(urlInputStream, "UTF-8")) {
 
 				scanner.useDelimiter("\\A");

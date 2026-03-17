@@ -145,6 +145,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		if (DBManagerUtil.getDBType() == DBType.HYPERSONIC) {
 			try (Connection connection = DataAccess.getConnection();
+
 				Statement statement = connection.createStatement()) {
 
 				statement.executeUpdate("SHUTDOWN");

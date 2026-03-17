@@ -52,6 +52,7 @@ public class LPKGContainerTest {
 		Files.createFile(containerPath);
 
 		try (OutputStream outputStream = Files.newOutputStream(containerPath);
+
 			ZipOutputStream zipOutputStream = new ZipOutputStream(
 				outputStream)) {
 

@@ -44,6 +44,7 @@ public class ConfigurationDBPartitionUpgradeProcess extends UpgradeProcess {
 					connection.prepareStatement(
 						"select configurationId, dictionary from " +
 							"Configuration_");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

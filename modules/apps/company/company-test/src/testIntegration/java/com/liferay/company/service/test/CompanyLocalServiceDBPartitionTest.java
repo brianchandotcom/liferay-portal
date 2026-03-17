@@ -888,6 +888,7 @@ public class CompanyLocalServiceDBPartitionTest
 					CompanyLocalServiceTestUtil.getPartitionName(companyId),
 					".Configuration_ where configurationId like '",
 					configuration.getFactoryPid(), "%'"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());

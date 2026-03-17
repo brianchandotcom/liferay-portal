@@ -37,6 +37,7 @@ public class ConfigurationPropertiesFactory {
 		}
 
 		try (InputStream inputStream = new FileInputStream(file);
+
 			Reader reader = new InputStreamReader(inputStream, encoding)) {
 
 			configurationProperties.load(reader);

@@ -308,6 +308,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			long fileLastModifiedTime = -1;
 
 			try (Reader reader = new FileReader(cacheFile);
+
 				UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(reader)) {
 
@@ -408,6 +409,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			long fileLastModifiedTime = -1;
 
 			try (Reader reader = new FileReader(cacheDataFile);
+
 				UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(reader)) {
 

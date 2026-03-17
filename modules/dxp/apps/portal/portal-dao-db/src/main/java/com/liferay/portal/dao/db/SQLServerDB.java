@@ -150,6 +150,7 @@ public class SQLServerDB extends BaseDB {
 					"sys.tables on sys.tables.object_id = ",
 					"sys.indexes.object_id where sys.indexes.name like ",
 					"'LIFERAY_%' or sys.indexes.name like 'IX_%'"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

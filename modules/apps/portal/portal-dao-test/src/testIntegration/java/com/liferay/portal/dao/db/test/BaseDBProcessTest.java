@@ -407,6 +407,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select typeString from " + _TABLE_NAME);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();

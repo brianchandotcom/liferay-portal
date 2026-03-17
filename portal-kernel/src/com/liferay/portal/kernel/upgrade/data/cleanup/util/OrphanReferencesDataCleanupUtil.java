@@ -100,6 +100,7 @@ public class OrphanReferencesDataCleanupUtil {
 					StringPool.SPACE, _SOURCE_TABLE_ALIAS, whereClause,
 					" group by ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
 					sourceColumnName));
+
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			if (!readOnly) {

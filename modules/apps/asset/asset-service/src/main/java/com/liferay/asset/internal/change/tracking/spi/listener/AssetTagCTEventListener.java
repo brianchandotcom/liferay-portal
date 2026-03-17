@@ -60,6 +60,7 @@ public class AssetTagCTEventListener implements CTEventListener {
 
 						try (PreparedStatement preparedStatement =
 								connection.prepareStatement(sql);
+
 							ResultSet resultSet =
 								preparedStatement.executeQuery()) {
 

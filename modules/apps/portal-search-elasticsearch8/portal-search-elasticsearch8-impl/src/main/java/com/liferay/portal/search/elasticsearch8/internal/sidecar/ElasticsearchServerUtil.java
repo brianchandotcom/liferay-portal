@@ -173,6 +173,7 @@ public class ElasticsearchServerUtil {
 	private static byte[] _getSidecarServerArgs(String settingsString) {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
+
 			StreamOutput streamOutput = new OutputStreamStreamOutput(
 				unsyncByteArrayOutputStream)) {
 

@@ -184,7 +184,9 @@ public class ModuleApplicationContextExtender
 			}
 
 			try (InputStream inputStream = url.openStream();
+
 				Reader reader = new InputStreamReader(inputStream);
+
 				UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(reader)) {
 

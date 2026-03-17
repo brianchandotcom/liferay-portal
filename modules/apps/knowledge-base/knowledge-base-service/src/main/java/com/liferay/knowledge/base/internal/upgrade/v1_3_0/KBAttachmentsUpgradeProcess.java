@@ -88,6 +88,7 @@ public class KBAttachmentsUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select kbArticleId, resourcePrimKey, groupId, companyId, " +
 					"userId, status from KBArticle");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

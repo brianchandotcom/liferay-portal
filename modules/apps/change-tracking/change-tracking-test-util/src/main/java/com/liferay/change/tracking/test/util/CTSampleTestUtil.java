@@ -52,6 +52,7 @@ public class CTSampleTestUtil {
 		long ctsChildId = 0;
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

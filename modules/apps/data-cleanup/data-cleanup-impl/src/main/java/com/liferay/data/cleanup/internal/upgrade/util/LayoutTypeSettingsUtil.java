@@ -46,6 +46,7 @@ public class LayoutTypeSettingsUtil {
 							StringBundler.concat(
 								"select plid, typeSettings from Layout where ",
 								"typeSettings like '%", portletId, "%'"));
+
 					ResultSet resultSet =
 						selectPreparedStatement.executeQuery()) {
 

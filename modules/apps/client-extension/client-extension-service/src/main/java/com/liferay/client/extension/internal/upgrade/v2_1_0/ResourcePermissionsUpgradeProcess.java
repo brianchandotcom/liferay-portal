@@ -52,6 +52,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 
 	private void _insertResourcePermissions() {
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				"select mvccVersion, remoteAppEntryId, companyId, userId " +
 					"from RemoteAppEntry");

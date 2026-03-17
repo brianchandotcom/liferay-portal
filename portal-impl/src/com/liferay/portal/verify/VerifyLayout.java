@@ -71,6 +71,7 @@ public class VerifyLayout extends VerifyProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select plid, friendlyURL from LayoutFriendlyURL where " +
 					"friendlyURL " + _getReservedLayoutFriendlyURLS());
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

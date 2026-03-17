@@ -43,6 +43,7 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 				"from CommercePaymentMethodGroupRel";
 
 		try (Statement s = connection.createStatement();
+
 			ResultSet resultSet = s.executeQuery(
 				selectCommercePaymentMethodGroupRelSQL)) {
 

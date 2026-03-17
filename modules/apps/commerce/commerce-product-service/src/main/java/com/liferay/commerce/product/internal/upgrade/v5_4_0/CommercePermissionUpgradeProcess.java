@@ -48,6 +48,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 					"select companyId, resourcePermissionId, roleId, primKey ",
 					"from ResourcePermission where name = 'com.liferay.",
 					"commerce.catalog' and scope = 1"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

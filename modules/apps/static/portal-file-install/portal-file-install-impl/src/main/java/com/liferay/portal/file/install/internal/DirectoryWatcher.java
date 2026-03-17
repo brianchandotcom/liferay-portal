@@ -575,6 +575,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				String location = url.toString();
 
 				try (InputStream inputStream = url.openStream();
+
 					BufferedInputStream bufferedInputStream =
 						new BufferedInputStream(inputStream)) {
 

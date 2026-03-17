@@ -92,6 +92,7 @@ public class WordsImpl implements Words {
 
 			try (InputStream inputStream = WordsImpl.class.getResourceAsStream(
 					"dependencies/words.txt");
+
 				UnsyncBufferedReader unsyncBufferedReader =
 					new UnsyncBufferedReader(
 						new InputStreamReader(inputStream))) {
@@ -133,6 +134,7 @@ public class WordsImpl implements Words {
 					try (InputStream inputStream =
 							WordsImpl.class.getResourceAsStream(
 								"dependencies/" + dic);
+
 						UnsyncBufferedReader unsyncBufferedReader =
 							new UnsyncBufferedReader(
 								new InputStreamReader(inputStream))) {

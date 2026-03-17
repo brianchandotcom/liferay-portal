@@ -58,6 +58,7 @@ public class CertificateToolImpl implements CertificateTool {
 
 		try (ByteArrayInputStream byteArrayInputStream =
 				new ByteArrayInputStream(publicKey.getEncoded());
+
 			ASN1InputStream asn1InputStream = new ASN1InputStream(
 				byteArrayInputStream)) {
 

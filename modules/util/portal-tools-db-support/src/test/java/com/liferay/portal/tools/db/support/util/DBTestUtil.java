@@ -49,6 +49,7 @@ public class DBTestUtil {
 		String sql = "select count(*) from " + name;
 
 		try (Statement statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(sql)) {
 
 			Assert.assertTrue(resultSet.next());

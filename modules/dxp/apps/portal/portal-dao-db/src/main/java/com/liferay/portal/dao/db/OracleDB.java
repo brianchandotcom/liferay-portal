@@ -160,6 +160,7 @@ public class OracleDB extends BaseDB {
 					"select index_name, table_name, uniqueness from ",
 					"user_indexes where index_name like 'LIFERAY_%' or ",
 					"index_name like 'IX_%'"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

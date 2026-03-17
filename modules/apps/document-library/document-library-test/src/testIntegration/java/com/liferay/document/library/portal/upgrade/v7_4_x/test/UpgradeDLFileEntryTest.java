@@ -171,6 +171,7 @@ public class UpgradeDLFileEntryTest {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"update DLFileEntry set externalReferenceCode = '' where " +
 					"ctCollectionId = ? and fileEntryId = ?")) {

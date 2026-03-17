@@ -54,6 +54,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 	public <T> T deepCopyProperties(Object source) throws Exception {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
+
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				unsyncByteArrayOutputStream)) {
 
@@ -64,6 +65,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 					new UnsyncByteArrayInputStream(
 						unsyncByteArrayOutputStream.toByteArray());
+
 				ObjectInputStream objectInputStream = new ObjectInputStream(
 					unsyncByteArrayInputStream)) {
 

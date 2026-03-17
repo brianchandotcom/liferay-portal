@@ -77,6 +77,7 @@ public class SseEventSourceTestUtil {
 		completableFuture.thenAccept(
 			response -> {
 				try (InputStream inputStream = response.body();
+
 					BufferedReader bufferedReader = new BufferedReader(
 						new InputStreamReader(inputStream))) {
 

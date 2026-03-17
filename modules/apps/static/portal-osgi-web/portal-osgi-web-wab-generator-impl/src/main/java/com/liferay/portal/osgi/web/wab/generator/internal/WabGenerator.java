@@ -178,6 +178,7 @@ public class WabGenerator
 				URI uri = warPath.toUri();
 
 				try (ZipFile zipFile = new ZipFile(new File(uri));
+
 					InputStream inputStream = zipFile.getInputStream(
 						new ZipEntry(
 							"WEB-INF/liferay-plugin-package.properties"))) {

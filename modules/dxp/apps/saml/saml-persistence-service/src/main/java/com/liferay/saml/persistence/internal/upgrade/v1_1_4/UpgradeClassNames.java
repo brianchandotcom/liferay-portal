@@ -42,6 +42,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 					connection.prepareStatement(
 						"select count(*) from Counter where name like '%." +
 							modelName + "'");
+
 				ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 				if (resultSet1.next()) {
@@ -56,6 +57,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 								StringBundler.concat(
 									"select max(currentId) from Counter where ",
 									"name like '%.", modelName, "'"));
+
 						ResultSet resultSet2 =
 							preparedStatement2.executeQuery()) {
 

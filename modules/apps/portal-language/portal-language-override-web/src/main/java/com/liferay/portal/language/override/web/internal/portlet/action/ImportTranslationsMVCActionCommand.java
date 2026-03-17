@@ -84,6 +84,7 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		try (InputStream inputStream = new FileInputStream(file);
+
 			Reader reader = new InputStreamReader(
 				inputStream, StandardCharsets.UTF_8)) {
 

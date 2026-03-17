@@ -22,6 +22,7 @@ public class SerializationUtil {
 
 		try (ByteArrayInputStream byteArrayInputStream =
 				new ByteArrayInputStream(data);
+
 			ObjectInputStream objectInputStream = new ObjectInputStream(
 				byteArrayInputStream) {
 
@@ -43,6 +44,7 @@ public class SerializationUtil {
 	public static byte[] serialize(Object object) throws IOException {
 		try (ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
+
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				byteArrayOutputStream)) {
 

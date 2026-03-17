@@ -59,11 +59,13 @@ public class FileUtil {
 
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
 				destinationFile);
+
 			FileChannel destinationChannel = fileOutputStream.getChannel()) {
 
 			for (File sourceFile : sourceFiles) {
 				try (FileInputStream fileInputStream = new FileInputStream(
 						sourceFile);
+
 					FileChannel sourceChannel = fileInputStream.getChannel()) {
 
 					sourceChannel.transferTo(

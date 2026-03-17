@@ -61,10 +61,10 @@ public class CTRowUtil {
 
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(selectSQL);
-				 PreparedStatement preparedStatement2 =
-					AutoBatchPreparedStatementUtil.autoBatch(connection, sb.toString());
-
-				 ResultSet resultSet = preparedStatement1.executeQuery()) {
+				PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection, sb.toString());
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {
 					int parameterIndex = 1;

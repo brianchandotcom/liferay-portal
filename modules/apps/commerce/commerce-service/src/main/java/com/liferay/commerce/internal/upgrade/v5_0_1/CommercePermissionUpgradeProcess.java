@@ -46,6 +46,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 
 		try (Statement statement = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
 					"select ResourcePermissionId from ResourcePermission ",
@@ -175,6 +176,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 
 		try (Statement statement = connection.createStatement(
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
 			ResultSet resultSet = statement.executeQuery(sb.toString())) {
 
 			while (resultSet.next()) {

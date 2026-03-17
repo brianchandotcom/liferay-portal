@@ -151,6 +151,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				connection.prepareStatement(
 					"select formInstanceId, settings_ from DDMFormInstance " +
 						"where ctCollectionId = 0");
+
 			ResultSet resultSet = selectPreparedStatement.executeQuery();
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(

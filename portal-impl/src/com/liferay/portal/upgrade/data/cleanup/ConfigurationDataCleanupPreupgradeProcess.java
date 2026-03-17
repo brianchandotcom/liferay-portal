@@ -95,6 +95,7 @@ public class ConfigurationDataCleanupPreupgradeProcess
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select groupId from Group_");
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

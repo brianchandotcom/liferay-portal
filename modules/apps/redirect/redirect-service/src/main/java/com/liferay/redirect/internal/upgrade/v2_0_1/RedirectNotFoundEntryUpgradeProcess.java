@@ -25,6 +25,7 @@ public class RedirectNotFoundEntryUpgradeProcess extends UpgradeProcess {
 				SQLTransformer.transform(
 					"select redirectNotFoundEntryId, companyId, hits from " +
 						"RedirectNotFoundEntry"));
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

@@ -69,6 +69,7 @@ public class SampleSQLBuilderLauncher {
 
 		try (FileSystem fileSystem = FileSystems.newFileSystem(
 				url.toURI(), Collections.emptyMap());
+
 			DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				fileSystem.getPath("/lib"), "*.jar")) {
 

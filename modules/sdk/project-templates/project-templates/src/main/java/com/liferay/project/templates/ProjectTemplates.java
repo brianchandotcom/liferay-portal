@@ -152,6 +152,7 @@ public class ProjectTemplates {
 
 					try (InputStream inputStream = jarFile.getInputStream(
 							jarEntry);
+
 						JarInputStream jarInputStream = new JarInputStream(
 							inputStream)) {
 
@@ -179,6 +180,7 @@ public class ProjectTemplates {
 				try (InputStream inputStream =
 						ProjectTemplates.class.getResourceAsStream(
 							projectTemplateJarName);
+
 					JarInputStream jarInputStream = new JarInputStream(
 						inputStream)) {
 

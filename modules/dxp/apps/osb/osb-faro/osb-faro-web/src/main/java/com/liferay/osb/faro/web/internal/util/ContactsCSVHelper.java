@@ -80,6 +80,7 @@ public class ContactsCSVHelper {
 
 		try (Reader reader = new InputStreamReader(
 				new FileInputStream(file), charset);
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader);
 			Writer writer = new OutputStreamWriter(

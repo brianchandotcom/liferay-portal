@@ -1113,6 +1113,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"update Release_ set schemaVersion = ?, buildNumber = ? " +
 					"where releaseId = ?")) {

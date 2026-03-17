@@ -38,6 +38,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					"select notificationQueueEntryId, companyId, userId, ",
 					"userName, createDate, modifiedDate, bcc, cc, from_, ",
 					"fromName, to_, toName FROM NotificationQueueEntry"));
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(

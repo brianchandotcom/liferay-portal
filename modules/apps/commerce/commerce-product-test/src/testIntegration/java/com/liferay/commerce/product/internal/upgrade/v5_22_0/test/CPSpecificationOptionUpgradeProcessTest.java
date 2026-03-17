@@ -67,6 +67,7 @@ public class CPSpecificationOptionUpgradeProcessTest {
 		long cpSpecificationOptionId = RandomTestUtil.randomLong();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -86,6 +87,7 @@ public class CPSpecificationOptionUpgradeProcessTest {
 		_runUpgrade();
 
 		try (Connection connection = DataAccess.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) as count from CPSOListTypeDefinitionRel " +
 					"where cpSpecificationOptionId = ?")) {

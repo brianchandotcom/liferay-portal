@@ -225,6 +225,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 					connection.prepareStatement(
 						"select value, classNameId from ClassName_ order by " +
 							"classNameId asc limit 1; ");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				if (resultSet.next()) {
@@ -261,6 +262,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"select count(1) from Configuration_");
+
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					if (resultSet.next()) {
@@ -297,6 +299,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						"select resourceActionId, name, actionId, " +
 							"bitwiseValue from ResourceAction order by " +
 								"resourceActionId asc limit 1;");
+
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				if (resultSet.next()) {

@@ -3764,6 +3764,7 @@ public class JenkinsResultsParserUtil {
 	public static void gzip(File sourceFile, File targetGzipFile) {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
 				targetGzipFile);
+
 			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
 				fileOutputStream);
 			FileInputStream fileInputStream = new FileInputStream(sourceFile)) {
@@ -4229,6 +4230,7 @@ public class JenkinsResultsParserUtil {
 
 		try (InputStream bufferedInputStream = new BufferedInputStream(
 				new FileInputStream(file));
+
 			TarArchiveInputStream tarArchiveInputStream =
 				new TarArchiveInputStream(bufferedInputStream)) {
 
@@ -4267,8 +4269,10 @@ public class JenkinsResultsParserUtil {
 
 		try (GZIPInputStream gzipInputStream = new GZIPInputStream(
 				new FileInputStream(file));
+
 			InputStream bufferedInputStream = new BufferedInputStream(
 				gzipInputStream);
+
 			TarArchiveInputStream tarArchiveInputStream =
 				new TarArchiveInputStream(bufferedInputStream)) {
 
@@ -4954,10 +4958,13 @@ public class JenkinsResultsParserUtil {
 
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
 				targetTarGzipFile);
+
 			BufferedOutputStream bufferedOutputStream =
 				new BufferedOutputStream(fileOutputStream);
+
 			GzipCompressorOutputStream gzipCompressorOutputStream =
 				new GzipCompressorOutputStream(bufferedOutputStream);
+
 			TarArchiveOutputStream tarArchiveOutputStream =
 				new TarArchiveOutputStream(gzipCompressorOutputStream)) {
 
@@ -6234,6 +6241,7 @@ public class JenkinsResultsParserUtil {
 
 	public static void zip(final File sourceDir, File zipFile) {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(zipFile);
+
 			final ZipOutputStream zipOutputStream = new ZipOutputStream(
 				fileOutputStream)) {
 
@@ -6644,6 +6652,7 @@ public class JenkinsResultsParserUtil {
 
 					try (CountingInputStream countingInputStream =
 							new CountingInputStream(process.getInputStream());
+
 						InputStreamReader inputStreamReader =
 							new InputStreamReader(
 								countingInputStream, StandardCharsets.UTF_8)) {

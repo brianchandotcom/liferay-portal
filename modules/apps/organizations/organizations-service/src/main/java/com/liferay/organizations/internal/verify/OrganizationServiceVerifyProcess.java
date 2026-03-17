@@ -74,6 +74,7 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(sb.toString());
+
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				try (PreparedStatement preparedStatement2 =

@@ -306,6 +306,7 @@ public class UpgradeRecorder {
 		}
 
 		try (Connection connection = dataSource.getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select servletContextName, schemaVersion from Release_")) {
 

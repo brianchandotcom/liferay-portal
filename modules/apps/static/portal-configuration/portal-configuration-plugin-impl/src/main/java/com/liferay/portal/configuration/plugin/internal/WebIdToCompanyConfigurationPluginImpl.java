@@ -68,6 +68,7 @@ public class WebIdToCompanyConfigurationPluginImpl
 				dataSourceServiceReference);
 
 			try (Connection connection = dataSource.getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						_db.buildSQL(

@@ -57,17 +57,16 @@ public class
 
 	private void _deleteNotificationQueueEntries() throws Exception {
 		try (PreparedStatement deletePreparedStatement1 =
-				 _getDeletePreparedStatement("notificationQueueEntryId",
-					 "NQueueEntryAttachment");
-			 PreparedStatement deletePreparedStatement2 =
-				 _getDeletePreparedStatement("notificationQueueEntryId",
-					 "NotificationQueueEntry");
-			 PreparedStatement selectPreparedStatement1 =
-				 _getSelectPreparedStatement();
-			 PreparedStatement selectPreparedStatement2 =
-				 _getSelectPreparedStatement("NotificationQueueEntry");
-
-			 ResultSet resultSet1 = selectPreparedStatement2.executeQuery()) {
+				_getDeletePreparedStatement(
+					"notificationQueueEntryId", "NQueueEntryAttachment");
+			PreparedStatement deletePreparedStatement2 =
+				_getDeletePreparedStatement(
+					"notificationQueueEntryId", "NotificationQueueEntry");
+			PreparedStatement selectPreparedStatement1 =
+				_getSelectPreparedStatement();
+			PreparedStatement selectPreparedStatement2 =
+				_getSelectPreparedStatement("NotificationQueueEntry");
+			ResultSet resultSet1 = selectPreparedStatement2.executeQuery()) {
 
 			while (resultSet1.next()) {
 				long notificationQueueEntryId = resultSet1.getLong(
@@ -139,18 +138,16 @@ public class
 
 	private void _deleteNotificationTemplates() throws Exception {
 		try (PreparedStatement deletePreparedStatement1 =
-				 _getDeletePreparedStatement("notificationTemplateId",
-					 "NTemplateAttachment");
-			 PreparedStatement deletePreparedStatement2 =
-			 _getDeletePreparedStatement("notificationTemplateId",
-				 "NotificationTemplate");
-			 PreparedStatement preparedStatement1 =
-				 _getSelectPreparedStatement();
-			 PreparedStatement preparedStatement2 =
-				 _getSelectPreparedStatement("NotificationTemplate");
-
-			 ResultSet resultSet1 = preparedStatement2.executeQuery();
-			) {
+				_getDeletePreparedStatement(
+					"notificationTemplateId", "NTemplateAttachment");
+			PreparedStatement deletePreparedStatement2 =
+				_getDeletePreparedStatement(
+					"notificationTemplateId", "NotificationTemplate");
+			PreparedStatement preparedStatement1 =
+				_getSelectPreparedStatement();
+			PreparedStatement preparedStatement2 = _getSelectPreparedStatement(
+				"NotificationTemplate");
+			ResultSet resultSet1 = preparedStatement2.executeQuery()) {
 
 			while (resultSet1.next()) {
 				long notificationTemplateId = resultSet1.getLong(

@@ -84,6 +84,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select ctCollectionId, fragmentEntryLinkId, " +
 					"fragmentEntryId, editableValues from FragmentEntryLink");
+
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

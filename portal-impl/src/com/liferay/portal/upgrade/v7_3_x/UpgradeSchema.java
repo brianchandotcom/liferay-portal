@@ -35,6 +35,7 @@ public class UpgradeSchema extends UpgradeProcess {
 	private void _copyCompanyKey() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select companyId, key_ from Company");
+
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(

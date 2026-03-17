@@ -146,6 +146,7 @@ public class DDLExporterTest {
 
 		try (ByteArrayInputStream byteArrayInputStream =
 				new ByteArrayInputStream(bytes);
+
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(byteArrayInputStream))) {
 
@@ -254,6 +255,7 @@ public class DDLExporterTest {
 
 		try (ByteArrayInputStream byteArrayInputStream =
 				new ByteArrayInputStream(bytes);
+
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(byteArrayInputStream))) {
 
@@ -318,6 +320,7 @@ public class DDLExporterTest {
 
 		try (ByteArrayInputStream byteArrayInputStream =
 				new ByteArrayInputStream(bytes);
+
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(byteArrayInputStream))) {
 

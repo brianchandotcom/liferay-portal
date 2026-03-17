@@ -81,6 +81,7 @@ public class ModulesStructureTestUtil {
 		throws IOException {
 
 		try (FileReader fileReader = new FileReader(path.toFile());
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(fileReader)) {
 

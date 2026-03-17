@@ -55,6 +55,7 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 	@Override
 	public long getCurrentId(String name) {
 		try (Connection connection = getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_SQL_SELECT_ID_BY_NAME)) {
 
@@ -76,8 +77,10 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 	@Override
 	public List<String> getNames() {
 		try (Connection connection = getConnection();
+
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_SQL_SELECT_NAMES);
+
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			List<String> list = new ArrayList<>();
@@ -150,6 +153,7 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 			}
 
 			try (Connection connection = getConnection();
+
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(_SQL_UPDATE_NAME_BY_NAME)) {
 
@@ -232,6 +236,7 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 		long rangeMin = -1;
 
 		try (Connection connection = getConnection();
+
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				_SQL_SELECT_ID_BY_NAME)) {
 

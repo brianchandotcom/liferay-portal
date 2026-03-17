@@ -379,6 +379,9 @@ data "aws_iam_policy_document" "provider_aws_s3_policy_document" {
 data "aws_iam_role" "envoy_proxy_role" {
 	name="${var.deployment_name}-envoy-proxy"
 }
+data "aws_iam_role" "liferay_irsa" {
+	name=local.liferay_service_account_role_name
+}
 data "aws_iam_roles" "opensearch_linked_role_lookup" {
 	name_regex="AWSServiceRoleForAmazonOpenSearchService"
 }

@@ -96,8 +96,8 @@ export default function SaveButtons({
 		);
 	}, [portletNamespace]);
 
-	const validateDefaultLanguageTitle = () => {
-		const titleInputComponent = Liferay.component(
+	const validateDefaultLanguageTitle = async () => {
+		const titleInputComponent = await Liferay.componentReady(
 			`${portletNamespace}titleMapAsXML`
 		);
 
@@ -124,7 +124,7 @@ export default function SaveButtons({
 			return;
 		}
 
-		if (!validateDefaultLanguageTitle()) {
+		if (!(await validateDefaultLanguageTitle())) {
 			return;
 		}
 
@@ -142,7 +142,7 @@ export default function SaveButtons({
 
 	const onScheduleButtonClick = async () => {
 		if (await validateRequiredFields(formId)) {
-			if (!validateDefaultLanguageTitle()) {
+			if (!(await validateDefaultLanguageTitle())) {
 				return;
 			}
 

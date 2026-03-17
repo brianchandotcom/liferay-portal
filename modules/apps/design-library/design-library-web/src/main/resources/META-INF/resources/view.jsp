@@ -13,9 +13,9 @@ ViewDesignLibraryAdminDisplayContext viewDesignLibraryAdminDisplayContext = new 
 
 <div class="design-library-fds-wrapper">
 	<frontend-data-set:headless-display
-		additionalProps="<%= viewDesignLibraryAdminDisplayContext.getFDSAdditionalProps() %>"
 		apiURL="<%= viewDesignLibraryAdminDisplayContext.getAPIURL() %>"
 		emptyState="<%= viewDesignLibraryAdminDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewDesignLibraryAdminDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= DesignLibraryAdminFDSNames.DESIGN_LIBRARIES %>"
 		propsTransformer="{DesignLibraryAdminFDSPropsTransformer} from design-library-web"

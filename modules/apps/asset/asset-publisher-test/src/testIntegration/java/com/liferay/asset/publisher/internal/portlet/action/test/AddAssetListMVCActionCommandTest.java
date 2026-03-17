@@ -149,15 +149,11 @@ public class AddAssetListMVCActionCommandTest {
 						"assetListEntryExternalReferenceCode", null),
 					expectedGroup.getGroupId());
 
-		Assert.assertNotNull(assetListEntry);
-
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
 			_assetListEntrySegmentsEntryRelLocalService.
 				fetchAssetListEntrySegmentsEntryRel(
 					assetListEntry.getAssetListEntryId(),
 					SegmentsEntryConstants.ID_DEFAULT);
-
-		Assert.assertNotNull(assetListEntrySegmentsEntryRel);
 
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.load(
 			assetListEntrySegmentsEntryRel.getTypeSettings()

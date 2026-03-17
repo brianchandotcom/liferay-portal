@@ -155,10 +155,10 @@ public class PortletPreferencesModelListener
 				}
 
 				if (layout.isDraftLayout()) {
+					long userId = layout.getUserId();
+
 					ServiceContext serviceContext =
 						ServiceContextThreadLocal.getServiceContext();
-
-					long userId = layout.getUserId();
 
 					if ((serviceContext != null) &&
 						(serviceContext.getUserId() != 0)) {

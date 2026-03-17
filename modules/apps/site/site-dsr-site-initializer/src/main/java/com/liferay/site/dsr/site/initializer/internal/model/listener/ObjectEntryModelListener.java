@@ -5,6 +5,11 @@
 
 package com.liferay.site.dsr.site.initializer.internal.model.listener;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -13,6 +18,9 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -49,6 +57,7 @@ import com.liferay.sites.kernel.util.Sites;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -168,6 +177,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				false);
 
 			_setResourcePermissions(objectEntry);
+			_updateFragmentEntryLink(group);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -268,6 +278,59 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
+	private void _updateFragmentEntryLink(Group group) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				group.getGroupId(), "digital-sales-room-master");
+
+		if (layoutPageTemplateEntry == null) {
+			return;
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				group.getGroupId(), layoutPageTemplateEntry.getPlid());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			if (!Objects.equals(
+					fragmentEntryLink.getRendererKey(),
+					_MENU_DISPLAY_FRAGMENT_RENDERER_KEY)) {
+
+				continue;
+			}
+
+			JSONObject jsonObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
+
+			jsonObject = jsonObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+			if (jsonObject == null) {
+				continue;
+			}
+
+			jsonObject.put("source", "");
+
+			try {
+				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+					fragmentEntryLink.getUserId(),
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					jsonObject.toString(), false);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+	}
+
+	private static final String _MENU_DISPLAY_FRAGMENT_RENDERER_KEY =
+		"com.liferay.fragment.renderer.menu.display.internal." +
+			"MenuDisplayFragmentRenderer";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryModelListener.class);
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -275,7 +338,14 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutServiceContextHelper _layoutServiceContextHelper;

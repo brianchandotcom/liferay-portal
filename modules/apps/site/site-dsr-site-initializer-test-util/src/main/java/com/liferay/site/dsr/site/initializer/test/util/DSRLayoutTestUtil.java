@@ -5,7 +5,13 @@
 
 package com.liferay.site.dsr.site.initializer.test.util;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -16,6 +22,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +33,43 @@ import org.junit.Assert;
  * @author Stefano Motta
  */
 public class DSRLayoutTestUtil {
+
+	public static void assertFragmentEntryLink(long groupId) {
+		boolean found = false;
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntry(
+					groupId, "digital-sales-room-master");
+
+		for (FragmentEntryLink fragmentEntryLink :
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
+					groupId, layoutPageTemplateEntry.getPlid())) {
+
+			if (!Objects.equals(
+					fragmentEntryLink.getRendererKey(),
+					_MENU_DISPLAY_FRAGMENT_RENDERER_KEY)) {
+
+				continue;
+			}
+
+			found = true;
+
+			JSONObject jsonObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
+
+			jsonObject = jsonObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+			String source = jsonObject.getString("source");
+
+			Assert.assertTrue(
+				Validator.isNull(source) || !source.contains("privateLayout"));
+		}
+
+		Assert.assertTrue(found);
+	}
 
 	public static void assertLayouts(
 			long groupId, String[] names, boolean privateLayout)
@@ -66,5 +110,9 @@ public class DSRLayoutTestUtil {
 			}
 		}
 	}
+
+	private static final String _MENU_DISPLAY_FRAGMENT_RENDERER_KEY =
+		"com.liferay.fragment.renderer.menu.display.internal." +
+			"MenuDisplayFragmentRenderer";
 
 }

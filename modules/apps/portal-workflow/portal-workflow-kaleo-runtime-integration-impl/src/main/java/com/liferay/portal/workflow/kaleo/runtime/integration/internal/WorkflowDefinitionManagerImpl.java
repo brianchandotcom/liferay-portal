@@ -38,6 +38,7 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -512,6 +513,10 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setUserId(userId);
 
 			List<KaleoDefinition> kaleoDefinitions = null;
+
+			if (Objects.equals(scope, WorkflowDefinitionConstants.SCOPE_AI)) {
+				liberal = true;
+			}
 
 			if (active == null) {
 				kaleoDefinitions = _get(

@@ -1831,6 +1831,38 @@ public class ObjectDefinitionResourceTest
 						objectRelationshipExternalReferenceCode =
 							"TESTOBJECTRELATIONSHIP";
 					}
+				},
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.STRING;
+						externalReferenceCode = "TEXTOBJECTFIELD";
+						indexed = true;
+						indexedAsKeyword = false;
+						indexedLanguageId = "en_US";
+						label = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
+						name = "textObjectField";
+						objectFieldSettings = new ObjectFieldSetting[] {
+							new ObjectFieldSetting() {
+								{
+									name =
+										ObjectFieldSettingConstants.
+											NAME_MAX_LENGTH;
+									value = "10";
+								}
+							},
+							new ObjectFieldSetting() {
+								{
+									name =
+										ObjectFieldSettingConstants.
+											NAME_SHOW_COUNTER;
+									value = true;
+								}
+							}
+						};
+						system = true;
+					}
 				}
 			});
 
@@ -1886,26 +1918,43 @@ public class ObjectDefinitionResourceTest
 
 		_assertObjectField(
 			"TESTSYSTEMOBJECTFIELD", ObjectField::getExternalReferenceCode,
-			ArrayUtil.filter(
-				putObjectDefinition.getObjectFields(),
-				objectField -> StringUtil.equals(
-					objectField.getName(), "creator")));
+			_getObjectField(putObjectDefinition, "creator"));
 
-		ObjectField[] objectFields = ArrayUtil.filter(
-			putObjectDefinition.getObjectFields(),
-			objectField -> !objectField.getSystem());
+		ObjectField objectField = _getObjectField(
+			putObjectDefinition, "r_relationshipName_c_objectDefinition1Id");
 
-		_assertObjectField(
-			"r_relationshipName_c_objectDefinition1Id", ObjectField::getName,
-			objectFields);
 		_assertObjectField(
 			"TESTOBJECTDEFINITION1",
 			ObjectField::getObjectDefinitionExternalReferenceCode1,
-			objectFields);
+			objectField);
 		_assertObjectField(
 			"TESTOBJECTRELATIONSHIP",
 			ObjectField::getObjectRelationshipExternalReferenceCode,
-			objectFields);
+			objectField);
+		_assertObjectField(false, ObjectField::getSystem, objectField);
+
+		objectField = _getObjectField(putObjectDefinition, "textObjectField");
+
+		_assertObjectField(
+			false, ObjectField::getIndexedAsKeyword, objectField);
+		_assertObjectField(
+			"en_US", ObjectField::getIndexedLanguageId, objectField);
+		_assertObjectField(
+			new ObjectFieldSetting[] {
+				new ObjectFieldSetting() {
+					{
+						name = ObjectFieldSettingConstants.NAME_MAX_LENGTH;
+						value = "10";
+					}
+				},
+				new ObjectFieldSetting() {
+					{
+						name = ObjectFieldSettingConstants.NAME_SHOW_COUNTER;
+						value = true;
+					}
+				}
+			},
+			null, objectField);
 
 		ObjectLayout[] objectLayouts = putObjectDefinition.getObjectLayouts();
 
@@ -1988,6 +2037,65 @@ public class ObjectDefinitionResourceTest
 		Assert.assertEquals(
 			"titleObjectFieldName",
 			randomObjectDefinition.getTitleObjectFieldName());
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setExternalReferenceCode(
+			"TESTOBJECTDEFINITION2");
+		randomObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						externalReferenceCode = "TEXTOBJECTFIELD";
+						indexedAsKeyword = true;
+						indexedLanguageId = StringPool.BLANK;
+						label = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
+						objectFieldSettings = new ObjectFieldSetting[] {
+							new ObjectFieldSetting() {
+								{
+									name =
+										ObjectFieldSettingConstants.
+											NAME_SHOW_COUNTER;
+									value = false;
+								}
+							}
+						};
+						system = true;
+					}
+				}
+			});
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		try {
+			SystemProperties.clear("liferay.mode");
+
+			putObjectDefinition =
+				objectDefinitionResource.
+					putObjectDefinitionByExternalReferenceCode(
+						randomObjectDefinition.getExternalReferenceCode(),
+						randomObjectDefinition);
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+
+		objectField = _getObjectField(putObjectDefinition, "textObjectField");
+
+		_assertObjectField(true, ObjectField::getIndexedAsKeyword, objectField);
+		_assertObjectField(
+			StringPool.BLANK, ObjectField::getIndexedLanguageId, objectField);
+		_assertObjectField(
+			new ObjectFieldSetting[] {
+				new ObjectFieldSetting() {
+					{
+						name = ObjectFieldSettingConstants.NAME_SHOW_COUNTER;
+						value = false;
+					}
+				}
+			},
+			null, objectField);
 
 		_testPutObjectDefinitionByExternalReferenceCodeWithSystemAggregationObjectField();
 	}
@@ -2245,14 +2353,36 @@ public class ObjectDefinitionResourceTest
 
 	private <T> void _assertObjectField(
 		T expectedValue, Function<ObjectField, T> function,
-		ObjectField[] objectFields) {
+		ObjectField objectField) {
 
-		Assert.assertEquals(
-			Arrays.toString(objectFields), 1, objectFields.length);
+		if (expectedValue instanceof
+				ObjectFieldSetting[] expectedObjectFieldSettings) {
 
-		ObjectField objectField = objectFields[0];
+			ObjectFieldSetting[] actualObjectFieldSettings =
+				objectField.getObjectFieldSettings();
 
-		Assert.assertEquals(expectedValue, function.apply(objectField));
+			Assert.assertEquals(
+				Arrays.toString(actualObjectFieldSettings),
+				expectedObjectFieldSettings.length,
+				actualObjectFieldSettings.length);
+
+			for (int i = 0; i < expectedObjectFieldSettings.length; i++) {
+				ObjectFieldSetting actualObjectFieldSetting =
+					actualObjectFieldSettings[i];
+				ObjectFieldSetting expectedObjectFieldSetting =
+					expectedObjectFieldSettings[i];
+
+				Assert.assertEquals(
+					expectedObjectFieldSetting.getName(),
+					actualObjectFieldSetting.getName());
+				Assert.assertEquals(
+					expectedObjectFieldSetting.getValue(),
+					actualObjectFieldSetting.getValue());
+			}
+		}
+		else {
+			Assert.assertEquals(expectedValue, function.apply(objectField));
+		}
 	}
 
 	private void _assertObjectValidationRule(
@@ -2404,6 +2534,20 @@ public class ObjectDefinitionResourceTest
 			externalReferenceCode);
 
 		return relationshipObjectField;
+	}
+
+	private ObjectField _getObjectField(
+		ObjectDefinition objectDefinition, String objectFieldName) {
+
+		ObjectField[] objectFields = ArrayUtil.filter(
+			objectDefinition.getObjectFields(),
+			objectField -> StringUtil.equals(
+				objectField.getName(), objectFieldName));
+
+		Assert.assertEquals(
+			Arrays.toString(objectFields), 1, objectFields.length);
+
+		return objectFields[0];
 	}
 
 	private JSONObject _getOwnerPermissionsJSONObject() {

@@ -3,132 +3,6 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.portal.tools.service.builder.test.compat710">
 	<namespace>SBCompat710</namespace>
-	<entity cache-enabled="true" local-service="true" name="BasicEntry" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="basicEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="name" type="String" />
-		<column name="description" type="String" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="name" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="C_N" return-type="BasicEntry" unique="true">
-			<finder-column name="companyId" />
-			<finder-column name="name" />
-		</finder>
-
-		<!-- Relationships -->
-
-		<column entity="MappingEntry" mapping-table="MappingEntries_BasicEntries" name="mappingEntries" type="Collection" />
-	</entity>
-	<entity cache-enabled="false" local-service="true" name="CacheDisabledEntry" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="cacheDisabledEntryId" primary="true" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="name" type="String" />
-
-		<!-- Finder methods -->
-
-		<finder name="Name" return-type="CacheDisabledEntry" unique="true">
-			<finder-column name="name" />
-		</finder>
-	</entity>
-	<entity local-service="true" name="EagerBlobEntry" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="eagerBlobEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Other fields -->
-
-		<column lazy="false" name="blob" type="Blob" />
-	</entity>
-	<entity local-service="true" name="LazyBlobEntry" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="lazyBlobEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="blob1" type="Blob" />
-		<column name="blob2" type="Blob" />
-	</entity>
-	<entity local-service="true" name="TreeEntry" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="treeEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="parentTreeEntryId" type="long" />
-		<column name="leftTreeEntryId" type="long" />
-		<column name="rightTreeEntryId" type="long" />
-	</entity>
-	<entity local-service="true" name="MappingEntry" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="mappingEntryId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="name" type="String" />
-
-		<!-- Relationships -->
-
-		<column entity="BasicEntry" mapping-table="MappingEntries_BasicEntries" name="basicEntries" type="Collection" />
-
-		<!-- References -->
-
-		<reference entity="BasicEntry" package-path="com.liferay.portal.tools.service.builder.test.compat710" />
-	</entity>
 	<entity local-service="true" name="ArrayableEntry" remote-service="false">
 
 		<!-- PK fields -->
@@ -163,20 +37,62 @@
 			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="groupId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="WhereClauseEntry" remote-service="false">
+	<entity cache-enabled="true" local-service="true" name="BasicEntry" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="whereClauseEntryId" primary="true" type="long" />
+		<column name="basicEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
-		<column name="nickname" type="String" />
+		<column name="description" type="String" />
+
+		<!-- Relationships -->
+
+		<column entity="MappingEntry" mapping-table="MappingEntries_BasicEntries" name="mappingEntries" type="Collection" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
 
 		<!-- Finder methods -->
 
-		<finder name="Name_Nickname" return-type="Collection" where="nickname IS NOT NULL">
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="C_N" return-type="BasicEntry" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity cache-enabled="false" local-service="true" name="CacheDisabledEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="cacheDisabledEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="CacheDisabledEntry" unique="true">
 			<finder-column name="name" />
 		</finder>
 	</entity>
@@ -195,6 +111,122 @@
 		<finder name="Name" return-type="ConvertNullEntry" unique="true">
 			<finder-column name="name" />
 		</finder>
+	</entity>
+	<entity local-service="true" name="EagerBlobEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="eagerBlobEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column lazy="false" name="blob" type="Blob" />
+	</entity>
+	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntry" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="ercCompanyEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+
+		<!-- Other fields -->
+
+		<column name="column1" type="int" />
+	</entity>
+	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="ercGroupEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
+	<entity external-reference-code="group" local-service="true" name="ERCVersionedEntry" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="ercVersionedEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
+	<entity local-service="true" name="LazyBlobEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="lazyBlobEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="blob1" type="Blob" />
+		<column name="blob2" type="Blob" />
+	</entity>
+	<entity local-service="true" name="LikeFinderEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="likeFinderEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="ownerId" type="long" />
+		<column name="ownerType" type="int" />
+		<column name="portletId" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="O_O_P" return-type="LikeFinderEntry" unique="true">
+			<finder-column name="ownerId" />
+			<finder-column name="ownerType" />
+			<finder-column name="portletId" />
+		</finder>
+		<finder name="C_O_O_LikeP" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="ownerId" />
+			<finder-column name="ownerType" />
+			<finder-column comparator="LIKE" name="portletId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="LocalizedEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="localizedEntryId" primary="true" type="long" />
+
+		<!-- Localized entity -->
+
+		<localized-entity>
+			<localized-column name="title" />
+			<localized-column name="content" />
+		</localized-entity>
 	</entity>
 	<entity local-service="true" name="ManyColumnsEntry" remote-service="false">
 
@@ -269,57 +301,27 @@
 		<column name="column63" type="int" />
 		<column name="column64" type="int" />
 	</entity>
-	<entity local-service="true" name="LikeFinderEntry" remote-service="false">
+	<entity local-service="true" name="MappingEntry" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="likeFinderEntryId" primary="true" type="long" />
+		<column name="mappingEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="ownerId" type="long" />
-		<column name="ownerType" type="int" />
-		<column name="portletId" type="String" />
-
-		<!-- Finder methods -->
-
-		<finder name="C_O_O_LikeP" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="ownerId" />
-			<finder-column name="ownerType" />
-			<finder-column comparator="LIKE" name="portletId" />
-		</finder>
-		<finder name="O_O_P" return-type="LikeFinderEntry" unique="true">
-			<finder-column name="ownerId" />
-			<finder-column name="ownerType" />
-			<finder-column name="portletId" />
-		</finder>
-	</entity>
-	<entity local-service="true" name="TrashEntry" remote-service="false" trash-enabled="true">
-
-		<!-- PK fields -->
-
-		<column name="trashEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
+
+		<!-- Relationships -->
+
+		<column entity="BasicEntry" mapping-table="MappingEntries_BasicEntries" name="basicEntries" type="Collection" />
+
+		<!-- References -->
+
+		<reference entity="BasicEntry" package-path="com.liferay.portal.tools.service.builder.test.compat710" />
 	</entity>
 	<entity local-service="true" mvcc-enabled="true" name="MvccEntry" remote-service="false">
 
@@ -345,27 +347,11 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
-	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntry" remote-service="false" uuid="true">
+	<entity local-service="true" name="TrashEntry" remote-service="false" trash-enabled="true">
 
 		<!-- PK fields -->
 
-		<column name="ercCompanyEntryId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-
-		<!-- Other fields -->
-
-		<column name="column1" type="int" />
-	</entity>
-	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry" remote-service="false" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="ercGroupEntryId" primary="true" type="long" />
+		<column name="trashEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -374,6 +360,30 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+	</entity>
+	<entity local-service="true" name="TreeEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="treeEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="parentTreeEntryId" type="long" />
+		<column name="leftTreeEntryId" type="long" />
+		<column name="rightTreeEntryId" type="long" />
 	</entity>
 	<entity local-service="true" name="VersionedEntry" remote-service="false" versioned="true">
 
@@ -391,31 +401,21 @@
 			<finder-column name="groupId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="LocalizedEntry" remote-service="false">
+	<entity local-service="true" name="WhereClauseEntry" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="localizedEntryId" primary="true" type="long" />
+		<column name="whereClauseEntryId" primary="true" type="long" />
 
-		<!-- Localized entity -->
+		<!-- Other fields -->
 
-		<localized-entity>
-			<localized-column name="title" />
-			<localized-column name="content" />
-		</localized-entity>
-	</entity>
-	<entity external-reference-code="group" local-service="true" name="ERCVersionedEntry" remote-service="false" uuid="true">
+		<column name="name" type="String" />
+		<column name="nickname" type="String" />
 
-		<!-- PK fields -->
+		<!-- Finder methods -->
 
-		<column name="ercVersionedEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
+		<finder name="Name_Nickname" return-type="Collection" where="nickname IS NOT NULL">
+			<finder-column name="name" />
+		</finder>
 	</entity>
 </service-builder>

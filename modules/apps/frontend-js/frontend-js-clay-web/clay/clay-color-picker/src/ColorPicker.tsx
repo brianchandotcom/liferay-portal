@@ -63,10 +63,10 @@ interface IProps
 	/**
 	 * Labels for the aria attributes
 	 */
-	ariaLabels?: {
+	ariaLabels?: Partial<{
 		selectColor: string;
 		selectionIs: string;
-	};
+	}>;
 
 	/**
 	 * List of color hex values
@@ -103,10 +103,10 @@ interface IProps
 	/**
 	 * Messages for the Color Picker.
 	 */
-	messages?: {
+	messages?: Partial<{
 		close: string;
 		customColor: string;
-	};
+	}>;
 
 	/**
 	 * The input attribute for name
@@ -134,6 +134,10 @@ interface IProps
 	 */
 	onValueChange?: (val: string) => void;
 
+	/**
+	 * List of predefined colors.
+	 */
+
 	predefinedColors?: Array<string>;
 
 	/**
@@ -146,6 +150,10 @@ interface IProps
 	 * This defaults to true
 	 */
 	showPalette?: boolean;
+
+	/**
+	 * Flag to display predefined colors together with custom colors.
+	 */
 
 	showPredefinedColorsWithCustom?: boolean;
 

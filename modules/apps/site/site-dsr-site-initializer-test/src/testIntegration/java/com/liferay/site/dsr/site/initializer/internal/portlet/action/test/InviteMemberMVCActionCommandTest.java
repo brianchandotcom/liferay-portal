@@ -182,14 +182,14 @@ public class InviteMemberMVCActionCommandTest {
 			TestPropsValues.getCompanyId(), emailAddress);
 
 		Assert.assertTrue(
+			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
+				accountEntry.getAccountEntryId(), user.getUserId()));
+		Assert.assertTrue(
 			ListUtil.exists(
 				_userGroupRoleLocalService.getUserGroupRoles(
 					user.getUserId(), group.getGroupId()),
 				userGroupRole ->
 					role.getRoleId() == userGroupRole.getRoleId()));
-		Assert.assertTrue(
-			_accountEntryUserRelLocalService.hasAccountEntryUserRel(
-				accountEntry.getAccountEntryId(), user.getUserId()));
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

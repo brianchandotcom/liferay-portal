@@ -178,11 +178,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		Group group = _groupService.getGroup(
-			GetterUtil.getLong(values.get("siteId")));
-
 		long accountEntryId = GetterUtil.getLong(
 			values.get("r_accountToDSRRooms_accountEntryId"));
+		Group group = _groupService.getGroup(
+			GetterUtil.getLong(values.get("siteId")));
 
 		Ticket ticket = _addInviteMemberTicket(
 			accountEntryId, group.getCompanyId(), group,

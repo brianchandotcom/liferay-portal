@@ -90,7 +90,7 @@ const AIHubForm = () => {
 	return (
 		<ProductPurchase.Shell
 			className="liferay-ai-hub-form"
-			title={i18n.translate('request-access-to-ai-private-hub-beta')}
+			title={i18n.translate('request-access-to-ai-hub-private-beta')}
 		>
 			<p className="mb-6 text-black-50">
 				{i18n.translate(
@@ -336,12 +336,12 @@ const AIHubForm = () => {
 								errors.administrationEmailAddress?.message
 							}
 							helpMessage={i18n.translate(
-								'this-is-the-email-address-that-will-receive-the-aihub-account-management-invite'
+								'this-is-the-email-address-that-will-receive-the-ai-hub-account-management-invite'
 							)}
 							id="administrationEmailAddress"
 							label={i18n.translate('administration-email')}
 							placeholder={i18n.translate(
-								'enter-administration-email'
+								'enter-administration-email-address'
 							)}
 							required
 						/>

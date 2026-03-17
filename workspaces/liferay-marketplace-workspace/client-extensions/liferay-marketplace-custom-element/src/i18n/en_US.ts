@@ -254,7 +254,7 @@ export default {
 	'email': 'Email',
 	'email-address': 'Email Address',
 	'end-user-license-agreement': 'End User License Agreement',
-	'enter-administration-email': 'Enter administration email',
+	'enter-administration-email-address': 'Enter administration email address',
 	'enter-ai-hub-account-name': 'Enter AI Hub Account Name',
 	'enter-app-description': 'Enter app description',
 	'enter-domain-here': 'Enter domain here',
@@ -595,7 +595,6 @@ export default {
 		'Purchase and install new apps and they will show up here.',
 	'purchase-app': 'Purchase App',
 	'purchase-completed': 'Purchase Completed',
-
 	'purchase-date': 'Purchase Date',
 	'purchase-failed': 'Purchase Failed',
 	'purchase-number': 'Purchase Number',
@@ -621,8 +620,8 @@ export default {
 		'Renewal will be available 3 months before your activation key expires.',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',
-	'request-access-to-ai-private-hub-beta':
-		'Request Access to AI Private Hub Beta',
+	'request-access-to-ai-hub-private-beta':
+		'Request Access to AI Hub Private Beta',
 	'request-account': 'Request Account',
 	'request-description': 'Request Description',
 	'request-details': 'Request Details',
@@ -768,8 +767,8 @@ export default {
 	'this-app-is-already-installed-in-this-environment':
 		'This app is already installed in this environment.',
 	'this-field-is-required': 'This field is required.',
-	'this-is-the-email-address-that-will-receive-the-aihub-account-management-invite':
-		'This is the email address that will receive the AIHub account management invite.',
+	'this-is-the-email-address-that-will-receive-the-ai-hub-account-management-invite':
+		'This is the email address that will receive the AI Hub account management invite.',
 	'this-is-the-first-version-of-the-app-to-be-published':
 		'This is the first version of the app to be published.',
 	'this-key-is-expired-and-cannot-be-downloaded':

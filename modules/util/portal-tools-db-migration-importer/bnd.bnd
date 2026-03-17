@@ -6,6 +6,7 @@ Main-Class: com.liferay.portal.tools.db.migration.importer.DBMigrationImport
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
+	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/BoundaryCheckerUtil.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncBufferedReader.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\

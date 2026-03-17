@@ -94,7 +94,7 @@ public class InviteMemberMVCActionCommand
 			inviteDigitalSalesRoomRoomUserDisplayContext);
 
 		User user = _addUser(
-			actionRequest, jsonObject.getLong("accountEntryId"),
+			jsonObject.getLong("accountEntryId"), actionRequest,
 			ticket.getClassPK(), jsonObject.getString("emailAddress"),
 			jsonObject.getString("roleKey"));
 
@@ -115,7 +115,7 @@ public class InviteMemberMVCActionCommand
 	}
 
 	private User _addUser(
-			ActionRequest actionRequest, long accountEntryId,
+			long accountEntryId, ActionRequest actionRequest,
 			long digitalSalesRoomId, String emailAddress, String roleKey)
 		throws Exception {
 

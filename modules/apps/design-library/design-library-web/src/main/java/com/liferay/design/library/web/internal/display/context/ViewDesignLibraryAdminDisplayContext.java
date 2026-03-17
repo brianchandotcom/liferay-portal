@@ -61,11 +61,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 					DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY, "{id}"
 				).buildString(),
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
-				null, null, "link"),
-			new FDSActionDropdownItem(
-				"#remove/{id}", "trash", "remove",
-				LanguageUtil.get(_httpServletRequest, "remove"), null, null,
-				"link"));
+				null, null, "link"));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

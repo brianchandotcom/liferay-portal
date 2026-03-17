@@ -136,6 +136,34 @@ describe('Kanban Task', () => {
 		});
 	});
 
+	it('hides other items actions when task only has view permissions', () => {
+		const taskWithOnlyViewPermission = {
+			...task,
+			actions: {
+				assignToMe: false,
+				delete: false,
+				get: true,
+				subscribe: false,
+				update: false,
+			},
+		};
+
+		const {queryByText} = render(
+			<KanbanViewContext.Provider
+				value={{itemsActions: [], loadData: mockLoadData} as any}
+			>
+				<Task {...taskWithOnlyViewPermission} />
+			</KanbanViewContext.Provider>
+		);
+
+		expect(queryByText('view')).toBeInTheDocument();
+
+		expect(queryByText('assign-to-...')).not.toBeInTheDocument();
+		expect(queryByText('delete')).not.toBeInTheDocument();
+		expect(queryByText('edit')).not.toBeInTheDocument();
+		expect(queryByText('watch-task')).not.toBeInTheDocument();
+	});
+
 	it('navigates when edit and view actions are clicked', async () => {
 		const itemsActions = [
 			{items: []},
@@ -207,6 +235,16 @@ describe('Kanban Task', () => {
 		expect(getByText('Task title')).toBeInTheDocument();
 		expect(getByText('Project A')).toBeInTheDocument();
 		expect(getByText('In Progress')).toBeInTheDocument();
+	});
+
+	it('shows all items actions when task has full permissions', () => {
+		const {queryByText} = renderTask();
+
+		expect(queryByText('assign-to-...')).toBeInTheDocument();
+		expect(queryByText('delete')).toBeInTheDocument();
+		expect(queryByText('edit')).toBeInTheDocument();
+		expect(queryByText('view')).toBeInTheDocument();
+		expect(queryByText('watch-task')).toBeInTheDocument();
 	});
 
 	it('shows error toast when assign-to-me fails', async () => {

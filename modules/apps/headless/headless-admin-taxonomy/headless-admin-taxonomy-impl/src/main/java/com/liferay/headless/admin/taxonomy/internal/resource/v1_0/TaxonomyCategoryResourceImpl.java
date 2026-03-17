@@ -891,6 +891,36 @@ public class TaxonomyCategoryResourceImpl
 			long groupId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			taxonomyCategory.getParentTaxonomyVocabulary();
+
+		if ((parentTaxonomyVocabulary != null) &&
+			Validator.isNotNull(
+				parentTaxonomyVocabulary.getExternalReferenceCode())) {
+
+			String taxonomyVocabularyExternalReferenceCode =
+				parentTaxonomyVocabulary.getExternalReferenceCode();
+
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyService.getOrAddEmptyVocabulary(
+					taxonomyVocabularyExternalReferenceCode, groupId);
+
+			if (FeatureFlagManagerUtil.isEnabled(
+					assetVocabulary.getCompanyId(), "LPD-17564")) {
+
+				Group group = _groupLocalService.getGroup(groupId);
+
+				if (group.isCMS()) {
+					_assetVocabularyGroupRelLocalService.
+						setAssetVocabularyGroupRels(
+							assetVocabulary.getVocabularyId(),
+							new long[] {GroupConstants.GROUP_ID_ALL});
+				}
+			}
+
+			return assetVocabulary.getVocabularyId();
+		}
+
 		Long taxonomyVocabularyId = taxonomyCategory.getTaxonomyVocabularyId();
 
 		if (taxonomyVocabularyId != null) {
@@ -904,38 +934,7 @@ public class TaxonomyCategoryResourceImpl
 			}
 		}
 
-		String taxonomyVocabularyExternalReferenceCode = StringPool.BLANK;
-
-		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
-			taxonomyCategory.getParentTaxonomyVocabulary();
-
-		if (parentTaxonomyVocabulary != null) {
-			taxonomyVocabularyExternalReferenceCode =
-				parentTaxonomyVocabulary.getExternalReferenceCode();
-		}
-
-		if (Validator.isBlank(taxonomyVocabularyExternalReferenceCode)) {
-			return null;
-		}
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyService.getOrAddEmptyVocabulary(
-				taxonomyVocabularyExternalReferenceCode, groupId);
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				assetVocabulary.getCompanyId(), "LPD-17564")) {
-
-			Group group = _groupLocalService.getGroup(groupId);
-
-			if (group.isCMS()) {
-				_assetVocabularyGroupRelLocalService.
-					setAssetVocabularyGroupRels(
-						assetVocabulary.getVocabularyId(),
-						new long[] {GroupConstants.GROUP_ID_ALL});
-			}
-		}
-
-		return assetVocabulary.getVocabularyId();
+		return null;
 	}
 
 	private long _getTotalCount(Long siteId) {

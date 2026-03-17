@@ -146,21 +146,6 @@ public interface LVEntryLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the lv entry localizations before and after the current lv entry localization in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryLocalizationId the primary key of the current lv entry localization
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
-	 */
-	public LVEntryLocalization[] findByLvEntryId_PrevAndNext(
-			long lvEntryLocalizationId, long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalization> orderByComparator)
-		throws NoSuchLVEntryLocalizationException;
-
-	/**
 	 * Removes all the lv entry localizations where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -396,4 +381,4 @@ public interface LVEntryLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:739154002
+// LIFERAY-SERVICE-BUILDER-HASH:793364427

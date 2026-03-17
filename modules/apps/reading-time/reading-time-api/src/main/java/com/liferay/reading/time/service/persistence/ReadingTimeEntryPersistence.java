@@ -147,21 +147,6 @@ public interface ReadingTimeEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the reading time entries before and after the current reading time entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param readingTimeEntryId the primary key of the current reading time entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next reading time entry
-	 * @throws NoSuchEntryException if a reading time entry with the primary key could not be found
-	 */
-	public ReadingTimeEntry[] findByUuid_PrevAndNext(
-			long readingTimeEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the reading time entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -347,22 +332,6 @@ public interface ReadingTimeEntryPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the reading time entries before and after the current reading time entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param readingTimeEntryId the primary key of the current reading time entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next reading time entry
-	 * @throws NoSuchEntryException if a reading time entry with the primary key could not be found
-	 */
-	public ReadingTimeEntry[] findByUuid_C_PrevAndNext(
-			long readingTimeEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the reading time entries where uuid = &#63; and companyId = &#63; from the database.
@@ -561,4 +530,4 @@ public interface ReadingTimeEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1658794586
+// LIFERAY-SERVICE-BUILDER-HASH:792449279

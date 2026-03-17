@@ -146,21 +146,6 @@ public interface BatchEngineExportTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the batch engine export tasks before and after the current batch engine export task in the ordered set where uuid = &#63;.
-	 *
-	 * @param batchEngineExportTaskId the primary key of the current batch engine export task
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch engine export task
-	 * @throws NoSuchExportTaskException if a batch engine export task with the primary key could not be found
-	 */
-	public BatchEngineExportTask[] findByUuid_PrevAndNext(
-			long batchEngineExportTaskId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<BatchEngineExportTask> orderByComparator)
-		throws NoSuchExportTaskException;
-
-	/**
 	 * Removes all the batch engine export tasks where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface BatchEngineExportTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the batch engine export tasks before and after the current batch engine export task in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param batchEngineExportTaskId the primary key of the current batch engine export task
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch engine export task
-	 * @throws NoSuchExportTaskException if a batch engine export task with the primary key could not be found
-	 */
-	public BatchEngineExportTask[] findByUuid_C_PrevAndNext(
-			long batchEngineExportTaskId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<BatchEngineExportTask> orderByComparator)
-		throws NoSuchExportTaskException;
-
-	/**
 	 * Removes all the batch engine export tasks where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -445,21 +414,6 @@ public interface BatchEngineExportTaskPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the batch engine export tasks before and after the current batch engine export task in the ordered set where companyId = &#63;.
-	 *
-	 * @param batchEngineExportTaskId the primary key of the current batch engine export task
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch engine export task
-	 * @throws NoSuchExportTaskException if a batch engine export task with the primary key could not be found
-	 */
-	public BatchEngineExportTask[] findByCompanyId_PrevAndNext(
-			long batchEngineExportTaskId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<BatchEngineExportTask> orderByComparator)
-		throws NoSuchExportTaskException;
-
-	/**
 	 * Removes all the batch engine export tasks where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -587,21 +541,6 @@ public interface BatchEngineExportTaskPersistence
 		String executeStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<BatchEngineExportTask>
 			orderByComparator);
-
-	/**
-	 * Returns the batch engine export tasks before and after the current batch engine export task in the ordered set where executeStatus = &#63;.
-	 *
-	 * @param batchEngineExportTaskId the primary key of the current batch engine export task
-	 * @param executeStatus the execute status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next batch engine export task
-	 * @throws NoSuchExportTaskException if a batch engine export task with the primary key could not be found
-	 */
-	public BatchEngineExportTask[] findByExecuteStatus_PrevAndNext(
-			long batchEngineExportTaskId, String executeStatus,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<BatchEngineExportTask> orderByComparator)
-		throws NoSuchExportTaskException;
 
 	/**
 	 * Removes all the batch engine export tasks where executeStatus = &#63; from the database.
@@ -795,4 +734,4 @@ public interface BatchEngineExportTaskPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1502960346
+// LIFERAY-SERVICE-BUILDER-HASH:1702379065

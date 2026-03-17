@@ -253,24 +253,6 @@ public class CommerceTermEntryRelUtil {
 	}
 
 	/**
-	 * Returns the commerce term entry rels before and after the current commerce term entry rel in the ordered set where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryRelId the primary key of the current commerce term entry rel
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry rel
-	 * @throws NoSuchTermEntryRelException if a commerce term entry rel with the primary key could not be found
-	 */
-	public static CommerceTermEntryRel[] findByCommerceTermEntryId_PrevAndNext(
-			long commerceTermEntryRelId, long commerceTermEntryId,
-			OrderByComparator<CommerceTermEntryRel> orderByComparator)
-		throws com.liferay.commerce.term.exception.NoSuchTermEntryRelException {
-
-		return getPersistence().findByCommerceTermEntryId_PrevAndNext(
-			commerceTermEntryRelId, commerceTermEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce term entry rels where commerceTermEntryId = &#63; from the database.
 	 *
 	 * @param commerceTermEntryId the commerce term entry ID
@@ -435,27 +417,6 @@ public class CommerceTermEntryRelUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, commerceTermEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce term entry rels before and after the current commerce term entry rel in the ordered set where classNameId = &#63; and commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryRelId the primary key of the current commerce term entry rel
-	 * @param classNameId the class name ID
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce term entry rel
-	 * @throws NoSuchTermEntryRelException if a commerce term entry rel with the primary key could not be found
-	 */
-	public static CommerceTermEntryRel[] findByC_C_PrevAndNext(
-			long commerceTermEntryRelId, long classNameId,
-			long commerceTermEntryId,
-			OrderByComparator<CommerceTermEntryRel> orderByComparator)
-		throws com.liferay.commerce.term.exception.NoSuchTermEntryRelException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			commerceTermEntryRelId, classNameId, commerceTermEntryId,
-			orderByComparator);
 	}
 
 	/**
@@ -728,4 +689,4 @@ public class CommerceTermEntryRelUtil {
 	private static volatile CommerceTermEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:875565723
+// LIFERAY-SERVICE-BUILDER-HASH:-1238829845

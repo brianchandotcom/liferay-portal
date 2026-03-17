@@ -266,26 +266,6 @@ public class JournalArticleLocalizationUtil {
 	}
 
 	/**
-	 * Returns the journal article localizations before and after the current journal article localization in the ordered set where companyId = &#63; and articlePK = &#63;.
-	 *
-	 * @param articleLocalizationId the primary key of the current journal article localization
-	 * @param companyId the company ID
-	 * @param articlePK the article pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article localization
-	 * @throws NoSuchArticleLocalizationException if a journal article localization with the primary key could not be found
-	 */
-	public static JournalArticleLocalization[] findByC_A_PrevAndNext(
-			long articleLocalizationId, long companyId, long articlePK,
-			OrderByComparator<JournalArticleLocalization> orderByComparator)
-		throws com.liferay.journal.exception.
-			NoSuchArticleLocalizationException {
-
-		return getPersistence().findByC_A_PrevAndNext(
-			articleLocalizationId, companyId, articlePK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal article localizations where companyId = &#63; and articlePK = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -559,4 +539,4 @@ public class JournalArticleLocalizationUtil {
 	private static volatile JournalArticleLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1364423880
+// LIFERAY-SERVICE-BUILDER-HASH:-1368908121

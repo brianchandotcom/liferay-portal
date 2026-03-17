@@ -240,25 +240,6 @@ public class ERCGroupEntryUtil {
 	}
 
 	/**
-	 * Returns the erc group entries before and after the current erc group entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param ercGroupEntryId the primary key of the current erc group entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc group entry
-	 * @throws NoSuchERCGroupEntryException if a erc group entry with the primary key could not be found
-	 */
-	public static ERCGroupEntry[] findByUuid_PrevAndNext(
-			long ercGroupEntryId, String uuid,
-			OrderByComparator<ERCGroupEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchERCGroupEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			ercGroupEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the erc group entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -488,26 +469,6 @@ public class ERCGroupEntryUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the erc group entries before and after the current erc group entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param ercGroupEntryId the primary key of the current erc group entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc group entry
-	 * @throws NoSuchERCGroupEntryException if a erc group entry with the primary key could not be found
-	 */
-	public static ERCGroupEntry[] findByUuid_C_PrevAndNext(
-			long ercGroupEntryId, String uuid, long companyId,
-			OrderByComparator<ERCGroupEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchERCGroupEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			ercGroupEntryId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -762,4 +723,4 @@ public class ERCGroupEntryUtil {
 	private static volatile ERCGroupEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1219507716
+// LIFERAY-SERVICE-BUILDER-HASH:-1822784362

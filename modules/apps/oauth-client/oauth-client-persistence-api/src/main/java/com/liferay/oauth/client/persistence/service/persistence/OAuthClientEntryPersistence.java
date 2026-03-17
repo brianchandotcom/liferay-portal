@@ -146,21 +146,6 @@ public interface OAuthClientEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param oAuthClientEntryId the primary key of the current o auth client entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
-	 */
-	public OAuthClientEntry[] findByCompanyId_PrevAndNext(
-			long oAuthClientEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
-				orderByComparator)
-		throws NoSuchOAuthClientEntryException;
-
-	/**
 	 * Returns all the o auth client entries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -201,21 +186,6 @@ public interface OAuthClientEntryPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set of o auth client entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param oAuthClientEntryId the primary key of the current o auth client entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
-	 */
-	public OAuthClientEntry[] filterFindByCompanyId_PrevAndNext(
-			long oAuthClientEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
-				orderByComparator)
-		throws NoSuchOAuthClientEntryException;
 
 	/**
 	 * Removes all the o auth client entries where companyId = &#63; from the database.
@@ -354,21 +324,6 @@ public interface OAuthClientEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set where userId = &#63;.
-	 *
-	 * @param oAuthClientEntryId the primary key of the current o auth client entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
-	 */
-	public OAuthClientEntry[] findByUserId_PrevAndNext(
-			long oAuthClientEntryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
-				orderByComparator)
-		throws NoSuchOAuthClientEntryException;
-
-	/**
 	 * Returns all the o auth client entries that the user has permission to view where userId = &#63;.
 	 *
 	 * @param userId the user ID
@@ -408,21 +363,6 @@ public interface OAuthClientEntryPersistence
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set of o auth client entries that the user has permission to view where userId = &#63;.
-	 *
-	 * @param oAuthClientEntryId the primary key of the current o auth client entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
-	 */
-	public OAuthClientEntry[] filterFindByUserId_PrevAndNext(
-			long oAuthClientEntryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
-				orderByComparator)
-		throws NoSuchOAuthClientEntryException;
 
 	/**
 	 * Removes all the o auth client entries where userId = &#63; from the database.
@@ -570,23 +510,6 @@ public interface OAuthClientEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set where companyId = &#63; and authServerWellKnownURI = &#63;.
-	 *
-	 * @param oAuthClientEntryId the primary key of the current o auth client entry
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
-	 */
-	public OAuthClientEntry[] findByC_A_PrevAndNext(
-			long oAuthClientEntryId, long companyId,
-			String authServerWellKnownURI,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
-				orderByComparator)
-		throws NoSuchOAuthClientEntryException;
-
-	/**
 	 * Returns all the o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -630,23 +553,6 @@ public interface OAuthClientEntryPersistence
 		long companyId, String authServerWellKnownURI, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the o auth client entries before and after the current o auth client entry in the ordered set of o auth client entries that the user has permission to view where companyId = &#63; and authServerWellKnownURI = &#63;.
-	 *
-	 * @param oAuthClientEntryId the primary key of the current o auth client entry
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
-	 */
-	public OAuthClientEntry[] filterFindByC_A_PrevAndNext(
-			long oAuthClientEntryId, long companyId,
-			String authServerWellKnownURI,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuthClientEntry>
-				orderByComparator)
-		throws NoSuchOAuthClientEntryException;
 
 	/**
 	 * Removes all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63; from the database.
@@ -856,4 +762,4 @@ public interface OAuthClientEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1164581258
+// LIFERAY-SERVICE-BUILDER-HASH:1642857557

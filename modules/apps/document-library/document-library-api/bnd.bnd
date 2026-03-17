@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library API
 Bundle-SymbolicName: com.liferay.document.library.api
-Bundle-Version: 27.0.2
+Bundle-Version: 28.0.0
 Export-Package:\
 	com.liferay.document.library.asset,\
 	com.liferay.document.library.asset.model,\

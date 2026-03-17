@@ -147,21 +147,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where patcherFixId = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherFixId the patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByPatcherFixId_PrevAndNext(
-			long patcherBuildId, long patcherFixId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63;.
 	 *
 	 * @param patcherFixId the patcher fix ID
@@ -202,21 +187,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		long patcherFixId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where patcherFixId = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherFixId the patcher fix ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByPatcherFixId_PrevAndNext(
-			long patcherBuildId, long patcherFixId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where patcherFixId = &#63; from the database.
@@ -356,21 +326,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByPatcherProjectVersionId_PrevAndNext(
-			long patcherBuildId, long patcherProjectVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -411,21 +366,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		long patcherProjectVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByPatcherProjectVersionId_PrevAndNext(
-			long patcherBuildId, long patcherProjectVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where patcherProjectVersionId = &#63; from the database.
@@ -565,21 +505,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where key = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByKey_PrevAndNext(
-			long patcherBuildId, String key,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where key = &#63;.
 	 *
 	 * @param key the key
@@ -619,21 +544,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		String key, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where key = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByKey_PrevAndNext(
-			long patcherBuildId, String key,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where key = &#63; from the database.
@@ -782,23 +692,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByP_P_PrevAndNext(
-			long patcherBuildId, long patcherAccountId,
-			long patcherProductVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
 	 *
 	 * @param patcherAccountId the patcher account ID
@@ -843,23 +736,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		long patcherAccountId, long patcherProductVersionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByP_P_PrevAndNext(
-			long patcherBuildId, long patcherAccountId,
-			long patcherProductVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where patcherAccountId = &#63; and patcherProductVersionId = &#63; from the database.
@@ -1012,22 +888,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByP_C_PrevAndNext(
-			long patcherBuildId, long patcherFixId, boolean childBuild,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63; and childBuild = &#63;.
 	 *
 	 * @param patcherFixId the patcher fix ID
@@ -1071,22 +931,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		long patcherFixId, boolean childBuild, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByP_C_PrevAndNext(
-			long patcherBuildId, long patcherFixId, boolean childBuild,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where patcherFixId = &#63; and childBuild = &#63; from the database.
@@ -1287,22 +1131,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where key = &#63; and keyVersion &gt; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByK_GtKV_PrevAndNext(
-			long patcherBuildId, String key, double keyVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where key = &#63; and keyVersion &gt; &#63;.
 	 *
 	 * @param key the key
@@ -1346,22 +1174,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		String key, double keyVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where key = &#63; and keyVersion &gt; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByK_GtKV_PrevAndNext(
-			long patcherBuildId, String key, double keyVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where key = &#63; and keyVersion &gt; &#63; from the database.
@@ -1512,22 +1324,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where key = &#63; and keyVersion &lt; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByK_LtKV_PrevAndNext(
-			long patcherBuildId, String key, double keyVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where key = &#63; and keyVersion &lt; &#63;.
 	 *
 	 * @param key the key
@@ -1571,22 +1367,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		String key, double keyVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where key = &#63; and keyVersion &lt; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByK_LtKV_PrevAndNext(
-			long patcherBuildId, String key, double keyVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where key = &#63; and keyVersion &lt; &#63; from the database.
@@ -1737,22 +1517,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByK_L_PrevAndNext(
-			long patcherBuildId, String key, boolean latestKeyBuild,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where key = &#63; and latestKeyBuild = &#63;.
 	 *
 	 * @param key the key
@@ -1796,22 +1560,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		String key, boolean latestKeyBuild, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByK_L_PrevAndNext(
-			long patcherBuildId, String key, boolean latestKeyBuild,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where key = &#63; and latestKeyBuild = &#63; from the database.
@@ -1965,23 +1713,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByL_S_PrevAndNext(
-			long patcherBuildId, boolean latestSupportTicketBuild,
-			String supportTicket,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
 	 *
 	 * @param latestSupportTicketBuild the latest support ticket build
@@ -2027,23 +1758,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByL_S_PrevAndNext(
-			long patcherBuildId, boolean latestSupportTicketBuild,
-			String supportTicket,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where latestSupportTicketBuild = &#63; and supportTicket = &#63; from the database.
@@ -2197,23 +1911,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where supportTicket = &#63; and supportTicketVersion &gt; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param supportTicket the support ticket
-	 * @param supportTicketVersion the support ticket version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByS_GtS_PrevAndNext(
-			long patcherBuildId, String supportTicket,
-			double supportTicketVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where supportTicket = &#63; and supportTicketVersion &gt; &#63;.
 	 *
 	 * @param supportTicket the support ticket
@@ -2257,23 +1954,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		String supportTicket, double supportTicketVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where supportTicket = &#63; and supportTicketVersion &gt; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param supportTicket the support ticket
-	 * @param supportTicketVersion the support ticket version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByS_GtS_PrevAndNext(
-			long patcherBuildId, String supportTicket,
-			double supportTicketVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where supportTicket = &#63; and supportTicketVersion &gt; &#63; from the database.
@@ -2426,23 +2106,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where supportTicket = &#63; and supportTicketVersion &lt; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param supportTicket the support ticket
-	 * @param supportTicketVersion the support ticket version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByS_LtS_PrevAndNext(
-			long patcherBuildId, String supportTicket,
-			double supportTicketVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where supportTicket = &#63; and supportTicketVersion &lt; &#63;.
 	 *
 	 * @param supportTicket the support ticket
@@ -2486,23 +2149,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		String supportTicket, double supportTicketVersion, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where supportTicket = &#63; and supportTicketVersion &lt; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param supportTicket the support ticket
-	 * @param supportTicketVersion the support ticket version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByS_LtS_PrevAndNext(
-			long patcherBuildId, String supportTicket,
-			double supportTicketVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where supportTicket = &#63; and supportTicketVersion &lt; &#63; from the database.
@@ -2663,24 +2309,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where modifiedDate &lt; &#63; and notified = &#63; and status = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param modifiedDate the modified date
-	 * @param notified the notified
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByLtM_N_S_PrevAndNext(
-			long patcherBuildId, Date modifiedDate, boolean notified,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where modifiedDate &lt; &#63; and notified = &#63; and status = &#63;.
 	 *
 	 * @param modifiedDate the modified date
@@ -2727,24 +2355,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		Date modifiedDate, boolean notified, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where modifiedDate &lt; &#63; and notified = &#63; and status = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param modifiedDate the modified date
-	 * @param notified the notified
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByLtM_N_S_PrevAndNext(
-			long patcherBuildId, Date modifiedDate, boolean notified,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Returns all the patcher builds that the user has permission to view where modifiedDate &lt; &#63; and notified = &#63; and status = any &#63;.
@@ -3070,25 +2680,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where patcherFixId = &#63; and patcherProductVersionId &ne; &#63; and childBuild = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherFixId the patcher fix ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param childBuild the child build
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByP_NotP_C_NotT_PrevAndNext(
-			long patcherBuildId, long patcherFixId,
-			long patcherProductVersionId, boolean childBuild, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63; and patcherProductVersionId &ne; &#63; and childBuild = &#63; and type &ne; &#63;.
 	 *
 	 * @param patcherFixId the patcher fix ID
@@ -3141,25 +2732,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where patcherFixId = &#63; and patcherProductVersionId &ne; &#63; and childBuild = &#63; and type &ne; &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherFixId the patcher fix ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param childBuild the child build
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByP_NotP_C_NotT_PrevAndNext(
-			long patcherBuildId, long patcherFixId,
-			long patcherProductVersionId, boolean childBuild, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where patcherFixId = &#63; and patcherProductVersionId &ne; &#63; and childBuild = &#63; and type &ne; &#63; from the database.
@@ -3346,25 +2918,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 			orderByComparator);
 
 	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] findByP_N_L_A_PrevAndNext(
-			long patcherBuildId, long patcherProjectVersionId,
-			String accountEntryCode, boolean latestKeyBuild, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
-
-	/**
 	 * Returns all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
 	 *
 	 * @param patcherProjectVersionId the patcher project version ID
@@ -3417,25 +2970,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		boolean latestKeyBuild, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher builds before and after the current patcher build in the ordered set of patcher builds that the user has permission to view where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * @param patcherBuildId the primary key of the current patcher build
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	public PatcherBuild[] filterFindByP_N_L_A_PrevAndNext(
-			long patcherBuildId, long patcherProjectVersionId,
-			String accountEntryCode, boolean latestKeyBuild, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherBuild>
-				orderByComparator)
-		throws NoSuchPatcherBuildException;
 
 	/**
 	 * Removes all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63; from the database.
@@ -3945,4 +3479,4 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		java.util.List<com.liferay.osb.patcher.model.PatcherFix> patcherFixes);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:577621832
+// LIFERAY-SERVICE-BUILDER-HASH:-1837007088

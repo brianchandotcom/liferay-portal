@@ -238,24 +238,6 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
-	 * Returns the wiki page resources before and after the current wiki page resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current wiki page resource
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page resource
-	 * @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
-	 */
-	public static WikiPageResource[] findByUuid_PrevAndNext(
-			long resourcePrimKey, String uuid,
-			OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			resourcePrimKey, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the wiki page resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -481,25 +463,6 @@ public class WikiPageResourceUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the wiki page resources before and after the current wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current wiki page resource
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next wiki page resource
-	 * @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
-	 */
-	public static WikiPageResource[] findByUuid_C_PrevAndNext(
-			long resourcePrimKey, String uuid, long companyId,
-			OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			resourcePrimKey, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -748,4 +711,4 @@ public class WikiPageResourceUtil {
 	private static volatile WikiPageResourcePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:634340333
+// LIFERAY-SERVICE-BUILDER-HASH:1342778603

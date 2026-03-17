@@ -147,21 +147,6 @@ public interface CalendarResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] findByUuid_PrevAndNext(
-			long calendarResourceId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
-
-	/**
 	 * Removes all the calendar resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface CalendarResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] findByUuid_C_PrevAndNext(
-			long calendarResourceId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
-
-	/**
 	 * Removes all the calendar resources where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface CalendarResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] findByGroupId_PrevAndNext(
-			long calendarResourceId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
-
-	/**
 	 * Returns all the calendar resources that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -549,21 +503,6 @@ public interface CalendarResourcePersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
 			orderByComparator);
-
-	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set of calendar resources that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] filterFindByGroupId_PrevAndNext(
-			long calendarResourceId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
 
 	/**
 	 * Removes all the calendar resources where groupId = &#63; from the database.
@@ -700,21 +639,6 @@ public interface CalendarResourcePersistence
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
 			orderByComparator);
-
-	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set where active = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] findByActive_PrevAndNext(
-			long calendarResourceId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
 
 	/**
 	 * Removes all the calendar resources where active = &#63; from the database.
@@ -854,22 +778,6 @@ public interface CalendarResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set where groupId = &#63; and code = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param groupId the group ID
-	 * @param code the code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] findByG_C_PrevAndNext(
-			long calendarResourceId, long groupId, String code,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
-
-	/**
 	 * Returns all the calendar resources that the user has permission to view where groupId = &#63; and code = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -913,22 +821,6 @@ public interface CalendarResourcePersistence
 		long groupId, String code, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
 			orderByComparator);
-
-	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set of calendar resources that the user has permission to view where groupId = &#63; and code = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param groupId the group ID
-	 * @param code the code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] filterFindByG_C_PrevAndNext(
-			long calendarResourceId, long groupId, String code,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
 
 	/**
 	 * Returns all the calendar resources that the user has permission to view where groupId = any &#63; and code = &#63;.
@@ -1212,22 +1104,6 @@ public interface CalendarResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set where groupId = &#63; and active = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] findByG_A_PrevAndNext(
-			long calendarResourceId, long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
-
-	/**
 	 * Returns all the calendar resources that the user has permission to view where groupId = &#63; and active = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1271,22 +1147,6 @@ public interface CalendarResourcePersistence
 		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
 			orderByComparator);
-
-	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set of calendar resources that the user has permission to view where groupId = &#63; and active = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] filterFindByG_A_PrevAndNext(
-			long calendarResourceId, long groupId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
 
 	/**
 	 * Removes all the calendar resources where groupId = &#63; and active = &#63; from the database.
@@ -1495,24 +1355,6 @@ public interface CalendarResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar resources before and after the current calendar resource in the ordered set where companyId = &#63; and code LIKE &#63; and active = &#63;.
-	 *
-	 * @param calendarResourceId the primary key of the current calendar resource
-	 * @param companyId the company ID
-	 * @param code the code
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	public CalendarResource[] findByC_LikeC_A_PrevAndNext(
-			long calendarResourceId, long companyId, String code,
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarResource>
-				orderByComparator)
-		throws NoSuchResourceException;
-
-	/**
 	 * Removes all the calendar resources where companyId = &#63; and code LIKE &#63; and active = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1652,4 +1494,4 @@ public interface CalendarResourcePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2086880604
+// LIFERAY-SERVICE-BUILDER-HASH:-1066520430

@@ -253,24 +253,6 @@ public class CommerceOrderPaymentUtil {
 	}
 
 	/**
-	 * Returns the commerce order payments before and after the current commerce order payment in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderPaymentId the primary key of the current commerce order payment
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order payment
-	 * @throws NoSuchOrderPaymentException if a commerce order payment with the primary key could not be found
-	 */
-	public static CommerceOrderPayment[] findByCommerceOrderId_PrevAndNext(
-			long commerceOrderPaymentId, long commerceOrderId,
-			OrderByComparator<CommerceOrderPayment> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderPaymentException {
-
-		return getPersistence().findByCommerceOrderId_PrevAndNext(
-			commerceOrderPaymentId, commerceOrderId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order payments where commerceOrderId = &#63; from the database.
 	 *
 	 * @param commerceOrderId the commerce order ID
@@ -458,4 +440,4 @@ public class CommerceOrderPaymentUtil {
 	private static volatile CommerceOrderPaymentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1744815251
+// LIFERAY-SERVICE-BUILDER-HASH:-652127436

@@ -252,25 +252,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByLayoutSetBranchId_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByLayoutSetBranchId_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout revisions where layoutSetBranchId = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -416,25 +397,6 @@ public class LayoutRevisionUtil {
 		long plid, OrderByComparator<LayoutRevision> orderByComparator) {
 
 		return getPersistence().fetchByPlid_Last(plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where plid = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByPlid_PrevAndNext(
-			long layoutRevisionId, long plid,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByPlid_PrevAndNext(
-			layoutRevisionId, plid, orderByComparator);
 	}
 
 	/**
@@ -584,25 +546,6 @@ public class LayoutRevisionUtil {
 		int status, OrderByComparator<LayoutRevision> orderByComparator) {
 
 		return getPersistence().fetchByStatus_Last(status, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where status = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByStatus_PrevAndNext(
-			long layoutRevisionId, int status,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByStatus_PrevAndNext(
-			layoutRevisionId, status, orderByComparator);
 	}
 
 	/**
@@ -774,26 +717,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and head = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByL_H_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId, boolean head,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByL_H_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, head, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout revisions where layoutSetBranchId = &#63; and head = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -961,26 +884,6 @@ public class LayoutRevisionUtil {
 
 		return getPersistence().fetchByL_P_Last(
 			layoutSetBranchId, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByL_P_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId, long plid,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByL_P_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, plid, orderByComparator);
 	}
 
 	/**
@@ -1155,26 +1058,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and status = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByL_S_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId, int status,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByL_S_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout revisions where layoutSetBranchId = &#63; and status = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -1335,26 +1218,6 @@ public class LayoutRevisionUtil {
 		OrderByComparator<LayoutRevision> orderByComparator) {
 
 		return getPersistence().fetchByH_P_Last(head, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where head = &#63; and plid = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param head the head
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByH_P_PrevAndNext(
-			long layoutRevisionId, boolean head, long plid,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByH_P_PrevAndNext(
-			layoutRevisionId, head, plid, orderByComparator);
 	}
 
 	/**
@@ -1522,26 +1385,6 @@ public class LayoutRevisionUtil {
 
 		return getPersistence().fetchByP_NotS_Last(
 			plid, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where plid = &#63; and status &ne; &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param plid the plid
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByP_NotS_PrevAndNext(
-			long layoutRevisionId, long plid, int status,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByP_NotS_PrevAndNext(
-			layoutRevisionId, plid, status, orderByComparator);
 	}
 
 	/**
@@ -1724,28 +1567,6 @@ public class LayoutRevisionUtil {
 
 		return getPersistence().fetchByL_L_P_Last(
 			layoutSetBranchId, layoutBranchId, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByL_L_P_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId, long layoutBranchId,
-			long plid, OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByL_L_P_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, layoutBranchId, plid,
-			orderByComparator);
 	}
 
 	/**
@@ -1939,29 +1760,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param parentLayoutRevisionId the parent layout revision ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByL_P_P_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId,
-			long parentLayoutRevisionId, long plid,
-			OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByL_P_P_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, parentLayoutRevisionId, plid,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -2147,27 +1945,6 @@ public class LayoutRevisionUtil {
 
 		return getPersistence().fetchByL_H_P_Collection_Last(
 			layoutSetBranchId, head, plid, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByL_H_P_Collection_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId, boolean head,
-			long plid, OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByL_H_P_Collection_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, head, plid, orderByComparator);
 	}
 
 	/**
@@ -2358,28 +2135,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByL_H_S_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId, boolean head,
-			int status, OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByL_H_S_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, head, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63; from the database.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -2562,28 +2317,6 @@ public class LayoutRevisionUtil {
 
 		return getPersistence().fetchByL_P_S_Last(
 			layoutSetBranchId, plid, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout revisions before and after the current layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
-	 *
-	 * @param layoutRevisionId the primary key of the current layout revision
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	public static LayoutRevision[] findByL_P_S_PrevAndNext(
-			long layoutRevisionId, long layoutSetBranchId, long plid,
-			int status, OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutRevisionException {
-
-		return getPersistence().findByL_P_S_PrevAndNext(
-			layoutRevisionId, layoutSetBranchId, plid, status,
-			orderByComparator);
 	}
 
 	/**
@@ -2774,4 +2507,4 @@ public class LayoutRevisionUtil {
 	private static volatile LayoutRevisionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:834632843
+// LIFERAY-SERVICE-BUILDER-HASH:-536858556

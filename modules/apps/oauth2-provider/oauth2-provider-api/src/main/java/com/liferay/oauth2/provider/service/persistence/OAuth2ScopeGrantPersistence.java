@@ -151,21 +151,6 @@ public interface OAuth2ScopeGrantPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the o auth2 scope grants before and after the current o auth2 scope grant in the ordered set where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * @param oAuth2ScopeGrantId the primary key of the current o auth2 scope grant
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth2 scope grant
-	 * @throws NoSuchOAuth2ScopeGrantException if a o auth2 scope grant with the primary key could not be found
-	 */
-	public OAuth2ScopeGrant[] findByOAuth2ApplicationScopeAliasesId_PrevAndNext(
-			long oAuth2ScopeGrantId, long oAuth2ApplicationScopeAliasesId,
-			com.liferay.portal.kernel.util.OrderByComparator<OAuth2ScopeGrant>
-				orderByComparator)
-		throws NoSuchOAuth2ScopeGrantException;
-
-	/**
 	 * Removes all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63; from the database.
 	 *
 	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
@@ -563,4 +548,4 @@ public interface OAuth2ScopeGrantPersistence
 			oAuth2Authorizations);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2095601459
+// LIFERAY-SERVICE-BUILDER-HASH:-1200494804

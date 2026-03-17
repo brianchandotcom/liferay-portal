@@ -146,21 +146,6 @@ public interface CommerceCurrencyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce currencies before and after the current commerce currency in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceCurrencyId the primary key of the current commerce currency
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce currency
-	 * @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
-	 */
-	public CommerceCurrency[] findByUuid_PrevAndNext(
-			long commerceCurrencyId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
-				orderByComparator)
-		throws NoSuchCurrencyException;
-
-	/**
 	 * Removes all the commerce currencies where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface CommerceCurrencyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce currencies before and after the current commerce currency in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceCurrencyId the primary key of the current commerce currency
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce currency
-	 * @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
-	 */
-	public CommerceCurrency[] findByUuid_C_PrevAndNext(
-			long commerceCurrencyId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
-				orderByComparator)
-		throws NoSuchCurrencyException;
-
-	/**
 	 * Removes all the commerce currencies where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -442,21 +411,6 @@ public interface CommerceCurrencyPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce currencies before and after the current commerce currency in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceCurrencyId the primary key of the current commerce currency
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce currency
-	 * @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
-	 */
-	public CommerceCurrency[] findByCompanyId_PrevAndNext(
-			long commerceCurrencyId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
-				orderByComparator)
-		throws NoSuchCurrencyException;
 
 	/**
 	 * Removes all the commerce currencies where companyId = &#63; from the database.
@@ -646,22 +600,6 @@ public interface CommerceCurrencyPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce currencies before and after the current commerce currency in the ordered set where companyId = &#63; and primary = &#63;.
-	 *
-	 * @param commerceCurrencyId the primary key of the current commerce currency
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce currency
-	 * @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
-	 */
-	public CommerceCurrency[] findByC_P_PrevAndNext(
-			long commerceCurrencyId, long companyId, boolean primary,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
-				orderByComparator)
-		throws NoSuchCurrencyException;
-
-	/**
 	 * Removes all the commerce currencies where companyId = &#63; and primary = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -799,22 +737,6 @@ public interface CommerceCurrencyPersistence
 		long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce currencies before and after the current commerce currency in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param commerceCurrencyId the primary key of the current commerce currency
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce currency
-	 * @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
-	 */
-	public CommerceCurrency[] findByC_A_PrevAndNext(
-			long commerceCurrencyId, long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
-				orderByComparator)
-		throws NoSuchCurrencyException;
 
 	/**
 	 * Removes all the commerce currencies where companyId = &#63; and active = &#63; from the database.
@@ -962,24 +884,6 @@ public interface CommerceCurrencyPersistence
 		long companyId, boolean primary, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce currencies before and after the current commerce currency in the ordered set where companyId = &#63; and primary = &#63; and active = &#63;.
-	 *
-	 * @param commerceCurrencyId the primary key of the current commerce currency
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce currency
-	 * @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
-	 */
-	public CommerceCurrency[] findByC_P_A_PrevAndNext(
-			long commerceCurrencyId, long companyId, boolean primary,
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceCurrency>
-				orderByComparator)
-		throws NoSuchCurrencyException;
 
 	/**
 	 * Removes all the commerce currencies where companyId = &#63; and primary = &#63; and active = &#63; from the database.
@@ -1175,4 +1079,4 @@ public interface CommerceCurrencyPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1970372108
+// LIFERAY-SERVICE-BUILDER-HASH:1064117540

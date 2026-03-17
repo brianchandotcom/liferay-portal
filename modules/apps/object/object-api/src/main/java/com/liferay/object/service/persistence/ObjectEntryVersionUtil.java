@@ -243,24 +243,6 @@ public class ObjectEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public static ObjectEntryVersion[] findByUuid_PrevAndNext(
-			long objectEntryVersionId, String uuid,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryVersionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectEntryVersionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -426,25 +408,6 @@ public class ObjectEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public static ObjectEntryVersion[] findByUuid_C_PrevAndNext(
-			long objectEntryVersionId, String uuid, long companyId,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryVersionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectEntryVersionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object entry versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -605,24 +568,6 @@ public class ObjectEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public static ObjectEntryVersion[] findByObjectDefinitionId_PrevAndNext(
-			long objectEntryVersionId, long objectDefinitionId,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryVersionException {
-
-		return getPersistence().findByObjectDefinitionId_PrevAndNext(
-			objectEntryVersionId, objectDefinitionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object entry versions where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -777,24 +722,6 @@ public class ObjectEntryVersionUtil {
 
 		return getPersistence().fetchByObjectEntryId_Last(
 			objectEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where objectEntryId = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param objectEntryId the object entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public static ObjectEntryVersion[] findByObjectEntryId_PrevAndNext(
-			long objectEntryVersionId, long objectEntryId,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryVersionException {
-
-		return getPersistence().findByObjectEntryId_PrevAndNext(
-			objectEntryVersionId, objectEntryId, orderByComparator);
 	}
 
 	/**
@@ -961,25 +888,6 @@ public class ObjectEntryVersionUtil {
 
 		return getPersistence().fetchByC_CD_Last(
 			companyId, createDate, orderByComparator);
-	}
-
-	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public static ObjectEntryVersion[] findByC_CD_PrevAndNext(
-			long objectEntryVersionId, long companyId, Date createDate,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryVersionException {
-
-		return getPersistence().findByC_CD_PrevAndNext(
-			objectEntryVersionId, companyId, createDate, orderByComparator);
 	}
 
 	/**
@@ -1219,25 +1127,6 @@ public class ObjectEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public static ObjectEntryVersion[] findByOEI_S_PrevAndNext(
-			long objectEntryVersionId, long objectEntryId, int status,
-			OrderByComparator<ObjectEntryVersion> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectEntryVersionException {
-
-		return getPersistence().findByOEI_S_PrevAndNext(
-			objectEntryVersionId, objectEntryId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object entry versions where objectEntryId = &#63; and status = &#63; from the database.
 	 *
 	 * @param objectEntryId the object entry ID
@@ -1426,4 +1315,4 @@ public class ObjectEntryVersionUtil {
 	private static volatile ObjectEntryVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:828931997
+// LIFERAY-SERVICE-BUILDER-HASH:-749801009

@@ -240,25 +240,6 @@ public class KaleoDefinitionUtil {
 	}
 
 	/**
-	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param kaleoDefinitionId the primary key of the current kaleo definition
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo definition
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	public static KaleoDefinition[] findByUuid_PrevAndNext(
-			long kaleoDefinitionId, String uuid,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			kaleoDefinitionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -491,26 +472,6 @@ public class KaleoDefinitionUtil {
 	}
 
 	/**
-	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param kaleoDefinitionId the primary key of the current kaleo definition
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo definition
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	public static KaleoDefinition[] findByUuid_C_PrevAndNext(
-			long kaleoDefinitionId, String uuid, long companyId,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			kaleoDefinitionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -668,25 +629,6 @@ public class KaleoDefinitionUtil {
 	}
 
 	/**
-	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoDefinitionId the primary key of the current kaleo definition
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo definition
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	public static KaleoDefinition[] findByCompanyId_PrevAndNext(
-			long kaleoDefinitionId, long companyId,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			kaleoDefinitionId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo definitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -835,25 +777,6 @@ public class KaleoDefinitionUtil {
 		boolean active, OrderByComparator<KaleoDefinition> orderByComparator) {
 
 		return getPersistence().fetchByActive_Last(active, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where active = &#63;.
-	 *
-	 * @param kaleoDefinitionId the primary key of the current kaleo definition
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo definition
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	public static KaleoDefinition[] findByActive_PrevAndNext(
-			long kaleoDefinitionId, boolean active,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByActive_PrevAndNext(
-			kaleoDefinitionId, active, orderByComparator);
 	}
 
 	/**
@@ -1089,26 +1012,6 @@ public class KaleoDefinitionUtil {
 	}
 
 	/**
-	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param kaleoDefinitionId the primary key of the current kaleo definition
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo definition
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	public static KaleoDefinition[] findByC_A_PrevAndNext(
-			long kaleoDefinitionId, long companyId, boolean active,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByC_A_PrevAndNext(
-			kaleoDefinitionId, companyId, active, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo definitions where companyId = &#63; and active = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1285,27 +1188,6 @@ public class KaleoDefinitionUtil {
 
 		return getPersistence().fetchByG_C_S_Last(
 			groupId, companyId, scope, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63;.
-	 *
-	 * @param kaleoDefinitionId the primary key of the current kaleo definition
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo definition
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	public static KaleoDefinition[] findByG_C_S_PrevAndNext(
-			long kaleoDefinitionId, long groupId, long companyId, String scope,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByG_C_S_PrevAndNext(
-			kaleoDefinitionId, groupId, companyId, scope, orderByComparator);
 	}
 
 	/**
@@ -1654,30 +1536,6 @@ public class KaleoDefinitionUtil {
 	}
 
 	/**
-	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where groupId = &#63; and companyId = &#63; and scope = &#63; and active = &#63;.
-	 *
-	 * @param kaleoDefinitionId the primary key of the current kaleo definition
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo definition
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	public static KaleoDefinition[] findByG_C_S_A_PrevAndNext(
-			long kaleoDefinitionId, long groupId, long companyId, String scope,
-			boolean active,
-			OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchDefinitionException {
-
-		return getPersistence().findByG_C_S_A_PrevAndNext(
-			kaleoDefinitionId, groupId, companyId, scope, active,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo definitions where groupId = &#63; and companyId = &#63; and scope = &#63; and active = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1941,4 +1799,4 @@ public class KaleoDefinitionUtil {
 	private static volatile KaleoDefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1587542599
+// LIFERAY-SERVICE-BUILDER-HASH:-552087922

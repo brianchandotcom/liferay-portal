@@ -146,21 +146,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 			orderByComparator);
 
 	/**
-	 * Returns the subscriptions before and after the current subscription in the ordered set where userId = &#63;.
-	 *
-	 * @param subscriptionId the primary key of the current subscription
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next subscription
-	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
-	 */
-	public Subscription[] findByUserId_PrevAndNext(
-			long subscriptionId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
-
-	/**
 	 * Removes all the subscriptions where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -295,22 +280,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
-
-	/**
-	 * Returns the subscriptions before and after the current subscription in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param subscriptionId the primary key of the current subscription
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next subscription
-	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
-	 */
-	public Subscription[] findByG_U_PrevAndNext(
-			long subscriptionId, long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
 
 	/**
 	 * Removes all the subscriptions where groupId = &#63; and userId = &#63; from the database.
@@ -450,22 +419,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 		long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
-
-	/**
-	 * Returns the subscriptions before and after the current subscription in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param subscriptionId the primary key of the current subscription
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next subscription
-	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
-	 */
-	public Subscription[] findByU_C_PrevAndNext(
-			long subscriptionId, long userId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
 
 	/**
 	 * Removes all the subscriptions where userId = &#63; and classNameId = &#63; from the database.
@@ -613,23 +566,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 		long companyId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
-
-	/**
-	 * Returns the subscriptions before and after the current subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param subscriptionId the primary key of the current subscription
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next subscription
-	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
-	 */
-	public Subscription[] findByC_C_C_PrevAndNext(
-			long subscriptionId, long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
-				orderByComparator)
-		throws NoSuchSubscriptionException;
 
 	/**
 	 * Removes all the subscriptions where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -929,4 +865,4 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:97378543
+// LIFERAY-SERVICE-BUILDER-HASH:-1475666036

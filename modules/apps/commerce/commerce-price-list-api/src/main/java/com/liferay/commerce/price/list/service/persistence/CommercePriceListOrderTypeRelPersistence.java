@@ -149,21 +149,6 @@ public interface CommercePriceListOrderTypeRelPersistence
 			<CommercePriceListOrderTypeRel> orderByComparator);
 
 	/**
-	 * Returns the commerce price list order type rels before and after the current commerce price list order type rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param commercePriceListOrderTypeRelId the primary key of the current commerce price list order type rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a commerce price list order type rel with the primary key could not be found
-	 */
-	public CommercePriceListOrderTypeRel[] findByUuid_PrevAndNext(
-			long commercePriceListOrderTypeRelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePriceListOrderTypeRel> orderByComparator)
-		throws NoSuchPriceListOrderTypeRelException;
-
-	/**
 	 * Removes all the commerce price list order type rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -301,22 +286,6 @@ public interface CommercePriceListOrderTypeRelPersistence
 			<CommercePriceListOrderTypeRel> orderByComparator);
 
 	/**
-	 * Returns the commerce price list order type rels before and after the current commerce price list order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commercePriceListOrderTypeRelId the primary key of the current commerce price list order type rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a commerce price list order type rel with the primary key could not be found
-	 */
-	public CommercePriceListOrderTypeRel[] findByUuid_C_PrevAndNext(
-			long commercePriceListOrderTypeRelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePriceListOrderTypeRel> orderByComparator)
-		throws NoSuchPriceListOrderTypeRelException;
-
-	/**
 	 * Removes all the commerce price list order type rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -448,22 +417,6 @@ public interface CommercePriceListOrderTypeRelPersistence
 		long commercePriceListId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePriceListOrderTypeRel> orderByComparator);
-
-	/**
-	 * Returns the commerce price list order type rels before and after the current commerce price list order type rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListOrderTypeRelId the primary key of the current commerce price list order type rel
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a commerce price list order type rel with the primary key could not be found
-	 */
-	public CommercePriceListOrderTypeRel[]
-			findByCommercePriceListId_PrevAndNext(
-				long commercePriceListOrderTypeRelId, long commercePriceListId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommercePriceListOrderTypeRel> orderByComparator)
-		throws NoSuchPriceListOrderTypeRelException;
 
 	/**
 	 * Removes all the commerce price list order type rels where commercePriceListId = &#63; from the database.
@@ -665,4 +618,4 @@ public interface CommercePriceListOrderTypeRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1877598572
+// LIFERAY-SERVICE-BUILDER-HASH:-352853939

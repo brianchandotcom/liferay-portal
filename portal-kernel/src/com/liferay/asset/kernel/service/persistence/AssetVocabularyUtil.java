@@ -238,24 +238,6 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where uuid = &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] findByUuid_PrevAndNext(
-			long vocabularyId, String uuid,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			vocabularyId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset vocabularies where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -484,25 +466,6 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] findByUuid_C_PrevAndNext(
-			long vocabularyId, String uuid, long companyId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			vocabularyId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset vocabularies where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -653,24 +616,6 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where groupId = &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] findByGroupId_PrevAndNext(
-			long vocabularyId, long groupId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			vocabularyId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the asset vocabularies that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -717,24 +662,6 @@ public class AssetVocabularyUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set of asset vocabularies that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] filterFindByGroupId_PrevAndNext(
-			long vocabularyId, long groupId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			vocabularyId, groupId, orderByComparator);
 	}
 
 	/**
@@ -1046,24 +973,6 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where companyId = &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] findByCompanyId_PrevAndNext(
-			long vocabularyId, long companyId,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			vocabularyId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset vocabularies where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1292,25 +1201,6 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] findByG_LikeN_PrevAndNext(
-			long vocabularyId, long groupId, String name,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().findByG_LikeN_PrevAndNext(
-			vocabularyId, groupId, name, orderByComparator);
-	}
-
-	/**
 	 * Returns all the asset vocabularies that the user has permission to view where groupId = &#63; and name LIKE &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1362,25 +1252,6 @@ public class AssetVocabularyUtil {
 
 		return getPersistence().filterFindByG_LikeN(
 			groupId, name, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set of asset vocabularies that the user has permission to view where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] filterFindByG_LikeN_PrevAndNext(
-			long vocabularyId, long groupId, String name,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().filterFindByG_LikeN_PrevAndNext(
-			vocabularyId, groupId, name, orderByComparator);
 	}
 
 	/**
@@ -1563,25 +1434,6 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] findByG_V_PrevAndNext(
-			long vocabularyId, long groupId, int visibilityType,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().findByG_V_PrevAndNext(
-			vocabularyId, groupId, visibilityType, orderByComparator);
-	}
-
-	/**
 	 * Returns all the asset vocabularies that the user has permission to view where groupId = &#63; and visibilityType = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1634,25 +1486,6 @@ public class AssetVocabularyUtil {
 
 		return getPersistence().filterFindByG_V(
 			groupId, visibilityType, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset vocabularies before and after the current asset vocabulary in the ordered set of asset vocabularies that the user has permission to view where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * @param vocabularyId the primary key of the current asset vocabulary
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	public static AssetVocabulary[] filterFindByG_V_PrevAndNext(
-			long vocabularyId, long groupId, int visibilityType,
-			OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.asset.kernel.exception.NoSuchVocabularyException {
-
-		return getPersistence().filterFindByG_V_PrevAndNext(
-			vocabularyId, groupId, visibilityType, orderByComparator);
 	}
 
 	/**
@@ -2076,4 +1909,4 @@ public class AssetVocabularyUtil {
 	private static volatile AssetVocabularyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1951033324
+// LIFERAY-SERVICE-BUILDER-HASH:1809463637

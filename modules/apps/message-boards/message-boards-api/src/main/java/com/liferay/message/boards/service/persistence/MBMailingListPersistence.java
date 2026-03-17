@@ -147,21 +147,6 @@ public interface MBMailingListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where uuid = &#63;.
-	 *
-	 * @param mailingListId the primary key of the current message boards mailing list
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards mailing list
-	 * @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	 */
-	public MBMailingList[] findByUuid_PrevAndNext(
-			long mailingListId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
-		throws NoSuchMailingListException;
-
-	/**
 	 * Removes all the message boards mailing lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface MBMailingListPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param mailingListId the primary key of the current message boards mailing list
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards mailing list
-	 * @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	 */
-	public MBMailingList[] findByUuid_C_PrevAndNext(
-			long mailingListId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
-		throws NoSuchMailingListException;
-
-	/**
 	 * Removes all the message boards mailing lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -493,21 +462,6 @@ public interface MBMailingListPersistence
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where active = &#63;.
-	 *
-	 * @param mailingListId the primary key of the current message boards mailing list
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards mailing list
-	 * @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	 */
-	public MBMailingList[] findByActive_PrevAndNext(
-			long mailingListId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
-		throws NoSuchMailingListException;
 
 	/**
 	 * Removes all the message boards mailing lists where active = &#63; from the database.
@@ -695,4 +649,4 @@ public interface MBMailingListPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1181956183
+// LIFERAY-SERVICE-BUILDER-HASH:1066097247

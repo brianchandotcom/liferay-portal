@@ -149,21 +149,6 @@ public interface CommerceInventoryAuditPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce inventory audits before and after the current commerce inventory audit in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param commerceInventoryAuditId the primary key of the current commerce inventory audit
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory audit
-	 * @throws NoSuchInventoryAuditException if a commerce inventory audit with the primary key could not be found
-	 */
-	public CommerceInventoryAudit[] findByLtCreateDate_PrevAndNext(
-			long commerceInventoryAuditId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryAudit> orderByComparator)
-		throws NoSuchInventoryAuditException;
-
-	/**
 	 * Removes all the commerce inventory audits where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -308,24 +293,6 @@ public interface CommerceInventoryAuditPersistence
 		long companyId, String sku, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventoryAudit>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce inventory audits before and after the current commerce inventory audit in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param commerceInventoryAuditId the primary key of the current commerce inventory audit
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce inventory audit
-	 * @throws NoSuchInventoryAuditException if a commerce inventory audit with the primary key could not be found
-	 */
-	public CommerceInventoryAudit[] findByC_S_U_PrevAndNext(
-			long commerceInventoryAuditId, long companyId, String sku,
-			String unitOfMeasureKey,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceInventoryAudit> orderByComparator)
-		throws NoSuchInventoryAuditException;
 
 	/**
 	 * Removes all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63; from the database.
@@ -473,4 +440,4 @@ public interface CommerceInventoryAuditPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-255671651
+// LIFERAY-SERVICE-BUILDER-HASH:1555858264

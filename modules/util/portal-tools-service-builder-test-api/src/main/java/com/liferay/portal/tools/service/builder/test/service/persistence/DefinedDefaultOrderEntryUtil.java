@@ -317,25 +317,6 @@ public class DefinedDefaultOrderEntryUtil {
 	}
 
 	/**
-	 * Returns the defined default order entries before and after the current defined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param definedDefaultOrderEntryId the primary key of the current defined default order entry
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next defined default order entry
-	 * @throws NoSuchDefinedDefaultOrderEntryException if a defined default order entry with the primary key could not be found
-	 */
-	public static DefinedDefaultOrderEntry[] findByName_Collection_PrevAndNext(
-			long definedDefaultOrderEntryId, String name,
-			OrderByComparator<DefinedDefaultOrderEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.exception.
-			NoSuchDefinedDefaultOrderEntryException {
-
-		return getPersistence().findByName_Collection_PrevAndNext(
-			definedDefaultOrderEntryId, name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the defined default order entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -530,4 +511,4 @@ public class DefinedDefaultOrderEntryUtil {
 	private static volatile DefinedDefaultOrderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1029226169
+// LIFERAY-SERVICE-BUILDER-HASH:754858275

@@ -148,21 +148,6 @@ public interface JournalArticleResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the journal article resources before and after the current journal article resource in the ordered set where uuid = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current journal article resource
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article resource
-	 * @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 */
-	public JournalArticleResource[] findByUuid_PrevAndNext(
-			long resourcePrimKey, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException;
-
-	/**
 	 * Removes all the journal article resources where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface JournalArticleResourcePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the journal article resources before and after the current journal article resource in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current journal article resource
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article resource
-	 * @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 */
-	public JournalArticleResource[] findByUuid_C_PrevAndNext(
-			long resourcePrimKey, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException;
-
-	/**
 	 * Removes all the journal article resources where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface JournalArticleResourcePersistence
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleResource>
 			orderByComparator);
-
-	/**
-	 * Returns the journal article resources before and after the current journal article resource in the ordered set where groupId = &#63;.
-	 *
-	 * @param resourcePrimKey the primary key of the current journal article resource
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article resource
-	 * @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 */
-	public JournalArticleResource[] findByGroupId_PrevAndNext(
-			long resourcePrimKey, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException;
 
 	/**
 	 * Removes all the journal article resources where groupId = &#63; from the database.
@@ -698,4 +652,4 @@ public interface JournalArticleResourcePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:849961805
+// LIFERAY-SERVICE-BUILDER-HASH:-254000936

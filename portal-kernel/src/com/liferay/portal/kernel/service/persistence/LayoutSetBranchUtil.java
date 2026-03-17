@@ -242,25 +242,6 @@ public class LayoutSetBranchUtil {
 	}
 
 	/**
-	 * Returns the layout set branches before and after the current layout set branch in the ordered set where groupId = &#63;.
-	 *
-	 * @param layoutSetBranchId the primary key of the current layout set branch
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	public static LayoutSetBranch[] findByGroupId_PrevAndNext(
-			long layoutSetBranchId, long groupId,
-			OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetBranchException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			layoutSetBranchId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout set branches that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -307,25 +288,6 @@ public class LayoutSetBranchUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout set branches before and after the current layout set branch in the ordered set of layout set branches that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param layoutSetBranchId the primary key of the current layout set branch
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	public static LayoutSetBranch[] filterFindByGroupId_PrevAndNext(
-			long layoutSetBranchId, long groupId,
-			OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetBranchException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			layoutSetBranchId, groupId, orderByComparator);
 	}
 
 	/**
@@ -507,26 +469,6 @@ public class LayoutSetBranchUtil {
 	}
 
 	/**
-	 * Returns the layout set branches before and after the current layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param layoutSetBranchId the primary key of the current layout set branch
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	public static LayoutSetBranch[] findByG_P_PrevAndNext(
-			long layoutSetBranchId, long groupId, boolean privateLayout,
-			OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetBranchException {
-
-		return getPersistence().findByG_P_PrevAndNext(
-			layoutSetBranchId, groupId, privateLayout, orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout set branches that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -579,26 +521,6 @@ public class LayoutSetBranchUtil {
 
 		return getPersistence().filterFindByG_P(
 			groupId, privateLayout, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout set branches before and after the current layout set branch in the ordered set of layout set branches that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param layoutSetBranchId the primary key of the current layout set branch
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	public static LayoutSetBranch[] filterFindByG_P_PrevAndNext(
-			long layoutSetBranchId, long groupId, boolean privateLayout,
-			OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetBranchException {
-
-		return getPersistence().filterFindByG_P_PrevAndNext(
-			layoutSetBranchId, groupId, privateLayout, orderByComparator);
 	}
 
 	/**
@@ -871,29 +793,6 @@ public class LayoutSetBranchUtil {
 	}
 
 	/**
-	 * Returns the layout set branches before and after the current layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param layoutSetBranchId the primary key of the current layout set branch
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	public static LayoutSetBranch[] findByG_P_M_PrevAndNext(
-			long layoutSetBranchId, long groupId, boolean privateLayout,
-			boolean master,
-			OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetBranchException {
-
-		return getPersistence().findByG_P_M_PrevAndNext(
-			layoutSetBranchId, groupId, privateLayout, master,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the layout set branches that the user has permission to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -951,29 +850,6 @@ public class LayoutSetBranchUtil {
 
 		return getPersistence().filterFindByG_P_M(
 			groupId, privateLayout, master, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout set branches before and after the current layout set branch in the ordered set of layout set branches that the user has permission to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param layoutSetBranchId the primary key of the current layout set branch
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	public static LayoutSetBranch[] filterFindByG_P_M_PrevAndNext(
-			long layoutSetBranchId, long groupId, boolean privateLayout,
-			boolean master,
-			OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchLayoutSetBranchException {
-
-		return getPersistence().filterFindByG_P_M_PrevAndNext(
-			layoutSetBranchId, groupId, privateLayout, master,
-			orderByComparator);
 	}
 
 	/**
@@ -1180,4 +1056,4 @@ public class LayoutSetBranchUtil {
 	private static volatile LayoutSetBranchPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1886070121
+// LIFERAY-SERVICE-BUILDER-HASH:-1116196406

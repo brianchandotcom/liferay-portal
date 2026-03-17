@@ -145,21 +145,6 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the plo entries before and after the current plo entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param ploEntryId the primary key of the current plo entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next plo entry
-	 * @throws NoSuchPLOEntryException if a plo entry with the primary key could not be found
-	 */
-	public PLOEntry[] findByCompanyId_PrevAndNext(
-			long ploEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-				orderByComparator)
-		throws NoSuchPLOEntryException;
-
-	/**
 	 * Removes all the plo entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -294,22 +279,6 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 		long companyId, String key,
 		com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the plo entries before and after the current plo entry in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param ploEntryId the primary key of the current plo entry
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next plo entry
-	 * @throws NoSuchPLOEntryException if a plo entry with the primary key could not be found
-	 */
-	public PLOEntry[] findByC_K_PrevAndNext(
-			long ploEntryId, long companyId, String key,
-			com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-				orderByComparator)
-		throws NoSuchPLOEntryException;
 
 	/**
 	 * Removes all the plo entries where companyId = &#63; and key = &#63; from the database.
@@ -449,22 +418,6 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 		long companyId, String languageId,
 		com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the plo entries before and after the current plo entry in the ordered set where companyId = &#63; and languageId = &#63;.
-	 *
-	 * @param ploEntryId the primary key of the current plo entry
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next plo entry
-	 * @throws NoSuchPLOEntryException if a plo entry with the primary key could not be found
-	 */
-	public PLOEntry[] findByC_L_PrevAndNext(
-			long ploEntryId, long companyId, String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator<PLOEntry>
-				orderByComparator)
-		throws NoSuchPLOEntryException;
 
 	/**
 	 * Removes all the plo entries where companyId = &#63; and languageId = &#63; from the database.
@@ -658,4 +611,4 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:738268267
+// LIFERAY-SERVICE-BUILDER-HASH:-517957546

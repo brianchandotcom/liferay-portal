@@ -255,25 +255,6 @@ public class CommerceDiscountRuleUtil {
 	}
 
 	/**
-	 * Returns the commerce discount rules before and after the current commerce discount rule in the ordered set where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountRuleId the primary key of the current commerce discount rule
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce discount rule
-	 * @throws NoSuchDiscountRuleException if a commerce discount rule with the primary key could not be found
-	 */
-	public static CommerceDiscountRule[] findByCommerceDiscountId_PrevAndNext(
-			long commerceDiscountRuleId, long commerceDiscountId,
-			OrderByComparator<CommerceDiscountRule> orderByComparator)
-		throws com.liferay.commerce.discount.exception.
-			NoSuchDiscountRuleException {
-
-		return getPersistence().findByCommerceDiscountId_PrevAndNext(
-			commerceDiscountRuleId, commerceDiscountId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce discount rules where commerceDiscountId = &#63; from the database.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -463,4 +444,4 @@ public class CommerceDiscountRuleUtil {
 	private static volatile CommerceDiscountRulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-564097628
+// LIFERAY-SERVICE-BUILDER-HASH:-858535077

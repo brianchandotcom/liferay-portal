@@ -146,21 +146,6 @@ public interface ObjectViewSortColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object view sort columns before and after the current object view sort column in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectViewSortColumnId the primary key of the current object view sort column
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view sort column
-	 * @throws NoSuchObjectViewSortColumnException if a object view sort column with the primary key could not be found
-	 */
-	public ObjectViewSortColumn[] findByUuid_PrevAndNext(
-			long objectViewSortColumnId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectViewSortColumn> orderByComparator)
-		throws NoSuchObjectViewSortColumnException;
-
-	/**
 	 * Removes all the object view sort columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectViewSortColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object view sort columns before and after the current object view sort column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectViewSortColumnId the primary key of the current object view sort column
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view sort column
-	 * @throws NoSuchObjectViewSortColumnException if a object view sort column with the primary key could not be found
-	 */
-	public ObjectViewSortColumn[] findByUuid_C_PrevAndNext(
-			long objectViewSortColumnId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectViewSortColumn> orderByComparator)
-		throws NoSuchObjectViewSortColumnException;
-
-	/**
 	 * Removes all the object view sort columns where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,21 +412,6 @@ public interface ObjectViewSortColumnPersistence
 		long objectViewId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewSortColumn>
 			orderByComparator);
-
-	/**
-	 * Returns the object view sort columns before and after the current object view sort column in the ordered set where objectViewId = &#63;.
-	 *
-	 * @param objectViewSortColumnId the primary key of the current object view sort column
-	 * @param objectViewId the object view ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view sort column
-	 * @throws NoSuchObjectViewSortColumnException if a object view sort column with the primary key could not be found
-	 */
-	public ObjectViewSortColumn[] findByObjectViewId_PrevAndNext(
-			long objectViewSortColumnId, long objectViewId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectViewSortColumn> orderByComparator)
-		throws NoSuchObjectViewSortColumnException;
 
 	/**
 	 * Removes all the object view sort columns where objectViewId = &#63; from the database.
@@ -595,23 +549,6 @@ public interface ObjectViewSortColumnPersistence
 		long objectViewId, String objectFieldName,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectViewSortColumn>
 			orderByComparator);
-
-	/**
-	 * Returns the object view sort columns before and after the current object view sort column in the ordered set where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewSortColumnId the primary key of the current object view sort column
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object view sort column
-	 * @throws NoSuchObjectViewSortColumnException if a object view sort column with the primary key could not be found
-	 */
-	public ObjectViewSortColumn[] findByOVI_OFN_PrevAndNext(
-			long objectViewSortColumnId, long objectViewId,
-			String objectFieldName,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ObjectViewSortColumn> orderByComparator)
-		throws NoSuchObjectViewSortColumnException;
 
 	/**
 	 * Removes all the object view sort columns where objectViewId = &#63; and objectFieldName = &#63; from the database.
@@ -753,4 +690,4 @@ public interface ObjectViewSortColumnPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1844330566
+// LIFERAY-SERVICE-BUILDER-HASH:1961112500

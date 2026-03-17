@@ -147,21 +147,6 @@ public interface ExpandoRowPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the expando rows before and after the current expando row in the ordered set where tableId = &#63;.
-	 *
-	 * @param rowId the primary key of the current expando row
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando row
-	 * @throws NoSuchRowException if a expando row with the primary key could not be found
-	 */
-	public ExpandoRow[] findByTableId_PrevAndNext(
-			long rowId, long tableId,
-			com.liferay.portal.kernel.util.OrderByComparator<ExpandoRow>
-				orderByComparator)
-		throws NoSuchRowException;
-
-	/**
 	 * Removes all the expando rows where tableId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -288,21 +273,6 @@ public interface ExpandoRowPersistence
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoRow>
 			orderByComparator);
-
-	/**
-	 * Returns the expando rows before and after the current expando row in the ordered set where classPK = &#63;.
-	 *
-	 * @param rowId the primary key of the current expando row
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando row
-	 * @throws NoSuchRowException if a expando row with the primary key could not be found
-	 */
-	public ExpandoRow[] findByClassPK_PrevAndNext(
-			long rowId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<ExpandoRow>
-				orderByComparator)
-		throws NoSuchRowException;
 
 	/**
 	 * Removes all the expando rows where classPK = &#63; from the database.
@@ -488,4 +458,4 @@ public interface ExpandoRowPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2118212845
+// LIFERAY-SERVICE-BUILDER-HASH:-104483825

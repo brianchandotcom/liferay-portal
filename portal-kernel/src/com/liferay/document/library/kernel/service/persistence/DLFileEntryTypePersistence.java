@@ -147,21 +147,6 @@ public interface DLFileEntryTypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library file entry types before and after the current document library file entry type in the ordered set where uuid = &#63;.
-	 *
-	 * @param fileEntryTypeId the primary key of the current document library file entry type
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
-	 */
-	public DLFileEntryType[] findByUuid_PrevAndNext(
-			long fileEntryTypeId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType>
-				orderByComparator)
-		throws NoSuchFileEntryTypeException;
-
-	/**
 	 * Removes all the document library file entry types where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface DLFileEntryTypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library file entry types before and after the current document library file entry type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param fileEntryTypeId the primary key of the current document library file entry type
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
-	 */
-	public DLFileEntryType[] findByUuid_C_PrevAndNext(
-			long fileEntryTypeId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType>
-				orderByComparator)
-		throws NoSuchFileEntryTypeException;
-
-	/**
 	 * Removes all the document library file entry types where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface DLFileEntryTypePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the document library file entry types before and after the current document library file entry type in the ordered set where groupId = &#63;.
-	 *
-	 * @param fileEntryTypeId the primary key of the current document library file entry type
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
-	 */
-	public DLFileEntryType[] findByGroupId_PrevAndNext(
-			long fileEntryTypeId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType>
-				orderByComparator)
-		throws NoSuchFileEntryTypeException;
-
-	/**
 	 * Returns all the document library file entry types that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -549,21 +503,6 @@ public interface DLFileEntryTypePersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType>
 			orderByComparator);
-
-	/**
-	 * Returns the document library file entry types before and after the current document library file entry type in the ordered set of document library file entry types that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param fileEntryTypeId the primary key of the current document library file entry type
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
-	 */
-	public DLFileEntryType[] filterFindByGroupId_PrevAndNext(
-			long fileEntryTypeId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType>
-				orderByComparator)
-		throws NoSuchFileEntryTypeException;
 
 	/**
 	 * Returns all the document library file entry types that the user has permission to view where groupId = any &#63;.
@@ -822,21 +761,6 @@ public interface DLFileEntryTypePersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType>
 			orderByComparator);
-
-	/**
-	 * Returns the document library file entry types before and after the current document library file entry type in the ordered set where companyId = &#63;.
-	 *
-	 * @param fileEntryTypeId the primary key of the current document library file entry type
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library file entry type
-	 * @throws NoSuchFileEntryTypeException if a document library file entry type with the primary key could not be found
-	 */
-	public DLFileEntryType[] findByCompanyId_PrevAndNext(
-			long fileEntryTypeId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryType>
-				orderByComparator)
-		throws NoSuchFileEntryTypeException;
 
 	/**
 	 * Removes all the document library file entry types where companyId = &#63; from the database.
@@ -1306,4 +1230,4 @@ public interface DLFileEntryTypePersistence
 			dlFolders);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1997905610
+// LIFERAY-SERVICE-BUILDER-HASH:1951706402

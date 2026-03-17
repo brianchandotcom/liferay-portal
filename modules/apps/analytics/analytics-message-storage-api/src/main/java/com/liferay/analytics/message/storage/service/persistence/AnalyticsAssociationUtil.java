@@ -265,28 +265,6 @@ public class AnalyticsAssociationUtil {
 	}
 
 	/**
-	 * Returns the analytics associations before and after the current analytics association in the ordered set where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * @param analyticsAssociationId the primary key of the current analytics association
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics association
-	 * @throws NoSuchAssociationException if a analytics association with the primary key could not be found
-	 */
-	public static AnalyticsAssociation[] findByC_A_PrevAndNext(
-			long analyticsAssociationId, long companyId,
-			String associationClassName,
-			OrderByComparator<AnalyticsAssociation> orderByComparator)
-		throws com.liferay.analytics.message.storage.exception.
-			NoSuchAssociationException {
-
-		return getPersistence().findByC_A_PrevAndNext(
-			analyticsAssociationId, companyId, associationClassName,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the analytics associations where companyId = &#63; and associationClassName = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -470,29 +448,6 @@ public class AnalyticsAssociationUtil {
 
 		return getPersistence().fetchByC_GtM_A_Last(
 			companyId, modifiedDate, associationClassName, orderByComparator);
-	}
-
-	/**
-	 * Returns the analytics associations before and after the current analytics association in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and associationClassName = &#63;.
-	 *
-	 * @param analyticsAssociationId the primary key of the current analytics association
-	 * @param companyId the company ID
-	 * @param modifiedDate the modified date
-	 * @param associationClassName the association class name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics association
-	 * @throws NoSuchAssociationException if a analytics association with the primary key could not be found
-	 */
-	public static AnalyticsAssociation[] findByC_GtM_A_PrevAndNext(
-			long analyticsAssociationId, long companyId, Date modifiedDate,
-			String associationClassName,
-			OrderByComparator<AnalyticsAssociation> orderByComparator)
-		throws com.liferay.analytics.message.storage.exception.
-			NoSuchAssociationException {
-
-		return getPersistence().findByC_GtM_A_PrevAndNext(
-			analyticsAssociationId, companyId, modifiedDate,
-			associationClassName, orderByComparator);
 	}
 
 	/**
@@ -691,29 +646,6 @@ public class AnalyticsAssociationUtil {
 		return getPersistence().fetchByC_A_A_Last(
 			companyId, associationClassName, associationClassPK,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the analytics associations before and after the current analytics association in the ordered set where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * @param analyticsAssociationId the primary key of the current analytics association
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics association
-	 * @throws NoSuchAssociationException if a analytics association with the primary key could not be found
-	 */
-	public static AnalyticsAssociation[] findByC_A_A_PrevAndNext(
-			long analyticsAssociationId, long companyId,
-			String associationClassName, long associationClassPK,
-			OrderByComparator<AnalyticsAssociation> orderByComparator)
-		throws com.liferay.analytics.message.storage.exception.
-			NoSuchAssociationException {
-
-		return getPersistence().findByC_A_A_PrevAndNext(
-			analyticsAssociationId, companyId, associationClassName,
-			associationClassPK, orderByComparator);
 	}
 
 	/**
@@ -916,4 +848,4 @@ public class AnalyticsAssociationUtil {
 	private static volatile AnalyticsAssociationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:604378723
+// LIFERAY-SERVICE-BUILDER-HASH:903784076

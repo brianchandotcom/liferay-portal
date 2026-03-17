@@ -148,21 +148,6 @@ public interface LayoutLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layout localizations before and after the current layout localization in the ordered set where uuid = &#63;.
-	 *
-	 * @param layoutLocalizationId the primary key of the current layout localization
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout localization
-	 * @throws NoSuchLayoutLocalizationException if a layout localization with the primary key could not be found
-	 */
-	public LayoutLocalization[] findByUuid_PrevAndNext(
-			long layoutLocalizationId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-				orderByComparator)
-		throws NoSuchLayoutLocalizationException;
-
-	/**
 	 * Removes all the layout localizations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface LayoutLocalizationPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the layout localizations before and after the current layout localization in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param layoutLocalizationId the primary key of the current layout localization
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout localization
-	 * @throws NoSuchLayoutLocalizationException if a layout localization with the primary key could not be found
-	 */
-	public LayoutLocalization[] findByUuid_C_PrevAndNext(
-			long layoutLocalizationId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-				orderByComparator)
-		throws NoSuchLayoutLocalizationException;
-
-	/**
 	 * Removes all the layout localizations where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,21 +463,6 @@ public interface LayoutLocalizationPersistence
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
 			orderByComparator);
-
-	/**
-	 * Returns the layout localizations before and after the current layout localization in the ordered set where plid = &#63;.
-	 *
-	 * @param layoutLocalizationId the primary key of the current layout localization
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout localization
-	 * @throws NoSuchLayoutLocalizationException if a layout localization with the primary key could not be found
-	 */
-	public LayoutLocalization[] findByPlid_PrevAndNext(
-			long layoutLocalizationId, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutLocalization>
-				orderByComparator)
-		throws NoSuchLayoutLocalizationException;
 
 	/**
 	 * Removes all the layout localizations where plid = &#63; from the database.
@@ -755,4 +709,4 @@ public interface LayoutLocalizationPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:681695651
+// LIFERAY-SERVICE-BUILDER-HASH:645978740

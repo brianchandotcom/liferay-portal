@@ -260,26 +260,6 @@ public class JSONStorageEntryUtil {
 	}
 
 	/**
-	 * Returns the json storage entries before and after the current json storage entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param jsonStorageEntryId the primary key of the current json storage entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a json storage entry with the primary key could not be found
-	 */
-	public static JSONStorageEntry[] findByCN_CPK_PrevAndNext(
-			long jsonStorageEntryId, long classNameId, long classPK,
-			OrderByComparator<JSONStorageEntry> orderByComparator)
-		throws com.liferay.json.storage.exception.
-			NoSuchJSONStorageEntryException {
-
-		return getPersistence().findByCN_CPK_PrevAndNext(
-			jsonStorageEntryId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the json storage entries where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -479,31 +459,6 @@ public class JSONStorageEntryUtil {
 
 		return getPersistence().fetchByC_CN_I_T_VL_Last(
 			companyId, classNameId, index, type, valueLong, orderByComparator);
-	}
-
-	/**
-	 * Returns the json storage entries before and after the current json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param jsonStorageEntryId the primary key of the current json storage entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param index the index
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a json storage entry with the primary key could not be found
-	 */
-	public static JSONStorageEntry[] findByC_CN_I_T_VL_PrevAndNext(
-			long jsonStorageEntryId, long companyId, long classNameId,
-			int index, int type, long valueLong,
-			OrderByComparator<JSONStorageEntry> orderByComparator)
-		throws com.liferay.json.storage.exception.
-			NoSuchJSONStorageEntryException {
-
-		return getPersistence().findByC_CN_I_T_VL_PrevAndNext(
-			jsonStorageEntryId, companyId, classNameId, index, type, valueLong,
-			orderByComparator);
 	}
 
 	/**
@@ -719,31 +674,6 @@ public class JSONStorageEntryUtil {
 
 		return getPersistence().fetchByC_CN_K_T_VL_Last(
 			companyId, classNameId, key, type, valueLong, orderByComparator);
-	}
-
-	/**
-	 * Returns the json storage entries before and after the current json storage entry in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param jsonStorageEntryId the primary key of the current json storage entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a json storage entry with the primary key could not be found
-	 */
-	public static JSONStorageEntry[] findByC_CN_K_T_VL_PrevAndNext(
-			long jsonStorageEntryId, long companyId, long classNameId,
-			String key, int type, long valueLong,
-			OrderByComparator<JSONStorageEntry> orderByComparator)
-		throws com.liferay.json.storage.exception.
-			NoSuchJSONStorageEntryException {
-
-		return getPersistence().findByC_CN_K_T_VL_PrevAndNext(
-			jsonStorageEntryId, companyId, classNameId, key, type, valueLong,
-			orderByComparator);
 	}
 
 	/**
@@ -1042,4 +972,4 @@ public class JSONStorageEntryUtil {
 	private static volatile JSONStorageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1510952065
+// LIFERAY-SERVICE-BUILDER-HASH:-1929829365

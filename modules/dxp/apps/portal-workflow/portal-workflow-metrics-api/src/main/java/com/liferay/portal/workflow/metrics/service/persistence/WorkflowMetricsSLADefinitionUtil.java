@@ -250,25 +250,6 @@ public class WorkflowMetricsSLADefinitionUtil {
 	}
 
 	/**
-	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where uuid = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	public static WorkflowMetricsSLADefinition[] findByUuid_PrevAndNext(
-			long workflowMetricsSLADefinitionId, String uuid,
-			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
-		throws com.liferay.portal.workflow.metrics.exception.
-			NoSuchSLADefinitionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			workflowMetricsSLADefinitionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the workflow metrics sla definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -502,26 +483,6 @@ public class WorkflowMetricsSLADefinitionUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	public static WorkflowMetricsSLADefinition[] findByUuid_C_PrevAndNext(
-			long workflowMetricsSLADefinitionId, String uuid, long companyId,
-			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
-		throws com.liferay.portal.workflow.metrics.exception.
-			NoSuchSLADefinitionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			workflowMetricsSLADefinitionId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -771,27 +732,6 @@ public class WorkflowMetricsSLADefinitionUtil {
 	}
 
 	/**
-	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	public static WorkflowMetricsSLADefinition[] findByC_S_PrevAndNext(
-			long workflowMetricsSLADefinitionId, long companyId, int status,
-			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
-		throws com.liferay.portal.workflow.metrics.exception.
-			NoSuchSLADefinitionException {
-
-		return getPersistence().findByC_S_PrevAndNext(
-			workflowMetricsSLADefinitionId, companyId, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the workflow metrics sla definitions where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -968,29 +908,6 @@ public class WorkflowMetricsSLADefinitionUtil {
 
 		return getPersistence().fetchByC_A_P_Last(
 			companyId, active, processId, orderByComparator);
-	}
-
-	/**
-	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	public static WorkflowMetricsSLADefinition[] findByC_A_P_PrevAndNext(
-			long workflowMetricsSLADefinitionId, long companyId, boolean active,
-			long processId,
-			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
-		throws com.liferay.portal.workflow.metrics.exception.
-			NoSuchSLADefinitionException {
-
-		return getPersistence().findByC_A_P_PrevAndNext(
-			workflowMetricsSLADefinitionId, companyId, active, processId,
-			orderByComparator);
 	}
 
 	/**
@@ -1188,30 +1105,6 @@ public class WorkflowMetricsSLADefinitionUtil {
 
 		return getPersistence().fetchByC_A_N_P_Last(
 			companyId, active, name, processId, orderByComparator);
-	}
-
-	/**
-	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and name = &#63; and processId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param name the name
-	 * @param processId the process ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	public static WorkflowMetricsSLADefinition[] findByC_A_N_P_PrevAndNext(
-			long workflowMetricsSLADefinitionId, long companyId, boolean active,
-			String name, long processId,
-			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
-		throws com.liferay.portal.workflow.metrics.exception.
-			NoSuchSLADefinitionException {
-
-		return getPersistence().findByC_A_N_P_PrevAndNext(
-			workflowMetricsSLADefinitionId, companyId, active, name, processId,
-			orderByComparator);
 	}
 
 	/**
@@ -1413,30 +1306,6 @@ public class WorkflowMetricsSLADefinitionUtil {
 
 		return getPersistence().fetchByC_A_P_S_Last(
 			companyId, active, processId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63; and status = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	public static WorkflowMetricsSLADefinition[] findByC_A_P_S_PrevAndNext(
-			long workflowMetricsSLADefinitionId, long companyId, boolean active,
-			long processId, int status,
-			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
-		throws com.liferay.portal.workflow.metrics.exception.
-			NoSuchSLADefinitionException {
-
-		return getPersistence().findByC_A_P_S_PrevAndNext(
-			workflowMetricsSLADefinitionId, companyId, active, processId,
-			status, orderByComparator);
 	}
 
 	/**
@@ -1658,34 +1527,6 @@ public class WorkflowMetricsSLADefinitionUtil {
 	}
 
 	/**
-	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where companyId = &#63; and active = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param processId the process ID
-	 * @param processVersion the process version
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	public static WorkflowMetricsSLADefinition[]
-			findByC_A_P_NotPV_S_PrevAndNext(
-				long workflowMetricsSLADefinitionId, long companyId,
-				boolean active, long processId, String processVersion,
-				int status,
-				OrderByComparator<WorkflowMetricsSLADefinition>
-					orderByComparator)
-		throws com.liferay.portal.workflow.metrics.exception.
-			NoSuchSLADefinitionException {
-
-		return getPersistence().findByC_A_P_NotPV_S_PrevAndNext(
-			workflowMetricsSLADefinitionId, companyId, active, processId,
-			processVersion, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the workflow metrics sla definitions where companyId = &#63; and active = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1901,4 +1742,4 @@ public class WorkflowMetricsSLADefinitionUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1674986760
+// LIFERAY-SERVICE-BUILDER-HASH:-658806472

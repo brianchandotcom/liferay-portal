@@ -147,21 +147,6 @@ public interface OAuthClientASLocalMetadataPersistence
 			<OAuthClientASLocalMetadata> orderByComparator);
 
 	/**
-	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set where companyId = &#63;.
-	 *
-	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
-	 */
-	public OAuthClientASLocalMetadata[] findByCompanyId_PrevAndNext(
-			long oAuthClientASLocalMetadataId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
-
-	/**
 	 * Returns all the o auth client as local metadatas that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -202,21 +187,6 @@ public interface OAuthClientASLocalMetadataPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuthClientASLocalMetadata> orderByComparator);
-
-	/**
-	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set of o auth client as local metadatas that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
-	 */
-	public OAuthClientASLocalMetadata[] filterFindByCompanyId_PrevAndNext(
-			long oAuthClientASLocalMetadataId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
 
 	/**
 	 * Removes all the o auth client as local metadatas where companyId = &#63; from the database.
@@ -355,21 +325,6 @@ public interface OAuthClientASLocalMetadataPersistence
 			<OAuthClientASLocalMetadata> orderByComparator);
 
 	/**
-	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set where userId = &#63;.
-	 *
-	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
-	 */
-	public OAuthClientASLocalMetadata[] findByUserId_PrevAndNext(
-			long oAuthClientASLocalMetadataId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
-
-	/**
 	 * Returns all the o auth client as local metadatas that the user has permission to view where userId = &#63;.
 	 *
 	 * @param userId the user ID
@@ -410,21 +365,6 @@ public interface OAuthClientASLocalMetadataPersistence
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuthClientASLocalMetadata> orderByComparator);
-
-	/**
-	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set of o auth client as local metadatas that the user has permission to view where userId = &#63;.
-	 *
-	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
-	 */
-	public OAuthClientASLocalMetadata[] filterFindByUserId_PrevAndNext(
-			long oAuthClientASLocalMetadataId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
 
 	/**
 	 * Removes all the o auth client as local metadatas where userId = &#63; from the database.
@@ -670,23 +610,6 @@ public interface OAuthClientASLocalMetadataPersistence
 			<OAuthClientASLocalMetadata> orderByComparator);
 
 	/**
-	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set where companyId = &#63; and localWellKnownEnabled = &#63;.
-	 *
-	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
-	 * @param companyId the company ID
-	 * @param localWellKnownEnabled the local well known enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
-	 */
-	public OAuthClientASLocalMetadata[] findByC_L_PrevAndNext(
-			long oAuthClientASLocalMetadataId, long companyId,
-			boolean localWellKnownEnabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
-
-	/**
 	 * Returns all the o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -730,23 +653,6 @@ public interface OAuthClientASLocalMetadataPersistence
 		long companyId, boolean localWellKnownEnabled, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<OAuthClientASLocalMetadata> orderByComparator);
-
-	/**
-	 * Returns the o auth client as local metadatas before and after the current o auth client as local metadata in the ordered set of o auth client as local metadatas that the user has permission to view where companyId = &#63; and localWellKnownEnabled = &#63;.
-	 *
-	 * @param oAuthClientASLocalMetadataId the primary key of the current o auth client as local metadata
-	 * @param companyId the company ID
-	 * @param localWellKnownEnabled the local well known enabled
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next o auth client as local metadata
-	 * @throws NoSuchOAuthClientASLocalMetadataException if a o auth client as local metadata with the primary key could not be found
-	 */
-	public OAuthClientASLocalMetadata[] filterFindByC_L_PrevAndNext(
-			long oAuthClientASLocalMetadataId, long companyId,
-			boolean localWellKnownEnabled,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<OAuthClientASLocalMetadata> orderByComparator)
-		throws NoSuchOAuthClientASLocalMetadataException;
 
 	/**
 	 * Removes all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63; from the database.
@@ -955,4 +861,4 @@ public interface OAuthClientASLocalMetadataPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1267516371
+// LIFERAY-SERVICE-BUILDER-HASH:1205957891

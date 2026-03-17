@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Launch API
 Bundle-SymbolicName: com.liferay.launch.api
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.launch.exception,\
 	com.liferay.launch.model,\

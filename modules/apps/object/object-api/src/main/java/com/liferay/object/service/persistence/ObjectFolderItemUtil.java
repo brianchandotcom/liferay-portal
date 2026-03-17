@@ -238,24 +238,6 @@ public class ObjectFolderItemUtil {
 	}
 
 	/**
-	 * Returns the object folder items before and after the current object folder item in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectFolderItemId the primary key of the current object folder item
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object folder item
-	 * @throws NoSuchObjectFolderItemException if a object folder item with the primary key could not be found
-	 */
-	public static ObjectFolderItem[] findByUuid_PrevAndNext(
-			long objectFolderItemId, String uuid,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderItemException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectFolderItemId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object folder items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -421,25 +403,6 @@ public class ObjectFolderItemUtil {
 	}
 
 	/**
-	 * Returns the object folder items before and after the current object folder item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectFolderItemId the primary key of the current object folder item
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object folder item
-	 * @throws NoSuchObjectFolderItemException if a object folder item with the primary key could not be found
-	 */
-	public static ObjectFolderItem[] findByUuid_C_PrevAndNext(
-			long objectFolderItemId, String uuid, long companyId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderItemException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectFolderItemId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object folder items where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -600,24 +563,6 @@ public class ObjectFolderItemUtil {
 	}
 
 	/**
-	 * Returns the object folder items before and after the current object folder item in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectFolderItemId the primary key of the current object folder item
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object folder item
-	 * @throws NoSuchObjectFolderItemException if a object folder item with the primary key could not be found
-	 */
-	public static ObjectFolderItem[] findByObjectDefinitionId_PrevAndNext(
-			long objectFolderItemId, long objectDefinitionId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderItemException {
-
-		return getPersistence().findByObjectDefinitionId_PrevAndNext(
-			objectFolderItemId, objectDefinitionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object folder items where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -773,24 +718,6 @@ public class ObjectFolderItemUtil {
 
 		return getPersistence().fetchByObjectFolderId_Last(
 			objectFolderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object folder items before and after the current object folder item in the ordered set where objectFolderId = &#63;.
-	 *
-	 * @param objectFolderItemId the primary key of the current object folder item
-	 * @param objectFolderId the object folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object folder item
-	 * @throws NoSuchObjectFolderItemException if a object folder item with the primary key could not be found
-	 */
-	public static ObjectFolderItem[] findByObjectFolderId_PrevAndNext(
-			long objectFolderItemId, long objectFolderId,
-			OrderByComparator<ObjectFolderItem> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFolderItemException {
-
-		return getPersistence().findByObjectFolderId_PrevAndNext(
-			objectFolderItemId, objectFolderId, orderByComparator);
 	}
 
 	/**
@@ -1048,4 +975,4 @@ public class ObjectFolderItemUtil {
 	private static volatile ObjectFolderItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:239283766
+// LIFERAY-SERVICE-BUILDER-HASH:-1831818711

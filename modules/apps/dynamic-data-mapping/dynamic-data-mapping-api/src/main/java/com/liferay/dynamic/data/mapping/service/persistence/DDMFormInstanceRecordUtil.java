@@ -247,25 +247,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns the ddm form instance records before and after the current ddm form instance record in the ordered set where uuid = &#63;.
-	 *
-	 * @param formInstanceRecordId the primary key of the current ddm form instance record
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a ddm form instance record with the primary key could not be found
-	 */
-	public static DDMFormInstanceRecord[] findByUuid_PrevAndNext(
-			long formInstanceRecordId, String uuid,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			formInstanceRecordId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm form instance records where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -501,26 +482,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns the ddm form instance records before and after the current ddm form instance record in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param formInstanceRecordId the primary key of the current ddm form instance record
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a ddm form instance record with the primary key could not be found
-	 */
-	public static DDMFormInstanceRecord[] findByUuid_C_PrevAndNext(
-			long formInstanceRecordId, String uuid, long companyId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			formInstanceRecordId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm form instance records where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -677,25 +638,6 @@ public class DDMFormInstanceRecordUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm form instance records before and after the current ddm form instance record in the ordered set where companyId = &#63;.
-	 *
-	 * @param formInstanceRecordId the primary key of the current ddm form instance record
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a ddm form instance record with the primary key could not be found
-	 */
-	public static DDMFormInstanceRecord[] findByCompanyId_PrevAndNext(
-			long formInstanceRecordId, long companyId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			formInstanceRecordId, companyId, orderByComparator);
 	}
 
 	/**
@@ -856,25 +798,6 @@ public class DDMFormInstanceRecordUtil {
 
 		return getPersistence().fetchByFormInstanceId_Last(
 			formInstanceId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm form instance records before and after the current ddm form instance record in the ordered set where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceRecordId the primary key of the current ddm form instance record
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a ddm form instance record with the primary key could not be found
-	 */
-	public static DDMFormInstanceRecord[] findByFormInstanceId_PrevAndNext(
-			long formInstanceRecordId, long formInstanceId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByFormInstanceId_PrevAndNext(
-			formInstanceRecordId, formInstanceId, orderByComparator);
 	}
 
 	/**
@@ -1046,26 +969,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns the ddm form instance records before and after the current ddm form instance record in the ordered set where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * @param formInstanceRecordId the primary key of the current ddm form instance record
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a ddm form instance record with the primary key could not be found
-	 */
-	public static DDMFormInstanceRecord[] findByU_F_PrevAndNext(
-			long formInstanceRecordId, long userId, long formInstanceId,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByU_F_PrevAndNext(
-			formInstanceRecordId, userId, formInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm form instance records where userId = &#63; and formInstanceId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1234,28 +1137,6 @@ public class DDMFormInstanceRecordUtil {
 
 		return getPersistence().fetchByF_F_Last(
 			formInstanceId, formInstanceVersion, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm form instance records before and after the current ddm form instance record in the ordered set where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * @param formInstanceRecordId the primary key of the current ddm form instance record
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record
-	 * @throws NoSuchFormInstanceRecordException if a ddm form instance record with the primary key could not be found
-	 */
-	public static DDMFormInstanceRecord[] findByF_F_PrevAndNext(
-			long formInstanceRecordId, long formInstanceId,
-			String formInstanceVersion,
-			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchFormInstanceRecordException {
-
-		return getPersistence().findByF_F_PrevAndNext(
-			formInstanceRecordId, formInstanceId, formInstanceVersion,
-			orderByComparator);
 	}
 
 	/**
@@ -1456,4 +1337,4 @@ public class DDMFormInstanceRecordUtil {
 	private static volatile DDMFormInstanceRecordPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1782993367
+// LIFERAY-SERVICE-BUILDER-HASH:1282531075

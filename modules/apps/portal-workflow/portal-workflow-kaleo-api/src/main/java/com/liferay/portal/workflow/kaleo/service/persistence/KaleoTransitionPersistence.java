@@ -147,21 +147,6 @@ public interface KaleoTransitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo transitions before and after the current kaleo transition in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoTransitionId the primary key of the current kaleo transition
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
-	 */
-	public KaleoTransition[] findByCompanyId_PrevAndNext(
-			long kaleoTransitionId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-				orderByComparator)
-		throws NoSuchTransitionException;
-
-	/**
 	 * Removes all the kaleo transitions where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -291,21 +276,6 @@ public interface KaleoTransitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo transitions before and after the current kaleo transition in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoTransitionId the primary key of the current kaleo transition
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
-	 */
-	public KaleoTransition[] findByKaleoDefinitionVersionId_PrevAndNext(
-			long kaleoTransitionId, long kaleoDefinitionVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-				orderByComparator)
-		throws NoSuchTransitionException;
-
-	/**
 	 * Removes all the kaleo transitions where kaleoDefinitionVersionId = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -432,21 +402,6 @@ public interface KaleoTransitionPersistence
 		long kaleoNodeId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
 			orderByComparator);
-
-	/**
-	 * Returns the kaleo transitions before and after the current kaleo transition in the ordered set where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoTransitionId the primary key of the current kaleo transition
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
-	 */
-	public KaleoTransition[] findByKaleoNodeId_PrevAndNext(
-			long kaleoTransitionId, long kaleoNodeId,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition>
-				orderByComparator)
-		throws NoSuchTransitionException;
 
 	/**
 	 * Removes all the kaleo transitions where kaleoNodeId = &#63; from the database.
@@ -687,4 +642,4 @@ public interface KaleoTransitionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1238465780
+// LIFERAY-SERVICE-BUILDER-HASH:1282321663

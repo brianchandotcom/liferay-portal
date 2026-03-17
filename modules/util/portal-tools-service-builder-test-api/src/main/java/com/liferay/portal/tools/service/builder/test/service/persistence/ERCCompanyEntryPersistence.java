@@ -146,21 +146,6 @@ public interface ERCCompanyEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the erc company entries before and after the current erc company entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param ercCompanyEntryId the primary key of the current erc company entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc company entry
-	 * @throws NoSuchERCCompanyEntryException if a erc company entry with the primary key could not be found
-	 */
-	public ERCCompanyEntry[] findByUuid_PrevAndNext(
-			long ercCompanyEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCCompanyEntry>
-				orderByComparator)
-		throws NoSuchERCCompanyEntryException;
-
-	/**
 	 * Removes all the erc company entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -296,22 +281,6 @@ public interface ERCCompanyEntryPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ERCCompanyEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the erc company entries before and after the current erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param ercCompanyEntryId the primary key of the current erc company entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc company entry
-	 * @throws NoSuchERCCompanyEntryException if a erc company entry with the primary key could not be found
-	 */
-	public ERCCompanyEntry[] findByUuid_C_PrevAndNext(
-			long ercCompanyEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ERCCompanyEntry>
-				orderByComparator)
-		throws NoSuchERCCompanyEntryException;
 
 	/**
 	 * Removes all the erc company entries where uuid = &#63; and companyId = &#63; from the database.
@@ -504,4 +473,4 @@ public interface ERCCompanyEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1610444820
+// LIFERAY-SERVICE-BUILDER-HASH:2012070655

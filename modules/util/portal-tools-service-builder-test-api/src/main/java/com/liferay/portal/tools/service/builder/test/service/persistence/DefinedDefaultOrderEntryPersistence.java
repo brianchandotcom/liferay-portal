@@ -192,21 +192,6 @@ public interface DefinedDefaultOrderEntryPersistence
 			<DefinedDefaultOrderEntry> orderByComparator);
 
 	/**
-	 * Returns the defined default order entries before and after the current defined default order entry in the ordered set where name = &#63;.
-	 *
-	 * @param definedDefaultOrderEntryId the primary key of the current defined default order entry
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next defined default order entry
-	 * @throws NoSuchDefinedDefaultOrderEntryException if a defined default order entry with the primary key could not be found
-	 */
-	public DefinedDefaultOrderEntry[] findByName_Collection_PrevAndNext(
-			long definedDefaultOrderEntryId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DefinedDefaultOrderEntry> orderByComparator)
-		throws NoSuchDefinedDefaultOrderEntryException;
-
-	/**
 	 * Removes all the defined default order entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -346,4 +331,4 @@ public interface DefinedDefaultOrderEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-124657409
+// LIFERAY-SERVICE-BUILDER-HASH:-557728578

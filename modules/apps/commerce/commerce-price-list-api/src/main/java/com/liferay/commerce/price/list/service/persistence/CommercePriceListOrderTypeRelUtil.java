@@ -250,25 +250,6 @@ public class CommercePriceListOrderTypeRelUtil {
 	}
 
 	/**
-	 * Returns the commerce price list order type rels before and after the current commerce price list order type rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param commercePriceListOrderTypeRelId the primary key of the current commerce price list order type rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a commerce price list order type rel with the primary key could not be found
-	 */
-	public static CommercePriceListOrderTypeRel[] findByUuid_PrevAndNext(
-			long commercePriceListOrderTypeRelId, String uuid,
-			OrderByComparator<CommercePriceListOrderTypeRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListOrderTypeRelException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commercePriceListOrderTypeRelId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price list order type rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -436,27 +417,6 @@ public class CommercePriceListOrderTypeRelUtil {
 	}
 
 	/**
-	 * Returns the commerce price list order type rels before and after the current commerce price list order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commercePriceListOrderTypeRelId the primary key of the current commerce price list order type rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a commerce price list order type rel with the primary key could not be found
-	 */
-	public static CommercePriceListOrderTypeRel[] findByUuid_C_PrevAndNext(
-			long commercePriceListOrderTypeRelId, String uuid, long companyId,
-			OrderByComparator<CommercePriceListOrderTypeRel> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListOrderTypeRelException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commercePriceListOrderTypeRelId, uuid, companyId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price list order type rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -618,28 +578,6 @@ public class CommercePriceListOrderTypeRelUtil {
 
 		return getPersistence().fetchByCommercePriceListId_Last(
 			commercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price list order type rels before and after the current commerce price list order type rel in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListOrderTypeRelId the primary key of the current commerce price list order type rel
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a commerce price list order type rel with the primary key could not be found
-	 */
-	public static CommercePriceListOrderTypeRel[]
-			findByCommercePriceListId_PrevAndNext(
-				long commercePriceListOrderTypeRelId, long commercePriceListId,
-				OrderByComparator<CommercePriceListOrderTypeRel>
-					orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListOrderTypeRelException {
-
-		return getPersistence().findByCommercePriceListId_PrevAndNext(
-			commercePriceListOrderTypeRelId, commercePriceListId,
-			orderByComparator);
 	}
 
 	/**
@@ -919,4 +857,4 @@ public class CommercePriceListOrderTypeRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1671367777
+// LIFERAY-SERVICE-BUILDER-HASH:-1014533088

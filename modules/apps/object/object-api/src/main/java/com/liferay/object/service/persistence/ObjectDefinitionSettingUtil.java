@@ -249,25 +249,6 @@ public class ObjectDefinitionSettingUtil {
 	}
 
 	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public static ObjectDefinitionSetting[] findByUuid_PrevAndNext(
-			long objectDefinitionSettingId, String uuid,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectDefinitionSettingException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectDefinitionSettingId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object definition settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -435,26 +416,6 @@ public class ObjectDefinitionSettingUtil {
 	}
 
 	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public static ObjectDefinitionSetting[] findByUuid_C_PrevAndNext(
-			long objectDefinitionSettingId, String uuid, long companyId,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectDefinitionSettingException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectDefinitionSettingId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object definition settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -614,26 +575,6 @@ public class ObjectDefinitionSettingUtil {
 
 		return getPersistence().fetchByObjectDefinitionId_Last(
 			objectDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public static ObjectDefinitionSetting[]
-			findByObjectDefinitionId_PrevAndNext(
-				long objectDefinitionSettingId, long objectDefinitionId,
-				OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectDefinitionSettingException {
-
-		return getPersistence().findByObjectDefinitionId_PrevAndNext(
-			objectDefinitionSettingId, objectDefinitionId, orderByComparator);
 	}
 
 	/**
@@ -801,26 +742,6 @@ public class ObjectDefinitionSettingUtil {
 
 		return getPersistence().fetchByC_N_Last(
 			companyId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where companyId = &#63; and name = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public static ObjectDefinitionSetting[] findByC_N_PrevAndNext(
-			long objectDefinitionSettingId, long companyId, String name,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectDefinitionSettingException {
-
-		return getPersistence().findByC_N_PrevAndNext(
-			objectDefinitionSettingId, companyId, name, orderByComparator);
 	}
 
 	/**
@@ -1072,29 +993,6 @@ public class ObjectDefinitionSettingUtil {
 	}
 
 	/**
-	 * Returns the object definition settings before and after the current object definition setting in the ordered set where companyId = &#63; and name = &#63; and value = &#63;.
-	 *
-	 * @param objectDefinitionSettingId the primary key of the current object definition setting
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param value the value
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	public static ObjectDefinitionSetting[] findByC_N_V_PrevAndNext(
-			long objectDefinitionSettingId, long companyId, String name,
-			String value,
-			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
-		throws com.liferay.object.exception.
-			NoSuchObjectDefinitionSettingException {
-
-		return getPersistence().findByC_N_V_PrevAndNext(
-			objectDefinitionSettingId, companyId, name, value,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the object definition settings where companyId = &#63; and name = &#63; and value = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1294,4 +1192,4 @@ public class ObjectDefinitionSettingUtil {
 	private static volatile ObjectDefinitionSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-456669156
+// LIFERAY-SERVICE-BUILDER-HASH:1543502642

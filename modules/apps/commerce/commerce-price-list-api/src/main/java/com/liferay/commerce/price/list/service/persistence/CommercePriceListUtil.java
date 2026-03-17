@@ -243,25 +243,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where uuid = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByUuid_PrevAndNext(
-			long commercePriceListId, String uuid,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commercePriceListId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price lists where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -494,26 +475,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByUuid_C_PrevAndNext(
-			long commercePriceListId, String uuid, long companyId,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commercePriceListId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price lists where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -670,25 +631,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().fetchByCompanyId_Last(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where companyId = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByCompanyId_PrevAndNext(
-			long commercePriceListId, long companyId,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commercePriceListId, companyId, orderByComparator);
 	}
 
 	/**
@@ -851,26 +793,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().fetchByParentCommercePriceListId_Last(
 			parentCommercePriceListId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where parentCommercePriceListId = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param parentCommercePriceListId the parent commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[]
-			findByParentCommercePriceListId_PrevAndNext(
-				long commercePriceListId, long parentCommercePriceListId,
-				OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByParentCommercePriceListId_PrevAndNext(
-			commercePriceListId, parentCommercePriceListId, orderByComparator);
 	}
 
 	/**
@@ -1047,26 +969,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByG_C_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_PrevAndNext(
-			commercePriceListId, groupId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1118,26 +1020,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().filterFindByG_C(
 			groupId, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] filterFindByG_C_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().filterFindByG_C_PrevAndNext(
-			commercePriceListId, groupId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1482,28 +1364,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByG_CBPL_PrevAndNext(
-			long commercePriceListId, long groupId,
-			boolean catalogBasePriceList,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_CBPL_PrevAndNext(
-			commercePriceListId, groupId, catalogBasePriceList,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1557,28 +1417,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().filterFindByG_CBPL(
 			groupId, catalogBasePriceList, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] filterFindByG_CBPL_PrevAndNext(
-			long commercePriceListId, long groupId,
-			boolean catalogBasePriceList,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().filterFindByG_CBPL_PrevAndNext(
-			commercePriceListId, groupId, catalogBasePriceList,
-			orderByComparator);
 	}
 
 	/**
@@ -1771,28 +1609,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where companyId = &#63; and commerceCurrencyCode = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param companyId the company ID
-	 * @param commerceCurrencyCode the commerce currency code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByC_C_PrevAndNext(
-			long commercePriceListId, long companyId,
-			String commerceCurrencyCode,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			commercePriceListId, companyId, commerceCurrencyCode,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce price lists where companyId = &#63; and commerceCurrencyCode = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1961,26 +1777,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByLtD_S_PrevAndNext(
-			long commercePriceListId, Date displayDate, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByLtD_S_PrevAndNext(
-			commercePriceListId, displayDate, status, orderByComparator);
 	}
 
 	/**
@@ -2163,27 +1959,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByG_C_S_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_S_PrevAndNext(
-			commercePriceListId, groupId, companyId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2239,27 +2014,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().filterFindByG_C_S(
 			groupId, companyId, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] filterFindByG_C_S_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().filterFindByG_C_S_PrevAndNext(
-			commercePriceListId, groupId, companyId, status, orderByComparator);
 	}
 
 	/**
@@ -2632,27 +2386,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByG_C_NotS_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_NotS_PrevAndNext(
-			commercePriceListId, groupId, companyId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2709,27 +2442,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().filterFindByG_C_NotS(
 			groupId, companyId, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] filterFindByG_C_NotS_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId, int status,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().filterFindByG_C_NotS_PrevAndNext(
-			commercePriceListId, groupId, companyId, status, orderByComparator);
 	}
 
 	/**
@@ -3111,29 +2823,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByG_CBPL_T_PrevAndNext(
-			long commercePriceListId, long groupId,
-			boolean catalogBasePriceList, String type,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_CBPL_T_PrevAndNext(
-			commercePriceListId, groupId, catalogBasePriceList, type,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3191,29 +2880,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().filterFindByG_CBPL_T(
 			groupId, catalogBasePriceList, type, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param catalogBasePriceList the catalog base price list
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] filterFindByG_CBPL_T_PrevAndNext(
-			long commercePriceListId, long groupId,
-			boolean catalogBasePriceList, String type,
-			OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().filterFindByG_CBPL_T_PrevAndNext(
-			commercePriceListId, groupId, catalogBasePriceList, type,
-			orderByComparator);
 	}
 
 	/**
@@ -3427,29 +3093,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByG_C_T_S_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId, String type,
-			int status, OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_T_S_PrevAndNext(
-			commercePriceListId, groupId, companyId, type, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3510,29 +3153,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().filterFindByG_C_T_S(
 			groupId, companyId, type, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] filterFindByG_C_T_S_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId, String type,
-			int status, OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().filterFindByG_C_T_S_PrevAndNext(
-			commercePriceListId, groupId, companyId, type, status,
-			orderByComparator);
 	}
 
 	/**
@@ -3939,29 +3559,6 @@ public class CommercePriceListUtil {
 	}
 
 	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set where groupId = &#63; and companyId = &#63; and type = &#63; and status &ne; &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] findByG_C_T_NotS_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId, String type,
-			int status, OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().findByG_C_T_NotS_PrevAndNext(
-			commercePriceListId, groupId, companyId, type, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63; and type = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4022,29 +3619,6 @@ public class CommercePriceListUtil {
 
 		return getPersistence().filterFindByG_C_T_NotS(
 			groupId, companyId, type, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce price lists before and after the current commerce price list in the ordered set of commerce price lists that the user has permission to view where groupId = &#63; and companyId = &#63; and type = &#63; and status &ne; &#63;.
-	 *
-	 * @param commercePriceListId the primary key of the current commerce price list
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price list
-	 * @throws NoSuchPriceListException if a commerce price list with the primary key could not be found
-	 */
-	public static CommercePriceList[] filterFindByG_C_T_NotS_PrevAndNext(
-			long commercePriceListId, long groupId, long companyId, String type,
-			int status, OrderByComparator<CommercePriceList> orderByComparator)
-		throws com.liferay.commerce.price.list.exception.
-			NoSuchPriceListException {
-
-		return getPersistence().filterFindByG_C_T_NotS_PrevAndNext(
-			commercePriceListId, groupId, companyId, type, status,
-			orderByComparator);
 	}
 
 	/**
@@ -4522,4 +4096,4 @@ public class CommercePriceListUtil {
 	private static volatile CommercePriceListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-149217600
+// LIFERAY-SERVICE-BUILDER-HASH:519638320

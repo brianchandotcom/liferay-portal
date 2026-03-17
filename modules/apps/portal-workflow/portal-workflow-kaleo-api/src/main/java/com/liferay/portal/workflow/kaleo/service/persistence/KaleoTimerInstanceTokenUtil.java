@@ -257,25 +257,6 @@ public class KaleoTimerInstanceTokenUtil {
 	}
 
 	/**
-	 * Returns the kaleo timer instance tokens before and after the current kaleo timer instance token in the ordered set where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoTimerInstanceTokenId the primary key of the current kaleo timer instance token
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
-	 */
-	public static KaleoTimerInstanceToken[] findByKaleoInstanceId_PrevAndNext(
-			long kaleoTimerInstanceTokenId, long kaleoInstanceId,
-			OrderByComparator<KaleoTimerInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTimerInstanceTokenException {
-
-		return getPersistence().findByKaleoInstanceId_PrevAndNext(
-			kaleoTimerInstanceTokenId, kaleoInstanceId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo timer instance tokens where kaleoInstanceId = &#63; from the database.
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -521,28 +502,6 @@ public class KaleoTimerInstanceTokenUtil {
 	}
 
 	/**
-	 * Returns the kaleo timer instance tokens before and after the current kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoTimerInstanceTokenId the primary key of the current kaleo timer instance token
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
-	 */
-	public static KaleoTimerInstanceToken[] findByKITI_C_PrevAndNext(
-			long kaleoTimerInstanceTokenId, long kaleoInstanceTokenId,
-			boolean completed,
-			OrderByComparator<KaleoTimerInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTimerInstanceTokenException {
-
-		return getPersistence().findByKITI_C_PrevAndNext(
-			kaleoTimerInstanceTokenId, kaleoInstanceTokenId, completed,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63; from the database.
 	 *
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
@@ -728,29 +687,6 @@ public class KaleoTimerInstanceTokenUtil {
 
 		return getPersistence().fetchByKITI_B_C_Last(
 			kaleoInstanceTokenId, blocking, completed, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo timer instance tokens before and after the current kaleo timer instance token in the ordered set where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoTimerInstanceTokenId the primary key of the current kaleo timer instance token
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param blocking the blocking
-	 * @param completed the completed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo timer instance token
-	 * @throws NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
-	 */
-	public static KaleoTimerInstanceToken[] findByKITI_B_C_PrevAndNext(
-			long kaleoTimerInstanceTokenId, long kaleoInstanceTokenId,
-			boolean blocking, boolean completed,
-			OrderByComparator<KaleoTimerInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTimerInstanceTokenException {
-
-		return getPersistence().findByKITI_B_C_PrevAndNext(
-			kaleoTimerInstanceTokenId, kaleoInstanceTokenId, blocking,
-			completed, orderByComparator);
 	}
 
 	/**
@@ -957,4 +893,4 @@ public class KaleoTimerInstanceTokenUtil {
 	private static volatile KaleoTimerInstanceTokenPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1054662098
+// LIFERAY-SERVICE-BUILDER-HASH:2024342234

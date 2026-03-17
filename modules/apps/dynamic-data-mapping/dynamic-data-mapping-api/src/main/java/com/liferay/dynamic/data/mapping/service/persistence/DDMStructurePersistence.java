@@ -147,21 +147,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where uuid = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByUuid_PrevAndNext(
-			long structureId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Removes all the ddm structures where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByUuid_C_PrevAndNext(
-			long structureId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Removes all the ddm structures where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByGroupId_PrevAndNext(
-			long structureId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -549,21 +503,6 @@ public interface DDMStructurePersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] filterFindByGroupId_PrevAndNext(
-			long structureId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
 
 	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = any &#63;.
@@ -825,21 +764,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where parentStructureId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByParentStructureId_PrevAndNext(
-			long structureId, long parentStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Removes all the ddm structures where parentStructureId = &#63; from the database.
 	 *
 	 * @param parentStructureId the parent structure ID
@@ -966,21 +890,6 @@ public interface DDMStructurePersistence
 		String structureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where structureKey = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param structureKey the structure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByStructureKey_PrevAndNext(
-			long structureId, String structureKey,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
 
 	/**
 	 * Removes all the ddm structures where structureKey = &#63; from the database.
@@ -1120,22 +1029,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByG_P_PrevAndNext(
-			long structureId, long groupId, long parentStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1179,22 +1072,6 @@ public interface DDMStructurePersistence
 		long groupId, long parentStructureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param parentStructureId the parent structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] filterFindByG_P_PrevAndNext(
-			long structureId, long groupId, long parentStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
 
 	/**
 	 * Removes all the ddm structures where groupId = &#63; and parentStructureId = &#63; from the database.
@@ -1345,22 +1222,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByG_C_PrevAndNext(
-			long structureId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1404,22 +1265,6 @@ public interface DDMStructurePersistence
 		long groupId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] filterFindByG_C_PrevAndNext(
-			long structureId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
 
 	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
@@ -1703,22 +1548,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByC_C_PrevAndNext(
-			long structureId, long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Removes all the ddm structures where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1986,23 +1815,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByG_N_D_PrevAndNext(
-			long structureId, long groupId, String name, String description,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2049,23 +1861,6 @@ public interface DDMStructurePersistence
 		long groupId, String name, String description, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] filterFindByG_N_D_PrevAndNext(
-			long structureId, long groupId, String name, String description,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
 
 	/**
 	 * Removes all the ddm structures where groupId = &#63; and name = &#63; and description = &#63; from the database.
@@ -2239,25 +2034,6 @@ public interface DDMStructurePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] findByG_C_N_D_PrevAndNext(
-			long structureId, long groupId, long classNameId, String name,
-			String description,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
-
-	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2309,25 +2085,6 @@ public interface DDMStructurePersistence
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
 			orderByComparator);
-
-	/**
-	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
-	 *
-	 * @param structureId the primary key of the current ddm structure
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param name the name
-	 * @param description the description
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	public DDMStructure[] filterFindByG_C_N_D_PrevAndNext(
-			long structureId, long groupId, long classNameId, String name,
-			String description,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-				orderByComparator)
-		throws NoSuchStructureException;
 
 	/**
 	 * Returns all the ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
@@ -2643,4 +2400,4 @@ public interface DDMStructurePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:537022498
+// LIFERAY-SERVICE-BUILDER-HASH:790036559

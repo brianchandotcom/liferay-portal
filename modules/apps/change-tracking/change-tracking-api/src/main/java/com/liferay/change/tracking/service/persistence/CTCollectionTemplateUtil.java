@@ -252,25 +252,6 @@ public class CTCollectionTemplateUtil {
 	}
 
 	/**
-	 * Returns the ct collection templates before and after the current ct collection template in the ordered set where companyId = &#63;.
-	 *
-	 * @param ctCollectionTemplateId the primary key of the current ct collection template
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection template
-	 * @throws NoSuchCollectionTemplateException if a ct collection template with the primary key could not be found
-	 */
-	public static CTCollectionTemplate[] findByCompanyId_PrevAndNext(
-			long ctCollectionTemplateId, long companyId,
-			OrderByComparator<CTCollectionTemplate> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchCollectionTemplateException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			ctCollectionTemplateId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the ct collection templates that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -319,25 +300,6 @@ public class CTCollectionTemplateUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct collection templates before and after the current ct collection template in the ordered set of ct collection templates that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param ctCollectionTemplateId the primary key of the current ct collection template
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection template
-	 * @throws NoSuchCollectionTemplateException if a ct collection template with the primary key could not be found
-	 */
-	public static CTCollectionTemplate[] filterFindByCompanyId_PrevAndNext(
-			long ctCollectionTemplateId, long companyId,
-			OrderByComparator<CTCollectionTemplate> orderByComparator)
-		throws com.liferay.change.tracking.exception.
-			NoSuchCollectionTemplateException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			ctCollectionTemplateId, companyId, orderByComparator);
 	}
 
 	/**
@@ -540,4 +502,4 @@ public class CTCollectionTemplateUtil {
 	private static volatile CTCollectionTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:912154650
+// LIFERAY-SERVICE-BUILDER-HASH:-418256943

@@ -148,21 +148,6 @@ public interface CPSpecificationOptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp specification options before and after the current cp specification option in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the primary key of the current cp specification option
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	public CPSpecificationOption[] findByUuid_PrevAndNext(
-			long CPSpecificationOptionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -202,21 +187,6 @@ public interface CPSpecificationOptionPersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
 			orderByComparator);
-
-	/**
-	 * Returns the cp specification options before and after the current cp specification option in the ordered set of cp specification options that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the primary key of the current cp specification option
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	public CPSpecificationOption[] filterFindByUuid_PrevAndNext(
-			long CPSpecificationOptionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
 
 	/**
 	 * Removes all the cp specification options where uuid = &#63; from the database.
@@ -364,22 +334,6 @@ public interface CPSpecificationOptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp specification options before and after the current cp specification option in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the primary key of the current cp specification option
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	public CPSpecificationOption[] findByUuid_C_PrevAndNext(
-			long CPSpecificationOptionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -423,22 +377,6 @@ public interface CPSpecificationOptionPersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
 			orderByComparator);
-
-	/**
-	 * Returns the cp specification options before and after the current cp specification option in the ordered set of cp specification options that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the primary key of the current cp specification option
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	public CPSpecificationOption[] filterFindByUuid_C_PrevAndNext(
-			long CPSpecificationOptionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
 
 	/**
 	 * Removes all the cp specification options where uuid = &#63; and companyId = &#63; from the database.
@@ -581,21 +519,6 @@ public interface CPSpecificationOptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp specification options before and after the current cp specification option in the ordered set where companyId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the primary key of the current cp specification option
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	public CPSpecificationOption[] findByCompanyId_PrevAndNext(
-			long CPSpecificationOptionId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -636,21 +559,6 @@ public interface CPSpecificationOptionPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
 			orderByComparator);
-
-	/**
-	 * Returns the cp specification options before and after the current cp specification option in the ordered set of cp specification options that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the primary key of the current cp specification option
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	public CPSpecificationOption[] filterFindByCompanyId_PrevAndNext(
-			long CPSpecificationOptionId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
 
 	/**
 	 * Removes all the cp specification options where companyId = &#63; from the database.
@@ -790,21 +698,6 @@ public interface CPSpecificationOptionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cp specification options before and after the current cp specification option in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the primary key of the current cp specification option
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	public CPSpecificationOption[] findByCPOptionCategoryId_PrevAndNext(
-			long CPSpecificationOptionId, long CPOptionCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
-
-	/**
 	 * Returns all the cp specification options that the user has permission to view where CPOptionCategoryId = &#63;.
 	 *
 	 * @param CPOptionCategoryId the cp option category ID
@@ -845,21 +738,6 @@ public interface CPSpecificationOptionPersistence
 		long CPOptionCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPSpecificationOption>
 			orderByComparator);
-
-	/**
-	 * Returns the cp specification options before and after the current cp specification option in the ordered set of cp specification options that the user has permission to view where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the primary key of the current cp specification option
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	public CPSpecificationOption[] filterFindByCPOptionCategoryId_PrevAndNext(
-			long CPSpecificationOptionId, long CPOptionCategoryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPSpecificationOption> orderByComparator)
-		throws NoSuchCPSpecificationOptionException;
 
 	/**
 	 * Removes all the cp specification options where CPOptionCategoryId = &#63; from the database.
@@ -1111,4 +989,4 @@ public interface CPSpecificationOptionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-529895701
+// LIFERAY-SERVICE-BUILDER-HASH:1307868515

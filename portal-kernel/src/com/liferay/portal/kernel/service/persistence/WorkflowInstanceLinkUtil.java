@@ -328,26 +328,6 @@ public class WorkflowInstanceLinkUtil {
 	}
 
 	/**
-	 * Returns the workflow instance links before and after the current workflow instance link in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the current workflow instance link
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 */
-	public static WorkflowInstanceLink[] findByC_C_PrevAndNext(
-			long workflowInstanceLinkId, long companyId, long classNameId,
-			OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowInstanceLinkException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			workflowInstanceLinkId, companyId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the workflow instance links where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -524,29 +504,6 @@ public class WorkflowInstanceLinkUtil {
 
 		return getPersistence().fetchByG_C_C_Last(
 			groupId, companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the workflow instance links before and after the current workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the current workflow instance link
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 */
-	public static WorkflowInstanceLink[] findByG_C_C_PrevAndNext(
-			long workflowInstanceLinkId, long groupId, long companyId,
-			long classNameId,
-			OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowInstanceLinkException {
-
-		return getPersistence().findByG_C_C_PrevAndNext(
-			workflowInstanceLinkId, groupId, companyId, classNameId,
-			orderByComparator);
 	}
 
 	/**
@@ -743,30 +700,6 @@ public class WorkflowInstanceLinkUtil {
 
 		return getPersistence().fetchByG_C_C_C_Last(
 			groupId, companyId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the workflow instance links before and after the current workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the current workflow instance link
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 */
-	public static WorkflowInstanceLink[] findByG_C_C_C_PrevAndNext(
-			long workflowInstanceLinkId, long groupId, long companyId,
-			long classNameId, long classPK,
-			OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchWorkflowInstanceLinkException {
-
-		return getPersistence().findByG_C_C_C_PrevAndNext(
-			workflowInstanceLinkId, groupId, companyId, classNameId, classPK,
-			orderByComparator);
 	}
 
 	/**
@@ -971,4 +904,4 @@ public class WorkflowInstanceLinkUtil {
 	private static volatile WorkflowInstanceLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:844661223
+// LIFERAY-SERVICE-BUILDER-HASH:1095722879

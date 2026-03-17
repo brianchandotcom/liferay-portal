@@ -147,21 +147,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByUuid_PrevAndNext(
-			long entryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the bookmarks entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByUuid_C_PrevAndNext(
-			long entryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the bookmarks entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -493,21 +462,6 @@ public interface BookmarksEntryPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByCompanyId_PrevAndNext(
-			long entryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the bookmarks entries where companyId = &#63; from the database.
@@ -647,22 +601,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByG_F_PrevAndNext(
-			long entryId, long groupId, long folderId,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -706,22 +644,6 @@ public interface BookmarksEntryPersistence
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set of bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] filterFindByG_F_PrevAndNext(
-			long entryId, long groupId, long folderId,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63;.
@@ -1004,22 +926,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByG_S_PrevAndNext(
-			long entryId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1063,22 +969,6 @@ public interface BookmarksEntryPersistence
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set of bookmarks entries that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] filterFindByG_S_PrevAndNext(
-			long entryId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the bookmarks entries where groupId = &#63; and status = &#63; from the database.
@@ -1229,22 +1119,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByG_NotS_PrevAndNext(
-			long entryId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1288,22 +1162,6 @@ public interface BookmarksEntryPersistence
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set of bookmarks entries that the user has permission to view where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] filterFindByG_NotS_PrevAndNext(
-			long entryId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the bookmarks entries where groupId = &#63; and status &ne; &#63; from the database.
@@ -1454,22 +1312,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByC_NotS_PrevAndNext(
-			long entryId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the bookmarks entries where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1617,23 +1459,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByG_U_S_PrevAndNext(
-			long entryId, long groupId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1680,23 +1505,6 @@ public interface BookmarksEntryPersistence
 		long groupId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set of bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and status = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] filterFindByG_U_S_PrevAndNext(
-			long entryId, long groupId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the bookmarks entries where groupId = &#63; and userId = &#63; and status = &#63; from the database.
@@ -1858,23 +1666,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByG_U_NotS_PrevAndNext(
-			long entryId, long groupId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1921,23 +1712,6 @@ public interface BookmarksEntryPersistence
 		long groupId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set of bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and status &ne; &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] filterFindByG_U_NotS_PrevAndNext(
-			long entryId, long groupId, long userId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the bookmarks entries where groupId = &#63; and userId = &#63; and status &ne; &#63; from the database.
@@ -2099,23 +1873,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByG_F_S_PrevAndNext(
-			long entryId, long groupId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2162,23 +1919,6 @@ public interface BookmarksEntryPersistence
 		long groupId, long folderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set of bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] filterFindByG_F_S_PrevAndNext(
-			long entryId, long groupId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and status = &#63;.
@@ -2482,23 +2222,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByG_F_NotS_PrevAndNext(
-			long entryId, long groupId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2545,23 +2268,6 @@ public interface BookmarksEntryPersistence
 		long groupId, long folderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set of bookmarks entries that the user has permission to view where groupId = &#63; and folderId = &#63; and status &ne; &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] filterFindByG_F_NotS_PrevAndNext(
-			long entryId, long groupId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and folderId = any &#63; and status &ne; &#63;.
@@ -2877,24 +2583,6 @@ public interface BookmarksEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] findByG_U_F_S_PrevAndNext(
-			long entryId, long groupId, long userId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2946,24 +2634,6 @@ public interface BookmarksEntryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set of bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param entryId the primary key of the current bookmarks entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next bookmarks entry
-	 * @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
-	 */
-	public BookmarksEntry[] filterFindByG_U_F_S_PrevAndNext(
-			long entryId, long groupId, long userId, long folderId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<BookmarksEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Returns all the bookmarks entries that the user has permission to view where groupId = &#63; and userId = &#63; and folderId = any &#63; and status = &#63;.
@@ -3278,4 +2948,4 @@ public interface BookmarksEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1759443368
+// LIFERAY-SERVICE-BUILDER-HASH:-224004206

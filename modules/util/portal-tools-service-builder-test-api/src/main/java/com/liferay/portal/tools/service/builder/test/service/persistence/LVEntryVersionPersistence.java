@@ -146,21 +146,6 @@ public interface LVEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param lvEntryId the lv entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByLvEntryId_PrevAndNext(
-			long lvEntryVersionId, long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
-
-	/**
 	 * Removes all the lv entry versions where lvEntryId = &#63; from the database.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -339,21 +324,6 @@ public interface LVEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByUuid_PrevAndNext(
-			long lvEntryVersionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
-
-	/**
 	 * Removes all the lv entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -489,22 +459,6 @@ public interface LVEntryVersionPersistence
 		String uuid, int version,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByUuid_Version_PrevAndNext(
-			long lvEntryVersionId, String uuid, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
 
 	/**
 	 * Removes all the lv entry versions where uuid = &#63; and version = &#63; from the database.
@@ -644,22 +598,6 @@ public interface LVEntryVersionPersistence
 		String uuid, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByUUID_G_PrevAndNext(
-			long lvEntryVersionId, String uuid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
 
 	/**
 	 * Removes all the lv entry versions where uuid = &#63; and groupId = &#63; from the database.
@@ -859,22 +797,6 @@ public interface LVEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByUuid_C_PrevAndNext(
-			long lvEntryVersionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
-
-	/**
 	 * Removes all the lv entry versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1022,23 +944,6 @@ public interface LVEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByUuid_C_Version_PrevAndNext(
-			long lvEntryVersionId, String uuid, long companyId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
-
-	/**
 	 * Removes all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1170,21 +1075,6 @@ public interface LVEntryVersionPersistence
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where groupId = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByGroupId_PrevAndNext(
-			long lvEntryVersionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
 
 	/**
 	 * Removes all the lv entry versions where groupId = &#63; from the database.
@@ -1324,22 +1214,6 @@ public interface LVEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where groupId = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByGroupId_Version_PrevAndNext(
-			long lvEntryVersionId, long groupId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
-
-	/**
 	 * Removes all the lv entry versions where groupId = &#63; and version = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1477,22 +1351,6 @@ public interface LVEntryVersionPersistence
 		long groupId, String uniqueGroupKey,
 		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param lvEntryVersionId the primary key of the current lv entry version
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	public LVEntryVersion[] findByG_UGK_PrevAndNext(
-			long lvEntryVersionId, long groupId, String uniqueGroupKey,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
-		throws NoSuchLVEntryVersionException;
 
 	/**
 	 * Removes all the lv entry versions where groupId = &#63; and uniqueGroupKey = &#63; from the database.
@@ -1881,4 +1739,4 @@ public interface LVEntryVersionPersistence
 				BigDecimalEntry> bigDecimalEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-730867572
+// LIFERAY-SERVICE-BUILDER-HASH:1869543601

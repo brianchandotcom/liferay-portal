@@ -145,21 +145,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 			orderByComparator);
 
 	/**
-	 * Returns the object filters before and after the current object filter in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectFilterId the primary key of the current object filter
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object filter
-	 * @throws NoSuchObjectFilterException if a object filter with the primary key could not be found
-	 */
-	public ObjectFilter[] findByUuid_PrevAndNext(
-			long objectFilterId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-				orderByComparator)
-		throws NoSuchObjectFilterException;
-
-	/**
 	 * Removes all the object filters where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -297,22 +282,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 			orderByComparator);
 
 	/**
-	 * Returns the object filters before and after the current object filter in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectFilterId the primary key of the current object filter
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object filter
-	 * @throws NoSuchObjectFilterException if a object filter with the primary key could not be found
-	 */
-	public ObjectFilter[] findByUuid_C_PrevAndNext(
-			long objectFilterId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-				orderByComparator)
-		throws NoSuchObjectFilterException;
-
-	/**
 	 * Removes all the object filters where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -441,21 +410,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 		long objectFieldId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
 			orderByComparator);
-
-	/**
-	 * Returns the object filters before and after the current object filter in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFilterId the primary key of the current object filter
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object filter
-	 * @throws NoSuchObjectFilterException if a object filter with the primary key could not be found
-	 */
-	public ObjectFilter[] findByObjectFieldId_PrevAndNext(
-			long objectFilterId, long objectFieldId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-				orderByComparator)
-		throws NoSuchObjectFilterException;
 
 	/**
 	 * Removes all the object filters where objectFieldId = &#63; from the database.
@@ -593,4 +547,4 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1397265739
+// LIFERAY-SERVICE-BUILDER-HASH:2134943430

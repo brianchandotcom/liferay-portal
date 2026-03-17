@@ -147,21 +147,6 @@ public interface ResourcePermissionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where name = &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByName_PrevAndNext(
-			long resourcePermissionId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
-
-	/**
 	 * Removes all the resource permissions where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -288,21 +273,6 @@ public interface ResourcePermissionPersistence
 		int scope,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator);
-
-	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where scope = &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByScope_PrevAndNext(
-			long resourcePermissionId, int scope,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
 
 	/**
 	 * Returns all the resource permissions where scope = any &#63;.
@@ -506,21 +476,6 @@ public interface ResourcePermissionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where roleId = &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByRoleId_PrevAndNext(
-			long resourcePermissionId, long roleId,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
-
-	/**
 	 * Removes all the resource permissions where roleId = &#63; from the database.
 	 *
 	 * @param roleId the role ID
@@ -656,22 +611,6 @@ public interface ResourcePermissionPersistence
 		long companyId, String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator);
-
-	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param companyId the company ID
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByC_LikeP_PrevAndNext(
-			long resourcePermissionId, long companyId, String primKey,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
 
 	/**
 	 * Removes all the resource permissions where companyId = &#63; and primKey LIKE &#63; from the database.
@@ -821,23 +760,6 @@ public interface ResourcePermissionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByC_N_S_PrevAndNext(
-			long resourcePermissionId, long companyId, String name, int scope,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
-
-	/**
 	 * Removes all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -985,24 +907,6 @@ public interface ResourcePermissionPersistence
 		long companyId, int scope, String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator);
-
-	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByC_S_P_PrevAndNext(
-			long resourcePermissionId, long companyId, int scope,
-			String primKey,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
 
 	/**
 	 * Removes all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63; from the database.
@@ -1163,25 +1067,6 @@ public interface ResourcePermissionPersistence
 		long companyId, String name, int scope, String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator);
-
-	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByC_N_S_P_PrevAndNext(
-			long resourcePermissionId, long companyId, String name, int scope,
-			String primKey,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
 
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = any &#63;.
@@ -1437,25 +1322,6 @@ public interface ResourcePermissionPersistence
 		long companyId, String name, int scope, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
 			orderByComparator);
-
-	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByC_N_S_R_PrevAndNext(
-			long resourcePermissionId, long companyId, String name, int scope,
-			long roleId,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
 
 	/**
 	 * Removes all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63; from the database.
@@ -1803,26 +1669,6 @@ public interface ResourcePermissionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63; and viewActionId = &#63;.
-	 *
-	 * @param resourcePermissionId the primary key of the current resource permission
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param viewActionId the view action ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	public ResourcePermission[] findByC_N_S_R_V_PrevAndNext(
-			long resourcePermissionId, long companyId, String name, int scope,
-			long roleId, boolean viewActionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission>
-				orderByComparator)
-		throws NoSuchResourcePermissionException;
-
-	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = any &#63; and viewActionId = &#63;.
 	 *
 	 * <p>
@@ -2071,4 +1917,4 @@ public interface ResourcePermissionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-673804853
+// LIFERAY-SERVICE-BUILDER-HASH:1396817235

@@ -146,21 +146,6 @@ public interface CommerceVirtualOrderItemPersistence
 			<CommerceVirtualOrderItem> orderByComparator);
 
 	/**
-	 * Returns the commerce virtual order items before and after the current commerce virtual order item in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemId the primary key of the current commerce virtual order item
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item
-	 * @throws NoSuchVirtualOrderItemException if a commerce virtual order item with the primary key could not be found
-	 */
-	public CommerceVirtualOrderItem[] findByUuid_PrevAndNext(
-			long commerceVirtualOrderItemId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceVirtualOrderItem> orderByComparator)
-		throws NoSuchVirtualOrderItemException;
-
-	/**
 	 * Removes all the commerce virtual order items where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -346,22 +331,6 @@ public interface CommerceVirtualOrderItemPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceVirtualOrderItem> orderByComparator);
-
-	/**
-	 * Returns the commerce virtual order items before and after the current commerce virtual order item in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemId the primary key of the current commerce virtual order item
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce virtual order item
-	 * @throws NoSuchVirtualOrderItemException if a commerce virtual order item with the primary key could not be found
-	 */
-	public CommerceVirtualOrderItem[] findByUuid_C_PrevAndNext(
-			long commerceVirtualOrderItemId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceVirtualOrderItem> orderByComparator)
-		throws NoSuchVirtualOrderItemException;
 
 	/**
 	 * Removes all the commerce virtual order items where uuid = &#63; and companyId = &#63; from the database.
@@ -553,4 +522,4 @@ public interface CommerceVirtualOrderItemPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1209650880
+// LIFERAY-SERVICE-BUILDER-HASH:177564577

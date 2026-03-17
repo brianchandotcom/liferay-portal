@@ -148,21 +148,6 @@ public interface ObjectEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public ObjectEntryVersion[] findByUuid_PrevAndNext(
-			long objectEntryVersionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
 	 * Removes all the object entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -300,22 +285,6 @@ public interface ObjectEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public ObjectEntryVersion[] findByUuid_C_PrevAndNext(
-			long objectEntryVersionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
 	 * Removes all the object entry versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -447,21 +416,6 @@ public interface ObjectEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where objectDefinitionId = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param objectDefinitionId the object definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public ObjectEntryVersion[] findByObjectDefinitionId_PrevAndNext(
-			long objectEntryVersionId, long objectDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
 	 * Removes all the object entry versions where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -589,21 +543,6 @@ public interface ObjectEntryVersionPersistence
 		long objectEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where objectEntryId = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param objectEntryId the object entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public ObjectEntryVersion[] findByObjectEntryId_PrevAndNext(
-			long objectEntryVersionId, long objectEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
 
 	/**
 	 * Removes all the object entry versions where objectEntryId = &#63; from the database.
@@ -741,22 +680,6 @@ public interface ObjectEntryVersionPersistence
 		long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public ObjectEntryVersion[] findByC_CD_PrevAndNext(
-			long objectEntryVersionId, long companyId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
 
 	/**
 	 * Removes all the object entry versions where companyId = &#63; and createDate = &#63; from the database.
@@ -948,22 +871,6 @@ public interface ObjectEntryVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object entry versions before and after the current object entry version in the ordered set where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * @param objectEntryVersionId the primary key of the current object entry version
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	public ObjectEntryVersion[] findByOEI_S_PrevAndNext(
-			long objectEntryVersionId, long objectEntryId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-				orderByComparator)
-		throws NoSuchObjectEntryVersionException;
-
-	/**
 	 * Removes all the object entry versions where objectEntryId = &#63; and status = &#63; from the database.
 	 *
 	 * @param objectEntryId the object entry ID
@@ -1102,4 +1009,4 @@ public interface ObjectEntryVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:726154247
+// LIFERAY-SERVICE-BUILDER-HASH:1451929806

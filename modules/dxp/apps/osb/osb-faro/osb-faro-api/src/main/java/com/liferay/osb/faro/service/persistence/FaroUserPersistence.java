@@ -145,21 +145,6 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 			orderByComparator);
 
 	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where groupId = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public FaroUser[] findByGroupId_PrevAndNext(
-			long faroUserId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroUser>
-				orderByComparator)
-		throws NoSuchFaroUserException;
-
-	/**
 	 * Removes all the faro users where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -286,21 +271,6 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 		long liveUserId,
 		com.liferay.portal.kernel.util.OrderByComparator<FaroUser>
 			orderByComparator);
-
-	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where liveUserId = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param liveUserId the live user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public FaroUser[] findByLiveUserId_PrevAndNext(
-			long faroUserId, long liveUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroUser>
-				orderByComparator)
-		throws NoSuchFaroUserException;
 
 	/**
 	 * Removes all the faro users where liveUserId = &#63; from the database.
@@ -531,22 +501,6 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 			orderByComparator);
 
 	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public FaroUser[] findByG_R_PrevAndNext(
-			long faroUserId, long groupId, long roleId,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroUser>
-				orderByComparator)
-		throws NoSuchFaroUserException;
-
-	/**
 	 * Removes all the faro users where groupId = &#63; and roleId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -735,22 +689,6 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 			orderByComparator);
 
 	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public FaroUser[] findByG_S_PrevAndNext(
-			long faroUserId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroUser>
-				orderByComparator)
-		throws NoSuchFaroUserException;
-
-	/**
 	 * Removes all the faro users where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -887,22 +825,6 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 		long liveUserId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<FaroUser>
 			orderByComparator);
-
-	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where liveUserId = &#63; and status = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public FaroUser[] findByL_S_PrevAndNext(
-			long faroUserId, long liveUserId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroUser>
-				orderByComparator)
-		throws NoSuchFaroUserException;
 
 	/**
 	 * Removes all the faro users where liveUserId = &#63; and status = &#63; from the database.
@@ -1043,22 +965,6 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 			orderByComparator);
 
 	/**
-	 * Returns the faro users before and after the current faro user in the ordered set where emailAddress = &#63; and status = &#63;.
-	 *
-	 * @param faroUserId the primary key of the current faro user
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	public FaroUser[] findByE_S_PrevAndNext(
-			long faroUserId, String emailAddress, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FaroUser>
-				orderByComparator)
-		throws NoSuchFaroUserException;
-
-	/**
 	 * Removes all the faro users where emailAddress = &#63; and status = &#63; from the database.
 	 *
 	 * @param emailAddress the email address
@@ -1195,4 +1101,4 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1934608315
+// LIFERAY-SERVICE-BUILDER-HASH:-1840006209

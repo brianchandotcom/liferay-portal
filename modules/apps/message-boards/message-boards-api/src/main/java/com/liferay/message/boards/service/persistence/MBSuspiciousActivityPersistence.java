@@ -148,21 +148,6 @@ public interface MBSuspiciousActivityPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where uuid = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public MBSuspiciousActivity[] findByUuid_PrevAndNext(
-			long suspiciousActivityId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<MBSuspiciousActivity> orderByComparator)
-		throws NoSuchSuspiciousActivityException;
-
-	/**
 	 * Removes all the message boards suspicious activities where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface MBSuspiciousActivityPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public MBSuspiciousActivity[] findByUuid_C_PrevAndNext(
-			long suspiciousActivityId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<MBSuspiciousActivity> orderByComparator)
-		throws NoSuchSuspiciousActivityException;
-
-	/**
 	 * Removes all the message boards suspicious activities where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface MBSuspiciousActivityPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public MBSuspiciousActivity[] findByMessageId_PrevAndNext(
-			long suspiciousActivityId, long messageId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<MBSuspiciousActivity> orderByComparator)
-		throws NoSuchSuspiciousActivityException;
-
-	/**
 	 * Removes all the message boards suspicious activities where messageId = &#63; from the database.
 	 *
 	 * @param messageId the message ID
@@ -637,21 +591,6 @@ public interface MBSuspiciousActivityPersistence
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBSuspiciousActivity>
 			orderByComparator);
-
-	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where threadId = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param threadId the thread ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public MBSuspiciousActivity[] findByThreadId_PrevAndNext(
-			long suspiciousActivityId, long threadId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<MBSuspiciousActivity> orderByComparator)
-		throws NoSuchSuspiciousActivityException;
 
 	/**
 	 * Removes all the message boards suspicious activities where threadId = &#63; from the database.
@@ -891,4 +830,4 @@ public interface MBSuspiciousActivityPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:4408305
+// LIFERAY-SERVICE-BUILDER-HASH:1320350033

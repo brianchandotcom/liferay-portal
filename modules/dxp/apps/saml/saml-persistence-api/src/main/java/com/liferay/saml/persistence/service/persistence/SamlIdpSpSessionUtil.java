@@ -250,25 +250,6 @@ public class SamlIdpSpSessionUtil {
 	}
 
 	/**
-	 * Returns the saml idp sp sessions before and after the current saml idp sp session in the ordered set where createDate &lt; &#63;.
-	 *
-	 * @param samlIdpSpSessionId the primary key of the current saml idp sp session
-	 * @param createDate the create date
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a saml idp sp session with the primary key could not be found
-	 */
-	public static SamlIdpSpSession[] findByLtCreateDate_PrevAndNext(
-			long samlIdpSpSessionId, Date createDate,
-			OrderByComparator<SamlIdpSpSession> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchIdpSpSessionException {
-
-		return getPersistence().findByLtCreateDate_PrevAndNext(
-			samlIdpSpSessionId, createDate, orderByComparator);
-	}
-
-	/**
 	 * Removes all the saml idp sp sessions where createDate &lt; &#63; from the database.
 	 *
 	 * @param createDate the create date
@@ -426,25 +407,6 @@ public class SamlIdpSpSessionUtil {
 
 		return getPersistence().fetchBySamlIdpSsoSessionId_Last(
 			samlIdpSsoSessionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the saml idp sp sessions before and after the current saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
-	 *
-	 * @param samlIdpSpSessionId the primary key of the current saml idp sp session
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a saml idp sp session with the primary key could not be found
-	 */
-	public static SamlIdpSpSession[] findBySamlIdpSsoSessionId_PrevAndNext(
-			long samlIdpSpSessionId, long samlIdpSsoSessionId,
-			OrderByComparator<SamlIdpSpSession> orderByComparator)
-		throws com.liferay.saml.persistence.exception.
-			NoSuchIdpSpSessionException {
-
-		return getPersistence().findBySamlIdpSsoSessionId_PrevAndNext(
-			samlIdpSpSessionId, samlIdpSsoSessionId, orderByComparator);
 	}
 
 	/**
@@ -630,4 +592,4 @@ public class SamlIdpSpSessionUtil {
 	private static volatile SamlIdpSpSessionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-178803535
+// LIFERAY-SERVICE-BUILDER-HASH:-1133591359

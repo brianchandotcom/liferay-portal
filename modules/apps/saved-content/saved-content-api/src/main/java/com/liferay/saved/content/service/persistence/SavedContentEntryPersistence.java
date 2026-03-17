@@ -148,21 +148,6 @@ public interface SavedContentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByUuid_PrevAndNext(
-			long savedContentEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
-
-	/**
 	 * Removes all the saved content entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -350,22 +335,6 @@ public interface SavedContentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByUuid_C_PrevAndNext(
-			long savedContentEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
-
-	/**
 	 * Removes all the saved content entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -496,21 +465,6 @@ public interface SavedContentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByGroupId_PrevAndNext(
-			long savedContentEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
-
-	/**
 	 * Returns all the saved content entries that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -550,21 +504,6 @@ public interface SavedContentEntryPersistence
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set of saved content entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] filterFindByGroupId_PrevAndNext(
-			long savedContentEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
 
 	/**
 	 * Removes all the saved content entries where groupId = &#63; from the database.
@@ -701,21 +640,6 @@ public interface SavedContentEntryPersistence
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where userId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByUserId_PrevAndNext(
-			long savedContentEntryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
 
 	/**
 	 * Removes all the saved content entries where userId = &#63; from the database.
@@ -855,22 +779,6 @@ public interface SavedContentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByG_U_PrevAndNext(
-			long savedContentEntryId, long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
-
-	/**
 	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -914,22 +822,6 @@ public interface SavedContentEntryPersistence
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set of saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] filterFindByG_U_PrevAndNext(
-			long savedContentEntryId, long groupId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
 
 	/**
 	 * Removes all the saved content entries where groupId = &#63; and userId = &#63; from the database.
@@ -1080,22 +972,6 @@ public interface SavedContentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByG_CN_PrevAndNext(
-			long savedContentEntryId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
-
-	/**
 	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1139,22 +1015,6 @@ public interface SavedContentEntryPersistence
 		long groupId, long classNameId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set of saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] filterFindByG_CN_PrevAndNext(
-			long savedContentEntryId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
 
 	/**
 	 * Removes all the saved content entries where groupId = &#63; and classNameId = &#63; from the database.
@@ -1305,22 +1165,6 @@ public interface SavedContentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByU_C_PrevAndNext(
-			long savedContentEntryId, long userId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
-
-	/**
 	 * Removes all the saved content entries where userId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1468,24 +1312,6 @@ public interface SavedContentEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByG_C_C_PrevAndNext(
-			long savedContentEntryId, long groupId, long classNameId,
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
-
-	/**
 	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1532,24 +1358,6 @@ public interface SavedContentEntryPersistence
 		long groupId, long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set of saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] filterFindByG_C_C_PrevAndNext(
-			long savedContentEntryId, long groupId, long classNameId,
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
 
 	/**
 	 * Removes all the saved content entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -1709,24 +1517,6 @@ public interface SavedContentEntryPersistence
 		long companyId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the saved content entries before and after the current saved content entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param savedContentEntryId the primary key of the current saved content entry
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	public SavedContentEntry[] findByC_C_C_PrevAndNext(
-			long savedContentEntryId, long companyId, long classNameId,
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
-				orderByComparator)
-		throws NoSuchSavedContentEntryException;
 
 	/**
 	 * Removes all the saved content entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -2092,4 +1882,4 @@ public interface SavedContentEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-725420036
+// LIFERAY-SERVICE-BUILDER-HASH:2118150995

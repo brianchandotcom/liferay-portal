@@ -261,26 +261,6 @@ public class KaleoTimerUtil {
 	}
 
 	/**
-	 * Returns the kaleo timers before and after the current kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoTimerId the primary key of the current kaleo timer
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo timer
-	 * @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
-	 */
-	public static KaleoTimer[] findByKCN_KCPK_PrevAndNext(
-			long kaleoTimerId, String kaleoClassName, long kaleoClassPK,
-			OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTimerException {
-
-		return getPersistence().findByKCN_KCPK_PrevAndNext(
-			kaleoTimerId, kaleoClassName, kaleoClassPK, orderByComparator);
-	}
-
-	/**
 	 * Removes all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
 	 *
 	 * @param kaleoClassName the kaleo class name
@@ -464,28 +444,6 @@ public class KaleoTimerUtil {
 
 		return getPersistence().fetchByKCN_KCPK_Blocking_Last(
 			kaleoClassName, kaleoClassPK, blocking, orderByComparator);
-	}
-
-	/**
-	 * Returns the kaleo timers before and after the current kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
-	 *
-	 * @param kaleoTimerId the primary key of the current kaleo timer
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param blocking the blocking
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo timer
-	 * @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
-	 */
-	public static KaleoTimer[] findByKCN_KCPK_Blocking_PrevAndNext(
-			long kaleoTimerId, String kaleoClassName, long kaleoClassPK,
-			boolean blocking, OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.
-			NoSuchTimerException {
-
-		return getPersistence().findByKCN_KCPK_Blocking_PrevAndNext(
-			kaleoTimerId, kaleoClassName, kaleoClassPK, blocking,
-			orderByComparator);
 	}
 
 	/**
@@ -677,4 +635,4 @@ public class KaleoTimerUtil {
 	private static volatile KaleoTimerPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:676072263
+// LIFERAY-SERVICE-BUILDER-HASH:-1642386370

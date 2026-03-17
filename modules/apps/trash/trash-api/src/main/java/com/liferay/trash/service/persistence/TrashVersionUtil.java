@@ -240,24 +240,6 @@ public class TrashVersionUtil {
 	}
 
 	/**
-	 * Returns the trash versions before and after the current trash version in the ordered set where entryId = &#63;.
-	 *
-	 * @param versionId the primary key of the current trash version
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next trash version
-	 * @throws NoSuchVersionException if a trash version with the primary key could not be found
-	 */
-	public static TrashVersion[] findByEntryId_PrevAndNext(
-			long versionId, long entryId,
-			OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.trash.exception.NoSuchVersionException {
-
-		return getPersistence().findByEntryId_PrevAndNext(
-			versionId, entryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the trash versions where entryId = &#63; from the database.
 	 *
 	 * @param entryId the entry ID
@@ -421,25 +403,6 @@ public class TrashVersionUtil {
 
 		return getPersistence().fetchByE_CN_Last(
 			entryId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the trash versions before and after the current trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param versionId the primary key of the current trash version
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next trash version
-	 * @throws NoSuchVersionException if a trash version with the primary key could not be found
-	 */
-	public static TrashVersion[] findByE_CN_PrevAndNext(
-			long versionId, long entryId, long classNameId,
-			OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.trash.exception.NoSuchVersionException {
-
-		return getPersistence().findByE_CN_PrevAndNext(
-			versionId, entryId, classNameId, orderByComparator);
 	}
 
 	/**
@@ -685,4 +648,4 @@ public class TrashVersionUtil {
 	private static volatile TrashVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:597929530
+// LIFERAY-SERVICE-BUILDER-HASH:-823910196

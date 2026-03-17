@@ -240,25 +240,6 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
-	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where uuid = &#63;.
-	 *
-	 * @param storageLinkId the primary key of the current ddm storage link
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm storage link
-	 * @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
-	 */
-	public static DDMStorageLink[] findByUuid_PrevAndNext(
-			long storageLinkId, String uuid,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStorageLinkException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			storageLinkId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm storage links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -423,26 +404,6 @@ public class DDMStorageLinkUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param storageLinkId the primary key of the current ddm storage link
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm storage link
-	 * @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
-	 */
-	public static DDMStorageLink[] findByUuid_C_PrevAndNext(
-			long storageLinkId, String uuid, long companyId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStorageLinkException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			storageLinkId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -663,25 +624,6 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
-	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where structureId = &#63;.
-	 *
-	 * @param storageLinkId the primary key of the current ddm storage link
-	 * @param structureId the structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm storage link
-	 * @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
-	 */
-	public static DDMStorageLink[] findByStructureId_PrevAndNext(
-			long storageLinkId, long structureId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStorageLinkException {
-
-		return getPersistence().findByStructureId_PrevAndNext(
-			storageLinkId, structureId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ddm storage links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
@@ -839,25 +781,6 @@ public class DDMStorageLinkUtil {
 
 		return getPersistence().fetchByStructureVersionId_Last(
 			structureVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where structureVersionId = &#63;.
-	 *
-	 * @param storageLinkId the primary key of the current ddm storage link
-	 * @param structureVersionId the structure version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm storage link
-	 * @throws NoSuchStorageLinkException if a ddm storage link with the primary key could not be found
-	 */
-	public static DDMStorageLink[] findByStructureVersionId_PrevAndNext(
-			long storageLinkId, long structureVersionId,
-			OrderByComparator<DDMStorageLink> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStorageLinkException {
-
-		return getPersistence().findByStructureVersionId_PrevAndNext(
-			storageLinkId, structureVersionId, orderByComparator);
 	}
 
 	/**
@@ -1129,4 +1052,4 @@ public class DDMStorageLinkUtil {
 	private static volatile DDMStorageLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1176381071
+// LIFERAY-SERVICE-BUILDER-HASH:457458267

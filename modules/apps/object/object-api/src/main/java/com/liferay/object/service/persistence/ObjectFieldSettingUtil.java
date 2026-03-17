@@ -242,24 +242,6 @@ public class ObjectFieldSettingUtil {
 	}
 
 	/**
-	 * Returns the object field settings before and after the current object field setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectFieldSettingId the primary key of the current object field setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field setting
-	 * @throws NoSuchObjectFieldSettingException if a object field setting with the primary key could not be found
-	 */
-	public static ObjectFieldSetting[] findByUuid_PrevAndNext(
-			long objectFieldSettingId, String uuid,
-			OrderByComparator<ObjectFieldSetting> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldSettingException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectFieldSettingId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object field settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -425,25 +407,6 @@ public class ObjectFieldSettingUtil {
 	}
 
 	/**
-	 * Returns the object field settings before and after the current object field setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectFieldSettingId the primary key of the current object field setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field setting
-	 * @throws NoSuchObjectFieldSettingException if a object field setting with the primary key could not be found
-	 */
-	public static ObjectFieldSetting[] findByUuid_C_PrevAndNext(
-			long objectFieldSettingId, String uuid, long companyId,
-			OrderByComparator<ObjectFieldSetting> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldSettingException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectFieldSettingId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object field settings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -600,24 +563,6 @@ public class ObjectFieldSettingUtil {
 
 		return getPersistence().fetchByObjectFieldId_Last(
 			objectFieldId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object field settings before and after the current object field setting in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldSettingId the primary key of the current object field setting
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object field setting
-	 * @throws NoSuchObjectFieldSettingException if a object field setting with the primary key could not be found
-	 */
-	public static ObjectFieldSetting[] findByObjectFieldId_PrevAndNext(
-			long objectFieldSettingId, long objectFieldId,
-			OrderByComparator<ObjectFieldSetting> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFieldSettingException {
-
-		return getPersistence().findByObjectFieldId_PrevAndNext(
-			objectFieldSettingId, objectFieldId, orderByComparator);
 	}
 
 	/**
@@ -875,4 +820,4 @@ public class ObjectFieldSettingUtil {
 	private static volatile ObjectFieldSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1180960765
+// LIFERAY-SERVICE-BUILDER-HASH:-1783206132

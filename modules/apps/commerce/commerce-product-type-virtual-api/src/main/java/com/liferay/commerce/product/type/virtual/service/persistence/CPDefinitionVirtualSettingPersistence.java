@@ -146,21 +146,6 @@ public interface CPDefinitionVirtualSettingPersistence
 			<CPDefinitionVirtualSetting> orderByComparator);
 
 	/**
-	 * Returns the cp definition virtual settings before and after the current cp definition virtual setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingId the primary key of the current cp definition virtual setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition virtual setting
-	 * @throws NoSuchCPDefinitionVirtualSettingException if a cp definition virtual setting with the primary key could not be found
-	 */
-	public CPDefinitionVirtualSetting[] findByUuid_PrevAndNext(
-			long CPDefinitionVirtualSettingId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionVirtualSetting> orderByComparator)
-		throws NoSuchCPDefinitionVirtualSettingException;
-
-	/**
 	 * Removes all the cp definition virtual settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -346,22 +331,6 @@ public interface CPDefinitionVirtualSettingPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionVirtualSetting> orderByComparator);
-
-	/**
-	 * Returns the cp definition virtual settings before and after the current cp definition virtual setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingId the primary key of the current cp definition virtual setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition virtual setting
-	 * @throws NoSuchCPDefinitionVirtualSettingException if a cp definition virtual setting with the primary key could not be found
-	 */
-	public CPDefinitionVirtualSetting[] findByUuid_C_PrevAndNext(
-			long CPDefinitionVirtualSettingId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionVirtualSetting> orderByComparator)
-		throws NoSuchCPDefinitionVirtualSettingException;
 
 	/**
 	 * Removes all the cp definition virtual settings where uuid = &#63; and companyId = &#63; from the database.
@@ -559,4 +528,4 @@ public interface CPDefinitionVirtualSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1096443629
+// LIFERAY-SERVICE-BUILDER-HASH:1764854356

@@ -146,21 +146,6 @@ public interface CPDefinitionGroupedEntryPersistence
 			<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
-	 * Returns the cp definition grouped entries before and after the current cp definition grouped entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDefinitionGroupedEntryId the primary key of the current cp definition grouped entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a cp definition grouped entry with the primary key could not be found
-	 */
-	public CPDefinitionGroupedEntry[] findByUuid_PrevAndNext(
-			long CPDefinitionGroupedEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException;
-
-	/**
 	 * Removes all the cp definition grouped entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -348,22 +333,6 @@ public interface CPDefinitionGroupedEntryPersistence
 			<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
-	 * Returns the cp definition grouped entries before and after the current cp definition grouped entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDefinitionGroupedEntryId the primary key of the current cp definition grouped entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a cp definition grouped entry with the primary key could not be found
-	 */
-	public CPDefinitionGroupedEntry[] findByUuid_C_PrevAndNext(
-			long CPDefinitionGroupedEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException;
-
-	/**
 	 * Removes all the cp definition grouped entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface CPDefinitionGroupedEntryPersistence
 			<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
-	 * Returns the cp definition grouped entries before and after the current cp definition grouped entry in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionGroupedEntryId the primary key of the current cp definition grouped entry
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a cp definition grouped entry with the primary key could not be found
-	 */
-	public CPDefinitionGroupedEntry[] findByCPDefinitionId_PrevAndNext(
-			long CPDefinitionGroupedEntryId, long CPDefinitionId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException;
-
-	/**
 	 * Removes all the cp definition grouped entries where CPDefinitionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -637,21 +591,6 @@ public interface CPDefinitionGroupedEntryPersistence
 		long entryCProductId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDefinitionGroupedEntry> orderByComparator);
-
-	/**
-	 * Returns the cp definition grouped entries before and after the current cp definition grouped entry in the ordered set where entryCProductId = &#63;.
-	 *
-	 * @param CPDefinitionGroupedEntryId the primary key of the current cp definition grouped entry
-	 * @param entryCProductId the entry c product ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a cp definition grouped entry with the primary key could not be found
-	 */
-	public CPDefinitionGroupedEntry[] findByEntryCProductId_PrevAndNext(
-			long CPDefinitionGroupedEntryId, long entryCProductId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDefinitionGroupedEntry> orderByComparator)
-		throws NoSuchCPDefinitionGroupedEntryException;
 
 	/**
 	 * Removes all the cp definition grouped entries where entryCProductId = &#63; from the database.
@@ -846,4 +785,4 @@ public interface CPDefinitionGroupedEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1377293829
+// LIFERAY-SERVICE-BUILDER-HASH:-1567219888

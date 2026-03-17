@@ -145,21 +145,6 @@ public interface MembershipRequestPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63;.
-	 *
-	 * @param membershipRequestId the primary key of the current membership request
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next membership request
-	 * @throws NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	 */
-	public MembershipRequest[] findByGroupId_PrevAndNext(
-			long membershipRequestId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-				orderByComparator)
-		throws NoSuchMembershipRequestException;
-
-	/**
 	 * Removes all the membership requests where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -286,21 +271,6 @@ public interface MembershipRequestPersistence
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator);
-
-	/**
-	 * Returns the membership requests before and after the current membership request in the ordered set where userId = &#63;.
-	 *
-	 * @param membershipRequestId the primary key of the current membership request
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next membership request
-	 * @throws NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	 */
-	public MembershipRequest[] findByUserId_PrevAndNext(
-			long membershipRequestId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-				orderByComparator)
-		throws NoSuchMembershipRequestException;
 
 	/**
 	 * Removes all the membership requests where userId = &#63; from the database.
@@ -438,22 +408,6 @@ public interface MembershipRequestPersistence
 		long groupId, long statusId,
 		com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
 			orderByComparator);
-
-	/**
-	 * Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63; and statusId = &#63;.
-	 *
-	 * @param membershipRequestId the primary key of the current membership request
-	 * @param groupId the group ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next membership request
-	 * @throws NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	 */
-	public MembershipRequest[] findByG_S_PrevAndNext(
-			long membershipRequestId, long groupId, long statusId,
-			com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-				orderByComparator)
-		throws NoSuchMembershipRequestException;
 
 	/**
 	 * Removes all the membership requests where groupId = &#63; and statusId = &#63; from the database.
@@ -603,23 +557,6 @@ public interface MembershipRequestPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
-	 *
-	 * @param membershipRequestId the primary key of the current membership request
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param statusId the status ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next membership request
-	 * @throws NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	 */
-	public MembershipRequest[] findByG_U_S_PrevAndNext(
-			long membershipRequestId, long groupId, long userId, long statusId,
-			com.liferay.portal.kernel.util.OrderByComparator<MembershipRequest>
-				orderByComparator)
-		throws NoSuchMembershipRequestException;
-
-	/**
 	 * Removes all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -760,4 +697,4 @@ public interface MembershipRequestPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1913675518
+// LIFERAY-SERVICE-BUILDER-HASH:844366023

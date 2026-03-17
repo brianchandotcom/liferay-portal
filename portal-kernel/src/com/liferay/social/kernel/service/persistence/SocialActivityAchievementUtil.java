@@ -252,25 +252,6 @@ public class SocialActivityAchievementUtil {
 	}
 
 	/**
-	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63;.
-	 *
-	 * @param activityAchievementId the primary key of the current social activity achievement
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity achievement
-	 * @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
-	 */
-	public static SocialActivityAchievement[] findByGroupId_PrevAndNext(
-			long activityAchievementId, long groupId,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityAchievementException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			activityAchievementId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activity achievements where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -435,26 +416,6 @@ public class SocialActivityAchievementUtil {
 
 		return getPersistence().fetchByG_U_Last(
 			groupId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param activityAchievementId the primary key of the current social activity achievement
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity achievement
-	 * @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
-	 */
-	public static SocialActivityAchievement[] findByG_U_PrevAndNext(
-			long activityAchievementId, long groupId, long userId,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityAchievementException {
-
-		return getPersistence().findByG_U_PrevAndNext(
-			activityAchievementId, groupId, userId, orderByComparator);
 	}
 
 	/**
@@ -627,26 +588,6 @@ public class SocialActivityAchievementUtil {
 	}
 
 	/**
-	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63; and name = &#63;.
-	 *
-	 * @param activityAchievementId the primary key of the current social activity achievement
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity achievement
-	 * @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
-	 */
-	public static SocialActivityAchievement[] findByG_N_PrevAndNext(
-			long activityAchievementId, long groupId, String name,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityAchievementException {
-
-		return getPersistence().findByG_N_PrevAndNext(
-			activityAchievementId, groupId, name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activity achievements where groupId = &#63; and name = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -814,26 +755,6 @@ public class SocialActivityAchievementUtil {
 
 		return getPersistence().fetchByG_F_Last(
 			groupId, firstInGroup, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param activityAchievementId the primary key of the current social activity achievement
-	 * @param groupId the group ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity achievement
-	 * @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
-	 */
-	public static SocialActivityAchievement[] findByG_F_PrevAndNext(
-			long activityAchievementId, long groupId, boolean firstInGroup,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityAchievementException {
-
-		return getPersistence().findByG_F_PrevAndNext(
-			activityAchievementId, groupId, firstInGroup, orderByComparator);
 	}
 
 	/**
@@ -1091,29 +1012,6 @@ public class SocialActivityAchievementUtil {
 	}
 
 	/**
-	 * Returns the social activity achievements before and after the current social activity achievement in the ordered set where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.
-	 *
-	 * @param activityAchievementId the primary key of the current social activity achievement
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param firstInGroup the first in group
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity achievement
-	 * @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
-	 */
-	public static SocialActivityAchievement[] findByG_U_F_PrevAndNext(
-			long activityAchievementId, long groupId, long userId,
-			boolean firstInGroup,
-			OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.social.kernel.exception.
-			NoSuchActivityAchievementException {
-
-		return getPersistence().findByG_U_F_PrevAndNext(
-			activityAchievementId, groupId, userId, firstInGroup,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activity achievements where groupId = &#63; and userId = &#63; and firstInGroup = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1313,4 +1211,4 @@ public class SocialActivityAchievementUtil {
 	private static volatile SocialActivityAchievementPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1258918247
+// LIFERAY-SERVICE-BUILDER-HASH:-920539310

@@ -251,25 +251,6 @@ public class RegionLocalizationUtil {
 	}
 
 	/**
-	 * Returns the region localizations before and after the current region localization in the ordered set where regionId = &#63;.
-	 *
-	 * @param regionLocalizationId the primary key of the current region localization
-	 * @param regionId the region ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next region localization
-	 * @throws NoSuchRegionLocalizationException if a region localization with the primary key could not be found
-	 */
-	public static RegionLocalization[] findByRegionId_PrevAndNext(
-			long regionLocalizationId, long regionId,
-			OrderByComparator<RegionLocalization> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchRegionLocalizationException {
-
-		return getPersistence().findByRegionId_PrevAndNext(
-			regionLocalizationId, regionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the region localizations where regionId = &#63; from the database.
 	 *
 	 * @param regionId the region ID
@@ -533,4 +514,4 @@ public class RegionLocalizationUtil {
 	private static volatile RegionLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1044494177
+// LIFERAY-SERVICE-BUILDER-HASH:352342043

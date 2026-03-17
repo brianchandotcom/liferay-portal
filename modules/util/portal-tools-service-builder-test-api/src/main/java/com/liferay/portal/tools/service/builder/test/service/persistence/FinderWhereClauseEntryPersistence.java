@@ -147,21 +147,6 @@ public interface FinderWhereClauseEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the finder where clause entries before and after the current finder where clause entry in the ordered set where name = &#63;.
-	 *
-	 * @param finderWhereClauseEntryId the primary key of the current finder where clause entry
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next finder where clause entry
-	 * @throws NoSuchFinderWhereClauseEntryException if a finder where clause entry with the primary key could not be found
-	 */
-	public FinderWhereClauseEntry[] findByName_Nickname_PrevAndNext(
-			long finderWhereClauseEntryId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<FinderWhereClauseEntry> orderByComparator)
-		throws NoSuchFinderWhereClauseEntryException;
-
-	/**
 	 * Removes all the finder where clause entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -301,4 +286,4 @@ public interface FinderWhereClauseEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-518233924
+// LIFERAY-SERVICE-BUILDER-HASH:1201917643

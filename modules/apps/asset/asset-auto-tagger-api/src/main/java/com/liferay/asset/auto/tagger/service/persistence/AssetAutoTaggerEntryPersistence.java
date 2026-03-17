@@ -149,21 +149,6 @@ public interface AssetAutoTaggerEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the asset auto tagger entries before and after the current asset auto tagger entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetAutoTaggerEntryId the primary key of the current asset auto tagger entry
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset auto tagger entry
-	 * @throws NoSuchEntryException if a asset auto tagger entry with the primary key could not be found
-	 */
-	public AssetAutoTaggerEntry[] findByAssetEntryId_PrevAndNext(
-			long assetAutoTaggerEntryId, long assetEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetAutoTaggerEntry> orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the asset auto tagger entries where assetEntryId = &#63; from the database.
 	 *
 	 * @param assetEntryId the asset entry ID
@@ -291,21 +276,6 @@ public interface AssetAutoTaggerEntryPersistence
 		long assetTagId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetAutoTaggerEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the asset auto tagger entries before and after the current asset auto tagger entry in the ordered set where assetTagId = &#63;.
-	 *
-	 * @param assetAutoTaggerEntryId the primary key of the current asset auto tagger entry
-	 * @param assetTagId the asset tag ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset auto tagger entry
-	 * @throws NoSuchEntryException if a asset auto tagger entry with the primary key could not be found
-	 */
-	public AssetAutoTaggerEntry[] findByAssetTagId_PrevAndNext(
-			long assetAutoTaggerEntryId, long assetTagId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetAutoTaggerEntry> orderByComparator)
-		throws NoSuchEntryException;
 
 	/**
 	 * Removes all the asset auto tagger entries where assetTagId = &#63; from the database.
@@ -495,4 +465,4 @@ public interface AssetAutoTaggerEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-377896856
+// LIFERAY-SERVICE-BUILDER-HASH:-441274368

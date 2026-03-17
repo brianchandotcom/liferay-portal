@@ -249,25 +249,6 @@ public class ClientExtensionEntryRelUtil {
 	}
 
 	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where uuid = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public static ClientExtensionEntryRel[] findByUuid_PrevAndNext(
-			long clientExtensionEntryRelId, String uuid,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryRelException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			clientExtensionEntryRelId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the client extension entry rels where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -504,26 +485,6 @@ public class ClientExtensionEntryRelUtil {
 	}
 
 	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public static ClientExtensionEntryRel[] findByUuid_C_PrevAndNext(
-			long clientExtensionEntryRelId, String uuid, long companyId,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryRelException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			clientExtensionEntryRelId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the client extension entry rels where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -675,25 +636,6 @@ public class ClientExtensionEntryRelUtil {
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
 
 		return getPersistence().fetchByType_Last(type, orderByComparator);
-	}
-
-	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where type = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public static ClientExtensionEntryRel[] findByType_PrevAndNext(
-			long clientExtensionEntryRelId, String type,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryRelException {
-
-		return getPersistence().findByType_PrevAndNext(
-			clientExtensionEntryRelId, type, orderByComparator);
 	}
 
 	/**
@@ -864,28 +806,6 @@ public class ClientExtensionEntryRelUtil {
 
 		return getPersistence().fetchByC_CETERC_Last(
 			companyId, cetExternalReferenceCode, orderByComparator);
-	}
-
-	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where companyId = &#63; and cetExternalReferenceCode = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param companyId the company ID
-	 * @param cetExternalReferenceCode the cet external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public static ClientExtensionEntryRel[] findByC_CETERC_PrevAndNext(
-			long clientExtensionEntryRelId, long companyId,
-			String cetExternalReferenceCode,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryRelException {
-
-		return getPersistence().findByC_CETERC_PrevAndNext(
-			clientExtensionEntryRelId, companyId, cetExternalReferenceCode,
-			orderByComparator);
 	}
 
 	/**
@@ -1061,26 +981,6 @@ public class ClientExtensionEntryRelUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public static ClientExtensionEntryRel[] findByC_C_PrevAndNext(
-			long clientExtensionEntryRelId, long classNameId, long classPK,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryRelException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			clientExtensionEntryRelId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -1260,29 +1160,6 @@ public class ClientExtensionEntryRelUtil {
 
 		return getPersistence().fetchByC_C_T_Last(
 			classNameId, classPK, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the client extension entry rels before and after the current client extension entry rel in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param clientExtensionEntryRelId the primary key of the current client extension entry rel
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry rel
-	 * @throws NoSuchClientExtensionEntryRelException if a client extension entry rel with the primary key could not be found
-	 */
-	public static ClientExtensionEntryRel[] findByC_C_T_PrevAndNext(
-			long clientExtensionEntryRelId, long classNameId, long classPK,
-			String type,
-			OrderByComparator<ClientExtensionEntryRel> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchClientExtensionEntryRelException {
-
-		return getPersistence().findByC_C_T_PrevAndNext(
-			clientExtensionEntryRelId, classNameId, classPK, type,
-			orderByComparator);
 	}
 
 	/**
@@ -1557,4 +1434,4 @@ public class ClientExtensionEntryRelUtil {
 	private static volatile ClientExtensionEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:432539291
+// LIFERAY-SERVICE-BUILDER-HASH:1429833407

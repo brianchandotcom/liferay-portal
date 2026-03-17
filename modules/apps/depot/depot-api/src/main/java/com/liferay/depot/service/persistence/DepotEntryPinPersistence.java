@@ -147,21 +147,6 @@ public interface DepotEntryPinPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entry pins before and after the current depot entry pin in the ordered set where uuid = &#63;.
-	 *
-	 * @param depotEntryPinId the primary key of the current depot entry pin
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry pin
-	 * @throws NoSuchEntryPinException if a depot entry pin with the primary key could not be found
-	 */
-	public DepotEntryPin[] findByUuid_PrevAndNext(
-			long depotEntryPinId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryPin>
-				orderByComparator)
-		throws NoSuchEntryPinException;
-
-	/**
 	 * Removes all the depot entry pins where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface DepotEntryPinPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entry pins before and after the current depot entry pin in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param depotEntryPinId the primary key of the current depot entry pin
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry pin
-	 * @throws NoSuchEntryPinException if a depot entry pin with the primary key could not be found
-	 */
-	public DepotEntryPin[] findByUuid_C_PrevAndNext(
-			long depotEntryPinId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryPin>
-				orderByComparator)
-		throws NoSuchEntryPinException;
-
-	/**
 	 * Removes all the depot entry pins where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface DepotEntryPinPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the depot entry pins before and after the current depot entry pin in the ordered set where userId = &#63;.
-	 *
-	 * @param depotEntryPinId the primary key of the current depot entry pin
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry pin
-	 * @throws NoSuchEntryPinException if a depot entry pin with the primary key could not be found
-	 */
-	public DepotEntryPin[] findByUserId_PrevAndNext(
-			long depotEntryPinId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryPin>
-				orderByComparator)
-		throws NoSuchEntryPinException;
-
-	/**
 	 * Removes all the depot entry pins where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -636,21 +590,6 @@ public interface DepotEntryPinPersistence
 		long depotEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<DepotEntryPin>
 			orderByComparator);
-
-	/**
-	 * Returns the depot entry pins before and after the current depot entry pin in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryPinId the primary key of the current depot entry pin
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry pin
-	 * @throws NoSuchEntryPinException if a depot entry pin with the primary key could not be found
-	 */
-	public DepotEntryPin[] findByDepotEntryId_PrevAndNext(
-			long depotEntryPinId, long depotEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<DepotEntryPin>
-				orderByComparator)
-		throws NoSuchEntryPinException;
 
 	/**
 	 * Removes all the depot entry pins where depotEntryId = &#63; from the database.
@@ -838,4 +777,4 @@ public interface DepotEntryPinPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1292394846
+// LIFERAY-SERVICE-BUILDER-HASH:1329951112

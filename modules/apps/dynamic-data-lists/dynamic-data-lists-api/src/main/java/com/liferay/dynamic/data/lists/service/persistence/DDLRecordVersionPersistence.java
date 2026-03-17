@@ -147,21 +147,6 @@ public interface DDLRecordVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddl record versions before and after the current ddl record version in the ordered set where recordId = &#63;.
-	 *
-	 * @param recordVersionId the primary key of the current ddl record version
-	 * @param recordId the record ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record version
-	 * @throws NoSuchRecordVersionException if a ddl record version with the primary key could not be found
-	 */
-	public DDLRecordVersion[] findByRecordId_PrevAndNext(
-			long recordVersionId, long recordId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
-				orderByComparator)
-		throws NoSuchRecordVersionException;
-
-	/**
 	 * Removes all the ddl record versions where recordId = &#63; from the database.
 	 *
 	 * @param recordId the record ID
@@ -297,22 +282,6 @@ public interface DDLRecordVersionPersistence
 		long recordSetId, String recordSetVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
 			orderByComparator);
-
-	/**
-	 * Returns the ddl record versions before and after the current ddl record version in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * @param recordVersionId the primary key of the current ddl record version
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record version
-	 * @throws NoSuchRecordVersionException if a ddl record version with the primary key could not be found
-	 */
-	public DDLRecordVersion[] findByR_R_PrevAndNext(
-			long recordVersionId, long recordSetId, String recordSetVersion,
-			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
-				orderByComparator)
-		throws NoSuchRecordVersionException;
 
 	/**
 	 * Removes all the ddl record versions where recordSetId = &#63; and recordSetVersion = &#63; from the database.
@@ -504,22 +473,6 @@ public interface DDLRecordVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddl record versions before and after the current ddl record version in the ordered set where recordId = &#63; and status = &#63;.
-	 *
-	 * @param recordVersionId the primary key of the current ddl record version
-	 * @param recordId the record ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record version
-	 * @throws NoSuchRecordVersionException if a ddl record version with the primary key could not be found
-	 */
-	public DDLRecordVersion[] findByR_S_PrevAndNext(
-			long recordVersionId, long recordId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
-				orderByComparator)
-		throws NoSuchRecordVersionException;
-
-	/**
 	 * Removes all the ddl record versions where recordId = &#63; and status = &#63; from the database.
 	 *
 	 * @param recordId the record ID
@@ -678,25 +631,6 @@ public interface DDLRecordVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddl record versions before and after the current ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
-	 *
-	 * @param recordVersionId the primary key of the current ddl record version
-	 * @param userId the user ID
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddl record version
-	 * @throws NoSuchRecordVersionException if a ddl record version with the primary key could not be found
-	 */
-	public DDLRecordVersion[] findByU_R_R_S_PrevAndNext(
-			long recordVersionId, long userId, long recordSetId,
-			String recordSetVersion, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
-				orderByComparator)
-		throws NoSuchRecordVersionException;
-
-	/**
 	 * Removes all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -840,4 +774,4 @@ public interface DDLRecordVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1011236844
+// LIFERAY-SERVICE-BUILDER-HASH:108605413

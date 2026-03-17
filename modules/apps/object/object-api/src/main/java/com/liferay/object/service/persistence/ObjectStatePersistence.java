@@ -145,21 +145,6 @@ public interface ObjectStatePersistence extends BasePersistence<ObjectState> {
 			orderByComparator);
 
 	/**
-	 * Returns the object states before and after the current object state in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectStateId the primary key of the current object state
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state
-	 * @throws NoSuchObjectStateException if a object state with the primary key could not be found
-	 */
-	public ObjectState[] findByUuid_PrevAndNext(
-			long objectStateId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectState>
-				orderByComparator)
-		throws NoSuchObjectStateException;
-
-	/**
 	 * Removes all the object states where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -297,22 +282,6 @@ public interface ObjectStatePersistence extends BasePersistence<ObjectState> {
 			orderByComparator);
 
 	/**
-	 * Returns the object states before and after the current object state in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectStateId the primary key of the current object state
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state
-	 * @throws NoSuchObjectStateException if a object state with the primary key could not be found
-	 */
-	public ObjectState[] findByUuid_C_PrevAndNext(
-			long objectStateId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectState>
-				orderByComparator)
-		throws NoSuchObjectStateException;
-
-	/**
 	 * Removes all the object states where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -444,21 +413,6 @@ public interface ObjectStatePersistence extends BasePersistence<ObjectState> {
 			orderByComparator);
 
 	/**
-	 * Returns the object states before and after the current object state in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param objectStateId the primary key of the current object state
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state
-	 * @throws NoSuchObjectStateException if a object state with the primary key could not be found
-	 */
-	public ObjectState[] findByListTypeEntryId_PrevAndNext(
-			long objectStateId, long listTypeEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectState>
-				orderByComparator)
-		throws NoSuchObjectStateException;
-
-	/**
 	 * Removes all the object states where listTypeEntryId = &#63; from the database.
 	 *
 	 * @param listTypeEntryId the list type entry ID
@@ -586,21 +540,6 @@ public interface ObjectStatePersistence extends BasePersistence<ObjectState> {
 		long objectStateFlowId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectState>
 			orderByComparator);
-
-	/**
-	 * Returns the object states before and after the current object state in the ordered set where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateId the primary key of the current object state
-	 * @param objectStateFlowId the object state flow ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state
-	 * @throws NoSuchObjectStateException if a object state with the primary key could not be found
-	 */
-	public ObjectState[] findByObjectStateFlowId_PrevAndNext(
-			long objectStateId, long objectStateFlowId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectState>
-				orderByComparator)
-		throws NoSuchObjectStateException;
 
 	/**
 	 * Removes all the object states where objectStateFlowId = &#63; from the database.
@@ -791,4 +730,4 @@ public interface ObjectStatePersistence extends BasePersistence<ObjectState> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1395361288
+// LIFERAY-SERVICE-BUILDER-HASH:-1165441031

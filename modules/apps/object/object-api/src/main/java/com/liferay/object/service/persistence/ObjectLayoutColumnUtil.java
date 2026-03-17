@@ -242,24 +242,6 @@ public class ObjectLayoutColumnUtil {
 	}
 
 	/**
-	 * Returns the object layout columns before and after the current object layout column in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectLayoutColumnId the primary key of the current object layout column
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	public static ObjectLayoutColumn[] findByUuid_PrevAndNext(
-			long objectLayoutColumnId, String uuid,
-			OrderByComparator<ObjectLayoutColumn> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutColumnException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectLayoutColumnId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout columns where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -425,25 +407,6 @@ public class ObjectLayoutColumnUtil {
 	}
 
 	/**
-	 * Returns the object layout columns before and after the current object layout column in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectLayoutColumnId the primary key of the current object layout column
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	public static ObjectLayoutColumn[] findByUuid_C_PrevAndNext(
-			long objectLayoutColumnId, String uuid, long companyId,
-			OrderByComparator<ObjectLayoutColumn> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutColumnException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectLayoutColumnId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout columns where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -603,24 +566,6 @@ public class ObjectLayoutColumnUtil {
 	}
 
 	/**
-	 * Returns the object layout columns before and after the current object layout column in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectLayoutColumnId the primary key of the current object layout column
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	public static ObjectLayoutColumn[] findByObjectFieldId_PrevAndNext(
-			long objectLayoutColumnId, long objectFieldId,
-			OrderByComparator<ObjectLayoutColumn> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutColumnException {
-
-		return getPersistence().findByObjectFieldId_PrevAndNext(
-			objectLayoutColumnId, objectFieldId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object layout columns where objectFieldId = &#63; from the database.
 	 *
 	 * @param objectFieldId the object field ID
@@ -776,24 +721,6 @@ public class ObjectLayoutColumnUtil {
 
 		return getPersistence().fetchByObjectLayoutRowId_Last(
 			objectLayoutRowId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object layout columns before and after the current object layout column in the ordered set where objectLayoutRowId = &#63;.
-	 *
-	 * @param objectLayoutColumnId the primary key of the current object layout column
-	 * @param objectLayoutRowId the object layout row ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	public static ObjectLayoutColumn[] findByObjectLayoutRowId_PrevAndNext(
-			long objectLayoutColumnId, long objectLayoutRowId,
-			OrderByComparator<ObjectLayoutColumn> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectLayoutColumnException {
-
-		return getPersistence().findByObjectLayoutRowId_PrevAndNext(
-			objectLayoutColumnId, objectLayoutRowId, orderByComparator);
 	}
 
 	/**
@@ -983,4 +910,4 @@ public class ObjectLayoutColumnUtil {
 	private static volatile ObjectLayoutColumnPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-342806467
+// LIFERAY-SERVICE-BUILDER-HASH:1145347139

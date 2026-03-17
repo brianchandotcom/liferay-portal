@@ -146,21 +146,6 @@ public interface ObjectLayoutTabPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object layout tabs before and after the current object layout tab in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectLayoutTabId the primary key of the current object layout tab
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a object layout tab with the primary key could not be found
-	 */
-	public ObjectLayoutTab[] findByUuid_PrevAndNext(
-			long objectLayoutTabId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
-				orderByComparator)
-		throws NoSuchObjectLayoutTabException;
-
-	/**
 	 * Removes all the object layout tabs where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectLayoutTabPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object layout tabs before and after the current object layout tab in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectLayoutTabId the primary key of the current object layout tab
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a object layout tab with the primary key could not be found
-	 */
-	public ObjectLayoutTab[] findByUuid_C_PrevAndNext(
-			long objectLayoutTabId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
-				orderByComparator)
-		throws NoSuchObjectLayoutTabException;
-
-	/**
 	 * Removes all the object layout tabs where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -445,21 +414,6 @@ public interface ObjectLayoutTabPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object layout tabs before and after the current object layout tab in the ordered set where objectLayoutId = &#63;.
-	 *
-	 * @param objectLayoutTabId the primary key of the current object layout tab
-	 * @param objectLayoutId the object layout ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a object layout tab with the primary key could not be found
-	 */
-	public ObjectLayoutTab[] findByObjectLayoutId_PrevAndNext(
-			long objectLayoutTabId, long objectLayoutId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
-				orderByComparator)
-		throws NoSuchObjectLayoutTabException;
-
-	/**
 	 * Removes all the object layout tabs where objectLayoutId = &#63; from the database.
 	 *
 	 * @param objectLayoutId the object layout ID
@@ -587,21 +541,6 @@ public interface ObjectLayoutTabPersistence
 		long objectRelationshipId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
 			orderByComparator);
-
-	/**
-	 * Returns the object layout tabs before and after the current object layout tab in the ordered set where objectRelationshipId = &#63;.
-	 *
-	 * @param objectLayoutTabId the primary key of the current object layout tab
-	 * @param objectRelationshipId the object relationship ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a object layout tab with the primary key could not be found
-	 */
-	public ObjectLayoutTab[] findByObjectRelationshipId_PrevAndNext(
-			long objectLayoutTabId, long objectRelationshipId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
-				orderByComparator)
-		throws NoSuchObjectLayoutTabException;
 
 	/**
 	 * Removes all the object layout tabs where objectRelationshipId = &#63; from the database.
@@ -739,4 +678,4 @@ public interface ObjectLayoutTabPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1413919149
+// LIFERAY-SERVICE-BUILDER-HASH:67442992

@@ -147,21 +147,6 @@ public interface CSDiagramSettingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the cs diagram settings before and after the current cs diagram setting in the ordered set where uuid = &#63;.
-	 *
-	 * @param CSDiagramSettingId the primary key of the current cs diagram setting
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram setting
-	 * @throws NoSuchCSDiagramSettingException if a cs diagram setting with the primary key could not be found
-	 */
-	public CSDiagramSetting[] findByUuid_PrevAndNext(
-			long CSDiagramSettingId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramSetting>
-				orderByComparator)
-		throws NoSuchCSDiagramSettingException;
-
-	/**
 	 * Removes all the cs diagram settings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -297,22 +282,6 @@ public interface CSDiagramSettingPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CSDiagramSetting>
 			orderByComparator);
-
-	/**
-	 * Returns the cs diagram settings before and after the current cs diagram setting in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CSDiagramSettingId the primary key of the current cs diagram setting
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cs diagram setting
-	 * @throws NoSuchCSDiagramSettingException if a cs diagram setting with the primary key could not be found
-	 */
-	public CSDiagramSetting[] findByUuid_C_PrevAndNext(
-			long CSDiagramSettingId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramSetting>
-				orderByComparator)
-		throws NoSuchCSDiagramSettingException;
 
 	/**
 	 * Removes all the cs diagram settings where uuid = &#63; and companyId = &#63; from the database.
@@ -497,4 +466,4 @@ public interface CSDiagramSettingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1220499233
+// LIFERAY-SERVICE-BUILDER-HASH:2034780948

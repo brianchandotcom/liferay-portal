@@ -238,24 +238,6 @@ public class DepotEntryPinUtil {
 	}
 
 	/**
-	 * Returns the depot entry pins before and after the current depot entry pin in the ordered set where uuid = &#63;.
-	 *
-	 * @param depotEntryPinId the primary key of the current depot entry pin
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry pin
-	 * @throws NoSuchEntryPinException if a depot entry pin with the primary key could not be found
-	 */
-	public static DepotEntryPin[] findByUuid_PrevAndNext(
-			long depotEntryPinId, String uuid,
-			OrderByComparator<DepotEntryPin> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryPinException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			depotEntryPinId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the depot entry pins where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -484,25 +466,6 @@ public class DepotEntryPinUtil {
 	}
 
 	/**
-	 * Returns the depot entry pins before and after the current depot entry pin in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param depotEntryPinId the primary key of the current depot entry pin
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry pin
-	 * @throws NoSuchEntryPinException if a depot entry pin with the primary key could not be found
-	 */
-	public static DepotEntryPin[] findByUuid_C_PrevAndNext(
-			long depotEntryPinId, String uuid, long companyId,
-			OrderByComparator<DepotEntryPin> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryPinException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			depotEntryPinId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the depot entry pins where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -649,24 +612,6 @@ public class DepotEntryPinUtil {
 		long userId, OrderByComparator<DepotEntryPin> orderByComparator) {
 
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the depot entry pins before and after the current depot entry pin in the ordered set where userId = &#63;.
-	 *
-	 * @param depotEntryPinId the primary key of the current depot entry pin
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry pin
-	 * @throws NoSuchEntryPinException if a depot entry pin with the primary key could not be found
-	 */
-	public static DepotEntryPin[] findByUserId_PrevAndNext(
-			long depotEntryPinId, long userId,
-			OrderByComparator<DepotEntryPin> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryPinException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			depotEntryPinId, userId, orderByComparator);
 	}
 
 	/**
@@ -820,24 +765,6 @@ public class DepotEntryPinUtil {
 
 		return getPersistence().fetchByDepotEntryId_Last(
 			depotEntryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the depot entry pins before and after the current depot entry pin in the ordered set where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryPinId the primary key of the current depot entry pin
-	 * @param depotEntryId the depot entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next depot entry pin
-	 * @throws NoSuchEntryPinException if a depot entry pin with the primary key could not be found
-	 */
-	public static DepotEntryPin[] findByDepotEntryId_PrevAndNext(
-			long depotEntryPinId, long depotEntryId,
-			OrderByComparator<DepotEntryPin> orderByComparator)
-		throws com.liferay.depot.exception.NoSuchEntryPinException {
-
-		return getPersistence().findByDepotEntryId_PrevAndNext(
-			depotEntryPinId, depotEntryId, orderByComparator);
 	}
 
 	/**
@@ -1082,4 +1009,4 @@ public class DepotEntryPinUtil {
 	private static volatile DepotEntryPinPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1658143436
+// LIFERAY-SERVICE-BUILDER-HASH:-1389203499

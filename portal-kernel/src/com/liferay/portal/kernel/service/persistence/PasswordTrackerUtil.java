@@ -241,25 +241,6 @@ public class PasswordTrackerUtil {
 	}
 
 	/**
-	 * Returns the password trackers before and after the current password tracker in the ordered set where userId = &#63;.
-	 *
-	 * @param passwordTrackerId the primary key of the current password tracker
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next password tracker
-	 * @throws NoSuchPasswordTrackerException if a password tracker with the primary key could not be found
-	 */
-	public static PasswordTracker[] findByUserId_PrevAndNext(
-			long passwordTrackerId, long userId,
-			OrderByComparator<PasswordTracker> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchPasswordTrackerException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			passwordTrackerId, userId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the password trackers where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -440,4 +421,4 @@ public class PasswordTrackerUtil {
 	private static volatile PasswordTrackerPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:62000525
+// LIFERAY-SERVICE-BUILDER-HASH:307000732

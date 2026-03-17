@@ -146,21 +146,6 @@ public interface PatcherAccountPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the patcher accounts before and after the current patcher account in the ordered set where companyId = &#63;.
-	 *
-	 * @param patcherAccountId the primary key of the current patcher account
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher account
-	 * @throws NoSuchPatcherAccountException if a patcher account with the primary key could not be found
-	 */
-	public PatcherAccount[] findByCompanyId_PrevAndNext(
-			long patcherAccountId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
-				orderByComparator)
-		throws NoSuchPatcherAccountException;
-
-	/**
 	 * Returns all the patcher accounts that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -200,21 +185,6 @@ public interface PatcherAccountPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher accounts before and after the current patcher account in the ordered set of patcher accounts that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param patcherAccountId the primary key of the current patcher account
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher account
-	 * @throws NoSuchPatcherAccountException if a patcher account with the primary key could not be found
-	 */
-	public PatcherAccount[] filterFindByCompanyId_PrevAndNext(
-			long patcherAccountId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
-				orderByComparator)
-		throws NoSuchPatcherAccountException;
 
 	/**
 	 * Removes all the patcher accounts where companyId = &#63; from the database.
@@ -407,22 +377,6 @@ public interface PatcherAccountPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the patcher accounts before and after the current patcher account in the ordered set where companyId = &#63; and accountEntryCode LIKE &#63;.
-	 *
-	 * @param patcherAccountId the primary key of the current patcher account
-	 * @param companyId the company ID
-	 * @param accountEntryCode the account entry code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher account
-	 * @throws NoSuchPatcherAccountException if a patcher account with the primary key could not be found
-	 */
-	public PatcherAccount[] findByC_LikeA_PrevAndNext(
-			long patcherAccountId, long companyId, String accountEntryCode,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
-				orderByComparator)
-		throws NoSuchPatcherAccountException;
-
-	/**
 	 * Returns all the patcher accounts that the user has permission to view where companyId = &#63; and accountEntryCode LIKE &#63;.
 	 *
 	 * @param companyId the company ID
@@ -466,22 +420,6 @@ public interface PatcherAccountPersistence
 		long companyId, String accountEntryCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
 			orderByComparator);
-
-	/**
-	 * Returns the patcher accounts before and after the current patcher account in the ordered set of patcher accounts that the user has permission to view where companyId = &#63; and accountEntryCode LIKE &#63;.
-	 *
-	 * @param patcherAccountId the primary key of the current patcher account
-	 * @param companyId the company ID
-	 * @param accountEntryCode the account entry code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next patcher account
-	 * @throws NoSuchPatcherAccountException if a patcher account with the primary key could not be found
-	 */
-	public PatcherAccount[] filterFindByC_LikeA_PrevAndNext(
-			long patcherAccountId, long companyId, String accountEntryCode,
-			com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
-				orderByComparator)
-		throws NoSuchPatcherAccountException;
 
 	/**
 	 * Removes all the patcher accounts where companyId = &#63; and accountEntryCode LIKE &#63; from the database.
@@ -807,4 +745,4 @@ public interface PatcherAccountPersistence
 			patcherBuilds);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1447012029
+// LIFERAY-SERVICE-BUILDER-HASH:-1256291159

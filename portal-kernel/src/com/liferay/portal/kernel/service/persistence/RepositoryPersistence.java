@@ -146,21 +146,6 @@ public interface RepositoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the repositories before and after the current repository in the ordered set where uuid = &#63;.
-	 *
-	 * @param repositoryId the primary key of the current repository
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next repository
-	 * @throws NoSuchRepositoryException if a repository with the primary key could not be found
-	 */
-	public Repository[] findByUuid_PrevAndNext(
-			long repositoryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Repository>
-				orderByComparator)
-		throws NoSuchRepositoryException;
-
-	/**
 	 * Removes all the repositories where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -347,22 +332,6 @@ public interface RepositoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the repositories before and after the current repository in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param repositoryId the primary key of the current repository
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next repository
-	 * @throws NoSuchRepositoryException if a repository with the primary key could not be found
-	 */
-	public Repository[] findByUuid_C_PrevAndNext(
-			long repositoryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Repository>
-				orderByComparator)
-		throws NoSuchRepositoryException;
-
-	/**
 	 * Removes all the repositories where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -493,21 +462,6 @@ public interface RepositoryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the repositories before and after the current repository in the ordered set where groupId = &#63;.
-	 *
-	 * @param repositoryId the primary key of the current repository
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next repository
-	 * @throws NoSuchRepositoryException if a repository with the primary key could not be found
-	 */
-	public Repository[] findByGroupId_PrevAndNext(
-			long repositoryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Repository>
-				orderByComparator)
-		throws NoSuchRepositoryException;
-
-	/**
 	 * Removes all the repositories where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -634,21 +588,6 @@ public interface RepositoryPersistence
 		String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository>
 			orderByComparator);
-
-	/**
-	 * Returns the repositories before and after the current repository in the ordered set where portletId = &#63;.
-	 *
-	 * @param repositoryId the primary key of the current repository
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next repository
-	 * @throws NoSuchRepositoryException if a repository with the primary key could not be found
-	 */
-	public Repository[] findByPortletId_PrevAndNext(
-			long repositoryId, String portletId,
-			com.liferay.portal.kernel.util.OrderByComparator<Repository>
-				orderByComparator)
-		throws NoSuchRepositoryException;
 
 	/**
 	 * Removes all the repositories where portletId = &#63; from the database.
@@ -891,4 +830,4 @@ public interface RepositoryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:139117741
+// LIFERAY-SERVICE-BUILDER-HASH:1110112392

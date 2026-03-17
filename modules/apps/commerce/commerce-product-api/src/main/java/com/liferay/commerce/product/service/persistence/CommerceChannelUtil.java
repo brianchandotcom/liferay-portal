@@ -238,24 +238,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] findByUuid_PrevAndNext(
-			long commerceChannelId, String uuid,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceChannelId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -302,24 +284,6 @@ public class CommerceChannelUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] filterFindByUuid_PrevAndNext(
-			long commerceChannelId, String uuid,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			commerceChannelId, uuid, orderByComparator);
 	}
 
 	/**
@@ -498,25 +462,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] findByUuid_C_PrevAndNext(
-			long commerceChannelId, String uuid, long companyId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceChannelId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -568,25 +513,6 @@ public class CommerceChannelUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] filterFindByUuid_C_PrevAndNext(
-			long commerceChannelId, String uuid, long companyId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			commerceChannelId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -756,24 +682,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] findByCompanyId_PrevAndNext(
-			long commerceChannelId, long companyId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commerceChannelId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -820,24 +728,6 @@ public class CommerceChannelUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] filterFindByCompanyId_PrevAndNext(
-			long commerceChannelId, long companyId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			commerceChannelId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1009,24 +899,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] findByAccountEntryId_PrevAndNext(
-			long commerceChannelId, long accountEntryId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findByAccountEntryId_PrevAndNext(
-			commerceChannelId, accountEntryId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where accountEntryId = &#63;.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -1076,24 +948,6 @@ public class CommerceChannelUtil {
 
 		return getPersistence().filterFindByAccountEntryId(
 			accountEntryId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where accountEntryId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] filterFindByAccountEntryId_PrevAndNext(
-			long commerceChannelId, long accountEntryId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().filterFindByAccountEntryId_PrevAndNext(
-			commerceChannelId, accountEntryId, orderByComparator);
 	}
 
 	/**
@@ -1262,24 +1116,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set where siteGroupId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param siteGroupId the site group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] findBySiteGroupId_PrevAndNext(
-			long commerceChannelId, long siteGroupId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().findBySiteGroupId_PrevAndNext(
-			commerceChannelId, siteGroupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce channels that the user has permission to view where siteGroupId = &#63;.
 	 *
 	 * @param siteGroupId the site group ID
@@ -1329,24 +1165,6 @@ public class CommerceChannelUtil {
 
 		return getPersistence().filterFindBySiteGroupId(
 			siteGroupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce channels before and after the current commerce channel in the ordered set of commerce channels that the user has permission to view where siteGroupId = &#63;.
-	 *
-	 * @param commerceChannelId the primary key of the current commerce channel
-	 * @param siteGroupId the site group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce channel
-	 * @throws NoSuchChannelException if a commerce channel with the primary key could not be found
-	 */
-	public static CommerceChannel[] filterFindBySiteGroupId_PrevAndNext(
-			long commerceChannelId, long siteGroupId,
-			OrderByComparator<CommerceChannel> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchChannelException {
-
-		return getPersistence().filterFindBySiteGroupId_PrevAndNext(
-			commerceChannelId, siteGroupId, orderByComparator);
 	}
 
 	/**
@@ -1608,4 +1426,4 @@ public class CommerceChannelUtil {
 	private static volatile CommerceChannelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1964033549
+// LIFERAY-SERVICE-BUILDER-HASH:847116429

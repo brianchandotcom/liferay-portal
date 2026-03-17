@@ -149,23 +149,6 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 			<CommerceShippingOptionAccountEntryRel> orderByComparator);
 
 	/**
-	 * Returns the commerce shipping option account entry rels before and after the current commerce shipping option account entry rel in the ordered set where accountEntryId = &#63;.
-	 *
-	 * @param CommerceShippingOptionAccountEntryRelId the primary key of the current commerce shipping option account entry rel
-	 * @param accountEntryId the account entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping option account entry rel
-	 * @throws NoSuchShippingOptionAccountEntryRelException if a commerce shipping option account entry rel with the primary key could not be found
-	 */
-	public CommerceShippingOptionAccountEntryRel[]
-			findByAccountEntryId_PrevAndNext(
-				long CommerceShippingOptionAccountEntryRelId,
-				long accountEntryId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceShippingOptionAccountEntryRel> orderByComparator)
-		throws NoSuchShippingOptionAccountEntryRelException;
-
-	/**
 	 * Removes all the commerce shipping option account entry rels where accountEntryId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -295,23 +278,6 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 		long commerceChannelId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceShippingOptionAccountEntryRel> orderByComparator);
-
-	/**
-	 * Returns the commerce shipping option account entry rels before and after the current commerce shipping option account entry rel in the ordered set where commerceChannelId = &#63;.
-	 *
-	 * @param CommerceShippingOptionAccountEntryRelId the primary key of the current commerce shipping option account entry rel
-	 * @param commerceChannelId the commerce channel ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping option account entry rel
-	 * @throws NoSuchShippingOptionAccountEntryRelException if a commerce shipping option account entry rel with the primary key could not be found
-	 */
-	public CommerceShippingOptionAccountEntryRel[]
-			findByCommerceChannelId_PrevAndNext(
-				long CommerceShippingOptionAccountEntryRelId,
-				long commerceChannelId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceShippingOptionAccountEntryRel> orderByComparator)
-		throws NoSuchShippingOptionAccountEntryRelException;
 
 	/**
 	 * Removes all the commerce shipping option account entry rels where commerceChannelId = &#63; from the database.
@@ -448,23 +414,6 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 			String commerceShippingOptionKey,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceShippingOptionAccountEntryRel> orderByComparator);
-
-	/**
-	 * Returns the commerce shipping option account entry rels before and after the current commerce shipping option account entry rel in the ordered set where commerceShippingOptionKey = &#63;.
-	 *
-	 * @param CommerceShippingOptionAccountEntryRelId the primary key of the current commerce shipping option account entry rel
-	 * @param commerceShippingOptionKey the commerce shipping option key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping option account entry rel
-	 * @throws NoSuchShippingOptionAccountEntryRelException if a commerce shipping option account entry rel with the primary key could not be found
-	 */
-	public CommerceShippingOptionAccountEntryRel[]
-			findByCommerceShippingOptionKey_PrevAndNext(
-				long CommerceShippingOptionAccountEntryRelId,
-				String commerceShippingOptionKey,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CommerceShippingOptionAccountEntryRel> orderByComparator)
-		throws NoSuchShippingOptionAccountEntryRelException;
 
 	/**
 	 * Removes all the commerce shipping option account entry rels where commerceShippingOptionKey = &#63; from the database.
@@ -668,4 +617,4 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2141495417
+// LIFERAY-SERVICE-BUILDER-HASH:-442662329

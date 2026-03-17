@@ -146,21 +146,6 @@ public interface ObjectLayoutRowPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object layout rows before and after the current object layout row in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectLayoutRowId the primary key of the current object layout row
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout row
-	 * @throws NoSuchObjectLayoutRowException if a object layout row with the primary key could not be found
-	 */
-	public ObjectLayoutRow[] findByUuid_PrevAndNext(
-			long objectLayoutRowId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutRow>
-				orderByComparator)
-		throws NoSuchObjectLayoutRowException;
-
-	/**
 	 * Removes all the object layout rows where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface ObjectLayoutRowPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object layout rows before and after the current object layout row in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectLayoutRowId the primary key of the current object layout row
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout row
-	 * @throws NoSuchObjectLayoutRowException if a object layout row with the primary key could not be found
-	 */
-	public ObjectLayoutRow[] findByUuid_C_PrevAndNext(
-			long objectLayoutRowId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutRow>
-				orderByComparator)
-		throws NoSuchObjectLayoutRowException;
-
-	/**
 	 * Removes all the object layout rows where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -443,21 +412,6 @@ public interface ObjectLayoutRowPersistence
 		long objectLayoutBoxId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutRow>
 			orderByComparator);
-
-	/**
-	 * Returns the object layout rows before and after the current object layout row in the ordered set where objectLayoutBoxId = &#63;.
-	 *
-	 * @param objectLayoutRowId the primary key of the current object layout row
-	 * @param objectLayoutBoxId the object layout box ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object layout row
-	 * @throws NoSuchObjectLayoutRowException if a object layout row with the primary key could not be found
-	 */
-	public ObjectLayoutRow[] findByObjectLayoutBoxId_PrevAndNext(
-			long objectLayoutRowId, long objectLayoutBoxId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutRow>
-				orderByComparator)
-		throws NoSuchObjectLayoutRowException;
 
 	/**
 	 * Removes all the object layout rows where objectLayoutBoxId = &#63; from the database.
@@ -595,4 +549,4 @@ public interface ObjectLayoutRowPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1530928500
+// LIFERAY-SERVICE-BUILDER-HASH:-1002114870

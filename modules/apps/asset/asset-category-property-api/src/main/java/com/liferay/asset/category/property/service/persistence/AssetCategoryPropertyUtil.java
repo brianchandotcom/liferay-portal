@@ -252,25 +252,6 @@ public class AssetCategoryPropertyUtil {
 	}
 
 	/**
-	 * Returns the asset category properties before and after the current asset category property in the ordered set where companyId = &#63;.
-	 *
-	 * @param categoryPropertyId the primary key of the current asset category property
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset category property
-	 * @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
-	 */
-	public static AssetCategoryProperty[] findByCompanyId_PrevAndNext(
-			long categoryPropertyId, long companyId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.asset.category.property.exception.
-			NoSuchCategoryPropertyException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			categoryPropertyId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the asset category properties where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -427,25 +408,6 @@ public class AssetCategoryPropertyUtil {
 
 		return getPersistence().fetchByCategoryId_Last(
 			categoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset category properties before and after the current asset category property in the ordered set where categoryId = &#63;.
-	 *
-	 * @param categoryPropertyId the primary key of the current asset category property
-	 * @param categoryId the category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset category property
-	 * @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
-	 */
-	public static AssetCategoryProperty[] findByCategoryId_PrevAndNext(
-			long categoryPropertyId, long categoryId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.asset.category.property.exception.
-			NoSuchCategoryPropertyException {
-
-		return getPersistence().findByCategoryId_PrevAndNext(
-			categoryPropertyId, categoryId, orderByComparator);
 	}
 
 	/**
@@ -613,26 +575,6 @@ public class AssetCategoryPropertyUtil {
 
 		return getPersistence().fetchByC_K_Last(
 			companyId, key, orderByComparator);
-	}
-
-	/**
-	 * Returns the asset category properties before and after the current asset category property in the ordered set where companyId = &#63; and key = &#63;.
-	 *
-	 * @param categoryPropertyId the primary key of the current asset category property
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset category property
-	 * @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
-	 */
-	public static AssetCategoryProperty[] findByC_K_PrevAndNext(
-			long categoryPropertyId, long companyId, String key,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.asset.category.property.exception.
-			NoSuchCategoryPropertyException {
-
-		return getPersistence().findByC_K_PrevAndNext(
-			categoryPropertyId, companyId, key, orderByComparator);
 	}
 
 	/**
@@ -969,4 +911,4 @@ public class AssetCategoryPropertyUtil {
 	private static volatile AssetCategoryPropertyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:491226126
+// LIFERAY-SERVICE-BUILDER-HASH:1972084327

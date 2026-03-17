@@ -146,21 +146,6 @@ public interface CPDAvailabilityEstimatePersistence
 			<CPDAvailabilityEstimate> orderByComparator);
 
 	/**
-	 * Returns the cpd availability estimates before and after the current cpd availability estimate in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDAvailabilityEstimateId the primary key of the current cpd availability estimate
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a cpd availability estimate with the primary key could not be found
-	 */
-	public CPDAvailabilityEstimate[] findByUuid_PrevAndNext(
-			long CPDAvailabilityEstimateId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDAvailabilityEstimate> orderByComparator)
-		throws NoSuchCPDAvailabilityEstimateException;
-
-	/**
 	 * Removes all the cpd availability estimates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,22 +283,6 @@ public interface CPDAvailabilityEstimatePersistence
 			<CPDAvailabilityEstimate> orderByComparator);
 
 	/**
-	 * Returns the cpd availability estimates before and after the current cpd availability estimate in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDAvailabilityEstimateId the primary key of the current cpd availability estimate
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a cpd availability estimate with the primary key could not be found
-	 */
-	public CPDAvailabilityEstimate[] findByUuid_C_PrevAndNext(
-			long CPDAvailabilityEstimateId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDAvailabilityEstimate> orderByComparator)
-		throws NoSuchCPDAvailabilityEstimateException;
-
-	/**
 	 * Removes all the cpd availability estimates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -447,23 +416,6 @@ public interface CPDAvailabilityEstimatePersistence
 		long commerceAvailabilityEstimateId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDAvailabilityEstimate> orderByComparator);
-
-	/**
-	 * Returns the cpd availability estimates before and after the current cpd availability estimate in the ordered set where commerceAvailabilityEstimateId = &#63;.
-	 *
-	 * @param CPDAvailabilityEstimateId the primary key of the current cpd availability estimate
-	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a cpd availability estimate with the primary key could not be found
-	 */
-	public CPDAvailabilityEstimate[]
-			findByCommerceAvailabilityEstimateId_PrevAndNext(
-				long CPDAvailabilityEstimateId,
-				long commerceAvailabilityEstimateId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CPDAvailabilityEstimate> orderByComparator)
-		throws NoSuchCPDAvailabilityEstimateException;
 
 	/**
 	 * Removes all the cpd availability estimates where commerceAvailabilityEstimateId = &#63; from the database.
@@ -652,4 +604,4 @@ public interface CPDAvailabilityEstimatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1001869137
+// LIFERAY-SERVICE-BUILDER-HASH:-450309046

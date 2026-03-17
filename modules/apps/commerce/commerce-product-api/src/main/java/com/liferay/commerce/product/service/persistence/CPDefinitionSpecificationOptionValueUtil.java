@@ -263,26 +263,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	}
 
 	/**
-	 * Returns the cp definition specification option values before and after the current cp definition specification option value in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDefinitionSpecificationOptionValueId the primary key of the current cp definition specification option value
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	public static CPDefinitionSpecificationOptionValue[] findByUuid_PrevAndNext(
-			long CPDefinitionSpecificationOptionValueId, String uuid,
-			OrderByComparator<CPDefinitionSpecificationOptionValue>
-				orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionSpecificationOptionValueException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			CPDefinitionSpecificationOptionValueId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -525,30 +505,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	}
 
 	/**
-	 * Returns the cp definition specification option values before and after the current cp definition specification option value in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDefinitionSpecificationOptionValueId the primary key of the current cp definition specification option value
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	public static CPDefinitionSpecificationOptionValue[]
-			findByUuid_C_PrevAndNext(
-				long CPDefinitionSpecificationOptionValueId, String uuid,
-				long companyId,
-				OrderByComparator<CPDefinitionSpecificationOptionValue>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionSpecificationOptionValueException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			CPDefinitionSpecificationOptionValueId, uuid, companyId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -710,27 +666,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 			orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp definition specification option values before and after the current cp definition specification option value in the ordered set where groupId = &#63;.
-	 *
-	 * @param CPDefinitionSpecificationOptionValueId the primary key of the current cp definition specification option value
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	public static CPDefinitionSpecificationOptionValue[]
-			findByGroupId_PrevAndNext(
-				long CPDefinitionSpecificationOptionValueId, long groupId,
-				OrderByComparator<CPDefinitionSpecificationOptionValue>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionSpecificationOptionValueException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			CPDefinitionSpecificationOptionValueId, groupId, orderByComparator);
 	}
 
 	/**
@@ -903,29 +838,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 
 		return getPersistence().fetchByCPDefinitionId_Last(
 			CPDefinitionId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp definition specification option values before and after the current cp definition specification option value in the ordered set where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionSpecificationOptionValueId the primary key of the current cp definition specification option value
-	 * @param CPDefinitionId the cp definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	public static CPDefinitionSpecificationOptionValue[]
-			findByCPDefinitionId_PrevAndNext(
-				long CPDefinitionSpecificationOptionValueId,
-				long CPDefinitionId,
-				OrderByComparator<CPDefinitionSpecificationOptionValue>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionSpecificationOptionValueException {
-
-		return getPersistence().findByCPDefinitionId_PrevAndNext(
-			CPDefinitionSpecificationOptionValueId, CPDefinitionId,
-			orderByComparator);
 	}
 
 	/**
@@ -1104,29 +1016,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	}
 
 	/**
-	 * Returns the cp definition specification option values before and after the current cp definition specification option value in the ordered set where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPDefinitionSpecificationOptionValueId the primary key of the current cp definition specification option value
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	public static CPDefinitionSpecificationOptionValue[]
-			findByCPSpecificationOptionId_PrevAndNext(
-				long CPDefinitionSpecificationOptionValueId,
-				long CPSpecificationOptionId,
-				OrderByComparator<CPDefinitionSpecificationOptionValue>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionSpecificationOptionValueException {
-
-		return getPersistence().findByCPSpecificationOptionId_PrevAndNext(
-			CPDefinitionSpecificationOptionValueId, CPSpecificationOptionId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPSpecificationOptionId the cp specification option ID
@@ -1302,29 +1191,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 
 		return getPersistence().fetchByCPOptionCategoryId_Last(
 			CPOptionCategoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp definition specification option values before and after the current cp definition specification option value in the ordered set where CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPDefinitionSpecificationOptionValueId the primary key of the current cp definition specification option value
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	public static CPDefinitionSpecificationOptionValue[]
-			findByCPOptionCategoryId_PrevAndNext(
-				long CPDefinitionSpecificationOptionValueId,
-				long CPOptionCategoryId,
-				OrderByComparator<CPDefinitionSpecificationOptionValue>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionSpecificationOptionValueException {
-
-		return getPersistence().findByCPOptionCategoryId_PrevAndNext(
-			CPDefinitionSpecificationOptionValueId, CPOptionCategoryId,
-			orderByComparator);
 	}
 
 	/**
@@ -1583,30 +1449,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	}
 
 	/**
-	 * Returns the cp definition specification option values before and after the current cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPDefinitionSpecificationOptionValueId the primary key of the current cp definition specification option value
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	public static CPDefinitionSpecificationOptionValue[]
-			findByC_CSO_PrevAndNext(
-				long CPDefinitionSpecificationOptionValueId,
-				long CPDefinitionId, long CPSpecificationOptionId,
-				OrderByComparator<CPDefinitionSpecificationOptionValue>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionSpecificationOptionValueException {
-
-		return getPersistence().findByC_CSO_PrevAndNext(
-			CPDefinitionSpecificationOptionValueId, CPDefinitionId,
-			CPSpecificationOptionId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the cp definition specification option values where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63; from the database.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -1786,30 +1628,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 
 		return getPersistence().fetchByC_COC_Last(
 			CPDefinitionId, CPOptionCategoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the cp definition specification option values before and after the current cp definition specification option value in the ordered set where CPDefinitionId = &#63; and CPOptionCategoryId = &#63;.
-	 *
-	 * @param CPDefinitionSpecificationOptionValueId the primary key of the current cp definition specification option value
-	 * @param CPDefinitionId the cp definition ID
-	 * @param CPOptionCategoryId the cp option category ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	public static CPDefinitionSpecificationOptionValue[]
-			findByC_COC_PrevAndNext(
-				long CPDefinitionSpecificationOptionValueId,
-				long CPDefinitionId, long CPOptionCategoryId,
-				OrderByComparator<CPDefinitionSpecificationOptionValue>
-					orderByComparator)
-		throws com.liferay.commerce.product.exception.
-			NoSuchCPDefinitionSpecificationOptionValueException {
-
-		return getPersistence().findByC_COC_PrevAndNext(
-			CPDefinitionSpecificationOptionValueId, CPDefinitionId,
-			CPOptionCategoryId, orderByComparator);
 	}
 
 	/**
@@ -2168,4 +1986,4 @@ public class CPDefinitionSpecificationOptionValueUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-283728763
+// LIFERAY-SERVICE-BUILDER-HASH:1120252958

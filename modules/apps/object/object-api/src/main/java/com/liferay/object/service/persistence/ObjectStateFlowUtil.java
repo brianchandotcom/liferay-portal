@@ -238,24 +238,6 @@ public class ObjectStateFlowUtil {
 	}
 
 	/**
-	 * Returns the object state flows before and after the current object state flow in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectStateFlowId the primary key of the current object state flow
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state flow
-	 * @throws NoSuchObjectStateFlowException if a object state flow with the primary key could not be found
-	 */
-	public static ObjectStateFlow[] findByUuid_PrevAndNext(
-			long objectStateFlowId, String uuid,
-			OrderByComparator<ObjectStateFlow> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectStateFlowException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectStateFlowId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object state flows where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -418,25 +400,6 @@ public class ObjectStateFlowUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object state flows before and after the current object state flow in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectStateFlowId the primary key of the current object state flow
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state flow
-	 * @throws NoSuchObjectStateFlowException if a object state flow with the primary key could not be found
-	 */
-	public static ObjectStateFlow[] findByUuid_C_PrevAndNext(
-			long objectStateFlowId, String uuid, long companyId,
-			OrderByComparator<ObjectStateFlow> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectStateFlowException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectStateFlowId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -679,4 +642,4 @@ public class ObjectStateFlowUtil {
 	private static volatile ObjectStateFlowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:870348687
+// LIFERAY-SERVICE-BUILDER-HASH:1176504373

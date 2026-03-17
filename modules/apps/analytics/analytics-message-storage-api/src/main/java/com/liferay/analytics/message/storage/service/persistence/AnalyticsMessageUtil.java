@@ -247,25 +247,6 @@ public class AnalyticsMessageUtil {
 	}
 
 	/**
-	 * Returns the analytics messages before and after the current analytics message in the ordered set where companyId = &#63;.
-	 *
-	 * @param analyticsMessageId the primary key of the current analytics message
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics message
-	 * @throws NoSuchMessageException if a analytics message with the primary key could not be found
-	 */
-	public static AnalyticsMessage[] findByCompanyId_PrevAndNext(
-			long analyticsMessageId, long companyId,
-			OrderByComparator<AnalyticsMessage> orderByComparator)
-		throws com.liferay.analytics.message.storage.exception.
-			NoSuchMessageException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			analyticsMessageId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the analytics messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -448,4 +429,4 @@ public class AnalyticsMessageUtil {
 	private static volatile AnalyticsMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-194497642
+// LIFERAY-SERVICE-BUILDER-HASH:-798389726

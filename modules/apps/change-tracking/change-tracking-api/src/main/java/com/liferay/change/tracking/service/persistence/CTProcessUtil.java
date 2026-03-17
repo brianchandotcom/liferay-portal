@@ -243,24 +243,6 @@ public class CTProcessUtil {
 	}
 
 	/**
-	 * Returns the ct processes before and after the current ct process in the ordered set where companyId = &#63;.
-	 *
-	 * @param ctProcessId the primary key of the current ct process
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct process
-	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
-	 */
-	public static CTProcess[] findByCompanyId_PrevAndNext(
-			long ctProcessId, long companyId,
-			OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			ctProcessId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the ct processes that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -307,24 +289,6 @@ public class CTProcessUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct processes before and after the current ct process in the ordered set of ct processes that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param ctProcessId the primary key of the current ct process
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct process
-	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
-	 */
-	public static CTProcess[] filterFindByCompanyId_PrevAndNext(
-			long ctProcessId, long companyId,
-			OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			ctProcessId, companyId, orderByComparator);
 	}
 
 	/**
@@ -490,24 +454,6 @@ public class CTProcessUtil {
 	}
 
 	/**
-	 * Returns the ct processes before and after the current ct process in the ordered set where ctCollectionId = &#63;.
-	 *
-	 * @param ctProcessId the primary key of the current ct process
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct process
-	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
-	 */
-	public static CTProcess[] findByCtCollectionId_PrevAndNext(
-			long ctProcessId, long ctCollectionId,
-			OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().findByCtCollectionId_PrevAndNext(
-			ctProcessId, ctCollectionId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the ct processes that the user has permission to view where ctCollectionId = &#63;.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -557,24 +503,6 @@ public class CTProcessUtil {
 
 		return getPersistence().filterFindByCtCollectionId(
 			ctCollectionId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct processes before and after the current ct process in the ordered set of ct processes that the user has permission to view where ctCollectionId = &#63;.
-	 *
-	 * @param ctProcessId the primary key of the current ct process
-	 * @param ctCollectionId the ct collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct process
-	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
-	 */
-	public static CTProcess[] filterFindByCtCollectionId_PrevAndNext(
-			long ctProcessId, long ctCollectionId,
-			OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().filterFindByCtCollectionId_PrevAndNext(
-			ctProcessId, ctCollectionId, orderByComparator);
 	}
 
 	/**
@@ -752,25 +680,6 @@ public class CTProcessUtil {
 	}
 
 	/**
-	 * Returns the ct processes before and after the current ct process in the ordered set where ctCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param ctProcessId the primary key of the current ct process
-	 * @param ctCollectionId the ct collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct process
-	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
-	 */
-	public static CTProcess[] findByC_T_PrevAndNext(
-			long ctProcessId, long ctCollectionId, int type,
-			OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().findByC_T_PrevAndNext(
-			ctProcessId, ctCollectionId, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the ct processes that the user has permission to view where ctCollectionId = &#63; and type = &#63;.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -823,25 +732,6 @@ public class CTProcessUtil {
 
 		return getPersistence().filterFindByC_T(
 			ctCollectionId, type, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the ct processes before and after the current ct process in the ordered set of ct processes that the user has permission to view where ctCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param ctProcessId the primary key of the current ct process
-	 * @param ctCollectionId the ct collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct process
-	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
-	 */
-	public static CTProcess[] filterFindByC_T_PrevAndNext(
-			long ctProcessId, long ctCollectionId, int type,
-			OrderByComparator<CTProcess> orderByComparator)
-		throws com.liferay.change.tracking.exception.NoSuchProcessException {
-
-		return getPersistence().filterFindByC_T_PrevAndNext(
-			ctProcessId, ctCollectionId, type, orderByComparator);
 	}
 
 	/**
@@ -1034,4 +924,4 @@ public class CTProcessUtil {
 	private static volatile CTProcessPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:891620958
+// LIFERAY-SERVICE-BUILDER-HASH:-14558029

@@ -238,24 +238,6 @@ public class LayoutSEOSiteUtil {
 	}
 
 	/**
-	 * Returns the layout seo sites before and after the current layout seo site in the ordered set where uuid = &#63;.
-	 *
-	 * @param layoutSEOSiteId the primary key of the current layout seo site
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout seo site
-	 * @throws NoSuchSiteException if a layout seo site with the primary key could not be found
-	 */
-	public static LayoutSEOSite[] findByUuid_PrevAndNext(
-			long layoutSEOSiteId, String uuid,
-			OrderByComparator<LayoutSEOSite> orderByComparator)
-		throws com.liferay.layout.seo.exception.NoSuchSiteException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			layoutSEOSiteId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the layout seo sites where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -481,25 +463,6 @@ public class LayoutSEOSiteUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the layout seo sites before and after the current layout seo site in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param layoutSEOSiteId the primary key of the current layout seo site
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout seo site
-	 * @throws NoSuchSiteException if a layout seo site with the primary key could not be found
-	 */
-	public static LayoutSEOSite[] findByUuid_C_PrevAndNext(
-			long layoutSEOSiteId, String uuid, long companyId,
-			OrderByComparator<LayoutSEOSite> orderByComparator)
-		throws com.liferay.layout.seo.exception.NoSuchSiteException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			layoutSEOSiteId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -740,4 +703,4 @@ public class LayoutSEOSiteUtil {
 	private static volatile LayoutSEOSitePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1972672932
+// LIFERAY-SERVICE-BUILDER-HASH:768884742

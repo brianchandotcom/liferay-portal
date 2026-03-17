@@ -148,21 +148,6 @@ public interface DDMTemplateVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm template versions before and after the current ddm template version in the ordered set where templateId = &#63;.
-	 *
-	 * @param templateVersionId the primary key of the current ddm template version
-	 * @param templateId the template ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm template version
-	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
-	 */
-	public DDMTemplateVersion[] findByTemplateId_PrevAndNext(
-			long templateVersionId, long templateId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion>
-				orderByComparator)
-		throws NoSuchTemplateVersionException;
-
-	/**
 	 * Removes all the ddm template versions where templateId = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -350,22 +335,6 @@ public interface DDMTemplateVersionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ddm template versions before and after the current ddm template version in the ordered set where templateId = &#63; and status = &#63;.
-	 *
-	 * @param templateVersionId the primary key of the current ddm template version
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm template version
-	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
-	 */
-	public DDMTemplateVersion[] findByT_S_PrevAndNext(
-			long templateVersionId, long templateId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion>
-				orderByComparator)
-		throws NoSuchTemplateVersionException;
-
-	/**
 	 * Removes all the ddm template versions where templateId = &#63; and status = &#63; from the database.
 	 *
 	 * @param templateId the template ID
@@ -504,4 +473,4 @@ public interface DDMTemplateVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-58232155
+// LIFERAY-SERVICE-BUILDER-HASH:1169183754

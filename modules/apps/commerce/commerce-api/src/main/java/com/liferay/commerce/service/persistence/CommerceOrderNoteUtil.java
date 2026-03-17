@@ -240,24 +240,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Returns the commerce order notes before and after the current commerce order note in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceOrderNoteId the primary key of the current commerce order note
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order note
-	 * @throws NoSuchOrderNoteException if a commerce order note with the primary key could not be found
-	 */
-	public static CommerceOrderNote[] findByUuid_PrevAndNext(
-			long commerceOrderNoteId, String uuid,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceOrderNoteId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order notes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -486,25 +468,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Returns the commerce order notes before and after the current commerce order note in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceOrderNoteId the primary key of the current commerce order note
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order note
-	 * @throws NoSuchOrderNoteException if a commerce order note with the primary key could not be found
-	 */
-	public static CommerceOrderNote[] findByUuid_C_PrevAndNext(
-			long commerceOrderNoteId, String uuid, long companyId,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceOrderNoteId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce order notes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -662,24 +625,6 @@ public class CommerceOrderNoteUtil {
 
 		return getPersistence().fetchByCommerceOrderId_Last(
 			commerceOrderId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order notes before and after the current commerce order note in the ordered set where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderNoteId the primary key of the current commerce order note
-	 * @param commerceOrderId the commerce order ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order note
-	 * @throws NoSuchOrderNoteException if a commerce order note with the primary key could not be found
-	 */
-	public static CommerceOrderNote[] findByCommerceOrderId_PrevAndNext(
-			long commerceOrderNoteId, long commerceOrderId,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
-
-		return getPersistence().findByCommerceOrderId_PrevAndNext(
-			commerceOrderNoteId, commerceOrderId, orderByComparator);
 	}
 
 	/**
@@ -847,26 +792,6 @@ public class CommerceOrderNoteUtil {
 
 		return getPersistence().fetchByC_R_Last(
 			commerceOrderId, restricted, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order notes before and after the current commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * @param commerceOrderNoteId the primary key of the current commerce order note
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order note
-	 * @throws NoSuchOrderNoteException if a commerce order note with the primary key could not be found
-	 */
-	public static CommerceOrderNote[] findByC_R_PrevAndNext(
-			long commerceOrderNoteId, long commerceOrderId, boolean restricted,
-			OrderByComparator<CommerceOrderNote> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
-
-		return getPersistence().findByC_R_PrevAndNext(
-			commerceOrderNoteId, commerceOrderId, restricted,
-			orderByComparator);
 	}
 
 	/**
@@ -1126,4 +1051,4 @@ public class CommerceOrderNoteUtil {
 	private static volatile CommerceOrderNotePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1727113238
+// LIFERAY-SERVICE-BUILDER-HASH:-1462462981

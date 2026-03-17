@@ -146,21 +146,6 @@ public interface CTCollectionTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the ct collection templates before and after the current ct collection template in the ordered set where companyId = &#63;.
-	 *
-	 * @param ctCollectionTemplateId the primary key of the current ct collection template
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection template
-	 * @throws NoSuchCollectionTemplateException if a ct collection template with the primary key could not be found
-	 */
-	public CTCollectionTemplate[] findByCompanyId_PrevAndNext(
-			long ctCollectionTemplateId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTCollectionTemplate> orderByComparator)
-		throws NoSuchCollectionTemplateException;
-
-	/**
 	 * Returns all the ct collection templates that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -201,21 +186,6 @@ public interface CTCollectionTemplatePersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CTCollectionTemplate>
 			orderByComparator);
-
-	/**
-	 * Returns the ct collection templates before and after the current ct collection template in the ordered set of ct collection templates that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param ctCollectionTemplateId the primary key of the current ct collection template
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct collection template
-	 * @throws NoSuchCollectionTemplateException if a ct collection template with the primary key could not be found
-	 */
-	public CTCollectionTemplate[] filterFindByCompanyId_PrevAndNext(
-			long ctCollectionTemplateId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CTCollectionTemplate> orderByComparator)
-		throws NoSuchCollectionTemplateException;
 
 	/**
 	 * Removes all the ct collection templates where companyId = &#63; from the database.
@@ -363,4 +333,4 @@ public interface CTCollectionTemplatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2096255359
+// LIFERAY-SERVICE-BUILDER-HASH:-1264119288

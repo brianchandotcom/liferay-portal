@@ -237,25 +237,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where uuid = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByUuid_PrevAndNext(
-			long folderId, String uuid,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			folderId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library folders where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -485,26 +466,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByUuid_C_PrevAndNext(
-			long folderId, String uuid, long companyId,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			folderId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library folders where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -656,25 +617,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByGroupId_PrevAndNext(
-			long folderId, long groupId,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			folderId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -721,25 +663,6 @@ public class DLFolderUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] filterFindByGroupId_PrevAndNext(
-			long folderId, long groupId,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			folderId, groupId, orderByComparator);
 	}
 
 	/**
@@ -905,25 +828,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where companyId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByCompanyId_PrevAndNext(
-			long folderId, long companyId,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			folderId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library folders where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1073,25 +977,6 @@ public class DLFolderUtil {
 
 		return getPersistence().fetchByRepositoryId_Last(
 			repositoryId, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where repositoryId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param repositoryId the repository ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByRepositoryId_PrevAndNext(
-			long folderId, long repositoryId,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByRepositoryId_PrevAndNext(
-			folderId, repositoryId, orderByComparator);
 	}
 
 	/**
@@ -1260,26 +1145,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByG_P_PrevAndNext(
-			long folderId, long groupId, long parentFolderId,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByG_P_PrevAndNext(
-			folderId, groupId, parentFolderId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1332,26 +1197,6 @@ public class DLFolderUtil {
 
 		return getPersistence().filterFindByG_P(
 			groupId, parentFolderId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] filterFindByG_P_PrevAndNext(
-			long folderId, long groupId, long parentFolderId,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().filterFindByG_P_PrevAndNext(
-			folderId, groupId, parentFolderId, orderByComparator);
 	}
 
 	/**
@@ -1529,26 +1374,6 @@ public class DLFolderUtil {
 
 		return getPersistence().fetchByC_NotS_Last(
 			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByC_NotS_PrevAndNext(
-			long folderId, long companyId, int status,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByC_NotS_PrevAndNext(
-			folderId, companyId, status, orderByComparator);
 	}
 
 	/**
@@ -1788,26 +1613,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where repositoryId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param repositoryId the repository ID
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByR_P_PrevAndNext(
-			long folderId, long repositoryId, long parentFolderId,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByR_P_PrevAndNext(
-			folderId, repositoryId, parentFolderId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the document library folders where repositoryId = &#63; and parentFolderId = &#63; from the database.
 	 *
 	 * @param repositoryId the repository ID
@@ -1972,26 +1777,6 @@ public class DLFolderUtil {
 
 		return getPersistence().fetchByP_N_Last(
 			parentFolderId, name, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where parentFolderId = &#63; and name = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param parentFolderId the parent folder ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByP_N_PrevAndNext(
-			long folderId, long parentFolderId, String name,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByP_N_PrevAndNext(
-			folderId, parentFolderId, name, orderByComparator);
 	}
 
 	/**
@@ -2363,27 +2148,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByG_M_P_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByG_M_P_PrevAndNext(
-			folderId, groupId, mountPoint, parentFolderId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2441,27 +2205,6 @@ public class DLFolderUtil {
 
 		return getPersistence().filterFindByG_M_P(
 			groupId, mountPoint, parentFolderId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] filterFindByG_M_P_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().filterFindByG_M_P_PrevAndNext(
-			folderId, groupId, mountPoint, parentFolderId, orderByComparator);
 	}
 
 	/**
@@ -2955,30 +2698,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByG_M_P_H_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, boolean hidden,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByG_M_P_H_PrevAndNext(
-			folderId, groupId, mountPoint, parentFolderId, hidden,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3039,30 +2758,6 @@ public class DLFolderUtil {
 
 		return getPersistence().filterFindByG_M_P_H(
 			groupId, mountPoint, parentFolderId, hidden, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] filterFindByG_M_P_H_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, boolean hidden,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().filterFindByG_M_P_H_PrevAndNext(
-			folderId, groupId, mountPoint, parentFolderId, hidden,
 			orderByComparator);
 	}
 
@@ -3283,28 +2978,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param treePath the tree path
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByG_M_LikeT_H_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint, String treePath,
-			boolean hidden, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByG_M_LikeT_H_PrevAndNext(
-			folderId, groupId, mountPoint, treePath, hidden, orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3366,28 +3039,6 @@ public class DLFolderUtil {
 		return getPersistence().filterFindByG_M_LikeT_H(
 			groupId, mountPoint, treePath, hidden, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param treePath the tree path
-	 * @param hidden the hidden
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] filterFindByG_M_LikeT_H_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint, String treePath,
-			boolean hidden, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().filterFindByG_M_LikeT_H_PrevAndNext(
-			folderId, groupId, mountPoint, treePath, hidden, orderByComparator);
 	}
 
 	/**
@@ -3607,29 +3258,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByG_P_H_S_PrevAndNext(
-			long folderId, long groupId, long parentFolderId, boolean hidden,
-			int status, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByG_P_H_S_PrevAndNext(
-			folderId, groupId, parentFolderId, hidden, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3690,29 +3318,6 @@ public class DLFolderUtil {
 
 		return getPersistence().filterFindByG_P_H_S(
 			groupId, parentFolderId, hidden, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] filterFindByG_P_H_S_PrevAndNext(
-			long folderId, long groupId, long parentFolderId, boolean hidden,
-			int status, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().filterFindByG_P_H_S_PrevAndNext(
-			folderId, groupId, parentFolderId, hidden, status,
 			orderByComparator);
 	}
 
@@ -3949,31 +3554,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByG_M_P_H_S_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, boolean hidden, int status,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByG_M_P_H_S_PrevAndNext(
-			folderId, groupId, mountPoint, parentFolderId, hidden, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4039,31 +3619,6 @@ public class DLFolderUtil {
 
 		return getPersistence().filterFindByG_M_P_H_S(
 			groupId, mountPoint, parentFolderId, hidden, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] filterFindByG_M_P_H_S_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint,
-			long parentFolderId, boolean hidden, int status,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().filterFindByG_M_P_H_S_PrevAndNext(
-			folderId, groupId, mountPoint, parentFolderId, hidden, status,
 			orderByComparator);
 	}
 
@@ -4300,31 +3855,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param treePath the tree path
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] findByG_M_LikeT_H_NotS_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint, String treePath,
-			boolean hidden, int status,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().findByG_M_LikeT_H_NotS_PrevAndNext(
-			folderId, groupId, mountPoint, treePath, hidden, status,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4390,31 +3920,6 @@ public class DLFolderUtil {
 
 		return getPersistence().filterFindByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the document library folders before and after the current document library folder in the ordered set of document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and treePath LIKE &#63; and hidden = &#63; and status &ne; &#63;.
-	 *
-	 * @param folderId the primary key of the current document library folder
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param treePath the tree path
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	public static DLFolder[] filterFindByG_M_LikeT_H_NotS_PrevAndNext(
-			long folderId, long groupId, boolean mountPoint, String treePath,
-			boolean hidden, int status,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFolderException {
-
-		return getPersistence().filterFindByG_M_LikeT_H_NotS_PrevAndNext(
-			folderId, groupId, mountPoint, treePath, hidden, status,
 			orderByComparator);
 	}
 
@@ -4938,4 +4443,4 @@ public class DLFolderUtil {
 	private static volatile DLFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1234922467
+// LIFERAY-SERVICE-BUILDER-HASH:-324231978

@@ -245,25 +245,6 @@ public class AuditEventUtil {
 	}
 
 	/**
-	 * Returns the audit events before and after the current audit event in the ordered set where companyId = &#63;.
-	 *
-	 * @param auditEventId the primary key of the current audit event
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next audit event
-	 * @throws NoSuchEventException if a audit event with the primary key could not be found
-	 */
-	public static AuditEvent[] findByCompanyId_PrevAndNext(
-			long auditEventId, long companyId,
-			OrderByComparator<AuditEvent> orderByComparator)
-		throws com.liferay.portal.security.audit.storage.exception.
-			NoSuchEventException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			auditEventId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the audit events where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -442,4 +423,4 @@ public class AuditEventUtil {
 	private static volatile AuditEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1145712277
+// LIFERAY-SERVICE-BUILDER-HASH:-519505697

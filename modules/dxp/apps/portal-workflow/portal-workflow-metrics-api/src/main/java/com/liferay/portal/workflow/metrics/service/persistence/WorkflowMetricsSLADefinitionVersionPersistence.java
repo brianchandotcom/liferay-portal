@@ -147,21 +147,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
-	 * Returns the workflow metrics sla definition versions before and after the current workflow metrics sla definition version in the ordered set where uuid = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionVersionId the primary key of the current workflow metrics sla definition version
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a workflow metrics sla definition version with the primary key could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion[] findByUuid_PrevAndNext(
-			long workflowMetricsSLADefinitionVersionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
-		throws NoSuchSLADefinitionVersionException;
-
-	/**
 	 * Removes all the workflow metrics sla definition versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -352,23 +337,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
-	 * Returns the workflow metrics sla definition versions before and after the current workflow metrics sla definition version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionVersionId the primary key of the current workflow metrics sla definition version
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a workflow metrics sla definition version with the primary key could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion[] findByUuid_C_PrevAndNext(
-			long workflowMetricsSLADefinitionVersionId, String uuid,
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
-		throws NoSuchSLADefinitionVersionException;
-
-	/**
 	 * Removes all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -506,23 +474,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 			long workflowMetricsSLADefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<WorkflowMetricsSLADefinitionVersion> orderByComparator);
-
-	/**
-	 * Returns the workflow metrics sla definition versions before and after the current workflow metrics sla definition version in the ordered set where workflowMetricsSLADefinitionId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionVersionId the primary key of the current workflow metrics sla definition version
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a workflow metrics sla definition version with the primary key could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion[]
-			findByWorkflowMetricsSLADefinitionId_PrevAndNext(
-				long workflowMetricsSLADefinitionVersionId,
-				long workflowMetricsSLADefinitionId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<WorkflowMetricsSLADefinitionVersion> orderByComparator)
-		throws NoSuchSLADefinitionVersionException;
 
 	/**
 	 * Removes all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63; from the database.
@@ -728,4 +679,4 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2120101128
+// LIFERAY-SERVICE-BUILDER-HASH:-1627908042

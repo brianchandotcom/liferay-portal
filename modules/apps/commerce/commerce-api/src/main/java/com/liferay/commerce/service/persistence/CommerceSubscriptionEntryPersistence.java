@@ -146,21 +146,6 @@ public interface CommerceSubscriptionEntryPersistence
 			<CommerceSubscriptionEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce subscription entries before and after the current commerce subscription entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceSubscriptionEntryId the primary key of the current commerce subscription entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	public CommerceSubscriptionEntry[] findByUuid_PrevAndNext(
-			long commerceSubscriptionEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
 	 * Removes all the commerce subscription entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -348,22 +333,6 @@ public interface CommerceSubscriptionEntryPersistence
 			<CommerceSubscriptionEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce subscription entries before and after the current commerce subscription entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceSubscriptionEntryId the primary key of the current commerce subscription entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	public CommerceSubscriptionEntry[] findByUuid_C_PrevAndNext(
-			long commerceSubscriptionEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
 	 * Removes all the commerce subscription entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -495,21 +464,6 @@ public interface CommerceSubscriptionEntryPersistence
 			<CommerceSubscriptionEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce subscription entries before and after the current commerce subscription entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceSubscriptionEntryId the primary key of the current commerce subscription entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	public CommerceSubscriptionEntry[] findByGroupId_PrevAndNext(
-			long commerceSubscriptionEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
 	 * Removes all the commerce subscription entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -637,21 +591,6 @@ public interface CommerceSubscriptionEntryPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
-	 * Returns the commerce subscription entries before and after the current commerce subscription entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceSubscriptionEntryId the primary key of the current commerce subscription entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	public CommerceSubscriptionEntry[] findByCompanyId_PrevAndNext(
-			long commerceSubscriptionEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
 
 	/**
 	 * Removes all the commerce subscription entries where companyId = &#63; from the database.
@@ -831,21 +770,6 @@ public interface CommerceSubscriptionEntryPersistence
 			<CommerceSubscriptionEntry> orderByComparator);
 
 	/**
-	 * Returns the commerce subscription entries before and after the current commerce subscription entry in the ordered set where subscriptionStatus = &#63;.
-	 *
-	 * @param commerceSubscriptionEntryId the primary key of the current commerce subscription entry
-	 * @param subscriptionStatus the subscription status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	public CommerceSubscriptionEntry[] findBySubscriptionStatus_PrevAndNext(
-			long commerceSubscriptionEntryId, int subscriptionStatus,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
-
-	/**
 	 * Removes all the commerce subscription entries where subscriptionStatus = &#63; from the database.
 	 *
 	 * @param subscriptionStatus the subscription status
@@ -981,22 +905,6 @@ public interface CommerceSubscriptionEntryPersistence
 		long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
-	 * Returns the commerce subscription entries before and after the current commerce subscription entry in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param commerceSubscriptionEntryId the primary key of the current commerce subscription entry
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	public CommerceSubscriptionEntry[] findByC_U_PrevAndNext(
-			long commerceSubscriptionEntryId, long companyId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
 
 	/**
 	 * Removes all the commerce subscription entries where companyId = &#63; and userId = &#63; from the database.
@@ -1144,24 +1052,6 @@ public interface CommerceSubscriptionEntryPersistence
 		long groupId, long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceSubscriptionEntry> orderByComparator);
-
-	/**
-	 * Returns the commerce subscription entries before and after the current commerce subscription entry in the ordered set where groupId = &#63; and companyId = &#63; and userId = &#63;.
-	 *
-	 * @param commerceSubscriptionEntryId the primary key of the current commerce subscription entry
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	public CommerceSubscriptionEntry[] findByG_C_U_PrevAndNext(
-			long commerceSubscriptionEntryId, long groupId, long companyId,
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceSubscriptionEntry> orderByComparator)
-		throws NoSuchSubscriptionEntryException;
 
 	/**
 	 * Removes all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63; from the database.
@@ -1369,4 +1259,4 @@ public interface CommerceSubscriptionEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:826393845
+// LIFERAY-SERVICE-BUILDER-HASH:252881749

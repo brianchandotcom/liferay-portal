@@ -146,21 +146,6 @@ public interface ObjectStateFlowPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the object state flows before and after the current object state flow in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectStateFlowId the primary key of the current object state flow
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state flow
-	 * @throws NoSuchObjectStateFlowException if a object state flow with the primary key could not be found
-	 */
-	public ObjectStateFlow[] findByUuid_PrevAndNext(
-			long objectStateFlowId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectStateFlow>
-				orderByComparator)
-		throws NoSuchObjectStateFlowException;
-
-	/**
 	 * Removes all the object state flows where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -296,22 +281,6 @@ public interface ObjectStateFlowPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectStateFlow>
 			orderByComparator);
-
-	/**
-	 * Returns the object state flows before and after the current object state flow in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectStateFlowId the primary key of the current object state flow
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object state flow
-	 * @throws NoSuchObjectStateFlowException if a object state flow with the primary key could not be found
-	 */
-	public ObjectStateFlow[] findByUuid_C_PrevAndNext(
-			long objectStateFlowId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ObjectStateFlow>
-				orderByComparator)
-		throws NoSuchObjectStateFlowException;
 
 	/**
 	 * Removes all the object state flows where uuid = &#63; and companyId = &#63; from the database.
@@ -496,4 +465,4 @@ public interface ObjectStateFlowPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1612208005
+// LIFERAY-SERVICE-BUILDER-HASH:1649468710

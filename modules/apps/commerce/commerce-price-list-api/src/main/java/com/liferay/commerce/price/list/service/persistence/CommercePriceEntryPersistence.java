@@ -152,21 +152,6 @@ public interface CommercePriceEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByUuid_PrevAndNext(
-			long commercePriceEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
-
-	/**
 	 * Removes all the commerce price entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -304,22 +289,6 @@ public interface CommercePriceEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByUuid_C_PrevAndNext(
-			long commercePriceEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
-
-	/**
 	 * Removes all the commerce price entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -448,21 +417,6 @@ public interface CommercePriceEntryPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByCompanyId_PrevAndNext(
-			long commercePriceEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
 
 	/**
 	 * Removes all the commerce price entries where companyId = &#63; from the database.
@@ -594,21 +548,6 @@ public interface CommercePriceEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where commercePriceListId = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param commercePriceListId the commerce price list ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByCommercePriceListId_PrevAndNext(
-			long commercePriceEntryId, long commercePriceListId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
-
-	/**
 	 * Removes all the commerce price entries where commercePriceListId = &#63; from the database.
 	 *
 	 * @param commercePriceListId the commerce price list ID
@@ -736,21 +675,6 @@ public interface CommercePriceEntryPersistence
 		String CPInstanceUuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where CPInstanceUuid = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByCPInstanceUuid_PrevAndNext(
-			long commercePriceEntryId, String CPInstanceUuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
 
 	/**
 	 * Removes all the commerce price entries where CPInstanceUuid = &#63; from the database.
@@ -888,23 +812,6 @@ public interface CommercePriceEntryPersistence
 		long commercePriceListId, String CPInstanceUuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where commercePriceListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param commercePriceListId the commerce price list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByC_C_PrevAndNext(
-			long commercePriceEntryId, long commercePriceListId,
-			String CPInstanceUuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
 
 	/**
 	 * Removes all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63; from the database.
@@ -1046,22 +953,6 @@ public interface CommercePriceEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByLtD_S_PrevAndNext(
-			long commercePriceEntryId, Date displayDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
-
-	/**
 	 * Removes all the commerce price entries where displayDate &lt; &#63; and status = &#63; from the database.
 	 *
 	 * @param displayDate the display date
@@ -1199,22 +1090,6 @@ public interface CommercePriceEntryPersistence
 		Date expirationDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByLtE_S_PrevAndNext(
-			long commercePriceEntryId, Date expirationDate, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
 
 	/**
 	 * Removes all the commerce price entries where expirationDate &lt; &#63; and status = &#63; from the database.
@@ -1365,24 +1240,6 @@ public interface CommercePriceEntryPersistence
 		long commercePriceListId, String CPInstanceUuid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where commercePriceListId = &#63; and CPInstanceUuid = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param commercePriceListId the commerce price list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByC_C_S_PrevAndNext(
-			long commercePriceEntryId, long commercePriceListId,
-			String CPInstanceUuid, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
 
 	/**
 	 * Removes all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63; and status = &#63; from the database.
@@ -1537,24 +1394,6 @@ public interface CommercePriceEntryPersistence
 		String CPInstanceUuid, BigDecimal quantity, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where CPInstanceUuid = &#63; and quantity = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param commercePriceEntryId the primary key of the current commerce price entry
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param quantity the quantity
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	public CommercePriceEntry[] findByC_Q_U_PrevAndNext(
-			long commercePriceEntryId, String CPInstanceUuid,
-			BigDecimal quantity, String unitOfMeasureKey,
-			com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
-				orderByComparator)
-		throws NoSuchPriceEntryException;
 
 	/**
 	 * Removes all the commerce price entries where CPInstanceUuid = &#63; and quantity = &#63; and unitOfMeasureKey = &#63; from the database.
@@ -1752,4 +1591,4 @@ public interface CommercePriceEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1101274178
+// LIFERAY-SERVICE-BUILDER-HASH:1623813745

@@ -241,24 +241,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] findByUuid_PrevAndNext(
-			long commerceOrderTypeId, String uuid,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceOrderTypeId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -305,24 +287,6 @@ public class CommerceOrderTypeUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set of commerce order types that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] filterFindByUuid_PrevAndNext(
-			long commerceOrderTypeId, String uuid,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			commerceOrderTypeId, uuid, orderByComparator);
 	}
 
 	/**
@@ -501,25 +465,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] findByUuid_C_PrevAndNext(
-			long commerceOrderTypeId, String uuid, long companyId,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceOrderTypeId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -571,25 +516,6 @@ public class CommerceOrderTypeUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set of commerce order types that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] filterFindByUuid_C_PrevAndNext(
-			long commerceOrderTypeId, String uuid, long companyId,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			commerceOrderTypeId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -761,24 +687,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set where companyId = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] findByCompanyId_PrevAndNext(
-			long commerceOrderTypeId, long companyId,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			commerceOrderTypeId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -827,24 +735,6 @@ public class CommerceOrderTypeUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set of commerce order types that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] filterFindByCompanyId_PrevAndNext(
-			long commerceOrderTypeId, long companyId,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			commerceOrderTypeId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1023,25 +913,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] findByC_A_PrevAndNext(
-			long commerceOrderTypeId, long companyId, boolean active,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByC_A_PrevAndNext(
-			commerceOrderTypeId, companyId, active, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1093,25 +964,6 @@ public class CommerceOrderTypeUtil {
 
 		return getPersistence().filterFindByC_A(
 			companyId, active, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set of commerce order types that the user has permission to view where companyId = &#63; and active = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] filterFindByC_A_PrevAndNext(
-			long commerceOrderTypeId, long companyId, boolean active,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().filterFindByC_A_PrevAndNext(
-			commerceOrderTypeId, companyId, active, orderByComparator);
 	}
 
 	/**
@@ -1293,25 +1145,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] findByLtD_S_PrevAndNext(
-			long commerceOrderTypeId, Date displayDate, int status,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByLtD_S_PrevAndNext(
-			commerceOrderTypeId, displayDate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date
@@ -1364,25 +1197,6 @@ public class CommerceOrderTypeUtil {
 
 		return getPersistence().filterFindByLtD_S(
 			displayDate, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set of commerce order types that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] filterFindByLtD_S_PrevAndNext(
-			long commerceOrderTypeId, Date displayDate, int status,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().filterFindByLtD_S_PrevAndNext(
-			commerceOrderTypeId, displayDate, status, orderByComparator);
 	}
 
 	/**
@@ -1565,25 +1379,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] findByLtE_S_PrevAndNext(
-			long commerceOrderTypeId, Date expirationDate, int status,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().findByLtE_S_PrevAndNext(
-			commerceOrderTypeId, expirationDate, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the commerce order types that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param expirationDate the expiration date
@@ -1636,25 +1431,6 @@ public class CommerceOrderTypeUtil {
 
 		return getPersistence().filterFindByLtE_S(
 			expirationDate, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce order types before and after the current commerce order type in the ordered set of commerce order types that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param commerceOrderTypeId the primary key of the current commerce order type
-	 * @param expirationDate the expiration date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	public static CommerceOrderType[] filterFindByLtE_S_PrevAndNext(
-			long commerceOrderTypeId, Date expirationDate, int status,
-			OrderByComparator<CommerceOrderType> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchOrderTypeException {
-
-		return getPersistence().filterFindByLtE_S_PrevAndNext(
-			commerceOrderTypeId, expirationDate, status, orderByComparator);
 	}
 
 	/**
@@ -1925,4 +1701,4 @@ public class CommerceOrderTypeUtil {
 	private static volatile CommerceOrderTypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1841656953
+// LIFERAY-SERVICE-BUILDER-HASH:562329233

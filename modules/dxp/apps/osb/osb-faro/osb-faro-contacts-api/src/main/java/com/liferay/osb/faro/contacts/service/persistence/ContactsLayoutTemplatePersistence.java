@@ -146,21 +146,6 @@ public interface ContactsLayoutTemplatePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the contacts layout templates before and after the current contacts layout template in the ordered set where groupId = &#63;.
-	 *
-	 * @param contactsLayoutTemplateId the primary key of the current contacts layout template
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a contacts layout template with the primary key could not be found
-	 */
-	public ContactsLayoutTemplate[] findByGroupId_PrevAndNext(
-			long contactsLayoutTemplateId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ContactsLayoutTemplate> orderByComparator)
-		throws NoSuchContactsLayoutTemplateException;
-
-	/**
 	 * Removes all the contacts layout templates where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -296,22 +281,6 @@ public interface ContactsLayoutTemplatePersistence
 		long groupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<ContactsLayoutTemplate>
 			orderByComparator);
-
-	/**
-	 * Returns the contacts layout templates before and after the current contacts layout template in the ordered set where groupId = &#63; and type = &#63;.
-	 *
-	 * @param contactsLayoutTemplateId the primary key of the current contacts layout template
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a contacts layout template with the primary key could not be found
-	 */
-	public ContactsLayoutTemplate[] findByG_T_PrevAndNext(
-			long contactsLayoutTemplateId, long groupId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ContactsLayoutTemplate> orderByComparator)
-		throws NoSuchContactsLayoutTemplateException;
 
 	/**
 	 * Removes all the contacts layout templates where groupId = &#63; and type = &#63; from the database.
@@ -455,4 +424,4 @@ public interface ContactsLayoutTemplatePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-849520230
+// LIFERAY-SERVICE-BUILDER-HASH:-1714328160

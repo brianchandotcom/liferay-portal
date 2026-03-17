@@ -156,22 +156,6 @@ public interface KaleoTimerPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo timers before and after the current kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
-	 *
-	 * @param kaleoTimerId the primary key of the current kaleo timer
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo timer
-	 * @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
-	 */
-	public KaleoTimer[] findByKCN_KCPK_PrevAndNext(
-			long kaleoTimerId, String kaleoClassName, long kaleoClassPK,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
-				orderByComparator)
-		throws NoSuchTimerException;
-
-	/**
 	 * Removes all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
 	 *
 	 * @param kaleoClassName the kaleo class name
@@ -322,24 +306,6 @@ public interface KaleoTimerPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the kaleo timers before and after the current kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
-	 *
-	 * @param kaleoTimerId the primary key of the current kaleo timer
-	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class pk
-	 * @param blocking the blocking
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo timer
-	 * @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
-	 */
-	public KaleoTimer[] findByKCN_KCPK_Blocking_PrevAndNext(
-			long kaleoTimerId, String kaleoClassName, long kaleoClassPK,
-			boolean blocking,
-			com.liferay.portal.kernel.util.OrderByComparator<KaleoTimer>
-				orderByComparator)
-		throws NoSuchTimerException;
-
-	/**
 	 * Removes all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63; from the database.
 	 *
 	 * @param kaleoClassName the kaleo class name
@@ -480,4 +446,4 @@ public interface KaleoTimerPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1848644969
+// LIFERAY-SERVICE-BUILDER-HASH:-1688261002

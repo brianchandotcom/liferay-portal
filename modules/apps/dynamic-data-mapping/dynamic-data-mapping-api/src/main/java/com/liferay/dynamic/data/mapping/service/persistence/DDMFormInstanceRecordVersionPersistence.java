@@ -152,22 +152,6 @@ public interface DDMFormInstanceRecordVersionPersistence
 			<DDMFormInstanceRecordVersion> orderByComparator);
 
 	/**
-	 * Returns the ddm form instance record versions before and after the current ddm form instance record version in the ordered set where formInstanceRecordId = &#63;.
-	 *
-	 * @param formInstanceRecordVersionId the primary key of the current ddm form instance record version
-	 * @param formInstanceRecordId the form instance record ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record version
-	 * @throws NoSuchFormInstanceRecordVersionException if a ddm form instance record version with the primary key could not be found
-	 */
-	public DDMFormInstanceRecordVersion[]
-			findByFormInstanceRecordId_PrevAndNext(
-				long formInstanceRecordVersionId, long formInstanceRecordId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<DDMFormInstanceRecordVersion> orderByComparator)
-		throws NoSuchFormInstanceRecordVersionException;
-
-	/**
 	 * Removes all the ddm form instance record versions where formInstanceRecordId = &#63; from the database.
 	 *
 	 * @param formInstanceRecordId the form instance record ID
@@ -303,22 +287,6 @@ public interface DDMFormInstanceRecordVersionPersistence
 		long userId, long formInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DDMFormInstanceRecordVersion> orderByComparator);
-
-	/**
-	 * Returns the ddm form instance record versions before and after the current ddm form instance record version in the ordered set where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * @param formInstanceRecordVersionId the primary key of the current ddm form instance record version
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record version
-	 * @throws NoSuchFormInstanceRecordVersionException if a ddm form instance record version with the primary key could not be found
-	 */
-	public DDMFormInstanceRecordVersion[] findByU_F_PrevAndNext(
-			long formInstanceRecordVersionId, long userId, long formInstanceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMFormInstanceRecordVersion> orderByComparator)
-		throws NoSuchFormInstanceRecordVersionException;
 
 	/**
 	 * Removes all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; from the database.
@@ -458,23 +426,6 @@ public interface DDMFormInstanceRecordVersionPersistence
 		long formInstanceId, String formInstanceVersion,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<DDMFormInstanceRecordVersion> orderByComparator);
-
-	/**
-	 * Returns the ddm form instance record versions before and after the current ddm form instance record version in the ordered set where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * @param formInstanceRecordVersionId the primary key of the current ddm form instance record version
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record version
-	 * @throws NoSuchFormInstanceRecordVersionException if a ddm form instance record version with the primary key could not be found
-	 */
-	public DDMFormInstanceRecordVersion[] findByF_F_PrevAndNext(
-			long formInstanceRecordVersionId, long formInstanceId,
-			String formInstanceVersion,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMFormInstanceRecordVersion> orderByComparator)
-		throws NoSuchFormInstanceRecordVersionException;
 
 	/**
 	 * Removes all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63; from the database.
@@ -669,23 +620,6 @@ public interface DDMFormInstanceRecordVersionPersistence
 			<DDMFormInstanceRecordVersion> orderByComparator);
 
 	/**
-	 * Returns the ddm form instance record versions before and after the current ddm form instance record version in the ordered set where formInstanceRecordId = &#63; and status = &#63;.
-	 *
-	 * @param formInstanceRecordVersionId the primary key of the current ddm form instance record version
-	 * @param formInstanceRecordId the form instance record ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record version
-	 * @throws NoSuchFormInstanceRecordVersionException if a ddm form instance record version with the primary key could not be found
-	 */
-	public DDMFormInstanceRecordVersion[] findByF_S_PrevAndNext(
-			long formInstanceRecordVersionId, long formInstanceRecordId,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMFormInstanceRecordVersion> orderByComparator)
-		throws NoSuchFormInstanceRecordVersionException;
-
-	/**
 	 * Removes all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63; from the database.
 	 *
 	 * @param formInstanceRecordId the form instance record ID
@@ -849,25 +783,6 @@ public interface DDMFormInstanceRecordVersionPersistence
 			<DDMFormInstanceRecordVersion> orderByComparator);
 
 	/**
-	 * Returns the ddm form instance record versions before and after the current ddm form instance record version in the ordered set where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
-	 *
-	 * @param formInstanceRecordVersionId the primary key of the current ddm form instance record version
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm form instance record version
-	 * @throws NoSuchFormInstanceRecordVersionException if a ddm form instance record version with the primary key could not be found
-	 */
-	public DDMFormInstanceRecordVersion[] findByU_F_F_S_PrevAndNext(
-			long formInstanceRecordVersionId, long userId, long formInstanceId,
-			String formInstanceVersion, int status,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMFormInstanceRecordVersion> orderByComparator)
-		throws NoSuchFormInstanceRecordVersionException;
-
-	/**
 	 * Removes all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -1021,4 +936,4 @@ public interface DDMFormInstanceRecordVersionPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1747348819
+// LIFERAY-SERVICE-BUILDER-HASH:1152733414

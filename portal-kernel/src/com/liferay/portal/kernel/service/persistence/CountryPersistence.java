@@ -145,21 +145,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the countries before and after the current country in the ordered set where uuid = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] findByUuid_PrevAndNext(
-			long countryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
 	 * Returns all the countries that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -199,21 +184,6 @@ public interface CountryPersistence
 		String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
-
-	/**
-	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] filterFindByUuid_PrevAndNext(
-			long countryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
 
 	/**
 	 * Removes all the countries where uuid = &#63; from the database.
@@ -360,22 +330,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the countries before and after the current country in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] findByUuid_C_PrevAndNext(
-			long countryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
 	 * Returns all the countries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -419,22 +373,6 @@ public interface CountryPersistence
 		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
-
-	/**
-	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] filterFindByUuid_C_PrevAndNext(
-			long countryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
 
 	/**
 	 * Removes all the countries where uuid = &#63; and companyId = &#63; from the database.
@@ -576,21 +514,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the countries before and after the current country in the ordered set where companyId = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] findByCompanyId_PrevAndNext(
-			long countryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
 	 * Returns all the countries that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -630,21 +553,6 @@ public interface CountryPersistence
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
-
-	/**
-	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] filterFindByCompanyId_PrevAndNext(
-			long countryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
 
 	/**
 	 * Removes all the countries where companyId = &#63; from the database.
@@ -783,21 +691,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the countries before and after the current country in the ordered set where active = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] findByActive_PrevAndNext(
-			long countryId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
 	 * Returns all the countries that the user has permission to view where active = &#63;.
 	 *
 	 * @param active the active
@@ -837,21 +730,6 @@ public interface CountryPersistence
 		boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
-
-	/**
-	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where active = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] filterFindByActive_PrevAndNext(
-			long countryId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
 
 	/**
 	 * Removes all the countries where active = &#63; from the database.
@@ -1099,22 +977,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the countries before and after the current country in the ordered set where companyId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] findByC_Active_PrevAndNext(
-			long countryId, long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
 	 * Returns all the countries that the user has permission to view where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1158,22 +1020,6 @@ public interface CountryPersistence
 		long companyId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
-
-	/**
-	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where companyId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] filterFindByC_Active_PrevAndNext(
-			long countryId, long companyId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
 
 	/**
 	 * Removes all the countries where companyId = &#63; and active = &#63; from the database.
@@ -1435,24 +1281,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the countries before and after the current country in the ordered set where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param billingAllowed the billing allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] findByC_A_B_PrevAndNext(
-			long countryId, long companyId, boolean active,
-			boolean billingAllowed,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
 	 * Returns all the countries that the user has permission to view where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1501,24 +1329,6 @@ public interface CountryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
-
-	/**
-	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param billingAllowed the billing allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] filterFindByC_A_B_PrevAndNext(
-			long countryId, long companyId, boolean active,
-			boolean billingAllowed,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
 
 	/**
 	 * Removes all the countries where companyId = &#63; and active = &#63; and billingAllowed = &#63; from the database.
@@ -1686,24 +1496,6 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the countries before and after the current country in the ordered set where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param shippingAllowed the shipping allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] findByC_A_S_PrevAndNext(
-			long countryId, long companyId, boolean active,
-			boolean shippingAllowed,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
-
-	/**
 	 * Returns all the countries that the user has permission to view where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1752,24 +1544,6 @@ public interface CountryPersistence
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Country>
 			orderByComparator);
-
-	/**
-	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
-	 *
-	 * @param countryId the primary key of the current country
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param shippingAllowed the shipping allowed
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	public Country[] filterFindByC_A_S_PrevAndNext(
-			long countryId, long companyId, boolean active,
-			boolean shippingAllowed,
-			com.liferay.portal.kernel.util.OrderByComparator<Country>
-				orderByComparator)
-		throws NoSuchCountryException;
 
 	/**
 	 * Removes all the countries where companyId = &#63; and active = &#63; and shippingAllowed = &#63; from the database.
@@ -2653,4 +2427,4 @@ public interface CountryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1774125586
+// LIFERAY-SERVICE-BUILDER-HASH:-1750921433

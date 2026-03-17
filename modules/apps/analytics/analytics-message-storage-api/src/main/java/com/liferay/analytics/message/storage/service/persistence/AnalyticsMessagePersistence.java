@@ -147,21 +147,6 @@ public interface AnalyticsMessagePersistence
 			orderByComparator);
 
 	/**
-	 * Returns the analytics messages before and after the current analytics message in the ordered set where companyId = &#63;.
-	 *
-	 * @param analyticsMessageId the primary key of the current analytics message
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next analytics message
-	 * @throws NoSuchMessageException if a analytics message with the primary key could not be found
-	 */
-	public AnalyticsMessage[] findByCompanyId_PrevAndNext(
-			long analyticsMessageId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnalyticsMessage>
-				orderByComparator)
-		throws NoSuchMessageException;
-
-	/**
 	 * Removes all the analytics messages where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -297,4 +282,4 @@ public interface AnalyticsMessagePersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:807421360
+// LIFERAY-SERVICE-BUILDER-HASH:-730189171

@@ -252,25 +252,6 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	 * Returns the service components before and after the current service component in the ordered set where buildNamespace = &#63;.
-	 *
-	 * @param serviceComponentId the primary key of the current service component
-	 * @param buildNamespace the build namespace
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next service component
-	 * @throws NoSuchServiceComponentException if a service component with the primary key could not be found
-	 */
-	public static ServiceComponent[] findByBuildNamespace_PrevAndNext(
-			long serviceComponentId, String buildNamespace,
-			OrderByComparator<ServiceComponent> orderByComparator)
-		throws com.liferay.portal.kernel.exception.
-			NoSuchServiceComponentException {
-
-		return getPersistence().findByBuildNamespace_PrevAndNext(
-			serviceComponentId, buildNamespace, orderByComparator);
-	}
-
-	/**
 	 * Removes all the service components where buildNamespace = &#63; from the database.
 	 *
 	 * @param buildNamespace the build namespace
@@ -523,4 +504,4 @@ public class ServiceComponentUtil {
 	private static volatile ServiceComponentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1739904010
+// LIFERAY-SERVICE-BUILDER-HASH:476532383

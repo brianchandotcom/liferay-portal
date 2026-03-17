@@ -144,21 +144,6 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 			orderByComparator);
 
 	/**
-	 * Returns the entries before and after the current entry in the ordered set where userId = &#63;.
-	 *
-	 * @param entryId the primary key of the current entry
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next entry
-	 * @throws NoSuchEntryException if a entry with the primary key could not be found
-	 */
-	public Entry[] findByUserId_PrevAndNext(
-			long entryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -342,4 +327,4 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:636838781
+// LIFERAY-SERVICE-BUILDER-HASH:477640467

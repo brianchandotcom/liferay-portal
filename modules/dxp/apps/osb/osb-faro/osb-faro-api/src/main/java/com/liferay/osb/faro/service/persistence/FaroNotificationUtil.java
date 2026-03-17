@@ -247,24 +247,6 @@ public class FaroNotificationUtil {
 	}
 
 	/**
-	 * Returns the faro notifications before and after the current faro notification in the ordered set where createTime &lt; &#63;.
-	 *
-	 * @param faroNotificationId the primary key of the current faro notification
-	 * @param createTime the create time
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro notification
-	 * @throws NoSuchFaroNotificationException if a faro notification with the primary key could not be found
-	 */
-	public static FaroNotification[] findByLtCreateTime_PrevAndNext(
-			long faroNotificationId, long createTime,
-			OrderByComparator<FaroNotification> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroNotificationException {
-
-		return getPersistence().findByLtCreateTime_PrevAndNext(
-			faroNotificationId, createTime, orderByComparator);
-	}
-
-	/**
 	 * Removes all the faro notifications where createTime &lt; &#63; from the database.
 	 *
 	 * @param createTime the create time
@@ -447,29 +429,6 @@ public class FaroNotificationUtil {
 
 		return getPersistence().fetchByG_GtC_O_T_Last(
 			groupId, createTime, ownerId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the faro notifications before and after the current faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63;.
-	 *
-	 * @param faroNotificationId the primary key of the current faro notification
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro notification
-	 * @throws NoSuchFaroNotificationException if a faro notification with the primary key could not be found
-	 */
-	public static FaroNotification[] findByG_GtC_O_T_PrevAndNext(
-			long faroNotificationId, long groupId, long createTime,
-			long ownerId, String type,
-			OrderByComparator<FaroNotification> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroNotificationException {
-
-		return getPersistence().findByG_GtC_O_T_PrevAndNext(
-			faroNotificationId, groupId, createTime, ownerId, type,
-			orderByComparator);
 	}
 
 	/**
@@ -790,30 +749,6 @@ public class FaroNotificationUtil {
 
 		return getPersistence().fetchByG_GtC_O_T_S_Last(
 			groupId, createTime, ownerId, type, subtype, orderByComparator);
-	}
-
-	/**
-	 * Returns the faro notifications before and after the current faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63; and subtype = &#63;.
-	 *
-	 * @param faroNotificationId the primary key of the current faro notification
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro notification
-	 * @throws NoSuchFaroNotificationException if a faro notification with the primary key could not be found
-	 */
-	public static FaroNotification[] findByG_GtC_O_T_S_PrevAndNext(
-			long faroNotificationId, long groupId, long createTime,
-			long ownerId, String type, String subtype,
-			OrderByComparator<FaroNotification> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroNotificationException {
-
-		return getPersistence().findByG_GtC_O_T_S_PrevAndNext(
-			faroNotificationId, groupId, createTime, ownerId, type, subtype,
-			orderByComparator);
 	}
 
 	/**
@@ -1164,31 +1099,6 @@ public class FaroNotificationUtil {
 	}
 
 	/**
-	 * Returns the faro notifications before and after the current faro notification in the ordered set where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and read = &#63; and type = &#63; and subtype = &#63;.
-	 *
-	 * @param faroNotificationId the primary key of the current faro notification
-	 * @param groupId the group ID
-	 * @param createTime the create time
-	 * @param ownerId the owner ID
-	 * @param read the read
-	 * @param type the type
-	 * @param subtype the subtype
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next faro notification
-	 * @throws NoSuchFaroNotificationException if a faro notification with the primary key could not be found
-	 */
-	public static FaroNotification[] findByG_GtC_O_R_T_S_PrevAndNext(
-			long faroNotificationId, long groupId, long createTime,
-			long ownerId, boolean read, String type, String subtype,
-			OrderByComparator<FaroNotification> orderByComparator)
-		throws com.liferay.osb.faro.exception.NoSuchFaroNotificationException {
-
-		return getPersistence().findByG_GtC_O_R_T_S_PrevAndNext(
-			faroNotificationId, groupId, createTime, ownerId, read, type,
-			subtype, orderByComparator);
-	}
-
-	/**
 	 * Returns all the faro notifications where groupId = &#63; and createTime &gt; &#63; and ownerId = any &#63; and read = &#63; and type = &#63; and subtype = &#63;.
 	 *
 	 * <p>
@@ -1512,4 +1422,4 @@ public class FaroNotificationUtil {
 	private static volatile FaroNotificationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1340870485
+// LIFERAY-SERVICE-BUILDER-HASH:947023911

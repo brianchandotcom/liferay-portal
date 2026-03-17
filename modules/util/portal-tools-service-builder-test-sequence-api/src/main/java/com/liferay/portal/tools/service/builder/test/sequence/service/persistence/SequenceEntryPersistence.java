@@ -146,21 +146,6 @@ public interface SequenceEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the sequence entries before and after the current sequence entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param sequenceEntryId the primary key of the current sequence entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sequence entry
-	 * @throws NoSuchSequenceEntryException if a sequence entry with the primary key could not be found
-	 */
-	public SequenceEntry[] findByUuid_PrevAndNext(
-			long sequenceEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<SequenceEntry>
-				orderByComparator)
-		throws NoSuchSequenceEntryException;
-
-	/**
 	 * Removes all the sequence entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -296,22 +281,6 @@ public interface SequenceEntryPersistence
 		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SequenceEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the sequence entries before and after the current sequence entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param sequenceEntryId the primary key of the current sequence entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sequence entry
-	 * @throws NoSuchSequenceEntryException if a sequence entry with the primary key could not be found
-	 */
-	public SequenceEntry[] findByUuid_C_PrevAndNext(
-			long sequenceEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SequenceEntry>
-				orderByComparator)
-		throws NoSuchSequenceEntryException;
 
 	/**
 	 * Removes all the sequence entries where uuid = &#63; and companyId = &#63; from the database.
@@ -451,4 +420,4 @@ public interface SequenceEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-523802222
+// LIFERAY-SERVICE-BUILDER-HASH:-94927713

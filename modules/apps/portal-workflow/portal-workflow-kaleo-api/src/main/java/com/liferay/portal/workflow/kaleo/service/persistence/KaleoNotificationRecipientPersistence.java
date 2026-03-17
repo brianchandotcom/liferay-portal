@@ -149,21 +149,6 @@ public interface KaleoNotificationRecipientPersistence
 			<KaleoNotificationRecipient> orderByComparator);
 
 	/**
-	 * Returns the kaleo notification recipients before and after the current kaleo notification recipient in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoNotificationRecipientId the primary key of the current kaleo notification recipient
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo notification recipient
-	 * @throws NoSuchNotificationRecipientException if a kaleo notification recipient with the primary key could not be found
-	 */
-	public KaleoNotificationRecipient[] findByCompanyId_PrevAndNext(
-			long kaleoNotificationRecipientId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoNotificationRecipient> orderByComparator)
-		throws NoSuchNotificationRecipientException;
-
-	/**
 	 * Removes all the kaleo notification recipients where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -296,23 +281,6 @@ public interface KaleoNotificationRecipientPersistence
 			<KaleoNotificationRecipient> orderByComparator);
 
 	/**
-	 * Returns the kaleo notification recipients before and after the current kaleo notification recipient in the ordered set where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoNotificationRecipientId the primary key of the current kaleo notification recipient
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo notification recipient
-	 * @throws NoSuchNotificationRecipientException if a kaleo notification recipient with the primary key could not be found
-	 */
-	public KaleoNotificationRecipient[]
-			findByKaleoDefinitionVersionId_PrevAndNext(
-				long kaleoNotificationRecipientId,
-				long kaleoDefinitionVersionId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<KaleoNotificationRecipient> orderByComparator)
-		throws NoSuchNotificationRecipientException;
-
-	/**
 	 * Removes all the kaleo notification recipients where kaleoDefinitionVersionId = &#63; from the database.
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -440,21 +408,6 @@ public interface KaleoNotificationRecipientPersistence
 		long kaleoNotificationId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<KaleoNotificationRecipient> orderByComparator);
-
-	/**
-	 * Returns the kaleo notification recipients before and after the current kaleo notification recipient in the ordered set where kaleoNotificationId = &#63;.
-	 *
-	 * @param kaleoNotificationRecipientId the primary key of the current kaleo notification recipient
-	 * @param kaleoNotificationId the kaleo notification ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo notification recipient
-	 * @throws NoSuchNotificationRecipientException if a kaleo notification recipient with the primary key could not be found
-	 */
-	public KaleoNotificationRecipient[] findByKaleoNotificationId_PrevAndNext(
-			long kaleoNotificationRecipientId, long kaleoNotificationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<KaleoNotificationRecipient> orderByComparator)
-		throws NoSuchNotificationRecipientException;
 
 	/**
 	 * Removes all the kaleo notification recipients where kaleoNotificationId = &#63; from the database.
@@ -598,4 +551,4 @@ public interface KaleoNotificationRecipientPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:596185686
+// LIFERAY-SERVICE-BUILDER-HASH:2028037361

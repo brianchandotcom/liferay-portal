@@ -238,25 +238,6 @@ public class SXPElementUtil {
 	}
 
 	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set where uuid = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] findByUuid_PrevAndNext(
-			long sxpElementId, String uuid,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			sxpElementId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -303,25 +284,6 @@ public class SXPElementUtil {
 
 		return getPersistence().filterFindByUuid(
 			uuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set of sxp elements that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] filterFindByUuid_PrevAndNext(
-			long sxpElementId, String uuid,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().filterFindByUuid_PrevAndNext(
-			sxpElementId, uuid, orderByComparator);
 	}
 
 	/**
@@ -500,26 +462,6 @@ public class SXPElementUtil {
 	}
 
 	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] findByUuid_C_PrevAndNext(
-			long sxpElementId, String uuid, long companyId,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			sxpElementId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -571,26 +513,6 @@ public class SXPElementUtil {
 
 		return getPersistence().filterFindByUuid_C(
 			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set of sxp elements that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] filterFindByUuid_C_PrevAndNext(
-			long sxpElementId, String uuid, long companyId,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().filterFindByUuid_C_PrevAndNext(
-			sxpElementId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -760,25 +682,6 @@ public class SXPElementUtil {
 	}
 
 	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set where companyId = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] findByCompanyId_PrevAndNext(
-			long sxpElementId, long companyId,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			sxpElementId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -825,25 +728,6 @@ public class SXPElementUtil {
 
 		return getPersistence().filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set of sxp elements that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] filterFindByCompanyId_PrevAndNext(
-			long sxpElementId, long companyId,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().filterFindByCompanyId_PrevAndNext(
-			sxpElementId, companyId, orderByComparator);
 	}
 
 	/**
@@ -1022,26 +906,6 @@ public class SXPElementUtil {
 	}
 
 	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set where companyId = &#63; and readOnly = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param companyId the company ID
-	 * @param readOnly the read only
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] findByC_R_PrevAndNext(
-			long sxpElementId, long companyId, boolean readOnly,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().findByC_R_PrevAndNext(
-			sxpElementId, companyId, readOnly, orderByComparator);
-	}
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where companyId = &#63; and readOnly = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1094,26 +958,6 @@ public class SXPElementUtil {
 
 		return getPersistence().filterFindByC_R(
 			companyId, readOnly, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set of sxp elements that the user has permission to view where companyId = &#63; and readOnly = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param companyId the company ID
-	 * @param readOnly the read only
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] filterFindByC_R_PrevAndNext(
-			long sxpElementId, long companyId, boolean readOnly,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().filterFindByC_R_PrevAndNext(
-			sxpElementId, companyId, readOnly, orderByComparator);
 	}
 
 	/**
@@ -1295,26 +1139,6 @@ public class SXPElementUtil {
 	}
 
 	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set where companyId = &#63; and type = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] findByC_T_PrevAndNext(
-			long sxpElementId, long companyId, int type,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().findByC_T_PrevAndNext(
-			sxpElementId, companyId, type, orderByComparator);
-	}
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where companyId = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1364,26 +1188,6 @@ public class SXPElementUtil {
 
 		return getPersistence().filterFindByC_T(
 			companyId, type, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set of sxp elements that the user has permission to view where companyId = &#63; and type = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] filterFindByC_T_PrevAndNext(
-			long sxpElementId, long companyId, int type,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().filterFindByC_T_PrevAndNext(
-			sxpElementId, companyId, type, orderByComparator);
 	}
 
 	/**
@@ -1577,27 +1381,6 @@ public class SXPElementUtil {
 	}
 
 	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] findByC_T_S_PrevAndNext(
-			long sxpElementId, long companyId, int type, int status,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().findByC_T_S_PrevAndNext(
-			sxpElementId, companyId, type, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the sxp elements that the user has permission to view where companyId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1653,27 +1436,6 @@ public class SXPElementUtil {
 
 		return getPersistence().filterFindByC_T_S(
 			companyId, type, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the sxp elements before and after the current sxp element in the ordered set of sxp elements that the user has permission to view where companyId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param sxpElementId the primary key of the current sxp element
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	public static SXPElement[] filterFindByC_T_S_PrevAndNext(
-			long sxpElementId, long companyId, int type, int status,
-			OrderByComparator<SXPElement> orderByComparator)
-		throws com.liferay.search.experiences.exception.
-			NoSuchSXPElementException {
-
-		return getPersistence().filterFindByC_T_S_PrevAndNext(
-			sxpElementId, companyId, type, status, orderByComparator);
 	}
 
 	/**
@@ -1943,4 +1705,4 @@ public class SXPElementUtil {
 	private static volatile SXPElementPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1863484028
+// LIFERAY-SERVICE-BUILDER-HASH:669759028

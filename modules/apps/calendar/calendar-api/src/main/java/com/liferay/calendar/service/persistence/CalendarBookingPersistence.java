@@ -147,21 +147,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar bookings before and after the current calendar booking in the ordered set where uuid = &#63;.
-	 *
-	 * @param calendarBookingId the primary key of the current calendar booking
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	public CalendarBooking[] findByUuid_PrevAndNext(
-			long calendarBookingId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
 	 * Removes all the calendar bookings where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -349,22 +334,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar bookings before and after the current calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param calendarBookingId the primary key of the current calendar booking
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	public CalendarBooking[] findByUuid_C_PrevAndNext(
-			long calendarBookingId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
 	 * Removes all the calendar bookings where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -493,21 +462,6 @@ public interface CalendarBookingPersistence
 		long calendarId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator);
-
-	/**
-	 * Returns the calendar bookings before and after the current calendar booking in the ordered set where calendarId = &#63;.
-	 *
-	 * @param calendarBookingId the primary key of the current calendar booking
-	 * @param calendarId the calendar ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	public CalendarBooking[] findByCalendarId_PrevAndNext(
-			long calendarBookingId, long calendarId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
 
 	/**
 	 * Removes all the calendar bookings where calendarId = &#63; from the database.
@@ -639,21 +593,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar bookings before and after the current calendar booking in the ordered set where calendarResourceId = &#63;.
-	 *
-	 * @param calendarBookingId the primary key of the current calendar booking
-	 * @param calendarResourceId the calendar resource ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	public CalendarBooking[] findByCalendarResourceId_PrevAndNext(
-			long calendarBookingId, long calendarResourceId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
 	 * Removes all the calendar bookings where calendarResourceId = &#63; from the database.
 	 *
 	 * @param calendarResourceId the calendar resource ID
@@ -783,21 +722,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar bookings before and after the current calendar booking in the ordered set where parentCalendarBookingId = &#63;.
-	 *
-	 * @param calendarBookingId the primary key of the current calendar booking
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	public CalendarBooking[] findByParentCalendarBookingId_PrevAndNext(
-			long calendarBookingId, long parentCalendarBookingId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
 	 * Removes all the calendar bookings where parentCalendarBookingId = &#63; from the database.
 	 *
 	 * @param parentCalendarBookingId the parent calendar booking ID
@@ -925,21 +849,6 @@ public interface CalendarBookingPersistence
 		long recurringCalendarBookingId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
 			orderByComparator);
-
-	/**
-	 * Returns the calendar bookings before and after the current calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
-	 *
-	 * @param calendarBookingId the primary key of the current calendar booking
-	 * @param recurringCalendarBookingId the recurring calendar booking ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	public CalendarBooking[] findByRecurringCalendarBookingId_PrevAndNext(
-			long calendarBookingId, long recurringCalendarBookingId,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
 
 	/**
 	 * Removes all the calendar bookings where recurringCalendarBookingId = &#63; from the database.
@@ -1184,22 +1093,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar bookings before and after the current calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
-	 *
-	 * @param calendarBookingId the primary key of the current calendar booking
-	 * @param calendarId the calendar ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	public CalendarBooking[] findByC_S_PrevAndNext(
-			long calendarBookingId, long calendarId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
 	 * Returns all the calendar bookings where calendarId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -1418,22 +1311,6 @@ public interface CalendarBookingPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the calendar bookings before and after the current calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
-	 *
-	 * @param calendarBookingId the primary key of the current calendar booking
-	 * @param parentCalendarBookingId the parent calendar booking ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	public CalendarBooking[] findByP_S_PrevAndNext(
-			long calendarBookingId, long parentCalendarBookingId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking>
-				orderByComparator)
-		throws NoSuchBookingException;
-
-	/**
 	 * Removes all the calendar bookings where parentCalendarBookingId = &#63; and status = &#63; from the database.
 	 *
 	 * @param parentCalendarBookingId the parent calendar booking ID
@@ -1624,4 +1501,4 @@ public interface CalendarBookingPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-620396587
+// LIFERAY-SERVICE-BUILDER-HASH:1354963400

@@ -247,24 +247,6 @@ public class RedirectNotFoundEntryUtil {
 	}
 
 	/**
-	 * Returns the redirect not found entries before and after the current redirect not found entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param redirectNotFoundEntryId the primary key of the current redirect not found entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next redirect not found entry
-	 * @throws NoSuchNotFoundEntryException if a redirect not found entry with the primary key could not be found
-	 */
-	public static RedirectNotFoundEntry[] findByGroupId_PrevAndNext(
-			long redirectNotFoundEntryId, long groupId,
-			OrderByComparator<RedirectNotFoundEntry> orderByComparator)
-		throws com.liferay.redirect.exception.NoSuchNotFoundEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			redirectNotFoundEntryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the redirect not found entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -517,4 +499,4 @@ public class RedirectNotFoundEntryUtil {
 	private static volatile RedirectNotFoundEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1160052214
+// LIFERAY-SERVICE-BUILDER-HASH:-80687389

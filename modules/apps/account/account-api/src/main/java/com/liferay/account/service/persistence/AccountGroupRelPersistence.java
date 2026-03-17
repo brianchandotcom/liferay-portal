@@ -147,21 +147,6 @@ public interface AccountGroupRelPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the account group rels before and after the current account group rel in the ordered set where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupRelId the primary key of the current account group rel
-	 * @param accountGroupId the account group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account group rel
-	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
-	 */
-	public AccountGroupRel[] findByAccountGroupId_PrevAndNext(
-			long accountGroupRelId, long accountGroupId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-				orderByComparator)
-		throws NoSuchGroupRelException;
-
-	/**
 	 * Removes all the account group rels where accountGroupId = &#63; from the database.
 	 *
 	 * @param accountGroupId the account group ID
@@ -297,22 +282,6 @@ public interface AccountGroupRelPersistence
 		long accountGroupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
 			orderByComparator);
-
-	/**
-	 * Returns the account group rels before and after the current account group rel in the ordered set where accountGroupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param accountGroupRelId the primary key of the current account group rel
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account group rel
-	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
-	 */
-	public AccountGroupRel[] findByA_C_PrevAndNext(
-			long accountGroupRelId, long accountGroupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-				orderByComparator)
-		throws NoSuchGroupRelException;
 
 	/**
 	 * Removes all the account group rels where accountGroupId = &#63; and classNameId = &#63; from the database.
@@ -452,22 +421,6 @@ public interface AccountGroupRelPersistence
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
 			orderByComparator);
-
-	/**
-	 * Returns the account group rels before and after the current account group rel in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param accountGroupRelId the primary key of the current account group rel
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next account group rel
-	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
-	 */
-	public AccountGroupRel[] findByC_C_PrevAndNext(
-			long accountGroupRelId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-				orderByComparator)
-		throws NoSuchGroupRelException;
 
 	/**
 	 * Removes all the account group rels where classNameId = &#63; and classPK = &#63; from the database.
@@ -667,4 +620,4 @@ public interface AccountGroupRelPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-938817310
+// LIFERAY-SERVICE-BUILDER-HASH:1237926579

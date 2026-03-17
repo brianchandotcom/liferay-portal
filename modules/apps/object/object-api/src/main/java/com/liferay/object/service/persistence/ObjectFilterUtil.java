@@ -238,24 +238,6 @@ public class ObjectFilterUtil {
 	}
 
 	/**
-	 * Returns the object filters before and after the current object filter in the ordered set where uuid = &#63;.
-	 *
-	 * @param objectFilterId the primary key of the current object filter
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object filter
-	 * @throws NoSuchObjectFilterException if a object filter with the primary key could not be found
-	 */
-	public static ObjectFilter[] findByUuid_PrevAndNext(
-			long objectFilterId, String uuid,
-			OrderByComparator<ObjectFilter> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFilterException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			objectFilterId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object filters where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -419,25 +401,6 @@ public class ObjectFilterUtil {
 	}
 
 	/**
-	 * Returns the object filters before and after the current object filter in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param objectFilterId the primary key of the current object filter
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object filter
-	 * @throws NoSuchObjectFilterException if a object filter with the primary key could not be found
-	 */
-	public static ObjectFilter[] findByUuid_C_PrevAndNext(
-			long objectFilterId, String uuid, long companyId,
-			OrderByComparator<ObjectFilter> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFilterException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			objectFilterId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the object filters where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -590,24 +553,6 @@ public class ObjectFilterUtil {
 
 		return getPersistence().fetchByObjectFieldId_Last(
 			objectFieldId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object filters before and after the current object filter in the ordered set where objectFieldId = &#63;.
-	 *
-	 * @param objectFilterId the primary key of the current object filter
-	 * @param objectFieldId the object field ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object filter
-	 * @throws NoSuchObjectFilterException if a object filter with the primary key could not be found
-	 */
-	public static ObjectFilter[] findByObjectFieldId_PrevAndNext(
-			long objectFilterId, long objectFieldId,
-			OrderByComparator<ObjectFilter> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectFilterException {
-
-		return getPersistence().findByObjectFieldId_PrevAndNext(
-			objectFilterId, objectFieldId, orderByComparator);
 	}
 
 	/**
@@ -787,4 +732,4 @@ public class ObjectFilterUtil {
 	private static volatile ObjectFilterPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-844205999
+// LIFERAY-SERVICE-BUILDER-HASH:-1995326602

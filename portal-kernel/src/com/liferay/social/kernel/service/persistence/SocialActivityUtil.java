@@ -240,24 +240,6 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where groupId = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByGroupId_PrevAndNext(
-			long activityId, long groupId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			activityId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activities where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -409,24 +391,6 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where companyId = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByCompanyId_PrevAndNext(
-			long activityId, long companyId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			activityId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activities where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -571,24 +535,6 @@ public class SocialActivityUtil {
 		long userId, OrderByComparator<SocialActivity> orderByComparator) {
 
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where userId = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByUserId_PrevAndNext(
-			long activityId, long userId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByUserId_PrevAndNext(
-			activityId, userId, orderByComparator);
 	}
 
 	/**
@@ -744,24 +690,6 @@ public class SocialActivityUtil {
 
 		return getPersistence().fetchByActivitySetId_Last(
 			activitySetId, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where activitySetId = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param activitySetId the activity set ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByActivitySetId_PrevAndNext(
-			long activityId, long activitySetId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByActivitySetId_PrevAndNext(
-			activityId, activitySetId, orderByComparator);
 	}
 
 	/**
@@ -984,24 +912,6 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where receiverUserId = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByReceiverUserId_PrevAndNext(
-			long activityId, long receiverUserId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByReceiverUserId_PrevAndNext(
-			activityId, receiverUserId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the social activities where receiverUserId = &#63; from the database.
 	 *
 	 * @param receiverUserId the receiver user ID
@@ -1165,25 +1075,6 @@ public class SocialActivityUtil {
 
 		return getPersistence().fetchByC_CN_Last(
 			companyId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByC_CN_PrevAndNext(
-			long activityId, long companyId, long classNameId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByC_CN_PrevAndNext(
-			activityId, companyId, classNameId, orderByComparator);
 	}
 
 	/**
@@ -1352,25 +1243,6 @@ public class SocialActivityUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByC_C_PrevAndNext(
-			long activityId, long classNameId, long classPK,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			activityId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -1551,27 +1423,6 @@ public class SocialActivityUtil {
 
 		return getPersistence().fetchByM_C_C_Last(
 			mirrorActivityId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param mirrorActivityId the mirror activity ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByM_C_C_PrevAndNext(
-			long activityId, long mirrorActivityId, long classNameId,
-			long classPK, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByM_C_C_PrevAndNext(
-			activityId, mirrorActivityId, classNameId, classPK,
-			orderByComparator);
 	}
 
 	/**
@@ -1756,26 +1607,6 @@ public class SocialActivityUtil {
 
 		return getPersistence().fetchByC_C_T_Last(
 			classNameId, classPK, type, orderByComparator);
-	}
-
-	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByC_C_T_PrevAndNext(
-			long activityId, long classNameId, long classPK, int type,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByC_C_T_PrevAndNext(
-			activityId, classNameId, classPK, type, orderByComparator);
 	}
 
 	/**
@@ -1994,31 +1825,6 @@ public class SocialActivityUtil {
 		return getPersistence().fetchByG_U_C_C_T_R_Last(
 			groupId, userId, classNameId, classPK, type, receiverUserId,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the social activities before and after the current social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
-	 *
-	 * @param activityId the primary key of the current social activity
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param receiverUserId the receiver user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	public static SocialActivity[] findByG_U_C_C_T_R_PrevAndNext(
-			long activityId, long groupId, long userId, long classNameId,
-			long classPK, int type, long receiverUserId,
-			OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.social.kernel.exception.NoSuchActivityException {
-
-		return getPersistence().findByG_U_C_C_T_R_PrevAndNext(
-			activityId, groupId, userId, classNameId, classPK, type,
-			receiverUserId, orderByComparator);
 	}
 
 	/**
@@ -2326,4 +2132,4 @@ public class SocialActivityUtil {
 	private static volatile SocialActivityPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-301593491
+// LIFERAY-SERVICE-BUILDER-HASH:-1286551928

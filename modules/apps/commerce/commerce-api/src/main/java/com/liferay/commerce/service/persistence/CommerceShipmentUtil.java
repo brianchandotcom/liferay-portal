@@ -238,24 +238,6 @@ public class CommerceShipmentUtil {
 	}
 
 	/**
-	 * Returns the commerce shipments before and after the current commerce shipment in the ordered set where uuid = &#63;.
-	 *
-	 * @param commerceShipmentId the primary key of the current commerce shipment
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipment
-	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
-	 */
-	public static CommerceShipment[] findByUuid_PrevAndNext(
-			long commerceShipmentId, String uuid,
-			OrderByComparator<CommerceShipment> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchShipmentException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			commerceShipmentId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce shipments where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -484,25 +466,6 @@ public class CommerceShipmentUtil {
 	}
 
 	/**
-	 * Returns the commerce shipments before and after the current commerce shipment in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param commerceShipmentId the primary key of the current commerce shipment
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipment
-	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
-	 */
-	public static CommerceShipment[] findByUuid_C_PrevAndNext(
-			long commerceShipmentId, String uuid, long companyId,
-			OrderByComparator<CommerceShipment> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchShipmentException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			commerceShipmentId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the commerce shipments where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -650,24 +613,6 @@ public class CommerceShipmentUtil {
 		long groupId, OrderByComparator<CommerceShipment> orderByComparator) {
 
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce shipments before and after the current commerce shipment in the ordered set where groupId = &#63;.
-	 *
-	 * @param commerceShipmentId the primary key of the current commerce shipment
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipment
-	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
-	 */
-	public static CommerceShipment[] findByGroupId_PrevAndNext(
-			long commerceShipmentId, long groupId,
-			OrderByComparator<CommerceShipment> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchShipmentException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			commerceShipmentId, groupId, orderByComparator);
 	}
 
 	/**
@@ -921,25 +866,6 @@ public class CommerceShipmentUtil {
 
 		return getPersistence().fetchByG_C_Last(
 			groupId, commerceAddressId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce shipments before and after the current commerce shipment in the ordered set where groupId = &#63; and commerceAddressId = &#63;.
-	 *
-	 * @param commerceShipmentId the primary key of the current commerce shipment
-	 * @param groupId the group ID
-	 * @param commerceAddressId the commerce address ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipment
-	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
-	 */
-	public static CommerceShipment[] findByG_C_PrevAndNext(
-			long commerceShipmentId, long groupId, long commerceAddressId,
-			OrderByComparator<CommerceShipment> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchShipmentException {
-
-		return getPersistence().findByG_C_PrevAndNext(
-			commerceShipmentId, groupId, commerceAddressId, orderByComparator);
 	}
 
 	/**
@@ -1200,25 +1126,6 @@ public class CommerceShipmentUtil {
 
 		return getPersistence().fetchByG_S_Last(
 			groupId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce shipments before and after the current commerce shipment in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param commerceShipmentId the primary key of the current commerce shipment
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipment
-	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
-	 */
-	public static CommerceShipment[] findByG_S_PrevAndNext(
-			long commerceShipmentId, long groupId, int status,
-			OrderByComparator<CommerceShipment> orderByComparator)
-		throws com.liferay.commerce.exception.NoSuchShipmentException {
-
-		return getPersistence().findByG_S_PrevAndNext(
-			commerceShipmentId, groupId, status, orderByComparator);
 	}
 
 	/**
@@ -1567,4 +1474,4 @@ public class CommerceShipmentUtil {
 	private static volatile CommerceShipmentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:398920600
+// LIFERAY-SERVICE-BUILDER-HASH:164058686

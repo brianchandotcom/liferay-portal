@@ -251,24 +251,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where resourcePrimKey = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param resourcePrimKey the resource prim key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByResourcePrimKey_PrevAndNext(
-			long id, long resourcePrimKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByResourcePrimKey_PrevAndNext(
-			id, resourcePrimKey, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where resourcePrimKey = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -412,24 +394,6 @@ public class JournalArticleUtil {
 		String uuid, OrderByComparator<JournalArticle> orderByComparator) {
 
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where uuid = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByUuid_PrevAndNext(
-			long id, String uuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			id, uuid, orderByComparator);
 	}
 
 	/**
@@ -661,25 +625,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByUuid_C_PrevAndNext(
-			long id, String uuid, long companyId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			id, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -830,24 +775,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByGroupId_PrevAndNext(
-			long id, long groupId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			id, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -894,24 +821,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByGroupId_PrevAndNext(
-			long id, long groupId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByGroupId_PrevAndNext(
-			id, groupId, orderByComparator);
 	}
 
 	/**
@@ -1076,24 +985,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where companyId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByCompanyId_PrevAndNext(
-			long id, long companyId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			id, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1249,24 +1140,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().fetchByDDMStructureId_Last(
 			DDMStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where DDMStructureId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByDDMStructureId_PrevAndNext(
-			long id, long DDMStructureId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByDDMStructureId_PrevAndNext(
-			id, DDMStructureId, orderByComparator);
 	}
 
 	/**
@@ -1428,24 +1301,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where DDMTemplateKey = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByDDMTemplateKey_PrevAndNext(
-			long id, String DDMTemplateKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByDDMTemplateKey_PrevAndNext(
-			id, DDMTemplateKey, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where DDMTemplateKey = &#63; from the database.
 	 *
 	 * @param DDMTemplateKey the ddm template key
@@ -1601,24 +1456,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where layoutUuid = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByLayoutUuid_PrevAndNext(
-			long id, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByLayoutUuid_PrevAndNext(
-			id, layoutUuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where layoutUuid = &#63; from the database.
 	 *
 	 * @param layoutUuid the layout uuid
@@ -1771,24 +1608,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().fetchBySmallImageId_Last(
 			smallImageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where smallImageId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param smallImageId the small image ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findBySmallImageId_PrevAndNext(
-			long id, long smallImageId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findBySmallImageId_PrevAndNext(
-			id, smallImageId, orderByComparator);
 	}
 
 	/**
@@ -1959,25 +1778,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where resourcePrimKey = &#63; and indexable = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param resourcePrimKey the resource prim key
-	 * @param indexable the indexable
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByR_I_PrevAndNext(
-			long id, long resourcePrimKey, boolean indexable,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByR_I_PrevAndNext(
-			id, resourcePrimKey, indexable, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where resourcePrimKey = &#63; and indexable = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -2143,25 +1943,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().fetchByR_ST_Last(
 			resourcePrimKey, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByR_ST_PrevAndNext(
-			long id, long resourcePrimKey, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByR_ST_PrevAndNext(
-			id, resourcePrimKey, status, orderByComparator);
 	}
 
 	/**
@@ -2425,25 +2206,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_U_PrevAndNext(
-			long id, long groupId, long userId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_U_PrevAndNext(
-			id, groupId, userId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2495,25 +2257,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_U(
 			groupId, userId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_U_PrevAndNext(
-			long id, long groupId, long userId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_U_PrevAndNext(
-			id, groupId, userId, orderByComparator);
 	}
 
 	/**
@@ -2697,25 +2440,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_ERC_PrevAndNext(
-			long id, long groupId, String externalReferenceCode,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_ERC_PrevAndNext(
-			id, groupId, externalReferenceCode, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -2769,25 +2493,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_ERC(
 			groupId, externalReferenceCode, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_ERC_PrevAndNext(
-			long id, long groupId, String externalReferenceCode,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_ERC_PrevAndNext(
-			id, groupId, externalReferenceCode, orderByComparator);
 	}
 
 	/**
@@ -2972,25 +2677,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_F_PrevAndNext(
-			long id, long groupId, long folderId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_F_PrevAndNext(
-			id, groupId, folderId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and folderId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3042,25 +2728,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_F(
 			groupId, folderId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and folderId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_F_PrevAndNext(
-			long id, long groupId, long folderId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_F_PrevAndNext(
-			id, groupId, folderId, orderByComparator);
 	}
 
 	/**
@@ -3400,25 +3067,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and articleId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_A_PrevAndNext(
-			long id, long groupId, String articleId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_A_PrevAndNext(
-			id, groupId, articleId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3470,25 +3118,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_A(
 			groupId, articleId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_A_PrevAndNext(
-			long id, long groupId, String articleId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_A_PrevAndNext(
-			id, groupId, articleId, orderByComparator);
 	}
 
 	/**
@@ -3670,25 +3299,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_UT_PrevAndNext(
-			long id, long groupId, String urlTitle,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_UT_PrevAndNext(
-			id, groupId, urlTitle, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -3740,25 +3350,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_UT(
 			groupId, urlTitle, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param urlTitle the url title
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_UT_PrevAndNext(
-			long id, long groupId, String urlTitle,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_UT_PrevAndNext(
-			id, groupId, urlTitle, orderByComparator);
 	}
 
 	/**
@@ -3942,25 +3533,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and DDMStructureId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_DDMSI_PrevAndNext(
-			long id, long groupId, long DDMStructureId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_DDMSI_PrevAndNext(
-			id, groupId, DDMStructureId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and DDMStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4013,25 +3585,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_DDMSI(
 			groupId, DDMStructureId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and DDMStructureId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param DDMStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_DDMSI_PrevAndNext(
-			long id, long groupId, long DDMStructureId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_DDMSI_PrevAndNext(
-			id, groupId, DDMStructureId, orderByComparator);
 	}
 
 	/**
@@ -4215,25 +3768,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and DDMTemplateKey = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_DDMTK_PrevAndNext(
-			long id, long groupId, String DDMTemplateKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_DDMTK_PrevAndNext(
-			id, groupId, DDMTemplateKey, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and DDMTemplateKey = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4286,25 +3820,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_DDMTK(
 			groupId, DDMTemplateKey, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and DDMTemplateKey = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_DDMTK_PrevAndNext(
-			long id, long groupId, String DDMTemplateKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_DDMTK_PrevAndNext(
-			id, groupId, DDMTemplateKey, orderByComparator);
 	}
 
 	/**
@@ -4488,25 +4003,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_L_PrevAndNext(
-			long id, long groupId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_L_PrevAndNext(
-			id, groupId, layoutUuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and layoutUuid = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4559,25 +4055,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_L(
 			groupId, layoutUuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_L_PrevAndNext(
-			long id, long groupId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_L_PrevAndNext(
-			id, groupId, layoutUuid, orderByComparator);
 	}
 
 	/**
@@ -4757,25 +4234,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_ST_PrevAndNext(
-			long id, long groupId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_ST_PrevAndNext(
-			id, groupId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -4827,25 +4285,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_ST(
 			groupId, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_ST_PrevAndNext(
-			long id, long groupId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_ST_PrevAndNext(
-			id, groupId, status, orderByComparator);
 	}
 
 	/**
@@ -5027,25 +4466,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where companyId = &#63; and version = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByC_V_PrevAndNext(
-			long id, long companyId, double version,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByC_V_PrevAndNext(
-			id, companyId, version, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where companyId = &#63; and version = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -5208,25 +4628,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().fetchByC_ST_Last(
 			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where companyId = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByC_ST_PrevAndNext(
-			long id, long companyId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByC_ST_PrevAndNext(
-			id, companyId, status, orderByComparator);
 	}
 
 	/**
@@ -5397,25 +4798,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where companyId = &#63; and status &ne; &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByC_NotST_PrevAndNext(
-			long id, long companyId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByC_NotST_PrevAndNext(
-			id, companyId, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where companyId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -5580,25 +4962,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().fetchByLtD_S_Last(
 			displayDate, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where displayDate &lt; &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param displayDate the display date
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByLtD_S_PrevAndNext(
-			long id, Date displayDate, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByLtD_S_PrevAndNext(
-			id, displayDate, status, orderByComparator);
 	}
 
 	/**
@@ -5777,26 +5140,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().fetchByR_I_S_Last(
 			resourcePrimKey, indexable, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where resourcePrimKey = &#63; and indexable = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param resourcePrimKey the resource prim key
-	 * @param indexable the indexable
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByR_I_S_PrevAndNext(
-			long id, long resourcePrimKey, boolean indexable, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByR_I_S_PrevAndNext(
-			id, resourcePrimKey, indexable, status, orderByComparator);
 	}
 
 	/**
@@ -6090,26 +5433,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_U_C_PrevAndNext(
-			long id, long groupId, long userId, long classNameId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_U_C_PrevAndNext(
-			id, groupId, userId, classNameId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6165,26 +5488,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_U_C(
 			groupId, userId, classNameId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_U_C_PrevAndNext(
-			long id, long groupId, long userId, long classNameId,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_U_C_PrevAndNext(
-			id, groupId, userId, classNameId, orderByComparator);
 	}
 
 	/**
@@ -6469,26 +5772,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_ERC_ST_PrevAndNext(
-			long id, long groupId, String externalReferenceCode, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_ERC_ST_PrevAndNext(
-			id, groupId, externalReferenceCode, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6547,26 +5830,6 @@ public class JournalArticleUtil {
 		return getPersistence().filterFindByG_ERC_ST(
 			groupId, externalReferenceCode, status, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_ERC_ST_PrevAndNext(
-			long id, long groupId, String externalReferenceCode, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_ERC_ST_PrevAndNext(
-			id, groupId, externalReferenceCode, status, orderByComparator);
 	}
 
 	/**
@@ -6952,26 +6215,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_F_ST_PrevAndNext(
-			long id, long groupId, long folderId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_F_ST_PrevAndNext(
-			id, groupId, folderId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7027,26 +6270,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_F_ST(
 			groupId, folderId, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_F_ST_PrevAndNext(
-			long id, long groupId, long folderId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_F_ST_PrevAndNext(
-			id, groupId, folderId, status, orderByComparator);
 	}
 
 	/**
@@ -7418,26 +6641,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_C_C_PrevAndNext(
-			long id, long groupId, long classNameId, long classPK,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_C_C_PrevAndNext(
-			id, groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7494,26 +6697,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_C_C(
 			groupId, classNameId, classPK, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_C_C_PrevAndNext(
-			long id, long groupId, long classNameId, long classPK,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_C_C_PrevAndNext(
-			id, groupId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -7798,26 +6981,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_C_DDMTK_PrevAndNext(
-			long id, long groupId, long classNameId, String DDMTemplateKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_C_DDMTK_PrevAndNext(
-			id, groupId, classNameId, DDMTemplateKey, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7876,26 +7039,6 @@ public class JournalArticleUtil {
 		return getPersistence().filterFindByG_C_DDMTK(
 			groupId, classNameId, DDMTemplateKey, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param DDMTemplateKey the ddm template key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_C_DDMTK_PrevAndNext(
-			long id, long groupId, long classNameId, String DDMTemplateKey,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_C_DDMTK_PrevAndNext(
-			id, groupId, classNameId, DDMTemplateKey, orderByComparator);
 	}
 
 	/**
@@ -8099,26 +7242,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and classNameId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_C_L_PrevAndNext(
-			long id, long groupId, long classNameId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_C_L_PrevAndNext(
-			id, groupId, classNameId, layoutUuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and layoutUuid = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -8175,26 +7298,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_C_L(
 			groupId, classNameId, layoutUuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and layoutUuid = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_C_L_PrevAndNext(
-			long id, long groupId, long classNameId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_C_L_PrevAndNext(
-			id, groupId, classNameId, layoutUuid, orderByComparator);
 	}
 
 	/**
@@ -8397,26 +7500,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and classNameId = &#63; and layoutUuid &ne; &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_C_NotL_PrevAndNext(
-			long id, long groupId, long classNameId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_C_NotL_PrevAndNext(
-			id, groupId, classNameId, layoutUuid, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and layoutUuid &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -8473,26 +7556,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_C_NotL(
 			groupId, classNameId, layoutUuid, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and layoutUuid &ne; &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param layoutUuid the layout uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_C_NotL_PrevAndNext(
-			long id, long groupId, long classNameId, String layoutUuid,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_C_NotL_PrevAndNext(
-			id, groupId, classNameId, layoutUuid, orderByComparator);
 	}
 
 	/**
@@ -8951,26 +8014,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and articleId = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_A_ST_PrevAndNext(
-			long id, long groupId, String articleId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_A_ST_PrevAndNext(
-			id, groupId, articleId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -9026,26 +8069,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_A_ST(
 			groupId, articleId, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_A_ST_PrevAndNext(
-			long id, long groupId, String articleId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_A_ST_PrevAndNext(
-			id, groupId, articleId, status, orderByComparator);
 	}
 
 	/**
@@ -9422,26 +8445,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and articleId = &#63; and status &ne; &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_A_NotST_PrevAndNext(
-			long id, long groupId, String articleId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_A_NotST_PrevAndNext(
-			id, groupId, articleId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -9498,26 +8501,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_A_NotST(
 			groupId, articleId, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and articleId = &#63; and status &ne; &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param articleId the article ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_A_NotST_PrevAndNext(
-			long id, long groupId, String articleId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_A_NotST_PrevAndNext(
-			id, groupId, articleId, status, orderByComparator);
 	}
 
 	/**
@@ -9719,26 +8702,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_UT_ST_PrevAndNext(
-			long id, long groupId, String urlTitle, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_UT_ST_PrevAndNext(
-			id, groupId, urlTitle, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and urlTitle = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -9794,26 +8757,6 @@ public class JournalArticleUtil {
 
 		return getPersistence().filterFindByG_UT_ST(
 			groupId, urlTitle, status, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_UT_ST_PrevAndNext(
-			long id, long groupId, String urlTitle, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_UT_ST_PrevAndNext(
-			id, groupId, urlTitle, status, orderByComparator);
 	}
 
 	/**
@@ -10014,26 +8957,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where companyId = &#63; and version = &#63; and status = &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByC_V_ST_PrevAndNext(
-			long id, long companyId, double version, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByC_V_ST_PrevAndNext(
-			id, companyId, version, status, orderByComparator);
-	}
-
-	/**
 	 * Removes all the journal articles where companyId = &#63; and version = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -10228,27 +9151,6 @@ public class JournalArticleUtil {
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param classNameId the class name ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] findByG_F_C_NotST_PrevAndNext(
-			long id, long groupId, long folderId, long classNameId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().findByG_F_C_NotST_PrevAndNext(
-			id, groupId, folderId, classNameId, status, orderByComparator);
-	}
-
-	/**
 	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
@@ -10310,27 +9212,6 @@ public class JournalArticleUtil {
 		return getPersistence().filterFindByG_F_C_NotST(
 			groupId, folderId, classNameId, status, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
-	 *
-	 * @param id the primary key of the current journal article
-	 * @param groupId the group ID
-	 * @param folderId the folder ID
-	 * @param classNameId the class name ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	public static JournalArticle[] filterFindByG_F_C_NotST_PrevAndNext(
-			long id, long groupId, long folderId, long classNameId, int status,
-			OrderByComparator<JournalArticle> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchArticleException {
-
-		return getPersistence().filterFindByG_F_C_NotST_PrevAndNext(
-			id, groupId, folderId, classNameId, status, orderByComparator);
 	}
 
 	/**
@@ -10539,4 +9420,4 @@ public class JournalArticleUtil {
 	private static volatile JournalArticlePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1584021460
+// LIFERAY-SERVICE-BUILDER-HASH:-1701375579

@@ -250,25 +250,6 @@ public class DEDataDefinitionFieldLinkUtil {
 	}
 
 	/**
-	 * Returns the de data definition field links before and after the current de data definition field link in the ordered set where uuid = &#63;.
-	 *
-	 * @param deDataDefinitionFieldLinkId the primary key of the current de data definition field link
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	public static DEDataDefinitionFieldLink[] findByUuid_PrevAndNext(
-			long deDataDefinitionFieldLinkId, String uuid,
-			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
-		throws com.liferay.data.engine.exception.
-			NoSuchDataDefinitionFieldLinkException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			deDataDefinitionFieldLinkId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the de data definition field links where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -505,26 +486,6 @@ public class DEDataDefinitionFieldLinkUtil {
 	}
 
 	/**
-	 * Returns the de data definition field links before and after the current de data definition field link in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param deDataDefinitionFieldLinkId the primary key of the current de data definition field link
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	public static DEDataDefinitionFieldLink[] findByUuid_C_PrevAndNext(
-			long deDataDefinitionFieldLinkId, String uuid, long companyId,
-			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
-		throws com.liferay.data.engine.exception.
-			NoSuchDataDefinitionFieldLinkException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			deDataDefinitionFieldLinkId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the de data definition field links where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -684,25 +645,6 @@ public class DEDataDefinitionFieldLinkUtil {
 
 		return getPersistence().fetchByDDMStructureId_Last(
 			ddmStructureId, orderByComparator);
-	}
-
-	/**
-	 * Returns the de data definition field links before and after the current de data definition field link in the ordered set where ddmStructureId = &#63;.
-	 *
-	 * @param deDataDefinitionFieldLinkId the primary key of the current de data definition field link
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	public static DEDataDefinitionFieldLink[] findByDDMStructureId_PrevAndNext(
-			long deDataDefinitionFieldLinkId, long ddmStructureId,
-			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
-		throws com.liferay.data.engine.exception.
-			NoSuchDataDefinitionFieldLinkException {
-
-		return getPersistence().findByDDMStructureId_PrevAndNext(
-			deDataDefinitionFieldLinkId, ddmStructureId, orderByComparator);
 	}
 
 	/**
@@ -871,27 +813,6 @@ public class DEDataDefinitionFieldLinkUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the de data definition field links before and after the current de data definition field link in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param deDataDefinitionFieldLinkId the primary key of the current de data definition field link
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	public static DEDataDefinitionFieldLink[] findByC_C_PrevAndNext(
-			long deDataDefinitionFieldLinkId, long classNameId, long classPK,
-			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
-		throws com.liferay.data.engine.exception.
-			NoSuchDataDefinitionFieldLinkException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			deDataDefinitionFieldLinkId, classNameId, classPK,
-			orderByComparator);
 	}
 
 	/**
@@ -1066,28 +987,6 @@ public class DEDataDefinitionFieldLinkUtil {
 	}
 
 	/**
-	 * Returns the de data definition field links before and after the current de data definition field link in the ordered set where classNameId = &#63; and ddmStructureId = &#63;.
-	 *
-	 * @param deDataDefinitionFieldLinkId the primary key of the current de data definition field link
-	 * @param classNameId the class name ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	public static DEDataDefinitionFieldLink[] findByC_DDMSI_PrevAndNext(
-			long deDataDefinitionFieldLinkId, long classNameId,
-			long ddmStructureId,
-			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
-		throws com.liferay.data.engine.exception.
-			NoSuchDataDefinitionFieldLinkException {
-
-		return getPersistence().findByC_DDMSI_PrevAndNext(
-			deDataDefinitionFieldLinkId, classNameId, ddmStructureId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the de data definition field links where classNameId = &#63; and ddmStructureId = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1256,28 +1155,6 @@ public class DEDataDefinitionFieldLinkUtil {
 
 		return getPersistence().fetchByDDMSI_F_Last(
 			ddmStructureId, fieldName, orderByComparator);
-	}
-
-	/**
-	 * Returns the de data definition field links before and after the current de data definition field link in the ordered set where ddmStructureId = &#63; and fieldName = &#63;.
-	 *
-	 * @param deDataDefinitionFieldLinkId the primary key of the current de data definition field link
-	 * @param ddmStructureId the ddm structure ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	public static DEDataDefinitionFieldLink[] findByDDMSI_F_PrevAndNext(
-			long deDataDefinitionFieldLinkId, long ddmStructureId,
-			String fieldName,
-			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
-		throws com.liferay.data.engine.exception.
-			NoSuchDataDefinitionFieldLinkException {
-
-		return getPersistence().findByDDMSI_F_PrevAndNext(
-			deDataDefinitionFieldLinkId, ddmStructureId, fieldName,
-			orderByComparator);
 	}
 
 	/**
@@ -1556,29 +1433,6 @@ public class DEDataDefinitionFieldLinkUtil {
 
 		return getPersistence().fetchByC_DDMSI_F_Last(
 			classNameId, ddmStructureId, fieldName, orderByComparator);
-	}
-
-	/**
-	 * Returns the de data definition field links before and after the current de data definition field link in the ordered set where classNameId = &#63; and ddmStructureId = &#63; and fieldName = &#63;.
-	 *
-	 * @param deDataDefinitionFieldLinkId the primary key of the current de data definition field link
-	 * @param classNameId the class name ID
-	 * @param ddmStructureId the ddm structure ID
-	 * @param fieldName the field name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	public static DEDataDefinitionFieldLink[] findByC_DDMSI_F_PrevAndNext(
-			long deDataDefinitionFieldLinkId, long classNameId,
-			long ddmStructureId, String fieldName,
-			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
-		throws com.liferay.data.engine.exception.
-			NoSuchDataDefinitionFieldLinkException {
-
-		return getPersistence().findByC_DDMSI_F_PrevAndNext(
-			deDataDefinitionFieldLinkId, classNameId, ddmStructureId, fieldName,
-			orderByComparator);
 	}
 
 	/**
@@ -1999,4 +1853,4 @@ public class DEDataDefinitionFieldLinkUtil {
 	private static volatile DEDataDefinitionFieldLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-343177300
+// LIFERAY-SERVICE-BUILDER-HASH:-1678530157

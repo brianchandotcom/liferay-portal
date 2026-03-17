@@ -146,21 +146,6 @@ public interface CPDVirtualSettingFileEntryPersistence
 			<CPDVirtualSettingFileEntry> orderByComparator);
 
 	/**
-	 * Returns the cpd virtual setting file entries before and after the current cpd virtual setting file entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingFileEntryId the primary key of the current cpd virtual setting file entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a cpd virtual setting file entry with the primary key could not be found
-	 */
-	public CPDVirtualSettingFileEntry[] findByUuid_PrevAndNext(
-			long CPDefinitionVirtualSettingFileEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDVirtualSettingFileEntry> orderByComparator)
-		throws NoSuchCPDVirtualSettingFileEntryException;
-
-	/**
 	 * Removes all the cpd virtual setting file entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -348,23 +333,6 @@ public interface CPDVirtualSettingFileEntryPersistence
 			<CPDVirtualSettingFileEntry> orderByComparator);
 
 	/**
-	 * Returns the cpd virtual setting file entries before and after the current cpd virtual setting file entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingFileEntryId the primary key of the current cpd virtual setting file entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a cpd virtual setting file entry with the primary key could not be found
-	 */
-	public CPDVirtualSettingFileEntry[] findByUuid_C_PrevAndNext(
-			long CPDefinitionVirtualSettingFileEntryId, String uuid,
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDVirtualSettingFileEntry> orderByComparator)
-		throws NoSuchCPDVirtualSettingFileEntryException;
-
-	/**
 	 * Removes all the cpd virtual setting file entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -499,23 +467,6 @@ public interface CPDVirtualSettingFileEntryPersistence
 			<CPDVirtualSettingFileEntry> orderByComparator);
 
 	/**
-	 * Returns the cpd virtual setting file entries before and after the current cpd virtual setting file entry in the ordered set where CPDefinitionVirtualSettingId = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingFileEntryId the primary key of the current cpd virtual setting file entry
-	 * @param CPDefinitionVirtualSettingId the cp definition virtual setting ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a cpd virtual setting file entry with the primary key could not be found
-	 */
-	public CPDVirtualSettingFileEntry[]
-			findByCPDefinitionVirtualSettingId_PrevAndNext(
-				long CPDefinitionVirtualSettingFileEntryId,
-				long CPDefinitionVirtualSettingId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<CPDVirtualSettingFileEntry> orderByComparator)
-		throws NoSuchCPDVirtualSettingFileEntryException;
-
-	/**
 	 * Removes all the cpd virtual setting file entries where CPDefinitionVirtualSettingId = &#63; from the database.
 	 *
 	 * @param CPDefinitionVirtualSettingId the cp definition virtual setting ID
@@ -645,21 +596,6 @@ public interface CPDVirtualSettingFileEntryPersistence
 		long fileEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPDVirtualSettingFileEntry> orderByComparator);
-
-	/**
-	 * Returns the cpd virtual setting file entries before and after the current cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
-	 *
-	 * @param CPDefinitionVirtualSettingFileEntryId the primary key of the current cpd virtual setting file entry
-	 * @param fileEntryId the file entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a cpd virtual setting file entry with the primary key could not be found
-	 */
-	public CPDVirtualSettingFileEntry[] findByFileEntryId_PrevAndNext(
-			long CPDefinitionVirtualSettingFileEntryId, long fileEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDVirtualSettingFileEntry> orderByComparator)
-		throws NoSuchCPDVirtualSettingFileEntryException;
 
 	/**
 	 * Removes all the cpd virtual setting file entries where fileEntryId = &#63; from the database.
@@ -806,4 +742,4 @@ public interface CPDVirtualSettingFileEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-652808559
+// LIFERAY-SERVICE-BUILDER-HASH:-242053129

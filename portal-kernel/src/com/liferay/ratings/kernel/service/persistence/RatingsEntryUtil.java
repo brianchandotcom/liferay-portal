@@ -238,24 +238,6 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	 * Returns the ratings entries before and after the current ratings entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param entryId the primary key of the current ratings entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	public static RatingsEntry[] findByUuid_PrevAndNext(
-			long entryId, String uuid,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.ratings.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			entryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ratings entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -416,25 +398,6 @@ public class RatingsEntryUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ratings entries before and after the current ratings entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current ratings entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	public static RatingsEntry[] findByUuid_C_PrevAndNext(
-			long entryId, String uuid, long companyId,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.ratings.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			entryId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -601,25 +564,6 @@ public class RatingsEntryUtil {
 
 		return getPersistence().fetchByC_C_Last(
 			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the ratings entries before and after the current ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param entryId the primary key of the current ratings entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	public static RatingsEntry[] findByC_C_PrevAndNext(
-			long entryId, long classNameId, long classPK,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.ratings.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			entryId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -977,26 +921,6 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	 * Returns the ratings entries before and after the current ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
-	 *
-	 * @param entryId the primary key of the current ratings entry
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param score the score
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	public static RatingsEntry[] findByC_C_S_PrevAndNext(
-			long entryId, long classNameId, long classPK, double score,
-			OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.ratings.kernel.exception.NoSuchEntryException {
-
-		return getPersistence().findByC_C_S_PrevAndNext(
-			entryId, classNameId, classPK, score, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
@@ -1181,4 +1105,4 @@ public class RatingsEntryUtil {
 	private static volatile RatingsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1944155019
+// LIFERAY-SERVICE-BUILDER-HASH:920583364

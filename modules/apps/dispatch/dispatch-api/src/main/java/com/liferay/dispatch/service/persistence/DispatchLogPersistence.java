@@ -146,21 +146,6 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 			orderByComparator);
 
 	/**
-	 * Returns the dispatch logs before and after the current dispatch log in the ordered set where dispatchTriggerId = &#63;.
-	 *
-	 * @param dispatchLogId the primary key of the current dispatch log
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dispatch log
-	 * @throws NoSuchLogException if a dispatch log with the primary key could not be found
-	 */
-	public DispatchLog[] findByDispatchTriggerId_PrevAndNext(
-			long dispatchLogId, long dispatchTriggerId,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchLog>
-				orderByComparator)
-		throws NoSuchLogException;
-
-	/**
 	 * Removes all the dispatch logs where dispatchTriggerId = &#63; from the database.
 	 *
 	 * @param dispatchTriggerId the dispatch trigger ID
@@ -296,22 +281,6 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 		long dispatchTriggerId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DispatchLog>
 			orderByComparator);
-
-	/**
-	 * Returns the dispatch logs before and after the current dispatch log in the ordered set where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * @param dispatchLogId the primary key of the current dispatch log
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dispatch log
-	 * @throws NoSuchLogException if a dispatch log with the primary key could not be found
-	 */
-	public DispatchLog[] findByDTI_S_PrevAndNext(
-			long dispatchLogId, long dispatchTriggerId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<DispatchLog>
-				orderByComparator)
-		throws NoSuchLogException;
 
 	/**
 	 * Removes all the dispatch logs where dispatchTriggerId = &#63; and status = &#63; from the database.
@@ -450,4 +419,4 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-951857021
+// LIFERAY-SERVICE-BUILDER-HASH:-494575869

@@ -54,7 +54,7 @@ jar {
 
 				optionDefaults.put("versions", String.valueOf(file.toURI()))
 
-				boolean jakartaFacesModule = project.hasProperty("isFacesModule") && project.isFacesModule
+				boolean jakartaFacesModule = project.hasProperty("jakartaFacesModule") && project.jakartaFacesModule
 
 				if (jakartaFacesModule) {
 					System.out.println("Configure extra transform properties for Faces modules...")

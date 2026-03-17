@@ -605,3 +605,4 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 	private boolean _useTempFile;
 
 }
+// SB-Hash:1190885161

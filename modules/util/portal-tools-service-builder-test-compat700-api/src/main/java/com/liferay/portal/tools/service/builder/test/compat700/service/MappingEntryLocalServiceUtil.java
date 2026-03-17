@@ -379,3 +379,4 @@ public class MappingEntryLocalServiceUtil {
 	private static volatile MappingEntryLocalService _service;
 
 }
+// SB-Hash:2139044189

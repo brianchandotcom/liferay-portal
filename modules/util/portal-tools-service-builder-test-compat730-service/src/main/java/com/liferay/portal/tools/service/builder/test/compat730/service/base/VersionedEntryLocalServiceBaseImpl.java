@@ -948,3 +948,4 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:-1648750275

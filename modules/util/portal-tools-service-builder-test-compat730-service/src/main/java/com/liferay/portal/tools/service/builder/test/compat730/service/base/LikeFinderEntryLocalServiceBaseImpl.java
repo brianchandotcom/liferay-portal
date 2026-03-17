@@ -502,3 +502,4 @@ public abstract class LikeFinderEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:1737209580

@@ -481,3 +481,4 @@ public abstract class EagerBlobEntryLocalServiceBaseImpl
 		EagerBlobEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:553232014

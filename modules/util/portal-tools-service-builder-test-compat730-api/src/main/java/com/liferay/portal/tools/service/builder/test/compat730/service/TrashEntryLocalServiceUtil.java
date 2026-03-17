@@ -284,3 +284,4 @@ public class TrashEntryLocalServiceUtil {
 	private static volatile TrashEntryLocalService _service;
 
 }
+// SB-Hash:-689403346

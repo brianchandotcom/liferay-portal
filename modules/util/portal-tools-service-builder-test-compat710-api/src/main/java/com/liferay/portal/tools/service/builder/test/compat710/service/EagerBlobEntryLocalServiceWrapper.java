@@ -362,3 +362,4 @@ public class EagerBlobEntryLocalServiceWrapper
 	private EagerBlobEntryLocalService _eagerBlobEntryLocalService;
 
 }
+// SB-Hash:546180012

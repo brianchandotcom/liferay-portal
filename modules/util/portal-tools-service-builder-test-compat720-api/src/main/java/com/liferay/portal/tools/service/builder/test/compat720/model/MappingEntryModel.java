@@ -92,3 +92,4 @@ public interface MappingEntryModel
 	public void setName(String name);
 
 }
+// SB-Hash:2027192742

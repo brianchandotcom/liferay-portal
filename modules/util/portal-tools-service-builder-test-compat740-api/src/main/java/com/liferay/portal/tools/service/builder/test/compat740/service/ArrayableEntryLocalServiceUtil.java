@@ -299,3 +299,4 @@ public class ArrayableEntryLocalServiceUtil {
 			ArrayableEntryLocalService.class);
 
 }
+// SB-Hash:1250410237

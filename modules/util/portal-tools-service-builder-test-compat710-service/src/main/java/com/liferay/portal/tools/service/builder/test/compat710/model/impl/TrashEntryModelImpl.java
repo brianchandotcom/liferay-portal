@@ -945,3 +945,4 @@ public class TrashEntryModelImpl
 	private TrashEntry _escapedModel;
 
 }
+// SB-Hash:-18705581

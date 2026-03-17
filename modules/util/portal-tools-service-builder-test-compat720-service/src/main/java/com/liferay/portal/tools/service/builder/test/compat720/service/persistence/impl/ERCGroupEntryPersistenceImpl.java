@@ -2660,3 +2660,4 @@ public class ERCGroupEntryPersistenceImpl
 		new String[] {"uuid"});
 
 }
+// SB-Hash:492529331

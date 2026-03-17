@@ -414,3 +414,4 @@ public class LocalizedEntryLocalServiceWrapper
 	private LocalizedEntryLocalService _localizedEntryLocalService;
 
 }
+// SB-Hash:533575112

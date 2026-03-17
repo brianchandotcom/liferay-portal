@@ -708,3 +708,4 @@ public class LikeFinderEntryModelImpl
 	private LikeFinderEntry _escapedModel;
 
 }
+// SB-Hash:1847916048

@@ -39,3 +39,4 @@ public class VersionedEntryTable extends BaseTable<VersionedEntryTable> {
 	}
 
 }
+// SB-Hash:822778159

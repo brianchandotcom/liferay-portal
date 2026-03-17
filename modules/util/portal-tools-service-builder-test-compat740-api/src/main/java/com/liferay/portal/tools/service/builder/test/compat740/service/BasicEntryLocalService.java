@@ -318,3 +318,4 @@ public interface BasicEntryLocalService
 	public BasicEntry updateBasicEntry(BasicEntry basicEntry);
 
 }
+// SB-Hash:582449364

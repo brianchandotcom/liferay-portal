@@ -347,3 +347,4 @@ public class TrashEntryWrapper
 	}
 
 }
+// SB-Hash:-886888987

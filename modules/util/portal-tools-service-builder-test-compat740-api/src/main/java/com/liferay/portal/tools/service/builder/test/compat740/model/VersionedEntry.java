@@ -50,3 +50,4 @@ public interface VersionedEntry extends PersistedModel, VersionedEntryModel {
 		};
 
 }
+// SB-Hash:1045549186

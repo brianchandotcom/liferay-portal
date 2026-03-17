@@ -34,3 +34,4 @@ package com.liferay.portal.tools.service.builder.test.compat710.service.http;
  */
 public class EagerBlobEntryServiceHttp {
 }
+// SB-Hash:-1114539436

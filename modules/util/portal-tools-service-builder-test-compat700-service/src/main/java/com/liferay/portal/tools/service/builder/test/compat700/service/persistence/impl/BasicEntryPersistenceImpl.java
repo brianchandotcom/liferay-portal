@@ -2139,3 +2139,4 @@ public class BasicEntryPersistenceImpl
 		BasicEntryPersistenceImpl.class);
 
 }
+// SB-Hash:522099104

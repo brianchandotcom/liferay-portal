@@ -137,3 +137,4 @@ public interface LocalizedEntryLocalizationModel
 	public void setContent(String content);
 
 }
+// SB-Hash:142769709

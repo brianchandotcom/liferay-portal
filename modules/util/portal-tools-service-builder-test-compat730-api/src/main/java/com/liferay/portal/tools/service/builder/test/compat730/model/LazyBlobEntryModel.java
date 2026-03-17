@@ -118,3 +118,4 @@ public interface LazyBlobEntryModel extends BaseModel<LazyBlobEntry> {
 	public void setBlob2(Blob blob2);
 
 }
+// SB-Hash:1702732292

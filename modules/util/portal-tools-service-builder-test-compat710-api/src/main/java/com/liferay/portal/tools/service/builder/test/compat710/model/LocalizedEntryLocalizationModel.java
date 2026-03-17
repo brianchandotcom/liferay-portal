@@ -199,3 +199,4 @@ public interface LocalizedEntryLocalizationModel
 	public String toXmlString();
 
 }
+// SB-Hash:45792666

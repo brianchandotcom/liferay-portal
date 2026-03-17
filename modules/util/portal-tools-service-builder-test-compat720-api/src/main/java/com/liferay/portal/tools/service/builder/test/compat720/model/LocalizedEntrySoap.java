@@ -101,3 +101,4 @@ public class LocalizedEntrySoap implements Serializable {
 	private long _localizedEntryId;
 
 }
+// SB-Hash:254101082

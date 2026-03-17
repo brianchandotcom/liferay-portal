@@ -74,3 +74,4 @@ public interface CacheDisabledEntryModel extends BaseModel<CacheDisabledEntry> {
 	public void setName(String name);
 
 }
+// SB-Hash:-1545356491

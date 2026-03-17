@@ -248,3 +248,4 @@ public interface LikeFinderEntryLocalService
 		LikeFinderEntry likeFinderEntry);
 
 }
+// SB-Hash:-2073119027

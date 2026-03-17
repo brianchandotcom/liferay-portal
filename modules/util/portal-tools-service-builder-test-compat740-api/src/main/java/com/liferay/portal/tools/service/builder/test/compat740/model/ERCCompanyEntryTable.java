@@ -45,3 +45,4 @@ public class ERCCompanyEntryTable extends BaseTable<ERCCompanyEntryTable> {
 	}
 
 }
+// SB-Hash:964404080

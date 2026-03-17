@@ -432,3 +432,4 @@ public class ERCCompanyEntryWrapper
 	private final ERCCompanyEntry _ercCompanyEntry;
 
 }
+// SB-Hash:19257312

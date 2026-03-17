@@ -33,3 +33,4 @@ public class MappingEntryTable extends BaseTable<MappingEntryTable> {
 	}
 
 }
+// SB-Hash:-359702172

@@ -50,3 +50,4 @@ public interface LazyBlobEntry extends LazyBlobEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:416469434

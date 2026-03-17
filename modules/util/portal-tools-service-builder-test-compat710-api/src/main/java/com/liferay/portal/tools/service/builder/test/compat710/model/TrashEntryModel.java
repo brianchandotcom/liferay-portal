@@ -313,3 +313,4 @@ public interface TrashEntryModel
 	public String toXmlString();
 
 }
+// SB-Hash:-1173782612

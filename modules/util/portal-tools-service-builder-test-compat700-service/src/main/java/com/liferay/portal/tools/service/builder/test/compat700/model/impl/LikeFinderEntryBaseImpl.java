@@ -39,3 +39,4 @@ public abstract class LikeFinderEntryBaseImpl
 	}
 
 }
+// SB-Hash:1308688124

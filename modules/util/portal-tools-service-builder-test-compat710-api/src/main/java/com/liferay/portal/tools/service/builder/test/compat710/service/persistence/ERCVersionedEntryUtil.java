@@ -777,3 +777,4 @@ public class ERCVersionedEntryUtil {
 	private static volatile ERCVersionedEntryPersistence _persistence;
 
 }
+// SB-Hash:1373876495

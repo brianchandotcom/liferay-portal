@@ -575,3 +575,4 @@ public class LikeFinderEntryUtil {
 	private static volatile LikeFinderEntryPersistence _persistence;
 
 }
+// SB-Hash:1246313488

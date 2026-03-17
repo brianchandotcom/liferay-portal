@@ -318,3 +318,4 @@ public interface MappingEntryLocalService
 	public MappingEntry updateMappingEntry(MappingEntry mappingEntry);
 
 }
+// SB-Hash:2130601044

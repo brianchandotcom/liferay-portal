@@ -154,3 +154,4 @@ public interface ManyColumnsEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-425498049

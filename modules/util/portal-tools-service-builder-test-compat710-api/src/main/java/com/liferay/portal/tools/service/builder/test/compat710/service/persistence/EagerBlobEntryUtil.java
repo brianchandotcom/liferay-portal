@@ -507,3 +507,4 @@ public class EagerBlobEntryUtil {
 	private static volatile EagerBlobEntryPersistence _persistence;
 
 }
+// SB-Hash:774992141

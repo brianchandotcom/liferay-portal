@@ -104,3 +104,4 @@ public interface EagerBlobEntryModel extends BaseModel<EagerBlobEntry> {
 	public void setBlob(Blob blob);
 
 }
+// SB-Hash:1200587027

@@ -89,3 +89,4 @@ public interface WhereClauseEntryModel extends BaseModel<WhereClauseEntry> {
 	public void setNickname(String nickname);
 
 }
+// SB-Hash:-802000487

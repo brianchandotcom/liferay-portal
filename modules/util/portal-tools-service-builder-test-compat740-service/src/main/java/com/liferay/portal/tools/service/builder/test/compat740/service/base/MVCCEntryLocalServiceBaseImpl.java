@@ -445,3 +445,4 @@ public abstract class MVCCEntryLocalServiceBaseImpl
 		MVCCEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:2139315438

@@ -954,3 +954,4 @@ public interface ManyColumnsEntryModel extends BaseModel<ManyColumnsEntry> {
 	public void setColumn64(int column64);
 
 }
+// SB-Hash:1415846909

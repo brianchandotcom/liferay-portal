@@ -668,3 +668,4 @@ public class ERCCompanyEntryModelImpl
 	private ERCCompanyEntry _escapedModel;
 
 }
+// SB-Hash:-858431103

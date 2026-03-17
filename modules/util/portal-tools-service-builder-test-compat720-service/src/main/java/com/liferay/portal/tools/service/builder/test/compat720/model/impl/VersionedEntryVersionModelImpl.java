@@ -613,3 +613,4 @@ public class VersionedEntryVersionModelImpl
 	private VersionedEntryVersion _escapedModel;
 
 }
+// SB-Hash:-1290434654

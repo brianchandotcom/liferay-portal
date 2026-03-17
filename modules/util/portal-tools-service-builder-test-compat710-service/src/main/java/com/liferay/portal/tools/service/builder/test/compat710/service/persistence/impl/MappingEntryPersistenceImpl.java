@@ -1160,3 +1160,4 @@ public class MappingEntryPersistenceImpl
 		MappingEntryPersistenceImpl.class);
 
 }
+// SB-Hash:1592074789

@@ -116,3 +116,4 @@ public class WhereClauseEntrySoap implements Serializable {
 	private String _nickname;
 
 }
+// SB-Hash:-1134823061

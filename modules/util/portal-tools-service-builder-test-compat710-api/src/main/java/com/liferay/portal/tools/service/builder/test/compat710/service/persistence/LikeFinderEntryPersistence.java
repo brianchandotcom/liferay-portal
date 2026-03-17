@@ -402,3 +402,4 @@ public interface LikeFinderEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-78617822

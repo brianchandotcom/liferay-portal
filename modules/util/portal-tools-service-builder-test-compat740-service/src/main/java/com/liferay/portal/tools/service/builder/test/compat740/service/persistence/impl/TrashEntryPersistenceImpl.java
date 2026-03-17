@@ -680,3 +680,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
+// SB-Hash:1343372063

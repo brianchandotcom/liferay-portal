@@ -1016,3 +1016,4 @@ public interface ManyColumnsEntryModel extends BaseModel<ManyColumnsEntry> {
 	public String toXmlString();
 
 }
+// SB-Hash:1901139373

@@ -274,3 +274,4 @@ public class ManyColumnsEntryUtil {
 	private static volatile ManyColumnsEntryPersistence _persistence;
 
 }
+// SB-Hash:622749499

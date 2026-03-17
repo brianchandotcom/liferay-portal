@@ -249,3 +249,4 @@ public interface ConvertNullEntryLocalService
 		ConvertNullEntry convertNullEntry);
 
 }
+// SB-Hash:1032351055

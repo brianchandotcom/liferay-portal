@@ -1807,3 +1807,4 @@ public class ArrayableEntryPersistenceImpl
 		new String[] {"integer", "type"});
 
 }
+// SB-Hash:-1439615995

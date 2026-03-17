@@ -154,3 +154,4 @@ public class LocalizedEntryLocalizationSoap implements Serializable {
 	private String _content;
 
 }
+// SB-Hash:2117684260

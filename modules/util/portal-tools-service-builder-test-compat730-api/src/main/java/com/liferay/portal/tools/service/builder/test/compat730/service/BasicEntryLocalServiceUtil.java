@@ -390,3 +390,4 @@ public class BasicEntryLocalServiceUtil {
 	private static volatile BasicEntryLocalService _service;
 
 }
+// SB-Hash:1301454334

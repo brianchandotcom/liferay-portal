@@ -402,3 +402,4 @@ public class BasicEntryLocalServiceUtil {
 			BasicEntryLocalServiceUtil.class, BasicEntryLocalService.class);
 
 }
+// SB-Hash:-1165819434

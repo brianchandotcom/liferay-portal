@@ -167,3 +167,4 @@ public class BasicEntrySoap implements Serializable {
 	private String _description;
 
 }
+// SB-Hash:402425481

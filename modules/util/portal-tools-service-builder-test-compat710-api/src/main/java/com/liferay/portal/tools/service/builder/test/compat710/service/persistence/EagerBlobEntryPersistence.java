@@ -357,3 +357,4 @@ public interface EagerBlobEntryPersistence
 	public Set<String> getBadColumnNames();
 
 }
+// SB-Hash:-1528469112

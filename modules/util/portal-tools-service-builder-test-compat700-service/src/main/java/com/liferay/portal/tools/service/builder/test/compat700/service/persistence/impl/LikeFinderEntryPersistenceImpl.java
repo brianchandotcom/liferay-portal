@@ -1942,3 +1942,4 @@ public class LikeFinderEntryPersistenceImpl
 		LikeFinderEntryPersistenceImpl.class);
 
 }
+// SB-Hash:-1678100017

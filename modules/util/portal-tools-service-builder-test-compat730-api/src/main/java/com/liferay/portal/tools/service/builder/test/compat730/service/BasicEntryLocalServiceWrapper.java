@@ -488,3 +488,4 @@ public class BasicEntryLocalServiceWrapper
 	private BasicEntryLocalService _basicEntryLocalService;
 
 }
+// SB-Hash:-1999616469

@@ -134,3 +134,4 @@ public class LikeFinderEntrySoap implements Serializable {
 	private String _portletId;
 
 }
+// SB-Hash:744238904

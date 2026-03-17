@@ -47,3 +47,4 @@ public class BasicEntryTable extends BaseTable<BasicEntryTable> {
 	}
 
 }
+// SB-Hash:-668583014

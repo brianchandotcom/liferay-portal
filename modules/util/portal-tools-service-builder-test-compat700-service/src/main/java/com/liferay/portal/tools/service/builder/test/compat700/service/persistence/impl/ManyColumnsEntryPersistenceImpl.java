@@ -855,3 +855,4 @@ public class ManyColumnsEntryPersistenceImpl
 		ManyColumnsEntryPersistenceImpl.class);
 
 }
+// SB-Hash:1096696432

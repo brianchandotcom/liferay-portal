@@ -346,3 +346,4 @@ public interface EagerBlobEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:601210356

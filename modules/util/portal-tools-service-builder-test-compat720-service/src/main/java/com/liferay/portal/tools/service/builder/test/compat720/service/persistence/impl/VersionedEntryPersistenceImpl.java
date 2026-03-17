@@ -2087,3 +2087,4 @@ public class VersionedEntryPersistenceImpl
 		VersionedEntryPersistenceImpl.class);
 
 }
+// SB-Hash:1929266239

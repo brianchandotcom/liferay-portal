@@ -552,3 +552,4 @@ public abstract class ERCCompanyEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:1724738759

@@ -335,3 +335,4 @@ public interface MappingEntryPersistence extends BasePersistence<MappingEntry> {
 				BasicEntry> basicEntries);
 
 }
+// SB-Hash:1459484404

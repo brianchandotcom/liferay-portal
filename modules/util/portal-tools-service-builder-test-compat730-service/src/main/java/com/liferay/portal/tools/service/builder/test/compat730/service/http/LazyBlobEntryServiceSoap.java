@@ -48,3 +48,4 @@ package com.liferay.portal.tools.service.builder.test.compat730.service.http;
 @Deprecated
 public class LazyBlobEntryServiceSoap {
 }
+// SB-Hash:1588070358

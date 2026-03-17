@@ -394,3 +394,4 @@ public class LocalizedEntryLocalizationWrapper
 	private final LocalizedEntryLocalization _localizedEntryLocalization;
 
 }
+// SB-Hash:1475800104

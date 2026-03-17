@@ -130,3 +130,4 @@ public class VersionedEntryVersionSoap implements Serializable {
 	private long _groupId;
 
 }
+// SB-Hash:339754893

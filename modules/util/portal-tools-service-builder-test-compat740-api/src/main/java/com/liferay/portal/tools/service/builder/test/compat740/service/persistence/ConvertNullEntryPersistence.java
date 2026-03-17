@@ -198,3 +198,4 @@ public interface ConvertNullEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:1002356193

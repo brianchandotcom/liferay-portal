@@ -639,3 +639,4 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:-1522494702

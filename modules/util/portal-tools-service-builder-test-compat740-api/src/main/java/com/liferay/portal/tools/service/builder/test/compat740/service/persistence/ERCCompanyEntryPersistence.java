@@ -504,3 +504,4 @@ public interface ERCCompanyEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:-1297692021

@@ -660,3 +660,4 @@ public interface VersionedEntryVersionPersistence
 	public int countAll();
 
 }
+// SB-Hash:298277205

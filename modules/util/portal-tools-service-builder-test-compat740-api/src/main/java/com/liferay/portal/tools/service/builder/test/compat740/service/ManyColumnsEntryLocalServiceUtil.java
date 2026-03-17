@@ -306,3 +306,4 @@ public class ManyColumnsEntryLocalServiceUtil {
 			ManyColumnsEntryLocalService.class);
 
 }
+// SB-Hash:-616753766

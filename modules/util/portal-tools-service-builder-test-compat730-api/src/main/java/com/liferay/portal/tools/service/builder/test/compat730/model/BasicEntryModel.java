@@ -207,3 +207,4 @@ public interface BasicEntryModel
 	public void setDescription(String description);
 
 }
+// SB-Hash:-239985009

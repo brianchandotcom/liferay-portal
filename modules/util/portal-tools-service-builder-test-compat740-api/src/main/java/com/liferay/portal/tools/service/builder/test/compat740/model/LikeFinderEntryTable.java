@@ -39,3 +39,4 @@ public class LikeFinderEntryTable extends BaseTable<LikeFinderEntryTable> {
 	}
 
 }
+// SB-Hash:-155610181

@@ -50,3 +50,4 @@ public interface LocalizedEntry extends LocalizedEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:1381571348

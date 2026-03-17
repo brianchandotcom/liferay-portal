@@ -363,3 +363,4 @@ public class ERCGroupEntryLocalServiceUtil {
 	private static volatile ERCGroupEntryLocalService _service;
 
 }
+// SB-Hash:-712760268

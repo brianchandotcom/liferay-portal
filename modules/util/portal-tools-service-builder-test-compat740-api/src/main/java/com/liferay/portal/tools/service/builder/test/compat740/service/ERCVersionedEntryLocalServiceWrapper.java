@@ -573,3 +573,4 @@ public class ERCVersionedEntryLocalServiceWrapper
 	private ERCVersionedEntryLocalService _ercVersionedEntryLocalService;
 
 }
+// SB-Hash:751420555

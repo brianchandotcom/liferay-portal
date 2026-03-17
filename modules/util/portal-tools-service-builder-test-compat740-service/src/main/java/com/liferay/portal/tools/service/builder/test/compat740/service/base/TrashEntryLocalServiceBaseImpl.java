@@ -448,3 +448,4 @@ public abstract class TrashEntryLocalServiceBaseImpl
 		TrashEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-1543834075

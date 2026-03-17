@@ -54,3 +54,4 @@ public interface ERCVersionedEntryVersion
 			};
 
 }
+// SB-Hash:320150823

@@ -164,3 +164,4 @@ public interface ERCCompanyEntryModel
 	public void setColumn1(int column1);
 
 }
+// SB-Hash:-1297004361

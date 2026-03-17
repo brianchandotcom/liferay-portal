@@ -47,3 +47,4 @@ public interface LazyBlobEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// SB-Hash:-134475952

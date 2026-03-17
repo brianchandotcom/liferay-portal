@@ -166,3 +166,4 @@ public interface EagerBlobEntryModel extends BaseModel<EagerBlobEntry> {
 	public String toXmlString();
 
 }
+// SB-Hash:548829761

@@ -518,3 +518,4 @@ public abstract class EagerBlobEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:-476669374

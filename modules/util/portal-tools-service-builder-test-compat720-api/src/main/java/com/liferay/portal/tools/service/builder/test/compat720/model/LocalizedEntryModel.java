@@ -98,3 +98,4 @@ public interface LocalizedEntryModel extends BaseModel<LocalizedEntry> {
 	public Map<String, String> getLanguageIdToContentMap();
 
 }
+// SB-Hash:-1885823394

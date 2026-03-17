@@ -292,3 +292,4 @@ public class TrashEntryLocalServiceUtil {
 			TrashEntryLocalServiceUtil.class, TrashEntryLocalService.class);
 
 }
+// SB-Hash:1638327994

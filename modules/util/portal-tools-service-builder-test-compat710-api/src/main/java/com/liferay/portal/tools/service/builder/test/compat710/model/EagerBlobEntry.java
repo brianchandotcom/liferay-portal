@@ -50,3 +50,4 @@ public interface EagerBlobEntry extends EagerBlobEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-2080228704

@@ -528,3 +528,4 @@ public class TrashEntryWrapper implements ModelWrapper<TrashEntry>, TrashEntry {
 	private final TrashEntry _trashEntry;
 
 }
+// SB-Hash:223942572

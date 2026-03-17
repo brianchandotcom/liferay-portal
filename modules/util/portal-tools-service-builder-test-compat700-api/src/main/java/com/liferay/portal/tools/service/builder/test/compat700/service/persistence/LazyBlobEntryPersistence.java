@@ -357,3 +357,4 @@ public interface LazyBlobEntryPersistence
 	public Set<String> getBadColumnNames();
 
 }
+// SB-Hash:-39386490

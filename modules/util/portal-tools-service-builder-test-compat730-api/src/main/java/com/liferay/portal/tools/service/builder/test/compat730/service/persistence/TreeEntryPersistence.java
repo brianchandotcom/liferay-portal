@@ -173,3 +173,4 @@ public interface TreeEntryPersistence extends BasePersistence<TreeEntry> {
 	public void setRebuildTreeEnabled(boolean rebuildTreeEnabled);
 
 }
+// SB-Hash:1157098534

@@ -245,3 +245,4 @@ public interface TrashEntryLocalService
 	public TrashEntry updateTrashEntry(TrashEntry trashEntry);
 
 }
+// SB-Hash:44117803

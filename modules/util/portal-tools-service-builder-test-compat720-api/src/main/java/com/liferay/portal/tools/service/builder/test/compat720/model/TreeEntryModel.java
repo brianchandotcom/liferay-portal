@@ -114,3 +114,4 @@ public interface TreeEntryModel extends BaseModel<TreeEntry> {
 	public void setRightTreeEntryId(long rightTreeEntryId);
 
 }
+// SB-Hash:1638386701

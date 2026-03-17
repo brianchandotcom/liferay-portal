@@ -1978,3 +1978,4 @@ public class ManyColumnsEntryWrapper
 	private final ManyColumnsEntry _manyColumnsEntry;
 
 }
+// SB-Hash:-552182272

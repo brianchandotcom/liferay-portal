@@ -346,3 +346,4 @@ public class LocalizedEntryLocalServiceUtil {
 			LocalizedEntryLocalService.class);
 
 }
+// SB-Hash:-1066130764

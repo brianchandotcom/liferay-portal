@@ -717,3 +717,4 @@ public class VersionedEntryVersionModelImpl
 	private VersionedEntryVersion _escapedModel;
 
 }
+// SB-Hash:1909524604

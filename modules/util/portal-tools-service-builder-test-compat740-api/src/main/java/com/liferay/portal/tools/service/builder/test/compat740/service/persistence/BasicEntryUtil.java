@@ -730,3 +730,4 @@ public class BasicEntryUtil {
 	private static volatile BasicEntryPersistence _persistence;
 
 }
+// SB-Hash:-1505941368

@@ -385,3 +385,4 @@ public class LazyBlobEntryLocalServiceWrapper
 	private LazyBlobEntryLocalService _lazyBlobEntryLocalService;
 
 }
+// SB-Hash:566060902

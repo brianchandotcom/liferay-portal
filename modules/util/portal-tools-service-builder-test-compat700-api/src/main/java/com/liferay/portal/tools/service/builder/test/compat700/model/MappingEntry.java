@@ -50,3 +50,4 @@ public interface MappingEntry extends MappingEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-792613042

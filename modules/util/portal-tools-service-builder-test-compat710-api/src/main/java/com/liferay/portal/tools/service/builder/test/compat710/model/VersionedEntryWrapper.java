@@ -342,3 +342,4 @@ public class VersionedEntryWrapper
 	private final VersionedEntry _versionedEntry;
 
 }
+// SB-Hash:1308759170

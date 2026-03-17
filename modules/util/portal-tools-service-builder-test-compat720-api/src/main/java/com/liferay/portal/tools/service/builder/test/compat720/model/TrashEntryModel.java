@@ -251,3 +251,4 @@ public interface TrashEntryModel
 	public boolean isInTrashImplicitly();
 
 }
+// SB-Hash:805232325

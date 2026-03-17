@@ -455,3 +455,4 @@ public class ERCVersionedEntryLocalServiceUtil {
 			ERCVersionedEntryLocalService.class);
 
 }
+// SB-Hash:1458334339

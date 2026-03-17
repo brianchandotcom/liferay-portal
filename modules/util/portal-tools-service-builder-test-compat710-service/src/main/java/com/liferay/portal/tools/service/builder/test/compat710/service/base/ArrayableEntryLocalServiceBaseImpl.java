@@ -488,3 +488,4 @@ public abstract class ArrayableEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:-1424004334

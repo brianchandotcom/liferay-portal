@@ -483,3 +483,4 @@ public abstract class MVCCEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:-502040997

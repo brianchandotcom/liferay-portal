@@ -308,3 +308,4 @@ public class EagerBlobEntryLocalServiceUtil {
 	private static volatile EagerBlobEntryLocalService _service;
 
 }
+// SB-Hash:2016110907

@@ -271,3 +271,4 @@ public class LocalizedEntryUtil {
 	private static volatile LocalizedEntryPersistence _persistence;
 
 }
+// SB-Hash:-125636599

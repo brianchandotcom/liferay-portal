@@ -269,3 +269,4 @@ public interface BasicEntryModel
 	public String toXmlString();
 
 }
+// SB-Hash:604102058

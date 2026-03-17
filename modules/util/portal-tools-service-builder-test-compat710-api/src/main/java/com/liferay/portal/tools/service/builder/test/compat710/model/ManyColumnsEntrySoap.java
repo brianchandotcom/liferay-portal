@@ -734,3 +734,4 @@ public class ManyColumnsEntrySoap implements Serializable {
 	private int _column64;
 
 }
+// SB-Hash:880552460

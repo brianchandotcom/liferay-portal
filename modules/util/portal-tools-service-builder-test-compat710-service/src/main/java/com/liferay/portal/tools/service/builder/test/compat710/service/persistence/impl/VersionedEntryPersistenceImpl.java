@@ -2246,3 +2246,4 @@ public class VersionedEntryPersistenceImpl
 		VersionedEntryPersistenceImpl.class);
 
 }
+// SB-Hash:-1135083688

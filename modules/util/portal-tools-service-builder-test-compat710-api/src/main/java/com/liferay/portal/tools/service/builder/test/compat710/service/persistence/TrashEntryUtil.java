@@ -270,3 +270,4 @@ public class TrashEntryUtil {
 	private static volatile TrashEntryPersistence _persistence;
 
 }
+// SB-Hash:-986123033

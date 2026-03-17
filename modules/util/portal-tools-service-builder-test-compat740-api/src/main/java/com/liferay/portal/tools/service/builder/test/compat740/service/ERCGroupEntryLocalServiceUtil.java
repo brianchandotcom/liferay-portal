@@ -372,3 +372,4 @@ public class ERCGroupEntryLocalServiceUtil {
 			ERCGroupEntryLocalService.class);
 
 }
+// SB-Hash:908452155

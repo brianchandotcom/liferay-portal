@@ -401,3 +401,4 @@ public class MappingEntryLocalServiceUtil {
 			MappingEntryLocalServiceUtil.class, MappingEntryLocalService.class);
 
 }
+// SB-Hash:1037225442

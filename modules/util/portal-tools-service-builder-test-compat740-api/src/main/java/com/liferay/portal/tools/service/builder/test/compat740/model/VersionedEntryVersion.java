@@ -50,3 +50,4 @@ public interface VersionedEntryVersion extends VersionedEntryVersionModel {
 			};
 
 }
+// SB-Hash:-1243050328

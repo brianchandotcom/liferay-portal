@@ -789,3 +789,4 @@ public class LocalizedEntryLocalizationModelImpl
 	private LocalizedEntryLocalization _escapedModel;
 
 }
+// SB-Hash:2132168171

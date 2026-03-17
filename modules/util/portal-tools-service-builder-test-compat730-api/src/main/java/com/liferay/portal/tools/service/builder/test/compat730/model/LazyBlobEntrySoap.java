@@ -130,3 +130,4 @@ public class LazyBlobEntrySoap implements Serializable {
 	private Blob _blob2;
 
 }
+// SB-Hash:1058667111

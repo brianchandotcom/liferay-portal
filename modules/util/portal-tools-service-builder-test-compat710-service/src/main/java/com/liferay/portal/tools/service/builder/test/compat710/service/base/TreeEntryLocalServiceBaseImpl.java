@@ -483,3 +483,4 @@ public abstract class TreeEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:-783480855

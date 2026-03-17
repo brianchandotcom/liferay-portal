@@ -182,3 +182,4 @@ public interface LikeFinderEntryModel
 	public String toXmlString();
 
 }
+// SB-Hash:970749346

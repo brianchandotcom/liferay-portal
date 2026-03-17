@@ -50,3 +50,4 @@ public interface BasicEntry extends BasicEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:2044930412

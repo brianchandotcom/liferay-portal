@@ -380,3 +380,4 @@ public interface ArrayableEntryPersistence
 	public Set<String> getBadColumnNames();
 
 }
+// SB-Hash:-9155475

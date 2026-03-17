@@ -878,3 +878,4 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 		VersionedEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:-310402956

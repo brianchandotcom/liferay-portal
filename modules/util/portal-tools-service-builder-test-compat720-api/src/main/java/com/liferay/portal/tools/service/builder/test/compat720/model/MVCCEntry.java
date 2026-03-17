@@ -50,3 +50,4 @@ public interface MVCCEntry extends MVCCEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-615536038

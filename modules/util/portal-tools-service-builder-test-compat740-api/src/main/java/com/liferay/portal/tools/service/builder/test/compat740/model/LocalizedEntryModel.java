@@ -105,3 +105,4 @@ public interface LocalizedEntryModel extends BaseModel<LocalizedEntry> {
 	}
 
 }
+// SB-Hash:1261970068

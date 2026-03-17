@@ -805,3 +805,4 @@ public class LocalizedEntryPersistenceImpl
 		LocalizedEntryPersistenceImpl.class);
 
 }
+// SB-Hash:1692900726

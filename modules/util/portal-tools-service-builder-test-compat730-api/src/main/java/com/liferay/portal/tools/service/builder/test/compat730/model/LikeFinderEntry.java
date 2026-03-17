@@ -50,3 +50,4 @@ public interface LikeFinderEntry extends LikeFinderEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:558556568

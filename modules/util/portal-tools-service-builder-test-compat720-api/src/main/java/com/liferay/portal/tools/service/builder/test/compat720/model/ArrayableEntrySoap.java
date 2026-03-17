@@ -151,3 +151,4 @@ public class ArrayableEntrySoap implements Serializable {
 	private String _type;
 
 }
+// SB-Hash:949504121

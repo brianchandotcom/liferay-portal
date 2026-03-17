@@ -39,3 +39,4 @@ public abstract class ManyColumnsEntryBaseImpl
 	}
 
 }
+// SB-Hash:-1473193108

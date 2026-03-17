@@ -694,3 +694,4 @@ public abstract class MappingEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:1166085497

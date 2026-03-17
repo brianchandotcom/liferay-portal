@@ -161,3 +161,4 @@ public interface LocalizedEntryPersistence
 	public int countAll();
 
 }
+// SB-Hash:72537489

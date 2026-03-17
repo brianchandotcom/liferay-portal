@@ -50,3 +50,4 @@ public interface TrashEntry extends PersistedModel, TrashEntryModel {
 		};
 
 }
+// SB-Hash:-359108851

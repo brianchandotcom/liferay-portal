@@ -39,3 +39,4 @@ public abstract class ERCCompanyEntryBaseImpl
 	}
 
 }
+// SB-Hash:1313726052

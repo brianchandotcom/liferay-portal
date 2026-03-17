@@ -52,3 +52,4 @@ public interface ManyColumnsEntry
 			};
 
 }
+// SB-Hash:1021697027

@@ -120,3 +120,4 @@ public interface LikeFinderEntryModel
 	public void setPortletId(String portletId);
 
 }
+// SB-Hash:-2111942843

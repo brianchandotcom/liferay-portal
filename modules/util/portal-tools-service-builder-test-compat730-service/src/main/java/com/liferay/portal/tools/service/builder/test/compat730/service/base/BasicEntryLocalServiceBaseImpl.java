@@ -652,3 +652,4 @@ public abstract class BasicEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// SB-Hash:-1452623603

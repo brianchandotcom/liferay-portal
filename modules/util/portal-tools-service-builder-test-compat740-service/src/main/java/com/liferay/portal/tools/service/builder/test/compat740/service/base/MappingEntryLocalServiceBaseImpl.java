@@ -613,3 +613,4 @@ public abstract class MappingEntryLocalServiceBaseImpl
 		MappingEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:515483508

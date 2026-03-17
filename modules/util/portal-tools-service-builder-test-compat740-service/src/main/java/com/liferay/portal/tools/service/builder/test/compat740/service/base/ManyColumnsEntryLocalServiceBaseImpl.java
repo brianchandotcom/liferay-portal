@@ -461,3 +461,4 @@ public abstract class ManyColumnsEntryLocalServiceBaseImpl
 		ManyColumnsEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1846438235

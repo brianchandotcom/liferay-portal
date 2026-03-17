@@ -352,3 +352,4 @@ public interface MVCCEntryPersistence extends BasePersistence<MVCCEntry> {
 	public int countAll();
 
 }
+// SB-Hash:-227857486

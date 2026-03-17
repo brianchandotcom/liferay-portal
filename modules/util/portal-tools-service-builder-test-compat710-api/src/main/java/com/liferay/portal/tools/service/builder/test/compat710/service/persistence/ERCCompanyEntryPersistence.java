@@ -515,3 +515,4 @@ public interface ERCCompanyEntryPersistence
 	public Set<String> getBadColumnNames();
 
 }
+// SB-Hash:2052625916

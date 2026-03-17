@@ -50,3 +50,4 @@ public interface ArrayableEntry extends ArrayableEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:2127075940

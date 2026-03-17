@@ -30,3 +30,4 @@ public abstract class LocalizedEntryLocalizationBaseImpl
 	 */
 
 }
+// SB-Hash:793512476

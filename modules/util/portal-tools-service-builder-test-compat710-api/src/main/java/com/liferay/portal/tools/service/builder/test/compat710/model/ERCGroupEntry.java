@@ -50,3 +50,4 @@ public interface ERCGroupEntry extends ERCGroupEntryModel, PersistedModel {
 		};
 
 }
+// SB-Hash:-840431008

@@ -126,3 +126,4 @@ public class ERCGroupEntrySoap implements Serializable {
 	private long _companyId;
 
 }
+// SB-Hash:669224206

@@ -45,3 +45,4 @@ public class EagerBlobEntryServiceUtil {
 	private static volatile EagerBlobEntryService _service;
 
 }
+// SB-Hash:587093277

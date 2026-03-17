@@ -2678,4 +2678,4 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 }
-// SB-Hash:1330707869
+// SB-Hash:-53355687

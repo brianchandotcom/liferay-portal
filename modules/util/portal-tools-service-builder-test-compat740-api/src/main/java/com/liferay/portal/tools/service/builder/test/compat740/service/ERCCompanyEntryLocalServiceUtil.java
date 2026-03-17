@@ -348,3 +348,4 @@ public class ERCCompanyEntryLocalServiceUtil {
 			ERCCompanyEntryLocalService.class);
 
 }
+// SB-Hash:1176891025

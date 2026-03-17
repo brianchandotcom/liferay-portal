@@ -157,3 +157,4 @@ public class TrashEntrySoap implements Serializable {
 	private String _name;
 
 }
+// SB-Hash:1003034893

@@ -189,3 +189,4 @@ public class BasicEntryCacheModel
 	public String description;
 
 }
+// SB-Hash:-706697384

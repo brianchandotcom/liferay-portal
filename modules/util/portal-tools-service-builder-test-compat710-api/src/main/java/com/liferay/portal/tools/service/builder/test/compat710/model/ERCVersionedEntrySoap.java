@@ -134,3 +134,4 @@ public class ERCVersionedEntrySoap implements Serializable {
 	private long _companyId;
 
 }
+// SB-Hash:-654041362

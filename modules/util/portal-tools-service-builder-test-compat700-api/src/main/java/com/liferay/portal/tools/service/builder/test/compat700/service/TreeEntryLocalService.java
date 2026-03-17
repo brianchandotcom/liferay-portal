@@ -244,3 +244,4 @@ public interface TreeEntryLocalService
 	public TreeEntry updateTreeEntry(TreeEntry treeEntry);
 
 }
+// SB-Hash:1519073351

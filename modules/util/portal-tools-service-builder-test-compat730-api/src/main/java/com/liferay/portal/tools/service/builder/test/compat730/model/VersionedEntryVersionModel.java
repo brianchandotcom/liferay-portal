@@ -106,3 +106,4 @@ public interface VersionedEntryVersionModel
 	public void setGroupId(long groupId);
 
 }
+// SB-Hash:617394806

@@ -1612,3 +1612,4 @@ public class LazyBlobEntryPersistenceImpl
 		new String[] {"uuid"});
 
 }
+// SB-Hash:669074930

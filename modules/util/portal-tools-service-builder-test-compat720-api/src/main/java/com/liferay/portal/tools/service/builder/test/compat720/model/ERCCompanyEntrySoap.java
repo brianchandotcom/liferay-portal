@@ -152,3 +152,4 @@ public class ERCCompanyEntrySoap implements Serializable {
 	private int _column1;
 
 }
+// SB-Hash:-629334644

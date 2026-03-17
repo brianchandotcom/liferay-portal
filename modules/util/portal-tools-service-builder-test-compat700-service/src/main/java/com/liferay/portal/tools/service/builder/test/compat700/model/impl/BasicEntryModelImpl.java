@@ -921,3 +921,4 @@ public class BasicEntryModelImpl
 	private BasicEntry _escapedModel;
 
 }
+// SB-Hash:-1446448119

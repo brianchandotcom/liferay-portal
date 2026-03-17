@@ -152,3 +152,4 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	public int countAll();
 
 }
+// SB-Hash:299944535

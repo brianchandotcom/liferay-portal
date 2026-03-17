@@ -610,3 +610,4 @@ public abstract class BasicEntryLocalServiceBaseImpl
 		BasicEntryLocalServiceBaseImpl.class);
 
 }
+// SB-Hash:1803813634

@@ -6,8 +6,8 @@
 package com.liferay.image.internal;
 
 import com.liferay.image.ImageMagick;
+import com.liferay.petra.concurrent.FutureConverter;
 import com.liferay.portal.image.ImageToolUtil;
-import com.liferay.portal.kernel.concurrent.FutureConverter;
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.image.CMYKImageTool;
 import com.liferay.portal.kernel.image.ImageBag;

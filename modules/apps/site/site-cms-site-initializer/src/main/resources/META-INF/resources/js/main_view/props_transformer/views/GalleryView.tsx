@@ -22,15 +22,11 @@ const MAX_VISIBLE_INDEX = (itemsLength: number) =>
 	Math.max(0, itemsLength - VISIBLE_ITEMS_COUNT);
 
 const GalleryView = ({
-	additionalProps,
 	frontendDataSetContext,
 	items,
 	schema,
 	...otherProps
 }: {
-	additionalProps: {
-		contentViewURL: string;
-	};
 	frontendDataSetContext: Context<IFrontendDataSetContext>;
 	items: any[];
 	schema: ICardSchema;
@@ -148,7 +144,8 @@ const GalleryView = ({
 						<AssetPreview
 							item={currentItem}
 							key={selectedIndex}
-							url={additionalProps.contentViewURL}
+							showContentPreview={false}
+							url=""
 						/>
 					)}
 				</div>

@@ -264,16 +264,32 @@ public class ObjectFieldLocalServiceImpl
 				objectFieldSettings);
 		}
 
+		ObjectField objectField = (ObjectField)existingObjectField.clone();
+
 		validateExternalReferenceCode(
-			externalReferenceCode, existingObjectField.getObjectFieldId(),
-			existingObjectField.getCompanyId(),
-			existingObjectField.getObjectDefinitionId());
-		_validateLabel(labelMap, existingObjectField);
+			externalReferenceCode, objectField.getObjectFieldId(),
+			objectField.getCompanyId(), objectField.getObjectDefinitionId());
+		_validateIndexed(
+			objectField.getBusinessType(), objectField.getDBType(),
+			objectField.isIndexed(), indexedAsKeyword, indexedLanguageId);
+		_validateLabel(labelMap, objectField);
 
-		existingObjectField.setExternalReferenceCode(externalReferenceCode);
-		existingObjectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectField.setExternalReferenceCode(externalReferenceCode);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
-		return objectFieldPersistence.update(existingObjectField);
+		objectField = objectFieldPersistence.update(objectField);
+
+		_addOrUpdateObjectFieldSettings(
+			objectField,
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectField.getObjectDefinitionId()),
+			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+				objectField.getBusinessType()),
+			objectFieldSettings, existingObjectField);
+
+		return objectField;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

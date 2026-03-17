@@ -131,10 +131,10 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 	}
 
 	@Override
-	public boolean hasExportableItems() {
-		if (FragmentCompositionLocalServiceUtil.hasExportableItems(
-				getFragmentCollectionId()) ||
-			FragmentEntryLocalServiceUtil.hasExportableItems(
+	public boolean hasExportableFragmentCompositionsAndFragmentEntries() {
+		if (FragmentCompositionLocalServiceUtil.
+				hasExportableFragmentCompositions(getFragmentCollectionId()) ||
+			FragmentEntryLocalServiceUtil.hasExportableFragmentEntries(
 				getFragmentCollectionId())) {
 
 			return true;

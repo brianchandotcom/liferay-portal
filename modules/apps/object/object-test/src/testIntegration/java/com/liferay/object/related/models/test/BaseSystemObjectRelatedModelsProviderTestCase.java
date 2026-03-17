@@ -182,11 +182,13 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			long groupId)
 		throws Exception {
 
-		long[] primaryKeys = addBaseModels(2);
+		long[] primaryKeys = addBaseModels(3);
+
+		// Object relationship deletion type cascade
 
 		addObjectRelationship(
 			_systemObjectDefinition, _objectDefinition,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
@@ -195,16 +197,67 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 				_relationshipObjectField.getName(), primaryKeys[0]
 			).build());
 
+		deleteBaseModel(primaryKeys[0]);
+
+		assertFailure(primaryKeys[0]);
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry1.getObjectEntryId()));
+
+		// Object relationship deletion type disassociate
+
+		ObjectRelationshipTestUtil.updateObjectRelationship(
+			_objectRelationship.getExternalReferenceCode(),
+			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			_objectRelationship.getLabelMap());
+
+		objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				_relationshipObjectField.getName(), primaryKeys[1]
+			).build());
+
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				_relationshipObjectField.getName(), primaryKeys[0]
+				_relationshipObjectField.getName(), primaryKeys[1]
 			).build());
+
+		deleteBaseModel(primaryKeys[1]);
+
+		assertFailure(primaryKeys[1]);
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry1.getObjectEntryId()));
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry2.getObjectEntryId()));
 
 		// Object relationship deletion type prevent
 
+		ObjectRelationshipTestUtil.updateObjectRelationship(
+			_objectRelationship.getExternalReferenceCode(),
+			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			_objectRelationship.getLabelMap());
+
+		objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				_relationshipObjectField.getName(), primaryKeys[2]
+			).build());
+
+		objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				_relationshipObjectField.getName(), primaryKeys[2]
+			).build());
+
 		try {
-			deleteBaseModel(primaryKeys[0]);
+			deleteBaseModel(primaryKeys[2]);
 
 			Assert.fail();
 		}
@@ -221,54 +274,13 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 				throwable.getMessage());
 		}
 
-		Assert.assertNotNull(fetchBaseModel(primaryKeys[0]));
+		Assert.assertNotNull(fetchBaseModel(primaryKeys[2]));
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry1.getObjectEntryId()));
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry2.getObjectEntryId()));
-
-		// Object relationship deletion type disassociate
-
-		ObjectRelationshipTestUtil.updateObjectRelationship(
-			_objectRelationship.getExternalReferenceCode(),
-			_objectRelationship.getObjectRelationshipId(),
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-			_objectRelationship.getLabelMap());
-
-		deleteBaseModel(primaryKeys[0]);
-
-		assertFailure(primaryKeys[0]);
-
-		Assert.assertNotNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				objectEntry1.getObjectEntryId()));
-		Assert.assertNotNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				objectEntry2.getObjectEntryId()));
-
-		// Object relationship deletion type cascade
-
-		ObjectRelationshipTestUtil.updateObjectRelationship(
-			_objectRelationship.getExternalReferenceCode(),
-			_objectRelationship.getObjectRelationshipId(),
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			_objectRelationship.getLabelMap());
-
-		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
-			groupId, _objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				_relationshipObjectField.getName(), primaryKeys[1]
-			).build());
-
-		deleteBaseModel(primaryKeys[1]);
-
-		assertFailure(primaryKeys[1]);
-
-		Assert.assertNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				objectEntry3.getObjectEntryId()));
 
 		objectRelationshipLocalService.deleteObjectRelationship(
 			_objectRelationship);

@@ -219,11 +219,11 @@ public class ClusterGeneralTest implements Serializable {
 		long userId = TestPropsValues.getUserId();
 
 		_testValidateFileEntryOnSeparateNodes(
-			_tomcatNode1, _tomcatNode2, userId, groupId,
-			RandomTestUtil.randomString());
+			groupId, userId, RandomTestUtil.randomString(), _tomcatNode1,
+			_tomcatNode2);
 		_testValidateFileEntryOnSeparateNodes(
-			_tomcatNode2, _tomcatNode1, userId, groupId,
-			RandomTestUtil.randomString());
+			groupId, userId, RandomTestUtil.randomString(), _tomcatNode2,
+			_tomcatNode1);
 	}
 
 	private static String _getLocalClusterNodeId() {
@@ -665,8 +665,8 @@ public class ClusterGeneralTest implements Serializable {
 	}
 
 	private void _testValidateFileEntryOnSeparateNodes(
-			TomcatNode tomcatNode1, TomcatNode tomcatNode2, long userId,
-			long groupId, String fileName)
+			long groupId, long userId, String fileName, TomcatNode tomcatNode1,
+			TomcatNode tomcatNode2)
 		throws Exception {
 
 		FileEntry fileEntry = tomcatNode1.syncExecute(

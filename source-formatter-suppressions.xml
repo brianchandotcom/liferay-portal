@@ -89,9 +89,6 @@
 		<suppress checks="IllegalImportsCheck" files="util-slf4j/src/com/liferay/util/slf4j/LiferayLoggerFactory\.java" />
 		<suppress checks="JavaCleanUpMethodVariablesCheck" files="util-taglib/src/com/liferay/taglib/util/IncludeTag\.java" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="portal-impl/src/com/liferay/portal/bean/BeanPropertiesImpl\.java" />
-		<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/AnnotatedObjectInputStream\.java" />
-		<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/ProtectedObjectInputStream\.java" />
-		<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ClassLoaderObjectInputStream\.java" />
 		<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/search/generic/BooleanClauseFactoryImpl\.java" />
 		<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
 		<suppress checks="JavaFeatureFlagManagerUtilCheck" files="portal-test/src/com/liferay/portal/test/rule/FeatureFlagTestRule\.java" />
@@ -119,7 +116,6 @@
 		<suppress checks="JavaUpgradeIndexCheck" files="portal-impl/src/com/liferay/portal/upgrade/v6_2_0/UpgradeSchema\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/One\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/Two\.java" />
-		<suppress checks="JavaVariableTypeCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/PathHolder\.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-impl/src/com/liferay/portal/upgrade/util/BaseUpgradeTableImpl.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/UpgradeProcess.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/util/UpgradeProcessUtil.java" />

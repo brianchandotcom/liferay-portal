@@ -11,10 +11,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Full Name"
+				"en_US": "Company Name"
 			},
-			"name": "fullName",
-			"required": true,
+			"name": "companyName",
+			"required": false,
 			"type": "String"
 		},
 		{
@@ -35,10 +35,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Job Title"
+				"en_US": "Full Name"
 			},
-			"name": "jobTitle",
-			"required": false,
+			"name": "fullName",
+			"required": true,
 			"type": "String"
 		},
 		{
@@ -47,23 +47,23 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Company Name"
+				"en_US": "Job Title"
 			},
-			"name": "companyName",
+			"name": "jobTitle",
 			"required": false,
 			"type": "String"
 		},
 		{
-			"DBType": "Integer",
-			"businessType": "Integer",
+			"DBType": "Boolean",
+			"businessType": "Boolean",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Rating Satisfaction"
+				"en_US": "Notify"
 			},
-			"name": "ratingSatisfaction",
+			"name": "notify",
 			"required": false,
-			"type": "Integer"
+			"type": "Boolean"
 		},
 		{
 			"DBType": "Integer",
@@ -83,23 +83,23 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en_US": "Rating Satisfaction"
+			},
+			"name": "ratingSatisfaction",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en_US": "Rating Usefulness"
 			},
 			"name": "ratingUsefulness",
 			"required": false,
 			"type": "Integer"
-		},
-		{
-			"DBType": "Boolean",
-			"businessType": "Boolean",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Notify"
-			},
-			"name": "notify",
-			"required": false,
-			"type": "Boolean"
 		},
 		{
 			"DBType": "String",

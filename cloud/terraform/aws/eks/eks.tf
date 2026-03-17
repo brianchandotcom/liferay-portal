@@ -55,11 +55,6 @@ module "eks" {
 	version="21.3.1"
 	vpc_id=module.vpc.vpc_id
 }
-module "observability" {
-	count=var.observability_config.enabled ? 1 : 0
-	deployment_name=var.deployment_name
-	source="../modules/observability"
-}
 resource "aws_eks_addon" "s3_csi" {
 	addon_name="aws-mountpoint-s3-csi-driver"
 	addon_version=data.aws_eks_addon_version.s3_csi.version

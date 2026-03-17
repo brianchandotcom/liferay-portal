@@ -59,10 +59,7 @@ public interface ExportImportReportEntryLocalService
 		String modelNameLanguageKey);
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Transactional(
-		isolation = Isolation.PORTAL,
-		rollbackFor = {PortalException.class, SystemException.class}
-	)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ExportImportReportEntry addErrorExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long classPK, long exportImportConfigurationId,

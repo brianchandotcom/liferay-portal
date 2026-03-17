@@ -76,7 +76,7 @@ public class DLFileEntryModelDocumentContributorTest {
 			public String extractText(
 				InputStream inputStream, int maxStringLength) {
 
-				throw new RuntimeException();
+				throw new NoSuchMethodError();
 			}
 
 		};

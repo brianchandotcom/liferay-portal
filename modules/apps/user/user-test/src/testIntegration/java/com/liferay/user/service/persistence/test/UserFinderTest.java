@@ -6,6 +6,9 @@
 package com.liferay.user.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -31,7 +34,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -67,6 +72,16 @@ public class UserFinderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
 		_group = GroupTestUtil.addGroup();
 		_groupUser = UserTestUtil.addUser();
 
@@ -108,6 +123,8 @@ public class UserFinderTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		_depotEntryLocalService.deleteDepotEntry(_depotEntry);
+
 		_groupLocalService.deleteGroup(_group);
 		_userLocalService.deleteUser(_groupUser);
 
@@ -134,8 +151,8 @@ public class UserFinderTest {
 		).put(
 			"usersGroups",
 			new Long[] {
-				_group.getGroupId(), _organization1.getGroupId(),
-				_userGroup.getGroupId()
+				_depotEntry.getGroupId(), _group.getGroupId(),
+				_organization1.getGroupId(), _userGroup.getGroupId()
 			}
 		).build();
 
@@ -166,6 +183,24 @@ public class UserFinderTest {
 			_organization1.getOrganizationId());
 		_groupLocalService.clearUserGroupGroups(_userGroup.getUserGroupId());
 		_teamLocalService.clearUserGroupTeams(_userGroup.getUserGroupId());
+	}
+
+	@Test
+	public void testCountByKeywordsWithInheritedGroupsThroughDepotEntry()
+		throws Exception {
+
+		int expectedCount = _userFinder.countByKeywords(
+			TestPropsValues.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams);
+
+		_groupLocalService.addUserGroupGroup(
+			_userGroup.getUserGroupId(), _depotEntry.getGroupId());
+
+		int count = _userFinder.countByKeywords(
+			TestPropsValues.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams);
+
+		Assert.assertEquals(expectedCount + 1, count);
 	}
 
 	@Test
@@ -315,6 +350,21 @@ public class UserFinderTest {
 	}
 
 	@Test
+	public void testFindByKeywordsWithInheritedGroupsThroughDepotEntry()
+		throws Exception {
+
+		_groupLocalService.addUserGroupGroup(
+			_userGroup.getUserGroupId(), _depotEntry.getGroupId());
+
+		List<User> users = _userFinder.findByKeywords(
+			TestPropsValues.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(users.contains(_userGroupUser));
+	}
+
+	@Test
 	public void testFindByKeywordsWithInheritedRoles() throws Exception {
 		List<User> expectedUsers = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
@@ -396,6 +446,11 @@ public class UserFinderTest {
 
 		Assert.assertEquals(users.toString(), 1, users.size());
 	}
+
+	private static DepotEntry _depotEntry;
+
+	@Inject
+	private static DepotEntryLocalService _depotEntryLocalService;
 
 	private static Group _group;
 

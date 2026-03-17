@@ -2330,10 +2330,10 @@ public class BatchEnginePortletDataHandlerTest {
 			company.getGroupId());
 
 		FileEntry tempFileEntry1 = _addTempFileEntry(
-			objectDefinition,
-			_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA);
+			_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA,
+			objectDefinition);
 		FileEntry tempFileEntry2 = _addTempFileEntry(
-			objectDefinition, _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER);
+			_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER, objectDefinition);
 
 		return _addObjectEntry(
 			groupId, objectDefinition,
@@ -2377,15 +2377,14 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private FileEntry _addTempFileEntry(
-			ObjectDefinition objectDefinition, String tempFileName)
+			String content, ObjectDefinition objectDefinition)
 		throws Exception {
-
-		String content = "test\n" + tempFileName;
 
 		return TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getPortletId(),
-			TempFileEntryUtil.getTempFileName(tempFileName + ".txt"),
+			TempFileEntryUtil.getTempFileName(
+				RandomTestUtil.randomString() + ".txt"),
 			FileUtil.createTempFile(content.getBytes()),
 			ContentTypes.TEXT_PLAIN);
 	}
@@ -2576,7 +2575,7 @@ public class BatchEnginePortletDataHandlerTest {
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER));
 
 			Assert.assertEquals(
-				"test\n" + _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER,
+				_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER,
 				StringUtil.read(dlFileEntry.getContentStream()));
 		}
 	}
@@ -3654,14 +3653,14 @@ public class BatchEnginePortletDataHandlerTest {
 		"xText" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
-		RandomTestUtil.randomString();
+		"test\n" + RandomTestUtil.randomString();
 
 	private static final String
 		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
-			RandomTestUtil.randomString();
+			"test\n" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
-		RandomTestUtil.randomString();
+		"test\n" + RandomTestUtil.randomString();
 
 	private static BundleContext _bundleContext;
 	private static final BiFunction

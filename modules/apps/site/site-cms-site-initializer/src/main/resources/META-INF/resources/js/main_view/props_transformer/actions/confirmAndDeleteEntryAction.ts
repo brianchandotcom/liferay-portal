@@ -42,9 +42,11 @@ export default function confirmAndDeleteEntryAction({
 						refreshData: () => {
 							loadData();
 
-							Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
-								id: dataSetId,
-							});
+							if (dataSetId) {
+								Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+									id: dataSetId,
+								});
+							}
 						},
 						successMessage,
 						url: deleteAction.href,

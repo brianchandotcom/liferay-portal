@@ -81,9 +81,11 @@ export const VERSION_ACTIONS: any = {
 						type: 'success',
 					});
 
-					Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
-						id: dataSetId,
-					});
+					if (dataSetId) {
+						Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+							id: dataSetId,
+						});
+					}
 				},
 				showToast: false,
 				url: objectEntry.actions.copy.href,
@@ -139,9 +141,11 @@ export const VERSION_ACTIONS: any = {
 				refreshData: (responseData) => {
 					refreshData?.(responseData);
 
-					Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
-						id: dataSetId,
-					});
+					if (dataSetId) {
+						Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+							id: dataSetId,
+						});
+					}
 				},
 				successMessage: sub(
 					Liferay.Language.get('expire-version-success-message'),
@@ -207,16 +211,18 @@ export const VERSION_ACTIONS: any = {
 			objectEntryTitle: string,
 			dataSetId?: string
 		) => {
-			event.preventDefault();
+			event?.preventDefault();
 
 			executeAsyncItemAction({
 				method: objectEntry.actions.restore.method,
 				refreshData: (responseData) => {
 					refreshData?.(responseData);
 
-					Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
-						id: dataSetId,
-					});
+					if (dataSetId) {
+						Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {
+							id: dataSetId,
+						});
+					}
 				},
 				successMessage: sub(
 					Liferay.Language.get('restore-version-success-message'),

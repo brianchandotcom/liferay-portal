@@ -17,6 +17,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Peter Yoo
  */
@@ -388,8 +390,19 @@ public class GitUtil {
 	}
 
 	public static void main(String[] args) {
+		String command = args[0];
+
+		if (command.contains("git fetch")) {
+			try {
+				_stitchHistory(command);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
 		ExecutionResult executionResult = executeBashCommands(
-			3, 1000 * 10, 1000 * 60, new File("."), args[0]);
+			3, 1000 * 10, 1000 * 60, new File("."), command);
 
 		System.out.println(executionResult.getStandardOut());
 
@@ -399,7 +412,7 @@ public class GitUtil {
 
 		System.err.println(executionResult.getStandardError());
 
-		throw new RuntimeException("Unable to run command:\n     " + args[0]);
+		throw new RuntimeException("Unable to run command:\n     " + command);
 	}
 
 	public static String toSlaveGitHubDevNodeRemoteURL(
@@ -646,6 +659,77 @@ public class GitUtil {
 		return defaultBranchName;
 	}
 
+	private static void _stitchHistory(String command) throws IOException {
+		Matcher matcher = _gitFetchPattern.matcher(command);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		String remoteURL = matcher.group("remoteURL");
+
+		if (!remoteURL.contains("github.com")) {
+			return;
+		}
+
+		Matcher remoteURLMatcher = GitRemote.getRemoteURLMatcher(remoteURL);
+
+		if (!remoteURLMatcher.find()) {
+			return;
+		}
+
+		String repositoryName = remoteURLMatcher.group("gitRepositoryName");
+
+		String baseBranchName = System.getenv("GITHUB_UPSTREAM_BRANCH_NAME");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(baseBranchName)) {
+			baseBranchName = "master";
+		}
+
+		String branchName = matcher.group("branchName");
+		String username = remoteURLMatcher.group("username");
+
+		String compareURL = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", username, "/", repositoryName,
+			"/compare/", baseBranchName, "...", branchName);
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			compareURL);
+
+		if (!jsonObject.has("merge_base_commit")) {
+			return;
+		}
+
+		JSONObject mergeBaseCommitJSONObject = jsonObject.getJSONObject(
+			"merge_base_commit");
+
+		String mergeBaseSHA = mergeBaseCommitJSONObject.getString("sha");
+
+		ExecutionResult executionResult = executeBashCommands(
+			1, 0, 1000 * 10, new File("."),
+			"git merge-base --is-ancestor " + mergeBaseSHA + " " +
+				baseBranchName);
+
+		if (executionResult.getExitValue() == 0) {
+			return;
+		}
+
+		System.out.println(
+			"Merge base " + mergeBaseSHA +
+				" is missing from local history. Deepening history...");
+
+		executionResult = executeBashCommands(
+			1, 0, MILLIS_TIMEOUT, new File("."),
+			"git fetch -f --no-tags " + remoteURL + " " + mergeBaseSHA + ":" +
+				baseBranchName);
+
+		if (executionResult.getExitValue() != 0) {
+			System.out.println(
+				"Unable to stitch history: " +
+					executionResult.getStandardError());
+		}
+	}
+
 	private static final String _HOSTNAME_GITHUB = "github.com";
 
 	private static final String _HOSTNAME_GITHUB_CACHE_PROXY =
@@ -653,6 +737,8 @@ public class GitUtil {
 
 	private static final Pattern _dnsDebugPattern = Pattern.compile(
 		"Unable to resolve hostname (?<hostname>[^:]+): ");
+	private static final Pattern _gitFetchPattern = Pattern.compile(
+		"git fetch .*? (?<remoteURL>[^\\s]+) (?<branchName>[^\\s:]+)");
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/",

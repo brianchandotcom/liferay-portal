@@ -197,7 +197,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) as count from SegmentsExperience where ",
+					"select 1 from SegmentsExperience where ",
 					"ctCollectionId = ? and groupId = ? and ",
 					"segmentsExperienceKey = ? and plid = ?"))) {
 
@@ -207,13 +207,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(4, plid);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					if (resultSet.getInt("count") > 0) {
-						return true;
-					}
-				}
-
-				return false;
+				return resultSet.next();
 			}
 		}
 	}

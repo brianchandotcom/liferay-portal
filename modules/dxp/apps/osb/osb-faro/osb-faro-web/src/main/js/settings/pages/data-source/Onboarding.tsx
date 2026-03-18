@@ -1,3 +1,4 @@
+import ConnectDemandbase from './ConnectDemandbase';
 import ConnectLiferayDXP from './ConnectLiferayDXP';
 import ConnectSalesforce from './ConnectSalesforce';
 import React from 'react';
@@ -6,8 +7,9 @@ import {DataSourceTypes} from 'shared/util/constants';
 import {useParams} from 'react-router-dom';
 
 const PAGE_MAP = {
-	[DataSourceTypes.Salesforce]: ConnectSalesforce,
-	[DataSourceTypes.Liferay]: ConnectLiferayDXP
+	[DataSourceTypes.Demandbase]: ConnectDemandbase,
+	[DataSourceTypes.Liferay]: ConnectLiferayDXP,
+	[DataSourceTypes.Salesforce]: ConnectSalesforce
 };
 
 const DataSourceOnboarding = () => {

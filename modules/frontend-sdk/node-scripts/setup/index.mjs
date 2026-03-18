@@ -6,8 +6,8 @@
 import {$} from 'execa';
 import path from 'path';
 
-import {FRONTEND_SDK_DIR} from './util/locations.mjs';
-import installSassBinary from './util/sass/util/installSassBinary.mjs';
+import {FRONTEND_SDK_DIR} from '../util/locations.mjs';
+import installSassBinary from '../util/sass/util/installSassBinary.mjs';
 
 async function buildPrettierPlugin() {
 	const location = path.join(FRONTEND_SDK_DIR, 'prettier-plugin');

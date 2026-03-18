@@ -51,6 +51,14 @@ spec:
                                     required:
                                         -   rules
                                     type: object
+                                cmk:
+                                    default:
+                                        enabled: false
+                                    properties:
+                                        enabled:
+                                            default: false
+                                            type: boolean
+                                    type: object
                                 commonTags:
                                     additionalProperties:
                                         type: string

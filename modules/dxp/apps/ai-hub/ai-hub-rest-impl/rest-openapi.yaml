@@ -50,14 +50,7 @@ components:
                 context:
                     additionalProperties: true
                     type: object
-                scope:
-                    $ref: "#/components/schemas/Scope"
                 text:
-                    type: string
-            type: object
-        Scope:
-            properties:
-                externalReferenceCode:
                     type: string
             type: object
         Status:

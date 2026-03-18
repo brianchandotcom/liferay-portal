@@ -41,4 +41,12 @@ public class AccountEntryUtil {
 		return null;
 	}
 
+	public static long getUserAccountEntryGroupId(long userId)
+		throws Exception {
+
+		AccountEntry accountEntry = getUserAccountEntry(userId);
+
+		return accountEntry.getAccountEntryGroupId();
+	}
+
 }

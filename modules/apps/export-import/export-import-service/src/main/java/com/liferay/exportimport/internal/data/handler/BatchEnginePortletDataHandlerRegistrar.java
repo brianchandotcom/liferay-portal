@@ -27,8 +27,8 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -107,7 +107,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	private LayoutLocalService _layoutLocalService;
 
 	private final Map<String, ServiceRegistration<PortletDataHandler>>
-		_portletIdServiceRegistrations = new HashMap<>();
+		_portletIdServiceRegistrations = new ConcurrentHashMap<>();
 	private final DCLSingleton
 		<ServiceTrackerList<ServiceRegistration<PortletDataHandler>>>
 			_serviceTrackerListDCLSingleton = new DCLSingleton<>();

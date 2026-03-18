@@ -28,6 +28,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -7250,8 +7251,6 @@ public class ObjectEntryLocalServiceTest {
 		Company company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
-		String content = StringUtil.randomId(8);
-
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), company.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -7259,8 +7258,11 @@ public class ObjectEntryLocalServiceTest {
 				RandomTestUtil.randomString() + ".txt"),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(content.getBytes()), 0, null, null, null,
-			ServiceContextTestUtil.getServiceContext());
+			new ByteArrayInputStream(
+				DLTestUtil.randomTextFileContent(
+					8
+				).getBytes()),
+			0, null, null, null, ServiceContextTestUtil.getServiceContext());
 
 		return _dlFileEntryLocalService.getFileEntry(
 			fileEntry.getFileEntryId());
@@ -7482,13 +7484,14 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private FileEntry _addTempFileEntry(String title) throws Exception {
-		String content = StringUtil.randomId(8);
-
 		return TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			_objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(title + ".txt"),
-			FileUtil.createTempFile(content.getBytes()),
+			FileUtil.createTempFile(
+				DLTestUtil.randomTextFileContent(
+					8
+				).getBytes()),
 			ContentTypes.TEXT_PLAIN);
 	}
 

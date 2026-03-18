@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -110,8 +110,9 @@ public class AttachmentManagerTest {
 	@Test
 	public void testGetOrAddFileEntry() throws Exception {
 		FileEntry tempFileEntry = _addTempFileEntry(
-			StringUtil.randomId(8), ".txt", RandomTestUtil.randomString(),
-			ContentTypes.TEXT_PLAIN, _objectDefinition);
+			DLTestUtil.randomTextFileContent(8), ".txt",
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			_objectDefinition);
 
 		Folder folder = tempFileEntry.getFolder();
 
@@ -192,8 +193,9 @@ public class AttachmentManagerTest {
 					).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				StringUtil.randomId(8), ".txt", RandomTestUtil.randomString(),
-				ContentTypes.TEXT_PLAIN, _objectDefinition);
+				DLTestUtil.randomTextFileContent(8), ".txt",
+				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+				_objectDefinition);
 
 			folder = tempFileEntry.getFolder();
 
@@ -220,8 +222,9 @@ public class AttachmentManagerTest {
 						).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				StringUtil.randomId(8), ".txt", RandomTestUtil.randomString(),
-				ContentTypes.TEXT_PLAIN, _objectDefinition);
+				DLTestUtil.randomTextFileContent(8), ".txt",
+				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+				_objectDefinition);
 
 			folder = tempFileEntry.getFolder();
 
@@ -247,7 +250,7 @@ public class AttachmentManagerTest {
 					).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				StringUtil.randomId(1000), ".txt",
+				DLTestUtil.randomTextFileContent(1000), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 				_objectDefinition);
 

@@ -2,6 +2,7 @@ ext {
 	gitHash = "e28afa18f74fffbed05a6faa6ef511fb1e51acb8"
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-portal"
+	mvnJARInclude = "com.liferay.faces.portal-7.0.0.jar"
 	mvnTargetDir = "portal/target"
 }
 

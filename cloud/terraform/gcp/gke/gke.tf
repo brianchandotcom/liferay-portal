@@ -96,6 +96,9 @@ resource "google_container_node_pool" "general_purpose" {
 		disk_size_gb=100
 		disk_type="pd-balanced"
 		image_type="COS_CONTAINERD"
+		kubelet_config {
+			insecure_kubelet_readonly_port_enabled="FALSE"
+		}
 		machine_type=var.machine_type
 		metadata={
 			disable-legacy-endpoints="true"

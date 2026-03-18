@@ -327,3 +327,4 @@ public class EagerBlobEntryLocalServiceUtil {
 			EagerBlobEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-568721925

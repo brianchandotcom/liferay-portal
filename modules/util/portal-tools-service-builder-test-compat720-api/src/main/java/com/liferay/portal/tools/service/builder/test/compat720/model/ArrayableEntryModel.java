@@ -163,3 +163,4 @@ public interface ArrayableEntryModel
 	public void setType(String type);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1020105653

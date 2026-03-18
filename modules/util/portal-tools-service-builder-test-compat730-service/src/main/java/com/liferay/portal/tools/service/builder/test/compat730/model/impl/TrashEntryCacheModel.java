@@ -171,3 +171,4 @@ public class TrashEntryCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1863434493

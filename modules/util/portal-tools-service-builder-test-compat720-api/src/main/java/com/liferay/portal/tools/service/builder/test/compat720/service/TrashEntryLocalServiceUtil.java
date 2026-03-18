@@ -274,3 +274,4 @@ public class TrashEntryLocalServiceUtil {
 	private static volatile TrashEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1642780499

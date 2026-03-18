@@ -1758,3 +1758,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-407400375

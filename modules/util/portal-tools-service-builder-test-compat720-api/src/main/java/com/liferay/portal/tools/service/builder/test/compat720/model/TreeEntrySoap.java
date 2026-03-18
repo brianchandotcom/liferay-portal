@@ -126,3 +126,4 @@ public class TreeEntrySoap implements Serializable {
 	private long _rightTreeEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-758341709

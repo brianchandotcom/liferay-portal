@@ -363,3 +363,4 @@ public class ERCGroupEntryLocalServiceUtil {
 	private static volatile ERCGroupEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-712760268

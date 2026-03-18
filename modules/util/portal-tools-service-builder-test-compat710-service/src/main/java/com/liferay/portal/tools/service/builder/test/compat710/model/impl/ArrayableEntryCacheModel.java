@@ -152,3 +152,4 @@ public class ArrayableEntryCacheModel
 	public String type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:994209420

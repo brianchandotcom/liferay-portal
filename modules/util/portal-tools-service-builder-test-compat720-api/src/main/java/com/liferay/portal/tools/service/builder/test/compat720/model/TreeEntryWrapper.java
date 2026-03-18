@@ -230,3 +230,4 @@ public class TreeEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1368416174

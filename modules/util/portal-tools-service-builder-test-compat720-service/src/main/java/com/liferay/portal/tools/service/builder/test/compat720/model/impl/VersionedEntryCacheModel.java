@@ -129,3 +129,4 @@ public class VersionedEntryCacheModel
 	public long groupId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:461595373

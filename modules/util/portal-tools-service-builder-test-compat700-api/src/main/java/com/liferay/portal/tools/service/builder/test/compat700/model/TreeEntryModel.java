@@ -176,3 +176,4 @@ public interface TreeEntryModel extends BaseModel<TreeEntry> {
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2061120051

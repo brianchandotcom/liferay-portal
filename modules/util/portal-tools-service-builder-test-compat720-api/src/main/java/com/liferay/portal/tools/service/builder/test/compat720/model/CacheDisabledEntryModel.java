@@ -74,3 +74,4 @@ public interface CacheDisabledEntryModel extends BaseModel<CacheDisabledEntry> {
 	public void setName(String name);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1545356491

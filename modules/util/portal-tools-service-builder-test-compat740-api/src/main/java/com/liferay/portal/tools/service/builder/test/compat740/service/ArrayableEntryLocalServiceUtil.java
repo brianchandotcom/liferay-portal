@@ -299,3 +299,4 @@ public class ArrayableEntryLocalServiceUtil {
 			ArrayableEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1250410237

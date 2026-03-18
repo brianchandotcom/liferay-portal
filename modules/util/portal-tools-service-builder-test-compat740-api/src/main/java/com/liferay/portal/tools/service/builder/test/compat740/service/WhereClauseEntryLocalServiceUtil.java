@@ -306,3 +306,4 @@ public class WhereClauseEntryLocalServiceUtil {
 			WhereClauseEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:391234990

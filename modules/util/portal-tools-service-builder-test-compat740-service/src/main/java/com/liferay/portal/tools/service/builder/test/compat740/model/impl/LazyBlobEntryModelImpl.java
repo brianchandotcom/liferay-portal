@@ -685,3 +685,4 @@ public class LazyBlobEntryModelImpl
 	private LazyBlobEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1729680501

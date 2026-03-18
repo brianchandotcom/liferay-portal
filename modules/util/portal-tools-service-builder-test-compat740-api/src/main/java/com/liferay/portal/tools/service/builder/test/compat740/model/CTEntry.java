@@ -50,3 +50,4 @@ public interface CTEntry extends CTEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-519298516

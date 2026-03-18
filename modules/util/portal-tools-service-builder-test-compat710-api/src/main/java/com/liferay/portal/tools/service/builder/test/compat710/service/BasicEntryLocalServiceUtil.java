@@ -380,3 +380,4 @@ public class BasicEntryLocalServiceUtil {
 	private static volatile BasicEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-181736685

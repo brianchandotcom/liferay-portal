@@ -135,3 +135,4 @@ public class ArrayableEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:832215640

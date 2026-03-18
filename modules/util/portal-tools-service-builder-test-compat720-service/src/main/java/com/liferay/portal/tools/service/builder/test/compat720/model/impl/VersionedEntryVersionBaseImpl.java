@@ -29,3 +29,4 @@ public abstract class VersionedEntryVersionBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:829808994

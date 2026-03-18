@@ -598,3 +598,4 @@ public class ManyColumnsEntryCacheModel
 	public int column64;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:772629202

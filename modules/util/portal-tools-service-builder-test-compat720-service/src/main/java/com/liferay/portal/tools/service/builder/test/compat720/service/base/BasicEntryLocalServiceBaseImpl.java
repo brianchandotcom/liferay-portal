@@ -643,3 +643,4 @@ public abstract class BasicEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-67836625

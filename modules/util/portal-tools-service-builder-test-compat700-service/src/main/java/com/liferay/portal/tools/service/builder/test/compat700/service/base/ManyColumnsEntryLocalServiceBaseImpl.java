@@ -498,3 +498,4 @@ public abstract class ManyColumnsEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-138280106

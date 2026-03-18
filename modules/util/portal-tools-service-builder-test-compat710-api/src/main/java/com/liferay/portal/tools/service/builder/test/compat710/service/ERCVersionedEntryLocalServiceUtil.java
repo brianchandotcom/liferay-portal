@@ -376,3 +376,4 @@ public class ERCVersionedEntryLocalServiceUtil {
 	private static volatile ERCVersionedEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-687151696

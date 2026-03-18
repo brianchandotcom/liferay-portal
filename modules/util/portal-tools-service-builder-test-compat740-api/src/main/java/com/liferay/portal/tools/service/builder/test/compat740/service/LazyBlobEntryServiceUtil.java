@@ -45,3 +45,4 @@ public class LazyBlobEntryServiceUtil {
 			LazyBlobEntryServiceUtil.class, LazyBlobEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:844124544

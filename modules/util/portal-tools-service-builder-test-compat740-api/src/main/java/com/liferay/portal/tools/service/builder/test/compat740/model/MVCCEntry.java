@@ -50,3 +50,4 @@ public interface MVCCEntry extends MVCCEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1203718556

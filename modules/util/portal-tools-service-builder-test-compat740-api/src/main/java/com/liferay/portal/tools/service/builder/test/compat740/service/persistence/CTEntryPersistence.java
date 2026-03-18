@@ -346,3 +346,4 @@ public interface CTEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-855946974

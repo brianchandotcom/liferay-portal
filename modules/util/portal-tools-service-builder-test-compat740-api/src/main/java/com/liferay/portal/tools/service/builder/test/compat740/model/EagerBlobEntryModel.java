@@ -111,3 +111,4 @@ public interface EagerBlobEntryModel extends BaseModel<EagerBlobEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:541882662

@@ -526,3 +526,4 @@ public class ArrayableEntryUtil {
 	private static volatile ArrayableEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-95394243

@@ -98,3 +98,4 @@ public interface LocalizedEntryModel extends BaseModel<LocalizedEntry> {
 	public Map<String, String> getLanguageIdToContentMap();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1885823394

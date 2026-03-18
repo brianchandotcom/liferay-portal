@@ -54,3 +54,4 @@ public interface LocalizedEntryLocalization
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1526025052

@@ -492,3 +492,4 @@ public abstract class LikeFinderEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:956404773

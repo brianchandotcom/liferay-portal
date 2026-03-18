@@ -358,3 +358,4 @@ public class LazyBlobEntryWrapper
 	private final LazyBlobEntry _lazyBlobEntry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-31652430

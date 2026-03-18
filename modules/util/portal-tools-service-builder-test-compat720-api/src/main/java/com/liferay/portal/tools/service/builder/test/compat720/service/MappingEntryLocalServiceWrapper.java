@@ -473,3 +473,4 @@ public class MappingEntryLocalServiceWrapper
 	private MappingEntryLocalService _mappingEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1538095854

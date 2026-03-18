@@ -35,3 +35,4 @@ public class CacheDisabledEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1342245692

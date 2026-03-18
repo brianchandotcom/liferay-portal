@@ -39,3 +39,4 @@ public abstract class LocalizedEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1759513390

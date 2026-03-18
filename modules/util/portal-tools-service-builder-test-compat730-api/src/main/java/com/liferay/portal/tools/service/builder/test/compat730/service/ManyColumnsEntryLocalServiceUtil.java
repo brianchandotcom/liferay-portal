@@ -297,3 +297,4 @@ public class ManyColumnsEntryLocalServiceUtil {
 	private static volatile ManyColumnsEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1698399062

@@ -344,3 +344,4 @@ public class BasicEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1062525096

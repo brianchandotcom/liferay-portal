@@ -379,3 +379,4 @@ public class EagerBlobEntryLocalServiceWrapper
 	private EagerBlobEntryLocalService _eagerBlobEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:640512578

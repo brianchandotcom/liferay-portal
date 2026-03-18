@@ -106,3 +106,4 @@ public class MappingEntrySoap implements Serializable {
 	private String _name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-307001648

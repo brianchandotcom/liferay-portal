@@ -244,3 +244,4 @@ public interface TreeEntryLocalService
 	public TreeEntry updateTreeEntry(TreeEntry treeEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2010349732

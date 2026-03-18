@@ -114,3 +114,4 @@ public interface TreeEntryModel extends BaseModel<TreeEntry> {
 	public void setRightTreeEntryId(long rightTreeEntryId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1638386701

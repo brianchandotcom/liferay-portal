@@ -165,3 +165,4 @@ public interface ERCVersionedEntryVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:30677148

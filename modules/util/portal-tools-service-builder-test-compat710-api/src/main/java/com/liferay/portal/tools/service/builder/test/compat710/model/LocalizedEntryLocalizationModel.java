@@ -199,3 +199,4 @@ public interface LocalizedEntryLocalizationModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:45792666

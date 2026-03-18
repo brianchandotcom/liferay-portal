@@ -110,3 +110,4 @@ public class MappingEntryCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-379065142

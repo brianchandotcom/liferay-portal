@@ -39,3 +39,4 @@ public abstract class LikeFinderEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:911754776

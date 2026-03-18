@@ -308,3 +308,4 @@ public class EagerBlobEntryLocalServiceUtil {
 	private static volatile EagerBlobEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:371462067

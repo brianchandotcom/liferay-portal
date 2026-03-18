@@ -45,3 +45,4 @@ public class EagerBlobEntryServiceUtil {
 			EagerBlobEntryServiceUtil.class, EagerBlobEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1804279878

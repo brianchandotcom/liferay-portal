@@ -1775,3 +1775,4 @@ public class EagerBlobEntryPersistenceImpl
 		new String[] {"uuid", "blob"});
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1416351541

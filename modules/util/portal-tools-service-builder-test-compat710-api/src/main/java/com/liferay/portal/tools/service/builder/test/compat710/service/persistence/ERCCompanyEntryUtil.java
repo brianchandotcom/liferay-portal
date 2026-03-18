@@ -704,3 +704,4 @@ public class ERCCompanyEntryUtil {
 	private static volatile ERCCompanyEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1562189053

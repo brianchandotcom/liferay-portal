@@ -455,3 +455,4 @@ public class ERCGroupEntryLocalServiceWrapper
 	private ERCGroupEntryLocalService _ercGroupEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-614606060

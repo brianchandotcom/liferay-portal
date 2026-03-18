@@ -726,3 +726,4 @@ public class ManyColumnsEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1762018537

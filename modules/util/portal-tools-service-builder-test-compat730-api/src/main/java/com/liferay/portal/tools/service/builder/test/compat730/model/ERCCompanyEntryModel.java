@@ -164,3 +164,4 @@ public interface ERCCompanyEntryModel
 	public void setColumn1(int column1);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1297004361

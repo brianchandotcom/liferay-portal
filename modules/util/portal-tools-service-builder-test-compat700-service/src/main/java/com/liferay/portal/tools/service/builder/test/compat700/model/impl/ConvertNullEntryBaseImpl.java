@@ -39,3 +39,4 @@ public abstract class ConvertNullEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1431201168

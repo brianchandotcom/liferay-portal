@@ -575,3 +575,4 @@ public class LikeFinderEntryUtil {
 	private static volatile LikeFinderEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1246313488

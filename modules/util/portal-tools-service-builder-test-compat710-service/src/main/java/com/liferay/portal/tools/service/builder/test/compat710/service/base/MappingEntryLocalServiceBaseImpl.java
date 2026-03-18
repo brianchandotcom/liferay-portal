@@ -694,3 +694,4 @@ public abstract class MappingEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-239852323

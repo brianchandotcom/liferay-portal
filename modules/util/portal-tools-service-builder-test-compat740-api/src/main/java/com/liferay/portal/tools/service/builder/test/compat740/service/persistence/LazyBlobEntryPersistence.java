@@ -346,3 +346,4 @@ public interface LazyBlobEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1796707224

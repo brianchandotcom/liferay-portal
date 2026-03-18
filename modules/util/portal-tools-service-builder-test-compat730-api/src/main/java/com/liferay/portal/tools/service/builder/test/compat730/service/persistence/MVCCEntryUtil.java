@@ -507,3 +507,4 @@ public class MVCCEntryUtil {
 	private static volatile MVCCEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:675436758

@@ -325,3 +325,4 @@ public class ManyColumnsEntryLocalServiceWrapper
 	private ManyColumnsEntryLocalService _manyColumnsEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:180978849

@@ -343,3 +343,4 @@ public class CTEntryLocalServiceWrapper
 	private CTEntryLocalService _ctEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-853237506

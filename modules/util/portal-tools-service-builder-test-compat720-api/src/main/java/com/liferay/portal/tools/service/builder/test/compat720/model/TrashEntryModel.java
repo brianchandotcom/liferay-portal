@@ -251,3 +251,4 @@ public interface TrashEntryModel
 	public boolean isInTrashImplicitly();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:805232325

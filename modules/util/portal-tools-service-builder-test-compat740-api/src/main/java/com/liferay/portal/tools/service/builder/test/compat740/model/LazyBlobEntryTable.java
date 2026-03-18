@@ -39,3 +39,4 @@ public class LazyBlobEntryTable extends BaseTable<LazyBlobEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:300186705

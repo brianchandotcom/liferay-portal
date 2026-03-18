@@ -137,3 +137,4 @@ public interface LocalizedEntryLocalizationModel
 	public void setContent(String content);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:142769709

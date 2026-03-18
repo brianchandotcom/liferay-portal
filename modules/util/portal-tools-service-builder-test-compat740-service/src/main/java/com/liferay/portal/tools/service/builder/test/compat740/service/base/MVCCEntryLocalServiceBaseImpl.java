@@ -445,3 +445,4 @@ public abstract class MVCCEntryLocalServiceBaseImpl
 		MVCCEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2139315438

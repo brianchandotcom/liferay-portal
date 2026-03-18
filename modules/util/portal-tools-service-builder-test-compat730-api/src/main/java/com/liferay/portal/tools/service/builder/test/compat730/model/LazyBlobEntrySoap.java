@@ -130,3 +130,4 @@ public class LazyBlobEntrySoap implements Serializable {
 	private Blob _blob2;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1058667111

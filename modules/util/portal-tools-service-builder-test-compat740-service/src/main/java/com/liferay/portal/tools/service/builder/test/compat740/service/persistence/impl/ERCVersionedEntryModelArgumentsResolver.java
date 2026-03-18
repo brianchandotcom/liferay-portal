@@ -116,3 +116,4 @@ public class ERCVersionedEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1859310467

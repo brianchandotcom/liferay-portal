@@ -208,3 +208,4 @@ public class VersionedEntryVersionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1844237908

@@ -207,3 +207,4 @@ public interface BasicEntryModel
 	public void setDescription(String description);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:589594640

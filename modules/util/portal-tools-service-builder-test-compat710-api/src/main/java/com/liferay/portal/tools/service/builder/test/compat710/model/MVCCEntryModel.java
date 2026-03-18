@@ -171,3 +171,4 @@ public interface MVCCEntryModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1023492116

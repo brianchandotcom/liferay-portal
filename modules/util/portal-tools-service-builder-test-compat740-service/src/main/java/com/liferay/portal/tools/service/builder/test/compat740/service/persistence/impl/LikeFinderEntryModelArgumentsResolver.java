@@ -115,3 +115,4 @@ public class LikeFinderEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1378088387

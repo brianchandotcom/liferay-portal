@@ -636,3 +636,4 @@ public class ArrayableEntryModelImpl
 	private ArrayableEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-672337473

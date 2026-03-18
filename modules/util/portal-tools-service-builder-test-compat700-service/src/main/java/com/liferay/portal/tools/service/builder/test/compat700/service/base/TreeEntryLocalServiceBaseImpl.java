@@ -483,3 +483,4 @@ public abstract class TreeEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1207210076

@@ -52,3 +52,4 @@ public interface ConvertNullEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1324225007

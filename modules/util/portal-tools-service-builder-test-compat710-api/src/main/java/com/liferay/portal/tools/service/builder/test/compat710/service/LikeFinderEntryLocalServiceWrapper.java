@@ -324,3 +324,4 @@ public class LikeFinderEntryLocalServiceWrapper
 	private LikeFinderEntryLocalService _likeFinderEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:397476476

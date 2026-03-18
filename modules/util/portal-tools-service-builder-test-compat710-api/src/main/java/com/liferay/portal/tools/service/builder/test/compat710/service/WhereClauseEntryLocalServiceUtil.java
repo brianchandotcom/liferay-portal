@@ -287,3 +287,4 @@ public class WhereClauseEntryLocalServiceUtil {
 	private static volatile WhereClauseEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:158662577

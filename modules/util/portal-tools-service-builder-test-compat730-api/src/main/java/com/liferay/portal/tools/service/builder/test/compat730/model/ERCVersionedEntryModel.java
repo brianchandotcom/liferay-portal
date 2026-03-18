@@ -121,3 +121,4 @@ public interface ERCVersionedEntryModel
 	public void setCompanyId(long companyId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1447651621

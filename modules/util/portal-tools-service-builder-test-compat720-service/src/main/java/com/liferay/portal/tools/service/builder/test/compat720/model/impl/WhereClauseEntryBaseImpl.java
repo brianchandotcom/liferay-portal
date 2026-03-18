@@ -39,3 +39,4 @@ public abstract class WhereClauseEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:280231216

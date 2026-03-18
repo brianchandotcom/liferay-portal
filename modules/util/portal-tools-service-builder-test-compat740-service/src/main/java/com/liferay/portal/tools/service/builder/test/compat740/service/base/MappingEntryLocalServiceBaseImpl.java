@@ -613,3 +613,4 @@ public abstract class MappingEntryLocalServiceBaseImpl
 		MappingEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:515483508

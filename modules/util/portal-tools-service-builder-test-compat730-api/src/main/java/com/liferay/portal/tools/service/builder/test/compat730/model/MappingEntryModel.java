@@ -92,3 +92,4 @@ public interface MappingEntryModel
 	public void setName(String name);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2085249735

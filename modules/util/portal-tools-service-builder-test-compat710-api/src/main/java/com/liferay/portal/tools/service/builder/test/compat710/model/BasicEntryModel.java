@@ -269,3 +269,4 @@ public interface BasicEntryModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-392772725

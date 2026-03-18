@@ -508,3 +508,4 @@ public abstract class WhereClauseEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1278857236

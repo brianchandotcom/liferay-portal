@@ -45,3 +45,4 @@ public class EagerBlobEntryServiceUtil {
 	private static volatile EagerBlobEntryService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2118717087

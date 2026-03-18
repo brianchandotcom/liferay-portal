@@ -255,3 +255,4 @@ public interface ManyColumnsEntryLocalService
 		ManyColumnsEntry manyColumnsEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1951113321

@@ -346,3 +346,4 @@ public class LocalizedEntryLocalServiceUtil {
 			LocalizedEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1066130764

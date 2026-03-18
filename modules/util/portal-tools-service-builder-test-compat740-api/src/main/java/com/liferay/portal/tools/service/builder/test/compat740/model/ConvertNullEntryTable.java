@@ -34,3 +34,4 @@ public class ConvertNullEntryTable extends BaseTable<ConvertNullEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1527411632

@@ -43,3 +43,4 @@ public class ArrayableEntryTable extends BaseTable<ArrayableEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1120492133

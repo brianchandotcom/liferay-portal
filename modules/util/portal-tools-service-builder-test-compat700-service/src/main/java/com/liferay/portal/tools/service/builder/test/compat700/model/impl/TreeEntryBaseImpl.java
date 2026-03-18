@@ -39,3 +39,4 @@ public abstract class TreeEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1172783138

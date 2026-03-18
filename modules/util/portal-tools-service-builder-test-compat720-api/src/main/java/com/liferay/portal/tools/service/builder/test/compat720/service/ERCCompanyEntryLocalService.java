@@ -288,3 +288,4 @@ public interface ERCCompanyEntryLocalService
 		ERCCompanyEntry ercCompanyEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1021788641

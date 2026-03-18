@@ -39,3 +39,4 @@ public abstract class BasicEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1413369172

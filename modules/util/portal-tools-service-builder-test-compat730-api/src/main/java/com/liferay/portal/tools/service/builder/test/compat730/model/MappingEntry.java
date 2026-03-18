@@ -50,3 +50,4 @@ public interface MappingEntry extends MappingEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1435807401

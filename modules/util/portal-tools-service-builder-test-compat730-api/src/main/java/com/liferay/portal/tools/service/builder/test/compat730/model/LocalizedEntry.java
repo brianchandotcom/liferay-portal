@@ -50,3 +50,4 @@ public interface LocalizedEntry extends LocalizedEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2055749737

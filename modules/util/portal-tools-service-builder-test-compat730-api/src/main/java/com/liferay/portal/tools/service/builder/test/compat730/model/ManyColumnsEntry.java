@@ -52,3 +52,4 @@ public interface ManyColumnsEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1886587494

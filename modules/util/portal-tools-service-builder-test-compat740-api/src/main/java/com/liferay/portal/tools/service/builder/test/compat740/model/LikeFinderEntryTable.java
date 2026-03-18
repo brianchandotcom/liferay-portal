@@ -39,3 +39,4 @@ public class LikeFinderEntryTable extends BaseTable<LikeFinderEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-155610181

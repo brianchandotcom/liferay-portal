@@ -346,3 +346,4 @@ public interface EagerBlobEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:601210356

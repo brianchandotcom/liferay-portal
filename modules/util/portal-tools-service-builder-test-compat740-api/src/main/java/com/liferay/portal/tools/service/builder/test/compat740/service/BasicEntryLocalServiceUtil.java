@@ -402,3 +402,4 @@ public class BasicEntryLocalServiceUtil {
 			BasicEntryLocalServiceUtil.class, BasicEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1165819434

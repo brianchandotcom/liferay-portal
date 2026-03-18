@@ -52,3 +52,4 @@ public interface CacheDisabledEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:115063245

@@ -50,3 +50,4 @@ public interface ERCCompanyEntry extends ERCCompanyEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:773958684

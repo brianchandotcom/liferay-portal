@@ -361,3 +361,4 @@ public class ERCVersionedEntryWrapper
 	private final ERCVersionedEntry _ercVersionedEntry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1897319737

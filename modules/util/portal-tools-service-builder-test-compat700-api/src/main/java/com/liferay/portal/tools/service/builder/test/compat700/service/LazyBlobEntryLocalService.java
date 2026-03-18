@@ -287,3 +287,4 @@ public interface LazyBlobEntryLocalService
 	public LazyBlobEntry updateLazyBlobEntry(LazyBlobEntry lazyBlobEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:552678292

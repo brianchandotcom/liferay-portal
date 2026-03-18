@@ -344,3 +344,4 @@ public interface MVCCEntryPersistence extends BasePersistence<MVCCEntry> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:143670329

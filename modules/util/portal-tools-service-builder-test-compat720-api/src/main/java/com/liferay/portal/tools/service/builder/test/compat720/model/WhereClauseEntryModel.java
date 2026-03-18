@@ -89,3 +89,4 @@ public interface WhereClauseEntryModel extends BaseModel<WhereClauseEntry> {
 	public void setNickname(String nickname);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-802000487

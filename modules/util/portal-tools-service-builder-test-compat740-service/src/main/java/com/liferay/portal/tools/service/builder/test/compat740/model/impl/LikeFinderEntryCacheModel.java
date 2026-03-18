@@ -126,3 +126,4 @@ public class LikeFinderEntryCacheModel
 	public String portletId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-662560061

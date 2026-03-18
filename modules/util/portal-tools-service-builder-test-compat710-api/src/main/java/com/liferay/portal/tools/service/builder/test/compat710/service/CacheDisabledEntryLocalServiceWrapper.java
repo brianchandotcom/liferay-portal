@@ -326,3 +326,4 @@ public class CacheDisabledEntryLocalServiceWrapper
 	private CacheDisabledEntryLocalService _cacheDisabledEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1685362833

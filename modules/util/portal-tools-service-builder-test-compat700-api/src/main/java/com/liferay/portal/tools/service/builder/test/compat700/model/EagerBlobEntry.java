@@ -50,3 +50,4 @@ public interface EagerBlobEntry extends EagerBlobEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:764666883

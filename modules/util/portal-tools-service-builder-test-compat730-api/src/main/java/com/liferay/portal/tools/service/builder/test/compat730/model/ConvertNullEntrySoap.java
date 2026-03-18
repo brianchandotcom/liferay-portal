@@ -106,3 +106,4 @@ public class ConvertNullEntrySoap implements Serializable {
 	private String _name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2000242032

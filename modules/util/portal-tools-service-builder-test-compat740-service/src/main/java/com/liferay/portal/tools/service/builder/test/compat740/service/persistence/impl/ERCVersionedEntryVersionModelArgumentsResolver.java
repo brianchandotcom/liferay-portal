@@ -139,3 +139,4 @@ public class ERCVersionedEntryVersionModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:556228273

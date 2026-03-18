@@ -110,3 +110,4 @@ public class EagerBlobEntryCacheModel
 	public long groupId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-352423792

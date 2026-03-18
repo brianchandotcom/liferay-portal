@@ -50,3 +50,4 @@ public interface ArrayableEntry extends ArrayableEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1558884148

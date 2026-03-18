@@ -292,3 +292,4 @@ public class MVCCEntryLocalServiceUtil {
 			MVCCEntryLocalServiceUtil.class, MVCCEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-568846921

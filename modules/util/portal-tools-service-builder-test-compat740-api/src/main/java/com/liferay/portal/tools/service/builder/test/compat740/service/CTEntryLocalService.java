@@ -276,3 +276,4 @@ public interface CTEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1025889963

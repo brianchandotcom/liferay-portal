@@ -380,3 +380,4 @@ public interface ArrayableEntryPersistence
 	public Set<String> getBadColumnNames();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-9155475

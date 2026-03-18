@@ -160,3 +160,4 @@ public interface LocalizedEntryModel extends BaseModel<LocalizedEntry> {
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-113243312

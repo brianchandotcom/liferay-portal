@@ -13,6 +13,7 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class VocabularyObjectDefinitionSelectionFDSFilter
 
 	@Override
 	public String getItemKey() {
-		return "assetTypes.type";
+		return "value";
 	}
 
 	@Override
@@ -65,10 +66,14 @@ public class VocabularyObjectDefinitionSelectionFDSFilter
 				}),
 			objectDefinition -> new SelectionFDSFilterItem(
 				objectDefinition.getLabel(locale),
-				objectDefinition.getObjectDefinitionId()));
+				String.valueOf(
+					_portal.getClassNameId(objectDefinition.getClassName()))));
 	}
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
+
+	@Reference
+	private Portal _portal;
 
 }

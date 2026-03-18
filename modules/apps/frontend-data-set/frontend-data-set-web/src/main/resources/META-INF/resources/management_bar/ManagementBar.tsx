@@ -81,7 +81,7 @@ function ManagementBar({
 				{!!items.length &&
 					selectable &&
 					selectionType === 'multiple' && (
-						<div className="ml-4 mt-2">
+						<div className="ml-4">
 							<SelectionCheckbox
 								handleCheckboxClick={handleCheckboxClick}
 								items={items}

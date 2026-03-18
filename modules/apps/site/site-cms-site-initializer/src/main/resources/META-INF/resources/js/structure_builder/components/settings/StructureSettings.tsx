@@ -15,6 +15,7 @@ import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectErrors from '../../selectors/selectErrors';
 import selectStructure from '../../selectors/selectStructure';
 import selectStructureLabel from '../../selectors/selectStructureLabel';
+import selectStructureType from '../../selectors/selectStructureType';
 import selectStructureUuid from '../../selectors/selectStructureUuid';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
@@ -22,10 +23,16 @@ import {LocalizedInput} from '../LocalizedInput';
 import SpacesSelector from '../SpacesSelector';
 import WorkflowTab from './WorkflowTab';
 
+const STRUCTURE_TYPES = {
+	L_CMS_CONTENT_STRUCTURES: Liferay.Language.get('content'),
+	L_CMS_FILE_TYPES: Liferay.Language.get('file'),
+};
+
 export default function StructureSettings() {
 	const dispatch = useStateDispatch();
 
 	const structureLabel = useSelector(selectStructureLabel);
+	const structureType = useSelector(selectStructureType);
 	const structureUuid = useSelector(selectStructureUuid);
 	const errors = useSelector(selectErrors(structureUuid));
 
@@ -56,7 +63,7 @@ export default function StructureSettings() {
 			) : null}
 
 			<ClayLabel className="mb-3" displayType="info">
-				{Liferay.Language.get('content')}
+				{STRUCTURE_TYPES[structureType]}
 			</ClayLabel>
 
 			<LocalizedInput

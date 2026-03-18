@@ -1,59 +1,8 @@
-import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.OSDetector
-
-task downloadSrc(type: Copy)
-task jarMvn(type: Exec)
-
-String facesUtilGitHash = "3934acaa017ddb260a14248d37156d47f332aea0"
-String facesUtilSrcUrl = "https://github.com/liferay/liferay-faces-bridge-ext/archive/${facesUtilGitHash}.zip"
-File srcDir = new File(buildDir, "liferay-faces-bridge-ext-${facesUtilGitHash}/bridge-ext")
-
-downloadSrc {
-	doNotTrackState("")
-
-	from {
-		zipTree(FileUtil.get(project, facesUtilSrcUrl))
-	}
-
-	into buildDir
+ext {
+	gitHash = "3934acaa017ddb260a14248d37156d47f332aea0"
+	gitHubOwner = "liferay"
+	gitHubRepository = "liferay-faces-bridge-ext"
+	mvnTargetDir = "bridge-ext/target"
 }
 
-jar {
-	dependsOn jarMvn
-	setActions([])
-}
-
-jarMvn {
-	commandLine _getMvnCommand("package")
-	dependsOn downloadSrc
-
-	doLast {
-		copy {
-			from new File(srcDir, "target")
-			include "com.liferay.faces.bridge.ext-9.0.0.jar"
-			into base.distsDirectory
-
-			rename {
-				jar.archiveFileName.get()
-			}
-		}
-	}
-
-	workingDir = srcDir
-}
-
-jarSources {
-	mustRunAfter downloadSrc
-}
-
-processResources {
-	mustRunAfter downloadSrc
-}
-
-private List<String> _getMvnCommand(String command) {
-	if (OSDetector.windows) {
-		return ["cmd.exe", "/c", "mvn ${command}"]
-	}
-
-	return ["/bin/sh", "-c", "mvn ${command}"]
-}
+apply from: "../build-maven.gradle"

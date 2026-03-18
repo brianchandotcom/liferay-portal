@@ -1,59 +1,8 @@
-import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.OSDetector
-
-task downloadSrc(type: Copy)
-task jarMvn(type: Exec)
-
-String facesUtilGitHash = "2f8449a1204934d47b4e7f03fad668d7042821e8"
-String facesUtilSrcUrl = "https://github.com/liferay/liferay-faces-util/archive/${facesUtilGitHash}.zip"
-File srcDir = new File(buildDir, "liferay-faces-util-${facesUtilGitHash}")
-
-downloadSrc {
-	doNotTrackState("")
-
-	from {
-		zipTree(FileUtil.get(project, facesUtilSrcUrl))
-	}
-
-	into buildDir
+ext {
+	gitHash = "2f8449a1204934d47b4e7f03fad668d7042821e8"
+	gitHubOwner = "liferay"
+	gitHubRepository = "liferay-faces-util"
+	mvnTargetDir = "target"
 }
 
-jar {
-	dependsOn jarMvn
-	setActions([])
-}
-
-jarMvn {
-	commandLine _getMvnCommand("package")
-	dependsOn downloadSrc
-
-	doLast {
-		copy {
-			from new File(srcDir, "target")
-			include "com.liferay.faces.util-5.0.0.jar"
-			into base.distsDirectory
-
-			rename {
-				jar.archiveFileName.get()
-			}
-		}
-	}
-
-	workingDir = srcDir
-}
-
-jarSources {
-	mustRunAfter downloadSrc
-}
-
-processResources {
-	mustRunAfter downloadSrc
-}
-
-private List<String> _getMvnCommand(String command) {
-	if (OSDetector.windows) {
-		return ["cmd.exe", "/c", "mvn ${command}"]
-	}
-
-	return ["/bin/sh", "-c", "mvn ${command}"]
-}
+apply from: "../build-maven.gradle"

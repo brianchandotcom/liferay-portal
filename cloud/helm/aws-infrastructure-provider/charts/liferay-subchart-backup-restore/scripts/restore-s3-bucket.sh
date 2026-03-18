@@ -1,9 +1,12 @@
 #!/bin/sh
 
-set -eu
+set -o errexit
+set -o nounset
 
 function main {
-	local restore_job_id=$( \
+	local restore_job_id
+
+	restore_job_id=$( \
 		aws \
 			backup \
 			start-restore-job \
@@ -13,21 +16,29 @@ function main {
 			--resource-type "S3" \
 			| jq --raw-output ".RestoreJobId")
 
-	local timeout=$(($(date +%s) + {{ .Values.awsBackupService.restoreWaitTimeoutSeconds }}))
+	local timeout
+
+	timeout=$(($(date +%s) + {{ .Values.awsBackupService.restoreWaitTimeoutSeconds }}))
 
 	while [ $(date +%s) -lt ${timeout} ]
 	do
-		local restore_job_status_json=$( \
+		local restore_job_status_json
+
+		restore_job_status_json=$( \
 			aws \
 				backup \
 				describe-restore-job \
 				--restore-job-id "${restore_job_id}")
 
-		local restore_job_status=$(echo "${restore_job_status_json}" | jq --raw-output ".Status")
+		local restore_job_status
+
+		restore_job_status=$(echo "${restore_job_status_json}" | jq --raw-output ".Status")
 
 		if [ "${restore_job_status}" = "ABORTED" ] || [ "${restore_job_status}" = "FAILED" ]
 		then
-			local restore_job_status_message=$( \
+			local restore_job_status_message
+
+			restore_job_status_message=$( \
 				echo \
 					"${restore_job_status_json}" \
 					| jq --raw-output ".StatusMessage")

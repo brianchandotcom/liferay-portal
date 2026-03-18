@@ -22,7 +22,9 @@ function main {
 
 	aws sso login
 
-	local terraform_args="$(_get_terraform_apply_args "${1}")"
+	local terraform_args
+
+	terraform_args="$(_get_terraform_apply_args "${1}")"
 
 	_setup_aws_eks "${terraform_args}"
 
@@ -52,7 +54,9 @@ function _generate_tfvars {
 
 	echo "Generating ${tfvars_file} from ${configuration_json_file}."
 
-	local tfvars_content=$(
+	local tfvars_content
+
+	tfvars_content=$(
 		jq --raw-output '.variables
 		| to_entries[]
 		| if (.value | type) == "string"
@@ -96,7 +100,9 @@ function _get_terraform_apply_args {
 
 	if jq --exit-status '.options.parallelism | numbers' "${configuration_json_file}" > /dev/null
 	then
-		local parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
+		local parallelism
+
+		parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
 
 		apply_args+=("-parallelism=${parallelism}")
 	fi
@@ -111,9 +117,13 @@ function _popd {
 function _port_forward_argo_cd {
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/gitops/platform"
 
-	local argocd_namespace=$(terraform output -raw argocd_namespace)
+	local argocd_namespace
 
-	local argocd_password=$( \
+	argocd_namespace=$(terraform output -raw argocd_namespace)
+
+	local argocd_password
+
+	argocd_password=$( \
 		kubectl \
 			get \
 			secret \
@@ -180,7 +190,7 @@ function _terraform_init_and_apply {
 
 	terraform init
 
-	terraform apply ${2}
+	terraform apply "${2}"
 
 	_popd
 }

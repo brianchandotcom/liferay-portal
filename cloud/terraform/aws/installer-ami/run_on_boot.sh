@@ -5,13 +5,17 @@ set -eux
 function main {
 	echo "Executing run_on_boot.sh on $(date) by $(id)."
 
-	local token=$( \
+	local token
+
+	token=$( \
 		curl \
 		--header "X-aws-ec2-metadata-token-ttl-seconds: 21600" \
 		--request PUT \
 		"http://169.254.169.254/latest/api/token")
 
-	local region=$( \
+	local region
+
+	region=$( \
 		curl \
 			--header "X-aws-ec2-metadata-token: ${token}" \
 			http://169.254.169.254/latest/meta-data/placement/region)
@@ -32,7 +36,9 @@ function main {
 
 	terraform output > "${terraform_dir}/eks/terraform.tfvars"
 
-	local ecr_dxp_repository_url=$( \
+	local ecr_dxp_repository_url
+
+	ecr_dxp_repository_url=$( \
 		terraform \
 			output \
 			-json ecr_repositories \
@@ -48,7 +54,9 @@ function main {
 
 	local image_dir=/opt/liferay/image
 
-	local dxp_image_tag=$(oras repo tags --oci-layout "${image_dir}/dxp")
+	local dxp_image_tag
+
+	dxp_image_tag=$(oras repo tags --oci-layout "${image_dir}/dxp")
 
 	oras \
 		cp \
@@ -72,8 +80,8 @@ function main {
 	aws \
 		eks \
 		update-kubeconfig \
-		--name $(terraform output -raw cluster_name) \
-		--region $(terraform output -raw region)
+		--name "$(terraform output -raw cluster_name)" \
+		--region "$(terraform output -raw region)"
 
 	kubectl cluster-info
 
@@ -90,8 +98,13 @@ function main {
 		values_file_argument="--values /opt/liferay/values.yaml"
 	fi
 
-	local namespace=$(terraform output -raw deployment_namespace)
-	local role_arn=$(terraform output -raw liferay_sa_role)
+	local namespace
+
+	namespace=$(terraform output -raw deployment_namespace)
+
+	local role_arn
+
+	role_arn=$(terraform output -raw liferay_sa_role)
 
 	helm \
 		upgrade \
@@ -108,7 +121,7 @@ function main {
 		--set "liferay-default.ingress.rules[0].http.paths[0].backend.service.port.name=http" \
 		--set "liferay-default.ingress.rules[0].http.paths[0].path=/" \
 		--set "liferay-default.ingress.rules[0].http.paths[0].pathType=ImplementationSpecific" \
-		${values_file_argument}
+		"${values_file_argument}"
 
 	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
@@ -134,7 +147,9 @@ function main {
 		--namespace "${namespace}" \
 		--timeout=1200s
 
-	local public_address=$( \
+	local public_address
+
+	public_address=$( \
 		kubectl \
 			get \
 			ingress \

@@ -12,11 +12,17 @@ function main {
 
 	_check_utils curl jq tar
 
-	local config_file=$(_get_config_file "${1:-}")
+	local config_file
 
-	local provider=$(_get_provider "${config_file}")
+	config_file=$(_get_config_file "${1:-}")
 
-	local extracted_dir=$(_download_and_extract_files "${provider}")
+	local provider
+
+	provider=$(_get_provider "${config_file}")
+
+	local extracted_dir
+
+	extracted_dir=$(_download_and_extract_files "${provider}")
 
 	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${config_file}"
 }
@@ -38,7 +44,9 @@ function _download_and_extract_files {
 
 	local prefix="bootstrap/liferay-${1}-bootstrap"
 
-	local json=$( \
+	local json
+
+	json=$( \
 		curl \
 			--location \
 			--silent \
@@ -51,7 +59,9 @@ function _download_and_extract_files {
 		exit 1
 	fi
 
-	local latest_path=$( \
+	local latest_path
+
+	latest_path=$( \
 		jq \
 			--raw-output \
 			".items
@@ -66,7 +76,9 @@ function _download_and_extract_files {
 		exit 1
 	fi
 
-	local output_file=$(basename "${latest_path}")
+	local output_file
+
+	output_file=$(basename "${latest_path}")
 
 	curl \
 		--location \
@@ -108,7 +120,9 @@ function _get_config_file {
 function _get_provider {
 	local config_file="${1}"
 
-	local provider=$(jq -r ".provider // empty" "${config_file}")
+	local provider
+
+	provider=$(jq -r ".provider // empty" "${config_file}")
 
 	if [ -z "${provider}" ]
 	then

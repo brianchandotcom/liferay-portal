@@ -141,7 +141,43 @@ export default function ManageUserViews({
 		() => new Set(systemDataSetEntries.map((entry) => entry.name)),
 		[systemDataSetEntries]
 	);
-	const requestLabel = useCallback(
+	
+        const filters = useMemo(() => [
+                {
+                        apiURL: '/o/headless-admin-user/v1.0/user-accounts?sort=name:asc',
+                        autocompleteEnabled: true,
+                        entityFieldType: 'integer',
+                        id: 'creatorId',
+                        inputPlaceholder: Liferay.Language.get('search'),
+                        itemKey: 'id',
+                        itemLabel: 'name',
+                        items: [],
+                        label: Liferay.Language.get('created-by'),
+                        multiple: false,
+                        type: 'selection',
+                },
+        ], []);
+
+        const systemDataSetNamesSet = useMemo(
+                () => new Set(systemDataSetEntries.map((entry) => entry.name)),
+                [systemDataSetEntries]
+        );
+        const filters = useMemo(() => [
+                {
+                        apiURL: '/o/headless-admin-user/v1.0/user-accounts?sort=name:asc',
+                        autocompleteEnabled: true,
+                        entityFieldType: 'integer',
+                        id: 'creatorId',
+                        inputPlaceholder: Liferay.Language.get('search'),
+                        itemKey: 'id',
+                        itemLabel: 'name',
+                        items: [],
+                        label: Liferay.Language.get('created-by'),
+                        multiple: false,
+                        type: 'selection',
+                },
+        ], []);
+        const requestLabel = useCallback(const requestLabel = useCallback(
 		(fdsName: string) => {
 			if (dataSetLabels[fdsName] !== undefined) {
 				return;
@@ -228,7 +264,8 @@ export default function ManageUserViews({
 						},
 					]}
 					portletId={portletId}
-					views={[views]}
+					filters={filters}
+                                        views={[views]}
 				/>
 			</div>
 		</DataSetLabelsContext.Provider>

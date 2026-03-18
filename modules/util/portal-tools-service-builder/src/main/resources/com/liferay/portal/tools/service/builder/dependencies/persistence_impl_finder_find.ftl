@@ -491,7 +491,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		return null;
 	}
 
-	<#if !entityFinder.hasEntityColumn(entity.PKVariableName)>
+	<#if !entityFinder.hasEntityColumn(entity.PKVariableName) && !serviceBuilder.isVersionGTE_7_4_0()>
 		/**
 		 * Returns the ${entity.pluralHumanName} before and after the current ${entity.humanName} in the ordered set where ${entityFinder.getHumanConditions(false)}.
 		 *
@@ -826,7 +826,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		}
 
-		<#if !entityFinder.hasEntityColumn(entity.PKVariableName)>
+		<#if !entityFinder.hasEntityColumn(entity.PKVariableName) && !serviceBuilder.isVersionGTE_7_4_0()>
 			/**
 			 * Returns the ${entity.pluralHumanName} before and after the current ${entity.humanName} in the ordered set of ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(false)}.
 			 *

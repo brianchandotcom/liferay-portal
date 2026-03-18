@@ -29,7 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFolder",
+	property = {
+		"model.class.name=com.liferay.document.library.kernel.model.DLFolder",
+		"permissions.view.dynamic.inheritance.checking=true"
+	},
 	service = ModelResourcePermission.class
 )
 public class DLFolderModelResourcePermissionWrapper

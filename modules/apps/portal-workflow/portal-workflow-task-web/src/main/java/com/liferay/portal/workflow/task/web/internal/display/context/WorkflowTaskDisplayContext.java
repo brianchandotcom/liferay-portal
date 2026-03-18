@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
@@ -627,6 +628,25 @@ public class WorkflowTaskDisplayContext {
 				addTableViewTypeItem();
 			}
 		};
+	}
+
+	public AssetEntry getWorkflowAssetEntry(
+			AssetRenderer<?> assetRenderer, WorkflowHandler<?> workflowHandler,
+			long classPK)
+		throws PortalException {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			workflowHandler.getClassName(), classPK);
+
+		AssetRendererFactory<?> assetRendererFactory =
+			assetRenderer.getAssetRendererFactory();
+
+		if ((assetRendererFactory != null) && (assetEntry == null)) {
+			assetEntry = assetRendererFactory.getAssetEntry(
+				workflowHandler.getClassName(), assetRenderer.getClassPK());
+		}
+
+		return assetEntry;
 	}
 
 	public long getWorkflowContextEntryClassPK(

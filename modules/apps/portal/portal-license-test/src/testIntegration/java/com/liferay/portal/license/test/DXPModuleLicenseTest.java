@@ -7,6 +7,7 @@ package com.liferay.portal.license.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.Time;
@@ -14,16 +15,22 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
 
+import java.util.Objects;
+
 import net.bytebuddy.agent.builder.ResettableClassFileTransformer;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Kevin Lee
@@ -94,6 +101,75 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
 
 		assertLicenseNotRegistered(hitHomePage("localhost", 8080));
+	}
+
+	@Test
+	public void testFreeTierLicenseManualDeploy() throws Exception {
+		assertLicensePropertiesNotExisted(getPortalProductId());
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		Bundle dxpOnlyBundle = null;
+		Bundle enterpriseAppBundle = null;
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					_getDxpOnlyModuleSymbolicName())) {
+
+				dxpOnlyBundle = bundle;
+
+				continue;
+			}
+
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					_getEnterpriseAppSymbolicName())) {
+
+				enterpriseAppBundle = bundle;
+			}
+		}
+
+		Assert.assertNotNull(dxpOnlyBundle);
+		Assert.assertNotNull(enterpriseAppBundle);
+
+		Assert.assertEquals(Bundle.ACTIVE, dxpOnlyBundle.getState());
+		Assert.assertEquals(Bundle.ACTIVE, enterpriseAppBundle.getState());
+
+		assertLicenseNotRegistered(hitHomePage("localhost", 8080));
+
+		Assert.assertEquals(Bundle.ACTIVE, dxpOnlyBundle.getState());
+		Assert.assertEquals(Bundle.ACTIVE, enterpriseAppBundle.getState());
+
+		deployFreeTierLicense(Time.HOUR);
+
+		assertLicensePropertiesExisted(getPortalProductId());
+
+		assertLicenseRegistered(hitHomePage("localhost", 8080));
+
+		Assert.assertEquals(Bundle.UNINSTALLED, dxpOnlyBundle.getState());
+		Assert.assertEquals(Bundle.UNINSTALLED, enterpriseAppBundle.getState());
+
+		dxpOnlyBundle = bundleContext.installBundle(
+			dxpOnlyBundle.getLocation());
+		enterpriseAppBundle = bundleContext.installBundle(
+			enterpriseAppBundle.getLocation());
+
+		try {
+			dxpOnlyBundle.start();
+			enterpriseAppBundle.start();
+
+			Assert.assertEquals(Bundle.ACTIVE, dxpOnlyBundle.getState());
+			Assert.assertEquals(Bundle.ACTIVE, enterpriseAppBundle.getState());
+
+			resetCheckInterval();
+
+			assertLicenseInvalid(hitHomePage("localhost", 8080));
+		}
+		finally {
+			dxpOnlyBundle.uninstall();
+			enterpriseAppBundle.uninstall();
+		}
 	}
 
 	private String _getDxpOnlyModuleSymbolicName() {

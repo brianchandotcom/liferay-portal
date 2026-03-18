@@ -11,6 +11,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -1716,14 +1717,15 @@ public class ObjectFieldLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"upload",
 				() -> {
-					String content = StringUtil.randomId(8);
-
 					FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 						TestPropsValues.getGroupId(),
 						TestPropsValues.getUserId(), StringUtil.randomString(),
 						TempFileEntryUtil.getTempFileName(
 							StringUtil.randomString() + ".txt"),
-						FileUtil.createTempFile(content.getBytes()),
+						FileUtil.createTempFile(
+							DLTestUtil.randomTextFileContent(
+								8
+							).getBytes()),
 						ContentTypes.TEXT_PLAIN);
 
 					return fileEntry.getFileEntryId();

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.FileInfoFieldType;
@@ -270,12 +271,13 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 	}
 
 	private FileEntry _addTempFileEntry(long groupId) throws Exception {
-		String content = StringUtil.randomId(8);
-
 		return TempFileEntryUtil.addTempFileEntry(
 			groupId, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			TempFileEntryUtil.getTempFileName("document.txt"),
-			FileUtil.createTempFile(content.getBytes()),
+			FileUtil.createTempFile(
+				DLTestUtil.randomTextFileContent(
+					8
+				).getBytes()),
 			ContentTypes.TEXT_PLAIN);
 	}
 

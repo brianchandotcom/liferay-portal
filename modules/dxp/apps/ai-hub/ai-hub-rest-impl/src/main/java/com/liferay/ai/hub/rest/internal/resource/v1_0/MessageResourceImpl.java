@@ -68,7 +68,7 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 				contextUser.getUserId()
 			).userToken(
 				contextHttpServletRequest.getHeader(
-					"Liferay-AI-Hub-On-Behalf-Of")
+					"Liferay-AI-Hub-Cell-On-Behalf-Of")
 			).build());
 
 		return message;

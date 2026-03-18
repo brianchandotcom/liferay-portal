@@ -5,9 +5,9 @@
 
 package com.liferay.ai.hub.rest.resource.v1_0.test;
 
+import com.liferay.ai.hub.cell.security.JWTTokenUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
-import com.liferay.ai.hub.security.JWTTokenUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -105,7 +105,7 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
 				"/messages",
 			HashMapBuilder.put(
-				"Liferay-AI-Hub-On-Behalf-Of",
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
 				_generateToken(TestPropsValues.getUserId())
 			).build(),
 			Http.Method.POST);
@@ -131,7 +131,7 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
 				"/messages",
 			HashMapBuilder.put(
-				"Liferay-AI-Hub-On-Behalf-Of",
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
 				_generateToken(TestPropsValues.getUserId())
 			).build(),
 			Http.Method.POST);

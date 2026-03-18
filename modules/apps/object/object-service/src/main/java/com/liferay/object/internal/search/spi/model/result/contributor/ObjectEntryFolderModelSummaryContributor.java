@@ -39,6 +39,10 @@ public class ObjectEntryFolderModelSummaryContributor
 		}
 
 		if (Validator.isBlank(title)) {
+			title = document.get(Field.NAME);
+		}
+
+		if (Validator.isBlank(title)) {
 			String localizedFieldTitle = Field.getLocalizedName(
 				locale, "localized_label");
 

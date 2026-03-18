@@ -6,7 +6,7 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import DateFilter, {DateFilterValues} from '../../../components/date-filter';
+import DateFilter, {DateFilterValues} from '../../../components/date_filter';
 
 export default function DataSelectionStep({
 	itemsCount = 0,

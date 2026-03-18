@@ -179,6 +179,41 @@ public abstract class BaseLicenseTestCase {
 			_CMP_LICENSE_TYPE);
 	}
 
+	public File deployEnterpriseLicense(long validityPeriod) throws Exception {
+		long currentTimeMillis = System.currentTimeMillis();
+
+		StringBundler sb = new StringBundler(20);
+
+		sb.append("<?xml version=\"1.0\"?>");
+		sb.append("<license><account-name>");
+		sb.append(_ENTERPRISE_ACCOUNT_NAME);
+		sb.append("</account-name><product-id>");
+		sb.append(getPortalProductId());
+		sb.append("</product-id><product-name>");
+		sb.append(_ENTERPRISE_PRODUCT_NAME);
+		sb.append("</product-name><product-version>2026.Q1</product-version>");
+		sb.append("<license-type>");
+		sb.append(_ENTERPRISE_LICENSE_TYPE);
+		sb.append("</license-type><license-version>6</license-version>");
+		sb.append("<start-date>");
+		sb.append(_DATE_FORMAT.format(new Date(currentTimeMillis)));
+		sb.append("</start-date><expiration-date>");
+		sb.append(
+			_DATE_FORMAT.format(new Date(currentTimeMillis + validityPeriod)));
+		sb.append("</expiration-date>");
+		sb.append("<domains><domain>");
+		sb.append(_ENTERPRISE_DOMAIN);
+		sb.append("</domain><domain>localhost</domain></domains>");
+		sb.append("<key></key></license>");
+
+		LicenseManagerUtil.registerLicense(
+			JSONUtil.put("licenseXML", sb.toString()));
+
+		return _buildBinaryFile(
+			getPortalProductId(), _ENTERPRISE_ACCOUNT_NAME,
+			_ENTERPRISE_PRODUCT_NAME, _ENTERPRISE_LICENSE_TYPE);
+	}
+
 	public File deployFreeTierLicense(long validityPeriod) throws Exception {
 		long currentTimeMillis = System.currentTimeMillis();
 
@@ -418,6 +453,14 @@ public abstract class BaseLicenseTestCase {
 
 	private static final DateFormat _DATE_FORMAT = new SimpleDateFormat(
 		"EEEE, MMMM d, yyyy hh:mm:ss a z", LocaleUtil.US);
+
+	private static final String _ENTERPRISE_ACCOUNT_NAME = "Enterprise Account";
+
+	private static final String _ENTERPRISE_DOMAIN = "enterprise.com";
+
+	private static final String _ENTERPRISE_LICENSE_TYPE = "enterprise";
+
+	private static final String _ENTERPRISE_PRODUCT_NAME = "DXP Enterprise";
 
 	private static final String _FREE_TIER_ACCOUNT_NAME = "Free Account";
 

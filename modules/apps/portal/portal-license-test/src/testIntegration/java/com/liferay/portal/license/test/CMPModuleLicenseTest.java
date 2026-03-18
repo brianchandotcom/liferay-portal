@@ -46,6 +46,45 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
+	public void testEnterpriseLicense() throws Exception {
+		assertLicensePropertiesNotExisted(getCMPProductId());
+
+		assertBundlesExisted(_getCmpSymbolicNames());
+
+		assertLicenseNotRegistered();
+
+		assertBundlesExisted(_getCmpSymbolicNames());
+
+		deployEnterpriseLicense(Time.HOUR);
+
+		assertLicensePropertiesNotExisted(getCMPProductId());
+
+		assertLicenseRegistered();
+
+		assertBundlesNotExisted(_getCmpSymbolicNames());
+
+		File binaryFile = deployCMPLicense(Time.HOUR);
+
+		assertLicensePropertiesExisted(getCMPProductId());
+
+		assertLicenseRegistered();
+
+		assertBundlesExisted(_getCmpSymbolicNames());
+
+		binaryFile.delete();
+
+		LicenseManagerUtil.checkLicense(getCMPProductId());
+
+		assertLicensePropertiesNotExisted(getCMPProductId());
+
+		resetLifecycleAction();
+
+		assertLicenseRegistered();
+
+		assertBundlesNotExisted(_getCmpSymbolicNames());
+	}
+
+	@Test
 	public void testFreeTierLicense() throws Exception {
 		assertLicensePropertiesNotExisted(getCMPProductId());
 

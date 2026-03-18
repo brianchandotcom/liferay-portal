@@ -27,6 +27,7 @@ spec:
                         {{- $xr := .observed.composite.resource -}}
 
                         {{- $baseRegion := $xr.spec.region -}}
+                        {{- $cmkEnabled := $xr.spec.cmk.enabled -}}
 
                         {{- $environmentId := $xr.spec.environmentId -}}
                         {{- $projectId := $xr.spec.projectId -}}
@@ -140,6 +141,78 @@ spec:
                                 versioningConfiguration:
                                     status: Enabled
                             managementPolicies: {{ $managementPolicies }}
+                        {{- if $cmkEnabled }}
+                        ---
+                        apiVersion: kms.aws.m.upbound.io/v1beta1
+                        kind: Alias
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: alias/{{ $baseName }}-backup-vault
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-vault-kms-alias
+                            labels:
+                                app: liferay
+                                component: backup-vault
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-backup-vault-kms-alias
+                        spec:
+                            forProvider:
+                                region: {{ $backupRegion }}
+                                targetKeyIdSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: backup-vault
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: kms.aws.m.upbound.io/v1beta1
+                        kind: Key
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-vault-kms-key
+                            labels:
+                                app: liferay
+                                component: backup-vault
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-backup-vault-kms-key
+                        spec:
+                            forProvider:
+                                deletionWindowInDays: 7
+                                enableKeyRotation: true
+                                policy: |
+                                    {
+                                        "Statement": [
+                                            {
+                                                "Action": "kms:*",
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "AWS": "arn:aws:iam::{{ $accountId }}:root"
+                                                },
+                                                "Resource": "*"
+                                            },
+                                            {
+                                                "Action": [
+                                                    "kms:CreateGrant",
+                                                    "kms:Decrypt",
+                                                    "kms:DescribeKey",
+                                                    "kms:Encrypt",
+                                                    "kms:GenerateDataKey*",
+                                                    "kms:ReEncrypt*"
+                                                ],
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "AWS": "arn:aws:iam::{{ $accountId }}:role/{{ $baseName }}-backup-service-role"
+                                                },
+                                                "Resource": "*"
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    }
+                                region: {{ $backupRegion }}
+                            managementPolicies: {{ $managementPolicies }}
+                        {{- end }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
@@ -506,6 +579,14 @@ spec:
                             name: {{ $baseName }}-backup-vault
                         spec:
                             forProvider:
+                                {{- if $cmkEnabled }}
+                                kmsKeyArnSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: backup-vault
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                                {{- end }}
                                 region: {{ $backupRegion }}
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
@@ -1128,6 +1209,14 @@ spec:
                                     volumeType: gp3
                                 encryptAtRest:
                                     enabled: true
+                                    {{- if $cmkEnabled }}
+                                    kmsKeyIdSelector:
+                                        matchLabels:
+                                            app: liferay
+                                            component: search
+                                            environmentId: {{ $environmentId }}
+                                            projectId: {{ $projectId }}
+                                    {{- end }}
                                 engineVersion: {{ $searchSpec.engineVersion | quote }}
                                 logPublishingOptions:
                                     -   cloudwatchLogGroupArn: arn:aws:logs:{{ $searchRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-audit-logs
@@ -1215,6 +1304,78 @@ spec:
                             forProvider:
                                 region: {{ $searchRegion }}
                                 retentionInDays: 7
+                        {{- if $cmkEnabled }}
+                        ---
+                        apiVersion: kms.aws.m.upbound.io/v1beta1
+                        kind: Alias
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: alias/{{ $searchName }}
+                                gotemplating.fn.crossplane.io/composition-resource-name: search-kms-alias
+                            labels:
+                                app: liferay
+                                component: search
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $searchName }}-kms-alias
+                        spec:
+                            forProvider:
+                                region: {{ $searchRegion }}
+                                targetKeyIdSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: search
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: kms.aws.m.upbound.io/v1beta1
+                        kind: Key
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: search-kms-key
+                            labels:
+                                app: liferay
+                                component: search
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $searchName }}-kms-key
+                        spec:
+                            forProvider:
+                                deletionWindowInDays: 7
+                                enableKeyRotation: true
+                                policy: |
+                                    {
+                                        "Statement": [
+                                            {
+                                                "Action": "kms:*",
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "AWS": "arn:aws:iam::{{ $accountId }}:root"
+                                                },
+                                                "Resource": "*"
+                                            },
+                                            {
+                                                "Action": [
+                                                    "kms:CreateGrant",
+                                                    "kms:Decrypt",
+                                                    "kms:DescribeKey",
+                                                    "kms:Encrypt",
+                                                    "kms:GenerateDataKey*",
+                                                    "kms:ReEncrypt*"
+                                                ],
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "Service": "es.amazonaws.com"
+                                                },
+                                                "Resource": "*"
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    }
+                                region: {{ $searchRegion }}
+                            managementPolicies: {{ $managementPolicies }}
+                        {{- end }}
                         ---
                         apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
                         kind: ResourcePolicy

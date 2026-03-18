@@ -145,13 +145,57 @@ public class EditObjectEntryRelatedModelMVCActionCommandTest {
 
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		_setUser(user);
 
-		PrincipalThreadLocal.setName(user.getUserId());
+		_invoke(
+			mockLiferayPortletActionRequest, objectDefinition2.getPortletId(),
+			user.getUserId());
 
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.USER_ID, user.getUserId());
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest,
+				PrincipalException.MustHavePermission.class.getName()));
+		Assert.assertNotNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				_portal.getPortletId(mockLiferayPortletActionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE));
+
+		_setUser(TestPropsValues.getUser());
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry2.getObjectEntryId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				objectDefinition2.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				role.getRoleId(), ActionKeys.VIEW));
+
+		_invoke(
+			mockLiferayPortletActionRequest, objectDefinition2.getPortletId(),
+			TestPropsValues.getUserId());
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				objectDefinition2.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				role.getRoleId(), ActionKeys.VIEW));
+	}
+
+	private void _invoke(
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest,
+			String portletId, long userId)
+		throws Exception {
+
+		mockLiferayPortletActionRequest.setAttribute(WebKeys.USER_ID, userId);
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			EditObjectEntryRelatedModelMVCActionCommandTest.class);
@@ -163,8 +207,7 @@ public class EditObjectEntryRelatedModelMVCActionCommandTest {
 				bundleContext.getServiceReferences(
 					MVCActionCommand.class,
 					StringBundler.concat(
-						"(&(jakarta.portlet.name=",
-						objectDefinition2.getPortletId(),
+						"(&(jakarta.portlet.name=", portletId,
 						")(mvc.command.name=/object_entries",
 						"/edit_object_entry_related_model))")));
 
@@ -177,16 +220,13 @@ public class EditObjectEntryRelatedModelMVCActionCommandTest {
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
+	}
 
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest,
-				PrincipalException.MustHavePermission.class.getName()));
-		Assert.assertNotNull(
-			SessionMessages.get(
-				mockLiferayPortletActionRequest,
-				_portal.getPortletId(mockLiferayPortletActionRequest) +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE));
+	private void _setUser(User user) {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
 	}
 
 	@Inject

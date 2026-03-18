@@ -43,6 +43,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -817,10 +818,30 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		BlogsEntry[] entries = blogsEntryPersistence.findByG_D_S_PrevAndNext(
-			entryId, entry.getGroupId(), entry.getDisplayDate(),
-			WorkflowConstants.STATUS_APPROVED,
-			EntryIdComparator.getInstance(true));
+		List<BlogsEntry> list = blogsEntryPersistence.findByG_D_S(
+			entry.getGroupId(), entry.getDisplayDate(),
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, EntryIdComparator.getInstance(true));
+
+		BlogsEntry[] entries = new BlogsEntry[3];
+
+		for (int i = 0; i < list.size(); i++) {
+			BlogsEntry curEntry = list.get(i);
+
+			if (curEntry.getEntryId() == entryId) {
+				if (i > 0) {
+					entries[0] = list.get(i - 1);
+				}
+
+				entries[1] = list.get(i);
+
+				if (i < (list.size() - 1)) {
+					entries[2] = list.get(i + 1);
+				}
+
+				break;
+			}
+		}
 
 		if (entries[0] == null) {
 			entries[0] = blogsEntryPersistence.fetchByG_LtD_S_Last(

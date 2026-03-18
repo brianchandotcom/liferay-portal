@@ -3263,7 +3263,7 @@ public class ObjectEntryLocalServiceImpl
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) from ",
+					"select count(*) as count from ",
 					dynamicObjectDefinitionTable.getTableName(), " where ",
 					dynamicObjectDefinitionTable.getPrimaryKeyColumnName(),
 					" = ?"))) {
@@ -3273,7 +3273,7 @@ public class ObjectEntryLocalServiceImpl
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 		catch (SQLException sqlException) {
@@ -7315,7 +7315,7 @@ public class ObjectEntryLocalServiceImpl
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) from ",
+					"select count(*) as count from ",
 					dynamicObjectDefinitionTable.getTableName(), " where ",
 					dbColumnName, " = ?"))) {
 
@@ -7324,7 +7324,7 @@ public class ObjectEntryLocalServiceImpl
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				count = resultSet.getInt(1);
+				count = resultSet.getInt("count");
 			}
 		}
 		catch (SQLException sqlException) {
@@ -7355,7 +7355,7 @@ public class ObjectEntryLocalServiceImpl
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) from ",
+					"select count(*) as count from ",
 					dynamicObjectDefinitionTable.getTableName(), " where ",
 					dynamicObjectDefinitionTable.getPrimaryKeyColumnName(),
 					" != ? and ", dbColumnName, " = ?"))) {
@@ -7366,7 +7366,7 @@ public class ObjectEntryLocalServiceImpl
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				count = resultSet.getInt(1);
+				count = resultSet.getInt("count");
 			}
 		}
 		catch (SQLException sqlException) {

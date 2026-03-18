@@ -23,7 +23,10 @@ function applyCustomFieldOdataFormat(key: string) {
 }
 
 function createOdataFilter(filters: Array<string>): string {
-	return filters.map((filter: string) => `(${filter})`).join(' and ');
+	return filters
+		.filter((filter) => Boolean(filter?.trim()))
+		.map((filter: string) => `(${filter})`)
+		.join(' and ');
 }
 
 function getFiltersString(
@@ -31,17 +34,20 @@ function getFiltersString(
 	providedFilters: string | null
 ): string {
 	let filtersString = '';
+	const validOdataFiltersStrings = odataFiltersStrings.filter((filter) =>
+		Boolean(filter?.trim())
+	);
 
 	if (providedFilters) {
 		filtersString += providedFilters;
 	}
 
-	if (providedFilters && odataFiltersStrings.length) {
+	if (providedFilters && validOdataFiltersStrings.length) {
 		filtersString += ' and ';
 	}
 
-	if (odataFiltersStrings.length) {
-		filtersString += createOdataFilter(odataFiltersStrings);
+	if (validOdataFiltersStrings.length) {
+		filtersString += createOdataFilter(validOdataFiltersStrings);
 	}
 
 	return filtersString;
@@ -73,11 +79,13 @@ export async function loadData({
 
 	url.searchParams.delete('filter');
 
-	if (providedFilters || odataFiltersStrings.length) {
-		url.searchParams.append(
-			'filter',
-			getFiltersString(odataFiltersStrings, providedFilters)
-		);
+	const filtersString = getFiltersString(
+		odataFiltersStrings,
+		providedFilters
+	);
+
+	if (filtersString) {
+		url.searchParams.append('filter', filtersString);
 	}
 
 	if (Liferay.ThemeDisplay.isImpersonated()) {

@@ -109,26 +109,23 @@ public class OrganizationServiceTest {
 				TestPropsValues.getGroupId(),
 				new long[] {organization1.getOrganizationId()});
 
-			Assert.assertEquals(
-				2,
-				_organizationLocalService.getGroupOrganizationsCount(
-					TestPropsValues.getGroupId()));
-
-			Assert.assertTrue(
-				_organizationLocalService.hasGroupOrganization(
-					TestPropsValues.getGroupId(),
-					organization1.getOrganizationId()));
-
-			Assert.assertTrue(
-				_organizationLocalService.hasGroupOrganization(
-					TestPropsValues.getGroupId(),
-					organization2.getOrganizationId()));
-
 			Assert.assertThrows(
 				PrincipalException.class,
 				() -> _organizationService.addGroupOrganizations(
 					TestPropsValues.getGroupId(),
 					new long[] {organization3.getOrganizationId()}));
+			Assert.assertEquals(
+				2,
+				_organizationLocalService.getGroupOrganizationsCount(
+					TestPropsValues.getGroupId()));
+			Assert.assertTrue(
+				_organizationLocalService.hasGroupOrganization(
+					TestPropsValues.getGroupId(),
+					organization1.getOrganizationId()));
+			Assert.assertTrue(
+				_organizationLocalService.hasGroupOrganization(
+					TestPropsValues.getGroupId(),
+					organization2.getOrganizationId()));
 		}
 	}
 
@@ -334,17 +331,14 @@ public class OrganizationServiceTest {
 				1,
 				_organizationLocalService.getGroupOrganizationsCount(
 					TestPropsValues.getGroupId()));
-
 			Assert.assertTrue(
 				_organizationLocalService.hasGroupOrganization(
 					TestPropsValues.getGroupId(),
 					organization1.getOrganizationId()));
-
 			Assert.assertFalse(
 				_organizationLocalService.hasGroupOrganization(
 					TestPropsValues.getGroupId(),
 					organization2.getOrganizationId()));
-
 			Assert.assertThrows(
 				PrincipalException.class,
 				() -> _organizationService.setGroupOrganizations(
@@ -396,12 +390,10 @@ public class OrganizationServiceTest {
 				_organizationLocalService.hasGroupOrganization(
 					TestPropsValues.getGroupId(),
 					organization1.getOrganizationId()));
-
 			Assert.assertTrue(
 				_organizationLocalService.hasGroupOrganization(
 					TestPropsValues.getGroupId(),
 					organization2.getOrganizationId()));
-
 			Assert.assertThrows(
 				PrincipalException.class,
 				() -> _organizationService.unsetGroupOrganizations(

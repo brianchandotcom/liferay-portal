@@ -2,7 +2,12 @@ ext {
 	gitHash = "dd35cdd7dc7638db9c2c609189185a79ad79d1c4"
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-bridge-ext"
+	mvnJARInclude = "com.liferay.faces.bridge.ext-9.0.0.jar"
 	mvnTargetDir = "bridge-ext/target"
 }
 
 apply from: "../build-maven.gradle"
+
+jarMVN {
+	workingDir = new File(mvnSourceDir, "bridge-ext")
+}

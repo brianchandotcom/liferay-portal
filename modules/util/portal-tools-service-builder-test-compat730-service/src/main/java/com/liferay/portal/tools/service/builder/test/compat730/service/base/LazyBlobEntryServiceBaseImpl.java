@@ -208,3 +208,4 @@ public abstract class LazyBlobEntryServiceBaseImpl
 		LazyBlobEntryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1367760540

@@ -736,3 +736,4 @@ public class ManyColumnsEntrySoap implements Serializable {
 	private int _column64;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-30085288

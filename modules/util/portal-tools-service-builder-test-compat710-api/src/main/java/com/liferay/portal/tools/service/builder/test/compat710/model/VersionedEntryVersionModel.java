@@ -168,3 +168,4 @@ public interface VersionedEntryVersionModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-151514339

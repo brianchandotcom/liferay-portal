@@ -137,3 +137,4 @@ public class ERCGroupEntryCacheModel
 	public long companyId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2048717288

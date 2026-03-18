@@ -254,3 +254,4 @@ public interface LikeFinderEntryLocalService
 		LikeFinderEntry likeFinderEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:102445121

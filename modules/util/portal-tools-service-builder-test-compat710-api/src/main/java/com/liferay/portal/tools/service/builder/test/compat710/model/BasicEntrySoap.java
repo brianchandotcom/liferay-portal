@@ -167,3 +167,4 @@ public class BasicEntrySoap implements Serializable {
 	private String _description;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:402425481

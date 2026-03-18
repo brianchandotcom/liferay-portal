@@ -113,3 +113,4 @@ public interface VersionedEntryVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-851589995

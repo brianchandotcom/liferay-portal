@@ -292,3 +292,4 @@ public class TreeEntryLocalServiceUtil {
 			TreeEntryLocalServiceUtil.class, TreeEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-857636054

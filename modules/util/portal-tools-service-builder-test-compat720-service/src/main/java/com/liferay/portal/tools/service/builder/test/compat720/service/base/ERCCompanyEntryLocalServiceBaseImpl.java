@@ -552,3 +552,4 @@ public abstract class ERCCompanyEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1039607801

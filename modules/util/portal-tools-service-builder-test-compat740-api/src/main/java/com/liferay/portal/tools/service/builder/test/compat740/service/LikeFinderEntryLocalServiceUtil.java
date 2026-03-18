@@ -303,3 +303,4 @@ public class LikeFinderEntryLocalServiceUtil {
 			LikeFinderEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1367647679

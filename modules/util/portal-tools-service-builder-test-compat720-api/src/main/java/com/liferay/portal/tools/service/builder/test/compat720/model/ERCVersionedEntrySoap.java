@@ -134,3 +134,4 @@ public class ERCVersionedEntrySoap implements Serializable {
 	private long _companyId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-742635123

@@ -325,3 +325,4 @@ public class WhereClauseEntryLocalServiceWrapper
 	private WhereClauseEntryLocalService _whereClauseEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1349284257

@@ -109,3 +109,4 @@ public interface MVCCEntryModel
 	public void setName(String name);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1830686312

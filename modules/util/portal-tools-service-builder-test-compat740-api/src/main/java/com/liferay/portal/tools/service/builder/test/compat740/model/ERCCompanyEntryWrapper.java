@@ -290,3 +290,4 @@ public class ERCCompanyEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1732011300

@@ -331,3 +331,4 @@ public class LocalizedEntryWrapper
 	private final LocalizedEntry _localizedEntry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2038043774

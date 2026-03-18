@@ -120,3 +120,4 @@ public interface LikeFinderEntryModel
 	public void setPortletId(String portletId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2111942843

@@ -274,3 +274,4 @@ public class TreeEntryLocalServiceUtil {
 	private static volatile TreeEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-275264641

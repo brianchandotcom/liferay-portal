@@ -50,3 +50,4 @@ public interface TrashEntry extends PersistedModel, TrashEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:7528906

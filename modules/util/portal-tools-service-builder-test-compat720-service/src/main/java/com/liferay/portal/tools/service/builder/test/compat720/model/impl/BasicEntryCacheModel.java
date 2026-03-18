@@ -189,3 +189,4 @@ public class BasicEntryCacheModel
 	public String description;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-325630535

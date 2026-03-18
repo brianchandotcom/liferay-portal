@@ -389,3 +389,4 @@ public class VersionedEntryLocalServiceUtil {
 	private static volatile VersionedEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:166101001

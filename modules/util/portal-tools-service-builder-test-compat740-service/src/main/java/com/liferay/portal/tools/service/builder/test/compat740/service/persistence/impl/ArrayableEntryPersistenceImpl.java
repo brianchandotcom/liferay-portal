@@ -1524,3 +1524,4 @@ public class ArrayableEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1574205256

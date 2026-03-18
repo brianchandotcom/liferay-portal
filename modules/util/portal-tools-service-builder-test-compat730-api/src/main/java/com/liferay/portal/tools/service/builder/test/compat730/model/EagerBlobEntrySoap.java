@@ -125,3 +125,4 @@ public class EagerBlobEntrySoap implements Serializable {
 	private Blob _blob;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1440891104

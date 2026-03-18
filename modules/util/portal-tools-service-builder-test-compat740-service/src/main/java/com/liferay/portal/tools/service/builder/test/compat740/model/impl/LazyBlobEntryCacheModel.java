@@ -110,3 +110,4 @@ public class LazyBlobEntryCacheModel
 	public long groupId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-671390487

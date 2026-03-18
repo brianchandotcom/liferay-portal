@@ -115,3 +115,4 @@ public class TreeEntryCacheModel
 	public long rightTreeEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1241197395

@@ -408,3 +408,4 @@ public class VersionedEntryLocalServiceUtil {
 			VersionedEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1426750953

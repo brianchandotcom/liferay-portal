@@ -33,3 +33,4 @@ public class MappingEntryTable extends BaseTable<MappingEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-359702172

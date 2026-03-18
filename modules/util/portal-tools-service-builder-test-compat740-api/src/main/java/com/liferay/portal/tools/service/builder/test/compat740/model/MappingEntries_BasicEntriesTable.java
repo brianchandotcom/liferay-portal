@@ -41,3 +41,4 @@ public class MappingEntries_BasicEntriesTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:601958646

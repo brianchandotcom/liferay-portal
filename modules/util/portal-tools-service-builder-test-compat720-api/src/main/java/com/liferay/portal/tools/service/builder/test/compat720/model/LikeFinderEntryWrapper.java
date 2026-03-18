@@ -205,3 +205,4 @@ public class LikeFinderEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1808305723

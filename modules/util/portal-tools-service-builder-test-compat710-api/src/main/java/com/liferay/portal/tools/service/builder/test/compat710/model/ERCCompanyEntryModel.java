@@ -226,3 +226,4 @@ public interface ERCCompanyEntryModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:198061132

@@ -508,3 +508,4 @@ public abstract class ConvertNullEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1290308228

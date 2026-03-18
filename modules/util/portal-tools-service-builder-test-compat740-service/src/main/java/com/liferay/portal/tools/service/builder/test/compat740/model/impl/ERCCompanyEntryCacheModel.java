@@ -164,3 +164,4 @@ public class ERCCompanyEntryCacheModel
 	public int column1;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1066052607

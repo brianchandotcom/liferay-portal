@@ -519,3 +519,4 @@ public abstract class CacheDisabledEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1881208732

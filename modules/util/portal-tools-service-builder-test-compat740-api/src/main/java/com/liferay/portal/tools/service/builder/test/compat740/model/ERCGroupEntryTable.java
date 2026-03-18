@@ -40,3 +40,4 @@ public class ERCGroupEntryTable extends BaseTable<ERCGroupEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1099479347

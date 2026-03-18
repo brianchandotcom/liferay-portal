@@ -52,3 +52,4 @@ public interface TreeEntry
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1802157880

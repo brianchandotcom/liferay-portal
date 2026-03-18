@@ -152,3 +152,4 @@ public class ERCCompanyEntrySoap implements Serializable {
 	private int _column1;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-197897973

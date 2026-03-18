@@ -103,3 +103,4 @@ public class LocalizedEntrySoap implements Serializable {
 	private long _localizedEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1046078285

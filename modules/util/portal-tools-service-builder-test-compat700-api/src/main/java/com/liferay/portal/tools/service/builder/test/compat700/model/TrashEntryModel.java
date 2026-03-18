@@ -313,3 +313,4 @@ public interface TrashEntryModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1988367221

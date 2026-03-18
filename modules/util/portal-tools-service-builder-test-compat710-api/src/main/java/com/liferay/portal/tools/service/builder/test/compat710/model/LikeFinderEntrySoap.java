@@ -132,3 +132,4 @@ public class LikeFinderEntrySoap implements Serializable {
 	private String _portletId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:604222700

@@ -48,3 +48,4 @@ package com.liferay.portal.tools.service.builder.test.compat730.service.http;
 @Deprecated
 public class EagerBlobEntryServiceSoap {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1311560974

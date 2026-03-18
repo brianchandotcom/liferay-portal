@@ -379,3 +379,4 @@ public class MappingEntryLocalServiceUtil {
 	private static volatile MappingEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1237505411

@@ -326,3 +326,4 @@ public class ArrayableEntryLocalServiceWrapper
 	private ArrayableEntryLocalService _arrayableEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1789627332

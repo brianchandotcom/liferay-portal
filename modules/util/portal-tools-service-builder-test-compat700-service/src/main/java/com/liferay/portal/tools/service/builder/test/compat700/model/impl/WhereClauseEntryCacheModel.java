@@ -122,3 +122,4 @@ public class WhereClauseEntryCacheModel
 	public String nickname;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:591449606

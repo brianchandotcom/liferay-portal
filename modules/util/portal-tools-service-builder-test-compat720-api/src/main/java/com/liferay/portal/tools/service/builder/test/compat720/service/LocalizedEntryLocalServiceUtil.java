@@ -327,3 +327,4 @@ public class LocalizedEntryLocalServiceUtil {
 	private static volatile LocalizedEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-211696536

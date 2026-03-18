@@ -182,3 +182,4 @@ public interface LikeFinderEntryModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1686922755

@@ -127,3 +127,4 @@ public interface LikeFinderEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2051408305

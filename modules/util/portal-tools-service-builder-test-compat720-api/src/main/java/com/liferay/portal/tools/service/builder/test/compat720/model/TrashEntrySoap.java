@@ -157,3 +157,4 @@ public class TrashEntrySoap implements Serializable {
 	private String _name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-49612213

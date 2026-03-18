@@ -152,3 +152,4 @@ public class LocalizedEntryLocalizationSoap implements Serializable {
 	private String _content;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-847623952

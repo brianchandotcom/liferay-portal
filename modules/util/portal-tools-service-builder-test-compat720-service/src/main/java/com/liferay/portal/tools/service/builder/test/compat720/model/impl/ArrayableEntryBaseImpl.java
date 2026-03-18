@@ -39,3 +39,4 @@ public abstract class ArrayableEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1426781790

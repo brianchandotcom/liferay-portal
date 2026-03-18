@@ -50,3 +50,4 @@ public interface LikeFinderEntry extends LikeFinderEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1867388627

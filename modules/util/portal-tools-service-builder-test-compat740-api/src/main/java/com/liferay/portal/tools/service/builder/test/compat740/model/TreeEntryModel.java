@@ -121,3 +121,4 @@ public interface TreeEntryModel extends BaseModel<TreeEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2088785352

@@ -569,3 +569,4 @@ public class CacheDisabledEntryModelImpl
 	private CacheDisabledEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-961805137

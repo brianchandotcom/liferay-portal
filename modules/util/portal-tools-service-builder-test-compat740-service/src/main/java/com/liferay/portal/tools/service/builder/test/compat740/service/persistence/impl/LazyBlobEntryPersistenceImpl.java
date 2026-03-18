@@ -1471,3 +1471,4 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:985681164

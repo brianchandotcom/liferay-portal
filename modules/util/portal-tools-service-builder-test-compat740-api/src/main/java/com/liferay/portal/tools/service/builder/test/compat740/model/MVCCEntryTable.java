@@ -35,3 +35,4 @@ public class MVCCEntryTable extends BaseTable<MVCCEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-399306151

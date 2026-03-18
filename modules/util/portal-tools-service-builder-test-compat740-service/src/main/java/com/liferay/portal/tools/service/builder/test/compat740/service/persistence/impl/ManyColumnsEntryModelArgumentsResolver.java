@@ -113,3 +113,4 @@ public class ManyColumnsEntryModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1538498600

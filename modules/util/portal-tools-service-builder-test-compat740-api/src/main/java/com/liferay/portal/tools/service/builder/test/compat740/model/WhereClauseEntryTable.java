@@ -36,3 +36,4 @@ public class WhereClauseEntryTable extends BaseTable<WhereClauseEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1736909656

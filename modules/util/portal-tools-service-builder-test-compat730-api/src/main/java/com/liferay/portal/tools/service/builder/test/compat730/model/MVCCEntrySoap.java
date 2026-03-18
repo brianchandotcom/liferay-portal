@@ -118,3 +118,4 @@ public class MVCCEntrySoap implements Serializable {
 	private String _name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:379171959

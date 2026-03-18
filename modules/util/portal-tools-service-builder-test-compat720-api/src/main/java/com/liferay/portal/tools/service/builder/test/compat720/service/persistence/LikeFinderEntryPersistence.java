@@ -394,3 +394,4 @@ public interface LikeFinderEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:163444669

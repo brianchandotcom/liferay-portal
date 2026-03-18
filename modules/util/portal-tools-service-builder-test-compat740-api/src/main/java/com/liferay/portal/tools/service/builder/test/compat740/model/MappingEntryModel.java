@@ -99,3 +99,4 @@ public interface MappingEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1336662157

@@ -47,3 +47,4 @@ public class BasicEntryTable extends BaseTable<BasicEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-668583014

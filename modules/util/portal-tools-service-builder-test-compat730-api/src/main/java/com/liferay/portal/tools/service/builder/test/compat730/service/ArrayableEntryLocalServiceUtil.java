@@ -290,3 +290,4 @@ public class ArrayableEntryLocalServiceUtil {
 	private static volatile ArrayableEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1525168820

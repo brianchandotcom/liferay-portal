@@ -319,3 +319,4 @@ public class MVCCEntryLocalServiceWrapper
 	private MVCCEntryLocalService _mvccEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1062872415

@@ -105,3 +105,4 @@ public class CacheDisabledEntryCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1263657984

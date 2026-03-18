@@ -136,3 +136,4 @@ public interface ConvertNullEntryModel extends BaseModel<ConvertNullEntry> {
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1168478246

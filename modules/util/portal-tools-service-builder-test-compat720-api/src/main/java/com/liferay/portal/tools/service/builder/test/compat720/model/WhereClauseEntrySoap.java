@@ -114,3 +114,4 @@ public class WhereClauseEntrySoap implements Serializable {
 	private String _nickname;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-127031560

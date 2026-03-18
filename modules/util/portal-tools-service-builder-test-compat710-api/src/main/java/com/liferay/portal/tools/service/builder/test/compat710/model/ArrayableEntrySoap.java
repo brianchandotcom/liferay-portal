@@ -151,3 +151,4 @@ public class ArrayableEntrySoap implements Serializable {
 	private String _type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1302801672

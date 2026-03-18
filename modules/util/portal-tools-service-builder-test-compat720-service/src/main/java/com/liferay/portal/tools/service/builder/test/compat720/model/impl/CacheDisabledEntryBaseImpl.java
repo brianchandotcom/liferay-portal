@@ -39,3 +39,4 @@ public abstract class CacheDisabledEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-80746230

@@ -306,3 +306,4 @@ public class ManyColumnsEntryLocalServiceUtil {
 			ManyColumnsEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-616753766

@@ -481,3 +481,4 @@ public class BasicEntryWrapper implements BasicEntry, ModelWrapper<BasicEntry> {
 	private final BasicEntry _basicEntry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-113857848

@@ -112,3 +112,4 @@ public class VersionedEntryVersionCacheModel
 	public long groupId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1854554295

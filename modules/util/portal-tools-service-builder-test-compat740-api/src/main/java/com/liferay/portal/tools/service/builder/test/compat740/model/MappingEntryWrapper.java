@@ -161,3 +161,4 @@ public class MappingEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-657293551

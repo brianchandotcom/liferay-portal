@@ -46,3 +46,4 @@ package com.liferay.portal.tools.service.builder.test.compat720.service.http;
  */
 public class LazyBlobEntryServiceSoap {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:989201736

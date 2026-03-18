@@ -52,3 +52,4 @@ public interface WhereClauseEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1063229663

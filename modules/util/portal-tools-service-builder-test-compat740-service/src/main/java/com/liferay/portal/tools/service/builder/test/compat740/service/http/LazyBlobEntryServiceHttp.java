@@ -33,3 +33,4 @@ package com.liferay.portal.tools.service.builder.test.compat740.service.http;
  */
 public class LazyBlobEntryServiceHttp {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-167899808

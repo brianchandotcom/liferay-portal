@@ -288,3 +288,4 @@ public class CacheDisabledEntryLocalServiceUtil {
 	private static volatile CacheDisabledEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-228894249

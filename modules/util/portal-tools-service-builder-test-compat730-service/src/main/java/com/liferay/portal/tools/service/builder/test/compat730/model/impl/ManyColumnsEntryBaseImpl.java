@@ -39,3 +39,4 @@ public abstract class ManyColumnsEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1473193108

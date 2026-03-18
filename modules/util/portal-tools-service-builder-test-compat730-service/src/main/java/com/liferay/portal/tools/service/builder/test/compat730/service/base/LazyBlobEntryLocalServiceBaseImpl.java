@@ -649,3 +649,4 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1586290873

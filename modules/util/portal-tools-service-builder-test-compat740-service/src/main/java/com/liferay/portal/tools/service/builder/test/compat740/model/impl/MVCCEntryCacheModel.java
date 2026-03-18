@@ -132,3 +132,4 @@ public class MVCCEntryCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2127983231

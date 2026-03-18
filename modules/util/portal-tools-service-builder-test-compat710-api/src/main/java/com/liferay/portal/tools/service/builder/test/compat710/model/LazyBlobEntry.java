@@ -50,3 +50,4 @@ public interface LazyBlobEntry extends LazyBlobEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:416469434

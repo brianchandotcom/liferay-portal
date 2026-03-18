@@ -225,3 +225,4 @@ public interface ArrayableEntryModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-922259830

@@ -103,3 +103,4 @@ public class LocalizedEntryCacheModel
 	public long localizedEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1883632777

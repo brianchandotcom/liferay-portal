@@ -96,3 +96,4 @@ public interface WhereClauseEntryModel extends BaseModel<WhereClauseEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1821813362

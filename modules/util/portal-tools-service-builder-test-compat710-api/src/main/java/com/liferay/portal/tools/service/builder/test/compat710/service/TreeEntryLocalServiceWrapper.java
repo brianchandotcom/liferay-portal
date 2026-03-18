@@ -319,3 +319,4 @@ public class TreeEntryLocalServiceWrapper
 	private TreeEntryLocalService _treeEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1600199995

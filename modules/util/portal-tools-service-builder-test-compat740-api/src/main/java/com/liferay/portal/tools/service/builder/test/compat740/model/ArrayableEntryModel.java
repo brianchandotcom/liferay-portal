@@ -170,3 +170,4 @@ public interface ArrayableEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:675452541

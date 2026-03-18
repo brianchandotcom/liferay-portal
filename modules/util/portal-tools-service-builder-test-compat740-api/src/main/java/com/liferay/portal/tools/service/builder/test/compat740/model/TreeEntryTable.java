@@ -37,3 +37,4 @@ public class TreeEntryTable extends BaseTable<TreeEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-128277068

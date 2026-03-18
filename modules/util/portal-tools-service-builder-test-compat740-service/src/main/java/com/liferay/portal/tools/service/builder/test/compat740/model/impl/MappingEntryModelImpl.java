@@ -585,3 +585,4 @@ public class MappingEntryModelImpl
 	private MappingEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2071149197

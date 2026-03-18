@@ -348,3 +348,4 @@ public class ERCCompanyEntryLocalServiceUtil {
 			ERCCompanyEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1176891025

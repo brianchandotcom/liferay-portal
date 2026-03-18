@@ -110,3 +110,4 @@ public interface VersionedEntryModel
 	public void setGroupId(long groupId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1923426813

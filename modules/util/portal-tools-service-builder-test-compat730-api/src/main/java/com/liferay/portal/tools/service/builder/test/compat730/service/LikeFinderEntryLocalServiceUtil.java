@@ -294,3 +294,4 @@ public class LikeFinderEntryLocalServiceUtil {
 	private static volatile LikeFinderEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1735047700

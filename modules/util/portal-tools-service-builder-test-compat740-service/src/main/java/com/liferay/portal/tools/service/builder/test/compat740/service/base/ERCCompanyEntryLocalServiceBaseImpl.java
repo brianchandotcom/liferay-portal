@@ -505,3 +505,4 @@ public abstract class ERCCompanyEntryLocalServiceBaseImpl
 		ERCCompanyEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1925822670

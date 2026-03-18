@@ -279,3 +279,4 @@ public class ArrayableEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:347619250

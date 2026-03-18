@@ -1612,3 +1612,4 @@ public class LazyBlobEntryPersistenceImpl
 		new String[] {"uuid"});
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:669074930

@@ -445,3 +445,4 @@ public abstract class TreeEntryLocalServiceBaseImpl
 		TreeEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-255096597

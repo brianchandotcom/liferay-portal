@@ -304,3 +304,4 @@ public class WhereClauseEntryWrapper
 	private final WhereClauseEntry _whereClauseEntry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:378418801

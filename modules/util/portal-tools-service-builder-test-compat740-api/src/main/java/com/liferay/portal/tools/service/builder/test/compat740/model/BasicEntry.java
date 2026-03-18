@@ -50,3 +50,4 @@ public interface BasicEntry extends BasicEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2044930412

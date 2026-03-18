@@ -128,3 +128,4 @@ public class ERCGroupEntrySoap implements Serializable {
 	private long _companyId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-109905062

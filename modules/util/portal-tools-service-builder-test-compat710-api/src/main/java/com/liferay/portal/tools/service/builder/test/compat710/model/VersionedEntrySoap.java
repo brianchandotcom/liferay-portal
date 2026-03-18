@@ -121,3 +121,4 @@ public class VersionedEntrySoap implements Serializable {
 	private long _groupId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-642302724

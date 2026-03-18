@@ -154,3 +154,4 @@ public interface MappingEntryModel
 	public String toXmlString();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1789778221

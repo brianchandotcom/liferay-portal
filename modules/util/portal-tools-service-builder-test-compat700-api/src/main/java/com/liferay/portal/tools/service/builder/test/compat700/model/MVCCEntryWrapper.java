@@ -325,3 +325,4 @@ public class MVCCEntryWrapper implements ModelWrapper<MVCCEntry>, MVCCEntry {
 	private final MVCCEntry _mvccEntry;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:31020558

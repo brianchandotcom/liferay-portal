@@ -160,3 +160,4 @@ public class ManyColumnsEntryTable extends BaseTable<ManyColumnsEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-957992064

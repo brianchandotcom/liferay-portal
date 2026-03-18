@@ -11,7 +11,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.dsr.site.initializer.internal.display.context.ViewRoomsSectionDisplayContext;
+import com.liferay.site.dsr.site.initializer.internal.display.context.ViewAnalyticsMostActiveVisitorsSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,32 +19,29 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Stefano Motta
+ * @author Gianmarco Brunialti Masera
  */
 @Component(service = FragmentRenderer.class)
-public class ViewRoomsJSPSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewRoomsSectionDisplayContext> {
-
-	@Override
-	public String getCollectionKey() {
-		return "sections";
-	}
+public class ViewAnalyticsMostActiveVisitorsJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer
+		<ViewAnalyticsMostActiveVisitorsSectionDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
-		return "rooms";
+		return "most-active-visitors";
 	}
 
 	@Override
-	protected ViewRoomsSectionDisplayContext getDisplayContext(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+	protected ViewAnalyticsMostActiveVisitorsSectionDisplayContext
+		getDisplayContext(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return new ViewRoomsSectionDisplayContext(
+		return new ViewAnalyticsMostActiveVisitorsSectionDisplayContext(
 			httpServletRequest,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
@@ -54,7 +51,7 @@ public class ViewRoomsJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_rooms.jsp";
+		return "/view_analytics_most_active_visitors.jsp";
 	}
 
 	@Reference

@@ -11,7 +11,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.dsr.site.initializer.internal.display.context.ViewRoomsSectionDisplayContext;
+import com.liferay.site.dsr.site.initializer.internal.display.context.ViewAnalyticsRoomGeneralSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,24 +19,20 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Stefano Motta
+ * @author Gianmarco Brunialti Masera
  */
 @Component(service = FragmentRenderer.class)
-public class ViewRoomsJSPSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewRoomsSectionDisplayContext> {
-
-	@Override
-	public String getCollectionKey() {
-		return "sections";
-	}
+public class ViewAnalyticsRoomGeneralJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer
+		<ViewAnalyticsRoomGeneralSectionDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
-		return "rooms";
+		return "room-general";
 	}
 
 	@Override
-	protected ViewRoomsSectionDisplayContext getDisplayContext(
+	protected ViewAnalyticsRoomGeneralSectionDisplayContext getDisplayContext(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
@@ -44,7 +40,7 @@ public class ViewRoomsJSPSectionFragmentRenderer
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return new ViewRoomsSectionDisplayContext(
+		return new ViewAnalyticsRoomGeneralSectionDisplayContext(
 			httpServletRequest,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
@@ -54,7 +50,7 @@ public class ViewRoomsJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_rooms.jsp";
+		return "/view_analytics_room_general.jsp";
 	}
 
 	@Reference

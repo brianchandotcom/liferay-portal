@@ -11,7 +11,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.dsr.site.initializer.internal.display.context.ViewRoomsSectionDisplayContext;
+import com.liferay.site.dsr.site.initializer.internal.display.context.ViewAnalyticsLatestActivitySectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,32 +19,29 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Stefano Motta
+ * @author Gianmarco Brunialti Masera
  */
 @Component(service = FragmentRenderer.class)
-public class ViewRoomsJSPSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewRoomsSectionDisplayContext> {
-
-	@Override
-	public String getCollectionKey() {
-		return "sections";
-	}
+public class ViewAnalyticsLatestActivityJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer
+		<ViewAnalyticsLatestActivitySectionDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
-		return "rooms";
+		return "latest-activity";
 	}
 
 	@Override
-	protected ViewRoomsSectionDisplayContext getDisplayContext(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+	protected ViewAnalyticsLatestActivitySectionDisplayContext
+		getDisplayContext(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return new ViewRoomsSectionDisplayContext(
+		return new ViewAnalyticsLatestActivitySectionDisplayContext(
 			httpServletRequest,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
@@ -54,7 +51,7 @@ public class ViewRoomsJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_rooms.jsp";
+		return "/view_analytics_latest_activity.jsp";
 	}
 
 	@Reference

@@ -7,12 +7,12 @@ import React from 'react';
 
 import {BaseLinkRenderer, BaseLinkRendererProps} from './BaseLinkRenderer';
 
-export function DesignLibraryLinkRenderer(props: BaseLinkRendererProps) {
+export function StyleBookLinkRenderer(props: BaseLinkRendererProps) {
 	return (
 		<BaseLinkRenderer
 			{...props}
-			className="design-library-fds-sticker-books"
-			symbol="books"
+			className="design-library-fds-sticker-stylebook"
+			symbol="book"
 		/>
 	);
 }

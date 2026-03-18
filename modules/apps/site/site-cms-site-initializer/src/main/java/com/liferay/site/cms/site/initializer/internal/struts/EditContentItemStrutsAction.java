@@ -12,7 +12,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
@@ -53,7 +53,7 @@ public class EditContentItemStrutsAction implements StrutsAction {
 			_fragmentEntryLinkService, _fragmentRendererRegistry,
 			httpServletRequest, String.valueOf(objectEntry.getObjectEntryId()),
 			_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
-			_objectDefinitionService.getObjectDefinition(
+			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId()));
 
 		if (Validator.isNotNull(redirect)) {
@@ -110,7 +110,7 @@ public class EditContentItemStrutsAction implements StrutsAction {
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
-	private ObjectDefinitionService _objectDefinitionService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

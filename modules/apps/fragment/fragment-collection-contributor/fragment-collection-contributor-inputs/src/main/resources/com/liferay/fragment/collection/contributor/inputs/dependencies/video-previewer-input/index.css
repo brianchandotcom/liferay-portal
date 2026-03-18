@@ -1,6 +1,7 @@
 .video-preview {
 	height: 100%;
 	left: 0;
+	max-width: 100%;
 	position: absolute;
 	top: 0;
 	width: 100%;

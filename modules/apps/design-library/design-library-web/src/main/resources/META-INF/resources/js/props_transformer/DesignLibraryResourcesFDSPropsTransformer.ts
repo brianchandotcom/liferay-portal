@@ -4,8 +4,17 @@
  */
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {dateUtils} from 'frontend-js-web';
 
 import {ActionItem, DesignLibraryItem} from '../types';
+import {FromNowDateTimeRenderer} from './cell_renderers/FromNowDateTimeRenderer';
+import {StyleBookLinkRenderer} from './cell_renderers/StyleBookLinkRenderer';
+
+enum TableCelRenderer {
+	DESIGN_LIBRARY_LINK = 'designLibraryLink',
+	FROM_NOW_DATE_TIME = 'fromNowDateTime',
+	RESOURCE_TYPE = 'resourceType',
+}
 
 export default function DesignLibraryResourcesFDSPropsTransformer(
 	props: IFrontendDataSetProps
@@ -21,9 +30,26 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 	return {
 		...props,
 		creationMenu,
+		customRenderers: {
+			tableCell: [
+				{
+					component: StyleBookLinkRenderer,
+					name: TableCelRenderer.DESIGN_LIBRARY_LINK,
+					type: 'internal',
+				},
+				{
+					component: () => Liferay.Language.get('style-book'),
+					name: TableCelRenderer.RESOURCE_TYPE,
+					type: 'internal',
+				},
+				{
+					component: FromNowDateTimeRenderer,
+					name: TableCelRenderer.FROM_NOW_DATE_TIME,
+					type: 'internal',
+				},
+			],
+		},
 		hideManagementBarInEmptyState: true,
-		selectedItemsKey: 'embedded.id',
-		selectionType: 'multiple',
 		showSelectAll: true,
 		views: [
 			{
@@ -35,8 +61,9 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 					fields: [
 						{
 							actionId: 'edit',
-							contentRenderer: 'actionLink',
-							fieldName: 'name',
+							contentRenderer:
+								TableCelRenderer.DESIGN_LIBRARY_LINK,
+							fieldName: 'title',
 							label: Liferay.Language.get('title'),
 							localizeLabel: true,
 							sortable: true,
@@ -48,9 +75,17 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 							truncate: true,
 						},
 						{
-							contentRenderer: 'dateTime',
+							contentRenderer: TableCelRenderer.RESOURCE_TYPE,
+							fieldName: 'type',
+							label: Liferay.Language.get('type'),
+							localizeLabel: true,
+							truncate: true,
+						},
+						{
+							contentRenderer:
+								TableCelRenderer.FROM_NOW_DATE_TIME,
 							fieldName: 'dateModified',
-							label: Liferay.Language.get('last-updated'),
+							label: Liferay.Language.get('modified'),
 							localizeLabel: true,
 							sortable: true,
 						},
@@ -76,7 +111,13 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 				}) => {
 					return {
 						...props,
-						description: `asdfasdf: ${new Date(item.dateModified).toLocaleString()}`,
+						description: dateUtils.fromNow(
+							new Date(item.dateModified)
+						),
+						href: props.actions.find(
+							(action) => action.data.id === 'edit'
+						)?.href,
+						symbol: 'book',
 					};
 				},
 				thumbnail: 'cards2',

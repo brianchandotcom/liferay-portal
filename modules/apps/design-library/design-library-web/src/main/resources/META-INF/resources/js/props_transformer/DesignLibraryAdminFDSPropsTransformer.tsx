@@ -106,7 +106,6 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 						symbol: 'books',
 					};
 				},
-
 				thumbnail: 'cards2',
 			},
 		],

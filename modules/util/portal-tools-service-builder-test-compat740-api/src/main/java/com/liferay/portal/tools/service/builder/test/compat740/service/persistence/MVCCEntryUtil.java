@@ -245,25 +245,6 @@ public class MVCCEntryUtil {
 	}
 
 	/**
-	 * Returns the mvcc entries before and after the current mvcc entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param mvccEntryId the primary key of the current mvcc entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next mvcc entry
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
-	 */
-	public static MVCCEntry[] findByCompanyId_PrevAndNext(
-			long mvccEntryId, long companyId,
-			OrderByComparator<MVCCEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchMVCCEntryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			mvccEntryId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the mvcc entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -507,4 +488,4 @@ public class MVCCEntryUtil {
 	private static volatile MVCCEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:884163470
+// LIFERAY-SERVICE-BUILDER-HASH:-1276016299

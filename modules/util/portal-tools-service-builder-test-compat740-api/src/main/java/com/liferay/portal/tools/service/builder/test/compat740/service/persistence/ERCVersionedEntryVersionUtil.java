@@ -258,26 +258,6 @@ public class ERCVersionedEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the erc versioned entry versions before and after the current erc versioned entry version in the ordered set where ercVersionedEntryId = &#63;.
-	 *
-	 * @param ercVersionedEntryVersionId the primary key of the current erc versioned entry version
-	 * @param ercVersionedEntryId the erc versioned entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a erc versioned entry version with the primary key could not be found
-	 */
-	public static ERCVersionedEntryVersion[]
-			findByErcVersionedEntryId_PrevAndNext(
-				long ercVersionedEntryVersionId, long ercVersionedEntryId,
-				OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchERCVersionedEntryVersionException {
-
-		return getPersistence().findByErcVersionedEntryId_PrevAndNext(
-			ercVersionedEntryVersionId, ercVersionedEntryId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the erc versioned entry versions where ercVersionedEntryId = &#63; from the database.
 	 *
 	 * @param ercVersionedEntryId the erc versioned entry ID
@@ -506,25 +486,6 @@ public class ERCVersionedEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the erc versioned entry versions before and after the current erc versioned entry version in the ordered set where uuid = &#63;.
-	 *
-	 * @param ercVersionedEntryVersionId the primary key of the current erc versioned entry version
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a erc versioned entry version with the primary key could not be found
-	 */
-	public static ERCVersionedEntryVersion[] findByUuid_PrevAndNext(
-			long ercVersionedEntryVersionId, String uuid,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchERCVersionedEntryVersionException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			ercVersionedEntryVersionId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the erc versioned entry versions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -689,26 +650,6 @@ public class ERCVersionedEntryVersionUtil {
 
 		return getPersistence().fetchByUuid_Version_Last(
 			uuid, version, orderByComparator);
-	}
-
-	/**
-	 * Returns the erc versioned entry versions before and after the current erc versioned entry version in the ordered set where uuid = &#63; and version = &#63;.
-	 *
-	 * @param ercVersionedEntryVersionId the primary key of the current erc versioned entry version
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a erc versioned entry version with the primary key could not be found
-	 */
-	public static ERCVersionedEntryVersion[] findByUuid_Version_PrevAndNext(
-			long ercVersionedEntryVersionId, String uuid, int version,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchERCVersionedEntryVersionException {
-
-		return getPersistence().findByUuid_Version_PrevAndNext(
-			ercVersionedEntryVersionId, uuid, version, orderByComparator);
 	}
 
 	/**
@@ -878,26 +819,6 @@ public class ERCVersionedEntryVersionUtil {
 
 		return getPersistence().fetchByUUID_G_Last(
 			uuid, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the erc versioned entry versions before and after the current erc versioned entry version in the ordered set where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param ercVersionedEntryVersionId the primary key of the current erc versioned entry version
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a erc versioned entry version with the primary key could not be found
-	 */
-	public static ERCVersionedEntryVersion[] findByUUID_G_PrevAndNext(
-			long ercVersionedEntryVersionId, String uuid, long groupId,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchERCVersionedEntryVersionException {
-
-		return getPersistence().findByUUID_G_PrevAndNext(
-			ercVersionedEntryVersionId, uuid, groupId, orderByComparator);
 	}
 
 	/**
@@ -1147,26 +1068,6 @@ public class ERCVersionedEntryVersionUtil {
 	}
 
 	/**
-	 * Returns the erc versioned entry versions before and after the current erc versioned entry version in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param ercVersionedEntryVersionId the primary key of the current erc versioned entry version
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a erc versioned entry version with the primary key could not be found
-	 */
-	public static ERCVersionedEntryVersion[] findByUuid_C_PrevAndNext(
-			long ercVersionedEntryVersionId, String uuid, long companyId,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchERCVersionedEntryVersionException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			ercVersionedEntryVersionId, uuid, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the erc versioned entry versions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -1343,29 +1244,6 @@ public class ERCVersionedEntryVersionUtil {
 
 		return getPersistence().fetchByUuid_C_Version_Last(
 			uuid, companyId, version, orderByComparator);
-	}
-
-	/**
-	 * Returns the erc versioned entry versions before and after the current erc versioned entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param ercVersionedEntryVersionId the primary key of the current erc versioned entry version
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a erc versioned entry version with the primary key could not be found
-	 */
-	public static ERCVersionedEntryVersion[] findByUuid_C_Version_PrevAndNext(
-			long ercVersionedEntryVersionId, String uuid, long companyId,
-			int version,
-			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchERCVersionedEntryVersionException {
-
-		return getPersistence().findByUuid_C_Version_PrevAndNext(
-			ercVersionedEntryVersionId, uuid, companyId, version,
-			orderByComparator);
 	}
 
 	/**
@@ -1571,4 +1449,4 @@ public class ERCVersionedEntryVersionUtil {
 	private static volatile ERCVersionedEntryVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1898959353
+// LIFERAY-SERVICE-BUILDER-HASH:1741914677

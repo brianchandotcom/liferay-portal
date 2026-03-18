@@ -359,30 +359,6 @@ public class LikeFinderEntryUtil {
 	}
 
 	/**
-	 * Returns the like finder entries before and after the current like finder entry in the ordered set where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
-	 *
-	 * @param likeFinderEntryId the primary key of the current like finder entry
-	 * @param companyId the company ID
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next like finder entry
-	 * @throws NoSuchLikeFinderEntryException if a like finder entry with the primary key could not be found
-	 */
-	public static LikeFinderEntry[] findByC_O_O_LikeP_PrevAndNext(
-			long likeFinderEntryId, long companyId, long ownerId, int ownerType,
-			String portletId,
-			OrderByComparator<LikeFinderEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchLikeFinderEntryException {
-
-		return getPersistence().findByC_O_O_LikeP_PrevAndNext(
-			likeFinderEntryId, companyId, ownerId, ownerType, portletId,
-			orderByComparator);
-	}
-
-	/**
 	 * Removes all the like finder entries where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -575,4 +551,4 @@ public class LikeFinderEntryUtil {
 	private static volatile LikeFinderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1509784112
+// LIFERAY-SERVICE-BUILDER-HASH:-1023886687

@@ -423,7 +423,8 @@ public class FriendlyURLServlet extends HttpServlet {
 							portal.getOriginalServletRequest(
 								httpServletRequest);
 
-						if (redirect.equals(
+						if (Objects.equals(
+								HttpComponentsUtil.getPath(redirect),
 								originalHttpServletRequest.getRequestURI())) {
 
 							throw new NoSuchLayoutException();

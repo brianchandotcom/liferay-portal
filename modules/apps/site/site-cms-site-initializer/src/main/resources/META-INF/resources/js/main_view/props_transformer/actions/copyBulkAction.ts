@@ -69,7 +69,8 @@ const copyBulkAction = ({
 			objectEntryFolderExternalReferenceCode:
 				additionalProps.objectEntryFolderExternalReferenceCode,
 			rootObjectEntryFolderExternalReferenceCode:
-				additionalProps.rootObjectEntryFolderExternalReferenceCode,
+				additionalProps.rootObjectEntryFolderExternalReferenceCode ||
+				additionalProps.parentObjectEntryFolderExternalReferenceCode,
 			selectedData,
 		},
 		document.createElement('div')

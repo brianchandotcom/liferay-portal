@@ -118,7 +118,7 @@ export function getOrderStatusLabel(order: PlacedOrder) {
 		);
 	}
 
-	if (OrderTypes.AI_HUB) {
+	if (order.orderTypeExternalReferenceCode === OrderTypes.AI_HUB) {
 		if (order.orderStatusInfo.code !== OrderWorkflowStatusCode.COMPLETED) {
 			return 'Requested';
 		}

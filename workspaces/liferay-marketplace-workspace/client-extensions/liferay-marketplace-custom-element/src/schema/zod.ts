@@ -11,6 +11,25 @@ import {removeHTMLTags} from '../utils/string';
 
 const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]+?\.)+[a-zA-Z]{2,}$/;
 
+const ipv4Regex =
+	/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+
+const macAddressRegex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+
+function checkRegExp(regex: RegExp, values: string) {
+	if (!values) {
+		return true;
+	}
+
+	return values.split('\n').every((value) => {
+		if (!value.trim()) {
+			return true;
+		}
+
+		return regex.test(value.trim());
+	});
+}
+
 const baseAppSchema = {
 	appUsageTermsURL: z.string().url().or(z.literal('')),
 	documentationURL: z.string().url().or(z.literal('')),
@@ -280,38 +299,29 @@ const zodSchema = {
 			.max(90, 'Please enter a valid number (1-90)'),
 		reason: z.string().min(3),
 	}),
-	generateLicenseKey: z
-		.object({
-			description: z
-				.string()
-				.min(3)
-				.max(100, {message: 'Invalid license name'}),
-			hostname: z.string().optional().or(z.literal('')),
-			ipAddress: z.string().optional().or(z.literal('')),
-			macAddress: z.string().optional().or(z.literal('')),
-			subscription: z
-				.object({
-					name: z.string(),
-					productPurchasedKey: z.string(),
-					productVersion: z.string(),
-					skuId: z.number(),
-				})
-				.optional(),
-		})
-		.superRefine((data, ctx) => {
-			if (!data.hostname && !data.ipAddress && !data.macAddress) {
-				const message =
-					'At least one identifier (Hostname, IP, or MAC) must be provided.';
-
-				['hostname', 'ipAddress', 'macAddress'].forEach((path) => {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message,
-						path: [path],
-					});
-				});
-			}
+	generateLicenseKey: z.object({
+		description: z
+			.string()
+			.min(3)
+			.max(100, {message: 'Invalid license name'}),
+		hostname: z.string().optional().or(z.literal('')),
+		ipAddress: z.string().refine((value) => checkRegExp(ipv4Regex, value), {
+			message: 'Invalid IP address',
 		}),
+		macAddress: z
+			.string()
+			.refine((value) => checkRegExp(macAddressRegex, value), {
+				message: 'Invalid MAC address',
+			}),
+		subscription: z
+			.object({
+				name: z.string(),
+				productPurchasedKey: z.string(),
+				productVersion: z.string(),
+				skuId: z.number(),
+			})
+			.optional(),
+	}),
 	installProductSchema: z.object({
 		environment: z.object({
 			isExtensionEnvironment: z.boolean(),

@@ -102,12 +102,13 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 
 	private int _getLatestSamlPeerBindingId() throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select max(samlPeerBindingId) from SamlPeerBinding");
+				"select max(samlPeerBindingId) as samlPeerBindingId from " +
+					"SamlPeerBinding");
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				return resultSet.getInt("samlPeerBindingId");
 			}
 		}
 
@@ -116,12 +117,13 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 
 	private int _getSamlIdpSpSessionIdOffset() throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select min(samlIdpSpSessionId) - 1 from SamlIdpSpSession");
+				"select min(samlIdpSpSessionId) - 1 as samlIdpSpSessionId " +
+					"from SamlIdpSpSession");
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				return resultSet.getInt("samlIdpSpSessionId");
 			}
 		}
 

@@ -21,6 +21,7 @@ import com.liferay.osb.faro.engine.client.model.ActivityAsset;
 import com.liferay.osb.faro.engine.client.model.ActivityGroup;
 import com.liferay.osb.faro.engine.client.model.AsahProject;
 import com.liferay.osb.faro.engine.client.model.Asset;
+import com.liferay.osb.faro.engine.client.model.AssetSummary;
 import com.liferay.osb.faro.engine.client.model.Author;
 import com.liferay.osb.faro.engine.client.model.BlockedKeyword;
 import com.liferay.osb.faro.engine.client.model.Channel;
@@ -965,6 +966,28 @@ public class ContactsEngineClientImpl
 		PagedModel<?, Asset> pagedModel = get(
 			faroProject, Rels.ASSETS,
 			new ParameterizedTypeReference<EntityModelPagedModel<Asset>>() {
+			},
+			uriVariables);
+
+		return pagedModel.getResults();
+	}
+
+	@Override
+	public Results<AssetSummary> getAssetSummaries(
+		FaroProject faroProject, long channelId, String keywords, int rangeKey,
+		int cur, int delta, List<OrderByField> orderByFields) {
+
+		Map<String, Object> uriVariables = getUriVariables(
+			faroProject, cur, delta, orderByFields);
+
+		uriVariables.put("channelId", channelId);
+		uriVariables.put("keywords", keywords);
+		uriVariables.put("rangeKey", rangeKey);
+
+		PagedModel<?, AssetSummary> pagedModel = get(
+			faroProject, Rels.ASSET_SUMMARIES,
+			new ParameterizedTypeReference
+				<EntityModelPagedModel<AssetSummary>>() {
 			},
 			uriVariables);
 

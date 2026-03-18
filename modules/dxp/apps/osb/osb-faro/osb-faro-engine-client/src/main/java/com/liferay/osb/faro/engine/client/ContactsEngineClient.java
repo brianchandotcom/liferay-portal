@@ -12,6 +12,7 @@ import com.liferay.osb.faro.engine.client.model.ActivityAggregation;
 import com.liferay.osb.faro.engine.client.model.ActivityAsset;
 import com.liferay.osb.faro.engine.client.model.ActivityGroup;
 import com.liferay.osb.faro.engine.client.model.Asset;
+import com.liferay.osb.faro.engine.client.model.AssetSummary;
 import com.liferay.osb.faro.engine.client.model.Author;
 import com.liferay.osb.faro.engine.client.model.BlockedKeyword;
 import com.liferay.osb.faro.engine.client.model.Channel;
@@ -213,6 +214,10 @@ public interface ContactsEngineClient {
 	public Results<Asset> getAssets(
 		FaroProject faroProject, String dataSourceId, String query, int action,
 		String assetType, int cur, int delta, List<OrderByField> orderByFields);
+
+	public Results<AssetSummary> getAssetSummaries(
+		FaroProject faroProject, long channelId, String keywords, int rangeKey,
+		int cur, int delta, List<OrderByField> orderByFields);
 
 	public DataSource getAvailableTokenDataSource(FaroProject faroProject);
 

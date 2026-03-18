@@ -132,6 +132,53 @@ public abstract class BaseLicenseTestCase {
 		Assert.assertFalse(response.contains(_LICENSE_PAGE_KEY));
 	}
 
+	public File deployCMPLicense(long validityPeriod) throws Exception {
+		long currentTimeMillis = System.currentTimeMillis();
+
+		StringBundler sb = new StringBundler(19);
+
+		sb.append("<?xml version=\"1.0\"?>");
+		sb.append("<license><product-id>");
+		sb.append(getCMPProductId());
+		sb.append("</product-id><product-name>");
+		sb.append(_CMP_PRODUCT_NAME);
+		sb.append("</product-name><product-version>2026.Q1</product-version>");
+		sb.append("<license-type>");
+		sb.append(_CMP_LICENSE_TYPE);
+		sb.append("</license-type><license-version>3</license-version>");
+		sb.append("<start-date>");
+		sb.append(_DATE_FORMAT.format(new Date(currentTimeMillis)));
+		sb.append("</start-date><expiration-date>");
+		sb.append(
+			_DATE_FORMAT.format(new Date(currentTimeMillis + validityPeriod)));
+		sb.append("</expiration-date><host-names>");
+		sb.append("<host-name>localhost</host-name>");
+		sb.append("</host-names><ip-addresses>");
+
+		for (String localIpAddress : LicenseUtil.getIpAddresses()) {
+			sb.append("<ip-address>");
+			sb.append(localIpAddress);
+			sb.append("</ip-address>");
+		}
+
+		sb.append("</ip-addresses><mac-addresses>");
+
+		for (String localMacAddress : LicenseUtil.getMacAddresses()) {
+			sb.append("<mac-address>");
+			sb.append(localMacAddress);
+			sb.append("</mac-address>");
+		}
+
+		sb.append("</mac-addresses><key></key></license>");
+
+		LicenseManagerUtil.registerLicense(
+			JSONUtil.put("licenseXML", sb.toString()));
+
+		return _buildBinaryFile(
+			getCMPProductId(), StringPool.BLANK, _CMP_PRODUCT_NAME,
+			_CMP_LICENSE_TYPE);
+	}
+
 	public File deployFreeTierLicense(long validityPeriod) throws Exception {
 		long currentTimeMillis = System.currentTimeMillis();
 
@@ -363,6 +410,11 @@ public abstract class BaseLicenseTestCase {
 
 		return HttpUtil.URLtoString(options);
 	}
+
+	private static final String _CMP_LICENSE_TYPE = "production";
+
+	private static final String _CMP_PRODUCT_NAME =
+		"Liferay Content Marketing Platform";
 
 	private static final DateFormat _DATE_FORMAT = new SimpleDateFormat(
 		"EEEE, MMMM d, yyyy hh:mm:ss a z", LocaleUtil.US);

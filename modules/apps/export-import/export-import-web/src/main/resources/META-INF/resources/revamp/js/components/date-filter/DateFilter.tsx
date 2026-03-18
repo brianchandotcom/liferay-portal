@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import {sub} from 'frontend-js-web';
 import React, {useMemo, useReducer} from 'react';
 
 import FieldSelectWithOption from '../forms/FieldSelectWithOption';
@@ -136,7 +137,7 @@ export default function DateFilter({
 							}
 							className="w-100"
 							displayType="info"
-							title={Liferay.Util.sub(
+							title={sub(
 								Liferay.Language.get(
 									'x-results-found-for-colon'
 								),

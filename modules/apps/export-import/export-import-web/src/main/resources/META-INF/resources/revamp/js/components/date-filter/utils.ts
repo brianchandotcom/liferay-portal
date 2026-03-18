@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {dateUtils} from 'frontend-js-web';
+import {dateUtils, sub} from 'frontend-js-web';
 
 import {
 	DateFilterValues,
@@ -29,19 +29,19 @@ export const FILTER_OPTIONS = [
 
 export const MODIFIED_LAST_OPTIONS = [
 	{
-		label: Liferay.Util.sub(Liferay.Language.get('x-hours'), '12'),
+		label: sub(Liferay.Language.get('x-hours'), '12'),
 		value: ModifiedLastType.H12,
 	},
 	{
-		label: Liferay.Util.sub(Liferay.Language.get('x-hours'), '24'),
+		label: sub(Liferay.Language.get('x-hours'), '24'),
 		value: ModifiedLastType.H24,
 	},
 	{
-		label: Liferay.Util.sub(Liferay.Language.get('x-hours'), '48'),
+		label: sub(Liferay.Language.get('x-hours'), '48'),
 		value: ModifiedLastType.H48,
 	},
 	{
-		label: Liferay.Util.sub(Liferay.Language.get('x-days'), '7'),
+		label: sub(Liferay.Language.get('x-days'), '7'),
 		value: ModifiedLastType.D7,
 	},
 ];
@@ -75,24 +75,18 @@ export function getAppliedFilterSummary(applied: DateFilterValues): string {
 		const {fromDate, toDate} = applied;
 
 		if (fromDate && toDate) {
-			return Liferay.Util.sub(Liferay.Language.get('date-range-x-to-x'), [
+			return sub(Liferay.Language.get('date-range-x-to-x'), [
 				fromDate,
 				toDate,
 			]);
 		}
 
 		if (fromDate) {
-			return Liferay.Util.sub(
-				Liferay.Language.get('date-range-after-x'),
-				fromDate
-			);
+			return sub(Liferay.Language.get('date-range-after-x'), fromDate);
 		}
 
 		if (toDate) {
-			return Liferay.Util.sub(
-				Liferay.Language.get('date-range-before-x'),
-				toDate
-			);
+			return sub(Liferay.Language.get('date-range-before-x'), toDate);
 		}
 	}
 

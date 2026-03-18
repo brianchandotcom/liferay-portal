@@ -32,7 +32,7 @@ public class UpgradeUserGroupRoleUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				updatePreparedStatement.setLong(1, resultSet.getLong(1));
+				updatePreparedStatement.setLong(1, resultSet.getLong("roleId"));
 
 				updatePreparedStatement.addBatch();
 			}

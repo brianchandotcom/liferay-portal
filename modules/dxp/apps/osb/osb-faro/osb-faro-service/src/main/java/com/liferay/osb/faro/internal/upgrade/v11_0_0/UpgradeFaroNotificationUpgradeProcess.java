@@ -68,7 +68,7 @@ public class UpgradeFaroNotificationUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				_addFaroNotification(resultSet.getLong(1));
+				_addFaroNotification(resultSet.getLong("groupId"));
 			}
 		}
 	}

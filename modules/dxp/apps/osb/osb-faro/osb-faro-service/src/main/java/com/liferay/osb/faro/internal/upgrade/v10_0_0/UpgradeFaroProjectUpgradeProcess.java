@@ -46,7 +46,7 @@ public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getLong(1);
+					return resultSet.getLong("roleId");
 				}
 
 				throw new Exception("Could not find site owner role ID");
@@ -74,8 +74,9 @@ public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					updatePreparedStatement.setString(
-						1, "[\"" + resultSet.getString(1) + "\"]");
-					updatePreparedStatement.setLong(2, resultSet.getLong(2));
+						1, "[\"" + resultSet.getString("emailAddress") + "\"]");
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("faroProjectId"));
 
 					updatePreparedStatement.addBatch();
 				}

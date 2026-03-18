@@ -249,9 +249,13 @@ function FolderItemSelectorModalContent({
 	rootObjectEntryFolderExternalReferenceCode,
 	selectedData,
 }: TFolderItemSelectorModalContent) {
+	const isCopy = action === 'copy';
+	const isFolderSelectionInitial =
+		objectEntryFolderExternalReferenceCode && !isCopy;
+
 	const [selectedItemType, setSelectedItemType] = useState<
 		'folder' | 'space'
-	>(objectEntryFolderExternalReferenceCode ? 'folder' : 'space');
+	>(isFolderSelectionInitial ? 'folder' : 'space');
 
 	const objectFolderExternalReferenceCode =
 		itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
@@ -265,7 +269,7 @@ function FolderItemSelectorModalContent({
 			? 'contents'
 			: 'files';
 	const [url, setURL] = useState<string>(
-		objectEntryFolderExternalReferenceCode
+		isFolderSelectionInitial
 			? getSpaceFoldersURL(cmsSection, itemData.embedded.scopeId)
 			: SPACES_URL
 	);
@@ -390,7 +394,7 @@ function FolderItemSelectorModalContent({
 				<ItemSelectorModal<Folder>
 					apiURL={url}
 					breadcrumbs={
-						objectEntryFolderExternalReferenceCode
+						isFolderSelectionInitial
 							? undefined
 							: [
 									{

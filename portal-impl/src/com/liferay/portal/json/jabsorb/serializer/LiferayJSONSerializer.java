@@ -116,15 +116,17 @@ public class LiferayJSONSerializer extends JSONSerializer {
 
 			try {
 				if (!Objects.equals(
-						getClassFromHint(jsonArray.get(0)), Integer.class)) {
+						super.getClassFromHint(jsonArray.get(0)),
+						Integer.class)) {
 
 					return super.getClassFromHint(object);
 				}
 
 				for (int i = 1; i < jsonArray.length(); i++) {
-					Class<?> clazz = getClassFromHint(jsonArray.get(i));
+					if (Objects.equals(
+							super.getClassFromHint(jsonArray.get(i)),
+							Long.class)) {
 
-					if (Objects.equals(clazz, Long.class)) {
 						return Long[].class;
 					}
 				}

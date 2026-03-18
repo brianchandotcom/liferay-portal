@@ -21,29 +21,29 @@ public class SHSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"LocalVariablesAssignedViaSubshells.testsh"
 			).addExpectedMessage(
 				StringBundler.concat(
-					"Do not declare and assign 'local' variables using ",
-					"subshell outputs in a single line, extract 'local' ",
+					"Do not declare and assign \"local\" variables using ",
+					"subshell outputs in a single line, extract \"local\" ",
 					"variable declaration and assignment via subshell into ",
 					"two separate lines"),
 				8
 			).addExpectedMessage(
 				StringBundler.concat(
-					"Do not declare and assign 'local' variables using ",
-					"subshell outputs in a single line, extract 'local' ",
+					"Do not declare and assign \"local\" variables using ",
+					"subshell outputs in a single line, extract \"local\" ",
 					"variable declaration and assignment via subshell into ",
 					"two separate lines"),
 				9
 			).addExpectedMessage(
 				StringBundler.concat(
-					"Do not declare and assign 'local' variables using ",
-					"subshell outputs in a single line, extract 'local' ",
+					"Do not declare and assign \"local\" variables using ",
+					"subshell outputs in a single line, extract \"local\" ",
 					"variable declaration and assignment via subshell into ",
 					"two separate lines"),
 				10
 			).addExpectedMessage(
 				StringBundler.concat(
-					"Do not declare and assign 'local' variables using ",
-					"subshell outputs in a single line, extract 'local' ",
+					"Do not declare and assign \"local\" variables using ",
+					"subshell outputs in a single line, extract \"local\" ",
 					"variable declaration and assignment via subshell into ",
 					"two separate lines"),
 				12

@@ -60,10 +60,10 @@ public class SHSubshellCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Do not declare and assign 'local' variables ",
+							"Do not declare and assign \"local\" variables ",
 							"using subshell outputs in a single line, extract ",
-							"'local' variable declaration and assignment via ",
-							"subshell into two separate lines"),
+							"\"local\" variable declaration and assignment ",
+							"via subshell into two separate lines"),
 						lineNumber);
 				}
 			}

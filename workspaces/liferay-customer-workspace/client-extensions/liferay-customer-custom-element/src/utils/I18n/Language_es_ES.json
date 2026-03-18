@@ -49,7 +49,7 @@
 	"almost-there-setup-analytics-cloud-by-finishing-the-activation-form": "¡Casi has terminado! Completa el formulario de activación para configurar Analytics Cloud.",
 	"almost-there-setup-experience-cloud-by-finishing-the-activation-form": "¡Casi has terminado! Completa la configuración de Experience Cloud rellenando el formulario de activación.",
 	"almost-there-setup-lxc-sm": "¡Casi has terminado! Completa la configuración de LXC - SM",
-	"amount-of-data-transfered-out-of-the-customer-application-s-environment-by-load-balancer-response-to-end-users-external-integrations-and-services-in-different-zones-of-the-same-region": "Cantidad de datos transferidos desde el entorno de la aplicación del cliente por respuesta del balanceador de carga a usuarios finales, integraciones externas y servicios en zonas diferentes de la misma región.",
+	"amount-of-data-transferred-in-and-out-of-the-customer-application-s-environment-by-load-balancer-response-to-end-users-external-integrations-and-services-in-different-zones-of-the-same-region": "Cantidad de datos transferidos hacia y desde el entorno de la aplicación del cliente por respuesta del balanceador de carga a usuarios finales, integraciones externas y servicios en zonas diferentes de la misma región.",
 	"amount-of-ram-allocated-across-all-extension-environments": "Cantidad de memoria RAM asignada en el conjunto de entornos de extensión.",
 	"amount-of-storage-space-available-for-your-projects": "Cantidad de espacio de almacenaje disponible en tus proyectos.",
 	"amount-of-virtual-cpus-allocated-across-all-extension-environments": "Cantidad de CPUs virtuales asignadas en el conjunto de entornos de extensión.",

@@ -197,7 +197,7 @@ const useProjectUsageData = (
 					{
 						...response?.[ResourceUsageDataEnum.NETWORK_TRAFFIC],
 						infoText: i18n.translate(
-							'amount-of-data-transfered-out-of-the-customer-application-s-environment-by-load-balancer-response-to-end-users-external-integrations-and-services-in-different-zones-of-the-same-region'
+							'amount-of-data-transferred-in-and-out-of-the-customer-application-s-environment-by-load-balancer-response-to-end-users-external-integrations-and-services-in-different-zones-of-the-same-region'
 						),
 						maxCountText: i18n.translate(
 							'monthly-inbound-and-outbound'

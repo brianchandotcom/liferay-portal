@@ -51,8 +51,7 @@ public class TestOpenSSOMVCRenderCommand implements MVCRenderCommand {
 				_log.debug("Invalid CSRF token", principalException);
 			}
 
-			throw new PortletException(
-				"Invalid security token", principalException);
+			throw new PortletException(principalException);
 		}
 
 		RequestDispatcher requestDispatcher =

@@ -7,19 +7,17 @@ import fg from 'fast-glob';
 import fs from 'fs';
 import path from 'path';
 
-import {GLOBAL_NODE_SCRIPTS_CONFIG_FILE} from '../locations.mjs';
-import projectScopeRequire from '../projectScopeRequire.mjs';
+import {GLOBAL_NODE_SCRIPTS_CONFIG_FILE, PORTAL_DIR} from '../../locations.mjs';
+import print from '../../print.mjs';
+import projectScopeRequire from '../../projectScopeRequire.mjs';
 
-/**
- * Runs checks against package.json files; detects:
- *
- * - Bad package names (ie. packages without named scopes).
- * - Banned dependencies.
- *
- * Returns a (possibly empty) array of error messages.
- */
-export async function checkPackageJSONFiles() {
+export default async function formatPackageJSONFiles() {
+	let checksPassed = true;
+
+	print(1, false, print.subTitle(`> Checking 'package.json' files...\n`));
+
 	let packages = await fg('**/package.json', {
+		absolute: true,
 		ignore: [
 			'**/frontend-sdk',
 			'**/build',
@@ -37,7 +35,7 @@ export async function checkPackageJSONFiles() {
 
 	packages = packages.filter((packagePath) => {
 
-		// Ignore serveral package.json files
+		// Ignore several package.json files
 
 		if (
 			packagePath.endsWith('modules/package.json') ||
@@ -49,22 +47,33 @@ export async function checkPackageJSONFiles() {
 
 		// Filters out packages that have their own yarn.lock
 
-		return !fs.existsSync(
-			path.join(path.dirname(packagePath), 'yarn.lock')
-		);
-	});
+		if (fs.existsSync(path.join(path.dirname(packagePath), 'yarn.lock'))) {
+			return false;
+		}
 
-	const errors = [];
+		return true;
+	});
 
 	const definedDependenciesSet = await collectDefinedDependencies();
 
 	packages.forEach((pkg) => {
-		const bad = (message) => errors.push(`${pkg}: BAD - ${message}`);
+		const signalError = (message) => {
+			print(
+				2,
+				true,
+				print.error('ERROR:'),
+				'File',
+				print.underline(path.relative(PORTAL_DIR, pkg)),
+				'has problems'
+			);
+			print(3, true, `${message}\n`);
+
+			checksPassed = false;
+		};
 
 		try {
 			const {dependencies, main, name} = JSON.parse(
-				fs.readFileSync(pkg),
-				'utf8'
+				fs.readFileSync(pkg, 'utf-8')
 			);
 
 			// Check for bad package names.
@@ -74,8 +83,8 @@ export async function checkPackageJSONFiles() {
 				!name.startsWith('@liferay/') &&
 				!ALLOWED_NAMED_SCOPE_EXCEPTIONS.includes(name)
 			) {
-				bad(
-					`package name ${name} should be under @liferay/ named scope - https://git.io/JOgy7`
+				signalError(
+					`Package name ${name} should be under '@liferay/' scope (see https://git.io/JOgy7)`
 				);
 			}
 
@@ -90,8 +99,8 @@ export async function checkPackageJSONFiles() {
 					!definedDependenciesSet.has(name) &&
 					!ALLOWED_NON_GLOBAL_DEPENDENCIES.includes(name)
 				) {
-					bad(
-						`dependency not provided by a specific module: ${name} - See https://issues.liferay.com/browse/LPS-168443\n`
+					signalError(
+						`Dependency '${name}' is not provided by a specific module (see https://issues.liferay.com/browse/LPS-168443)`
 					);
 				}
 			});
@@ -125,13 +134,13 @@ export async function checkPackageJSONFiles() {
 				);
 
 				if (indexExists) {
-					bad(
-						`package.json doesn't contain a "main" entry point when you have an ${indexExists} file - https://github.com/liferay/liferay-frontend-projects/issues/719`
+					signalError(
+						`The file does not have a 'main' entry point but you have an ${indexExists} file (see https://github.com/liferay/liferay-frontend-projects/issues/719)`
 					);
 				}
 			}
 
-			// Check that main entry point doesn't 'export default'
+			// Check that main entry point exists and doesn't export a default symbol
 
 			if (main && main !== 'package.json' && !pkg.includes('client-js')) {
 				const filePath = path.join(
@@ -141,27 +150,27 @@ export async function checkPackageJSONFiles() {
 				);
 
 				if (!fs.existsSync(filePath)) {
-					bad(
-						`package.json contains a "main" entry point that doesn't exist.`
+					signalError(
+						`The file contains a 'main' entry point that doesn't exist.`
 					);
 				}
 				else {
 					const entryFile = fs.readFileSync(filePath);
 
 					if (entryFile.toString().match(/\s*export\s+default\s*/i)) {
-						bad(
-							`package.json's "main" entry point contains "export default". Use named exports only.`
+						signalError(
+							`The file's 'main' entry point contains 'export default' (use named exports only)`
 						);
 					}
 				}
 			}
 		}
 		catch (error) {
-			bad(`error thrown during checks: ${error}`);
+			signalError(`Unexpected error thrown during checks: ${error}`);
 		}
 	});
 
-	return errors;
+	return checksPassed;
 }
 
 async function collectDefinedDependencies() {

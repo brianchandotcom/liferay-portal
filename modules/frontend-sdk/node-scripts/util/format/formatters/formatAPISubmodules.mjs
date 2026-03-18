@@ -6,18 +6,16 @@
 import fg from 'fast-glob';
 import path from 'path';
 
-import {MODULES_DIR} from '../locations.mjs';
+import {MODULES_DIR} from '../../locations.mjs';
+import print from '../../print.mjs';
 
 const REGEX_API_DIR = /\/resources\/js\/api\/api\.(js|ts)$/;
 
-/**
- * Runs checks against node-scripts.config.js files; detects:
- *
- * - invalid 'api' submodule paths
- *
- * Returns a (possibly empty) array of error messages.
- */
-export async function checkAPISubmodules() {
+export default async function formatAPISubmodules() {
+	let checksPassed = true;
+
+	print(1, false, print.subTitle('> Checking API submodules...\n'));
+
 	const nodeScriptConfigs = await fg('**/node-scripts.config.js', {
 		ignore: ['**/build', '**/classes', '**/node_modules'],
 	});
@@ -34,11 +32,20 @@ export async function checkAPISubmodules() {
 		return config?.submodules?.api;
 	});
 
-	return configsWithAPISubmodule
-		.map(({config, path}) => {
-			if (!REGEX_API_DIR.test(config.submodules.api)) {
-				return `BAD - 'api' submodule must be located in /resources/js/api/api.js (or .ts). See '${path}'`;
-			}
-		})
-		.filter(Boolean);
+	configsWithAPISubmodule.forEach(({config, path}) => {
+		if (!REGEX_API_DIR.test(config.submodules.api)) {
+			print(
+				2,
+				true,
+				print.error('ERROR:'),
+				'Invalid API module found at path',
+				print.underline(path),
+				'should be located at /resources/js/api/api.{js|ts})\n'
+			);
+
+			checksPassed = false;
+		}
+	});
+
+	return checksPassed;
 }

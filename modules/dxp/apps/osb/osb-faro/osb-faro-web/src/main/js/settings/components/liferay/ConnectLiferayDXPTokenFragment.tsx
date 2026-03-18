@@ -3,7 +3,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import Clipboard from 'clipboard';
 import getCN from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Alert} from 'shared/types';
 
 const ConnectLiferayDXPTokenFragment = ({addAlert, disabled, token}) => {
@@ -11,9 +11,14 @@ const ConnectLiferayDXPTokenFragment = ({addAlert, disabled, token}) => {
 	const [copyTitle, setCopyTitle] = useState(
 		Liferay.Language.get('click-to-copy')
 	);
+	const buttonRef = useRef(null);
 
 	useEffect(() => {
-		const _clipboard = new Clipboard('[data-clipboard-text]');
+		if (!buttonRef.current) {
+			return;
+		}
+
+		const _clipboard = new Clipboard(buttonRef.current);
 
 		_clipboard.on('success', event => {
 			setCopyTitle(Liferay.Language.get('copied'));
@@ -51,7 +56,7 @@ const ConnectLiferayDXPTokenFragment = ({addAlert, disabled, token}) => {
 						name='token'
 						readOnly={!isUrlCopied}
 						type='text'
-						value={token}
+						value={value ? value : Liferay.Language.get('loading')}
 					/>
 				</ClayInput.GroupItem>
 
@@ -63,6 +68,7 @@ const ConnectLiferayDXPTokenFragment = ({addAlert, disabled, token}) => {
 						displayType={isUrlCopied ? 'success' : 'secondary'}
 						onClick={() => setIsUrlCopied(true)}
 						outline
+						ref={buttonRef}
 						title={copyTitle}
 					>
 						<ClayIcon symbol={isUrlCopied ? 'check' : 'copy'} />

@@ -187,6 +187,7 @@ export class StructureBuilderPage {
 		label,
 		localizable,
 		mandatory,
+		maximumFileSize,
 		multiselection,
 		name,
 		picklist,
@@ -197,6 +198,7 @@ export class StructureBuilderPage {
 		label?: string;
 		localizable?: boolean;
 		mandatory?: boolean;
+		maximumFileSize?: number;
 		multiselection?: boolean;
 		name?: string;
 		picklist?: string;
@@ -275,6 +277,13 @@ export class StructureBuilderPage {
 				}),
 				trigger: this.page.getByLabel('Request Files'),
 			});
+		}
+
+		if (maximumFileSize !== undefined) {
+			const maxFileSizeInput = this.page.getByLabel('Maximum File Size');
+
+			await maxFileSizeInput.fill(String(maximumFileSize));
+			await maxFileSizeInput.blur();
 		}
 
 		if (showFilesInLibrary !== undefined) {

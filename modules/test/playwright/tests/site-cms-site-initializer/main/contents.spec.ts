@@ -32,6 +32,63 @@ const test = mergeTests(
 );
 
 test(
+	'Shows client-side error when uploading a file that exceeds the maximum file size',
+	{tag: '@LPD-79511'},
+	async ({assetsPage, contentsPage, page, structureBuilderPage}) => {
+
+		// Create a structure with an Upload field limited to 1MB
+
+		const structureLabel = `StructureName${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			page: structureBuilderPage,
+		});
+
+		await structureBuilderPage.addField('Upload');
+
+		await structureBuilderPage.changeFieldSettings({
+			maximumFileSize: 1,
+			requestFile: 'computer',
+		});
+
+		await structureBuilderPage.publishStructure();
+
+		// Create a content and upload a file that exceeds the limit
+
+		await contentsPage.goto();
+
+		await assetsPage.createContent(structureLabel);
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await page
+			.getByRole('button', {exact: true, name: 'Select File'})
+			.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles({
+			buffer: Buffer.alloc(2 * 1024 * 1024),
+			mimeType: 'image/jpeg',
+			name: 'oversized-file.jpg',
+		});
+
+		// Check the error message is shown and the file is not uploaded
+
+		await expect(
+			page.getByText(
+				'Please enter a file with a valid file size no larger than 1 MB.'
+			)
+		).toBeVisible();
+
+		await expect(
+			page.locator('.file-upload').getByText('oversized-file')
+		).not.toBeVisible();
+	}
+);
+
+test(
 	'Upload fields marked to show in the CMS library create visible files',
 	{tag: '@LPD-17564'},
 	async ({assetsPage, contentsPage, page, structureBuilderPage}) => {

@@ -21,6 +21,7 @@ import {
 	RepeatableGroup,
 	Structure,
 	StructureChild,
+	StructureType,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
@@ -90,6 +91,7 @@ const INITIAL_STATE: State = {
 		spaces: 'all',
 		status: 'new',
 		system: false,
+		type: 'L_CMS_CONTENT_STRUCTURES',
 		uuid: getUuid(),
 		workflows: {},
 	},
@@ -999,6 +1001,7 @@ function initState(state: State): State {
 			...structure,
 			children: getDefaultChildren(structure.uuid),
 			erc: getRandomId(),
+			type: getType(),
 		},
 	};
 }
@@ -1042,9 +1045,7 @@ function useStateDispatch() {
 }
 
 function getDefaultChildren(structureUuid: Uuid) {
-	const url = new URL(window.location.href);
-
-	const type = url.searchParams.get('objectFolderExternalReferenceCode');
+	const type = getType();
 
 	const children = new Map();
 
@@ -1097,6 +1098,14 @@ function getNextName({
 	return normalizeString(localizedLabel, {
 		style: 'status' in item ? 'pascal' : 'camel',
 	});
+}
+
+function getType() {
+	const url = new URL(window.location.href);
+
+	return url.searchParams.get(
+		'objectFolderExternalReferenceCode'
+	) as StructureType;
 }
 
 export {StateContext, StateContextProvider, useSelector, useStateDispatch};

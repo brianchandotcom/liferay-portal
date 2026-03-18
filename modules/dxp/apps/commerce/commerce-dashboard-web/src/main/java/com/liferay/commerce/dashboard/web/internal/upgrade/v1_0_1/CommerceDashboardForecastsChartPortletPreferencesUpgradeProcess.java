@@ -53,8 +53,8 @@ public class CommerceDashboardForecastsChartPortletPreferencesUpgradeProcess
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String name = resultSet.getString(1);
-					String smallValues = resultSet.getString(2);
+					String name = resultSet.getString("name");
+					String smallValues = resultSet.getString("smallValue");
 
 					updatePreparedStatement.setString(
 						1, "assetCategoryExternalReferenceCodes");

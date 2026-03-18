@@ -7,6 +7,11 @@
 
 <%@ include file="/init.jsp" %>
 
+<portlet:renderURL var="manageUserViewsURL">
+	<portlet:param name="mvcRenderCommandName" value="/frontend_data_set_admin/manage_user_views" />
+	<portlet:param name="backURL" value="<%= themeDisplay.getURLCurrent() %>" />
+</portlet:renderURL>
+
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 String dataSetERC = ParamUtil.getString(request, "dataSetERC");
@@ -31,6 +36,8 @@ renderResponse.setTitle(dataSetLabel);
 			"filterClientExtensionRenderers", fdsAdminDisplayContext.getFDSFilterCETsJSONArray()
 		).put(
 			"learnResources", LearnMessageUtil.getReactDataJSONObject("frontend-data-set-admin-web")
+		).put(
+			"manageUserViewsURL", manageUserViewsURL
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(

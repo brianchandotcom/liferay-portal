@@ -64,6 +64,7 @@ export interface IDataSetSectionProps {
 	dataSet: IDataSet;
 	fieldTreeItems: Array<IFieldTreeItem>;
 	filterClientExtensionRenderers: IClientExtensionRenderer[];
+	manageUserViewsURL: string;
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
 	onDataSetUpdate: (data: IDataSet) => void;
@@ -81,6 +82,7 @@ const DataSet = ({
 	fdsViewId,
 	filterClientExtensionRenderers,
 	learnResources,
+	manageUserViewsURL,
 	namespace,
 	resolvedRESTSchemas = [],
 	restApplications,
@@ -94,6 +96,7 @@ const DataSet = ({
 	fdsViewId: string;
 	filterClientExtensionRenderers: IClientExtensionRenderer[];
 	learnResources: ILearnResourceContext;
+	manageUserViewsURL: string;
 	namespace: string;
 	resolvedRESTSchemas: string[];
 	restApplications: string[];
@@ -173,6 +176,7 @@ const DataSet = ({
 							filterClientExtensionRenderers={
 								filterClientExtensionRenderers
 							}
+							manageUserViewsURL={manageUserViewsURL}
 							namespace={namespace}
 							onActiveSectionChange={(tab) => setActiveIndex(tab)}
 							onDataSetUpdate={(updatedDataSet) => {

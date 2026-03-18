@@ -291,6 +291,19 @@ public class FDSAdminDisplayContext {
 			});
 	}
 
+	public String getUserViewsDataSetsURL() {
+		ResourceURL resourceURL =
+			(ResourceURL)PortalUtil.getControlPanelPortletURL(
+				_renderRequest, _themeDisplay.getScopeGroup(),
+				FDSAdminPortletKeys.FDS_ADMIN, 0, 0,
+				RenderRequest.RESOURCE_PHASE);
+
+		resourceURL.setResourceID(
+			"/frontend_data_set_admin/get_user_views_data_sets");
+
+		return resourceURL.toString();
+	}
+
 	public boolean hasAddDataSetObjectEntryPermission() {
 		PortletResourcePermission portletResourcePermission =
 			ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(

@@ -7250,7 +7250,7 @@ public class ObjectEntryLocalServiceTest {
 		Company company = _companyLocalService.getCompanyById(
 			TestPropsValues.getCompanyId());
 
-		String content = _getRandomFileContent();
+		String content = StringUtil.randomId(8);
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), company.getGroupId(),
@@ -7482,7 +7482,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private FileEntry _addTempFileEntry(String title) throws Exception {
-		String content = _getRandomFileContent();
+		String content = StringUtil.randomId(8);
 
 		return TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
@@ -7810,10 +7810,6 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		return ": Invalid transformation format:";
-	}
-
-	private String _getRandomFileContent() {
-		return "test\n" + RandomTestUtil.randomString();
 	}
 
 	private Map<String, Serializable> _getValuesFromCacheField(

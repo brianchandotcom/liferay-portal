@@ -18,9 +18,9 @@ import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleDescription;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.ReaderInputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -46,7 +46,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.io.InputStream;
-import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,8 +210,8 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 	}
 
 	protected FileEntry addFileEntryWithEnglishWords() throws Exception {
-		try (InputStream inputStream = new ReaderInputStream(
-				new StringReader(US_CONTENT))) {
+		try (InputStream inputStream = new UnsyncByteArrayInputStream(
+				US_CONTENT.getBytes(StringPool.UTF8))) {
 
 			return _fileEntrySearchFixture.addFileEntry(
 				new FileEntryBlueprint() {

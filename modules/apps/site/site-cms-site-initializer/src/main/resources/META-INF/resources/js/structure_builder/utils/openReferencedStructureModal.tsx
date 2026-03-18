@@ -8,6 +8,7 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {FieldFeedback, openModal, useId} from 'frontend-js-components-web';
 import React, {Dispatch, useState} from 'react';
@@ -66,7 +67,7 @@ export default function openReferencedStructureModal({
 	});
 }
 
-function ReferencedStructureModal({
+export function ReferencedStructureModal({
 	closeModal,
 	objectDefinitions,
 	onAdd,
@@ -85,6 +86,7 @@ function ReferencedStructureModal({
 	const [hasError, setHasError] = useState(false);
 
 	const id = useId();
+	const sourceItems = getItems(objectDefinitions, structure.erc);
 
 	return (
 		<>
@@ -118,11 +120,23 @@ function ReferencedStructureModal({
 						items={selection}
 						loadingState={status === 'saving' ? 1 : 0}
 						onItemsChange={(selection: Item[]) => {
-							setSelection(selection);
+							const newSelection = selection
+								.map((item) =>
+									sourceItems.find(
+										(sourceItem) =>
+											sourceItem.label.toLowerCase() ===
+											item.label.toLowerCase()
+									)
+								)
+								.filter(
+									(item): item is Item =>
+										!isNullOrUndefined(item)
+								);
 
-							setHasError(!selection.length);
+							setSelection(newSelection);
+							setHasError(!newSelection.length);
 						}}
-						sourceItems={getItems(objectDefinitions, structure.erc)}
+						sourceItems={sourceItems}
 					/>
 
 					{hasError ? (

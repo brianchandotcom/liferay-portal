@@ -237,6 +237,14 @@ public class ResetPrototypeMVCActionCommandTest {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), false);
 
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
+
+		layoutSet = _layoutSetLocalService.updateLayoutSet(layoutSet);
+
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);

@@ -12,7 +12,7 @@ import React from 'react';
 
 import {ActionItem, DesignLibraryItem} from '../../types';
 
-export function SimpleActionLinkRenderer({
+export function DesignLibraryLinkRenderer({
 	actions,
 	itemData,
 	options,

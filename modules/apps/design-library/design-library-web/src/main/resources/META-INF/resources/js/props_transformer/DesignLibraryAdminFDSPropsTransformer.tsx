@@ -6,7 +6,10 @@
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
 import {ActionItem, DesignLibraryItem} from '../types';
-import {SimpleActionLinkRenderer} from './cell_renderers/SimpleActionLinkRenderer';
+import {DesignLibraryLinkRenderer} from './cell_renderers/DesignLibraryLinkRenderer';
+enum TableCelRenderer {
+	DESIGN_LIBRARY_LINK = 'designLibraryLink',
+}
 
 export default function DesignLibraryAdminFDSPropsTransformer(
 	props: IFrontendDataSetProps
@@ -25,8 +28,8 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 		customRenderers: {
 			tableCell: [
 				{
-					component: SimpleActionLinkRenderer,
-					name: 'simpleLink',
+					component: DesignLibraryLinkRenderer,
+					name: TableCelRenderer.DESIGN_LIBRARY_LINK,
 					type: 'internal',
 				},
 			],
@@ -42,7 +45,8 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 					fields: [
 						{
 							actionId: 'edit',
-							contentRenderer: 'simpleLink',
+							contentRenderer:
+								TableCelRenderer.DESIGN_LIBRARY_LINK,
 							fieldName: 'name',
 							label: Liferay.Language.get('title'),
 							localizeLabel: true,

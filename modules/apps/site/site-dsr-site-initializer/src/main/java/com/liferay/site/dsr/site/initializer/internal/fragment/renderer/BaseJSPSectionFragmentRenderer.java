@@ -5,7 +5,6 @@
 
 package com.liferay.site.dsr.site.initializer.internal.fragment.renderer;
 
-import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
@@ -27,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 public abstract class BaseJSPSectionFragmentRenderer<T>
-	implements FragmentRenderer {
+	extends BaseSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -41,7 +40,7 @@ public abstract class BaseJSPSectionFragmentRenderer<T>
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -55,7 +54,8 @@ public abstract class BaseJSPSectionFragmentRenderer<T>
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(getJSPPath());
 
-			T displayContext = getDisplayContext(httpServletRequest);
+			T displayContext = getDisplayContext(
+				fragmentRendererContext, httpServletRequest);
 
 			Class<?> clazz = displayContext.getClass();
 
@@ -72,6 +72,7 @@ public abstract class BaseJSPSectionFragmentRenderer<T>
 	}
 
 	protected abstract T getDisplayContext(
+			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 

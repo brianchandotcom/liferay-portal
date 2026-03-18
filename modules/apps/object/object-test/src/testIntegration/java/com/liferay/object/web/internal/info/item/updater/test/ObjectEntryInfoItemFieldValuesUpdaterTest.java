@@ -270,7 +270,7 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 	}
 
 	private FileEntry _addTempFileEntry(long groupId) throws Exception {
-		String content = "test\n" + RandomTestUtil.randomString();
+		String content = StringUtil.randomId(8);
 
 		return TempFileEntryUtil.addTempFileEntry(
 			groupId, TestPropsValues.getUserId(), RandomTestUtil.randomString(),

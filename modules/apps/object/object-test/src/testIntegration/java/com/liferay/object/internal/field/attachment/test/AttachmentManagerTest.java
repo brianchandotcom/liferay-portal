@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -109,7 +110,7 @@ public class AttachmentManagerTest {
 	@Test
 	public void testGetOrAddFileEntry() throws Exception {
 		FileEntry tempFileEntry = _addTempFileEntry(
-			_getRandomFileContent(8), ".txt", RandomTestUtil.randomString(),
+			StringUtil.randomId(8), ".txt", RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, _objectDefinition);
 
 		Folder folder = tempFileEntry.getFolder();
@@ -191,7 +192,7 @@ public class AttachmentManagerTest {
 					).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				_getRandomFileContent(8), ".txt", RandomTestUtil.randomString(),
+				StringUtil.randomId(8), ".txt", RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, _objectDefinition);
 
 			folder = tempFileEntry.getFolder();
@@ -219,7 +220,7 @@ public class AttachmentManagerTest {
 						).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				_getRandomFileContent(8), ".txt", RandomTestUtil.randomString(),
+				StringUtil.randomId(8), ".txt", RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, _objectDefinition);
 
 			folder = tempFileEntry.getFolder();
@@ -246,7 +247,7 @@ public class AttachmentManagerTest {
 					).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				_getRandomFileContent(1000), ".txt",
+				StringUtil.randomId(1000), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 				_objectDefinition);
 
@@ -313,15 +314,6 @@ public class AttachmentManagerTest {
 			objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(fileName + extension),
 			FileUtil.createTempFile(content.getBytes()), mimeType);
-	}
-
-	private String _getRandomFileContent(int size) {
-		String firstLine = "test\n";
-
-		String randomContent = RandomTestUtil.randomString(
-			size - firstLine.length());
-
-		return firstLine + randomContent;
 	}
 
 	@Inject

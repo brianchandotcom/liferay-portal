@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
+import {navigate} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import ApiHelper from '../../common/services/ApiHelper';
@@ -182,12 +182,14 @@ export default function SpaceSummaryHeader({
 			<div className="align-items-center d-flex">
 				{showViewAll &&
 					(url ? (
-						<ClayLink
+						<ClayButton
 							className="text-3 text-weight-semi-bold"
-							href={url}
+							displayType="link"
+							onClick={() => navigate(url)}
+							size="sm"
 						>
 							{label}
-						</ClayLink>
+						</ClayButton>
 					) : (
 						<ClayButton
 							className="text-3 text-weight-semi-bold"

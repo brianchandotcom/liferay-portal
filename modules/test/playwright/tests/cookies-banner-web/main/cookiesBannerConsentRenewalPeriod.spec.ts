@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
-import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
@@ -52,9 +51,9 @@ test.beforeEach(async ({page}) => {
 	});
 
 	await test.step('Verify Cookies Banner appears, then Accept All cookies', async () => {
-		const cookiesBanner = await page.locator(
-			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-		);
+		const cookiesBanner = await page.getByRole('dialog', {
+			name: 'banner cookies',
+		});
 
 		await expect(cookiesBanner).toBeVisible();
 
@@ -144,9 +143,9 @@ test(
 
 		await page.waitForTimeout(1000);
 
-		const cookiesBanner = await page.locator(
-			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-		);
+		const cookiesBanner = await page.getByRole('dialog', {
+			name: 'banner cookies',
+		});
 
 		await expect(cookiesBanner).not.toBeVisible();
 
@@ -161,11 +160,6 @@ test(
 		});
 
 		await page.getByRole('button', {name: 'Update'}).click();
-
-		await reloadUntilVisible({
-			myLocator: cookiesBanner,
-			page,
-		});
 
 		await expect(cookiesBanner).toBeVisible();
 	}
@@ -289,11 +283,9 @@ test(
 				consentRenewalPeriod: '2',
 			});
 
-			await expect(
-				await page.locator(
-					'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-				)
-			).toBeVisible();
+			await page
+				.getByRole('dialog', {name: 'banner cookies'})
+				.waitFor({state: 'visible'});
 		});
 
 		await test.step('Verify no consent cookies are set', async () => {
@@ -334,11 +326,9 @@ async function validateConsentRenewalPeriodValue(
 
 		await waitForAlert(page);
 
-		await expect(
-			await page.locator(
-				'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-			)
-		).toBeVisible();
+		await page
+			.getByRole('dialog', {name: 'banner cookies'})
+			.waitFor({state: 'visible'});
 
 		await page.getByRole('button', {name: 'Accept All'}).click();
 	}

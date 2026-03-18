@@ -549,6 +549,14 @@ public class TaxonomyVocabularyResourceImpl
 
 				return new AssetLibrary() {
 					{
+						setExternalReferenceCode(
+							() -> {
+								if (group == null) {
+									return null;
+								}
+
+								return group.getExternalReferenceCode();
+							});
 						setId(assetVocabularyGroupRel::getGroupId);
 						setName(
 							() -> {

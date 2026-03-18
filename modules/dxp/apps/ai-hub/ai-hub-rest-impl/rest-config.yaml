@@ -6,7 +6,7 @@ application:
     name: Liferay.AI.Hub.REST
 author: Feliphe Marinho
 clientDir: ../ai-hub-rest-client/src/main/java
-compatibilityVersion: 13
+compatibilityVersion: 15
 forcePredictableOperationId: true
 generateGraphQL: false
 javaEEPackage: jakarta

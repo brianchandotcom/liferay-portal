@@ -12,6 +12,7 @@ export class SettingsPage {
 	readonly dataSetPage: DataSetPage;
 	readonly goToVisualizationModesLink: Locator;
 	readonly defaultVisualizationModeLabel: Locator;
+	readonly manageUserViewsButton: Locator;
 	readonly notConfiguredPlaceholder: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
@@ -27,6 +28,10 @@ export class SettingsPage {
 			'Default Visualization Mode',
 			{exact: true}
 		);
+		this.manageUserViewsButton = page.getByRole('button', {
+			exact: true,
+			name: 'Manage User Views',
+		});
 		this.page = page;
 		this.notConfiguredPlaceholder = page.getByPlaceholder('Not Configured');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
@@ -39,5 +44,9 @@ export class SettingsPage {
 		});
 
 		await this.dataSetPage.selectTab('Settings');
+	}
+
+	async gotoManageUserViews() {
+		await this.manageUserViewsButton.click();
 	}
 }

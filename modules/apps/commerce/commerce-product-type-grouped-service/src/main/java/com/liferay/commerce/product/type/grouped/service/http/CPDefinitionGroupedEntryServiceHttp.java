@@ -588,3 +588,4 @@ public class CPDefinitionGroupedEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-867017495

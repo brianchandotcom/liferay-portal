@@ -570,3 +570,4 @@ public class CommercePaymentEntryLocalServiceWrapper
 	private CommercePaymentEntryLocalService _commercePaymentEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1037394977

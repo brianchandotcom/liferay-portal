@@ -114,3 +114,4 @@ public class DepotEntryGroupRelServiceUtil {
 			DepotEntryGroupRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1074009646

@@ -3920,3 +3920,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:542610269

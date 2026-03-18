@@ -214,3 +214,4 @@ public class ContactsCardTemplateCacheModel
 	public int type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2047863775

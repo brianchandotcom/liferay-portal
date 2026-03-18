@@ -630,3 +630,4 @@ public class AccountGroupServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1315194101

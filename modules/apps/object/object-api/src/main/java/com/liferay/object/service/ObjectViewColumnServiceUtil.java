@@ -45,3 +45,4 @@ public class ObjectViewColumnServiceUtil {
 			ObjectViewColumnServiceUtil.class, ObjectViewColumnService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:29247635

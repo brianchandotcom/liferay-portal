@@ -1262,3 +1262,4 @@ public class KaleoTaskFormInstanceUtil {
 	private static volatile KaleoTaskFormInstancePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1423478162

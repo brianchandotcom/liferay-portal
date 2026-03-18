@@ -236,3 +236,4 @@ public class CommerceOrderPaymentCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:913664456

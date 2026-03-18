@@ -134,3 +134,4 @@ public class BlogsEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:530228957

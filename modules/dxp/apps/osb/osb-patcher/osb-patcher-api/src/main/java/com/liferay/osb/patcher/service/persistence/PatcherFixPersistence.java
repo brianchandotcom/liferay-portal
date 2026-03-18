@@ -2906,3 +2906,4 @@ public interface PatcherFixPersistence extends BasePersistence<PatcherFix> {
 			patcherFixPacks);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1546818291

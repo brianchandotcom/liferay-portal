@@ -248,3 +248,4 @@ public interface ObjectValidationRuleSettingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-935437044

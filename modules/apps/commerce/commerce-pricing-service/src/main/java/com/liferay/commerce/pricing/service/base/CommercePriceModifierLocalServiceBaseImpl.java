@@ -733,3 +733,4 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 		CommercePriceModifierLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1496313455

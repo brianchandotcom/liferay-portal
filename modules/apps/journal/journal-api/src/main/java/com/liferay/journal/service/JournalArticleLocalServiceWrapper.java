@@ -3377,3 +3377,4 @@ public class JournalArticleLocalServiceWrapper
 	private JournalArticleLocalService _journalArticleLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2010132391

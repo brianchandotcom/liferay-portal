@@ -368,3 +368,4 @@ public interface RepositoryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1766589685

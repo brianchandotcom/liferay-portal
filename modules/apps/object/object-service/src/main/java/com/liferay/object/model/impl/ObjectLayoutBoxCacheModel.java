@@ -250,3 +250,4 @@ public class ObjectLayoutBoxCacheModel
 	public String type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1806583312

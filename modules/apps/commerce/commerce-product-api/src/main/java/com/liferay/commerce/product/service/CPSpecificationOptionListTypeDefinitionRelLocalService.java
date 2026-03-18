@@ -331,3 +331,4 @@ public interface CPSpecificationOptionListTypeDefinitionRelLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1250597642

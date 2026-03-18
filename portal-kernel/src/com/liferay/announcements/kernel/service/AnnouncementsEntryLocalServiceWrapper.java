@@ -609,3 +609,4 @@ public class AnnouncementsEntryLocalServiceWrapper
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:674929502

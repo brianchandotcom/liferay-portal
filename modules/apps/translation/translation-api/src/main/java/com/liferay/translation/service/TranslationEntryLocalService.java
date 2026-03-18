@@ -383,3 +383,4 @@ public interface TranslationEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:325983551

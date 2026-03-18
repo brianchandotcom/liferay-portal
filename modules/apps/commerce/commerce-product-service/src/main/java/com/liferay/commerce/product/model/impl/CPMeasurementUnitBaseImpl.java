@@ -39,3 +39,4 @@ public abstract class CPMeasurementUnitBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:259335843

@@ -39,3 +39,4 @@ public abstract class ExpandoTableBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-272296855

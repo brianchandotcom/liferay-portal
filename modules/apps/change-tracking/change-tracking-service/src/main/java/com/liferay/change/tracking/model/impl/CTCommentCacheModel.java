@@ -185,3 +185,4 @@ public class CTCommentCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-172823981

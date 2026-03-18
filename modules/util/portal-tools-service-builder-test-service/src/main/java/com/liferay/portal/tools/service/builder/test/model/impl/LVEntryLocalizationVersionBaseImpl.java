@@ -30,3 +30,4 @@ public abstract class LVEntryLocalizationVersionBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1495635145

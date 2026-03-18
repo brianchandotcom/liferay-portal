@@ -5039,3 +5039,4 @@ public class LayoutSetPrototypePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-120677133

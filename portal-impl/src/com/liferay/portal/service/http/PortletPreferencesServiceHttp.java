@@ -268,3 +268,4 @@ public class PortletPreferencesServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:462582829

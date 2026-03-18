@@ -485,3 +485,4 @@ public interface CPDefinitionLinkModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1987825374

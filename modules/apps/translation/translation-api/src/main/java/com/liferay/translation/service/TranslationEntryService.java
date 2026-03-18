@@ -67,3 +67,4 @@ public interface TranslationEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:898063337

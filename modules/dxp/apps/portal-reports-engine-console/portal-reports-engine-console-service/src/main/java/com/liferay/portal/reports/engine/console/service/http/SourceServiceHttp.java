@@ -324,3 +324,4 @@ public class SourceServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1791697921

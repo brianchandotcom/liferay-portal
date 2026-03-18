@@ -473,3 +473,4 @@ public interface ObjectFieldLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:308136097

@@ -518,3 +518,4 @@ public class MBSuspiciousActivityLocalServiceWrapper
 	private MBSuspiciousActivityLocalService _mbSuspiciousActivityLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-984496049

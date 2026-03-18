@@ -967,3 +967,4 @@ public class LayoutPageTemplateStructureUtil {
 	private static volatile LayoutPageTemplateStructurePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1784398144

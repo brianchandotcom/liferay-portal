@@ -1325,3 +1325,4 @@ public interface WikiNodePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1942127187

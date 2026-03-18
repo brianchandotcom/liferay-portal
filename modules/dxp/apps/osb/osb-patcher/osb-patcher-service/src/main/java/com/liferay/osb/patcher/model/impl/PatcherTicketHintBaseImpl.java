@@ -39,3 +39,4 @@ public abstract class PatcherTicketHintBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-150036079

@@ -41,3 +41,4 @@ public class OSBPatcher_PAccounts_PBuildsTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1494183776

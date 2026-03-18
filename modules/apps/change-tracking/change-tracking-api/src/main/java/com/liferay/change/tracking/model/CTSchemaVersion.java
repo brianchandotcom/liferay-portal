@@ -50,3 +50,4 @@ public interface CTSchemaVersion extends CTSchemaVersionModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1527269457

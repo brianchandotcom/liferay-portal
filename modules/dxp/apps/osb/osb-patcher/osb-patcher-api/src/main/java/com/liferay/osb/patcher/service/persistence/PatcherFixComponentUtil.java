@@ -344,3 +344,4 @@ public class PatcherFixComponentUtil {
 	private static volatile PatcherFixComponentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:658701515

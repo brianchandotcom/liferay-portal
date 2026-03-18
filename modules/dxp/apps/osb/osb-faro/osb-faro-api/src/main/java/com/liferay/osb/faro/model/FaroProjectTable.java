@@ -89,3 +89,4 @@ public class FaroProjectTable extends BaseTable<FaroProjectTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1295361779

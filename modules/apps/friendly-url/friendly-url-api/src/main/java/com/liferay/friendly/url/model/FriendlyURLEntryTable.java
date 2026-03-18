@@ -58,3 +58,4 @@ public class FriendlyURLEntryTable extends BaseTable<FriendlyURLEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1918607024

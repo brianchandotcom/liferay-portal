@@ -79,3 +79,4 @@ public abstract class CommerceTaxFixedRateAddressRelFinderBaseImpl
 		CommerceTaxFixedRateAddressRelFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1236704541

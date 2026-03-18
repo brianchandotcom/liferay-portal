@@ -118,3 +118,4 @@ public class StagingServiceUtil {
 	private static volatile StagingService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:98783297

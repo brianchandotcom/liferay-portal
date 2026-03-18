@@ -127,3 +127,4 @@ public abstract class BatchEngineExportTaskServiceBaseImpl
 		BatchEngineExportTaskServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-510089885

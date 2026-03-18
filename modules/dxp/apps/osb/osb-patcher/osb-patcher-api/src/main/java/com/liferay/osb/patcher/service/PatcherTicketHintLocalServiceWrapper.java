@@ -362,3 +362,4 @@ public class PatcherTicketHintLocalServiceWrapper
 	private PatcherTicketHintLocalService _patcherTicketHintLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1967049147

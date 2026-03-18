@@ -1443,3 +1443,4 @@ public interface CPDefinitionOptionValueRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2008202983

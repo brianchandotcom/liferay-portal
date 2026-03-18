@@ -573,3 +573,4 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1383033040

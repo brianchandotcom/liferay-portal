@@ -421,3 +421,4 @@ public class SystemEventLocalServiceWrapper
 	private SystemEventLocalService _systemEventLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-25325850

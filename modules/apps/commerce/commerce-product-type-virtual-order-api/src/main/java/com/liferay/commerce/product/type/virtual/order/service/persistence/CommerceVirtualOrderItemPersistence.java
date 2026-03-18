@@ -553,3 +553,4 @@ public interface CommerceVirtualOrderItemPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1209650880

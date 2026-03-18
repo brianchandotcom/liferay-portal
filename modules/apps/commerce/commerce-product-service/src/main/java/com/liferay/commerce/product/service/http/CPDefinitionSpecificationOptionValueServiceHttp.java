@@ -589,3 +589,4 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1335948950

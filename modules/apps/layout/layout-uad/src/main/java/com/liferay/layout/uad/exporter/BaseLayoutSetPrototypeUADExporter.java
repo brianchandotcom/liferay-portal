@@ -66,3 +66,4 @@ public abstract class BaseLayoutSetPrototypeUADExporter
 	protected LayoutSetPrototypeLocalService layoutSetPrototypeLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1560167089

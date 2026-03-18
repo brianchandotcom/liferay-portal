@@ -97,3 +97,4 @@ public abstract class BaseDLFolderUADAnonymizer
 	protected DLFolderLocalService dlFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-274201793

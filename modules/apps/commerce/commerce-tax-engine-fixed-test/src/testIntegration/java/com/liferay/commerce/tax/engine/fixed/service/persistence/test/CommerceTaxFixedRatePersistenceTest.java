@@ -581,3 +581,4 @@ public class CommerceTaxFixedRatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1035003197

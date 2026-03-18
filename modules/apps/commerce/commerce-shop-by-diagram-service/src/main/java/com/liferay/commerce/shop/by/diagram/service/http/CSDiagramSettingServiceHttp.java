@@ -282,3 +282,4 @@ public class CSDiagramSettingServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:139496123

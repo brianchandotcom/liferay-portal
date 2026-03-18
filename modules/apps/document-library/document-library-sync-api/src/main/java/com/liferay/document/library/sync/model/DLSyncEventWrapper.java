@@ -242,3 +242,4 @@ public class DLSyncEventWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-791502164

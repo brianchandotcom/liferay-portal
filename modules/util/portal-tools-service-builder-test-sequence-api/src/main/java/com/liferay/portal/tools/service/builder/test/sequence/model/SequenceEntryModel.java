@@ -116,3 +116,4 @@ public interface SequenceEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:231578248

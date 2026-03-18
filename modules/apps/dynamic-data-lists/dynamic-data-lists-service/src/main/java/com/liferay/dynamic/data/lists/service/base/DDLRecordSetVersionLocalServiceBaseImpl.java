@@ -492,3 +492,4 @@ public abstract class DDLRecordSetVersionLocalServiceBaseImpl
 		DDLRecordSetVersionLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1167146263

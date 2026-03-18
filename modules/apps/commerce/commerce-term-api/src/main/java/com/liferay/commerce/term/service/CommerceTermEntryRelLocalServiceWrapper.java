@@ -446,3 +446,4 @@ public class CommerceTermEntryRelLocalServiceWrapper
 	private CommerceTermEntryRelLocalService _commerceTermEntryRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-991451871

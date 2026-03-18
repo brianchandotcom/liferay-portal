@@ -910,3 +910,4 @@ public class BlogsEntryLocalServiceUtil {
 			BlogsEntryLocalServiceUtil.class, BlogsEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1453622075

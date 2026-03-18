@@ -136,3 +136,4 @@ public class VersionedEntryVersionModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1843306718

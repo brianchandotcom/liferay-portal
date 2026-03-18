@@ -76,3 +76,4 @@ public abstract class SourceFinderBaseImpl extends BasePersistenceImpl<Source> {
 		SourceFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-219705584

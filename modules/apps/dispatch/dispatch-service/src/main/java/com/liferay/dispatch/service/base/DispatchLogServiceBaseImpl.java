@@ -125,3 +125,4 @@ public abstract class DispatchLogServiceBaseImpl
 		DispatchLogServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1609080472

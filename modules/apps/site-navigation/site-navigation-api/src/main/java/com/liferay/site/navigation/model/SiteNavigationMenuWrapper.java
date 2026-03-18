@@ -552,3 +552,4 @@ public class SiteNavigationMenuWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1867804529

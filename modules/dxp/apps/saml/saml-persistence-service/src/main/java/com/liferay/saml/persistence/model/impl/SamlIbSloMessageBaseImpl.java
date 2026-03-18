@@ -39,3 +39,4 @@ public abstract class SamlIbSloMessageBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1019560152

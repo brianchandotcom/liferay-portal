@@ -612,3 +612,4 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 		DDLRecordSetLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-270400812

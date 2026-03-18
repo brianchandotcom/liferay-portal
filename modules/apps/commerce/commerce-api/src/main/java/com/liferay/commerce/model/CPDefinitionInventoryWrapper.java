@@ -743,3 +743,4 @@ public class CPDefinitionInventoryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1428686238

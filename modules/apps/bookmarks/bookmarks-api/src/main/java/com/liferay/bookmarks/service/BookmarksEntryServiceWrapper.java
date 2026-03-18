@@ -238,3 +238,4 @@ public class BookmarksEntryServiceWrapper
 	private BookmarksEntryService _bookmarksEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1921581443

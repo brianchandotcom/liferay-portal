@@ -341,3 +341,4 @@ public interface PhoneLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-677847787

@@ -2186,3 +2186,4 @@ public interface AddressPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-689976633

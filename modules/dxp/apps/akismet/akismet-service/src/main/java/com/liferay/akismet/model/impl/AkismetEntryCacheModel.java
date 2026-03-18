@@ -223,3 +223,4 @@ public class AkismetEntryCacheModel
 	public String userURL;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1617218639

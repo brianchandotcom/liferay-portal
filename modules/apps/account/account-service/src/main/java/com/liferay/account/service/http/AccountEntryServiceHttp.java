@@ -1031,3 +1031,4 @@ public class AccountEntryServiceHttp {
 		new Class[] {long.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:198517912

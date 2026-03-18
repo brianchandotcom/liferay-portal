@@ -61,3 +61,4 @@ public class RegionTable extends BaseTable<RegionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1883526518

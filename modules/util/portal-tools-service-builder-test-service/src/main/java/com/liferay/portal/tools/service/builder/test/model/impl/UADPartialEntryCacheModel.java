@@ -128,3 +128,4 @@ public class UADPartialEntryCacheModel
 	public String message;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-520322518

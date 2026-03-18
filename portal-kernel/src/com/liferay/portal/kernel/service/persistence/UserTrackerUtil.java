@@ -771,3 +771,4 @@ public class UserTrackerUtil {
 	private static volatile UserTrackerPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-225080167

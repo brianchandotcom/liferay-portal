@@ -6828,3 +6828,4 @@ public interface LayoutPageTemplateEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-92273563

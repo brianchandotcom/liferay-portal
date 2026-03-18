@@ -460,3 +460,4 @@ public interface JournalFeedModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2030364304

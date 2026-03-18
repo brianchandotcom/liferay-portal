@@ -216,3 +216,4 @@ public class SpringEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:373638727

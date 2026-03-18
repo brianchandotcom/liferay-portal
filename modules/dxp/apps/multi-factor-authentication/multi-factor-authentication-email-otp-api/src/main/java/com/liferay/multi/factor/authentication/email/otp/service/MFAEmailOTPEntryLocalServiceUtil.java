@@ -328,3 +328,4 @@ public class MFAEmailOTPEntryLocalServiceUtil {
 			MFAEmailOTPEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1362212493

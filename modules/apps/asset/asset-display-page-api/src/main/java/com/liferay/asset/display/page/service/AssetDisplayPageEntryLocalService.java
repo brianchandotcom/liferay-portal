@@ -400,3 +400,4 @@ public interface AssetDisplayPageEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1659403689

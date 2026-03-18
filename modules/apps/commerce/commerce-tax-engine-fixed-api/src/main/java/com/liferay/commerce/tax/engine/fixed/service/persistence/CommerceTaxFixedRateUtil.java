@@ -718,3 +718,4 @@ public class CommerceTaxFixedRateUtil {
 	private static volatile CommerceTaxFixedRatePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-19098700

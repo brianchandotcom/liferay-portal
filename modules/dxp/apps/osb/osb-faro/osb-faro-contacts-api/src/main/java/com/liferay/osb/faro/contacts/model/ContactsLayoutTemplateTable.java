@@ -65,3 +65,4 @@ public class ContactsLayoutTemplateTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:103692992

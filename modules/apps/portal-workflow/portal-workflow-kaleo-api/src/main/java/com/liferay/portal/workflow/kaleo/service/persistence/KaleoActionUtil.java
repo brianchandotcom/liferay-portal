@@ -1486,3 +1486,4 @@ public class KaleoActionUtil {
 	private static volatile KaleoActionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-636571793

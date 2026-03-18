@@ -8140,3 +8140,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:220009144

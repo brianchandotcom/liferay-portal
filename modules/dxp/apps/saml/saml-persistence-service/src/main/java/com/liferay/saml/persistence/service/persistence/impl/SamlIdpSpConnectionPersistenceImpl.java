@@ -1487,3 +1487,4 @@ public class SamlIdpSpConnectionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-940608959

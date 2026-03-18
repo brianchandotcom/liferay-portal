@@ -421,3 +421,4 @@ public class CommerceWishListWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:553418783

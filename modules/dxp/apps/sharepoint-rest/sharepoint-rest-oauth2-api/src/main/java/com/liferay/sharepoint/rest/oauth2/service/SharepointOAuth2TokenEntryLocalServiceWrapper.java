@@ -422,3 +422,4 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 		_sharepointOAuth2TokenEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:742116142

@@ -68,3 +68,4 @@ public class EROrganizationLocalServiceWrapper
 	private EROrganizationLocalService _erOrganizationLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1100675234

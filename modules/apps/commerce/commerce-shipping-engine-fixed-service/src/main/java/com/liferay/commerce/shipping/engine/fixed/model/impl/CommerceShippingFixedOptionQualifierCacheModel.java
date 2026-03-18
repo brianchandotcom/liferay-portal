@@ -207,3 +207,4 @@ public class CommerceShippingFixedOptionQualifierCacheModel
 	public long commerceShippingFixedOptionId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:66630887

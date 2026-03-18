@@ -323,3 +323,4 @@ public class PatcherFixRelLocalServiceUtil {
 			PatcherFixRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2100721555

@@ -190,3 +190,4 @@ public class SegmentsEntryServiceWrapper
 	private SegmentsEntryService _segmentsEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-16920795

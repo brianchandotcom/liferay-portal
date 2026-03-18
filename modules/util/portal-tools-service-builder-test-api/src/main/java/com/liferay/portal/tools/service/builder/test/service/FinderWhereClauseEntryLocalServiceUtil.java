@@ -312,3 +312,4 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 	private static volatile FinderWhereClauseEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1051151947

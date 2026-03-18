@@ -366,3 +366,4 @@ public interface ExpandoTablePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1323224610

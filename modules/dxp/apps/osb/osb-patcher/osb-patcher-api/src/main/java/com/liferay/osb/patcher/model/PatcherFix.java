@@ -48,3 +48,4 @@ public interface PatcherFix extends PatcherFixModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2146797726

@@ -90,3 +90,4 @@ public class AssetCategoryPropertyServiceUtil {
 			AssetCategoryPropertyService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1187518912

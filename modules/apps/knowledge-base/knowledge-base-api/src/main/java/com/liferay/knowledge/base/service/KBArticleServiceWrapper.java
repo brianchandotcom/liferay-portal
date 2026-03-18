@@ -517,3 +517,4 @@ public class KBArticleServiceWrapper
 	private KBArticleService _kbArticleService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1379065792

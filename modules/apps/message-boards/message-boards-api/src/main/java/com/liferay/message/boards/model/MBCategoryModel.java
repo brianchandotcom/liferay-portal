@@ -551,3 +551,4 @@ public interface MBCategoryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1535769312

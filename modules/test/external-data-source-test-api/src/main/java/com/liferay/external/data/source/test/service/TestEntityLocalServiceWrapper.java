@@ -343,3 +343,4 @@ public class TestEntityLocalServiceWrapper
 	private TestEntityLocalService _testEntityLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-632260185

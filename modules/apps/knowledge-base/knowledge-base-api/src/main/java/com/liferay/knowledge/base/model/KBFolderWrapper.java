@@ -879,3 +879,4 @@ public class KBFolderWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:664769560

@@ -54,3 +54,4 @@ public class PatcherFixComponentTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2010385307

@@ -495,3 +495,4 @@ public class KaleoLogLocalServiceUtil {
 			KaleoLogLocalServiceUtil.class, KaleoLogLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1389648775

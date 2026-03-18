@@ -39,3 +39,4 @@ public abstract class CTRemoteBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1145154554

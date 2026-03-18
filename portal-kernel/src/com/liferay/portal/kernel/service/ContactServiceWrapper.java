@@ -122,3 +122,4 @@ public class ContactServiceWrapper
 	private ContactService _contactService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:919194753

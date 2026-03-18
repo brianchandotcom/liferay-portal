@@ -89,3 +89,4 @@ public interface DDMFormInstanceFinder {
 					orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1521641567

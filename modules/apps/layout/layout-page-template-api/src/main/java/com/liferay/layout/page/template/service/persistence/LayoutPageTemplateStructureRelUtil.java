@@ -1207,3 +1207,4 @@ public class LayoutPageTemplateStructureRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2119946222

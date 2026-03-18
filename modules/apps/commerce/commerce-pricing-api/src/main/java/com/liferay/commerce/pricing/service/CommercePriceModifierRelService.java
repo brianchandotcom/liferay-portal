@@ -125,3 +125,4 @@ public interface CommercePriceModifierRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:755830055

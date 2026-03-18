@@ -330,3 +330,4 @@ public class CalendarNotificationTemplateCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1783798317

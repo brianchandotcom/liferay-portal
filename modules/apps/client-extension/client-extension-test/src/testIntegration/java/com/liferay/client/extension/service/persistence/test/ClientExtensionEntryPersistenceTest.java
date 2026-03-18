@@ -695,3 +695,4 @@ public class ClientExtensionEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1870917096

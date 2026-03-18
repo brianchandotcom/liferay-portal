@@ -466,3 +466,4 @@ public class FinderWhereClauseEntryUtil {
 	private static volatile FinderWhereClauseEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:924787693

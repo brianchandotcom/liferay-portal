@@ -47,3 +47,4 @@ public interface PasswordPolicy extends PasswordPolicyModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1865132913

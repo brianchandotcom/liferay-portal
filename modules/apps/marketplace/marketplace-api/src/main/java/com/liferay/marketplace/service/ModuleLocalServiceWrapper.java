@@ -391,3 +391,4 @@ public class ModuleLocalServiceWrapper
 	private ModuleLocalService _moduleLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-232197680

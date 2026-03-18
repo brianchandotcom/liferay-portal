@@ -55,3 +55,4 @@ public interface Address extends AddressModel, PersistedModel {
 	public Region getRegion();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1897172745

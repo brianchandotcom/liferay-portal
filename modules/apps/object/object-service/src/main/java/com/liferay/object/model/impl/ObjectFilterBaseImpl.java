@@ -39,3 +39,4 @@ public abstract class ObjectFilterBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:694427859

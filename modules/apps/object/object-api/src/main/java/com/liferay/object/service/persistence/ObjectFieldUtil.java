@@ -3216,3 +3216,4 @@ public class ObjectFieldUtil {
 	private static volatile ObjectFieldPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1683120955

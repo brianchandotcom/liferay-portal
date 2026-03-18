@@ -235,3 +235,4 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1602318420

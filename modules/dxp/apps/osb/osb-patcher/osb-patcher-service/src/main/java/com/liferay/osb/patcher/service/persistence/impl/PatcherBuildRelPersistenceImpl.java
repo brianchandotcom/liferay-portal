@@ -1739,3 +1739,4 @@ public class PatcherBuildRelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:353672740

@@ -353,3 +353,4 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 			SharepointOAuth2TokenEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1297471777

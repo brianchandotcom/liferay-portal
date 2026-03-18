@@ -115,3 +115,4 @@ public class LayoutPageTemplateEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:986376417

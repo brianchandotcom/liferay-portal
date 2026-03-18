@@ -53,3 +53,4 @@ public class ObjectViewColumnServiceWrapper
 	private ObjectViewColumnService _objectViewColumnService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:523841029

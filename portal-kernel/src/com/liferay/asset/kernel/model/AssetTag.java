@@ -67,3 +67,4 @@ public interface AssetTag extends AssetTagModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:984740420

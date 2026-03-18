@@ -133,3 +133,4 @@ public class AccountEntryUserRelCacheModel
 	public long accountUserId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1169717515

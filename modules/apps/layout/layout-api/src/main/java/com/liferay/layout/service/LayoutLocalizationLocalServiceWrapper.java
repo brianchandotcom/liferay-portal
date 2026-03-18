@@ -496,3 +496,4 @@ public class LayoutLocalizationLocalServiceWrapper
 	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-435620509

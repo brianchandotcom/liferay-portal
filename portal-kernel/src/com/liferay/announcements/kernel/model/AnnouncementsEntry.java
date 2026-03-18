@@ -54,3 +54,4 @@ public interface AnnouncementsEntry
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:25177323

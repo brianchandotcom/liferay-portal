@@ -528,3 +528,4 @@ public class TrashEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-871875510

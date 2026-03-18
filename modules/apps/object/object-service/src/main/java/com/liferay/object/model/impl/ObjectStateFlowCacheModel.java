@@ -197,3 +197,4 @@ public class ObjectStateFlowCacheModel
 	public long objectFieldId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-45692111

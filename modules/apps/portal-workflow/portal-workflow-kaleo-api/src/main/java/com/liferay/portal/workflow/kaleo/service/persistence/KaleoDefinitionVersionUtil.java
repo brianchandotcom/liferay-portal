@@ -730,3 +730,4 @@ public class KaleoDefinitionVersionUtil {
 	private static volatile KaleoDefinitionVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1542174731

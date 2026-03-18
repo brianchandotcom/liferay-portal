@@ -2543,3 +2543,4 @@ public interface Portlet extends PersistedModel, PortletModel {
 	public void unsetReady();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-581819074

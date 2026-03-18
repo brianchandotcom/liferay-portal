@@ -110,3 +110,4 @@ public class SXPElementServiceUtil {
 		new Snapshot<>(SXPElementServiceUtil.class, SXPElementService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1210762289

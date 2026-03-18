@@ -482,3 +482,4 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 			LayoutClassedModelUsageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-781914343

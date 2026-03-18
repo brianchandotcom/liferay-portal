@@ -715,3 +715,4 @@ public class CPTaxCategoryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1806654095

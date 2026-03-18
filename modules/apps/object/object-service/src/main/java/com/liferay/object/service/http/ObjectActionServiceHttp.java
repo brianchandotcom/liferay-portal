@@ -246,3 +246,4 @@ public class ObjectActionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-570179611

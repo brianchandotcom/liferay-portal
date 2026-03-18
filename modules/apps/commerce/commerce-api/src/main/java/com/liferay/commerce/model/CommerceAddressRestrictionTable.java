@@ -63,3 +63,4 @@ public class CommerceAddressRestrictionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1682244689

@@ -295,3 +295,4 @@ public interface AppModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1329093659

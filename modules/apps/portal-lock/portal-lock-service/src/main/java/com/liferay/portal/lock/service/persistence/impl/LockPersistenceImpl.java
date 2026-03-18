@@ -4403,3 +4403,4 @@ public class LockPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:781331794

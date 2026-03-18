@@ -804,3 +804,4 @@ public interface CommerceAvailabilityEstimatePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-973278724

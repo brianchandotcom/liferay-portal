@@ -52,3 +52,4 @@ public interface DLFileVersionPreview
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1248162462

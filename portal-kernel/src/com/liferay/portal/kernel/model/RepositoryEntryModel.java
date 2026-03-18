@@ -300,3 +300,4 @@ public interface RepositoryEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1153711459

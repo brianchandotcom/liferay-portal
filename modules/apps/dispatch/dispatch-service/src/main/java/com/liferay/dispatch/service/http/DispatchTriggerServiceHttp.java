@@ -371,3 +371,4 @@ public class DispatchTriggerServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-491069094

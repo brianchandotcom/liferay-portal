@@ -249,3 +249,4 @@ public class CPTaxCategoryCacheModel
 	public String description;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1007105850

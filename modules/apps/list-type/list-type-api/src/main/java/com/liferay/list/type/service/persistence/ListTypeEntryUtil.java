@@ -1476,3 +1476,4 @@ public class ListTypeEntryUtil {
 	private static volatile ListTypeEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:335566092

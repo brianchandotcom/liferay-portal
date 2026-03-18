@@ -562,3 +562,4 @@ public interface CommercePriceListModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1001844683

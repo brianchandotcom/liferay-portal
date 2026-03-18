@@ -1600,3 +1600,4 @@ public class CommercePaymentEntryUtil {
 	private static volatile CommercePaymentEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-887498144

@@ -441,3 +441,4 @@ public class PatcherAccountLocalServiceUtil {
 			PatcherAccountLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-201657550

@@ -77,3 +77,4 @@ public abstract class KBFolderFinderBaseImpl
 		KBFolderFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1793804548

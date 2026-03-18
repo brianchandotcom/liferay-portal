@@ -118,3 +118,4 @@ public interface CommerceOrderItem
 	public boolean hasParentCommerceOrderItem();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1865294040

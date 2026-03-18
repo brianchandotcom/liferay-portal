@@ -694,3 +694,4 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 		_cpAttachmentFileEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1061107393

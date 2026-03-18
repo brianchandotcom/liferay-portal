@@ -1668,3 +1668,4 @@ public class CPInstanceUnitOfMeasureUtil {
 	private static volatile CPInstanceUnitOfMeasurePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1985883763

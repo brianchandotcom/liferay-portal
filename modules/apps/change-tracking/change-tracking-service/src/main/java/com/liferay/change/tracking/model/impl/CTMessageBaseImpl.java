@@ -39,3 +39,4 @@ public abstract class CTMessageBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:402536450

@@ -202,3 +202,4 @@ public class ReadingTimeEntryCacheModel
 	public long readingTime;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:211108913

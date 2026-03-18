@@ -6958,3 +6958,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:214030922

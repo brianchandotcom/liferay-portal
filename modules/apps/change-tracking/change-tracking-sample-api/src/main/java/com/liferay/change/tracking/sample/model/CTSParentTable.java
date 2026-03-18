@@ -39,3 +39,4 @@ public class CTSParentTable extends BaseTable<CTSParentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1075063999

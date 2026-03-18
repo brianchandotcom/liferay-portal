@@ -13673,3 +13673,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-203508668

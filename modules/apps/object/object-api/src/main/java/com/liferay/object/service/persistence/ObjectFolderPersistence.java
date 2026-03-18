@@ -894,3 +894,4 @@ public interface ObjectFolderPersistence extends BasePersistence<ObjectFolder> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1549767823

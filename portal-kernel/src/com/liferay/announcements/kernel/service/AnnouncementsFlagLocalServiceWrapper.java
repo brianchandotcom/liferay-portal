@@ -394,3 +394,4 @@ public class AnnouncementsFlagLocalServiceWrapper
 	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-6372204

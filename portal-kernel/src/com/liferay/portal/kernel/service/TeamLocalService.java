@@ -472,3 +472,4 @@ public interface TeamLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:950825642

@@ -39,3 +39,4 @@ public abstract class DDMStorageLinkBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1507496076

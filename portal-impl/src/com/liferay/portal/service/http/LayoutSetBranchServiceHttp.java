@@ -308,3 +308,4 @@ public class LayoutSetBranchServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-461933536

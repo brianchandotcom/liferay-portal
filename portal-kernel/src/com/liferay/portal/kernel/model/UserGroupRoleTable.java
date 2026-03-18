@@ -42,3 +42,4 @@ public class UserGroupRoleTable extends BaseTable<UserGroupRoleTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1112880910

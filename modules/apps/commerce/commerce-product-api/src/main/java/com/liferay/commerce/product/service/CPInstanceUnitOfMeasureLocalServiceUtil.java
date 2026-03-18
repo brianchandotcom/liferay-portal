@@ -456,3 +456,4 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 			CPInstanceUnitOfMeasureLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1493386727

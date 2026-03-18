@@ -2470,3 +2470,4 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private User _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1890632020

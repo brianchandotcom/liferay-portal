@@ -437,3 +437,4 @@ public class ReadingTimeEntryLocalServiceUtil {
 			ReadingTimeEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1070447231

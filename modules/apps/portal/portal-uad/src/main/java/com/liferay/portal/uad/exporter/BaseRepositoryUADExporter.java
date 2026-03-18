@@ -66,3 +66,4 @@ public abstract class BaseRepositoryUADExporter
 	protected RepositoryLocalService repositoryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-491751635

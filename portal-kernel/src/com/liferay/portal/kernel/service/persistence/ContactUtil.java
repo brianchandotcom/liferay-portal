@@ -965,3 +965,4 @@ public class ContactUtil {
 	private static volatile ContactPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:530704471

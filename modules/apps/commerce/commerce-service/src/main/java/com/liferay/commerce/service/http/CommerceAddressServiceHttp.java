@@ -1285,3 +1285,4 @@ public class CommerceAddressServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1158191204

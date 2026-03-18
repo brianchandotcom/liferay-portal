@@ -129,3 +129,4 @@ public interface NotificationTemplateAttachmentModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1118585865

@@ -132,3 +132,4 @@ public abstract class DDMFormInstanceRecordServiceBaseImpl
 		DDMFormInstanceRecordServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1883810762

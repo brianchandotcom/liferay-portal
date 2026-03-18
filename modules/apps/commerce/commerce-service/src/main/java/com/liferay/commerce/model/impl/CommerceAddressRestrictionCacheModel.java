@@ -208,3 +208,4 @@ public class CommerceAddressRestrictionCacheModel
 	public long countryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1310019973

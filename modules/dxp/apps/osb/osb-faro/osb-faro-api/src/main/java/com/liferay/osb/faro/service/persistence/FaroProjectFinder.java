@@ -18,3 +18,4 @@ public interface FaroProjectFinder {
 		findByEmailAddressDomain(String emailAddressDomain);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2004527768

@@ -419,3 +419,4 @@ public class ObjectRelationshipServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1133714556

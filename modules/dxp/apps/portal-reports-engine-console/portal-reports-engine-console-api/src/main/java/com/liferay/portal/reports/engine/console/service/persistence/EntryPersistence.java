@@ -150,3 +150,4 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1936803907

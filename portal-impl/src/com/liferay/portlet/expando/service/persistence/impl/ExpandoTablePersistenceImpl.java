@@ -1713,3 +1713,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1807003214

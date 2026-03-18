@@ -298,3 +298,4 @@ public interface ContactsCardTemplatePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:465330470

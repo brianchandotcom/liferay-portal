@@ -254,3 +254,4 @@ public interface LockModel extends BaseModel<Lock>, MVCCModel, ShardedModel {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:633273070

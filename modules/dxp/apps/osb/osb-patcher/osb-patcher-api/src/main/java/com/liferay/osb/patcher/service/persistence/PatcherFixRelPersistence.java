@@ -441,3 +441,4 @@ public interface PatcherFixRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:973466868

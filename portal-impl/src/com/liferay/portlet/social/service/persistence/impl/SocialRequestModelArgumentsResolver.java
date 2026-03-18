@@ -129,3 +129,4 @@ public class SocialRequestModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1793531221

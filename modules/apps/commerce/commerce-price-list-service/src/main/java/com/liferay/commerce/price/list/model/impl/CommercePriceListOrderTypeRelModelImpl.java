@@ -1095,3 +1095,4 @@ public class CommercePriceListOrderTypeRelModelImpl
 	private CommercePriceListOrderTypeRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2012357876

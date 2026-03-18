@@ -65,3 +65,4 @@ public class CTCollectionTable extends BaseTable<CTCollectionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1472358053

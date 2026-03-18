@@ -564,3 +564,4 @@ public interface AccountEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1423674627

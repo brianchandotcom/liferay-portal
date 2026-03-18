@@ -182,3 +182,4 @@ public class CommerceNotificationTemplateServiceWrapper
 		_commerceNotificationTemplateService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-351529764

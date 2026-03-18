@@ -319,3 +319,4 @@ public interface ImageLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-436823611

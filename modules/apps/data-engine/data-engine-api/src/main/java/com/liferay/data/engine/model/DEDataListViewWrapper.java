@@ -672,3 +672,4 @@ public class DEDataListViewWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:121001219

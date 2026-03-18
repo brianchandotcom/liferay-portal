@@ -71,3 +71,4 @@ public class KBFolderTable extends BaseTable<KBFolderTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1644712635

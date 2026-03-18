@@ -431,3 +431,4 @@ public class ObjectFolderItemWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-761247870

@@ -401,3 +401,4 @@ public class DDMStorageLinkLocalServiceUtil {
 			DDMStorageLinkLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1383552024

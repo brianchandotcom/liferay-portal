@@ -51,3 +51,4 @@ public interface UserNotificationEvent
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1804527360

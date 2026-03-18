@@ -243,3 +243,4 @@ public interface AccountGroupRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1905129961

@@ -41,3 +41,4 @@ public interface TeamFinder {
 			<com.liferay.portal.kernel.model.Team> orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2142624733

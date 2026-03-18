@@ -988,3 +988,4 @@ public class ObjectViewColumnUtil {
 	private static volatile ObjectViewColumnPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1551169783

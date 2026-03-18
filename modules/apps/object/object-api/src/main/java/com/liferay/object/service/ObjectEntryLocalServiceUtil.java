@@ -894,3 +894,4 @@ public class ObjectEntryLocalServiceUtil {
 			ObjectEntryLocalServiceUtil.class, ObjectEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:233544416

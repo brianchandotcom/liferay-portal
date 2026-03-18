@@ -363,3 +363,4 @@ public class MBCategoryCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1389887462

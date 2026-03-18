@@ -98,3 +98,4 @@ public abstract class BaseLayoutFriendlyURLUADAnonymizer
 	protected LayoutFriendlyURLLocalService layoutFriendlyURLLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1366202346

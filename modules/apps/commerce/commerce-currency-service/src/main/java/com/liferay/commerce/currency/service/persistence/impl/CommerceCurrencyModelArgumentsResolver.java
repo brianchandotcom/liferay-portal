@@ -134,3 +134,4 @@ public class CommerceCurrencyModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1469246161

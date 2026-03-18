@@ -338,3 +338,4 @@ public interface DepotEntryGroupRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-113519235

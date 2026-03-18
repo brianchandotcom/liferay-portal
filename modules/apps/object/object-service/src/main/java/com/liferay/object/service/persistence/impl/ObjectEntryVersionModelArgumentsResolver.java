@@ -118,3 +118,4 @@ public class ObjectEntryVersionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1554939546

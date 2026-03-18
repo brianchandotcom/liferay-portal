@@ -176,3 +176,4 @@ public class TrashVersionCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-580509329

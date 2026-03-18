@@ -67,3 +67,4 @@ public interface OAuth2Application
 	public void setRedirectURIsList(java.util.List<String> redirectURIsList);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1789500448

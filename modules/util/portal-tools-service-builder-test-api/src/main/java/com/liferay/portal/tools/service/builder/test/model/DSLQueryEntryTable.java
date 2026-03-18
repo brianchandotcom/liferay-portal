@@ -32,3 +32,4 @@ public class DSLQueryEntryTable extends BaseTable<DSLQueryEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:208875066

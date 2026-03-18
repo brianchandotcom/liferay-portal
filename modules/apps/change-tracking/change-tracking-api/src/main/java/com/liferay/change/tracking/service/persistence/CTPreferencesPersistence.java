@@ -491,3 +491,4 @@ public interface CTPreferencesPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:794712546

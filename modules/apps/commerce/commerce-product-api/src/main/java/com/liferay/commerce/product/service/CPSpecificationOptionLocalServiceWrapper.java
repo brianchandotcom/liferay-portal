@@ -523,3 +523,4 @@ public class CPSpecificationOptionLocalServiceWrapper
 		_cpSpecificationOptionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1029373219

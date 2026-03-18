@@ -195,3 +195,4 @@ public class SegmentsEntryRoleCacheModel
 	public long roleId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2030886461

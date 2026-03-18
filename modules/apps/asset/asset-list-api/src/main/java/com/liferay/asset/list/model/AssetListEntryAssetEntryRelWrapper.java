@@ -549,3 +549,4 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1598852390

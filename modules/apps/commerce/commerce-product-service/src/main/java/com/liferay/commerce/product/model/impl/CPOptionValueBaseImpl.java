@@ -39,3 +39,4 @@ public abstract class CPOptionValueBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1591759057

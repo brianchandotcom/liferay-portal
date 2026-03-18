@@ -498,3 +498,4 @@ public class LayoutPrototypePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-953359635

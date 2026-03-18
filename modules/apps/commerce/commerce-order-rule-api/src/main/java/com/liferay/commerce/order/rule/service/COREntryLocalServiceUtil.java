@@ -518,3 +518,4 @@ public class COREntryLocalServiceUtil {
 			COREntryLocalServiceUtil.class, COREntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1614418906

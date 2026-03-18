@@ -231,3 +231,4 @@ public abstract class SocialActivityServiceBaseImpl
 		SocialActivityServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-863638802

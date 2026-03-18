@@ -67,3 +67,4 @@ public class MBBanServiceWrapper
 	private MBBanService _mbBanService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1640430326

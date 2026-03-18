@@ -66,3 +66,4 @@ public interface AccountEntryUserRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:4815676

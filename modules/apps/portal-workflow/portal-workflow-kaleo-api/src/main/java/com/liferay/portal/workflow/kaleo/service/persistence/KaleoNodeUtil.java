@@ -816,3 +816,4 @@ public class KaleoNodeUtil {
 	private static volatile KaleoNodePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:489266277

@@ -1624,3 +1624,4 @@ public interface CalendarBookingPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-620396587

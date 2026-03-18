@@ -36,3 +36,4 @@ public class ViewCountEntryTable extends BaseTable<ViewCountEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1772003667

@@ -5274,3 +5274,4 @@ public class PhonePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-354440384

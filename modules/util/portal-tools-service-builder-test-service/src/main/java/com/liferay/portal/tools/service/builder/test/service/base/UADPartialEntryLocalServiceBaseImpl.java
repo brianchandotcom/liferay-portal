@@ -510,3 +510,4 @@ public abstract class UADPartialEntryLocalServiceBaseImpl
 		UADPartialEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-879251727

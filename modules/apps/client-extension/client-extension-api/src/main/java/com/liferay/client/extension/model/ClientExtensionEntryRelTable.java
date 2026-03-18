@@ -82,3 +82,4 @@ public class ClientExtensionEntryRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1111829545

@@ -118,3 +118,4 @@ public class ObjectStateTransitionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1163524185

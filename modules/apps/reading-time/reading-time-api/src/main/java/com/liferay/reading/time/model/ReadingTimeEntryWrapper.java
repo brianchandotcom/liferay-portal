@@ -445,3 +445,4 @@ public class ReadingTimeEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-393698811

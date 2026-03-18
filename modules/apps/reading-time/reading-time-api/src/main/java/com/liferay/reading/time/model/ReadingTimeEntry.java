@@ -52,3 +52,4 @@ public interface ReadingTimeEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-443978668

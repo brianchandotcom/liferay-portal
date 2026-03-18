@@ -367,3 +367,4 @@ public class SavedContentEntryServiceHttp {
 		new Class[] {long.class, String.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:822559129

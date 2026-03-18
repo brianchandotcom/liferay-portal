@@ -420,3 +420,4 @@ public class DLAppHelperLocalServiceWrapper
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-822462814

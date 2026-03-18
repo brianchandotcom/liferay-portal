@@ -1521,3 +1521,4 @@ public interface KBCommentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1702778223

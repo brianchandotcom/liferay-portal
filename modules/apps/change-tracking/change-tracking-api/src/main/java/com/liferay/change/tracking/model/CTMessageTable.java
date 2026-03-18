@@ -38,3 +38,4 @@ public class CTMessageTable extends BaseTable<CTMessageTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-487934784

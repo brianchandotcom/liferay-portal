@@ -138,3 +138,4 @@ public class AnnouncementsEntryModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-660490257

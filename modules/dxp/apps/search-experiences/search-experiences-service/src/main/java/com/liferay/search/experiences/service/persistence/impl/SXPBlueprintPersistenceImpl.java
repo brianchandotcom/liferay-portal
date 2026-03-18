@@ -4030,3 +4030,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-563911589

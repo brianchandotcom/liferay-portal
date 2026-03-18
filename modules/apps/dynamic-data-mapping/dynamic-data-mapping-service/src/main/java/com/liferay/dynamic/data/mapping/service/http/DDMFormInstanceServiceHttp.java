@@ -842,3 +842,4 @@ public class DDMFormInstanceServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-899580019

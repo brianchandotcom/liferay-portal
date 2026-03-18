@@ -153,3 +153,4 @@ public interface UADPartialEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-551001158

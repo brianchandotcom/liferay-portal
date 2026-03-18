@@ -2793,3 +2793,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1362471476

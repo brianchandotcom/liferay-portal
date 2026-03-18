@@ -464,3 +464,4 @@ public class SavedContentEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1734921201

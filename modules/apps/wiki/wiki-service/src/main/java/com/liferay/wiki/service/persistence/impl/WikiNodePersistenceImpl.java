@@ -5887,3 +5887,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-124510863

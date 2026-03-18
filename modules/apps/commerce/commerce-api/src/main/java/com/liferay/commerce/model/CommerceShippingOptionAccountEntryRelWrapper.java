@@ -417,3 +417,4 @@ public class CommerceShippingOptionAccountEntryRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-125491703

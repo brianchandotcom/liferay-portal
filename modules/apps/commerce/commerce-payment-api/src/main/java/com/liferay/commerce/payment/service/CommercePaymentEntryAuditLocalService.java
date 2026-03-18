@@ -297,3 +297,4 @@ public interface CommercePaymentEntryAuditLocalService
 		CommercePaymentEntryAudit commercePaymentEntryAudit);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-204549365

@@ -761,3 +761,4 @@ public interface AssetTagLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1779770499

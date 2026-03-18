@@ -929,3 +929,4 @@ public class CPDefinitionLinkServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1302634559

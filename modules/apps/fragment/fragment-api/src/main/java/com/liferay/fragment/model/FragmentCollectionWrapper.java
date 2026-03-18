@@ -630,3 +630,4 @@ public class FragmentCollectionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1775839693

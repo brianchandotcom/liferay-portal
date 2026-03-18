@@ -1295,3 +1295,4 @@ public class CommerceChannelModelImpl
 	private CommerceChannel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:50634852

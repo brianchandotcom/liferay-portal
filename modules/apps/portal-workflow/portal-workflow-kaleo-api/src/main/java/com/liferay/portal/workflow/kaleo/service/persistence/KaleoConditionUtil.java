@@ -690,3 +690,4 @@ public class KaleoConditionUtil {
 	private static volatile KaleoConditionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1413681957

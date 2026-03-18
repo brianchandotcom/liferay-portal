@@ -61,3 +61,4 @@ public interface CommerceChannel extends CommerceChannelModel, PersistedModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-654916879

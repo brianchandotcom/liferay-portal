@@ -48,3 +48,4 @@ public class DLContentDataBlobModel {
 	private Blob _dataBlob;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:666891159

@@ -1237,3 +1237,4 @@ public interface TemplateEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-862980514

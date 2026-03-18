@@ -1517,3 +1517,4 @@ public class SamlSpMessagePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-884484708

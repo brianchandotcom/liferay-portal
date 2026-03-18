@@ -384,3 +384,4 @@ public class PortletItemLocalServiceWrapper
 	private PortletItemLocalService _portletItemLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1414912103

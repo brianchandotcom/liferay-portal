@@ -451,3 +451,4 @@ public abstract class CTSGrandParentLocalServiceBaseImpl
 		CTSGrandParentLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:990050347

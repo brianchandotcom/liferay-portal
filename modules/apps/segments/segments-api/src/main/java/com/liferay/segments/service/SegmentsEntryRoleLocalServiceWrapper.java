@@ -447,3 +447,4 @@ public class SegmentsEntryRoleLocalServiceWrapper
 	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1713517898

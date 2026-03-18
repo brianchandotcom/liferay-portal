@@ -61,3 +61,4 @@ public class CommerceTermEntryRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2001934774

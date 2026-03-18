@@ -495,3 +495,4 @@ public class CommerceOrderTypeRelLocalServiceWrapper
 	private CommerceOrderTypeRelLocalService _commerceOrderTypeRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1717974303

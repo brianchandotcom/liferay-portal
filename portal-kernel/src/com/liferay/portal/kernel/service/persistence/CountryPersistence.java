@@ -2653,3 +2653,4 @@ public interface CountryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1774125586

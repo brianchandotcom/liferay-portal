@@ -497,3 +497,4 @@ public class ObjectViewSortColumnPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-6660269

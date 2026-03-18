@@ -95,3 +95,4 @@ public class ObjectActionServiceUtil {
 			ObjectActionServiceUtil.class, ObjectActionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1881169689

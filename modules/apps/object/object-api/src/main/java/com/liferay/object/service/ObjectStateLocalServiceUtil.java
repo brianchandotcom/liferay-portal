@@ -372,3 +372,4 @@ public class ObjectStateLocalServiceUtil {
 			ObjectStateLocalServiceUtil.class, ObjectStateLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:939046386

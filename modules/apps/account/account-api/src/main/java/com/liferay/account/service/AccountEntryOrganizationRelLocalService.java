@@ -341,3 +341,4 @@ public interface AccountEntryOrganizationRelLocalService
 		AccountEntryOrganizationRel accountEntryOrganizationRel);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1515787194

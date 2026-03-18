@@ -4058,3 +4058,4 @@ public class LaunchSetPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1274757858

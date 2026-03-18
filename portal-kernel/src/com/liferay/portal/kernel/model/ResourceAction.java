@@ -47,3 +47,4 @@ public interface ResourceAction extends PersistedModel, ResourceActionModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:315181255

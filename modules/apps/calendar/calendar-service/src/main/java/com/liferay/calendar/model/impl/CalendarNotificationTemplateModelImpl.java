@@ -1309,3 +1309,4 @@ public class CalendarNotificationTemplateModelImpl
 	private CalendarNotificationTemplate _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-122405344

@@ -581,3 +581,4 @@ public class CPInstanceOptionValueRelLocalServiceWrapper
 		_cpInstanceOptionValueRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:30339307

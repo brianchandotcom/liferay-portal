@@ -485,3 +485,4 @@ public class UserNotificationEventWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:935040950

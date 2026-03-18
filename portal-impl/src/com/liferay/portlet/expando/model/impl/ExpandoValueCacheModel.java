@@ -183,3 +183,4 @@ public class ExpandoValueCacheModel
 	public String data;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:333932332

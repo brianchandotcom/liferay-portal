@@ -49,3 +49,4 @@ public class AssetVocabularyGroupRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1244633168

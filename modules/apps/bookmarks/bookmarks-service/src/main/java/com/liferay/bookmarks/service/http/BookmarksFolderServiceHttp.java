@@ -1040,3 +1040,4 @@ public class BookmarksFolderServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1229381573

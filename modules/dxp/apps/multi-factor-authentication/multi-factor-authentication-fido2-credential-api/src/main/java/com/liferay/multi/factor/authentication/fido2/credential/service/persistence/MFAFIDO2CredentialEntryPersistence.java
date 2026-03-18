@@ -497,3 +497,4 @@ public interface MFAFIDO2CredentialEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-731363990

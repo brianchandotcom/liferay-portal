@@ -33,3 +33,4 @@ package com.liferay.commerce.service.http;
  */
 public class CommerceAddressRestrictionServiceHttp {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2009333682

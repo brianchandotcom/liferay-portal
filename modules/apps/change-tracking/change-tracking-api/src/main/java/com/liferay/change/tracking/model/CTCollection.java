@@ -64,3 +64,4 @@ public interface CTCollection extends CTCollectionModel, PersistedModel {
 	public boolean isReadOnly();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:838455712

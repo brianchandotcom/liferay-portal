@@ -1847,3 +1847,4 @@ public class SequenceEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-65728050

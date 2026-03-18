@@ -82,3 +82,4 @@ public class DispatchLogServiceUtil {
 		new Snapshot<>(DispatchLogServiceUtil.class, DispatchLogService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-415708974

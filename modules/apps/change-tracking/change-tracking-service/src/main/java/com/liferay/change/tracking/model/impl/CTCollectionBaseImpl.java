@@ -39,3 +39,4 @@ public abstract class CTCollectionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1344421626

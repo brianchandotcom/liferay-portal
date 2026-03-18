@@ -3898,3 +3898,4 @@ public class UserGroupGroupRolePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1617497574

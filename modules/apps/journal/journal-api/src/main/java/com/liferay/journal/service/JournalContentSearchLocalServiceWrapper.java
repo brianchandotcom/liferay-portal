@@ -503,3 +503,4 @@ public class JournalContentSearchLocalServiceWrapper
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-74997804

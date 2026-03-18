@@ -48,3 +48,4 @@ public class CompareRunsServiceWrapper
 	private CompareRunsService _compareRunsService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-160864639

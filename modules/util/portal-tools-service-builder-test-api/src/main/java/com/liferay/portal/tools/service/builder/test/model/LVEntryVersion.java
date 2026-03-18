@@ -49,3 +49,4 @@ public interface LVEntryVersion extends LVEntryVersionModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:307509187

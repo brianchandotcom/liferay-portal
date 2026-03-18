@@ -643,3 +643,4 @@ public class CommerceShipmentLocalServiceUtil {
 			CommerceShipmentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2049266083

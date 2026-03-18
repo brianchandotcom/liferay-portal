@@ -67,3 +67,4 @@ public interface TrashEntry extends PersistedModel, TrashEntryModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:610786521

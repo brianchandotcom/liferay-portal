@@ -234,3 +234,4 @@ public interface CTRemoteModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-425176851

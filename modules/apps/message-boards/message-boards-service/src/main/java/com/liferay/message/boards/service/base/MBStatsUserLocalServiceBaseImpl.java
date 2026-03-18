@@ -109,3 +109,4 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 		MBStatsUserLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:148890145

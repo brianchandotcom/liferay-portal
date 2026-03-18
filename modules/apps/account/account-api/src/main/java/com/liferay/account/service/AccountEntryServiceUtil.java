@@ -227,3 +227,4 @@ public class AccountEntryServiceUtil {
 			AccountEntryServiceUtil.class, AccountEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1492291587

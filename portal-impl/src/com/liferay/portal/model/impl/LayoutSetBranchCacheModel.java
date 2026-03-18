@@ -342,3 +342,4 @@ public class LayoutSetBranchCacheModel
 	public boolean layoutSetPrototypeLinkEnabled;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2143176102

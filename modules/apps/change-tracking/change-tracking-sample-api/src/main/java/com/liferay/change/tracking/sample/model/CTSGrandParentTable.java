@@ -41,3 +41,4 @@ public class CTSGrandParentTable extends BaseTable<CTSGrandParentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1969480400

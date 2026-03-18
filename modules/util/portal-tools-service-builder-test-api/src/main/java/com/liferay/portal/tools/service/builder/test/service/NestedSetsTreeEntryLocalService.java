@@ -274,3 +274,4 @@ public interface NestedSetsTreeEntryLocalService
 		NestedSetsTreeEntry nestedSetsTreeEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1034568500

@@ -706,3 +706,4 @@ public class NotificationRecipientUtil {
 	private static volatile NotificationRecipientPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1349315788

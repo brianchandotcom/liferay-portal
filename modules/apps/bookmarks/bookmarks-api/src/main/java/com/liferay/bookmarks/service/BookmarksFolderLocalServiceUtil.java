@@ -588,3 +588,4 @@ public class BookmarksFolderLocalServiceUtil {
 			BookmarksFolderLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:153036870

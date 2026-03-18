@@ -62,3 +62,4 @@ public class ERAssetCategoryLocalServiceUtil {
 			ERAssetCategoryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2033009260

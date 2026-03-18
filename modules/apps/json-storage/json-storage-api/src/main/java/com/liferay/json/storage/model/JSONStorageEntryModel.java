@@ -250,3 +250,4 @@ public interface JSONStorageEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:865364738

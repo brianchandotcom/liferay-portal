@@ -21,3 +21,4 @@ public interface CPTaxCategoryFinder {
 			long companyId, String keyword, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:577168125

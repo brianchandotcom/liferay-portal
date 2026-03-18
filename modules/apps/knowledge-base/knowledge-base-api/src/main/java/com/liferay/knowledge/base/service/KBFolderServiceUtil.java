@@ -168,3 +168,4 @@ public class KBFolderServiceUtil {
 		new Snapshot<>(KBFolderServiceUtil.class, KBFolderService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-570770519

@@ -333,3 +333,4 @@ public class PasswordPolicyServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1634501835

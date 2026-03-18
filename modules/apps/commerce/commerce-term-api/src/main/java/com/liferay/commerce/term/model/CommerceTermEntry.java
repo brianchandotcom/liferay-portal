@@ -56,3 +56,4 @@ public interface CommerceTermEntry
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1417795032

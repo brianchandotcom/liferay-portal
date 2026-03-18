@@ -129,3 +129,4 @@ public abstract class KBArticleServiceBaseImpl
 		KBArticleServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2010201752

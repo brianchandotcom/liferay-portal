@@ -133,3 +133,4 @@ public class PortalPreferencesCacheModel
 	public int ownerType;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-250870542

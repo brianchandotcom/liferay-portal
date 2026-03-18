@@ -48,3 +48,4 @@ public class CTCommentTable extends BaseTable<CTCommentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1220661606

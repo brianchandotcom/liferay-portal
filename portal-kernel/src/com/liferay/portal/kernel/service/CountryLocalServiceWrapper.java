@@ -579,3 +579,4 @@ public class CountryLocalServiceWrapper
 	private CountryLocalService _countryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:203717887

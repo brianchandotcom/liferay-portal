@@ -4958,3 +4958,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1740147372

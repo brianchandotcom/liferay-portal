@@ -1172,3 +1172,4 @@ public class CPAttachmentFileEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-487379530

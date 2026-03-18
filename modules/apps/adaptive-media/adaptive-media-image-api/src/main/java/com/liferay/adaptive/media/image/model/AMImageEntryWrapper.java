@@ -448,3 +448,4 @@ public class AMImageEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1540582311

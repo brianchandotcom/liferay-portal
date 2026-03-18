@@ -770,3 +770,4 @@ public interface KaleoNotificationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:240936376

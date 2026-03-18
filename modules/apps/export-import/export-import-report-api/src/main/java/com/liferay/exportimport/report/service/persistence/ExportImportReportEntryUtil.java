@@ -597,3 +597,4 @@ public class ExportImportReportEntryUtil {
 	private static volatile ExportImportReportEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1283264597

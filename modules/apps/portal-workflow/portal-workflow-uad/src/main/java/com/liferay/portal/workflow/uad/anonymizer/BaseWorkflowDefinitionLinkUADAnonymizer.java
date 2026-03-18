@@ -102,3 +102,4 @@ public abstract class BaseWorkflowDefinitionLinkUADAnonymizer
 		workflowDefinitionLinkLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1968278911

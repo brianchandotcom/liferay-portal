@@ -64,3 +64,4 @@ public class AssetTagFinderBaseImpl extends BasePersistenceImpl<AssetTag> {
 		AssetTagFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-585231577

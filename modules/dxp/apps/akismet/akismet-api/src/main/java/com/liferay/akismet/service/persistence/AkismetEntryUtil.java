@@ -504,3 +504,4 @@ public class AkismetEntryUtil {
 	private static volatile AkismetEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1182423187

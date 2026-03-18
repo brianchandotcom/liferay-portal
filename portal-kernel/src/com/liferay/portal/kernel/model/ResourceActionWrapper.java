@@ -214,3 +214,4 @@ public class ResourceActionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:628820094

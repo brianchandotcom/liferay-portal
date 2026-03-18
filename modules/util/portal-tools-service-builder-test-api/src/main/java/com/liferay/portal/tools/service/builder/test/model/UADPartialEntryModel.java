@@ -124,3 +124,4 @@ public interface UADPartialEntryModel extends BaseModel<UADPartialEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-677343313

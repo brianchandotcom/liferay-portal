@@ -533,3 +533,4 @@ public class AuditEventWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1416724512

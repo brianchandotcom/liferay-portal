@@ -1368,3 +1368,4 @@ public class CommerceTaxMethodModelImpl
 	private CommerceTaxMethod _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:280836933

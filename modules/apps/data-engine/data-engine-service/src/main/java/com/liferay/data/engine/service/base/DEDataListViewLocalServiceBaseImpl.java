@@ -605,3 +605,4 @@ public abstract class DEDataListViewLocalServiceBaseImpl
 		DEDataListViewLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1600314660

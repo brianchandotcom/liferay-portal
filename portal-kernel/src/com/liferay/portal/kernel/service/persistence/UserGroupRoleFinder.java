@@ -21,3 +21,4 @@ public interface UserGroupRoleFinder {
 		findByUserUserGroupGroupRole(long userId, long groupId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-344165969

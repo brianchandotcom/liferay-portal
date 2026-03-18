@@ -690,3 +690,4 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 		AnnouncementsEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-982640191

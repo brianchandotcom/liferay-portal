@@ -73,3 +73,4 @@ public class ERUserLocalServiceWrapper
 	private ERUserLocalService _erUserLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-77394725

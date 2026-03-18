@@ -2089,3 +2089,4 @@ public class CPDisplayLayoutUtil {
 	private static volatile CPDisplayLayoutPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1369809914

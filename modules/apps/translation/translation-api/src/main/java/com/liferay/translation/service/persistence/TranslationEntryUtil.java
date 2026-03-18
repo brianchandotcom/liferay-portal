@@ -948,3 +948,4 @@ public class TranslationEntryUtil {
 	private static volatile TranslationEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-847263517

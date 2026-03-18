@@ -606,3 +606,4 @@ public interface CompanyLocalService
 		boolean strangersVerify, boolean siteLogo);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1994948731

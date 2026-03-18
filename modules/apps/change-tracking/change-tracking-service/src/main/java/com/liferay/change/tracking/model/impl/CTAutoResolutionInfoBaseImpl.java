@@ -29,3 +29,4 @@ public abstract class CTAutoResolutionInfoBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1049304698

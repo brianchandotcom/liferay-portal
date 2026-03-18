@@ -934,3 +934,4 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1634947234

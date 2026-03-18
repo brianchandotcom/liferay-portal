@@ -77,3 +77,4 @@ public abstract class MicroblogsEntryFinderBaseImpl
 		MicroblogsEntryFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:665527586

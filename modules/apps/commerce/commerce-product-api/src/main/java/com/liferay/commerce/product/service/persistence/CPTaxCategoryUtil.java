@@ -1112,3 +1112,4 @@ public class CPTaxCategoryUtil {
 	private static volatile CPTaxCategoryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1547528790

@@ -430,3 +430,4 @@ public class MBMailingListLocalServiceUtil {
 			MBMailingListLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:168786760

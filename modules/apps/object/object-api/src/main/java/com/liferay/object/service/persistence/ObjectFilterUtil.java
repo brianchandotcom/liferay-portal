@@ -787,3 +787,4 @@ public class ObjectFilterUtil {
 	private static volatile ObjectFilterPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-844205999

@@ -351,3 +351,4 @@ public interface RegionLocalizationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1750174351

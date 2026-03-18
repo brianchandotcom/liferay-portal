@@ -410,3 +410,4 @@ public class CProductLocalServiceUtil {
 			CProductLocalServiceUtil.class, CProductLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1725540722

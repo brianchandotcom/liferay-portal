@@ -54,3 +54,4 @@ public interface LayoutSEOEntryCustomMetaTag
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-239346471

@@ -126,3 +126,4 @@ public class KaleoDefinitionServiceWrapper
 	private KaleoDefinitionService _kaleoDefinitionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-294050812

@@ -353,3 +353,4 @@ public class PortalServiceHttp {
 		new Class[] {};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1153346425

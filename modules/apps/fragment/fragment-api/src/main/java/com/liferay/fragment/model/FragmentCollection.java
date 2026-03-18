@@ -81,3 +81,4 @@ public interface FragmentCollection
 		throws Exception;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-440920962

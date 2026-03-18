@@ -47,3 +47,4 @@ public class ImageTable extends BaseTable<ImageTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1790659118

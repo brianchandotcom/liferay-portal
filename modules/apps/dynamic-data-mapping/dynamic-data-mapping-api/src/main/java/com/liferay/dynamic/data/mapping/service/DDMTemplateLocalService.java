@@ -1259,3 +1259,4 @@ public interface DDMTemplateLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-904773251

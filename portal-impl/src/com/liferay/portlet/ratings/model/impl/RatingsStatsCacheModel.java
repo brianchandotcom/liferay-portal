@@ -190,3 +190,4 @@ public class RatingsStatsCacheModel
 	public double averageScore;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2012465576

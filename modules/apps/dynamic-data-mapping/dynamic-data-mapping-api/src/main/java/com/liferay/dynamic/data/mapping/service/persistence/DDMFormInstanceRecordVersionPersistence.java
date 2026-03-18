@@ -1021,3 +1021,4 @@ public interface DDMFormInstanceRecordVersionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1747348819

@@ -104,3 +104,4 @@ public interface CommercePriceListFinder {
 						queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:522658356

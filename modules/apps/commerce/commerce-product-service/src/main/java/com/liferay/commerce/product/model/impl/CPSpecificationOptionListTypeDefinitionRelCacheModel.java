@@ -156,3 +156,4 @@ public class CPSpecificationOptionListTypeDefinitionRelCacheModel
 	public long listTypeDefinitionId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-924020810

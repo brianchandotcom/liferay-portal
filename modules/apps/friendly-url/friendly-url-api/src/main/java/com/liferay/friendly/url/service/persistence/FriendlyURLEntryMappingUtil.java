@@ -360,3 +360,4 @@ public class FriendlyURLEntryMappingUtil {
 	private static volatile FriendlyURLEntryMappingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1057632086

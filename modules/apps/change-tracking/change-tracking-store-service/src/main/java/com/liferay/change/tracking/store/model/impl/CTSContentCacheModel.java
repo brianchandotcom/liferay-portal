@@ -194,3 +194,4 @@ public class CTSContentCacheModel
 	public String storeType;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:104414045

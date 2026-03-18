@@ -129,3 +129,4 @@ public class ListTypeModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-994184469

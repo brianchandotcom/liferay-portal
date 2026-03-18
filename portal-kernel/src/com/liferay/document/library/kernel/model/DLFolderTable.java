@@ -85,3 +85,4 @@ public class DLFolderTable extends BaseTable<DLFolderTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1082821979

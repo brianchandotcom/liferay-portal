@@ -62,3 +62,4 @@ public class ObjectDefinitionSettingTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1641430322

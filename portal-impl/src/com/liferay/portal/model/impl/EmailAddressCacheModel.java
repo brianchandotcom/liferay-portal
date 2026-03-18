@@ -265,3 +265,4 @@ public class EmailAddressCacheModel
 	public boolean primary;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:412768731

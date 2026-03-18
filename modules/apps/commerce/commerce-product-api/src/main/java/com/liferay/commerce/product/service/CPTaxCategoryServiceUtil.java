@@ -128,3 +128,4 @@ public class CPTaxCategoryServiceUtil {
 			CPTaxCategoryServiceUtil.class, CPTaxCategoryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1234698510

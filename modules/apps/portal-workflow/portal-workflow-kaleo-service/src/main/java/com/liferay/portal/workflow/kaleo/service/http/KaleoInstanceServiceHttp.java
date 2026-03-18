@@ -100,3 +100,4 @@ public class KaleoInstanceServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1992008160

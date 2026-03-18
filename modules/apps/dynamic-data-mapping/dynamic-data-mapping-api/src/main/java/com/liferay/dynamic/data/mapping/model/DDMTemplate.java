@@ -81,3 +81,4 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 	public void setSmallImageType(String smallImageType);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-230755083

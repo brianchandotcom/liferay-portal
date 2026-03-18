@@ -39,3 +39,4 @@ public abstract class MBCategoryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-434320485

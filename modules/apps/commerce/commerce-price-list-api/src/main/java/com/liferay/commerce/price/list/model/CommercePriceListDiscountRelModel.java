@@ -280,3 +280,4 @@ public interface CommercePriceListDiscountRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:975424600

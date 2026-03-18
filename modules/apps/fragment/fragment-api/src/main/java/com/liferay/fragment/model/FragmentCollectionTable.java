@@ -78,3 +78,4 @@ public class FragmentCollectionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:203296948

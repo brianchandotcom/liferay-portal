@@ -144,3 +144,4 @@ public abstract class ThemeLocalServiceBaseImpl
 		ThemeLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-279220482

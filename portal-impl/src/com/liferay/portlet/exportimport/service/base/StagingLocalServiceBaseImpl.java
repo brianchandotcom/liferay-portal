@@ -146,3 +146,4 @@ public abstract class StagingLocalServiceBaseImpl
 		StagingLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1413209515

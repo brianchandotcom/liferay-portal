@@ -415,3 +415,4 @@ public class NotificationQueueEntryAttachmentLocalServiceWrapper
 		_notificationQueueEntryAttachmentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:477297666

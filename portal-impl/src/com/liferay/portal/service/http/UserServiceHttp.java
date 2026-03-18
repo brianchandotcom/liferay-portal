@@ -3799,3 +3799,4 @@ public class UserServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2032426377

@@ -235,3 +235,4 @@ public interface CommercePricingClassCPDefinitionRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1757018142

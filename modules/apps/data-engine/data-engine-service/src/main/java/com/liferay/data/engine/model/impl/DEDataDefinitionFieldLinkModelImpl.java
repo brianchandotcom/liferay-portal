@@ -1101,3 +1101,4 @@ public class DEDataDefinitionFieldLinkModelImpl
 	private DEDataDefinitionFieldLink _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-765758248

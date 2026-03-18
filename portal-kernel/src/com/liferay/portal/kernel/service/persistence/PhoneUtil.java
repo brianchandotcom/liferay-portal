@@ -1614,3 +1614,4 @@ public class PhoneUtil {
 	private static volatile PhonePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:704308995

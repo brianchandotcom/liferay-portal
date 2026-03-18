@@ -424,3 +424,4 @@ public class UserTrackerPathPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:433784273

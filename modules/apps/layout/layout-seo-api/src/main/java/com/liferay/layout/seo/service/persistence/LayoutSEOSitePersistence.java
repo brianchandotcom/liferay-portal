@@ -545,3 +545,4 @@ public interface LayoutSEOSitePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:506621057

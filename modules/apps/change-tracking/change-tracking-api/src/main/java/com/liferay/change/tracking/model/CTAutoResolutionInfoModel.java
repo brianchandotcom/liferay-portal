@@ -188,3 +188,4 @@ public interface CTAutoResolutionInfoModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:509525122

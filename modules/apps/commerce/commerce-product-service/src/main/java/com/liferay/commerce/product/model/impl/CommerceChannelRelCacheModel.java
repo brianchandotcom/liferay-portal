@@ -203,3 +203,4 @@ public class CommerceChannelRelCacheModel
 	public long commerceChannelId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1055747060

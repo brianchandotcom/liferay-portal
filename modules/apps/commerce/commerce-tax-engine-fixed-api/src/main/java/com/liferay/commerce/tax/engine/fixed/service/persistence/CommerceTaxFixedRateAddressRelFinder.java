@@ -45,3 +45,4 @@ public interface CommerceTaxFixedRateAddressRelFinder {
 				long regionId, String zip, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1888569091

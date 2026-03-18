@@ -375,3 +375,4 @@ public class SamlSpMessageLocalServiceWrapper
 	private SamlSpMessageLocalService _samlSpMessageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:776497597

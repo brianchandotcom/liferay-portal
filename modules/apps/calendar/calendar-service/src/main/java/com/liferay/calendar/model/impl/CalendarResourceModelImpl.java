@@ -1584,3 +1584,4 @@ public class CalendarResourceModelImpl
 	private CalendarResource _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-753676533

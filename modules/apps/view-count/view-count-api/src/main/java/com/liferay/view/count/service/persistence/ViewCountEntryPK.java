@@ -162,3 +162,4 @@ public class ViewCountEntryPK
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1552940843

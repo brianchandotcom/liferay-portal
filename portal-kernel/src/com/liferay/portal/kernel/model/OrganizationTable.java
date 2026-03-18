@@ -76,3 +76,4 @@ public class OrganizationTable extends BaseTable<OrganizationTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:786277632

@@ -474,3 +474,4 @@ public interface TranslationEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:433366334

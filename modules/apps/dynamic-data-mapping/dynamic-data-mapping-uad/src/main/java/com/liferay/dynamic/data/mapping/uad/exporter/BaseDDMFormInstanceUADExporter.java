@@ -53,12 +53,12 @@ public abstract class BaseDDMFormInstanceUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
-		sb.append(ddmFormInstance.getVersionUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(ddmFormInstance.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
+		sb.append(ddmFormInstance.getVersionUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -78,3 +78,4 @@ public abstract class BaseDDMFormInstanceUADExporter
 	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1392462918

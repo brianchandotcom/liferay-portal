@@ -149,3 +149,4 @@ public interface StyleBookEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-368423728

@@ -190,3 +190,4 @@ public class EagerBlobEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-79317498

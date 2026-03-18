@@ -3652,3 +3652,4 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1547964432

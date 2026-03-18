@@ -661,3 +661,4 @@ public class KaleoNotificationWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-879566948

@@ -102,3 +102,4 @@ public class TestEntityCacheModel
 	public String data;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-54995059

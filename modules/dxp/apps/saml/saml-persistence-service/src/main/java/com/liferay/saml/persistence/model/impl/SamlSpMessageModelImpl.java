@@ -739,3 +739,4 @@ public class SamlSpMessageModelImpl
 	private SamlSpMessage _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1624572970

@@ -440,3 +440,4 @@ public class PasswordTrackerUtil {
 	private static volatile PasswordTrackerPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:62000525

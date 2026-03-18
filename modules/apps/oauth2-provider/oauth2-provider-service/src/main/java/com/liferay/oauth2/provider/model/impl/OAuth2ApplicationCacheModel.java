@@ -458,3 +458,4 @@ public class OAuth2ApplicationCacheModel
 	public boolean trustedApplication;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1038855590

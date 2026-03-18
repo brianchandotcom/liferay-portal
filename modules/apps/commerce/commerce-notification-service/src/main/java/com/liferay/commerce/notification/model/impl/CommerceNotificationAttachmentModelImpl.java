@@ -1047,3 +1047,4 @@ public class CommerceNotificationAttachmentModelImpl
 	private CommerceNotificationAttachment _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1529693040

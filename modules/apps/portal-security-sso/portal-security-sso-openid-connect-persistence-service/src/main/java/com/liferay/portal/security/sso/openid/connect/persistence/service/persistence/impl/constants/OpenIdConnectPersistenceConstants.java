@@ -21,3 +21,4 @@ public class OpenIdConnectPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2115565004

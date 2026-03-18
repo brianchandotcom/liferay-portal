@@ -479,3 +479,4 @@ public abstract class JSONStorageEntryLocalServiceBaseImpl
 		JSONStorageEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1762373737

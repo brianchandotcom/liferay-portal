@@ -929,3 +929,4 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:97378543

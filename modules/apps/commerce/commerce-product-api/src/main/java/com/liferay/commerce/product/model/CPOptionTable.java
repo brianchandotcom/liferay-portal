@@ -69,3 +69,4 @@ public class CPOptionTable extends BaseTable<CPOptionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1200082758

@@ -2405,3 +2405,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-292158015

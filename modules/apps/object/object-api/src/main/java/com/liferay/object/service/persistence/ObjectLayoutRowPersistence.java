@@ -595,3 +595,4 @@ public interface ObjectLayoutRowPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1530928500

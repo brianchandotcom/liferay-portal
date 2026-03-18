@@ -934,3 +934,4 @@ public class LaunchEntryUtil {
 	private static volatile LaunchEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:479587046

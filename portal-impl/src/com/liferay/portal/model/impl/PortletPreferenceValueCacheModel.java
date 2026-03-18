@@ -208,3 +208,4 @@ public class PortletPreferenceValueCacheModel
 	public String smallValue;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-849592416

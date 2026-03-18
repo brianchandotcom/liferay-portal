@@ -307,3 +307,4 @@ public class DSLQueryStatusEntryLocalServiceUtil {
 	private static volatile DSLQueryStatusEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1210214421

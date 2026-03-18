@@ -39,3 +39,4 @@ public abstract class KaleoProcessLinkBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1374877481

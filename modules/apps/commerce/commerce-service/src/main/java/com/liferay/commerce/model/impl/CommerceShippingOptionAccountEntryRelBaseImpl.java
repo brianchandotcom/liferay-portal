@@ -42,3 +42,4 @@ public abstract class CommerceShippingOptionAccountEntryRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1876961087

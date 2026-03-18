@@ -595,3 +595,4 @@ public class KBCommentLocalServiceWrapper
 	private KBCommentLocalService _kbCommentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1579949903

@@ -39,3 +39,4 @@ public abstract class DDLRecordSetBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2062995646

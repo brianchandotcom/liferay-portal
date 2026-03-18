@@ -233,3 +233,4 @@ public class ContactsLayoutTemplateCacheModel
 	public int type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:515028399

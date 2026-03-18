@@ -151,3 +151,4 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1241678113

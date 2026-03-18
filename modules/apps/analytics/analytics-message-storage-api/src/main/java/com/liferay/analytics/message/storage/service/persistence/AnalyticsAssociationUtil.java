@@ -916,3 +916,4 @@ public class AnalyticsAssociationUtil {
 	private static volatile AnalyticsAssociationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:604378723

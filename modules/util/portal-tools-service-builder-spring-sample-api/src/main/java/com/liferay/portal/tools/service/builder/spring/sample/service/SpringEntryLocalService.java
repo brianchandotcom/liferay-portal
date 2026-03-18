@@ -289,3 +289,4 @@ public interface SpringEntryLocalService
 	public SpringEntry updateSpringEntry(SpringEntry springEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-52503923

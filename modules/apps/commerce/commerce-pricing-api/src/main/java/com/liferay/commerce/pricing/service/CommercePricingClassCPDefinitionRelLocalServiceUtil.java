@@ -404,3 +404,4 @@ public class CommercePricingClassCPDefinitionRelLocalServiceUtil {
 				CommercePricingClassCPDefinitionRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:512668748

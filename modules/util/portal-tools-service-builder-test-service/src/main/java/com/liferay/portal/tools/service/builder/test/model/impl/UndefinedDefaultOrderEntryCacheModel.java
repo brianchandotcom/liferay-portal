@@ -123,3 +123,4 @@ public class UndefinedDefaultOrderEntryCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2074831340

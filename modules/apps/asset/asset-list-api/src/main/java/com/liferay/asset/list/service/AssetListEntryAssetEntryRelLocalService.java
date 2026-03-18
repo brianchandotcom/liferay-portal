@@ -413,3 +413,4 @@ public interface AssetListEntryAssetEntryRelLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:205654214

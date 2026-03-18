@@ -1335,3 +1335,4 @@ public class ListTypeEntryModelImpl
 	private ListTypeEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1023889484

@@ -134,3 +134,4 @@ public class SocialActivitySetModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2009998936

@@ -114,3 +114,4 @@ public class DDMStorageLinkModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-895579288

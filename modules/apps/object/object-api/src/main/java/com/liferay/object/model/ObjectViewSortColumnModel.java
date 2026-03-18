@@ -261,3 +261,4 @@ public interface ObjectViewSortColumnModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1900300981

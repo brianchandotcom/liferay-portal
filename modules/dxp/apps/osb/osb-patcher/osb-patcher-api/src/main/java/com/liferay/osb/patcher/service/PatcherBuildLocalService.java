@@ -488,3 +488,4 @@ public interface PatcherBuildLocalService
 		throws Exception;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1687666510

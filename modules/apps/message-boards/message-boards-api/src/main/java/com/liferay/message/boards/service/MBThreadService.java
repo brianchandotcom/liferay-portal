@@ -157,3 +157,4 @@ public interface MBThreadService extends BaseService {
 	public void unlockThread(long threadId) throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-243297824

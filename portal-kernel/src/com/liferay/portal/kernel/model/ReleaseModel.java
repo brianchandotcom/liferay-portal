@@ -234,3 +234,4 @@ public interface ReleaseModel extends BaseModel<Release>, MVCCModel {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-406752481

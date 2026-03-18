@@ -3015,3 +3015,4 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-648168280

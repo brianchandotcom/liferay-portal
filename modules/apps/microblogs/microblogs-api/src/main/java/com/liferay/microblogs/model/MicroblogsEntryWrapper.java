@@ -439,3 +439,4 @@ public class MicroblogsEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-281720659

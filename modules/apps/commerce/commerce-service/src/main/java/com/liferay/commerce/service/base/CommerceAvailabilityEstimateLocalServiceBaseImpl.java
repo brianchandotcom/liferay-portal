@@ -601,3 +601,4 @@ public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 		CommerceAvailabilityEstimateLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1934511558

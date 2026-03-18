@@ -61,3 +61,4 @@ public class KBCommentTable extends BaseTable<KBCommentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1921504570

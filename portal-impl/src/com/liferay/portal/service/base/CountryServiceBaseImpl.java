@@ -226,3 +226,4 @@ public abstract class CountryServiceBaseImpl
 		CountryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1699364385

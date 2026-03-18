@@ -51,3 +51,4 @@ public interface Contact extends ContactModel, PersistedModel {
 	public boolean isUser();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-857934433

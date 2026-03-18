@@ -680,3 +680,4 @@ public class KaleoTimerWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:725842285

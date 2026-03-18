@@ -232,3 +232,4 @@ public class CommerceVirtualOrderItemServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1188130107

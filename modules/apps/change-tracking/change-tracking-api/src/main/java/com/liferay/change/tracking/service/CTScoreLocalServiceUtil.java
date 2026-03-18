@@ -304,3 +304,4 @@ public class CTScoreLocalServiceUtil {
 			CTScoreLocalServiceUtil.class, CTScoreLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1323675259

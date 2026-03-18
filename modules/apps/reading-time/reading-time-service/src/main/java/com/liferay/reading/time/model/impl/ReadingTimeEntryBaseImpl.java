@@ -39,3 +39,4 @@ public abstract class ReadingTimeEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-270285922

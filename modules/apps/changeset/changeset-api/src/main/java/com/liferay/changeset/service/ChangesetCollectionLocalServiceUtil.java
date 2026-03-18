@@ -335,3 +335,4 @@ public class ChangesetCollectionLocalServiceUtil {
 			ChangesetCollectionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1706049166

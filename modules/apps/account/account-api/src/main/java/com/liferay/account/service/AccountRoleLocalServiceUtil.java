@@ -415,3 +415,4 @@ public class AccountRoleLocalServiceUtil {
 			AccountRoleLocalServiceUtil.class, AccountRoleLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1880585886

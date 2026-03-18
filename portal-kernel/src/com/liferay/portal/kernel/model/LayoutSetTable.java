@@ -66,3 +66,4 @@ public class LayoutSetTable extends BaseTable<LayoutSetTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:984442145

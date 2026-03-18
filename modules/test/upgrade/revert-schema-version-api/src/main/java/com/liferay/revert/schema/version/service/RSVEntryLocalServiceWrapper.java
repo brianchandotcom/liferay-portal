@@ -338,3 +338,4 @@ public class RSVEntryLocalServiceWrapper
 	private RSVEntryLocalService _rsvEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1646998235

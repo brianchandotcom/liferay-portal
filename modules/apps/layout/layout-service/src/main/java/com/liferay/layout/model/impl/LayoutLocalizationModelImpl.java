@@ -1009,3 +1009,4 @@ public class LayoutLocalizationModelImpl
 	private LayoutLocalization _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:472639409

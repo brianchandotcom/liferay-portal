@@ -198,3 +198,4 @@ public class CommercePriceModifierRelServiceWrapper
 	private CommercePriceModifierRelService _commercePriceModifierRelService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2023393821

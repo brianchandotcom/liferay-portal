@@ -452,3 +452,4 @@ public class DispatchLogWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1154672289

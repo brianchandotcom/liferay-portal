@@ -647,3 +647,4 @@ public abstract class PhoneLocalServiceBaseImpl
 		PhoneLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:351774601

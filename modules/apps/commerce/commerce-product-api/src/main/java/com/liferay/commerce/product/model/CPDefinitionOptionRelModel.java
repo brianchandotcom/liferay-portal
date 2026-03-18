@@ -658,3 +658,4 @@ public interface CPDefinitionOptionRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-619966520

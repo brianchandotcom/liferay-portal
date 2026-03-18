@@ -205,3 +205,4 @@ public class DDLRecordServiceUtil {
 		new Snapshot<>(DDLRecordServiceUtil.class, DDLRecordService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-225497736

@@ -397,3 +397,4 @@ public class DLFolderCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-449914051

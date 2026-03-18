@@ -1691,3 +1691,4 @@ public class CommerceCurrencyModelImpl
 	private CommerceCurrency _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:851162293

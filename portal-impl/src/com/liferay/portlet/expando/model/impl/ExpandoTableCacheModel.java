@@ -149,3 +149,4 @@ public class ExpandoTableCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1338756445

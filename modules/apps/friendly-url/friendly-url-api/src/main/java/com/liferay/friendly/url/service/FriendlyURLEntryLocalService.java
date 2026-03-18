@@ -495,3 +495,4 @@ public interface FriendlyURLEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2030397357

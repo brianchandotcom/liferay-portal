@@ -586,3 +586,4 @@ public abstract class ObjectStateTransitionLocalServiceBaseImpl
 		ObjectStateTransitionLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1289469013

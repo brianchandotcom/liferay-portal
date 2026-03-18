@@ -1791,3 +1791,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-642469076

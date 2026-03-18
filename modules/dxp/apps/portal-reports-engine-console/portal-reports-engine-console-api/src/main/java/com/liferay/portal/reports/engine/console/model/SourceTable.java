@@ -57,3 +57,4 @@ public class SourceTable extends BaseTable<SourceTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:393930995

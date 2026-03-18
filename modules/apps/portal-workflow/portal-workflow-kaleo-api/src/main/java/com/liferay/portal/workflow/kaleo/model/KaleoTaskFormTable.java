@@ -81,3 +81,4 @@ public class KaleoTaskFormTable extends BaseTable<KaleoTaskFormTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2016380599

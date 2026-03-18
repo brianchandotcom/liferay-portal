@@ -504,3 +504,4 @@ public class ExpandoColumnLocalServiceUtil {
 	private static volatile ExpandoColumnLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1947747122

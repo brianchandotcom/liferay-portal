@@ -481,3 +481,4 @@ public class ContactCacheModel
 	public String hoursOfOperation;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1533323975

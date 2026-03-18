@@ -7545,3 +7545,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1466531230

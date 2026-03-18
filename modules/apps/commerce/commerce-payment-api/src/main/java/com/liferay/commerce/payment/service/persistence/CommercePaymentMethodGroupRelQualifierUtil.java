@@ -815,3 +815,4 @@ public class CommercePaymentMethodGroupRelQualifierUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1919487384

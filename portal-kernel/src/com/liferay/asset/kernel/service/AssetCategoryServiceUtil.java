@@ -430,3 +430,4 @@ public class AssetCategoryServiceUtil {
 	private static volatile AssetCategoryService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1607392872

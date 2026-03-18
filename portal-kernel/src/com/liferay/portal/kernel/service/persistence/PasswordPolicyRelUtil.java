@@ -525,3 +525,4 @@ public class PasswordPolicyRelUtil {
 	private static volatile PasswordPolicyRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1641796986

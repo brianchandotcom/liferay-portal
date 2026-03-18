@@ -1766,3 +1766,4 @@ public class CommerceSubscriptionEntryUtil {
 	private static volatile CommerceSubscriptionEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1957907648

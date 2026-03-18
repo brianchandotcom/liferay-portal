@@ -58,3 +58,4 @@ public interface Country extends CountryModel, PersistedModel {
 	public void setNameCurrentLanguageId(String languageId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-81183641

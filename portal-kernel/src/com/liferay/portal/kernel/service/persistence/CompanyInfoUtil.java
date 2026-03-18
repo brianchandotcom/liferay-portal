@@ -326,3 +326,4 @@ public class CompanyInfoUtil {
 	private static volatile CompanyInfoPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1976487125

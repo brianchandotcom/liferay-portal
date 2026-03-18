@@ -48,3 +48,4 @@ public interface JournalFeed extends JournalFeedModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1601238273

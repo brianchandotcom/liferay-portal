@@ -362,3 +362,4 @@ public class LayoutBranchLocalServiceUtil {
 	private static volatile LayoutBranchLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-756541645

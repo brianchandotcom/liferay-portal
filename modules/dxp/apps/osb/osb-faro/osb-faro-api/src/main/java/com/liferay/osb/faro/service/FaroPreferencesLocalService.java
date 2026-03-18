@@ -278,3 +278,4 @@ public interface FaroPreferencesLocalService
 		FaroPreferences faroPreferences);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1716305784

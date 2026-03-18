@@ -93,3 +93,4 @@ public class BatchPlannerPolicyServiceUtil {
 			BatchPlannerPolicyService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1215923103

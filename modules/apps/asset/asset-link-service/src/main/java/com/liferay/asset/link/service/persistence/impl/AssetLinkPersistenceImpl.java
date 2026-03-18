@@ -3938,3 +3938,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1914357157

@@ -153,3 +153,4 @@ public interface DataLimitEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2043081632

@@ -201,3 +201,4 @@ public class SocialActivityLimitCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-843361401

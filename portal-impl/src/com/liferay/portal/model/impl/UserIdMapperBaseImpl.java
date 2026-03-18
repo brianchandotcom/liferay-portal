@@ -39,3 +39,4 @@ public abstract class UserIdMapperBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1514528535

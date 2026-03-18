@@ -136,3 +136,4 @@ public class CPOptionCategoryModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:764369864

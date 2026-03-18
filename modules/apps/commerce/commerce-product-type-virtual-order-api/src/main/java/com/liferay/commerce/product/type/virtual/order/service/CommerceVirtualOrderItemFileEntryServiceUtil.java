@@ -78,3 +78,4 @@ public class CommerceVirtualOrderItemFileEntryServiceUtil {
 			CommerceVirtualOrderItemFileEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-613736640

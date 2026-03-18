@@ -1183,3 +1183,4 @@ public class ObjectStateTransitionUtil {
 	private static volatile ObjectStateTransitionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-203883270

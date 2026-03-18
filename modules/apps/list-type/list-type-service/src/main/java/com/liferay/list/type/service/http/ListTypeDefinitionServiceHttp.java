@@ -441,3 +441,4 @@ public class ListTypeDefinitionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-318479449

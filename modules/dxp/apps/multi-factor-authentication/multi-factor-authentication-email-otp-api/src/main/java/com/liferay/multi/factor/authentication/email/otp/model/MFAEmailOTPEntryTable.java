@@ -64,3 +64,4 @@ public class MFAEmailOTPEntryTable extends BaseTable<MFAEmailOTPEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1428859228

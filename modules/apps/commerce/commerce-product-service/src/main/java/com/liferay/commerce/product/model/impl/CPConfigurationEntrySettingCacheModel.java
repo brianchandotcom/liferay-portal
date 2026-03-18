@@ -249,3 +249,4 @@ public class CPConfigurationEntrySettingCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:57223790

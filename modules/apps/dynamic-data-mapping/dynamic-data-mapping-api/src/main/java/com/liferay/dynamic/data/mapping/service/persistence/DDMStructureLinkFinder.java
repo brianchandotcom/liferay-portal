@@ -39,3 +39,4 @@ public interface DDMStructureLinkFinder {
 						orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-768244087

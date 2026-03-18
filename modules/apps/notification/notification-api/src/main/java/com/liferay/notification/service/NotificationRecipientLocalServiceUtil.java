@@ -362,3 +362,4 @@ public class NotificationRecipientLocalServiceUtil {
 			NotificationRecipientLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-136507293

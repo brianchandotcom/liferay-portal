@@ -8416,3 +8416,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2034044417

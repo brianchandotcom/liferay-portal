@@ -239,3 +239,4 @@ public class LayoutUtilityPageEntryServiceWrapper
 	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1353222100

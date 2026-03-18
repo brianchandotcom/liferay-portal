@@ -39,3 +39,4 @@ public abstract class ChangesetEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2090452160

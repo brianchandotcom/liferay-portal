@@ -213,3 +213,4 @@ public class MembershipRequestCacheModel
 	public long statusId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-268459852

@@ -69,3 +69,4 @@ public class CPDVirtualSettingFileEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-77659241

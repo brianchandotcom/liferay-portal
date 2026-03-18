@@ -697,3 +697,4 @@ public class ResourceActionModelImpl
 	private ResourceAction _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1869468065

@@ -488,3 +488,4 @@ public interface KaleoTransitionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-10108011

@@ -514,3 +514,4 @@ public interface DLFileShortcutModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2142752932

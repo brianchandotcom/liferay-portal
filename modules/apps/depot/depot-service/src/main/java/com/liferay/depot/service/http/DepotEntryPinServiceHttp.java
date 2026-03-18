@@ -130,3 +130,4 @@ public class DepotEntryPinServiceHttp {
 		new Class[] {long.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-35942291

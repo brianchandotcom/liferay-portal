@@ -471,3 +471,4 @@ public class DDMStorageLinkLocalServiceWrapper
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-357765659

@@ -102,3 +102,4 @@ public class SavedContentEntryServiceUtil {
 			SavedContentEntryServiceUtil.class, SavedContentEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1131823596

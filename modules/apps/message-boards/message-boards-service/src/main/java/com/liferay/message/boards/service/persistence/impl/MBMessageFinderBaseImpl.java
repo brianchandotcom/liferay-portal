@@ -77,3 +77,4 @@ public abstract class MBMessageFinderBaseImpl
 		MBMessageFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1914934942

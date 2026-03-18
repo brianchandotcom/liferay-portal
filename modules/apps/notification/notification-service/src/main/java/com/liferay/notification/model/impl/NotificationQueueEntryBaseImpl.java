@@ -41,3 +41,4 @@ public abstract class NotificationQueueEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:958135967

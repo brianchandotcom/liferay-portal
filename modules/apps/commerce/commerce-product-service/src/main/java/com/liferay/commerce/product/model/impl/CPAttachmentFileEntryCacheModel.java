@@ -427,3 +427,4 @@ public class CPAttachmentFileEntryCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1917982199

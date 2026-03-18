@@ -170,3 +170,4 @@ public class CommerceShippingFixedOptionRelServiceWrapper
 		_commerceShippingFixedOptionRelService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1882264509

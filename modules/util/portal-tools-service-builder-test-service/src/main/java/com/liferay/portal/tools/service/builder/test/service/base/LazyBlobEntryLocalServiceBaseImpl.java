@@ -656,3 +656,4 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 	private boolean _useTempFile;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-298356877

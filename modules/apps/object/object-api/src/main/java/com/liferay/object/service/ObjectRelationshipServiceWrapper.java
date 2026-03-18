@@ -140,3 +140,4 @@ public class ObjectRelationshipServiceWrapper
 	private ObjectRelationshipService _objectRelationshipService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:168388091

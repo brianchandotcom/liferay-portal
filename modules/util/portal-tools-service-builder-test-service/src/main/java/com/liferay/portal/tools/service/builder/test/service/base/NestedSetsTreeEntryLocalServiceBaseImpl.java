@@ -532,3 +532,4 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 		NestedSetsTreeEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1197767370

@@ -59,3 +59,4 @@ public class AssetTagTable extends BaseTable<AssetTagTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:303102317

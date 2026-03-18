@@ -484,3 +484,4 @@ public class FragmentCollectionLocalServiceUtil {
 			FragmentCollectionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-188320846

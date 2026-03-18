@@ -123,3 +123,4 @@ public class SXPElementServiceWrapper
 	private SXPElementService _sxpElementService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2116844477

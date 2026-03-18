@@ -56,3 +56,4 @@ public interface JSONStorageEntry
 	public void setValue(Object value);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1095892404

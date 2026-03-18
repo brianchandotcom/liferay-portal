@@ -122,3 +122,4 @@ public class JournalArticleLocalizationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1730466326

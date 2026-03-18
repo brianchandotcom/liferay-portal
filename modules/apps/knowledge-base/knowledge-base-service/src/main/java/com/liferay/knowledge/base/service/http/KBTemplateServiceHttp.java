@@ -392,3 +392,4 @@ public class KBTemplateServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1776659497

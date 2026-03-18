@@ -54,3 +54,4 @@ public interface UserNotificationDelivery
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1300019504

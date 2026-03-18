@@ -444,3 +444,4 @@ public class AppLocalServiceWrapper
 	private AppLocalService _appLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1027365753

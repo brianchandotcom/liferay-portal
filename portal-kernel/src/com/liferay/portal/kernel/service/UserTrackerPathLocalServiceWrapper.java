@@ -359,3 +359,4 @@ public class UserTrackerPathLocalServiceWrapper
 	private UserTrackerPathLocalService _userTrackerPathLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1842775635

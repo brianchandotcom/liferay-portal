@@ -187,3 +187,4 @@ public class AnalyticsDeleteMessageCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-103316843

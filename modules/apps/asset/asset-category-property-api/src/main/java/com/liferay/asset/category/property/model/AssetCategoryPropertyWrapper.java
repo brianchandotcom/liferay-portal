@@ -446,3 +446,4 @@ public class AssetCategoryPropertyWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1989363822

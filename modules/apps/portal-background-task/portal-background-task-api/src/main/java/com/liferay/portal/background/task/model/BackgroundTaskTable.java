@@ -70,3 +70,4 @@ public class BackgroundTaskTable extends BaseTable<BackgroundTaskTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:971197363

@@ -205,3 +205,4 @@ public class ObjectLayoutRowCacheModel
 	public int priority;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:234168238

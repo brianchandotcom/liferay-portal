@@ -134,3 +134,4 @@ public class TestEntityWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1745642017

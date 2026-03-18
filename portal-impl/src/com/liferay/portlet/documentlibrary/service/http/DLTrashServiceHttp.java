@@ -432,3 +432,4 @@ public class DLTrashServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:637400147

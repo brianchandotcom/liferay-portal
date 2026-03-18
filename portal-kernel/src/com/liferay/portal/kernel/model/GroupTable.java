@@ -86,3 +86,4 @@ public class GroupTable extends BaseTable<GroupTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:886014136

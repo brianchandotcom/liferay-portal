@@ -85,3 +85,4 @@ public interface CPInstance extends CPInstanceModel, PersistedModel {
 			subscriptionTypeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1311629681

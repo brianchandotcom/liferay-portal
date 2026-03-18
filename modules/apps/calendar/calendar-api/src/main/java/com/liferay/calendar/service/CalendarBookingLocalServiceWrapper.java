@@ -984,3 +984,4 @@ public class CalendarBookingLocalServiceWrapper
 	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1261786053

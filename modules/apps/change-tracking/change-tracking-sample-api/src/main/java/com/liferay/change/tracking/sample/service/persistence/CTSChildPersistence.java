@@ -606,3 +606,4 @@ public interface CTSChildPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1142415804

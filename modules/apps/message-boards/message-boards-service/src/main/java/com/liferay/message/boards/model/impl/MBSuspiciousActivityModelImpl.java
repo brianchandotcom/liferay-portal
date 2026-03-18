@@ -1149,3 +1149,4 @@ public class MBSuspiciousActivityModelImpl
 	private MBSuspiciousActivity _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1934836908

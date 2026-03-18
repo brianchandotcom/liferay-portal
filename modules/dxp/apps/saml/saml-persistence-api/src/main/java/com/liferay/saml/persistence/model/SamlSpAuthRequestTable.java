@@ -49,3 +49,4 @@ public class SamlSpAuthRequestTable extends BaseTable<SamlSpAuthRequestTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1546376665

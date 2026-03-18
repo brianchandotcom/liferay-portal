@@ -110,3 +110,4 @@ public interface CalendarBookingFinder {
 				<com.liferay.calendar.model.CalendarBooking> orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1670601876

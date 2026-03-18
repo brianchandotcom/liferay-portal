@@ -105,3 +105,4 @@ public abstract class BaseKaleoTaskAssignmentInstanceUADAnonymizer
 		kaleoTaskAssignmentInstanceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:629791508

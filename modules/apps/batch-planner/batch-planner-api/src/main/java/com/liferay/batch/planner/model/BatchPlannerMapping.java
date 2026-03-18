@@ -52,3 +52,4 @@ public interface BatchPlannerMapping
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1266465213

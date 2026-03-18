@@ -270,3 +270,4 @@ public interface WebDAVPropsLocalService
 	public WebDAVProps updateWebDAVProps(WebDAVProps webDAVProps);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-866124418

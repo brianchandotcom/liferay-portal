@@ -39,3 +39,4 @@ public abstract class SystemEventBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-776422541

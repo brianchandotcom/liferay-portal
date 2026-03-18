@@ -50,3 +50,4 @@ public interface LVEntry extends LVEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1566870971

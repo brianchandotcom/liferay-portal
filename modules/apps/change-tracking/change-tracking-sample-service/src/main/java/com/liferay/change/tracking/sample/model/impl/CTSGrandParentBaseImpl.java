@@ -39,3 +39,4 @@ public abstract class CTSGrandParentBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2041748059

@@ -372,3 +372,4 @@ public class FaroChannelLocalServiceUtil {
 			FaroChannelLocalServiceUtil.class, FaroChannelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:201385132

@@ -676,3 +676,4 @@ public class CommerceInventoryAuditUtil {
 	private static volatile CommerceInventoryAuditPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-672276182

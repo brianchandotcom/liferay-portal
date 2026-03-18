@@ -129,3 +129,4 @@ public abstract class CPDAvailabilityEstimateServiceBaseImpl
 		CPDAvailabilityEstimateServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-480762844

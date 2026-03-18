@@ -159,3 +159,4 @@ public class CalendarNotificationTemplateServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-249892338

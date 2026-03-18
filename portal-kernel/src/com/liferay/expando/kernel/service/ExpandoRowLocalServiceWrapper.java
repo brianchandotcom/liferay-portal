@@ -512,3 +512,4 @@ public class ExpandoRowLocalServiceWrapper
 	private ExpandoRowLocalService _expandoRowLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-246128185

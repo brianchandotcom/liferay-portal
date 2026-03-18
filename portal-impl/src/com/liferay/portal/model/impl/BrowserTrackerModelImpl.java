@@ -667,3 +667,4 @@ public class BrowserTrackerModelImpl
 	private BrowserTracker _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1007192758

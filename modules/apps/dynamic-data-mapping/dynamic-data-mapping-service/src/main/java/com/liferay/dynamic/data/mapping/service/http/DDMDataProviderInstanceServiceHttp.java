@@ -617,3 +617,4 @@ public class DDMDataProviderInstanceServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1777524853

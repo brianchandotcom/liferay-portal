@@ -550,3 +550,4 @@ public class AssetDisplayPageEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-354533361

@@ -86,3 +86,4 @@ public class CalendarNotificationTemplateTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:469132150

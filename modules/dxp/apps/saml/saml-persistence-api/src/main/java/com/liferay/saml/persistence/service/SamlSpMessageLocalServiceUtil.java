@@ -326,3 +326,4 @@ public class SamlSpMessageLocalServiceUtil {
 			SamlSpMessageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1352081650

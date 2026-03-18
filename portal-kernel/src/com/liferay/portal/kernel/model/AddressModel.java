@@ -552,3 +552,4 @@ public interface AddressModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1392936160

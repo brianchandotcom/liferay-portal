@@ -1632,3 +1632,4 @@ public class BlogsEntryServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1105594064

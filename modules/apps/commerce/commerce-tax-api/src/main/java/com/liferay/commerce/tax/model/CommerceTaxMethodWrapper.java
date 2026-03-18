@@ -783,3 +783,4 @@ public class CommerceTaxMethodWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1208491297

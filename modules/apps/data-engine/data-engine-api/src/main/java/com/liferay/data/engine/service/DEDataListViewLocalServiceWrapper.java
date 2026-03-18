@@ -485,3 +485,4 @@ public class DEDataListViewLocalServiceWrapper
 	private DEDataListViewLocalService _deDataListViewLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-236466133

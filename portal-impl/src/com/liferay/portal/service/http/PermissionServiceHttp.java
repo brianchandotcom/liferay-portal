@@ -124,3 +124,4 @@ public class PermissionServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2098831182

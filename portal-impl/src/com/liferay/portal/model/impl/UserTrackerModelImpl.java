@@ -870,3 +870,4 @@ public class UserTrackerModelImpl
 	private UserTracker _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:151166152

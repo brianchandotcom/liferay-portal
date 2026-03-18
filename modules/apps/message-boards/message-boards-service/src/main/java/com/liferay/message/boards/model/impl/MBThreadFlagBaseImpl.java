@@ -39,3 +39,4 @@ public abstract class MBThreadFlagBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2046582587

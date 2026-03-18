@@ -790,3 +790,4 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1759775301

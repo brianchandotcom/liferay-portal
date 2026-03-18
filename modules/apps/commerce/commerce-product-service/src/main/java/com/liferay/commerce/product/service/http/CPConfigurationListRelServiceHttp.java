@@ -944,3 +944,4 @@ public class CPConfigurationListRelServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-905928885

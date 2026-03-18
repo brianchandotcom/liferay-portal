@@ -19,3 +19,4 @@ public interface OAuth2AuthorizationFinder {
 			java.util.Date purgeDate, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2066405936

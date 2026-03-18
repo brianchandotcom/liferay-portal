@@ -7397,3 +7397,4 @@ public class CommerceOrderItemPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1101502179

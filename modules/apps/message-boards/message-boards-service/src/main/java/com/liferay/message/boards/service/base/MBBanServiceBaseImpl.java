@@ -125,3 +125,4 @@ public abstract class MBBanServiceBaseImpl
 		MBBanServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1124209068

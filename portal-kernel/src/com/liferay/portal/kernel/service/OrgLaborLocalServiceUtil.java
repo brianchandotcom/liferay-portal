@@ -320,3 +320,4 @@ public class OrgLaborLocalServiceUtil {
 	private static volatile OrgLaborLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-546473359

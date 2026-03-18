@@ -41,3 +41,4 @@ public class ModuleTable extends BaseTable<ModuleTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-131092579

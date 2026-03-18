@@ -39,3 +39,4 @@ public abstract class MBMailingListBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-706737245

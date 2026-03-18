@@ -405,3 +405,4 @@ public class ListTypeDefinitionLocalServiceUtil {
 			ListTypeDefinitionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:494142190

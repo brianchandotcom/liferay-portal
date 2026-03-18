@@ -39,3 +39,4 @@ public abstract class BrowserTrackerBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1789814561

@@ -329,3 +329,4 @@ public class RecentLayoutBranchLocalServiceUtil {
 	private static volatile RecentLayoutBranchLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:595192082

@@ -50,3 +50,4 @@ public interface RSVEntry extends PersistedModel, RSVEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1181388451

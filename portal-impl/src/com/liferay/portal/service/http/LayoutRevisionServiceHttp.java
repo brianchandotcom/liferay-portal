@@ -107,3 +107,4 @@ public class LayoutRevisionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1063065889

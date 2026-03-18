@@ -399,3 +399,4 @@ public interface AddressLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-784472085

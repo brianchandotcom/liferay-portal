@@ -118,3 +118,4 @@ public class ObjectRelationshipModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:470253849

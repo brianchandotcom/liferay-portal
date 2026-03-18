@@ -118,3 +118,4 @@ public class SiteNavigationMenuModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-313328846

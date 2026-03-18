@@ -13393,3 +13393,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1358654860

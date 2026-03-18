@@ -1457,3 +1457,4 @@ public class KaleoTransitionModelImpl
 	private KaleoTransition _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:857694251

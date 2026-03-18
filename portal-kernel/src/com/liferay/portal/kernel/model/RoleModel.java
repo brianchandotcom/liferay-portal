@@ -552,3 +552,4 @@ public interface RoleModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2108540271

@@ -163,3 +163,4 @@ public class AnnouncementsFlagCacheModel
 	public int value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1252950974

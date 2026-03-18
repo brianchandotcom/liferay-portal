@@ -130,3 +130,4 @@ public class CalendarModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:468759048

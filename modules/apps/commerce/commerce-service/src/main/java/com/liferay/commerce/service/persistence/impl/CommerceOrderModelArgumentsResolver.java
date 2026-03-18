@@ -123,3 +123,4 @@ public class CommerceOrderModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:564820770

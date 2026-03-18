@@ -45,3 +45,4 @@ public class ObjectLayoutTabServiceUtil {
 			ObjectLayoutTabServiceUtil.class, ObjectLayoutTabService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-181317053

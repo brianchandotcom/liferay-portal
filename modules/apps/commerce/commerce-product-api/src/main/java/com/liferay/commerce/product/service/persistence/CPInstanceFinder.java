@@ -22,3 +22,4 @@ public interface CPInstanceFinder {
 					queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-349613029

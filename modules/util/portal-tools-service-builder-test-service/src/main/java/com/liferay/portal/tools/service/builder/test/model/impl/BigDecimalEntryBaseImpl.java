@@ -29,3 +29,4 @@ public abstract class BigDecimalEntryBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1048701293

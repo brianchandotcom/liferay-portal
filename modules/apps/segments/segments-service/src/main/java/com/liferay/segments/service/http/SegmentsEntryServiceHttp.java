@@ -692,3 +692,4 @@ public class SegmentsEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:919124702

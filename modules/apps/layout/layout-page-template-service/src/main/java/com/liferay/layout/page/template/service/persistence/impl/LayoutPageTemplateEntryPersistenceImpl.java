@@ -30915,3 +30915,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1070236870

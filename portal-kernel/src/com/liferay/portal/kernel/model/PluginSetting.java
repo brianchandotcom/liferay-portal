@@ -91,3 +91,4 @@ public interface PluginSetting extends PersistedModel, PluginSettingModel {
 	public void setRolesArray(String[] rolesArray);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1762184584

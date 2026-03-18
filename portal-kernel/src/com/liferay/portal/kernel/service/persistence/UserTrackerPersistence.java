@@ -580,3 +580,4 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:638914363

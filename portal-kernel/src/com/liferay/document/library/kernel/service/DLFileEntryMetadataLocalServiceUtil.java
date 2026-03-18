@@ -463,3 +463,4 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	private static volatile DLFileEntryMetadataLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2049131744

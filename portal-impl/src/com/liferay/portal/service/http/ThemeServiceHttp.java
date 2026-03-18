@@ -113,3 +113,4 @@ public class ThemeServiceHttp {
 		new Class[] {};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1244748876

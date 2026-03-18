@@ -151,3 +151,4 @@ public class CommercePriceListCommerceAccountGroupRelServiceUtil {
 				CommercePriceListCommerceAccountGroupRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1426284235

@@ -96,3 +96,4 @@ public class ObjectValidationRuleServiceUtil {
 			ObjectValidationRuleService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1302118741

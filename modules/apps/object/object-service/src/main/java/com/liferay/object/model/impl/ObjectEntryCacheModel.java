@@ -388,3 +388,4 @@ public class ObjectEntryCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1715185352

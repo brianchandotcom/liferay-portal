@@ -649,3 +649,4 @@ public class CommerceShipmentItemLocalServiceWrapper
 	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-703385371

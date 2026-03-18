@@ -436,3 +436,4 @@ public class CommerceAddressCacheModel
 	public String zip;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1218006342

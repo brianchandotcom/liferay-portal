@@ -119,3 +119,4 @@ public class AnalyticsDeleteMessageModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2024882177

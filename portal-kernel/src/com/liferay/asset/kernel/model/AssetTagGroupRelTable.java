@@ -45,3 +45,4 @@ public class AssetTagGroupRelTable extends BaseTable<AssetTagGroupRelTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-23084204

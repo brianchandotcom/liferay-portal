@@ -268,3 +268,4 @@ public interface DLSyncEventLocalService
 	public DLSyncEvent updateDLSyncEvent(DLSyncEvent dlSyncEvent);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1115856003

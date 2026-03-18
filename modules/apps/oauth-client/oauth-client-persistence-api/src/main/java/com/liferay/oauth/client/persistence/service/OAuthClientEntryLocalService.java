@@ -301,3 +301,4 @@ public interface OAuthClientEntryLocalService
 		OAuthClientEntry oAuthClientEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-412152741

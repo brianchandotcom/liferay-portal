@@ -7944,3 +7944,4 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-588314506

@@ -1843,3 +1843,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:177656639

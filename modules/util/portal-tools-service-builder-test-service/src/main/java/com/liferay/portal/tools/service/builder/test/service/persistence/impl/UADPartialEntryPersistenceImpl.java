@@ -600,3 +600,4 @@ public class UADPartialEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:678265765

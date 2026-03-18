@@ -1285,3 +1285,4 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-399084085

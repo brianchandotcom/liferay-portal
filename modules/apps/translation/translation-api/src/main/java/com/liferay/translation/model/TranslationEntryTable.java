@@ -78,3 +78,4 @@ public class TranslationEntryTable extends BaseTable<TranslationEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:612475264

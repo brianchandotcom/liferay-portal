@@ -86,3 +86,4 @@ public class CommerceNotificationQueueEntryServiceUtil {
 			CommerceNotificationQueueEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1421283264

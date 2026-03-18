@@ -2283,3 +2283,4 @@ public interface DLFileVersionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:734099931

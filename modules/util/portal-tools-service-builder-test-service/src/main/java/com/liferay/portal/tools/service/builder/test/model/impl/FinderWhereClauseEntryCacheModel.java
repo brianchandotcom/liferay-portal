@@ -124,3 +124,4 @@ public class FinderWhereClauseEntryCacheModel
 	public String nickname;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1429523993

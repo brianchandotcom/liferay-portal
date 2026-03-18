@@ -339,3 +339,4 @@ public class PLOEntryServiceHttp {
 		new Class[] {String.class, java.util.Map.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2019287986

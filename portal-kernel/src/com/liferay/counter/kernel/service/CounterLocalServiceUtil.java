@@ -78,3 +78,4 @@ public class CounterLocalServiceUtil {
 	private static volatile CounterLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1549212617

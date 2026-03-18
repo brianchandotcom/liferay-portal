@@ -460,3 +460,4 @@ public class CSDiagramEntryLocalServiceWrapper
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:700199467

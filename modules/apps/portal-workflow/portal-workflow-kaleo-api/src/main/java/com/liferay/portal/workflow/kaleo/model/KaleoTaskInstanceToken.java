@@ -63,3 +63,4 @@ public interface KaleoTaskInstanceToken
 		getKaleoTaskAssignmentInstances();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1862048218

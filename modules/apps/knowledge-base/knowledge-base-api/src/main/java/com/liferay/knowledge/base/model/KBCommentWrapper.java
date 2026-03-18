@@ -570,3 +570,4 @@ public class KBCommentWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1515129385

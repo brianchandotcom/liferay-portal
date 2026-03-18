@@ -44,3 +44,4 @@ public class CompareRunsServiceUtil {
 		new Snapshot<>(CompareRunsServiceUtil.class, CompareRunsService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2124739856

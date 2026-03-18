@@ -97,3 +97,4 @@ public abstract class BaseBookmarksFolderUADAnonymizer
 	protected BookmarksFolderLocalService bookmarksFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1466979483

@@ -606,3 +606,4 @@ public interface MBThreadModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2129848866

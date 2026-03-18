@@ -34,3 +34,4 @@ public interface CommercePricingClassCPDefinitionRelFinder {
 				int start, int end, boolean inlineSQLHelper);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-550647114

@@ -85,3 +85,4 @@ public interface FragmentEntryLinkService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:664073313

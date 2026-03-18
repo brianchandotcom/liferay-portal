@@ -421,3 +421,4 @@ public class AnalyticsDeleteMessageLocalServiceWrapper
 		_analyticsDeleteMessageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1827968016

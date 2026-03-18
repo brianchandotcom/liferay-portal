@@ -1664,3 +1664,4 @@ public class WikiNodeUtil {
 	private static volatile WikiNodePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1874933508

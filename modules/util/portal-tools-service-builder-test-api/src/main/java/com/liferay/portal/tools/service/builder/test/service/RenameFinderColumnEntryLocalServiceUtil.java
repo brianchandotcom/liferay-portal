@@ -313,3 +313,4 @@ public class RenameFinderColumnEntryLocalServiceUtil {
 	private static volatile RenameFinderColumnEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1158672329

@@ -542,3 +542,4 @@ public class WikiPageResourcePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-495337434

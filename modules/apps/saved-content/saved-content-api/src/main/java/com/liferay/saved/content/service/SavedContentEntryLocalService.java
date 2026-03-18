@@ -360,3 +360,4 @@ public interface SavedContentEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1770843114

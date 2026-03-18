@@ -110,3 +110,4 @@ public class FragmentEntryLinkServiceUtil {
 			FragmentEntryLinkServiceUtil.class, FragmentEntryLinkService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2134443574

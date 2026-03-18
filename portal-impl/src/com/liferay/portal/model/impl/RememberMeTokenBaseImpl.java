@@ -39,3 +39,4 @@ public abstract class RememberMeTokenBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1647672643

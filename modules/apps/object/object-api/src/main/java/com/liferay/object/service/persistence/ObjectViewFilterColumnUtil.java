@@ -1023,3 +1023,4 @@ public class ObjectViewFilterColumnUtil {
 	private static volatile ObjectViewFilterColumnPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-207354495

@@ -102,3 +102,4 @@ public class SamlSpIdpConnectionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:35248333

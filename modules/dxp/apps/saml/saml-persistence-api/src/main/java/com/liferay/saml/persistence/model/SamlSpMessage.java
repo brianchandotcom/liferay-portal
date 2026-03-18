@@ -52,3 +52,4 @@ public interface SamlSpMessage extends PersistedModel, SamlSpMessageModel {
 	public boolean isExpired();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1777932842

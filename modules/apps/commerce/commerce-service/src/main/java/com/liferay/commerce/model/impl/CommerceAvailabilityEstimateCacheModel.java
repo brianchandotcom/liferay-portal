@@ -236,3 +236,4 @@ public class CommerceAvailabilityEstimateCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-935368080

@@ -994,3 +994,4 @@ public class CommercePaymentEntryAuditModelImpl
 	private CommercePaymentEntryAudit _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2100778084

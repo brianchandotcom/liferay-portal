@@ -92,3 +92,4 @@ public interface ObjectEntry
 	public void setValues(java.util.Map<String, java.io.Serializable> values);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1501007772

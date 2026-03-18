@@ -159,3 +159,4 @@ public class AssetDisplayPageEntryServiceWrapper
 	private AssetDisplayPageEntryService _assetDisplayPageEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:705015584

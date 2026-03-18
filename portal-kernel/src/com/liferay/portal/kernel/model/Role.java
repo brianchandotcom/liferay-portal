@@ -97,3 +97,4 @@ public interface Role extends PersistedModel, RoleModel {
 	public boolean isTeam();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1539703615

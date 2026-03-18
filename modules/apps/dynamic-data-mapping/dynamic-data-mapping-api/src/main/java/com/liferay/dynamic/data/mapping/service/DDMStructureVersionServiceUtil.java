@@ -79,3 +79,4 @@ public class DDMStructureVersionServiceUtil {
 			DDMStructureVersionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:66754348

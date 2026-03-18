@@ -618,3 +618,4 @@ public class RenameFinderColumnEntryModelImpl
 	private RenameFinderColumnEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1079298082

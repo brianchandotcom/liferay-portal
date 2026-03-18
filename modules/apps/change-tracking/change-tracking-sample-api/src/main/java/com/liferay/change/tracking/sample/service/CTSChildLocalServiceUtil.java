@@ -337,3 +337,4 @@ public class CTSChildLocalServiceUtil {
 			CTSChildLocalServiceUtil.class, CTSChildLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:496703072

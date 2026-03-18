@@ -50,3 +50,4 @@ public interface DLSyncEvent extends DLSyncEventModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-676910663

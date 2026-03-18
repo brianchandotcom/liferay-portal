@@ -14547,3 +14547,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1796374411

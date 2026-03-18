@@ -76,3 +76,4 @@ public interface DDMFormInstance extends DDMFormInstanceModel, PersistedModel {
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:722265001

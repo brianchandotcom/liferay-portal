@@ -123,3 +123,4 @@ public class LayoutPageTemplateStructureModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:14277052

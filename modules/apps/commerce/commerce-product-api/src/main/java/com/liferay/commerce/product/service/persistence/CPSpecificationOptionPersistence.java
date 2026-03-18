@@ -1111,3 +1111,4 @@ public interface CPSpecificationOptionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-529895701

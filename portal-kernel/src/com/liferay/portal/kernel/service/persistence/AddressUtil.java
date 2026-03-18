@@ -2689,3 +2689,4 @@ public class AddressUtil {
 	private static volatile AddressPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-426996249

@@ -33,3 +33,4 @@ public interface ResourcePermissionFinder {
 		findByR_S(long roleId, int[] scopes, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-240754925

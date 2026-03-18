@@ -528,3 +528,4 @@ public class SocialActivitySetLocalServiceWrapper
 	private SocialActivitySetLocalService _socialActivitySetLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-65778887

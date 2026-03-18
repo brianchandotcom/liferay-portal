@@ -45,3 +45,4 @@ public class ResourcePermissionFinderBaseImpl
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:583847454

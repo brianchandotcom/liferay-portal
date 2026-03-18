@@ -42,3 +42,4 @@ public abstract class NotificationRecipientSettingBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:84422511

@@ -677,3 +677,4 @@ public abstract class DEDataDefinitionFieldLinkLocalServiceBaseImpl
 		DEDataDefinitionFieldLinkLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2122814797

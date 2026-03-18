@@ -215,3 +215,4 @@ public interface CommerceDiscountCommerceAccountGroupRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:345577482

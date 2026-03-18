@@ -64,3 +64,4 @@ public class CommerceOrderNoteTable extends BaseTable<CommerceOrderNoteTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:413757671

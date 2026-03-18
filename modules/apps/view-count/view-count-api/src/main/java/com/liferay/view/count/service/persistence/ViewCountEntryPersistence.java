@@ -312,3 +312,4 @@ public interface ViewCountEntryPersistence
 	public Set<String> getCompoundPKColumnNames();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-162948388

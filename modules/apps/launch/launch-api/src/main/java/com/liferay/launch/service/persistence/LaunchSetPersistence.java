@@ -1027,3 +1027,4 @@ public interface LaunchSetPersistence extends BasePersistence<LaunchSet> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-933488049

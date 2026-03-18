@@ -440,3 +440,4 @@ public class JournalFeedCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1212624968

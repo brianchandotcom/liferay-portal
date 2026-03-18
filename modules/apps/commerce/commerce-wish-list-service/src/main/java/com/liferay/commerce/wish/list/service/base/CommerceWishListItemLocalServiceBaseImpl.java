@@ -476,3 +476,4 @@ public abstract class CommerceWishListItemLocalServiceBaseImpl
 		CommerceWishListItemLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:228114758

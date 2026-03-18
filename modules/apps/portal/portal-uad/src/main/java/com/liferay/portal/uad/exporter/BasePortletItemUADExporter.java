@@ -66,3 +66,4 @@ public abstract class BasePortletItemUADExporter
 	protected PortletItemLocalService portletItemLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1322108940

@@ -175,3 +175,4 @@ public class AnnouncementsDeliveryCacheModel
 	public boolean website;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1811201774

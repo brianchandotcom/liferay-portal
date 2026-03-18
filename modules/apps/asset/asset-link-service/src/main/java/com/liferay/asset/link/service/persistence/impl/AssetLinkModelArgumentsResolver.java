@@ -130,3 +130,4 @@ public class AssetLinkModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1338743670

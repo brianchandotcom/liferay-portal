@@ -39,3 +39,4 @@ public class CTSchemaVersionTable extends BaseTable<CTSchemaVersionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:369448266

@@ -6998,3 +6998,4 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-663238309

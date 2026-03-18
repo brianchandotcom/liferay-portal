@@ -39,3 +39,4 @@ public abstract class LayoutSetPrototypeBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:865995109

@@ -1952,3 +1952,4 @@ public class FragmentCollectionUtil {
 	private static volatile FragmentCollectionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1914323479

@@ -41,3 +41,4 @@ public abstract class DepotAppCustomizationBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:659367098

@@ -547,3 +547,4 @@ public class CommerceCatalogServiceHttp {
 			new Class[] {String.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1350786515

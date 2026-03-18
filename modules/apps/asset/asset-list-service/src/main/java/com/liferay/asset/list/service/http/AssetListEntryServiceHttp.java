@@ -1495,3 +1495,4 @@ public class AssetListEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2030062219

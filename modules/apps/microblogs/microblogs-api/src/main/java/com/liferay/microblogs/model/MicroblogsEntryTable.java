@@ -62,3 +62,4 @@ public class MicroblogsEntryTable extends BaseTable<MicroblogsEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1498787595

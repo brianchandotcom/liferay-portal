@@ -158,3 +158,4 @@ public class PermissionCheckFinderEntryCacheModel
 	public String type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:141145897

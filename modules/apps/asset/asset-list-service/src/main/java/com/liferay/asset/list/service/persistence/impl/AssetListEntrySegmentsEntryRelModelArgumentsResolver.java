@@ -123,3 +123,4 @@ public class AssetListEntrySegmentsEntryRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1797097271

@@ -781,3 +781,4 @@ public class CommercePricingClassCPDefinitionRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2024221820

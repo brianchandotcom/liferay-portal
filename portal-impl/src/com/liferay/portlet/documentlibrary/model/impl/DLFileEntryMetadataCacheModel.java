@@ -195,3 +195,4 @@ public class DLFileEntryMetadataCacheModel
 	public long fileVersionId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1046507259

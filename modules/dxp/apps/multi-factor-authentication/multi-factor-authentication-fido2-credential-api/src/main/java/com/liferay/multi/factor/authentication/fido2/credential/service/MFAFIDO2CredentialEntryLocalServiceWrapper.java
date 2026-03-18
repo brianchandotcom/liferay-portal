@@ -426,3 +426,4 @@ public class MFAFIDO2CredentialEntryLocalServiceWrapper
 		_mfaFIDO2CredentialEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:73636017

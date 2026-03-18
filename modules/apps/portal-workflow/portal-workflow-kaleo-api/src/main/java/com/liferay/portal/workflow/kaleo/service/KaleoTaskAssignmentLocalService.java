@@ -319,3 +319,4 @@ public interface KaleoTaskAssignmentLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:240982093

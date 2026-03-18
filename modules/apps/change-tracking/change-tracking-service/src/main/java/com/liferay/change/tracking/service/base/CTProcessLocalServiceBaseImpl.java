@@ -448,3 +448,4 @@ public abstract class CTProcessLocalServiceBaseImpl
 		CTProcessLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1445016490

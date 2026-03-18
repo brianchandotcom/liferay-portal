@@ -45,3 +45,4 @@ public class SequenceEntryServiceUtil {
 			SequenceEntryServiceUtil.class, SequenceEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1399992748

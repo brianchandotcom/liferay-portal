@@ -776,3 +776,4 @@ public class FragmentCompositionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:700017067

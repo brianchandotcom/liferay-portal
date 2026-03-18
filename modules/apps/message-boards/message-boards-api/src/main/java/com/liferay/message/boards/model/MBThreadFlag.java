@@ -50,3 +50,4 @@ public interface MBThreadFlag extends MBThreadFlagModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-163225528

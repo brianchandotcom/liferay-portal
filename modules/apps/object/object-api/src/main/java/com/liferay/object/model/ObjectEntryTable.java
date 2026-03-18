@@ -91,3 +91,4 @@ public class ObjectEntryTable extends BaseTable<ObjectEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1724132446

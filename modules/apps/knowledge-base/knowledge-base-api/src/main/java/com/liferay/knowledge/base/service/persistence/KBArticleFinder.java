@@ -30,3 +30,4 @@ public interface KBArticleFinder {
 			int[] status, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:866292698

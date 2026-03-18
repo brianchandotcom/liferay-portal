@@ -496,3 +496,4 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 			OAuth2ScopeGrantLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1924408425

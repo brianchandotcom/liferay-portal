@@ -57,3 +57,4 @@ public class DispatchLogTable extends BaseTable<DispatchLogTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:631332911

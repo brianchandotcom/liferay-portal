@@ -960,3 +960,4 @@ public class AnalyticsAssociationModelImpl
 	private AnalyticsAssociation _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-775148284

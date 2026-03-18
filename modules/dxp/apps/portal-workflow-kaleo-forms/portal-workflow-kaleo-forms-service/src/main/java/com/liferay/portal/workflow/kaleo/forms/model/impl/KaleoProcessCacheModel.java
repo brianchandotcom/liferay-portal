@@ -217,3 +217,4 @@ public class KaleoProcessCacheModel
 	public int workflowDefinitionVersion;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:771482804

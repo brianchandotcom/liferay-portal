@@ -92,3 +92,4 @@ public interface AccountRoleService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-375871885

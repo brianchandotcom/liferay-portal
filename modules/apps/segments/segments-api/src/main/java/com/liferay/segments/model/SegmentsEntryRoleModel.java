@@ -233,3 +233,4 @@ public interface SegmentsEntryRoleModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1426834754

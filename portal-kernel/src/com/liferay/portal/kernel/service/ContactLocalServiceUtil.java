@@ -350,3 +350,4 @@ public class ContactLocalServiceUtil {
 	private static volatile ContactLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:444362040

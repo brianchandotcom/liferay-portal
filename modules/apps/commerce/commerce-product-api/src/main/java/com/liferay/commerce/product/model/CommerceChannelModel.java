@@ -365,3 +365,4 @@ public interface CommerceChannelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1541588357

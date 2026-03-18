@@ -601,3 +601,4 @@ public class SharingEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1521835014

@@ -166,3 +166,4 @@ public class SamlIdpSsoSessionCacheModel
 	public String samlIdpSsoSessionKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1376456658

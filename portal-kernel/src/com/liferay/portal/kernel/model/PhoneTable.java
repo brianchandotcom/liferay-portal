@@ -63,3 +63,4 @@ public class PhoneTable extends BaseTable<PhoneTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1593273370

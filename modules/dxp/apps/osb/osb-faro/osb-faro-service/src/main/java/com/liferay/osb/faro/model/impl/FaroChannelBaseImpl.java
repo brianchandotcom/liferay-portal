@@ -39,3 +39,4 @@ public abstract class FaroChannelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-294393813

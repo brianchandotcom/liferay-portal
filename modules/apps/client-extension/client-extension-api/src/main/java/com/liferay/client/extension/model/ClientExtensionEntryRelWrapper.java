@@ -656,3 +656,4 @@ public class ClientExtensionEntryRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:112592744

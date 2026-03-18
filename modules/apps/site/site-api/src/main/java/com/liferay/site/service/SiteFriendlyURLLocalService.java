@@ -360,3 +360,4 @@ public interface SiteFriendlyURLLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:352524180

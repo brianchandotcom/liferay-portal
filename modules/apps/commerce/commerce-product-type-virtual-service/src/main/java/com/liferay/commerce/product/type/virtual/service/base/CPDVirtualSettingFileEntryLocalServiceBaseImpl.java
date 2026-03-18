@@ -632,3 +632,4 @@ public abstract class CPDVirtualSettingFileEntryLocalServiceBaseImpl
 		CPDVirtualSettingFileEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:634329917

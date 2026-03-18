@@ -177,3 +177,4 @@ public class OAuth2ScopeGrantCacheModel
 	public String scopeAliases;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-761430949

@@ -498,3 +498,4 @@ public interface CPInstanceUnitOfMeasureModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:789916656

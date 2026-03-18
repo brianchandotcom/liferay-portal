@@ -64,3 +64,4 @@ public class NotificationRecipientSettingTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1331085971

@@ -67,3 +67,4 @@ public class CommerceWishListItemTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:564782012

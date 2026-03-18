@@ -261,3 +261,4 @@ public class PushNotificationsDeviceServiceHttp {
 		new Class[] {String.class, java.util.List.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1471410345

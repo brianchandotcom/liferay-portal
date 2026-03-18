@@ -49,3 +49,4 @@ public interface AutoEscapeEntry extends AutoEscapeEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-683031457

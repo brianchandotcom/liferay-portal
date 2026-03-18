@@ -1075,3 +1075,4 @@ public interface CPInstanceOptionValueRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-893577747

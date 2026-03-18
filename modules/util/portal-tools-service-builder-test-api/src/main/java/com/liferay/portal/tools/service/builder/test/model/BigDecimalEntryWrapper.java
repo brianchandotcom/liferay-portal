@@ -159,3 +159,4 @@ public class BigDecimalEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:937192021

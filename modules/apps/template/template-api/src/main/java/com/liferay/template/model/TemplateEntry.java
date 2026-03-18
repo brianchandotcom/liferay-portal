@@ -48,3 +48,4 @@ public interface TemplateEntry extends PersistedModel, TemplateEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:788992626

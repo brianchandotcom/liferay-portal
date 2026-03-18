@@ -29,3 +29,4 @@ public abstract class ObjectLayoutRowBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-283595462

@@ -54,3 +54,4 @@ public class CTCollectionTemplateTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1079641744

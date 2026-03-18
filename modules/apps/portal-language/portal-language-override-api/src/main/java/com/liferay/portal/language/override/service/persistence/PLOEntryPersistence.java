@@ -658,3 +658,4 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:738268267

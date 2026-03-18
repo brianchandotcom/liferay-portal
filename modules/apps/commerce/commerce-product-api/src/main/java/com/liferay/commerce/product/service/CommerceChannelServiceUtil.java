@@ -168,3 +168,4 @@ public class CommerceChannelServiceUtil {
 			CommerceChannelServiceUtil.class, CommerceChannelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2139869695

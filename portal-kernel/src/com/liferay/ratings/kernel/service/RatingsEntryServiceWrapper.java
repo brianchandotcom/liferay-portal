@@ -64,3 +64,4 @@ public class RatingsEntryServiceWrapper
 	private RatingsEntryService _ratingsEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-793368476

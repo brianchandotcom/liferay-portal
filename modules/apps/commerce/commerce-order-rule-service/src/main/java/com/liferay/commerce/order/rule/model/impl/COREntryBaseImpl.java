@@ -39,3 +39,4 @@ public abstract class COREntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-15068009

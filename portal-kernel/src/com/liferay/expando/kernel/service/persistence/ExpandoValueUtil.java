@@ -1840,3 +1840,4 @@ public class ExpandoValueUtil {
 	private static volatile ExpandoValuePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:495744124

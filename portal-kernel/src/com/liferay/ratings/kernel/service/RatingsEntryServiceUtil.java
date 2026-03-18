@@ -60,3 +60,4 @@ public class RatingsEntryServiceUtil {
 	private static volatile RatingsEntryService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1463964687

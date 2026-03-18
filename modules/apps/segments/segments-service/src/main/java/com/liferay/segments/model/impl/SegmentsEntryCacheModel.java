@@ -335,3 +335,4 @@ public class SegmentsEntryCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:395340247

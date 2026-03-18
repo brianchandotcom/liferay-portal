@@ -250,3 +250,4 @@ public class CPDefinitionInventoryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-582841521

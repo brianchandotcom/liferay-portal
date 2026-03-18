@@ -363,3 +363,4 @@ public class CommerceCurrencyCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2018564782

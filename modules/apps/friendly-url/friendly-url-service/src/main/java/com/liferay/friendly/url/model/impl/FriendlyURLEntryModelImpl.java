@@ -1066,3 +1066,4 @@ public class FriendlyURLEntryModelImpl
 	private FriendlyURLEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:506127677

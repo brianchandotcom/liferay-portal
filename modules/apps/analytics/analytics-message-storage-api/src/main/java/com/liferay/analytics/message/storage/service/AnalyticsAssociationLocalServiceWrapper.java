@@ -432,3 +432,4 @@ public class AnalyticsAssociationLocalServiceWrapper
 	private AnalyticsAssociationLocalService _analyticsAssociationLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1395767237

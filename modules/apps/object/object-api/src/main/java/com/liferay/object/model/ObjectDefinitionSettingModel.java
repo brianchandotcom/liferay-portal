@@ -247,3 +247,4 @@ public interface ObjectDefinitionSettingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-71383693

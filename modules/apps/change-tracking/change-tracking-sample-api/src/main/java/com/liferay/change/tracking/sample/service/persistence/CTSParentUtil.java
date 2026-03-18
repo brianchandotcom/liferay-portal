@@ -633,3 +633,4 @@ public class CTSParentUtil {
 	private static volatile CTSParentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-94874317

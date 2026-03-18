@@ -54,3 +54,4 @@ public interface CommerceCatalog extends CommerceCatalogModel, PersistedModel {
 	public long getGroupId();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1645481940

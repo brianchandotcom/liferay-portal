@@ -110,3 +110,4 @@ public class EntryServiceUtil {
 		new Snapshot<>(EntryServiceUtil.class, EntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1009405847

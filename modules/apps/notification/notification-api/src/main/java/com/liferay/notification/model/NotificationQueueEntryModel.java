@@ -330,3 +330,4 @@ public interface NotificationQueueEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1719211483

@@ -313,3 +313,4 @@ public class BatchPlannerPolicyServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:793427212

@@ -1635,3 +1635,4 @@ public interface CPDisplayLayoutPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1195477108

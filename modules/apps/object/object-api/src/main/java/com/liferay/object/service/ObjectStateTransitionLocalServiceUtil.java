@@ -391,3 +391,4 @@ public class ObjectStateTransitionLocalServiceUtil {
 			ObjectStateTransitionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1967217996

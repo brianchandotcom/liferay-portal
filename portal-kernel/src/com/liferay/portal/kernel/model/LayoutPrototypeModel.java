@@ -470,3 +470,4 @@ public interface LayoutPrototypeModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1839276377

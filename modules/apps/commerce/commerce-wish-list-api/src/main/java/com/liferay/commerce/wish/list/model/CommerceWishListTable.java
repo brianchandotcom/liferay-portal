@@ -57,3 +57,4 @@ public class CommerceWishListTable extends BaseTable<CommerceWishListTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:16811736

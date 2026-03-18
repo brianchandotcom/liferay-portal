@@ -414,3 +414,4 @@ public interface DEDataListViewModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1462197093

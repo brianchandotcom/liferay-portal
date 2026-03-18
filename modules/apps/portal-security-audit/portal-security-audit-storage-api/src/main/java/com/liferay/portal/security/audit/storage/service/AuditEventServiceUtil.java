@@ -114,3 +114,4 @@ public class AuditEventServiceUtil {
 		new Snapshot<>(AuditEventServiceUtil.class, AuditEventService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2129421729

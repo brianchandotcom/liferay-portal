@@ -1283,3 +1283,4 @@ public class KBArticleWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2116278954

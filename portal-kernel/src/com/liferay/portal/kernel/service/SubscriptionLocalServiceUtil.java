@@ -531,3 +531,4 @@ public class SubscriptionLocalServiceUtil {
 	private static volatile SubscriptionLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:447792095

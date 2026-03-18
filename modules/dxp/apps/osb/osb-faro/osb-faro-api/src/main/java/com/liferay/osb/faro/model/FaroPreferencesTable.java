@@ -50,3 +50,4 @@ public class FaroPreferencesTable extends BaseTable<FaroPreferencesTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1606319006

@@ -212,3 +212,4 @@ public class JSONStorageEntryCacheModel
 	public String valueString;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1347243534

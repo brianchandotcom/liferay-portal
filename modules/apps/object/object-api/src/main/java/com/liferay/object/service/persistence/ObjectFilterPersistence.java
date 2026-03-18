@@ -593,3 +593,4 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1397265739

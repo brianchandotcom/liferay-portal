@@ -11174,3 +11174,4 @@ public class UserPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1622365664

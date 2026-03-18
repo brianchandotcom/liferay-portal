@@ -77,3 +77,4 @@ public class LayoutSetBranchTable extends BaseTable<LayoutSetBranchTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2015857805

@@ -519,3 +519,4 @@ public class CommerceNotificationTemplateServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1934858617

@@ -52,3 +52,4 @@ public interface AnalyticsAssociation
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:944802758

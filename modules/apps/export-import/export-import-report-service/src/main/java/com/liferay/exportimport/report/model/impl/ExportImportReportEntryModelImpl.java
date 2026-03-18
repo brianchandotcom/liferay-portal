@@ -1191,3 +1191,4 @@ public class ExportImportReportEntryModelImpl
 	private ExportImportReportEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1311623805

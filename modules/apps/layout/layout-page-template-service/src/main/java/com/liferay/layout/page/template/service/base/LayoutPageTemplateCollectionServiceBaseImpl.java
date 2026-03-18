@@ -132,3 +132,4 @@ public abstract class LayoutPageTemplateCollectionServiceBaseImpl
 		LayoutPageTemplateCollectionServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1920263945

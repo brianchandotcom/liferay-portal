@@ -305,3 +305,4 @@ public class CPMeasurementUnitCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1464568136

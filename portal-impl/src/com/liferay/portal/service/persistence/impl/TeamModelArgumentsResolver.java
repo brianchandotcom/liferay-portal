@@ -126,3 +126,4 @@ public class TeamModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1597984329

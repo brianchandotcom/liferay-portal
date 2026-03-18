@@ -205,3 +205,4 @@ public class TicketCacheModel
 	public long expirationDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-878817001

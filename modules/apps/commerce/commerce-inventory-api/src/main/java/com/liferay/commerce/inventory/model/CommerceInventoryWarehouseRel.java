@@ -56,3 +56,4 @@ public interface CommerceInventoryWarehouseRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:444923251

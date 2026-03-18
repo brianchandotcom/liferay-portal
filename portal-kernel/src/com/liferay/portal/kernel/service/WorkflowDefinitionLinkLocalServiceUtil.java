@@ -576,3 +576,4 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 	private static volatile WorkflowDefinitionLinkLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-269207822

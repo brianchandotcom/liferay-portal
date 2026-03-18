@@ -374,3 +374,4 @@ public class AppLocalServiceUtil {
 		new Snapshot<>(AppLocalServiceUtil.class, AppLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2001836979

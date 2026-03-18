@@ -1312,3 +1312,4 @@ public class LaunchSetUtil {
 	private static volatile LaunchSetPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1546510921

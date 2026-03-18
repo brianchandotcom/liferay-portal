@@ -393,3 +393,4 @@ public class CPDefinitionOptionRelCacheModel
 	public String typeSettings;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-250277603

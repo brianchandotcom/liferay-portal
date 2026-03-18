@@ -50,3 +50,4 @@ public interface SXPBlueprint extends PersistedModel, SXPBlueprintModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1210842473

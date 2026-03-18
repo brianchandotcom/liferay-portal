@@ -97,3 +97,4 @@ public abstract class BaseDLFileShortcutUADAnonymizer
 	protected DLFileShortcutLocalService dlFileShortcutLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-518293208

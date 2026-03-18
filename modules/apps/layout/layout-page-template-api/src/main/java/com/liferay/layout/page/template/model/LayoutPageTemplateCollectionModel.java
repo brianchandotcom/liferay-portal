@@ -349,3 +349,4 @@ public interface LayoutPageTemplateCollectionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:10092172

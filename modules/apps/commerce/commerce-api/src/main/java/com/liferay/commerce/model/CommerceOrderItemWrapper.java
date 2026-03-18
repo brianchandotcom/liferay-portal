@@ -2405,3 +2405,4 @@ public class CommerceOrderItemWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2131788649

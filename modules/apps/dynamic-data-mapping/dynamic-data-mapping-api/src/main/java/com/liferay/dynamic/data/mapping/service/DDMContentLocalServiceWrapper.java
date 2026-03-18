@@ -485,3 +485,4 @@ public class DDMContentLocalServiceWrapper
 	private DDMContentLocalService _ddmContentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1484047661

@@ -130,3 +130,4 @@ public interface FragmentCompositionService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-766972670

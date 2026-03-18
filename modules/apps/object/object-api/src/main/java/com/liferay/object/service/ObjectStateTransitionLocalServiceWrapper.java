@@ -458,3 +458,4 @@ public class ObjectStateTransitionLocalServiceWrapper
 		_objectStateTransitionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1566074291

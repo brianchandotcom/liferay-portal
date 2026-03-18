@@ -332,3 +332,4 @@ public class SamlIdpSpConnectionCacheModel
 	public String nameIdFormat;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2039354977

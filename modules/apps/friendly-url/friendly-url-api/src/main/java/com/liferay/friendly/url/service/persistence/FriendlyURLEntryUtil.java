@@ -1282,3 +1282,4 @@ public class FriendlyURLEntryUtil {
 	private static volatile FriendlyURLEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1131187831

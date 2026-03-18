@@ -132,3 +132,4 @@ public class COREntryRelModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2087145399

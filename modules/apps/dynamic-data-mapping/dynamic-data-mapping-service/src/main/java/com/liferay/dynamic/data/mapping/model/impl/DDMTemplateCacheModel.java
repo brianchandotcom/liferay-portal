@@ -506,3 +506,4 @@ public class DDMTemplateCacheModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-74204155

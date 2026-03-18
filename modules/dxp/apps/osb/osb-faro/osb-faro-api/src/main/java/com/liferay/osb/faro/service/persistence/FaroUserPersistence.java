@@ -1195,3 +1195,4 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1934608315

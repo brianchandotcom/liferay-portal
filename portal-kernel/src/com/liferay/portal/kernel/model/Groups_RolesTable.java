@@ -38,3 +38,4 @@ public class Groups_RolesTable extends BaseTable<Groups_RolesTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:229191087

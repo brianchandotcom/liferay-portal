@@ -2476,3 +2476,4 @@ public class AnnouncementsEntryUtil {
 	private static volatile AnnouncementsEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-66198448

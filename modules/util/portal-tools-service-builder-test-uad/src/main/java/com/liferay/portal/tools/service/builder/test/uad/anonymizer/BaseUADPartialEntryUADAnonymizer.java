@@ -93,3 +93,4 @@ public abstract class BaseUADPartialEntryUADAnonymizer
 	protected UADPartialEntryLocalService uadPartialEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1102317735

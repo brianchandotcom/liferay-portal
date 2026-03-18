@@ -1139,3 +1139,4 @@ public class DLFileEntryMetadataUtil {
 	private static volatile DLFileEntryMetadataPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1328996791

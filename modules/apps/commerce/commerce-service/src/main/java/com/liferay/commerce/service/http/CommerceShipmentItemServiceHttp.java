@@ -790,3 +790,4 @@ public class CommerceShipmentItemServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1805610865

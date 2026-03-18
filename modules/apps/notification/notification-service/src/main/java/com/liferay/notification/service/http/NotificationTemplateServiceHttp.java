@@ -328,3 +328,4 @@ public class NotificationTemplateServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:190395101

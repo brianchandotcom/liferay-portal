@@ -3257,3 +3257,4 @@ public class CommerceOrderUtil {
 	private static volatile CommerceOrderPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2125456409

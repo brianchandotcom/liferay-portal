@@ -988,3 +988,4 @@ public class AddressWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1470900482

@@ -18,3 +18,4 @@ public interface CommerceShipmentItemFinder {
 		long commerceShipmentId, long commerceOrderItemId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:767073895

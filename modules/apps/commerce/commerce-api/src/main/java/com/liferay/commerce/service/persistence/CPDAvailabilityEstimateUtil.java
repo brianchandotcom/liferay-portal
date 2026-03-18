@@ -909,3 +909,4 @@ public class CPDAvailabilityEstimateUtil {
 	private static volatile CPDAvailabilityEstimatePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-989658566

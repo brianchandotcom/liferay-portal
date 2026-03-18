@@ -163,3 +163,4 @@ public class SamlSpAuthRequestCacheModel
 	public String samlSpAuthRequestKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-341848361

@@ -687,3 +687,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:855079443

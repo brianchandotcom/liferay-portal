@@ -109,3 +109,4 @@ public interface ClassNameModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1339403409

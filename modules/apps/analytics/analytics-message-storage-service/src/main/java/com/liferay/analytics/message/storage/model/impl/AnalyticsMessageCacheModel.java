@@ -164,3 +164,4 @@ public class AnalyticsMessageCacheModel
 	public long createDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-962381522

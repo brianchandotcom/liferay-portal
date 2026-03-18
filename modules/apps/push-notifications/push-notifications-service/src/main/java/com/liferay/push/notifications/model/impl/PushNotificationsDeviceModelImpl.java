@@ -776,3 +776,4 @@ public class PushNotificationsDeviceModelImpl
 	private PushNotificationsDevice _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1198637777

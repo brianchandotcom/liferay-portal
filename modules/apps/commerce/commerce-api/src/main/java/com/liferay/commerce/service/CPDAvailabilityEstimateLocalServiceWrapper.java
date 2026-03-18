@@ -446,3 +446,4 @@ public class CPDAvailabilityEstimateLocalServiceWrapper
 		_cpdAvailabilityEstimateLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2126347405

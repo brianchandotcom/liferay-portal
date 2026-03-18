@@ -98,3 +98,4 @@ public abstract class BaseLayoutRevisionUADAnonymizer
 	protected LayoutRevisionLocalService layoutRevisionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:589335586

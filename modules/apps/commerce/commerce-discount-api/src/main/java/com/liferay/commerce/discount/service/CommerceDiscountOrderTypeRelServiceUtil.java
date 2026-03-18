@@ -103,3 +103,4 @@ public class CommerceDiscountOrderTypeRelServiceUtil {
 			CommerceDiscountOrderTypeRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1270904687

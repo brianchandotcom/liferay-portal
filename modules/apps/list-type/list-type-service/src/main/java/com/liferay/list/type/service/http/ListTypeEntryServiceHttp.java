@@ -443,3 +443,4 @@ public class ListTypeEntryServiceHttp {
 		new Class[] {String.class, long.class, java.util.Map.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:768782822

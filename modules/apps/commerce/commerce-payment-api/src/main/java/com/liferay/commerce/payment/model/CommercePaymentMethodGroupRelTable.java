@@ -77,3 +77,4 @@ public class CommercePaymentMethodGroupRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-991556169

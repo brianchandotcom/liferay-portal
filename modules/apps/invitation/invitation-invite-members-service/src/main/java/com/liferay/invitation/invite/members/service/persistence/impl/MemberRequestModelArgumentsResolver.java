@@ -133,3 +133,4 @@ public class MemberRequestModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1099877461

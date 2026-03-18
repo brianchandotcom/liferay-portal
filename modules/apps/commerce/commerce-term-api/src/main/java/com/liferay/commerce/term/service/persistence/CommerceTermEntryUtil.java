@@ -2381,3 +2381,4 @@ public class CommerceTermEntryUtil {
 	private static volatile CommerceTermEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-897001729

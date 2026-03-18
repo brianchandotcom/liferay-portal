@@ -1328,3 +1328,4 @@ public class ChangesetEntryUtil {
 	private static volatile ChangesetEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1625555368

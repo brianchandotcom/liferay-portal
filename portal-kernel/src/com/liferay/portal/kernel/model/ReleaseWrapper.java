@@ -421,3 +421,4 @@ public class ReleaseWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1767628777

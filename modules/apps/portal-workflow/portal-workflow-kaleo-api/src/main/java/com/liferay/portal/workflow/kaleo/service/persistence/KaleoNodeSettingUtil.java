@@ -515,3 +515,4 @@ public class KaleoNodeSettingUtil {
 	private static volatile KaleoNodeSettingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-727849491

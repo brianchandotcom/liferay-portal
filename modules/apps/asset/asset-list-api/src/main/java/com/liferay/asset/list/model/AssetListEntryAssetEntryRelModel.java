@@ -312,3 +312,4 @@ public interface AssetListEntryAssetEntryRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:580329075

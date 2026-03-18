@@ -271,3 +271,4 @@ public class LayoutFriendlyURLCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:984446637

@@ -11990,3 +11990,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1057708521

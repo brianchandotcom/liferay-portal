@@ -467,3 +467,4 @@ public class LayoutSEOEntryCustomMetaTagPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-927386854

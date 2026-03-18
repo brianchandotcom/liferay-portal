@@ -476,3 +476,4 @@ public class AccountEntryUserRelLocalServiceUtil {
 			AccountEntryUserRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:282106658

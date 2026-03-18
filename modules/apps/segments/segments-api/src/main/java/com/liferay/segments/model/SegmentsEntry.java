@@ -52,3 +52,4 @@ public interface SegmentsEntry extends PersistedModel, SegmentsEntryModel {
 	public long[] getRoleIds();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:997995891

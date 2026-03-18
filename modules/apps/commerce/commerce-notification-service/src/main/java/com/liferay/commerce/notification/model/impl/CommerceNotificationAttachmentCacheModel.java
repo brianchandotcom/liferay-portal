@@ -232,3 +232,4 @@ public class CommerceNotificationAttachmentCacheModel
 	public boolean deleteOnSend;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:910678709

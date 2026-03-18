@@ -1140,3 +1140,4 @@ public class AssetVocabularyGroupRelUtil {
 	private static volatile AssetVocabularyGroupRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:440645675

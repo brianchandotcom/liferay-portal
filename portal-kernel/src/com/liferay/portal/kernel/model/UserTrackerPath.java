@@ -47,3 +47,4 @@ public interface UserTrackerPath extends PersistedModel, UserTrackerPathModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:875646492

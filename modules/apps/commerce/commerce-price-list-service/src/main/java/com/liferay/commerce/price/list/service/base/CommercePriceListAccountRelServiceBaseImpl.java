@@ -137,3 +137,4 @@ public abstract class CommercePriceListAccountRelServiceBaseImpl
 		CommercePriceListAccountRelServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1382681336

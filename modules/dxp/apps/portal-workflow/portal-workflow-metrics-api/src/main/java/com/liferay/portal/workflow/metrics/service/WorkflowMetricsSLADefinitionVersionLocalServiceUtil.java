@@ -441,3 +441,4 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceUtil {
 				WorkflowMetricsSLADefinitionVersionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:378178727

@@ -39,3 +39,4 @@ public abstract class CTSParentBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:260642101

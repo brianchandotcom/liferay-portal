@@ -122,3 +122,4 @@ public class AutoEscapeEntryCacheModel
 	public String autoEscapeEnabledColumn;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-101382369

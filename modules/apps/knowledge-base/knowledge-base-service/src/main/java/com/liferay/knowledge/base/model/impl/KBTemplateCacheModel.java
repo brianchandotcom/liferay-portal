@@ -254,3 +254,4 @@ public class KBTemplateCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1339040002

@@ -1090,3 +1090,4 @@ public class CommerceQualifierEntryModelImpl
 	private CommerceQualifierEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-127557911

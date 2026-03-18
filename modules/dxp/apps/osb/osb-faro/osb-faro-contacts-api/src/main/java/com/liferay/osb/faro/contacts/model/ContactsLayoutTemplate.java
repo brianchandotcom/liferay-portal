@@ -52,3 +52,4 @@ public interface ContactsLayoutTemplate
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1214336800

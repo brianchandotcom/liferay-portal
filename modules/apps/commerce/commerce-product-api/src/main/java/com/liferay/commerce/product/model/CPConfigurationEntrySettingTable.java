@@ -71,3 +71,4 @@ public class CPConfigurationEntrySettingTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1567243876

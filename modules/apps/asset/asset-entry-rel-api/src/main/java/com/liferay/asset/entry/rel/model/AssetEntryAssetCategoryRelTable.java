@@ -52,3 +52,4 @@ public class AssetEntryAssetCategoryRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1409663707

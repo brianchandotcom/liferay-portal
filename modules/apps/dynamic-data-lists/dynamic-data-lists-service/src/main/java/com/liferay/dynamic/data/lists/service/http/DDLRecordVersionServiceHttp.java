@@ -273,3 +273,4 @@ public class DDLRecordVersionServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1608611602

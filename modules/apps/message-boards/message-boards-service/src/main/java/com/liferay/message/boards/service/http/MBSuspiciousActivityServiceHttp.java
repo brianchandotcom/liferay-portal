@@ -355,3 +355,4 @@ public class MBSuspiciousActivityServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1633664974

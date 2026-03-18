@@ -655,3 +655,4 @@ public class CPMeasurementUnitServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1762387632

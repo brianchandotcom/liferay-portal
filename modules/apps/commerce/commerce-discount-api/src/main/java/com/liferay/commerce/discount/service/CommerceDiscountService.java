@@ -250,3 +250,4 @@ public interface CommerceDiscountService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:571526413

@@ -838,3 +838,4 @@ public interface MBThreadFlagPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1578517692

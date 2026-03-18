@@ -752,3 +752,4 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-643725132

@@ -114,3 +114,4 @@ public interface ObjectDefinition
 	public void setObjectFolder(ObjectFolder objectFolder);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1332771215

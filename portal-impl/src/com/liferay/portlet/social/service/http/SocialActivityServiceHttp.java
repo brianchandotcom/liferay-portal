@@ -1299,3 +1299,4 @@ public class SocialActivityServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1626095168

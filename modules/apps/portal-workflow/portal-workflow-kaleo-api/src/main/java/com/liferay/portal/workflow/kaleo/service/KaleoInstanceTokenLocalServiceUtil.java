@@ -438,3 +438,4 @@ public class KaleoInstanceTokenLocalServiceUtil {
 			KaleoInstanceTokenLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-355444649

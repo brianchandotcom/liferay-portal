@@ -691,3 +691,4 @@ public class CSDiagramSettingUtil {
 	private static volatile CSDiagramSettingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:333838363

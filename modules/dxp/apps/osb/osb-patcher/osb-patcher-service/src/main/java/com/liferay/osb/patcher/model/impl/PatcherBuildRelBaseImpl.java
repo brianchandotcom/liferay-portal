@@ -39,3 +39,4 @@ public abstract class PatcherBuildRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:328514477

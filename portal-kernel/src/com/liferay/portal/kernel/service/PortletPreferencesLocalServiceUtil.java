@@ -542,3 +542,4 @@ public class PortletPreferencesLocalServiceUtil {
 	private static volatile PortletPreferencesLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:793609999

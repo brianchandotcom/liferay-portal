@@ -334,3 +334,4 @@ public class AssetCategoryCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1753721811

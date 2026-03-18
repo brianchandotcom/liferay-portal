@@ -55,3 +55,4 @@ public interface AssetEntryAssetCategoryRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1567415808

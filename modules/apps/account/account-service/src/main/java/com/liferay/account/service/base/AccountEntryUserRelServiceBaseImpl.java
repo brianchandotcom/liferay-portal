@@ -125,3 +125,4 @@ public abstract class AccountEntryUserRelServiceBaseImpl
 		AccountEntryUserRelServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1114898201

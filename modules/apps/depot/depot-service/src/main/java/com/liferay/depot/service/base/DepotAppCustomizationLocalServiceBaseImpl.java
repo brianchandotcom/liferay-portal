@@ -497,3 +497,4 @@ public abstract class DepotAppCustomizationLocalServiceBaseImpl
 		DepotAppCustomizationLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1549611597

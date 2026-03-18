@@ -248,3 +248,4 @@ public class AssetDisplayPageEntryCacheModel
 	public long plid;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-42388576

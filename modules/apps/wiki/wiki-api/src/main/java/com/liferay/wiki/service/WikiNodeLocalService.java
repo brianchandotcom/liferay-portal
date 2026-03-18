@@ -464,3 +464,4 @@ public interface WikiNodeLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:275612801

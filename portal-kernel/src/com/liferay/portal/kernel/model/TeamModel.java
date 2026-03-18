@@ -280,3 +280,4 @@ public interface TeamModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-920817772

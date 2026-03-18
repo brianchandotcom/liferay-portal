@@ -3855,3 +3855,4 @@ public class ObjectRelationshipUtil {
 	private static volatile ObjectRelationshipPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1746790231

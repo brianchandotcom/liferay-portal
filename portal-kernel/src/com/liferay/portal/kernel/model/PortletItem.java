@@ -47,3 +47,4 @@ public interface PortletItem extends PersistedModel, PortletItemModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2131507559

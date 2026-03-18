@@ -564,3 +564,4 @@ public class SubscriptionLocalServiceUtil {
 			SubscriptionLocalServiceUtil.class, SubscriptionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:710032732

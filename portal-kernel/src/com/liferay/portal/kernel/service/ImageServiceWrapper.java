@@ -55,3 +55,4 @@ public class ImageServiceWrapper
 	private ImageService _imageService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:749713752

@@ -194,3 +194,4 @@ public interface DDMFormInstanceReportModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-27497280

@@ -132,3 +132,4 @@ public class DLFileEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:514509688

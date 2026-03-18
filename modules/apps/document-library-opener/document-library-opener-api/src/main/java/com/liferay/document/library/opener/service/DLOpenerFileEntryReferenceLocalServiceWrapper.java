@@ -534,3 +534,4 @@ public class DLOpenerFileEntryReferenceLocalServiceWrapper
 		_dlOpenerFileEntryReferenceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-79549828

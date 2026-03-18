@@ -419,3 +419,4 @@ public class RepositoryEntryLocalServiceUtil {
 	private static volatile RepositoryEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1539113531

@@ -500,3 +500,4 @@ public class PortletUtil {
 	private static volatile PortletPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1900201043

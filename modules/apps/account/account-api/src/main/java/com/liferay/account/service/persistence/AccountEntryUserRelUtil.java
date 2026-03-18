@@ -701,3 +701,4 @@ public class AccountEntryUserRelUtil {
 	private static volatile AccountEntryUserRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1597202723

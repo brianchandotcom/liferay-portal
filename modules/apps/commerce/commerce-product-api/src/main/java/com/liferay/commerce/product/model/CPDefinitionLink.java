@@ -58,3 +58,4 @@ public interface CPDefinitionLink
 	public String getCProductName();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1920275699

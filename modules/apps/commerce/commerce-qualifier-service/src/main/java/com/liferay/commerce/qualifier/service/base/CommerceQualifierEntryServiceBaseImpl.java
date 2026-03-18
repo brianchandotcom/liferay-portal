@@ -130,3 +130,4 @@ public abstract class CommerceQualifierEntryServiceBaseImpl
 		CommerceQualifierEntryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1839319046

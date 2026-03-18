@@ -135,3 +135,4 @@ public abstract class DDMDataProviderInstanceServiceBaseImpl
 		DDMDataProviderInstanceServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:583335324

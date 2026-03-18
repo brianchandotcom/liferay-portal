@@ -1060,3 +1060,4 @@ public class ChangesetCollectionUtil {
 	private static volatile ChangesetCollectionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1230847669

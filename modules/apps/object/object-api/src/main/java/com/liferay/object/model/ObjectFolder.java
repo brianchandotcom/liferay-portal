@@ -50,3 +50,4 @@ public interface ObjectFolder extends ObjectFolderModel, PersistedModel {
 	public boolean isDefault();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-781339325

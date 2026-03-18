@@ -114,3 +114,4 @@ public class AutoEscapeEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1091750336

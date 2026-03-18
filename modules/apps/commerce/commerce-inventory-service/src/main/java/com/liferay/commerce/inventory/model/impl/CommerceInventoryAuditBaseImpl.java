@@ -41,3 +41,4 @@ public abstract class CommerceInventoryAuditBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1358001914

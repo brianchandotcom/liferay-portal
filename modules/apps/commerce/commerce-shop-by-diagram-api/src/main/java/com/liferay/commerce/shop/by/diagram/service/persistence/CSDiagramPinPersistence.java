@@ -298,3 +298,4 @@ public interface CSDiagramPinPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:822752573

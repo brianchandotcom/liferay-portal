@@ -211,3 +211,4 @@ public class ExpandoColumnCacheModel
 	public String typeSettings;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1198845414

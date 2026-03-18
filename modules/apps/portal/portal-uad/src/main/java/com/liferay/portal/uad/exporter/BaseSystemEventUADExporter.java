@@ -66,3 +66,4 @@ public abstract class BaseSystemEventUADExporter
 	protected SystemEventLocalService systemEventLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:216506582

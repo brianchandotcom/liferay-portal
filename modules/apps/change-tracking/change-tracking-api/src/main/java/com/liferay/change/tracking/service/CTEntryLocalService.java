@@ -348,3 +348,4 @@ public interface CTEntryLocalService
 		long ctEntryId, long modelMvccVersion);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-200155549

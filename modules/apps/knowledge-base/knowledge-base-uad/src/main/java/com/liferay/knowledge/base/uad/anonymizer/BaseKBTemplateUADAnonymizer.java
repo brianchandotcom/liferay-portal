@@ -92,3 +92,4 @@ public abstract class BaseKBTemplateUADAnonymizer
 	protected KBTemplateLocalService kbTemplateLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:336385215

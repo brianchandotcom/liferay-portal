@@ -20,3 +20,4 @@ public interface AssetEntryFinder {
 		findEntries(AssetEntryQuery entryQuery);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1043647529

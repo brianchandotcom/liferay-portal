@@ -160,3 +160,4 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 			CommerceInventoryReplenishmentItemService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-678387437

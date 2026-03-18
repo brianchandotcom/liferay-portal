@@ -2402,3 +2402,4 @@ public class LVEntryVersionUtil {
 	private static volatile LVEntryVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1348962884

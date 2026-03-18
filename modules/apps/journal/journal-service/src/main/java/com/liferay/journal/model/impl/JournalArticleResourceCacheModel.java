@@ -170,3 +170,4 @@ public class JournalArticleResourceCacheModel
 	public String articleId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:698529226

@@ -195,3 +195,4 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1654444404

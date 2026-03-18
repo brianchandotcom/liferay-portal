@@ -52,3 +52,4 @@ public class SamlIdpSpSessionTable extends BaseTable<SamlIdpSpSessionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:993594594

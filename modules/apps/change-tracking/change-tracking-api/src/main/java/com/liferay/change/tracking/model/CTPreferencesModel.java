@@ -177,3 +177,4 @@ public interface CTPreferencesModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:348366480

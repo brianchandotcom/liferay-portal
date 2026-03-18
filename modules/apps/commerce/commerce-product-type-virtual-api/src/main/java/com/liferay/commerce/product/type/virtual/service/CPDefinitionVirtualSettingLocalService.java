@@ -375,3 +375,4 @@ public interface CPDefinitionVirtualSettingLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:145045906

@@ -73,3 +73,4 @@ public class DDMDataProviderInstanceTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1070447993

@@ -31,3 +31,4 @@ public class CounterTable extends BaseTable<CounterTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1991042301

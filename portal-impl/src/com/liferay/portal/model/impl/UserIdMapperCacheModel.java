@@ -177,3 +177,4 @@ public class UserIdMapperCacheModel
 	public String externalUserId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-982987840

@@ -199,3 +199,4 @@ public class CommerceShipmentItemServiceUtil {
 			CommerceShipmentItemService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-142098154

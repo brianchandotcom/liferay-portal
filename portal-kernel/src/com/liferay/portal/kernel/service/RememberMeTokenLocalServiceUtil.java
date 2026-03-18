@@ -328,3 +328,4 @@ public class RememberMeTokenLocalServiceUtil {
 	private static volatile RememberMeTokenLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1478070534

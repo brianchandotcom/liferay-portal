@@ -33,3 +33,4 @@ package com.liferay.portal.tools.service.builder.test.service.http;
  */
 public class EagerBlobEntryServiceHttp {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1242944870

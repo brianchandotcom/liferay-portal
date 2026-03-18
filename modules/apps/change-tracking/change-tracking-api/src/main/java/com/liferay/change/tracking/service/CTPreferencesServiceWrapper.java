@@ -67,3 +67,4 @@ public class CTPreferencesServiceWrapper
 	private CTPreferencesService _ctPreferencesService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:773782222

@@ -125,3 +125,4 @@ public abstract class ObjectEntryVersionServiceBaseImpl
 		ObjectEntryVersionServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-104325783

@@ -256,3 +256,4 @@ public class ServiceComponentWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1003740822

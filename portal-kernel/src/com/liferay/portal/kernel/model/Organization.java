@@ -119,3 +119,4 @@ public interface Organization
 	public boolean isRoot();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:440731118

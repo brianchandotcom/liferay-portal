@@ -123,3 +123,4 @@ public class CommerceInventoryWarehouseItemModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-300071636

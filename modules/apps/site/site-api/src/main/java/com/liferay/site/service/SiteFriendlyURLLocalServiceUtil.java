@@ -445,3 +445,4 @@ public class SiteFriendlyURLLocalServiceUtil {
 			SiteFriendlyURLLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:845151514

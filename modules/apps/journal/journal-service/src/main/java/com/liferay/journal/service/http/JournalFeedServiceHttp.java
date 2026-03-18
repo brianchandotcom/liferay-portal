@@ -319,3 +319,4 @@ public class JournalFeedServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-456623594

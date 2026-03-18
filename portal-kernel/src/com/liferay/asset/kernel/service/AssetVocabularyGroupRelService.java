@@ -64,3 +64,4 @@ public interface AssetVocabularyGroupRelService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1354333689

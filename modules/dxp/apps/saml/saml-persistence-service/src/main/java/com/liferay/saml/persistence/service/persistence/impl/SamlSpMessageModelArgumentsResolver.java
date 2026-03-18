@@ -114,3 +114,4 @@ public class SamlSpMessageModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:487610420

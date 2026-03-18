@@ -39,3 +39,4 @@ public abstract class LayoutLocalizationBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1923814174

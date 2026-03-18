@@ -65,3 +65,4 @@ public class CPDAvailabilityEstimateServiceUtil {
 			CPDAvailabilityEstimateService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1026746812

@@ -87,3 +87,4 @@ public class CommerceCurrencyTable extends BaseTable<CommerceCurrencyTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1225551505

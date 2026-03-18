@@ -81,3 +81,4 @@ public class DDMStructureLayoutServiceWrapper
 	private DDMStructureLayoutService _ddmStructureLayoutService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-95953992

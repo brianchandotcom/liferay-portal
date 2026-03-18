@@ -961,3 +961,4 @@ public interface ManyColumnsEntryModel extends BaseModel<ManyColumnsEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1422360889

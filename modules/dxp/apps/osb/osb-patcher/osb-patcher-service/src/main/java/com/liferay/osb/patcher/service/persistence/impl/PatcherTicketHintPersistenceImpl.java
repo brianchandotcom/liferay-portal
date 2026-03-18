@@ -907,3 +907,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1957456338

@@ -876,3 +876,4 @@ public class DLFileEntryTypeWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1597599625

@@ -1135,3 +1135,4 @@ public class NotificationTemplateUtil {
 	private static volatile NotificationTemplatePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1064455296

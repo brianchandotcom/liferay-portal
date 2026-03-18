@@ -57,3 +57,4 @@ public class ChangesetEntryTable extends BaseTable<ChangesetEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2071341236

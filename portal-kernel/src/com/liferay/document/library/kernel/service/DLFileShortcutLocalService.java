@@ -451,3 +451,4 @@ public interface DLFileShortcutLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-841932807

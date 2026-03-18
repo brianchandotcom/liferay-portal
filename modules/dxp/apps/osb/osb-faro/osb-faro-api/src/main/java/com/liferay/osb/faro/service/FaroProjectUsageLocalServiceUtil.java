@@ -335,3 +335,4 @@ public class FaroProjectUsageLocalServiceUtil {
 			FaroProjectUsageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1056223522

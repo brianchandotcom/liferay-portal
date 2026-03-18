@@ -39,3 +39,4 @@ public abstract class CSDiagramEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2089682896

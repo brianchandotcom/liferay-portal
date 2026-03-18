@@ -223,3 +223,4 @@ public class StyleBookEntryServiceUtil {
 			StyleBookEntryServiceUtil.class, StyleBookEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:574895026

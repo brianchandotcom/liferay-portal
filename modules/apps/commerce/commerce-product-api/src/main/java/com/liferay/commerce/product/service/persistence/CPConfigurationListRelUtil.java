@@ -750,3 +750,4 @@ public class CPConfigurationListRelUtil {
 	private static volatile CPConfigurationListRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:650337347

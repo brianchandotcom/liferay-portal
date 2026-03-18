@@ -39,3 +39,4 @@ public abstract class KaleoNodeBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-73848840

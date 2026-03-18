@@ -243,3 +243,4 @@ public class AssetCategoryPropertyCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1214552174

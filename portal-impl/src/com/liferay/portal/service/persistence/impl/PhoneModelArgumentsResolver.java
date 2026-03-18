@@ -127,3 +127,4 @@ public class PhoneModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1769024060

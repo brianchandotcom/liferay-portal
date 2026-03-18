@@ -782,3 +782,4 @@ public class KBCommentServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1619588130

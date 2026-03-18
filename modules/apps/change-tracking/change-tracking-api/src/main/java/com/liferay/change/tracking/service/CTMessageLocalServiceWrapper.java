@@ -353,3 +353,4 @@ public class CTMessageLocalServiceWrapper
 	private CTMessageLocalService _ctMessageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:905627980

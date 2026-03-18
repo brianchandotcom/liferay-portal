@@ -342,3 +342,4 @@ public class RepositoryServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1404207676

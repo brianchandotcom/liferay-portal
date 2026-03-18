@@ -174,3 +174,4 @@ public class SocialRelationCacheModel
 	public int type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1498082640

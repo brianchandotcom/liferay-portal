@@ -1285,3 +1285,4 @@ public interface PhonePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1425911909

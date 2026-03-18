@@ -54,3 +54,4 @@ public class CommerceAddressRestrictionServiceWrapper
 		_commerceAddressRestrictionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1358749458

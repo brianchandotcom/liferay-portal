@@ -352,3 +352,4 @@ public class SystemEventLocalServiceUtil {
 	private static volatile SystemEventLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-679156878

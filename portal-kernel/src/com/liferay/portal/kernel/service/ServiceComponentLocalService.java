@@ -282,3 +282,4 @@ public interface ServiceComponentLocalService
 		throws Exception;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2123618559

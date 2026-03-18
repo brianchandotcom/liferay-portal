@@ -353,3 +353,4 @@ public interface ExpandoRowLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1387060210

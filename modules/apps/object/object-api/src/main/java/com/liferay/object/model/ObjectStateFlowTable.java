@@ -50,3 +50,4 @@ public class ObjectStateFlowTable extends BaseTable<ObjectStateFlowTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1363578333

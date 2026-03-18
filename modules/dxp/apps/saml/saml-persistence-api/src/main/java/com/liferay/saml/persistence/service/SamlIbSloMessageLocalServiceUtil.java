@@ -322,3 +322,4 @@ public class SamlIbSloMessageLocalServiceUtil {
 			SamlIbSloMessageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:604300058

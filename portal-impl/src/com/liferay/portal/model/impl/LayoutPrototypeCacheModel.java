@@ -261,3 +261,4 @@ public class LayoutPrototypeCacheModel
 	public boolean active;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-716699757

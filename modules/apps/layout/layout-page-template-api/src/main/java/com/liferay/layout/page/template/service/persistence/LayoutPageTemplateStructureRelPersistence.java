@@ -875,3 +875,4 @@ public interface LayoutPageTemplateStructureRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1052712165

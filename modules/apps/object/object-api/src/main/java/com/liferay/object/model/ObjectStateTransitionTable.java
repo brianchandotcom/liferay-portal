@@ -65,3 +65,4 @@ public class ObjectStateTransitionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-361758219

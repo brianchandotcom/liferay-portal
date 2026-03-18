@@ -266,3 +266,4 @@ public class ResourcePermissionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:29309143

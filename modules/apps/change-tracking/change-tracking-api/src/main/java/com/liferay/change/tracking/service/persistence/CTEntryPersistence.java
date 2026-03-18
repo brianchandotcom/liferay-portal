@@ -1257,3 +1257,4 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1909718159

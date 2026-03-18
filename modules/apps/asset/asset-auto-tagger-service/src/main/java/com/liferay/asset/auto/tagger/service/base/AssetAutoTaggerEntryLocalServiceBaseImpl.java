@@ -495,3 +495,4 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 		AssetAutoTaggerEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2032529406

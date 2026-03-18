@@ -200,3 +200,4 @@ public class FriendlyURLEntryLocalizationCacheModel
 	public String urlTitle;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-625439588

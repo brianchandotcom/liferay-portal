@@ -111,3 +111,4 @@ public class CSDiagramPinServiceWrapper
 	private CSDiagramPinService _csDiagramPinService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-846648494

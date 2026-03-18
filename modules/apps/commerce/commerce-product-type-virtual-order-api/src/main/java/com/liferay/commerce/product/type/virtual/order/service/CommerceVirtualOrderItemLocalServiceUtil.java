@@ -487,3 +487,4 @@ public class CommerceVirtualOrderItemLocalServiceUtil {
 			CommerceVirtualOrderItemLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:956614246

@@ -914,3 +914,4 @@ public class CommercePriceListChannelRelUtil {
 	private static volatile CommercePriceListChannelRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2023099710

@@ -123,3 +123,4 @@ public class DDMDataProviderInstanceLinkModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1372390830

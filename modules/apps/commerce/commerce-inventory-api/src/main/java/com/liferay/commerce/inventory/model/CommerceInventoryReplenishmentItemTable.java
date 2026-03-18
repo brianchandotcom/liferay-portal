@@ -79,3 +79,4 @@ public class CommerceInventoryReplenishmentItemTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:403069077

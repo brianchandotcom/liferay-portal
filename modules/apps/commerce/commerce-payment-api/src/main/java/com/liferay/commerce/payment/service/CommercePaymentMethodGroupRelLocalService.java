@@ -369,3 +369,4 @@ public interface CommercePaymentMethodGroupRelLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1634607539

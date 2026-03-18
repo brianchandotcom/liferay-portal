@@ -63,3 +63,4 @@ public interface UserGroupGroupRoleService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-184416296

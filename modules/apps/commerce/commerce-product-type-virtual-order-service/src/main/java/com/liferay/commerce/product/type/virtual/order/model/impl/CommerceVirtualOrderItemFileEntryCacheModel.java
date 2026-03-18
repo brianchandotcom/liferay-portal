@@ -269,3 +269,4 @@ public class CommerceVirtualOrderItemFileEntryCacheModel
 	public String version;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-40823526

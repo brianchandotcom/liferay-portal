@@ -44,3 +44,4 @@ public class AssetEntryFinderBaseImpl extends BasePersistenceImpl<AssetEntry> {
 	protected AssetEntryPersistence assetEntryPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1250382208

@@ -1820,3 +1820,4 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1969295774

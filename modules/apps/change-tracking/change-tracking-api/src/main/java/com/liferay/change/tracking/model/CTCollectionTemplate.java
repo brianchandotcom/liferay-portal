@@ -64,3 +64,4 @@ public interface CTCollectionTemplate
 	public String getUserName();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-490555087

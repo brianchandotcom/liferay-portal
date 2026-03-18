@@ -416,3 +416,4 @@ public interface ListTypeEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1901955218

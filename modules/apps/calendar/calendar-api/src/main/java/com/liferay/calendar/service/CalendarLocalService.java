@@ -415,3 +415,4 @@ public interface CalendarLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-51698338

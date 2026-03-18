@@ -891,3 +891,4 @@ public interface RepositoryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:139117741

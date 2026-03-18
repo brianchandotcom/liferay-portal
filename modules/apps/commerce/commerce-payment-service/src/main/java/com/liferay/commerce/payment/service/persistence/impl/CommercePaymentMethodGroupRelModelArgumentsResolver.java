@@ -142,3 +142,4 @@ public class CommercePaymentMethodGroupRelModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1567070273

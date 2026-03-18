@@ -317,3 +317,4 @@ public class CPInstanceUnitOfMeasureCacheModel
 	public String sku;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:325193798

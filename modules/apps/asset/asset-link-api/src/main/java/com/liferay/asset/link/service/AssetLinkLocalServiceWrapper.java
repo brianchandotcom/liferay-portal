@@ -573,3 +573,4 @@ public class AssetLinkLocalServiceWrapper
 	private AssetLinkLocalService _assetLinkLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1959529881

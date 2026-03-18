@@ -460,3 +460,4 @@ public class CommerceDiscountCommerceAccountGroupRelServiceHttp {
 			new Class[] {long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2120541442

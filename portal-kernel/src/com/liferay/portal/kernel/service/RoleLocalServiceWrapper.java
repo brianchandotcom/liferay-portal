@@ -1448,3 +1448,4 @@ public class RoleLocalServiceWrapper
 	private RoleLocalService _roleLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-175854219

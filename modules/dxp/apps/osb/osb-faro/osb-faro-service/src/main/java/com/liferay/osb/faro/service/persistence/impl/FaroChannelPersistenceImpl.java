@@ -2477,3 +2477,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-997879274

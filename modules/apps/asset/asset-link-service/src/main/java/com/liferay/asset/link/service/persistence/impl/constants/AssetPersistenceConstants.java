@@ -21,3 +21,4 @@ public class AssetPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2103208723

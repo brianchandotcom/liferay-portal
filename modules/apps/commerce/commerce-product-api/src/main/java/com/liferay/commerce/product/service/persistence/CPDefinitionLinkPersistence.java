@@ -2113,3 +2113,4 @@ public interface CPDefinitionLinkPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1230101563

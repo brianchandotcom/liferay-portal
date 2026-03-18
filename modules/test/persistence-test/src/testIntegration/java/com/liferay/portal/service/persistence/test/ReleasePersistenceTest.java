@@ -508,3 +508,4 @@ public class ReleasePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:356339734

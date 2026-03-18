@@ -576,3 +576,4 @@ public abstract class AccountGroupLocalServiceBaseImpl
 		AccountGroupLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1359161333

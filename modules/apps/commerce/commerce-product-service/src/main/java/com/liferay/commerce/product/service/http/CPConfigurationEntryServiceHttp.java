@@ -370,3 +370,4 @@ public class CPConfigurationEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2023229507

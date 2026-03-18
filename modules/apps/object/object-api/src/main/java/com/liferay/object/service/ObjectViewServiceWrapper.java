@@ -97,3 +97,4 @@ public class ObjectViewServiceWrapper
 	private ObjectViewService _objectViewService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:534288747

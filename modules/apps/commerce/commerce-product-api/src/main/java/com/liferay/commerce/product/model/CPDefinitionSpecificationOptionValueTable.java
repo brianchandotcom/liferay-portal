@@ -94,3 +94,4 @@ public class CPDefinitionSpecificationOptionValueTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1044359477

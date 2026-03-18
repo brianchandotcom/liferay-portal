@@ -1079,3 +1079,4 @@ public class AssetTagGroupRelUtil {
 	private static volatile AssetTagGroupRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-938357305

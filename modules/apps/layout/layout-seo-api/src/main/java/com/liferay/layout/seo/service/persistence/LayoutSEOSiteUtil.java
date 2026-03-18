@@ -740,3 +740,4 @@ public class LayoutSEOSiteUtil {
 	private static volatile LayoutSEOSitePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1972672932

@@ -479,3 +479,4 @@ public class ObjectFilterPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2023186224

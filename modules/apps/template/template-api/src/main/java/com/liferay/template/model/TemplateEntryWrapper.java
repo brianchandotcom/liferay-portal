@@ -531,3 +531,4 @@ public class TemplateEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1244923000

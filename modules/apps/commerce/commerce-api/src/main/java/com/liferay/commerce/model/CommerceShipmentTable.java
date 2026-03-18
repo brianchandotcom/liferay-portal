@@ -85,3 +85,4 @@ public class CommerceShipmentTable extends BaseTable<CommerceShipmentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1191948449

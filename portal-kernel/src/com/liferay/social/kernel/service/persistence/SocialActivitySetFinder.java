@@ -40,3 +40,4 @@ public interface SocialActivitySetFinder {
 		findByUserGroups(long userId, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:319723592

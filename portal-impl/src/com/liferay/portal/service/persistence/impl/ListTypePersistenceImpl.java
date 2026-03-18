@@ -3180,3 +3180,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2124899571

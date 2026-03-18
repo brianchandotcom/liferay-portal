@@ -290,3 +290,4 @@ public interface KaleoNodeSettingLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-37298992

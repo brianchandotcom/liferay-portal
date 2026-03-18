@@ -861,3 +861,4 @@ public interface CalendarBookingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:251457371

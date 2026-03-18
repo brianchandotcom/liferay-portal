@@ -200,3 +200,4 @@ public interface ObjectEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1890677116

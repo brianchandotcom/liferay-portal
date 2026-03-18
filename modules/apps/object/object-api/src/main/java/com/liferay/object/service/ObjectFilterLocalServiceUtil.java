@@ -347,3 +347,4 @@ public class ObjectFilterLocalServiceUtil {
 			ObjectFilterLocalServiceUtil.class, ObjectFilterLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1024195862

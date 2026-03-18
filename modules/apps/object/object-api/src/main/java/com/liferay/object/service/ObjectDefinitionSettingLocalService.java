@@ -327,3 +327,4 @@ public interface ObjectDefinitionSettingLocalService
 		ObjectDefinitionSetting objectDefinitionSetting);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1356977315

@@ -65,3 +65,4 @@ public class CommerceDiscountRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1296129918

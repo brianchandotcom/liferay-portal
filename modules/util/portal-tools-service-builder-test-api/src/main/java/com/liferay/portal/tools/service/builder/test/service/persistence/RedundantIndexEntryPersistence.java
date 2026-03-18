@@ -205,3 +205,4 @@ public interface RedundantIndexEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:535380899

@@ -727,3 +727,4 @@ public class AccountEntryOrganizationRelUtil {
 	private static volatile AccountEntryOrganizationRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-883252479

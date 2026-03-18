@@ -81,3 +81,4 @@ public abstract class CommercePricingClassCPDefinitionRelFinderBaseImpl
 		CommercePricingClassCPDefinitionRelFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1827650768

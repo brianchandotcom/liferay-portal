@@ -459,3 +459,4 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 		_redirectNotFoundEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1244827409

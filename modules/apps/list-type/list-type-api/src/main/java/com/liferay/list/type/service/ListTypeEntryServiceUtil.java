@@ -117,3 +117,4 @@ public class ListTypeEntryServiceUtil {
 			ListTypeEntryServiceUtil.class, ListTypeEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:602372712

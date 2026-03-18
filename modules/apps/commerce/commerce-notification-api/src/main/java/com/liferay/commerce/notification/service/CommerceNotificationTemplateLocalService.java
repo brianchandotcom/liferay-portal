@@ -388,3 +388,4 @@ public interface CommerceNotificationTemplateLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:252756082

@@ -94,3 +94,4 @@ public class KaleoTaskFormInstanceTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:225048860

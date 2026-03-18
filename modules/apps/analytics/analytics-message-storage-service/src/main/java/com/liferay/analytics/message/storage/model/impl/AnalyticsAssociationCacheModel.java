@@ -216,3 +216,4 @@ public class AnalyticsAssociationCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-46195281

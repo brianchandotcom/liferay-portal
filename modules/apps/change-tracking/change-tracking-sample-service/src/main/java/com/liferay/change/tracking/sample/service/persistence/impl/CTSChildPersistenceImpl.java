@@ -2579,3 +2579,4 @@ public class CTSChildPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-425603831

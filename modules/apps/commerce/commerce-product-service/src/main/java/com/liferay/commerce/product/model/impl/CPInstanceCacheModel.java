@@ -660,3 +660,4 @@ public class CPInstanceCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:71339319

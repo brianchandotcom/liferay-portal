@@ -320,3 +320,4 @@ public class LayoutPrototypeServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-51975214

@@ -440,3 +440,4 @@ public class ListTypeEntryLocalServiceUtil {
 			ListTypeEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:278398604

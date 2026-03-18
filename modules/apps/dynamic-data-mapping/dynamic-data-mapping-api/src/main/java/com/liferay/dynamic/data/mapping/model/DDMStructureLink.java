@@ -54,3 +54,4 @@ public interface DDMStructureLink
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2048057372

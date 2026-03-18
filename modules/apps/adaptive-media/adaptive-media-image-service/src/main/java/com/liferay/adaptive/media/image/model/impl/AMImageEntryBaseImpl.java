@@ -39,3 +39,4 @@ public abstract class AMImageEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:701588334

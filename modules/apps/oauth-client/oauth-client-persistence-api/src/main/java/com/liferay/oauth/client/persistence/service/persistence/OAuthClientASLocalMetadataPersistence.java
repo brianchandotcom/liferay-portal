@@ -955,3 +955,4 @@ public interface OAuthClientASLocalMetadataPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1267516371

@@ -66,3 +66,4 @@ public abstract class BaseLayoutFriendlyURLUADExporter
 	protected LayoutFriendlyURLLocalService layoutFriendlyURLLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:194910217

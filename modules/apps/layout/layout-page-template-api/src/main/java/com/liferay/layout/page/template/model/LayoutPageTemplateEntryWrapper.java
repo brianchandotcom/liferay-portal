@@ -1000,3 +1000,4 @@ public class LayoutPageTemplateEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-953971290

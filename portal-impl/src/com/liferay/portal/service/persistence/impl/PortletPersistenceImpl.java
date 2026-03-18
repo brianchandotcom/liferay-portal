@@ -1364,3 +1364,4 @@ public class PortletPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1772066699

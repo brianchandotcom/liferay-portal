@@ -447,3 +447,4 @@ public class CSDiagramPinUtil {
 	private static volatile CSDiagramPinPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1122701824

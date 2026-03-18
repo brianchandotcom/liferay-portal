@@ -99,3 +99,4 @@ public class CPDefinitionVirtualSettingTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1250906650

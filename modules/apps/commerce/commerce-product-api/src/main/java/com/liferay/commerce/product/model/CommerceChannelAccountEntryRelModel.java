@@ -327,3 +327,4 @@ public interface CommerceChannelAccountEntryRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1862203803

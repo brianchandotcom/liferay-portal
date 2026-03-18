@@ -784,3 +784,4 @@ public class FaroProjectUtil {
 	private static volatile FaroProjectPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1320035750

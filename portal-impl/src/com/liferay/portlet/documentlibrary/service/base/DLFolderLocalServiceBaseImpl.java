@@ -913,3 +913,4 @@ public abstract class DLFolderLocalServiceBaseImpl
 		DLFolderLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1407837715

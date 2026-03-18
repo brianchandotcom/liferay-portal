@@ -250,3 +250,4 @@ public class LaunchSetCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1201586582

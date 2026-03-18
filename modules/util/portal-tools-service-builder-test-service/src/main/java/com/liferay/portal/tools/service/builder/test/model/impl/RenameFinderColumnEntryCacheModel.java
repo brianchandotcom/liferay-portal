@@ -114,3 +114,4 @@ public class RenameFinderColumnEntryCacheModel
 	public String columnToRename;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-228229443

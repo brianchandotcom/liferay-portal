@@ -424,3 +424,4 @@ public class MBDiscussionLocalServiceUtil {
 			MBDiscussionLocalServiceUtil.class, MBDiscussionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:211059820

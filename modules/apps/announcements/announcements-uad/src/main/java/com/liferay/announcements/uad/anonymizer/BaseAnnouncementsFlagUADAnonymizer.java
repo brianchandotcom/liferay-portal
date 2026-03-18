@@ -95,3 +95,4 @@ public abstract class BaseAnnouncementsFlagUADAnonymizer
 	protected AnnouncementsFlagLocalService announcementsFlagLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1975836528

@@ -504,3 +504,4 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 		WebDAVPropsLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1695919650

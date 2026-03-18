@@ -995,3 +995,4 @@ public class LayoutLocalizationUtil {
 	private static volatile LayoutLocalizationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:854546695

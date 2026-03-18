@@ -502,3 +502,4 @@ public interface CommerceTaxMethodPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1613268859

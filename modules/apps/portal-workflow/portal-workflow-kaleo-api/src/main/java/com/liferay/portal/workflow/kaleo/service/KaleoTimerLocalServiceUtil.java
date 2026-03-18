@@ -317,3 +317,4 @@ public class KaleoTimerLocalServiceUtil {
 			KaleoTimerLocalServiceUtil.class, KaleoTimerLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1430396687

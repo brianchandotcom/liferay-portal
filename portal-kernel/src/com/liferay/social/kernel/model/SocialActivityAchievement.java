@@ -54,3 +54,4 @@ public interface SocialActivityAchievement
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1946590338

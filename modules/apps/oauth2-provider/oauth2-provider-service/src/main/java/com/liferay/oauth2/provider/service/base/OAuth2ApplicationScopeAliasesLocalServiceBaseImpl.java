@@ -488,3 +488,4 @@ public abstract class OAuth2ApplicationScopeAliasesLocalServiceBaseImpl
 		OAuth2ApplicationScopeAliasesLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:74360296

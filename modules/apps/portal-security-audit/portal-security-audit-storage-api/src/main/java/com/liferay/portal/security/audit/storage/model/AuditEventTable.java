@@ -62,3 +62,4 @@ public class AuditEventTable extends BaseTable<AuditEventTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-842353748

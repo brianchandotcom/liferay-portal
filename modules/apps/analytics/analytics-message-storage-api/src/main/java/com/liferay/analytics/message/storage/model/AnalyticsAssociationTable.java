@@ -65,3 +65,4 @@ public class AnalyticsAssociationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-63150805

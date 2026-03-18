@@ -137,3 +137,4 @@ public class CommercePricingClassModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1395056563

@@ -200,3 +200,4 @@ public interface MFATimeBasedOTPEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2092053354

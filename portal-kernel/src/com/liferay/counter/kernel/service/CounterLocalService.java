@@ -64,3 +64,4 @@ public interface CounterLocalService extends BaseLocalService {
 	public void reset(String name, long size);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:358494911

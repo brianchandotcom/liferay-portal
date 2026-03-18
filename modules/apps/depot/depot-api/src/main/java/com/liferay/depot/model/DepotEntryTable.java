@@ -51,3 +51,4 @@ public class DepotEntryTable extends BaseTable<DepotEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:288960202

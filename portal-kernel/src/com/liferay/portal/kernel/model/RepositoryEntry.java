@@ -47,3 +47,4 @@ public interface RepositoryEntry extends PersistedModel, RepositoryEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-130409305

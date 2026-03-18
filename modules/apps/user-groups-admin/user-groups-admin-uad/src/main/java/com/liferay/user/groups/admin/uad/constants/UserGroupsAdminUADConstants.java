@@ -14,3 +14,4 @@ public class UserGroupsAdminUADConstants {
 	public static final String[] USER_ID_FIELD_NAMES_USER_GROUP = {"userId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:962086652

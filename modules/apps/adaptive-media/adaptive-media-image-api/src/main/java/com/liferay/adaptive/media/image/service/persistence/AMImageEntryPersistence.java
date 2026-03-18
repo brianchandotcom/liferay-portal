@@ -1282,3 +1282,4 @@ public interface AMImageEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2084462727

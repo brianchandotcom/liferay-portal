@@ -215,3 +215,4 @@ public class DDMFieldAttributeCacheModel
 	public String smallAttributeValue;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1293016298

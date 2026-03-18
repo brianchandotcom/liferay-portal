@@ -75,3 +75,4 @@ public abstract class BaseKBTemplateUADDisplay
 	protected KBTemplateLocalService kbTemplateLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:514642648

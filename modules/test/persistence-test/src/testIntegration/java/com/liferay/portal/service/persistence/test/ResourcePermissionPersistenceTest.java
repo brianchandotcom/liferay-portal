@@ -682,3 +682,4 @@ public class ResourcePermissionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1539273040

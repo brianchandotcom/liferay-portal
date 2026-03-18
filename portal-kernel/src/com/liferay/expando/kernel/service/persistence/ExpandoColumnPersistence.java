@@ -507,3 +507,4 @@ public interface ExpandoColumnPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-141361106

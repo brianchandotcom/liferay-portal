@@ -220,3 +220,4 @@ public class RatingsEntryCacheModel
 	public double score;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-789035600

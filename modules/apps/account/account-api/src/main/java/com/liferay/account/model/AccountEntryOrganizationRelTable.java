@@ -47,3 +47,4 @@ public class AccountEntryOrganizationRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1771088333

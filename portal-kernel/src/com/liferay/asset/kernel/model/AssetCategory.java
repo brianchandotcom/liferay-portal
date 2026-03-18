@@ -104,3 +104,4 @@ public interface AssetCategory
 	public boolean isRootCategory();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:324490232

@@ -71,3 +71,4 @@ public class CommercePaymentEntryAuditTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:53466481

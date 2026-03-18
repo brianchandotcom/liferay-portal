@@ -809,3 +809,4 @@ public class OAuth2ScopeGrantUtil {
 	private static volatile OAuth2ScopeGrantPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:487931710

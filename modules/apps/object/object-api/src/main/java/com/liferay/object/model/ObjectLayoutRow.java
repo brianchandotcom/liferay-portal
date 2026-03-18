@@ -52,3 +52,4 @@ public interface ObjectLayoutRow extends ObjectLayoutRowModel {
 		java.util.List<ObjectLayoutColumn> objectLayoutColumns);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1457461934

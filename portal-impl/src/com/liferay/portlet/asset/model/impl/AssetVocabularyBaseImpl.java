@@ -39,3 +39,4 @@ public abstract class AssetVocabularyBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:145388947

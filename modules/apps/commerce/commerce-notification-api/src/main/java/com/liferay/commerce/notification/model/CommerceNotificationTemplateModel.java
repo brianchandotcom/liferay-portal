@@ -666,3 +666,4 @@ public interface CommerceNotificationTemplateModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1334502614

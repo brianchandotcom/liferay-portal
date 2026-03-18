@@ -668,3 +668,4 @@ public class KaleoTaskAssignmentWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:167315308

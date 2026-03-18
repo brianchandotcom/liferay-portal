@@ -2326,3 +2326,4 @@ public class SocialActivityUtil {
 	private static volatile SocialActivityPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-301593491

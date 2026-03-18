@@ -294,3 +294,4 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2032316797

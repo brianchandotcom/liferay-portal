@@ -1082,3 +1082,4 @@ public class DepotEntryPinUtil {
 	private static volatile DepotEntryPinPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1658143436

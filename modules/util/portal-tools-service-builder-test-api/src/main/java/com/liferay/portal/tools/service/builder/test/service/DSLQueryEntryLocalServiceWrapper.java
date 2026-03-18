@@ -349,3 +349,4 @@ public class DSLQueryEntryLocalServiceWrapper
 	private DSLQueryEntryLocalService _dslQueryEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-948571629

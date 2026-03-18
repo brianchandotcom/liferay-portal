@@ -187,3 +187,4 @@ public class CompanyInfoWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1266531186

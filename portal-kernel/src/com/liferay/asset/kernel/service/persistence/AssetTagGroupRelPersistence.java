@@ -838,3 +838,4 @@ public interface AssetTagGroupRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1410508336

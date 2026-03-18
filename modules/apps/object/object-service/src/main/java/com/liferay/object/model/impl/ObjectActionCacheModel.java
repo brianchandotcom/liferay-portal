@@ -386,3 +386,4 @@ public class ObjectActionCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-379932176

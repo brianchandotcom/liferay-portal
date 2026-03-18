@@ -318,3 +318,4 @@ public interface ObjectStateTransitionLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-675412067

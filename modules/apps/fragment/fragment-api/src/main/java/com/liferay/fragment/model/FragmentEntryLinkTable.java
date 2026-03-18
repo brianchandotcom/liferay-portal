@@ -116,3 +116,4 @@ public class FragmentEntryLinkTable extends BaseTable<FragmentEntryLinkTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1024051345

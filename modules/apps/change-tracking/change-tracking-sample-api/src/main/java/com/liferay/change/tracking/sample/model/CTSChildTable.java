@@ -43,3 +43,4 @@ public class CTSChildTable extends BaseTable<CTSChildTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:600705475

@@ -755,3 +755,4 @@ public class NestedSetsTreeEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-30694753

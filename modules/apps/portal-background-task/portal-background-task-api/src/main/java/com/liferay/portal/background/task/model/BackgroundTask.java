@@ -78,3 +78,4 @@ public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 	public boolean isInProgress();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:939104800

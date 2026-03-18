@@ -720,3 +720,4 @@ public class DispatchTriggerWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1988791752

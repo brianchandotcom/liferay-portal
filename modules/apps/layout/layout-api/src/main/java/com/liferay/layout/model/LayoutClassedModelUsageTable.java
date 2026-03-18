@@ -78,3 +78,4 @@ public class LayoutClassedModelUsageTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1720683442

@@ -314,3 +314,4 @@ public interface SamlSpSessionLocalService
 	public SamlSpSession updateSamlSpSession(SamlSpSession samlSpSession);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1678622983

@@ -53,12 +53,12 @@ public abstract class BaseCalendarBookingUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(calendarBooking.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(calendarBooking.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(calendarBooking.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -70,3 +70,4 @@ public abstract class BaseCalendarBookingUADExporter
 	protected CalendarBookingLocalService calendarBookingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1780106941

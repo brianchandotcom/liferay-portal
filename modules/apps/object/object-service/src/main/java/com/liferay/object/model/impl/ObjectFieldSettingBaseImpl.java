@@ -39,3 +39,4 @@ public abstract class ObjectFieldSettingBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-633769855

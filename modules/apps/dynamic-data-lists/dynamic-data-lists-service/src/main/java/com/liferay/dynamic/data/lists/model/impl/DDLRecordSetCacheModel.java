@@ -396,3 +396,4 @@ public class DDLRecordSetCacheModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1065237352

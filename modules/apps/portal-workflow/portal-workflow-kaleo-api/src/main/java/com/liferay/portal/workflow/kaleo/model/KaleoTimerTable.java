@@ -73,3 +73,4 @@ public class KaleoTimerTable extends BaseTable<KaleoTimerTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-545441394

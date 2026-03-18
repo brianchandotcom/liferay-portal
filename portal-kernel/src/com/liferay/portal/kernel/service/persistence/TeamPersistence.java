@@ -1238,3 +1238,4 @@ public interface TeamPersistence
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-357326973

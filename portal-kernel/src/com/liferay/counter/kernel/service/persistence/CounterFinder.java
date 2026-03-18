@@ -35,3 +35,4 @@ public interface CounterFinder {
 	public void reset(String name, long size);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1684298350

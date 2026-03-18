@@ -641,3 +641,4 @@ public interface RecentLayoutBranchPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1879592773

@@ -271,3 +271,4 @@ public class DSLQueryEntryUtil {
 	private static volatile DSLQueryEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2001043378

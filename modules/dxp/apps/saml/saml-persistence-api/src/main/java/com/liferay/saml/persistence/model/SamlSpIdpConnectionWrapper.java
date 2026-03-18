@@ -748,3 +748,4 @@ public class SamlSpIdpConnectionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1174174574

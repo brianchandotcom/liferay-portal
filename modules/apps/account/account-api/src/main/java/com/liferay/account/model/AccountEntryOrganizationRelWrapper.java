@@ -250,3 +250,4 @@ public class AccountEntryOrganizationRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1265131508

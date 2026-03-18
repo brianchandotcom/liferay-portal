@@ -423,3 +423,4 @@ public class KBTemplateLocalServiceUtil {
 			KBTemplateLocalServiceUtil.class, KBTemplateLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-653482425

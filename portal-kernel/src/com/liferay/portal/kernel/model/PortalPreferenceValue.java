@@ -55,3 +55,4 @@ public interface PortalPreferenceValue
 	public void setValue(String value);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1087139925

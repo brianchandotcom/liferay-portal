@@ -506,3 +506,4 @@ public class CommercePriceListCommerceAccountGroupRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:92228675

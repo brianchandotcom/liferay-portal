@@ -67,3 +67,4 @@ public interface AssetLink extends AssetLinkModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1471241120

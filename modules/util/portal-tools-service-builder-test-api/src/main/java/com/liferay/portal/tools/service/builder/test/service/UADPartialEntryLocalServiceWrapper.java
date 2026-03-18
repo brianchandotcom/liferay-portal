@@ -357,3 +357,4 @@ public class UADPartialEntryLocalServiceWrapper
 	private UADPartialEntryLocalService _uadPartialEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-218628409

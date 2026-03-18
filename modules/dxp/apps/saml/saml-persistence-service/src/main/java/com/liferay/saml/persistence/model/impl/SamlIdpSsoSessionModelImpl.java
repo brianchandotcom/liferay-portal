@@ -811,3 +811,4 @@ public class SamlIdpSsoSessionModelImpl
 	private SamlIdpSsoSession _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-313796795

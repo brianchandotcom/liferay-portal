@@ -58,3 +58,4 @@ public interface BackgroundTaskService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1121426225

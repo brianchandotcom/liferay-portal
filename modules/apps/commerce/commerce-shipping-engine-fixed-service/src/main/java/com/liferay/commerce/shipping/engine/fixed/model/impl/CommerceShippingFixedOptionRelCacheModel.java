@@ -288,3 +288,4 @@ public class CommerceShippingFixedOptionRelCacheModel
 	public String zip;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1579244235

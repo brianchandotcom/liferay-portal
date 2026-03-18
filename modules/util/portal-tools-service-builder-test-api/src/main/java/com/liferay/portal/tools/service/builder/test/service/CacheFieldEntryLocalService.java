@@ -267,3 +267,4 @@ public interface CacheFieldEntryLocalService
 		CacheFieldEntry cacheFieldEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-106168536

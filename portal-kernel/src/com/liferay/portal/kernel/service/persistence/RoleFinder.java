@@ -163,3 +163,4 @@ public interface RoleFinder {
 			<com.liferay.portal.kernel.model.Role> orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1414766380

@@ -284,3 +284,4 @@ public interface CPConfigurationEntrySettingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1737730288

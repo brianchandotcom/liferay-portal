@@ -1056,3 +1056,4 @@ public class BatchEngineExportTaskUtil {
 	private static volatile BatchEngineExportTaskPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1623006463

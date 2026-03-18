@@ -59,3 +59,4 @@ public interface TrashVersion extends PersistedModel, TrashVersionModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-403478774

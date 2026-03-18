@@ -64,3 +64,4 @@ public interface DispatchTrigger extends DispatchTriggerModel, PersistedModel {
 			dispatchTaskSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:87323755

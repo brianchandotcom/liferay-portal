@@ -3208,3 +3208,4 @@ public interface MBCategoryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-959932852

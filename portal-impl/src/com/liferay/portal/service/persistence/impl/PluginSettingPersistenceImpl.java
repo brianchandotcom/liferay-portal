@@ -1429,3 +1429,4 @@ public class PluginSettingPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1498594892

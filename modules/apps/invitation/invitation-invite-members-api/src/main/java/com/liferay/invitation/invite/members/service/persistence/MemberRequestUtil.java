@@ -775,3 +775,4 @@ public class MemberRequestUtil {
 	private static volatile MemberRequestPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1063695785

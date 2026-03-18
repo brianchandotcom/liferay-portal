@@ -476,3 +476,4 @@ public abstract class ContactsCardTemplateLocalServiceBaseImpl
 		ContactsCardTemplateLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1720014388

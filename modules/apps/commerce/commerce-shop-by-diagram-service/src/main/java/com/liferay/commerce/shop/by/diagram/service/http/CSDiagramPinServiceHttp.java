@@ -383,3 +383,4 @@ public class CSDiagramPinServiceHttp {
 		new Class[] {long.class, double.class, double.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:984600872

@@ -3793,3 +3793,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1111198340

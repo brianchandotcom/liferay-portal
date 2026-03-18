@@ -39,3 +39,4 @@ public abstract class LayoutFriendlyURLBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-753826473

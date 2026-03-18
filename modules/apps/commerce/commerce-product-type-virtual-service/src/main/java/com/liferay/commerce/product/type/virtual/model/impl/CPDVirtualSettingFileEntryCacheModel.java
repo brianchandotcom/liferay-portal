@@ -256,3 +256,4 @@ public class CPDVirtualSettingFileEntryCacheModel
 	public String version;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1528846550

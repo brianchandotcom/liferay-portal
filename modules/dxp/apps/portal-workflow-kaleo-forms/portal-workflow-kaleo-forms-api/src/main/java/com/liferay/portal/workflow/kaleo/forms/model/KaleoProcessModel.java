@@ -260,3 +260,4 @@ public interface KaleoProcessModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1369770570

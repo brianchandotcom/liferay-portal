@@ -393,3 +393,4 @@ public interface ExportImportReportEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1332273680

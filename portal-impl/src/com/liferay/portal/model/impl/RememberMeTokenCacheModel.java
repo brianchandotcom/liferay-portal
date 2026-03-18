@@ -168,3 +168,4 @@ public class RememberMeTokenCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-32887137

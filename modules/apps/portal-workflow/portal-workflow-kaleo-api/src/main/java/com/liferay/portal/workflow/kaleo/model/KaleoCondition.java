@@ -50,3 +50,4 @@ public interface KaleoCondition extends KaleoConditionModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-214318915

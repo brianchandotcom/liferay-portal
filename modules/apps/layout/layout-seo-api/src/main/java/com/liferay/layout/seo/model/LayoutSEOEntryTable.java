@@ -95,3 +95,4 @@ public class LayoutSEOEntryTable extends BaseTable<LayoutSEOEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-383639756

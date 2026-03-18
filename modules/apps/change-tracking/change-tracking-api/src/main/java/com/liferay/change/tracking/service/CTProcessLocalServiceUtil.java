@@ -309,3 +309,4 @@ public class CTProcessLocalServiceUtil {
 			CTProcessLocalServiceUtil.class, CTProcessLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1466841024

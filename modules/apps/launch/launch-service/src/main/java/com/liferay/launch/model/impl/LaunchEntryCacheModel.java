@@ -229,3 +229,4 @@ public class LaunchEntryCacheModel
 	public String classVersion;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-451925477

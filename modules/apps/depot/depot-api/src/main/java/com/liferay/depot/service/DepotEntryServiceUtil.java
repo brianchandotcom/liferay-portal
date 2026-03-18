@@ -132,3 +132,4 @@ public class DepotEntryServiceUtil {
 		new Snapshot<>(DepotEntryServiceUtil.class, DepotEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1376930221

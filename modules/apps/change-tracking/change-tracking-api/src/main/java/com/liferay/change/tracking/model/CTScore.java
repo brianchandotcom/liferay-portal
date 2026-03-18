@@ -50,3 +50,4 @@ public interface CTScore extends CTScoreModel, PersistedModel {
 	public String getSizeClassification();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1088207382

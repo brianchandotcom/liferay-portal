@@ -130,3 +130,4 @@ public abstract class CommerceChannelRelServiceBaseImpl
 		CommerceChannelRelServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1422307296

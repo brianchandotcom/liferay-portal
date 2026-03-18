@@ -33,3 +33,4 @@ package com.liferay.launch.service.http;
  */
 public class LaunchEntryServiceHttp {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1580210624

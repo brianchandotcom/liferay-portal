@@ -475,3 +475,4 @@ public class SAPEntryLocalServiceWrapper
 	private SAPEntryLocalService _sapEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:430723341

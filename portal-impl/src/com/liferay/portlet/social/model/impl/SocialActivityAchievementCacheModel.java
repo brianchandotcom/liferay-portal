@@ -179,3 +179,4 @@ public class SocialActivityAchievementCacheModel
 	public boolean firstInGroup;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:673266316

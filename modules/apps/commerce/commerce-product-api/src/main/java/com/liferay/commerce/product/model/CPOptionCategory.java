@@ -52,3 +52,4 @@ public interface CPOptionCategory
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:238565866

@@ -39,3 +39,4 @@ public abstract class KBFolderBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-826480324

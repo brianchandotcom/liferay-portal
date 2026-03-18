@@ -85,3 +85,4 @@ public class ContactTable extends BaseTable<ContactTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:668123959

@@ -4606,3 +4606,4 @@ public class CPOptionCategoryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1387988950

@@ -733,3 +733,4 @@ public class CommerceChannelRelUtil {
 	private static volatile CommerceChannelRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-866613515

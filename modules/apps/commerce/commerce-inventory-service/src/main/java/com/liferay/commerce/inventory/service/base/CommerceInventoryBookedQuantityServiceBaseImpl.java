@@ -132,3 +132,4 @@ public abstract class CommerceInventoryBookedQuantityServiceBaseImpl
 		CommerceInventoryBookedQuantityServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-216726857

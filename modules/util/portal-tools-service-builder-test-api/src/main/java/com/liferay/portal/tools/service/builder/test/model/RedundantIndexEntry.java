@@ -52,3 +52,4 @@ public interface RedundantIndexEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-845981270

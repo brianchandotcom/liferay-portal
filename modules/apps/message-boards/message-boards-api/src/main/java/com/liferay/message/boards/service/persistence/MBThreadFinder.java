@@ -141,3 +141,4 @@ public interface MBThreadFinder {
 				<com.liferay.message.boards.model.MBThread> queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:326088742

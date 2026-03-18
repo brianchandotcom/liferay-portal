@@ -203,3 +203,4 @@ public class AppServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1140372132

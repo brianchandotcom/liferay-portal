@@ -246,3 +246,4 @@ public class CommerceTaxFixedRateAddressRelCacheModel
 	public double rate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1748277985

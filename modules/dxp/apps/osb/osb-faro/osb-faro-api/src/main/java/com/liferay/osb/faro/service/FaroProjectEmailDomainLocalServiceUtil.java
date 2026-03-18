@@ -339,3 +339,4 @@ public class FaroProjectEmailDomainLocalServiceUtil {
 			FaroProjectEmailDomainLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1417616249

@@ -129,3 +129,4 @@ public abstract class StyleBookEntryServiceBaseImpl
 		StyleBookEntryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:276567896

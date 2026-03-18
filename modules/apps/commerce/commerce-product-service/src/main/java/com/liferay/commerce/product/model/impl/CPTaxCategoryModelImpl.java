@@ -1293,3 +1293,4 @@ public class CPTaxCategoryModelImpl
 	private CPTaxCategory _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-968992141

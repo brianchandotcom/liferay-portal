@@ -142,3 +142,4 @@ public class CTMessageCacheModel
 	public String messageContent;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:709274994

@@ -86,3 +86,4 @@ public class AssetEntryTable extends BaseTable<AssetEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:247284121

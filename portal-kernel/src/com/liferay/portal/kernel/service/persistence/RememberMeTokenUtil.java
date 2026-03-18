@@ -620,3 +620,4 @@ public class RememberMeTokenUtil {
 	private static volatile RememberMeTokenPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2004522690

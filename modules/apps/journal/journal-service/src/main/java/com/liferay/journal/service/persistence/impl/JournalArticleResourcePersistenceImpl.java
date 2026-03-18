@@ -3197,3 +3197,4 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1099442707

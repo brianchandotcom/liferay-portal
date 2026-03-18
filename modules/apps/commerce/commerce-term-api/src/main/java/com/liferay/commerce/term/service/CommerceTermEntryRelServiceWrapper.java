@@ -160,3 +160,4 @@ public class CommerceTermEntryRelServiceWrapper
 	private CommerceTermEntryRelService _commerceTermEntryRelService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-850615306

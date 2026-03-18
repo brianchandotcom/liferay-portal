@@ -1239,3 +1239,4 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-827730152

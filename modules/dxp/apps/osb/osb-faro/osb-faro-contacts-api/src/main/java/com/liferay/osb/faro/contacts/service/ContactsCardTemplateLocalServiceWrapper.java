@@ -397,3 +397,4 @@ public class ContactsCardTemplateLocalServiceWrapper
 	private ContactsCardTemplateLocalService _contactsCardTemplateLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-481347876

@@ -42,3 +42,4 @@ public abstract class LayoutClassedModelUsageBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-352467926

@@ -69,3 +69,4 @@ public interface CommerceTaxFixedRateAddressRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-151608278

@@ -848,3 +848,4 @@ public class KaleoNotificationRecipientUtil {
 	private static volatile KaleoNotificationRecipientPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-6570833

@@ -3884,3 +3884,4 @@ public class DDMTemplateUtil {
 	private static volatile DDMTemplatePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-307357636

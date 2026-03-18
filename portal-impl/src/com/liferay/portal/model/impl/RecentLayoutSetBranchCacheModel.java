@@ -150,3 +150,4 @@ public class RecentLayoutSetBranchCacheModel
 	public long layoutSetId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-700948213

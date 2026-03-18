@@ -192,3 +192,4 @@ public interface AnnouncementsFlagModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-975691137

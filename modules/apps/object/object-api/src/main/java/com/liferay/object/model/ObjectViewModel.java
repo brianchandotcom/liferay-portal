@@ -354,3 +354,4 @@ public interface ObjectViewModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:35923744

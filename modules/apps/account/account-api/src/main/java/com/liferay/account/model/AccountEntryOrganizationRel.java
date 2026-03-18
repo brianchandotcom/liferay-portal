@@ -65,3 +65,4 @@ public interface AccountEntryOrganizationRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-8219315

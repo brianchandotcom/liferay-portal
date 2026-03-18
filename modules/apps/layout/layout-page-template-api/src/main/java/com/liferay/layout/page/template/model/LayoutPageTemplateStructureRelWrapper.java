@@ -733,3 +733,4 @@ public class LayoutPageTemplateStructureRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1281743439

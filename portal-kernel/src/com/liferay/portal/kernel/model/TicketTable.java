@@ -50,3 +50,4 @@ public class TicketTable extends BaseTable<TicketTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1325508359

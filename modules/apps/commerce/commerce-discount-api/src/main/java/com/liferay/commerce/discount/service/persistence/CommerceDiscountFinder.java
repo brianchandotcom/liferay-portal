@@ -96,3 +96,4 @@ public interface CommerceDiscountFinder {
 			long[] assetCategoryIds, long[] commercePricingClassIds);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-434495460

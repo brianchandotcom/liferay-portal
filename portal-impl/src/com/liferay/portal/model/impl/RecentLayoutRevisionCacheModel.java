@@ -158,3 +158,4 @@ public class RecentLayoutRevisionCacheModel
 	public long plid;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1800422262

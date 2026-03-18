@@ -52,3 +52,4 @@ public interface ERCVersionedEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1495397162

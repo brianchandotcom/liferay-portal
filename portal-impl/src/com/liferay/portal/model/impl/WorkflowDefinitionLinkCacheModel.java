@@ -279,3 +279,4 @@ public class WorkflowDefinitionLinkCacheModel
 	public int workflowDefinitionVersion;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-518401912

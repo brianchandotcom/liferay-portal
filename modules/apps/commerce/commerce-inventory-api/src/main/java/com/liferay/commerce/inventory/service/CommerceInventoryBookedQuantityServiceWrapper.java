@@ -106,3 +106,4 @@ public class CommerceInventoryBookedQuantityServiceWrapper
 		_commerceInventoryBookedQuantityService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1435463247

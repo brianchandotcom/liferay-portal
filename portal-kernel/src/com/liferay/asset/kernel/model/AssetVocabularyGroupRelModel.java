@@ -164,3 +164,4 @@ public interface AssetVocabularyGroupRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1105584765

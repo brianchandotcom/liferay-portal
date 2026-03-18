@@ -2016,3 +2016,4 @@ public class CPDefinitionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:726118717

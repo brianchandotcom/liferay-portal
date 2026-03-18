@@ -344,3 +344,4 @@ public class OrganizationCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-70480856

@@ -72,3 +72,4 @@ public class OpenIdConnectSessionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:537963378

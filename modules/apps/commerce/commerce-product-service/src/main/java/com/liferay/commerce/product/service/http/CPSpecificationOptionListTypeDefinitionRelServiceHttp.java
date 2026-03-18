@@ -135,3 +135,4 @@ public class CPSpecificationOptionListTypeDefinitionRelServiceHttp {
 			new Class[] {long.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1969019191

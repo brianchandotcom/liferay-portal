@@ -50,3 +50,4 @@ public interface ERCGroupEntry extends ERCGroupEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1788968356

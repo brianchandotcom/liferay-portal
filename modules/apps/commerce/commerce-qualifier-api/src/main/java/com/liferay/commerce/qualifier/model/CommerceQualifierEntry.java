@@ -52,3 +52,4 @@ public interface CommerceQualifierEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-443360793

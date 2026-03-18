@@ -334,3 +334,4 @@ public class MFAEmailOTPEntryUtil {
 	private static volatile MFAEmailOTPEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-539501614

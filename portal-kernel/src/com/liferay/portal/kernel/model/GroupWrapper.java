@@ -1513,3 +1513,4 @@ public class GroupWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-18435476

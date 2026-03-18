@@ -796,3 +796,4 @@ public class CPDefinitionOptionValueRelServiceHttp {
 			new Class[] {long.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:170135678

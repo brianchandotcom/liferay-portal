@@ -55,3 +55,4 @@ public interface SharepointOAuth2TokenEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1703147017

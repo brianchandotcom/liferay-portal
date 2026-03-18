@@ -374,3 +374,4 @@ public class UserNotificationDeliveryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1944211102

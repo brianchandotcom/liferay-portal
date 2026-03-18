@@ -33,3 +33,4 @@ package com.liferay.layout.seo.service.http;
  */
 public class LayoutSEOSiteServiceHttp {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1134341724

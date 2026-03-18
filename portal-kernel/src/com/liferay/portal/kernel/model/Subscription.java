@@ -49,3 +49,4 @@ public interface Subscription extends PersistedModel, SubscriptionModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1292526859

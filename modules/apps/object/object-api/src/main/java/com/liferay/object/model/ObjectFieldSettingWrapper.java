@@ -432,3 +432,4 @@ public class ObjectFieldSettingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-207933483

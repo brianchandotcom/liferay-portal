@@ -5795,3 +5795,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-111046911

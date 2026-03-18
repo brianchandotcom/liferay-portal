@@ -789,3 +789,4 @@ public class CPInstanceLocalServiceUtil {
 			CPInstanceLocalServiceUtil.class, CPInstanceLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1369807608

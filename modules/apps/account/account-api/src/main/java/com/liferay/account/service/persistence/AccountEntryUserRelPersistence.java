@@ -496,3 +496,4 @@ public interface AccountEntryUserRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1495070821

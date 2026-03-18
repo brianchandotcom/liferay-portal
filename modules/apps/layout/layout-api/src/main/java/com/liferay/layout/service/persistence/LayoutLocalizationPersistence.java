@@ -755,3 +755,4 @@ public interface LayoutLocalizationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:681695651

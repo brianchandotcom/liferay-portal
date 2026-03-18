@@ -24,3 +24,4 @@ public class KaleoUADConstants {
 		{"userId", "completionUserId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1417233560

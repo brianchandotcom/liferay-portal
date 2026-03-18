@@ -382,3 +382,4 @@ public class COREntryCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1069906036

@@ -141,3 +141,4 @@ public interface DLSyncEventModel extends BaseModel<DLSyncEvent>, ShardedModel {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:476586246

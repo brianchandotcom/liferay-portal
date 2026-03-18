@@ -293,3 +293,4 @@ public interface ModuleLocalService
 	public Module updateModule(Module module);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1472255890

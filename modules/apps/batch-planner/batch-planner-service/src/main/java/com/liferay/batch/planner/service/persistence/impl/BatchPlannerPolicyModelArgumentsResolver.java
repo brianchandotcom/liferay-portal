@@ -137,3 +137,4 @@ public class BatchPlannerPolicyModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2067708250

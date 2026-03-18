@@ -170,3 +170,4 @@ public class KBCommentServiceUtil {
 		new Snapshot<>(KBCommentServiceUtil.class, KBCommentService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1753201113

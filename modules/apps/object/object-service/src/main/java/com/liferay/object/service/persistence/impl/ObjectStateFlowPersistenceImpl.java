@@ -2086,3 +2086,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1372941042

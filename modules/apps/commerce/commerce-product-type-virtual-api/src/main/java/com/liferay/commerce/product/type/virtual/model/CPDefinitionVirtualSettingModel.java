@@ -547,3 +547,4 @@ public interface CPDefinitionVirtualSettingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1272276317

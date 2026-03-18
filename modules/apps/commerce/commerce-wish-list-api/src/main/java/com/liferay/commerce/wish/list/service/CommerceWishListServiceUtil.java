@@ -106,3 +106,4 @@ public class CommerceWishListServiceUtil {
 			CommerceWishListServiceUtil.class, CommerceWishListService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-478871068

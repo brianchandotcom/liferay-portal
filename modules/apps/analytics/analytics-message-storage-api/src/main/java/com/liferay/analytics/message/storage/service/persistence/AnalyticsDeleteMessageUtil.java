@@ -657,3 +657,4 @@ public class AnalyticsDeleteMessageUtil {
 	private static volatile AnalyticsDeleteMessagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-674538792

@@ -1316,3 +1316,4 @@ public class KaleoTaskFormInstanceModelImpl
 	private KaleoTaskFormInstance _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1544919969

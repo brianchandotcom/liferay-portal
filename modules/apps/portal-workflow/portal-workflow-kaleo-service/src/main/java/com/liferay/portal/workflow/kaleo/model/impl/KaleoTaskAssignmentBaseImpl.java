@@ -39,3 +39,4 @@ public abstract class KaleoTaskAssignmentBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2091927892

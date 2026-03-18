@@ -839,3 +839,4 @@ public class CTAutoResolutionInfoModelImpl
 	private CTAutoResolutionInfo _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:195499783

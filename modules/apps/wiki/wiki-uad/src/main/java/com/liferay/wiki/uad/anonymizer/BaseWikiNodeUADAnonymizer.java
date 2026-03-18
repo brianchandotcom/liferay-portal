@@ -97,3 +97,4 @@ public abstract class BaseWikiNodeUADAnonymizer
 	protected WikiNodeLocalService wikiNodeLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1129423341

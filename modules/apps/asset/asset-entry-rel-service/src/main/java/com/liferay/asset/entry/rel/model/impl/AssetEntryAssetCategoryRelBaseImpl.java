@@ -42,3 +42,4 @@ public abstract class AssetEntryAssetCategoryRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-562525502

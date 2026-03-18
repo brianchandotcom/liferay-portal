@@ -386,3 +386,4 @@ public class FaroProjectUsageLocalServiceWrapper
 	private FaroProjectUsageLocalService _faroProjectUsageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-702009314

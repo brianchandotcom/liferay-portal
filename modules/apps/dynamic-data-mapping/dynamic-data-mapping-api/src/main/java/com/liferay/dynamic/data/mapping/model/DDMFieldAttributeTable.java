@@ -57,3 +57,4 @@ public class DDMFieldAttributeTable extends BaseTable<DDMFieldAttributeTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1248286512

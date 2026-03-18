@@ -105,3 +105,4 @@ public interface CommerceShippingFixedOptionRelService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:49387258

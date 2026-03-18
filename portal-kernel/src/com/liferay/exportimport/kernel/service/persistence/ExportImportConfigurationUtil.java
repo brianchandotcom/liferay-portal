@@ -1224,3 +1224,4 @@ public class ExportImportConfigurationUtil {
 	private static volatile ExportImportConfigurationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1548892744

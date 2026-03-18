@@ -695,3 +695,4 @@ public abstract class JournalFolderLocalServiceBaseImpl
 		JournalFolderLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1006798966

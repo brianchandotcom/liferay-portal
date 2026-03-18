@@ -271,3 +271,4 @@ public class OrgLaborServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2005245153

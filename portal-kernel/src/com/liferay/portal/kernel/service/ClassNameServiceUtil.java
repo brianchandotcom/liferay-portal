@@ -54,3 +54,4 @@ public class ClassNameServiceUtil {
 	private static volatile ClassNameService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2064175110

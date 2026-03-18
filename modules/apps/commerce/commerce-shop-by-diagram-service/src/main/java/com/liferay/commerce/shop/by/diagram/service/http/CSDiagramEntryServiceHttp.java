@@ -551,3 +551,4 @@ public class CSDiagramEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1297501184

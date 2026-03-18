@@ -975,3 +975,4 @@ public class ObjectLayoutTabUtil {
 	private static volatile ObjectLayoutTabPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1770739978

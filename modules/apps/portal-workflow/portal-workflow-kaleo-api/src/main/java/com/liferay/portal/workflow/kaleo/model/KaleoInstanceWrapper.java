@@ -703,3 +703,4 @@ public class KaleoInstanceWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:543177736

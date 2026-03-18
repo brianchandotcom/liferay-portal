@@ -404,3 +404,4 @@ public interface DepotAppCustomizationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-618835423

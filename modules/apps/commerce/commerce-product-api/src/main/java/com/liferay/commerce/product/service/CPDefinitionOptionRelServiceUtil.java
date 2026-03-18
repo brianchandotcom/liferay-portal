@@ -232,3 +232,4 @@ public class CPDefinitionOptionRelServiceUtil {
 			CPDefinitionOptionRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1595031747

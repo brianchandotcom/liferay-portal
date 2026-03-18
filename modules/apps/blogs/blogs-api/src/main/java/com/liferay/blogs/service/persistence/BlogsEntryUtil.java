@@ -6632,3 +6632,4 @@ public class BlogsEntryUtil {
 	private static volatile BlogsEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1453778582

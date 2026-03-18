@@ -439,3 +439,4 @@ public class CommerceChannelRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1475909155

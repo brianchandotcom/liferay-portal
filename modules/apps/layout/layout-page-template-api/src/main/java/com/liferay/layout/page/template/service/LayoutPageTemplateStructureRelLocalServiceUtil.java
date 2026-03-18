@@ -480,3 +480,4 @@ public class LayoutPageTemplateStructureRelLocalServiceUtil {
 			LayoutPageTemplateStructureRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1681831489

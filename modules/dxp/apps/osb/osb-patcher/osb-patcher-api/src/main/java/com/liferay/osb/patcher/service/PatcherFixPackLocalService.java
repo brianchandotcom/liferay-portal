@@ -363,3 +363,4 @@ public interface PatcherFixPackLocalService
 	public PatcherFixPack updatePatcherFixPack(PatcherFixPack patcherFixPack);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2046055605

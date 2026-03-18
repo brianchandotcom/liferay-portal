@@ -1185,3 +1185,4 @@ public class SAPEntryModelImpl
 	private SAPEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:267326863

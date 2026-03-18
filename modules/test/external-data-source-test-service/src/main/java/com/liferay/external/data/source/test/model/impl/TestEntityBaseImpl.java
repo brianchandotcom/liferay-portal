@@ -39,3 +39,4 @@ public abstract class TestEntityBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1716135352

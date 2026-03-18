@@ -2859,3 +2859,4 @@ public class DLFileVersionUtil {
 	private static volatile DLFileVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1063192675

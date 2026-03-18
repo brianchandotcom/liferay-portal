@@ -1147,3 +1147,4 @@ public interface FriendlyURLEntryLocalizationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1264635615

@@ -540,3 +540,4 @@ public class CTCollectionTemplateUtil {
 	private static volatile CTCollectionTemplatePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:912154650

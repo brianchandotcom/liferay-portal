@@ -39,3 +39,4 @@ public abstract class KaleoNotificationBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2104364972

@@ -101,3 +101,4 @@ public class CounterCacheModel implements CacheModel<Counter>, Externalizable {
 	public long currentId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:186245327

@@ -52,3 +52,4 @@ public interface BatchPlannerPolicy
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2126916941

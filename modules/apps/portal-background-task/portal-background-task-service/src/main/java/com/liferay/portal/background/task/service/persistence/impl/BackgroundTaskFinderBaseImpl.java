@@ -57,3 +57,4 @@ public abstract class BackgroundTaskFinderBaseImpl
 	protected BackgroundTaskPersistence backgroundTaskPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-482471352

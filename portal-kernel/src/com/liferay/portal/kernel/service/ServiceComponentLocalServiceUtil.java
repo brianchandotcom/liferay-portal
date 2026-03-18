@@ -333,3 +333,4 @@ public class ServiceComponentLocalServiceUtil {
 	private static volatile ServiceComponentLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-501659784

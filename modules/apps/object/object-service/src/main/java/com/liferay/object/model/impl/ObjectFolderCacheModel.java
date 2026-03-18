@@ -250,3 +250,4 @@ public class ObjectFolderCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1712274747

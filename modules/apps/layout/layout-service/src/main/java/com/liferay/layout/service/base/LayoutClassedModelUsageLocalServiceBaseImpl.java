@@ -673,3 +673,4 @@ public abstract class LayoutClassedModelUsageLocalServiceBaseImpl
 		LayoutClassedModelUsageLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:391534127

@@ -528,3 +528,4 @@ public class KaleoProcessLinkUtil {
 	private static volatile KaleoProcessLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2103844387

@@ -1418,3 +1418,4 @@ public class OrganizationModelImpl
 	private Organization _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:90741373

@@ -115,3 +115,4 @@ public class SegmentsEntryRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1216701635

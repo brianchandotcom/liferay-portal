@@ -104,3 +104,4 @@ public class CommerceAvailabilityEstimateServiceUtil {
 			CommerceAvailabilityEstimateService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-632827482

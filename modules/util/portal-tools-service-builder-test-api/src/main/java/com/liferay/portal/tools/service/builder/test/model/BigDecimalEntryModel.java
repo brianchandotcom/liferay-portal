@@ -99,3 +99,4 @@ public interface BigDecimalEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:986125007

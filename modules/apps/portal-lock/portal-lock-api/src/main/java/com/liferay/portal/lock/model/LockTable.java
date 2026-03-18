@@ -53,3 +53,4 @@ public class LockTable extends BaseTable<LockTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2037422667

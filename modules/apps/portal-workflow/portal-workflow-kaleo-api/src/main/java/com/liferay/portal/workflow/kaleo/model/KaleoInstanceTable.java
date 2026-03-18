@@ -81,3 +81,4 @@ public class KaleoInstanceTable extends BaseTable<KaleoInstanceTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:927051381

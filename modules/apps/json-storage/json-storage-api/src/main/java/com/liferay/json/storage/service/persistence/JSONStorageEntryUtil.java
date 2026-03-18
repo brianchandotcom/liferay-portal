@@ -1042,3 +1042,4 @@ public class JSONStorageEntryUtil {
 	private static volatile JSONStorageEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1510952065

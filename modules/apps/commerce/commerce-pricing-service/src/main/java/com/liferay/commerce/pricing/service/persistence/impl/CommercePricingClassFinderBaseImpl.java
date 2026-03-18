@@ -77,3 +77,4 @@ public abstract class CommercePricingClassFinderBaseImpl
 		CommercePricingClassFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1247194287

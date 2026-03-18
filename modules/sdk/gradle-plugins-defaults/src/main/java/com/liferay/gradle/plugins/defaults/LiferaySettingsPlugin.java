@@ -5,7 +5,6 @@
 
 package com.liferay.gradle.plugins.defaults;
 
-import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -176,25 +175,6 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 				projectPath.replace(File.separatorChar, ':');
 
 		File projectDir = projectDirPath.toFile();
-
-		if (Boolean.parseBoolean(System.getProperty("skip.read.only"))) {
-			boolean publicBranch = GradleUtil.getProperty(
-				settings, "liferay.releng.public", false);
-
-			if (publicBranch && projectPath.startsWith(":private:")) {
-				return;
-			}
-
-			File gitRepoDir = GradleUtil.getRootDir(projectDir, ".gitrepo");
-
-			if (gitRepoDir != null) {
-				File gitRepoFile = new File(gitRepoDir, ".gitrepo");
-
-				if (FileUtil.contains(gitRepoFile, "mode = pull")) {
-					return;
-				}
-			}
-		}
 
 		settings.include(new String[] {projectPath});
 

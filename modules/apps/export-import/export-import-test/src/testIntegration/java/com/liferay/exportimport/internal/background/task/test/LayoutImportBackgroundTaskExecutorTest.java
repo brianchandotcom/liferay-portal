@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
@@ -462,14 +462,14 @@ public class LayoutImportBackgroundTaskExecutorTest {
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
-		StringUtil.randomId(8);
+		DLTestUtil.randomTextFileContent(8);
 
 	private static final String
 		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
-			StringUtil.randomId(8);
+			DLTestUtil.randomTextFileContent(8);
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
-		StringUtil.randomId(8);
+		DLTestUtil.randomTextFileContent(8);
 
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

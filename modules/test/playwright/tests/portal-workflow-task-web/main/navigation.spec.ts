@@ -18,16 +18,13 @@ export const test = mergeTests(
 test(
 	'Back button is preserved when switching tabs from Home',
 	{tag: '@LPD-78912'},
-	async ({
-		page,
-		workflowTasksPage,
-	}) => {
+	async ({page, workflowTasksPage}) => {
 		await page.getByTitle('User Profile Menu').click();
 
-       	await page.getByRole('menuitem', {name: 'My Workflow Tasks'}).click();
+		await page.getByRole('menuitem', {name: 'My Workflow Tasks'}).click();
 
 		const backLink = page.getByRole('link', {
-			name: 'Return to Full Page'
+			name: 'Return to Full Page',
 		});
 
 		await expect(backLink).toBeVisible();
@@ -49,18 +46,15 @@ test(
 test(
 	'Back button is preserved when switching tabs from Administration',
 	{tag: '@LPD-78912'},
-	async ({
-		page,
-		workflowTasksPage,
-	}) => {
+	async ({page, workflowTasksPage}) => {
 		workflowTasksPage.goto();
 
 		await page.getByTitle('User Profile Menu').click();
 
-       	await page.getByRole('menuitem', {name: 'My Workflow Tasks'}).click();
+		await page.getByRole('menuitem', {name: 'My Workflow Tasks'}).click();
 
 		const backLink = page.getByRole('link', {
-			name: 'Back'
+			name: 'Back',
 		});
 
 		await expect(backLink).toBeVisible();

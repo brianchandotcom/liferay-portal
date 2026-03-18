@@ -27,37 +27,41 @@ const test = mergeTests(
 test(
 	'My Workflow Tasks full view preserves the back button when switching tabs',
 	{tag: '@LPD-78912'},
-	async ({
-		context,
-		homePage,
-		page,
-	}) => {
+	async ({context, homePage, page}) => {
 		await homePage.goto();
 
 		const [fullViewPage] = await Promise.all([
 			context.waitForEvent('page'),
-			page.getByRole('button', {
-				name: /Open My Workflow Tasks: Assigned to Me/i,
-			}).click(),
+			page
+				.getByRole('button', {
+					name: /Open My Workflow Tasks: Assigned to Me/i,
+				})
+				.click(),
 		]);
 
 		await fullViewPage.waitForLoadState();
 
-		const backButton = fullViewPage.getByRole('link', { name: 'Return to Full Page' })
+		const backButton = fullViewPage.getByRole('link', {
+			name: 'Return to Full Page',
+		});
 
 		await expect(backButton).toBeVisible();
 
-		await fullViewPage.getByRole('link', {
-			name: 'Assigned to Me',
-		}).click();
+		await fullViewPage
+			.getByRole('link', {
+				name: 'Assigned to Me',
+			})
+			.click();
 
 		await fullViewPage.waitForLoadState();
 
 		await expect(backButton).toBeVisible();
 
-		await fullViewPage.getByRole('link', {
-			name: 'Assigned to My Roles',
-		}).click();
+		await fullViewPage
+			.getByRole('link', {
+				name: 'Assigned to My Roles',
+			})
+			.click();
 
 		await fullViewPage.waitForLoadState();
 

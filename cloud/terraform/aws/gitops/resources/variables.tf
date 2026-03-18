@@ -84,7 +84,7 @@ variable "infrastructure_provider_helm_chart_config" {
 			chart_name=optional(string, "liferay-aws-infrastructure-provider")
 			chart_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure-provider")
 			path=optional(string, null)
-			version=optional(string, "0.3.1")
+			version=optional(string, "0.3.2")
 		})
 }
 variable "liferay_git_repo_config" {

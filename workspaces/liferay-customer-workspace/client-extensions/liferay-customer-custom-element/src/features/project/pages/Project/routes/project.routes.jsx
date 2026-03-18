@@ -90,21 +90,7 @@ const ProjectRoutes = () => {
 	const isProjectUsageEnabled =
 		((loggedUserAccount?.isLiferayStaff || loggedUserAccount?.isPartner) &&
 			(hasPlanSubscription || hasLegacySubscription)) ||
-		(featureFlags.includes('LRSD-12003') && hasExperienceSubscription);
-
-	const hasSaasSubscription = useMemo(
-		() => {
-			const allowedERCs = [
-				`${project?.externalReferenceCode}_liferay-cloud`,
-				`${project?.externalReferenceCode}_liferay-saas`
-			];
-
-			return subscriptionGroups?.some(({externalReferenceCode}) =>
-				allowedERCs.includes(externalReferenceCode)
-			);
-		},
-		[project?.externalReferenceCode, subscriptionGroups]
-	);
+		(featureFlags.includes('LRSD-12003') && loggedUserAccount?.isLiferayStaff && hasExperienceSubscription);
 
 	const hasSLASubscription = useMemo(
 		() =>

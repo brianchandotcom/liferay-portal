@@ -10,7 +10,9 @@
 	.table-list {
 		border-radius: 0;
 	}
+}
 
+.design-library-fds-wrapper--landing {
 	.design-library-fds-sticker-books {
 		background-color: $teal-l3;
 		color: $teal;
@@ -22,5 +24,15 @@
 		.card-type-asset-icon {
 			color: $teal;
 		}
+	}
+}
+
+.design-library-fds-wrapper--resources {
+	.design-library-fds-sticker-stylebook {
+		color: $purple;
+	}
+
+	.card-item-first .card-type-asset-icon {
+		color: $purple;
 	}
 }

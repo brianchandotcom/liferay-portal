@@ -21,13 +21,16 @@ DesignLibraryResourcesDisplayContext designLibraryResourcesDisplayContext = new 
 		/>
 	</div>
 
-	<div class="design-library-fds-wrapper">
+	<div class="design-library-fds-wrapper design-library-fds-wrapper--resources">
 		<frontend-data-set:headless-display
 			apiURL="<%= designLibraryResourcesDisplayContext.getAPIURL() %>"
 			emptyState="<%= designLibraryResourcesDisplayContext.getEmptyState() %>"
+			fdsActionDropdownItems="<%= designLibraryResourcesDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= DesignLibraryAdminFDSNames.DESIGN_LIBRARY_RESOURCES %>"
 			propsTransformer="{DesignLibraryResourcesFDSPropsTransformer} from design-library-web"
+			selectedItemsKey="embedded.id"
+			selectionType="multiple"
 		/>
 	</div>
 </div>

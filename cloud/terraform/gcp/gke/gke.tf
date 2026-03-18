@@ -81,18 +81,17 @@ resource "google_container_cluster" "primary" {
 	}
 }
 resource "google_container_node_pool" "general_purpose" {
-	cluster=google_container_cluster.primary.name
-	location=var.regional_cluster ? var.region : "${var.region}-a"
-	name="general-purpose"
-	project=var.project_id
 	autoscaling {
 		max_node_count=var.max_node_count
 		min_node_count=var.min_node_count
 	}
+	cluster=google_container_cluster.primary.name
+	location=var.regional_cluster ? var.region : "${var.region}-a"
 	management {
 		auto_repair=true
 		auto_upgrade=true
 	}
+	name="general-purpose"
 	node_config {
 		disk_size_gb=100
 		disk_type="pd-balanced"
@@ -112,9 +111,10 @@ resource "google_container_node_pool" "general_purpose" {
 			mode="GKE_METADATA"
 		}
 	}
+	project=var.project_id
 }
 resource "google_gke_hub_membership" "membership" {
-	depends_on = [google_container_cluster.primary]
+	depends_on=[google_container_cluster.primary]
 	endpoint {
 		gke_cluster {
 			resource_link="//container.googleapis.com/${google_container_cluster.primary.id}"

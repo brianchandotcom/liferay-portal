@@ -274,26 +274,27 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			'<portlet:namespace />tokenRequestParametersJSON'
 		).value = tokenRequestParametersJSON;
 
-		var oidcUserInfoMapperJSON = JSON.parse(
-			document.getElementById('<portlet:namespace />OIDCUserInfoMapperJSON')
-				.value
-		);
-
-		var matcherFieldValue = document.getElementById(
-			'<portlet:namespace />matcherField'
-		)?.value;
-
-		if (
-			matcherFieldValue == 'screenName' &&
-			!oidcUserInfoMapperJSON.user.screenName
-		) {
-			alert(
-				'Missing screenName value at OpenId Connect User Information Mapper JSON'
-			);
-			return;
-		}
+		var oidcUserInfoMapperJSON = document.getElementById(
+			'<portlet:namespace />OIDCUserInfoMapperJSON'
+		).value;
 
 		try {
+			oidcUserInfoMapperJSON = JSON.parse(oidcUserInfoMapperJSON);
+
+			var matcherFieldValue = document.getElementById(
+				'<portlet:namespace />matcherField'
+			)?.value;
+
+			if (
+				matcherFieldValue == 'screenName' &&
+				!oidcUserInfoMapperJSON.user.screenName
+			) {
+				alert(
+					'Missing screenName value at OpenId Connect User Information Mapper JSON'
+				);
+				return;
+			}
+
 			oidcUserInfoMapperJSON = JSON.stringify(
 				oidcUserInfoMapperJSON,
 				null,

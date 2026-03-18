@@ -1521,6 +1521,8 @@ public class ObjectDefinitionResourceTest
 
 		randomObjectDefinition = randomObjectDefinition();
 
+		randomObjectDefinition.setPanelCategoryKey("");
+
 		randomObjectDefinition.setScope(ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(

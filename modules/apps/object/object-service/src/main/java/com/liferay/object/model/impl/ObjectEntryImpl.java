@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -221,22 +222,17 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 				Object value = ObjectEntryValuesUtil.getValue(
 					languageId, objectField, getIndexedValues());
 
-				if (value != null) {
-					return (String)value;
+				if (Validator.isNull(value) && useDefault) {
+					value = ObjectEntryValuesUtil.getValue(
+						getDefaultLanguageId(), objectField,
+						getIndexedValues());
 				}
 
-				if (!useDefault) {
+				if (value == null) {
 					return null;
 				}
 
-				value = ObjectEntryValuesUtil.getValue(
-					getDefaultLanguageId(), objectField, getIndexedValues());
-
-				if (value != null) {
-					return (String)value;
-				}
-
-				return null;
+				return String.valueOf(value);
 			}
 		}
 

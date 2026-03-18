@@ -21,6 +21,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -148,8 +149,6 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 				return;
 			}
 
-			long primaryKey = _getPrimaryKey(baseModel);
-
 			long groupId = 0;
 
 			if (Objects.equals(
@@ -161,6 +160,8 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 
 				groupId = groupedModel.getGroupId();
 			}
+
+			long primaryKey = _getPrimaryKey(baseModel);
 
 			_objectEntryLocalService.deleteRelatedObjectEntries(
 				groupId, objectDefinition.getObjectDefinitionId(), primaryKey);
@@ -241,15 +242,14 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 			(Map<String, Function<Object, Object>>)
 				(Map<String, ?>)baseModel.getAttributeGetterFunctions();
 
-		String primaryKeyColumnName =
-			_systemObjectDefinitionManager.getPrimaryKeyColumn(
-			).getName();
+		Column<?, Long> column =
+			_systemObjectDefinitionManager.getPrimaryKeyColumn();
 
-		Function<Object, Object> function = functions.get(primaryKeyColumnName);
+		Function<Object, Object> function = functions.get(column.getName());
 
 		if (function == null) {
 			throw new IllegalArgumentException(
-				"Base model does not have a column: " + primaryKeyColumnName);
+				"Base model does not have a column: " + column.getName());
 		}
 
 		return (Long)function.apply(baseModel);

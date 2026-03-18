@@ -8,9 +8,9 @@ package com.liferay.redirect.web.internal.portlet.action;
 import com.google.re2j.Pattern;
 import com.google.re2j.PatternSyntaxException;
 
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -57,9 +57,7 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(),
 				_getRedirectPatternEntries(actionRequest));
 		}
-		catch (ConfigurationModelListenerException | PatternSyntaxException
-					exception) {
-
+		catch (ConfigurationException | PatternSyntaxException exception) {
 			_log.error(exception);
 
 			SessionErrors.add(actionRequest, "redirectPatternInvalid");

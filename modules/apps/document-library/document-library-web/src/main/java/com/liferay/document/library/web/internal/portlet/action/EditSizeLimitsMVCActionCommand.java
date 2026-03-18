@@ -10,6 +10,7 @@ import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvid
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -64,11 +65,14 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			_updateSizeLimit(actionRequest, scope, scopePK);
 		}
-		catch (ConfigurationModelListenerException
-					configurationModelListenerException) {
+		catch (ConfigurationException configurationException) {
+			Throwable throwable = configurationException.getCause();
 
-			SessionErrors.add(
-				actionRequest, configurationModelListenerException.getClass());
+			if (throwable instanceof ConfigurationModelListenerException) {
+				SessionErrors.add(
+					actionRequest, ConfigurationModelListenerException.class,
+					configurationException);
+			}
 
 			actionResponse.sendRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));

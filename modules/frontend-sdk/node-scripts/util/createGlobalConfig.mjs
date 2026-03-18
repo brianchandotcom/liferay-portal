@@ -5,11 +5,11 @@
 
 import crypto from 'crypto';
 
-import getProjectDirs from '../util/getProjectDirs.mjs';
+import getProjectDirs from './getProjectDirs.mjs';
 import objectSF from './objectSF.mjs';
 import projectScopeRequire from './projectScopeRequire.mjs';
 
-export async function createGlobalConfig(hashOnly = false) {
+export default async function createGlobalConfig() {
 	const projectDirs = await getProjectDirs();
 
 	let allDependencies = {};
@@ -31,7 +31,7 @@ export async function createGlobalConfig(hashOnly = false) {
 		for (const symbolPackage in symbols) {
 			if (!exports.includes(symbolPackage)) {
 				throw Error(
-					`❌ 'node-scripts.config.js' is invalid. Only declare symbols for packages your module 'exports'. Reading '${symbolPackage}'.`
+					`File 'node-scripts.config.js' is invalid. Only declare symbols for packages your module 'exports'. Reading '${symbolPackage}'.`
 				);
 			}
 		}
@@ -56,7 +56,10 @@ export async function createGlobalConfig(hashOnly = false) {
 		.update(JSON.stringify(allImports) + JSON.stringify(allSymbols))
 		.digest('hex');
 
-	return hashOnly ? hash : template(allImports, allSymbols, hash);
+	return {
+		config: template(allImports, allSymbols, hash),
+		hash,
+	};
 }
 
 function template(imports, symbols, hash) {

@@ -5,7 +5,7 @@
 
 import path from 'path';
 
-import doFormat from '../util/format/doFormat.mjs';
+import formatSourceFiles from '../util/format/formatters/formatSourceFiles.mjs';
 import {PORTAL_DIR} from '../util/locations.mjs';
 
 export default async function main() {
@@ -16,5 +16,7 @@ export default async function main() {
 		process.exit(2);
 	}
 
-	await doFormat(true, [path.relative(PORTAL_DIR, path.resolve(filePath))]);
+	await formatSourceFiles(false, [
+		path.relative(PORTAL_DIR, path.resolve(filePath)),
+	]);
 }

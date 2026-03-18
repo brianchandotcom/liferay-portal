@@ -42,7 +42,8 @@ public class StyleBookEntryVersionUpgradeProcess extends UpgradeProcess {
 
 				while (resultSet.next()) {
 					preparedStatement2.setString(1, PortalUUIDUtil.generate());
-					preparedStatement2.setLong(2, resultSet.getLong(1));
+					preparedStatement2.setLong(
+						2, resultSet.getLong("styleBookEntryId"));
 
 					preparedStatement2.addBatch();
 				}

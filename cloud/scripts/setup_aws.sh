@@ -22,7 +22,9 @@ function main {
 
 	aws sso login
 
-	local terraform_args="$(_get_terraform_apply_args "${1}")"
+	local terraform_args
+
+	terraform_args="$(_get_terraform_apply_args "${1}")"
 
 	_set_up_aws_eks "${terraform_args}"
 
@@ -54,7 +56,9 @@ function _generate_tfvars {
 
 	echo "Generating ${tfvars_file} from ${configuration_json_file}."
 
-	local tfvars_content=$(
+	local tfvars_content
+
+	tfvars_content=$(
 		jq --raw-output '.variables
 		| to_entries[]
 		| if (.value | type) == "string"
@@ -98,7 +102,9 @@ function _get_terraform_apply_args {
 
 	if jq --exit-status '.options.parallelism | numbers' "${configuration_json_file}" > /dev/null
 	then
-		local parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
+		local parallelism
+
+		parallelism=$(jq --raw-output '.options.parallelism' "${configuration_json_file}")
 
 		apply_args+=("-parallelism=${parallelism}")
 	fi
@@ -113,9 +119,13 @@ function _popd {
 function _port_forward_argo_cd {
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/gitops/platform"
 
-	local argocd_namespace=$(terraform output -raw argocd_namespace)
+	local argocd_namespace
 
-	local argocd_password=$( \
+	argocd_namespace=$(terraform output -raw argocd_namespace)
+
+	local argocd_password
+
+	argocd_password=$( \
 		kubectl \
 			get \
 			secret \
@@ -180,7 +190,9 @@ function _set_up_aws_gitops {
 function _set_up_aws_grafana {
 	_pushd "${_ROOT_CLOUD_DIR}/terraform/aws/eks"
 
-	local grafana_enabled=$(terraform output -raw "grafana_enabled")
+	local grafana_enabled
+
+	grafana_enabled=$(terraform output -raw "grafana_enabled")
 
 	if [[ "${grafana_enabled}" != "true" ]]
 	then
@@ -191,7 +203,9 @@ function _set_up_aws_grafana {
 
 	echo "Setting up Amazon Managed Grafana."
 
-	export TF_VAR_grafana_workspace_api_key=$(terraform output -raw "grafana_workspace_api_key")
+	TF_VAR_grafana_workspace_api_key=$(terraform output -raw "grafana_workspace_api_key")
+
+	export TF_VAR_grafana_workspace_api_key
 
 	_terraform_init_and_apply \
 		"../grafana" \

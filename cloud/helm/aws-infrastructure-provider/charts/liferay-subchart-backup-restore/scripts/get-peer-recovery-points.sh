@@ -1,17 +1,22 @@
 #!/bin/sh
 
-set -eu
+set -o errexit
+set -o nounset
 
 function get_recovery_point_arn_by_type {
 	local recovery_points_json="${2}"
 	local resource_type="${1}"
 
-	local filtered_recovery_points_json=$( \
+	local filtered_recovery_points_json
+
+	filtered_recovery_points_json=$( \
 		echo \
 			"${recovery_points_json}" \
 			| jq --arg resource_type "${resource_type}" "[.[] | select(.ResourceType == \$resource_type)]")
 
-	local filtered_recovery_points_length=$(echo "${filtered_recovery_points_json}" | jq "length")
+	local filtered_recovery_points_length
+
+	filtered_recovery_points_length=$(echo "${filtered_recovery_points_json}" | jq "length")
 
 	if [ "${filtered_recovery_points_length}" -ne 1 ]
 	then
@@ -33,7 +38,9 @@ function main {
 			--backup-vault-name "{{ "{{" }}inputs.parameters.backup-vault-name}}" \
 			--recovery-point-arn "{{ "{{" }}workflow.parameters.recovery-point-arn}}")
 
-	local creation_date=$(echo "${recovery_point_details}" | jq --raw-output ".CreationDate")
+	local creation_date
+
+	creation_date=$(echo "${recovery_point_details}" | jq --raw-output ".CreationDate")
 
 	if [ -z "${creation_date}" ] || [ "${creation_date}" = "null" ]
 	then
@@ -42,12 +49,21 @@ function main {
 		return 1
 	fi
 
-	local creation_date_timestamp=$(date --date "${creation_date}" +%s)
+	local creation_date_timestamp
 
-	local by_created_after=$(date --date @$((creation_date_timestamp - 1)) --iso-8601=seconds)
-	local by_created_before=$(date --date @$((creation_date_timestamp + 1)) --iso-8601=seconds)
+	creation_date_timestamp=$(date --date "${creation_date}" +%s)
 
-	local peer_recovery_points=$( \
+	local by_created_after
+
+	by_created_after=$(date --date @$((creation_date_timestamp - 1)) --iso-8601=seconds)
+
+	local by_created_before
+
+	by_created_before=$(date --date @$((creation_date_timestamp + 1)) --iso-8601=seconds)
+
+	local peer_recovery_points
+
+	peer_recovery_points=$( \
 		aws \
 			backup \
 			list-recovery-points-by-backup-vault \
@@ -56,9 +72,13 @@ function main {
 			--by-created-before "${by_created_before}" \
 			| jq --arg creation_date "${creation_date}" "[.RecoveryPoints[] | select(.CreationDate == \$creation_date)]")
 
-	local rds_recovery_point_arn=$(get_recovery_point_arn_by_type "RDS" "${peer_recovery_points}")
+	local rds_recovery_point_arn
 
-	local rds_snapshot_id=$( \
+	rds_recovery_point_arn=$(get_recovery_point_arn_by_type "RDS" "${peer_recovery_points}")
+
+	local rds_snapshot_id
+
+	rds_snapshot_id=$( \
 		echo \
 			"${rds_recovery_point_arn}" \
 			| awk --field-separator "snapshot:" "{print \$2}")
@@ -72,7 +92,9 @@ function main {
 
 	echo "${rds_snapshot_id}" > /tmp/rds-snapshot-id.txt
 
-	local s3_recovery_point_arn=$(get_recovery_point_arn_by_type "S3" "${peer_recovery_points}")
+	local s3_recovery_point_arn
+
+	s3_recovery_point_arn=$(get_recovery_point_arn_by_type "S3" "${peer_recovery_points}")
 
 	echo "${s3_recovery_point_arn}" > /tmp/s3-recovery-point-arn.txt
 }

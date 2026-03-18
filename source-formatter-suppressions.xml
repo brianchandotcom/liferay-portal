@@ -162,13 +162,6 @@
 		<suppress checks="PropertiesWhitespaceCheck" files="build\.properties" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/resource/bundle/ClassResourceBundleLoader\.java" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ResourceBundleUtil\.java" />
-		<suppress checks="SHSubshellCheck" files="cloud/helm/aws-infrastructure-provider/charts/liferay-subchart-backup-restore/scripts/get-current-infrastructure-state\.sh" />
-		<suppress checks="SHSubshellCheck" files="cloud/helm/aws-infrastructure-provider/charts/liferay-subchart-backup-restore/scripts/get-peer-recovery-points\.sh" />
-		<suppress checks="SHSubshellCheck" files="cloud/helm/aws-infrastructure-provider/charts/liferay-subchart-backup-restore/scripts/restore-s3-bucket\.sh" />
-		<suppress checks="SHSubshellCheck" files="cloud/helm/aws-infrastructure-provider/charts/liferay-subchart-backup-restore/scripts/wait-infrastructure-ready\.sh" />
-		<suppress checks="SHSubshellCheck" files="cloud/scripts/bootstrap\.sh" />
-		<suppress checks="SHSubshellCheck" files="cloud/scripts/setup_aws\.sh" />
-		<suppress checks="SHSubshellCheck" files="cloud/terraform/aws/installer-ami/run_on_boot\.sh" />
 		<suppress checks="SHSubshellCheck" files="tools/commit_release\.sh" />
 		<suppress checks="SHSubshellCheck" files="tools/tag_release\.sh" />
 		<suppress checks="SHSubshellCheck" files="workspaces/refresh_liferay_sample_workspace\.sh" />

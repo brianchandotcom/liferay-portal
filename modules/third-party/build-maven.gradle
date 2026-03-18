@@ -11,7 +11,11 @@ ext.getMVNCommand = {
 	return ["/bin/sh", "-c", "mvn ${command}"]
 }
 
-File mvnSourceDir = new File(buildDir, "${gitHubRepository}-${gitHash}")
+ext.mvnSourceDir = new File(buildDir, "${gitHubRepository}-${gitHash}")
+
+if (project.hasProperty("mvnSourceFolder")) {
+	ext.mvnSourceDir = new File(buildDir, "${gitHubRepository}-${gitHash}/${mvnSourceFolder}")
+}
 
 String mvnSourceURL = "https://github.com/${gitHubOwner}/${gitHubRepository}/archive/${gitHash}.zip"
 

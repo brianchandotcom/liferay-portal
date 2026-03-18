@@ -3,6 +3,7 @@ ext {
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-alloy"
 	mvnTargetDir = "alloy/target"
+	mvnJARInclude = "com.liferay.faces.alloy-5.0.0.jar"
 }
 
 apply from: "../build-maven.gradle"

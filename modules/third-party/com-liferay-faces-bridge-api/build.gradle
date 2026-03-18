@@ -2,7 +2,8 @@ ext {
 	gitHash = "e8c6c819c73fc3e479f433a5ae85261d7a1c93e4"
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-bridge-api"
-	mvnTargetDir = "bridge-api/target"
+	mvnSourceFolder = "bridge-api"
+	mvnTargetDir = "target"
 }
 
 apply from: "../build-maven.gradle"

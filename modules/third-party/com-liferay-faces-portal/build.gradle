@@ -2,18 +2,9 @@ ext {
 	gitHash = "e28afa18f74fffbed05a6faa6ef511fb1e51acb8"
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-portal"
-	mvnTargetDir = "portal/target"
+	mvnSourceFolder = "portal"
+	mvnTargetDir = "target"
+	mvnJARInclude = "com.liferay.faces.portal-7.0.0.jar"
 }
 
 apply from: "../build-maven.gradle"
-
-downloadSource {
-	doLast {
-		File pomXmlFile = new File(mvnSourceDir, "pom.xml")
-
-		if (pomXmlFile.exists()) {
-			pomXmlFile.text = pomXmlFile.text.replace("<module>demo</module>", "")
-			pomXmlFile.text = pomXmlFile.text.replace("<module>test</module>", "")
-		}
-	}
-}

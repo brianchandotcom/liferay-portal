@@ -8,9 +8,11 @@ package com.liferay.portal.license.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.io.File;
+import java.io.InputStream;
 
 import net.bytebuddy.agent.builder.ResettableClassFileTransformer;
 
@@ -43,6 +45,36 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 	public void tearDown() throws Exception {
 		resetLicenseData();
 		resetLifecycleAction();
+	}
+
+	@Test
+	public void testEmptyCMPFile() throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		PortalClassLoaderUtil.setClassLoader(
+			new WrapperClassLoader(classLoader) {
+
+				@Override
+				public InputStream getResourceAsStream(String name) {
+					if (name.equals(_getCmpFilePath())) {
+						return InputStream.nullInputStream();
+					}
+
+					return classLoader.getResourceAsStream(name);
+				}
+
+			});
+
+		try {
+			assertLicenseNotRegistered();
+
+			deployEnterpriseLicense(Time.HOUR);
+
+			assertLicenseInvalid();
+		}
+		finally {
+			PortalClassLoaderUtil.setClassLoader(classLoader);
+		}
 	}
 
 	@Test
@@ -121,6 +153,40 @@ public class CMPModuleLicenseTest extends BaseLicenseTestCase {
 		assertLicenseRegistered();
 
 		assertBundlesNotExisted(_getCmpSymbolicNames());
+	}
+
+	@Test
+	public void testMissingCMPFile() throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		PortalClassLoaderUtil.setClassLoader(
+			new WrapperClassLoader(classLoader) {
+
+				@Override
+				public InputStream getResourceAsStream(String name) {
+					if (name.equals(_getCmpFilePath())) {
+						return null;
+					}
+
+					return classLoader.getResourceAsStream(name);
+				}
+
+			});
+
+		try {
+			assertLicenseNotRegistered();
+
+			deployEnterpriseLicense(Time.HOUR);
+
+			assertLicenseInvalid();
+		}
+		finally {
+			PortalClassLoaderUtil.setClassLoader(classLoader);
+		}
+	}
+
+	private String _getCmpFilePath() {
+		return getProperty("cmp.file.path");
 	}
 
 	private String[] _getCmpSymbolicNames() {

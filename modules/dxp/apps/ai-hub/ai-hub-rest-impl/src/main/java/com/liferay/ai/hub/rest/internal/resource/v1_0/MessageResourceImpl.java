@@ -8,10 +8,9 @@ package com.liferay.ai.hub.rest.internal.resource.v1_0;
 import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.agent.SupervisorAgent;
 import com.liferay.ai.hub.rest.dto.v1_0.Message;
-import com.liferay.ai.hub.rest.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.MessageResource;
+import com.liferay.ai.hub.util.AccountEntryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -55,9 +54,8 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 					contextUser)
 			).groupId(
-				GroupUtil.getGroupId(
-					contextCompany.getCompanyId(), _groupService,
-					message.getScope())
+				AccountEntryUtil.getUserAccountEntryGroupId(
+					contextUser.getUserId())
 			).input(
 				Map.of("message", message.getText())
 			).serviceContext(
@@ -76,9 +74,6 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private GroupService _groupService;
 
 	@Reference
 	private SupervisorAgent _supervisorAgent;

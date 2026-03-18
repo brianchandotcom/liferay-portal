@@ -36,7 +36,9 @@ public class StyleBookEntryExceptionRequestHandlerUtil {
 
 		if (portalException instanceof DuplicateStyleBookEntryNameException) {
 			errorMessage = LanguageUtil.get(
-				themeDisplay.getRequest(), "please-enter-a-unique-name");
+				themeDisplay.getRequest(),
+				"a-style-book-with-this-name-already-exists.-please-enter-a-" +
+					"different-name");
 		}
 		else if (portalException instanceof StyleBookEntryNameException) {
 			errorMessage = LanguageUtil.get(

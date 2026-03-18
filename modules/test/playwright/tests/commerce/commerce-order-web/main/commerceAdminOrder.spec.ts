@@ -691,100 +691,64 @@ test('LPD-47793 Notes should be visible using their respective permissions in th
 	).toBeVisible();
 });
 
-test.skip('LPD-31378 Check order date formatted correctly', async ({
+test('LPD-31378 Check order date formatted correctly', async ({
 	apiHelpers,
-	applicationsMenuPage,
+	checkoutPage,
+	commerceAdminOrdersPage,
+	commerceMiniCartPage,
+	commerceThemeMiniumCatalogPage,
 	page,
 }) => {
-	await test.step('Create commerce site', async () => {
-		const site = await apiHelpers.headlessSite.createSite({
-			name: 'Minium',
-			templateKey: 'minium-initializer',
-			templateType: 'site-initializer',
-		});
+	const {site} = await miniumSetUp(apiHelpers);
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
-
-		await applicationsMenuPage.goToSite('Minium');
+	await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
 	});
 
-	await test.step('Add transmission to shopping cart', async () => {
-		const accountNameField = page.getByText('There is no order selected.');
-		await accountNameField.waitFor({state: 'visible'});
+	await page.goto(`/web/${site.name}/catalog`);
 
-		const transmissionButton = page
-			.locator('#wwxc_column_2d_2_1_add_to_cart')
-			.getByRole('button', {name: 'Add to Cart'});
+	await commerceThemeMiniumCatalogPage.addToCart('Mount');
 
-		await transmissionButton.waitFor({state: 'visible'});
-		await transmissionButton.click();
+	await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.submitButton.click();
 
-		const cartButton = page.locator('[data-qa-id="miniCartButton"]');
-
-		await cartButton.waitFor({state: 'visible'});
-		await cartButton.click();
+	await checkoutPage.addAddress({
+		city: 'testCity',
+		countryLabel: 'United States',
+		name: 'John Doe',
+		regionLabel: 'Florida',
+		street: 'testStreet',
+		zip: '12345',
 	});
 
-	await test.step('Complete order', async () => {
-		const submitButton = page.getByRole('button', {name: 'Submit'});
-		await submitButton.waitFor({state: 'visible'});
-		await submitButton.click();
+	await checkoutPage.continueButton.click();
+	await expect(page.getByText('Standard Delivery (+$ 15.00)')).toBeVisible();
+	await checkoutPage.continueButton.click();
+	await expect(page.getByText('Mount')).toBeVisible();
+	await checkoutPage.continueButton.click();
+	await expect(checkoutPage.orderSuccessMessage).toBeVisible();
 
-		await page.getByPlaceholder('Name', {exact: true}).fill('Name');
+	await checkoutPage.goToOrderDetailsButton.click();
 
-		await page.getByPlaceholder('Phone Number').fill('Number');
+	const orderDate = await commerceAdminOrdersPage.orderDate.textContent();
+	const cleanedOrderDate = orderDate.replace(/\s+/g, ' ').trim();
 
-		await page.getByPlaceholder('Address', {exact: true}).fill('Address');
+	const orderId = await commerceAdminOrdersPage.orderId.textContent();
 
-		await page
-			.locator(
-				'[id="_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet_countryId"]'
-			)
-			.selectOption('United States');
+	apiHelpers.data.push({id: orderId, type: 'order'});
 
-		await page.getByPlaceholder('Zip').fill('Zip');
+	await commerceAdminOrdersPage.goto();
 
-		await page.getByPlaceholder('City').fill('City');
+	const orderDate2 = await commerceAdminOrdersPage
+		.orderDateByOrderId(orderId)
+		.textContent();
+	const cleanedOrderDate2 = orderDate2.replace(
+		/(\d{2}),(\s*\d{1,2}:)/,
+		'$1$2'
+	);
 
-		await page.getByRole('button', {name: 'Continue'}).click();
-
-		await page.getByRole('button', {name: 'Continue'}).click();
-
-		await page.getByRole('button', {name: 'Continue'}).click();
-	});
-
-	await test.step('Check date and time of order', async () => {
-		await page.getByRole('button', {name: 'Go to Order Details'}).click();
-
-		const orderDate = await page
-			.locator('dl.commerce-list:has-text("Order Date") dd')
-			.textContent();
-
-		const orderId = await page
-			.locator('dl.commerce-list:has-text("Order ID") dd')
-			.textContent();
-
-		await page.getByRole('link', {name: 'Placed Orders'}).click();
-
-		const cleanedDateText = orderDate.replace(/\s+/g, ' ').trim();
-
-		const cleanedDateText2 = cleanedDateText.replace(
-			/(\w+ \d+, )(\d{2})/,
-			'$120$2,'
-		);
-
-		await page.getByTestId('applicationsMenu').click();
-
-		await page.getByRole('tab', {name: 'Commerce'}).click();
-
-		await page.getByRole('menuitem', {name: 'Orders'}).click();
-
-		const orderDate2 = await page
-			.locator(`tr:has-text("${orderId}") .cell-orderDate`)
-			.textContent();
-
-		expect(cleanedDateText2).toBe(orderDate2);
-	});
+	expect(cleanedOrderDate).toBe(cleanedOrderDate2);
 });
 
 test(

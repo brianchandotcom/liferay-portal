@@ -40,6 +40,9 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 	readonly menuActionButton: (accountName: string) => Locator;
 	readonly menuItemAction: (action: string) => Locator;
 	readonly orderActionsButton: Locator;
+	readonly orderDate: Locator;
+	readonly orderDateByOrderId: (orderId: string) => Locator;
+	readonly orderId: Locator;
 	readonly orderStatusLink: (orderStatus: string) => Locator;
 	readonly page: Page;
 	readonly quoteProcessedButton: Locator;
@@ -127,6 +130,12 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 		this.orderActionsButton = page.getByRole('button', {
 			name: 'Actions',
 		});
+		this.orderDate = page.locator(
+			'dl.commerce-list:has-text("Order Date") dd'
+		);
+		this.orderDateByOrderId = (orderId: string) =>
+			page.locator(`tr:has-text("${orderId}") .cell-orderDate`);
+		this.orderId = page.locator('dl.commerce-list:has-text("Order ID") dd');
 		this.orderStatusLink = (orderStatus: string) =>
 			page.getByRole('link', {exact: true, name: orderStatus});
 		this.page = page;

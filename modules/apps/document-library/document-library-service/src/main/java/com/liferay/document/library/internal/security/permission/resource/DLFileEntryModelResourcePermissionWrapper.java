@@ -138,6 +138,10 @@ public class DLFileEntryModelResourcePermissionWrapper
 
 					consumer.accept(
 						(permissionChecker, name, model, actionId) -> {
+							if (Validator.isNotNull(model.getClassName())) {
+								return null;
+							}
+
 							if (actionId.equals(ActionKeys.DOWNLOAD)) {
 								actionId = ActionKeys.VIEW;
 							}

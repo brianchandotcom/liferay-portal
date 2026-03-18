@@ -7,6 +7,7 @@ package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
 import com.liferay.change.tracking.rest.dto.v1_0.CTProcess;
 import com.liferay.change.tracking.rest.resource.v1_0.CTProcessResource;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -448,6 +449,15 @@ public abstract class BaseCTProcessResourceImpl
 			@Override
 			public Locale getPreferredLocale() {
 				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+			@Override
+			public boolean isAcceptAllLanguages() {
+				if (ExportImportThreadLocal.isExportInProcess()) {
+					return true;
+				}
+
+				return AcceptLanguage.super.isAcceptAllLanguages();
 			}
 
 		};

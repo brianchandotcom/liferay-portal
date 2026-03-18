@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.machine.learning.internal.resource.v1_0;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountForecast;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountForecastResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -204,6 +205,15 @@ public abstract class BaseAccountForecastResourceImpl
 			@Override
 			public Locale getPreferredLocale() {
 				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+			@Override
+			public boolean isAcceptAllLanguages() {
+				if (ExportImportThreadLocal.isExportInProcess()) {
+					return true;
+				}
+
+				return AcceptLanguage.super.isAcceptAllLanguages();
 			}
 
 		};

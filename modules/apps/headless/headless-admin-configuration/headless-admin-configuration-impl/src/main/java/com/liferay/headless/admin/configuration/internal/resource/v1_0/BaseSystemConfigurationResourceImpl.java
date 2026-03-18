@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.configuration.internal.resource.v1_0;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.admin.configuration.dto.v1_0.SystemConfiguration;
 import com.liferay.headless.admin.configuration.resource.v1_0.SystemConfigurationResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -470,6 +471,15 @@ public abstract class BaseSystemConfigurationResourceImpl
 			@Override
 			public Locale getPreferredLocale() {
 				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+			@Override
+			public boolean isAcceptAllLanguages() {
+				if (ExportImportThreadLocal.isExportInProcess()) {
+					return true;
+				}
+
+				return AcceptLanguage.super.isAcceptAllLanguages();
 			}
 
 		};

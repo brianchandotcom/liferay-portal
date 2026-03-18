@@ -7,6 +7,7 @@ package com.liferay.ai.hub.cell.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.cell.rest.dto.v1_0.Token;
 import com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -225,6 +226,15 @@ public abstract class BaseTokenResourceImpl
 			@Override
 			public Locale getPreferredLocale() {
 				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+			@Override
+			public boolean isAcceptAllLanguages() {
+				if (ExportImportThreadLocal.isExportInProcess()) {
+					return true;
+				}
+
+				return AcceptLanguage.super.isAcceptAllLanguages();
 			}
 
 		};

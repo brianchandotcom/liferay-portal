@@ -5,6 +5,7 @@
 
 package com.liferay.headless.user.notification.internal.resource.v1_0;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.user.notification.dto.v1_0.UserNotification;
 import com.liferay.headless.user.notification.resource.v1_0.UserNotificationResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -400,6 +401,15 @@ public abstract class BaseUserNotificationResourceImpl
 			@Override
 			public Locale getPreferredLocale() {
 				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+			@Override
+			public boolean isAcceptAllLanguages() {
+				if (ExportImportThreadLocal.isExportInProcess()) {
+					return true;
+				}
+
+				return AcceptLanguage.super.isAcceptAllLanguages();
 			}
 
 		};

@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.rest.internal.resource.v1_0;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.rest.dto.v1_0.ReportEntry;
 import com.liferay.exportimport.rest.resource.v1_0.ReportEntryResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -358,6 +359,15 @@ public abstract class BaseReportEntryResourceImpl
 			@Override
 			public Locale getPreferredLocale() {
 				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+			@Override
+			public boolean isAcceptAllLanguages() {
+				if (ExportImportThreadLocal.isExportInProcess()) {
+					return true;
+				}
+
+				return AcceptLanguage.super.isAcceptAllLanguages();
 			}
 
 		};

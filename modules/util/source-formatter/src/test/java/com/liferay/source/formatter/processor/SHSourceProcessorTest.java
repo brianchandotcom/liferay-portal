@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.processor;
 
+import com.liferay.petra.string.StringBundler;
+
 import org.junit.Test;
 
 /**
@@ -18,24 +20,32 @@ public class SHSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"LocalVariablesAssignedViaSubshells.testsh"
 			).addExpectedMessage(
-				"Do not assign subshell outputs directly to 'local' " +
-					"variables, extract the subshell call into a separate " +
-						"assignment",
+				StringBundler.concat(
+					"Do not declare and assign 'local' variables using ",
+					"subshell outputs in a single line, extract 'local' ",
+					"variable declaration and assignment via subshell into ",
+					"two separate lines"),
 				8
 			).addExpectedMessage(
-				"Do not assign subshell outputs directly to 'local' " +
-					"variables, extract the subshell call into a separate " +
-						"assignment",
+				StringBundler.concat(
+					"Do not declare and assign 'local' variables using ",
+					"subshell outputs in a single line, extract 'local' ",
+					"variable declaration and assignment via subshell into ",
+					"two separate lines"),
 				9
 			).addExpectedMessage(
-				"Do not assign subshell outputs directly to 'local' " +
-					"variables, extract the subshell call into a separate " +
-						"assignment",
+				StringBundler.concat(
+					"Do not declare and assign 'local' variables using ",
+					"subshell outputs in a single line, extract 'local' ",
+					"variable declaration and assignment via subshell into ",
+					"two separate lines"),
 				10
 			).addExpectedMessage(
-				"Do not assign subshell outputs directly to 'local' " +
-					"variables, extract the subshell call into a separate " +
-						"assignment",
+				StringBundler.concat(
+					"Do not declare and assign 'local' variables using ",
+					"subshell outputs in a single line, extract 'local' ",
+					"variable declaration and assignment via subshell into ",
+					"two separate lines"),
 				12
 			));
 	}

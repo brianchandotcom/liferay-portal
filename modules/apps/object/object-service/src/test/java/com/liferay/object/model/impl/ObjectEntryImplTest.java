@@ -8,14 +8,13 @@ package com.liferay.object.model.impl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.bag.ObjectFieldBag;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,6 +23,7 @@ import org.mockito.Mockito;
 
 /**
  * @author Mikel Lorza
+ * @author Nícolas Moura
  */
 public class ObjectEntryImplTest {
 
@@ -32,64 +32,108 @@ public class ObjectEntryImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test
-	public void testGetTitleValueWithNullValue() throws Exception {
-		ObjectEntryImpl objectEntryImpl = Mockito.spy(new ObjectEntryImpl());
+	@Before
+	public void setUp() {
+		_setUpObjectDefinition();
+		_setUpObjectEntryImpl();
+		_setUpObjectField();
+		_setUpObjectFieldBag();
+	}
 
-		ObjectDefinition objectDefinition = Mockito.mock(
-			ObjectDefinition.class);
+	@Test
+	public void testGetTitleValue() throws Exception {
+		Assert.assertNull(_objectEntryImpl.getTitleValue("pt_BR", false));
 
 		Mockito.when(
-			objectDefinition.getTitleObjectFieldId()
+			_objectField.getI18nObjectFieldName()
+		).thenReturn(
+			"title_i18n"
+		);
+
+		Mockito.when(
+			_objectField.isLocalized()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertNull(_objectEntryImpl.getTitleValue("it_IT", false));
+		Assert.assertEquals(
+			"Title", _objectEntryImpl.getTitleValue("it_IT", true));
+		Assert.assertEquals(
+			"Título", _objectEntryImpl.getTitleValue("pt_BR", true));
+
+		Mockito.doReturn(
+			"pt_PT"
+		).when(
+			_objectEntryImpl
+		).getDefaultLanguageId();
+
+		Assert.assertNull(_objectEntryImpl.getTitleValue("it_IT", true));
+	}
+
+	private void _setUpObjectDefinition() {
+		Mockito.when(
+			_objectDefinition.getObjectFieldBag()
+		).thenReturn(
+			_objectFieldBag
+		);
+
+		Mockito.when(
+			_objectDefinition.getTitleObjectFieldId()
 		).thenReturn(
 			1L
 		);
+	}
 
-		ObjectField objectField = Mockito.mock(ObjectField.class);
-
-		Mockito.when(
-			objectField.getName()
-		).thenReturn(
-			"title"
-		);
-
-		ObjectFieldBag objectFieldBag = Mockito.mock(ObjectFieldBag.class);
-
-		Mockito.when(
-			objectFieldBag.getObjectField(1L)
-		).thenReturn(
-			objectField
-		);
-
-		Mockito.when(
-			objectDefinition.getObjectFieldBag()
-		).thenReturn(
-			objectFieldBag
-		);
-
-		Mockito.doReturn(
-			objectDefinition
-		).when(
-			objectEntryImpl
-		).getObjectDefinition();
-
-		Map<String, Serializable> indexedValues = new HashMap<>();
-
-		indexedValues.put("title", null);
-
-		Mockito.doReturn(
-			indexedValues
-		).when(
-			objectEntryImpl
-		).getIndexedValues();
-
+	private void _setUpObjectEntryImpl() {
 		Mockito.doReturn(
 			"en_US"
 		).when(
-			objectEntryImpl
+			_objectEntryImpl
 		).getDefaultLanguageId();
 
-		Assert.assertNull(objectEntryImpl.getTitleValue("en_US", true));
+		Mockito.doReturn(
+			HashMapBuilder.<String, Serializable>put(
+				"title_i18n",
+				HashMapBuilder.<String, Serializable>put(
+					"en_US", "Title"
+				).put(
+					"pt_BR", "Título"
+				).build()
+			).build()
+		).when(
+			_objectEntryImpl
+		).getIndexedValues();
+
+		Mockito.doReturn(
+			_objectDefinition
+		).when(
+			_objectEntryImpl
+		).getObjectDefinition();
 	}
+
+	private void _setUpObjectField() {
+		Mockito.when(
+			_objectField.getName()
+		).thenReturn(
+			"title"
+		);
+	}
+
+	private void _setUpObjectFieldBag() {
+		Mockito.when(
+			_objectFieldBag.getObjectField(1L)
+		).thenReturn(
+			_objectField
+		);
+	}
+
+	private final ObjectDefinition _objectDefinition = Mockito.mock(
+		ObjectDefinition.class);
+	private final ObjectEntryImpl _objectEntryImpl = Mockito.spy(
+		new ObjectEntryImpl());
+	private final ObjectField _objectField = Mockito.mock(ObjectField.class);
+	private final ObjectFieldBag _objectFieldBag = Mockito.mock(
+		ObjectFieldBag.class);
 
 }

@@ -169,6 +169,12 @@ export default function ManageUserViews({
                         multiple: false,
                         type: 'selection',
                 },
+                {
+                        entityFieldType: 'date-time',
+                        id: 'dateModified',
+                        label: Liferay.Language.get('date'),
+                        type: 'dateRange',
+                },
         ], [getUserViewsDataSetsURL]);
 
         const systemDataSetNamesSet = useMemo(

@@ -155,14 +155,14 @@ public class ClusterGeneralTest implements Serializable {
 
 	@Test
 	public void testLanguageOverrideSyncsBetweenNodes() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
 		String key = RandomTestUtil.randomString();
-		String value = RandomTestUtil.randomString();
 
 		String languageId = "en_US";
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		long companyId = TestPropsValues.getCompanyId();
+		String value = RandomTestUtil.randomString();
 
 		long ploEntryId = _tomcatNode1.syncExecute(
 			() -> {
@@ -751,7 +751,6 @@ public class ClusterGeneralTest implements Serializable {
 			() -> DLAppLocalServiceUtil.getFileEntry(
 				fileEntry.getFileEntryId()));
 
-		Assert.assertNotNull(syncedFileEntry);
 		Assert.assertEquals(fileEntry, syncedFileEntry);
 	}
 

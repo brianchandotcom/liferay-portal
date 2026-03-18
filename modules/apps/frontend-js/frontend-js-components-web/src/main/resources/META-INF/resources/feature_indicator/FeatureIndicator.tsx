@@ -6,8 +6,10 @@
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import useId from '../hooks/useId';
@@ -15,28 +17,38 @@ import LearnMessage, {
 	LearnResourcesContext,
 } from '../learn_message/LearnMessage';
 
-export type Type = 'beta' | 'deprecated' | 'maintenance';
+export type Type = 'beta' | 'deprecated' | 'enterprise' | 'maintenance';
 
-type DisplayType = 'info' | 'warning';
+type DisplayType = 'info' | 'primary' | 'warning';
 
 type featureIndicatorNoninteractiveProps = {
 	interactive?: false;
 	learnResourceContext?: any;
+	type?: Type;
 };
 
 type featureIndicatorInteractiveProps = {
 	interactive: true;
 	learnResourceContext: any;
+	type?: Exclude<Type, 'enterprise'>;
+};
+
+type featureIndicatorEnterpriseProps = {
+	interactive?: boolean;
+	learnResourceContext?: undefined;
+	type: Extract<Type, 'enterprise'>;
 };
 
 type featureIndicatorProps = (
 	| featureIndicatorNoninteractiveProps
 	| featureIndicatorInteractiveProps
+	| featureIndicatorEnterpriseProps
 ) & {
 	dark?: boolean;
 	tooltipAlign?: (typeof ALIGN_POSITIONS)[number];
-	type?: Type;
 };
+
+const ENTERPRISE_URL = 'https://www.liferay.com/web/lr/cms-upgrade';
 
 export default function FeatureIndicator({
 	dark,
@@ -52,6 +64,8 @@ export default function FeatureIndicator({
 	let displayType: DisplayType = 'info';
 	let label = Liferay.Language.get('beta');
 	let learnMessageResourceKey = 'beta-features';
+	let linkMessage;
+	let linkUrl;
 	let popoverText = Liferay.Language.get('this-feature-is-in-testing');
 	let popoverTitle = Liferay.Language.get('beta-feature');
 	let symbol = 'info-circle-open';
@@ -65,6 +79,19 @@ export default function FeatureIndicator({
 		popoverTitle = Liferay.Language.get('deprecated-feature');
 		symbol = 'warning-full';
 		tooltipTitle = Liferay.Language.get('open-deprecated-definition');
+	}
+
+	if (type === 'enterprise') {
+		displayType = 'primary';
+		label = Liferay.Language.get('enterprise');
+		linkMessage = Liferay.Language.get('get-enterprise-details');
+		linkUrl = ENTERPRISE_URL;
+		popoverText = Liferay.Language.get(
+			'this-feature-is-only-available-on-the-enterprise-subscription'
+		);
+		popoverTitle = Liferay.Language.get('get-more-with-enterprise');
+		symbol = 'crown';
+		tooltipTitle = Liferay.Language.get('open-enterprise-definition');
 	}
 
 	if (type === 'maintenance') {
@@ -118,10 +145,25 @@ export default function FeatureIndicator({
 					>
 						{popoverText + ' '}
 
-						<LearnMessage
-							resource="frontend-js-components-web"
-							resourceKey={learnMessageResourceKey}
-						/>
+						{linkMessage && linkUrl ? (
+							<ClayLink
+								aria-label={sub(
+									Liferay.Language.get('x-opens-new-window'),
+									linkMessage
+								)}
+								className="text-decoration-underline"
+								href={linkUrl}
+								rel="noopener noreferrer"
+								target="_blank"
+							>
+								{linkMessage}
+							</ClayLink>
+						) : learnMessageResourceKey ? (
+							<LearnMessage
+								resource="frontend-js-components-web"
+								resourceKey={learnMessageResourceKey}
+							/>
+						) : null}
 					</ClayPopover>
 				</ClayTooltipProvider>
 			) : (

@@ -12,6 +12,7 @@ import com.liferay.document.library.exception.DLFileEntryConfigurationException;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -52,10 +53,20 @@ public class EditDLFileEntryConfigurationMVCActionCommand
 				_getMaxNumberOfPages(actionRequest), scope,
 				_getScopePK(actionRequest, scope));
 		}
-		catch (ConfigurationModelListenerException |
-			   DLFileEntryConfigurationException exception) {
+		catch (ConfigurationException | DLFileEntryConfigurationException
+					exception) {
 
-			SessionErrors.add(actionRequest, exception.getClass(), exception);
+			Throwable throwable = exception.getCause();
+
+			if (throwable instanceof ConfigurationModelListenerException) {
+				SessionErrors.add(
+					actionRequest, ConfigurationModelListenerException.class,
+					exception);
+			}
+			else {
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
+			}
 
 			actionResponse.sendRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));

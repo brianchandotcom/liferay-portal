@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -81,11 +82,14 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			_updateDLSizeLimitConfiguration(group.getGroupId(), actionRequest);
 		}
-		catch (ConfigurationModelListenerException
-					configurationModelListenerException) {
+		catch (ConfigurationException configurationException) {
+			Throwable throwable = configurationException.getCause();
 
-			SessionErrors.add(
-				actionRequest, configurationModelListenerException.getClass());
+			if (throwable instanceof ConfigurationModelListenerException) {
+				SessionErrors.add(
+					actionRequest, ConfigurationModelListenerException.class,
+					configurationException);
+			}
 
 			actionResponse.sendRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));

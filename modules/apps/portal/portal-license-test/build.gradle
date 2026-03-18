@@ -1,0 +1,9 @@
+dependencies {
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "net.bytebuddy", name: "byte-buddy", version: "1.15.11"
+	testIntegrationImplementation group: "net.bytebuddy", name: "byte-buddy-agent", version: "1.15.11"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":apps:static:osgi:osgi-util")
+	testIntegrationImplementation project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

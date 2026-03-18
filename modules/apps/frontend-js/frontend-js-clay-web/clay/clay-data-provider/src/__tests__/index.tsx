@@ -116,15 +116,16 @@ describe('ClayDataProvider', () => {
 		);
 	});
 
-	it.skip('calls clay.data and return data from cache', async () => {
+	it('calls clay.data and return data from cache', async () => {
 		const data = {title: 'Foo'};
 
 		fetchMock.mockResponse(JSON.stringify(data));
 
-		const {container} = render(
+		const {container, rerender} = render(
 			<Provider spritemap="">
 				<DataProvider
 					fetchPolicy={FetchPolicy.CacheFirst}
+					key="render-1"
 					link="https://clay.data"
 				>
 					{({data}) => <h1>{data && data.title}</h1>}
@@ -132,9 +133,24 @@ describe('ClayDataProvider', () => {
 			</Provider>
 		);
 
-		await waitFor(() => expect(fetchMock.mock.calls.length).not.toEqual(1));
+		await waitFor(() => expect(fetchMock.mock.calls.length).toEqual(1));
+		await waitFor(() => expect(container.innerHTML).toContain(data.title));
 
-		expect(fetchMock.mock.calls.length).toBe(0);
+		rerender(
+			<Provider spritemap="">
+				<DataProvider
+					fetchPolicy={FetchPolicy.CacheFirst}
+					key="render-2"
+					link="https://clay.data"
+				>
+					{({data}) => <h1>{data && data.title}</h1>}
+				</DataProvider>
+			</Provider>
+		);
+
+		await waitFor(() => expect(container.innerHTML).toContain(data.title));
+
+		expect(fetchMock.mock.calls.length).toBe(1);
 		expect(container.innerHTML).toMatchSnapshot();
 	});
 

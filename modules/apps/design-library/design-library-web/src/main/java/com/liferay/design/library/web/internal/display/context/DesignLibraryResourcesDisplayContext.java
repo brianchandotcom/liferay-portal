@@ -6,6 +6,7 @@
 package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -13,9 +14,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,8 +35,9 @@ public class DesignLibraryResourcesDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/search/v1.0/search?page=1&pageSize=20&emptySearch=true&" +
-			"filter=error eq true&nestedFields=embedded";
+		return "/o/search/v1.0/search?page=1&pageSize=20&emptySearch=true" +
+			"&filter=cmsRoot eq true and cmsSection eq 'files'&nestedFields=" +
+				"embedded";
 	}
 
 	public Map<String, Object> getBreadcrumbProps(long designLibraryEntryId)
@@ -59,6 +63,18 @@ public class DesignLibraryResourcesDisplayContext {
 			"title",
 			LanguageUtil.get(_httpServletRequest, "no-design-resources-yet")
 		).build();
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				"#edit/{embedded.id}", "pencil", "edit",
+				LanguageUtil.get(_httpServletRequest, "edit"), null, null,
+				"link"),
+			new FDSActionDropdownItem(
+				"#remove/{embedded.id}", "trash", "remove",
+				LanguageUtil.get(_httpServletRequest, "remove"), null, null,
+				"link"));
 	}
 
 	private JSONArray _getActionItemsJSONArray() {

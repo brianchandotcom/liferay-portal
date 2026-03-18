@@ -4,6 +4,7 @@
  */
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {dateUtils} from 'frontend-js-web';
 
 import {ActionItem, DesignLibraryItem} from '../types';
 import {DesignLibraryLinkRenderer} from './cell_renderers/DesignLibraryLinkRenderer';
@@ -84,7 +85,6 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 				name: 'cards',
 				schema: {
 					description: 'dateModified',
-					sticker: 'books',
 					symbol: '',
 					title: 'name',
 				},
@@ -97,10 +97,13 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 				}) => {
 					return {
 						...props,
-						description: `asdfasdf: ${new Date(item.dateModified).toLocaleString()}`,
+						description: dateUtils.fromNow(
+							new Date(item.dateModified)
+						),
 						href: props.actions.find(
 							(action) => action.data.id === 'edit'
 						)?.href,
+						symbol: 'books',
 					};
 				},
 

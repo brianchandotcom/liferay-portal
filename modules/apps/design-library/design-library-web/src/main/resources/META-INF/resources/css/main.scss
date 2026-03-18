@@ -15,4 +15,12 @@
 		background-color: $teal-l3;
 		color: $teal;
 	}
+
+	.card-item-first {
+		background-color: $teal-l3;
+
+		.card-type-asset-icon {
+			color: $teal;
+		}
+	}
 }

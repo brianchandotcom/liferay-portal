@@ -17,6 +17,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import ItemSelectorModal from './ItemSelectorModal';
 import {TDetachedItemSelectorModal} from './types';
 
+import '../css/DetachedCMSFilesItemSelectorModal.scss';
+
 async function checkNewCMSFiles(
 	cmsRootFilesURL: string,
 	lastRequestTime: string
@@ -72,6 +74,7 @@ function DetachedCMSFilesItemSelectorModal<T extends Record<string, any>>(
 
 		return (
 			<ClayAlert
+				className="detached-cms-files-alert mx-n3 pl-5 pr-1"
 				displayType="info"
 				onClose={() => setShowInlineNotification(false)}
 				title={Liferay.Language.get('info')}

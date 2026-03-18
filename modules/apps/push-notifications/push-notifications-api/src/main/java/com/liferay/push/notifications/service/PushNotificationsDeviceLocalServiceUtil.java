@@ -356,3 +356,4 @@ public class PushNotificationsDeviceLocalServiceUtil {
 			PushNotificationsDeviceLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1041589818

@@ -348,3 +348,4 @@ public class LayoutPageTemplateStructureRelCacheModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-59623095

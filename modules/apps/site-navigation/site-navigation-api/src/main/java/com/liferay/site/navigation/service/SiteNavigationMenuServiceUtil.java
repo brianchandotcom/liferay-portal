@@ -185,3 +185,4 @@ public class SiteNavigationMenuServiceUtil {
 			SiteNavigationMenuService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1950109305

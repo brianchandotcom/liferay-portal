@@ -48,3 +48,4 @@ public class RegionLocalizationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1839931040

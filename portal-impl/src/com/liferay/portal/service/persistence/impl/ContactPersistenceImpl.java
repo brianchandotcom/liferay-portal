@@ -2769,3 +2769,4 @@ public class ContactPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-110668796

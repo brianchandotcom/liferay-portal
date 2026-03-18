@@ -1650,3 +1650,4 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1622687873

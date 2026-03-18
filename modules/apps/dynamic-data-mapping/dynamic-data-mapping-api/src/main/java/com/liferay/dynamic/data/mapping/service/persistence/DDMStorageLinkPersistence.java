@@ -857,3 +857,4 @@ public interface DDMStorageLinkPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1193523728

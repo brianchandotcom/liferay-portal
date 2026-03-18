@@ -150,3 +150,4 @@ public class BackgroundTaskServiceHttp {
 		_getBackgroundTaskStatusJSONParameterTypes2 = new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-147920561

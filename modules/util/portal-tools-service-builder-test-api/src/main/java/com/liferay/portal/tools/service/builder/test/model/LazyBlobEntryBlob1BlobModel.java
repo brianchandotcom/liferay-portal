@@ -48,3 +48,4 @@ public class LazyBlobEntryBlob1BlobModel {
 	private Blob _blob1Blob;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:716946035

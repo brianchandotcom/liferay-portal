@@ -96,3 +96,4 @@ public class ObjectFieldServiceUtil {
 		new Snapshot<>(ObjectFieldServiceUtil.class, ObjectFieldService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-480066158

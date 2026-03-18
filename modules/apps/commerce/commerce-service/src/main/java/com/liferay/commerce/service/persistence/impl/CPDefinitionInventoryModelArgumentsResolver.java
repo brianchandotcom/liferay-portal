@@ -118,3 +118,4 @@ public class CPDefinitionInventoryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1481111750

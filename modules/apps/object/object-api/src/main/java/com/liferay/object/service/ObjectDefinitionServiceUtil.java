@@ -250,3 +250,4 @@ public class ObjectDefinitionServiceUtil {
 			ObjectDefinitionServiceUtil.class, ObjectDefinitionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2029570327

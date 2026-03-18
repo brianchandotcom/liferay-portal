@@ -70,3 +70,4 @@ public abstract class BaseWorkflowDefinitionLinkUADExporter
 		workflowDefinitionLinkLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2023301040

@@ -153,3 +153,4 @@ public class CPMeasurementUnitServiceUtil {
 			CPMeasurementUnitServiceUtil.class, CPMeasurementUnitService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1033404605

@@ -53,3 +53,4 @@ public class AnnouncementsDeliveryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:838799566

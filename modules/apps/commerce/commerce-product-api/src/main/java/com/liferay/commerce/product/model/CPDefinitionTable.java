@@ -168,3 +168,4 @@ public class CPDefinitionTable extends BaseTable<CPDefinitionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:509728319

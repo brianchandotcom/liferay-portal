@@ -209,3 +209,4 @@ public class CommerceSubscriptionEntryServiceWrapper
 	private CommerceSubscriptionEntryService _commerceSubscriptionEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1766164157

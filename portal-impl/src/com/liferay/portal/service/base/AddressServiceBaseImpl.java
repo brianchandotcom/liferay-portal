@@ -202,3 +202,4 @@ public abstract class AddressServiceBaseImpl
 		AddressServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1747216866

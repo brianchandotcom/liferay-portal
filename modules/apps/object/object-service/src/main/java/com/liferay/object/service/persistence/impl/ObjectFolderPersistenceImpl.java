@@ -4237,3 +4237,4 @@ public class ObjectFolderPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1088038414

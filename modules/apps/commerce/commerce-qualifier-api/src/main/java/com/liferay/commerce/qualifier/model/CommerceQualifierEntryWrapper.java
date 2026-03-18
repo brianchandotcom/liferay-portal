@@ -472,3 +472,4 @@ public class CommerceQualifierEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1383342928

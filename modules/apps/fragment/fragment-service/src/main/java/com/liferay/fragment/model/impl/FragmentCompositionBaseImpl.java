@@ -39,3 +39,4 @@ public abstract class FragmentCompositionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-718037294

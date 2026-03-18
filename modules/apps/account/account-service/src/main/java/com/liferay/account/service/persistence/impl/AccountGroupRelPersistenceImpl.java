@@ -2585,3 +2585,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1985893915

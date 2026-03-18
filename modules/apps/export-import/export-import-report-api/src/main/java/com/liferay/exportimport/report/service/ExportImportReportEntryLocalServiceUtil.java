@@ -372,3 +372,4 @@ public class ExportImportReportEntryLocalServiceUtil {
 			ExportImportReportEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1145355427

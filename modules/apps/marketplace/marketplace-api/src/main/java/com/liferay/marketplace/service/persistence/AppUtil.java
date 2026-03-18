@@ -999,3 +999,4 @@ public class AppUtil {
 	private static volatile AppPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1877001732

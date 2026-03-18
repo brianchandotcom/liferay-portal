@@ -848,3 +848,4 @@ public class PatcherBuildLocalServiceWrapper
 	private PatcherBuildLocalService _patcherBuildLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-815333689

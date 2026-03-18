@@ -485,3 +485,4 @@ public class CommerceOrderTypeServiceHttp {
 			new Class[] {String.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:101323089

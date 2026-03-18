@@ -77,3 +77,4 @@ public class AssetListEntryAssetEntryRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-74332390

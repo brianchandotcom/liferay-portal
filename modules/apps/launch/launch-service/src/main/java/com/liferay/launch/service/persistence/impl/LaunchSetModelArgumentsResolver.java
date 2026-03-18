@@ -131,3 +131,4 @@ public class LaunchSetModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-601605485

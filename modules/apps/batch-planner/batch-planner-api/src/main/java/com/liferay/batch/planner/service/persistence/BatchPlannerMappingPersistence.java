@@ -363,3 +363,4 @@ public interface BatchPlannerMappingPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1565208165

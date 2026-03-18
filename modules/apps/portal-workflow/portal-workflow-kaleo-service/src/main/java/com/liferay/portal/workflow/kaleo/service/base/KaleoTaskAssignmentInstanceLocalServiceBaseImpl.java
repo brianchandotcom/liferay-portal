@@ -506,3 +506,4 @@ public abstract class KaleoTaskAssignmentInstanceLocalServiceBaseImpl
 		KaleoTaskAssignmentInstanceLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1259637248

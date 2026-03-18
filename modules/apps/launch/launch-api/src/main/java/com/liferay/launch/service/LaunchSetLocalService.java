@@ -300,3 +300,4 @@ public interface LaunchSetLocalService
 	public LaunchSet updateLaunchSet(LaunchSet launchSet);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:859177618

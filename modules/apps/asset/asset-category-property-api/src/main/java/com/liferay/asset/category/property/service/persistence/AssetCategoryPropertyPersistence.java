@@ -703,3 +703,4 @@ public interface AssetCategoryPropertyPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1836812433

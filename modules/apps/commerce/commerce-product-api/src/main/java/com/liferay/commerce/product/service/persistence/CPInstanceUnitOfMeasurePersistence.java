@@ -1283,3 +1283,4 @@ public interface CPInstanceUnitOfMeasurePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-589990206

@@ -358,3 +358,4 @@ public class KaleoNotificationCacheModel
 	public String notificationTypes;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1651856434

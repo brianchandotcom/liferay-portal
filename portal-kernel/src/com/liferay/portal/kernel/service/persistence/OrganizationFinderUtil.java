@@ -149,3 +149,4 @@ public class OrganizationFinderUtil {
 	private static OrganizationFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-52553465

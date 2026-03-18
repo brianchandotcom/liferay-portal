@@ -289,3 +289,4 @@ public class BackgroundTaskCacheModel
 	public String statusMessage;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-592060345

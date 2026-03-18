@@ -795,3 +795,4 @@ public interface AssetEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1105844400

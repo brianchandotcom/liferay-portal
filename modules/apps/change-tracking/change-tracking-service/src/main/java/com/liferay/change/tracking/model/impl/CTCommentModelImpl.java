@@ -821,3 +821,4 @@ public class CTCommentModelImpl
 	private CTComment _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1770152176

@@ -421,3 +421,4 @@ public class CommerceInventoryWarehouseCacheModel
 	public String type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2097447705

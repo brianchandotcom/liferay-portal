@@ -446,3 +446,4 @@ public class ExportImportReportEntryLocalServiceWrapper
 		_exportImportReportEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:233950841

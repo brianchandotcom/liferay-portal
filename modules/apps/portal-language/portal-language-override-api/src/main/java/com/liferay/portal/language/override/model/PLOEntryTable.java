@@ -48,3 +48,4 @@ public class PLOEntryTable extends BaseTable<PLOEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1410306551

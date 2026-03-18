@@ -41,3 +41,4 @@ public abstract class RedirectNotFoundEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1254140396

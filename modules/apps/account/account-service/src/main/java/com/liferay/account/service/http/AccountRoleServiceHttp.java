@@ -431,3 +431,4 @@ public class AccountRoleServiceHttp {
 		new Class[] {long.class, long.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-715490538

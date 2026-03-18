@@ -224,3 +224,4 @@ public class KaleoNodeSettingCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1470298282

@@ -389,3 +389,4 @@ public class SegmentsEntryRoleWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:433853817

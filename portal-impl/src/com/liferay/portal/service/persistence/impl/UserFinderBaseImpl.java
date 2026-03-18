@@ -65,3 +65,4 @@ public class UserFinderBaseImpl extends BasePersistenceImpl<User> {
 		UserFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1194103699

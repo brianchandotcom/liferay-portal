@@ -2039,3 +2039,4 @@ public interface JournalFolderPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:112623075

@@ -327,3 +327,4 @@ public interface DDMFormInstanceRecordVersionLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1074804109

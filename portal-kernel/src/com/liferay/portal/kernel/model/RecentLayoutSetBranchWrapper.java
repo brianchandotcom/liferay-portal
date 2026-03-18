@@ -293,3 +293,4 @@ public class RecentLayoutSetBranchWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:157807003

@@ -624,3 +624,4 @@ public class AssetVocabularyLocalServiceUtil {
 	private static volatile AssetVocabularyLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-236408834

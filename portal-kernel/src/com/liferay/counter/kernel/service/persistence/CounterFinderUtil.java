@@ -69,3 +69,4 @@ public class CounterFinderUtil {
 	private static CounterFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1553829273

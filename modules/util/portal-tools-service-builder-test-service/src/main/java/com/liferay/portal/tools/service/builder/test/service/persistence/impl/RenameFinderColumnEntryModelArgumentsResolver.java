@@ -119,3 +119,4 @@ public class RenameFinderColumnEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1827956610

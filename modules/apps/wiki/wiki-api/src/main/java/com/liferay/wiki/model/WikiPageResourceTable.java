@@ -46,3 +46,4 @@ public class WikiPageResourceTable extends BaseTable<WikiPageResourceTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1206355805

@@ -65,3 +65,4 @@ public class CSDiagramSettingTable extends BaseTable<CSDiagramSettingTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:524669119

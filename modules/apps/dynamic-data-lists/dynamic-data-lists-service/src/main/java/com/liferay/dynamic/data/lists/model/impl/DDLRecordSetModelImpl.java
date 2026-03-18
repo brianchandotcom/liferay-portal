@@ -1704,3 +1704,4 @@ public class DDLRecordSetModelImpl
 	private DDLRecordSet _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1285127865

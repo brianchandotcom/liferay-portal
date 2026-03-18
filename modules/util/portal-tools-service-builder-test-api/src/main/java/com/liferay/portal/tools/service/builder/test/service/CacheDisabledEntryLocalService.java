@@ -271,3 +271,4 @@ public interface CacheDisabledEntryLocalService
 		CacheDisabledEntry cacheDisabledEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1450730910

@@ -335,3 +335,4 @@ public class CPDefinitionOptionValueRelCacheModel
 	public String unitOfMeasureKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2030565164

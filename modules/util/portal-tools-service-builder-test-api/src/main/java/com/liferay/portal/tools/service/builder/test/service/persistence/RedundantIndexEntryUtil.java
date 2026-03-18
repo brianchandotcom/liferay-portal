@@ -349,3 +349,4 @@ public class RedundantIndexEntryUtil {
 	private static volatile RedundantIndexEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:88721886

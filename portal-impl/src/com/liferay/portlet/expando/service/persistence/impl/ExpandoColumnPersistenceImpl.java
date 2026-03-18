@@ -2696,3 +2696,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-242120339

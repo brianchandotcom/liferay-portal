@@ -226,3 +226,4 @@ public class FaroUserCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:973895475

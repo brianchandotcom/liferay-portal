@@ -455,3 +455,4 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-264460628

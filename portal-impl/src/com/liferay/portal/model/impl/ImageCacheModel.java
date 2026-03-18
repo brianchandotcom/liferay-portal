@@ -179,3 +179,4 @@ public class ImageCacheModel
 	public int size;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-977464880

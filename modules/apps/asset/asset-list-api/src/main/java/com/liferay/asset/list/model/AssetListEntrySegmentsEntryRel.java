@@ -56,3 +56,4 @@ public interface AssetListEntrySegmentsEntryRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1614259136

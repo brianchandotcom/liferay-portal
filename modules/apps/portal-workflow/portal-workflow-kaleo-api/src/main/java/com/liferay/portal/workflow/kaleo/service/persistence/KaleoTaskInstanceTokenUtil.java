@@ -1488,3 +1488,4 @@ public class KaleoTaskInstanceTokenUtil {
 	private static volatile KaleoTaskInstanceTokenPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-512808246

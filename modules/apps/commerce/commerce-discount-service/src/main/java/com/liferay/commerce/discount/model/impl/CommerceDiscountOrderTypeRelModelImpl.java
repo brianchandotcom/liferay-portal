@@ -1056,3 +1056,4 @@ public class CommerceDiscountOrderTypeRelModelImpl
 	private CommerceDiscountOrderTypeRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-302816991

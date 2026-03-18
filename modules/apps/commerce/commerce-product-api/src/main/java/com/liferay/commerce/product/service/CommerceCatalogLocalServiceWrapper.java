@@ -559,3 +559,4 @@ public class CommerceCatalogLocalServiceWrapper
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-927196325

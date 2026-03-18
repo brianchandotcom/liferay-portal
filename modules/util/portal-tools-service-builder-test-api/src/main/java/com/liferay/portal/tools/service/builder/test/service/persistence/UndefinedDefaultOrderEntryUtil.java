@@ -531,3 +531,4 @@ public class UndefinedDefaultOrderEntryUtil {
 	private static volatile UndefinedDefaultOrderEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1727093959

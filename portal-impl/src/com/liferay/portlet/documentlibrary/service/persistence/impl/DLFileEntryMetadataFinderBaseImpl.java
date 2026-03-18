@@ -65,3 +65,4 @@ public class DLFileEntryMetadataFinderBaseImpl
 		DLFileEntryMetadataFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-107703617

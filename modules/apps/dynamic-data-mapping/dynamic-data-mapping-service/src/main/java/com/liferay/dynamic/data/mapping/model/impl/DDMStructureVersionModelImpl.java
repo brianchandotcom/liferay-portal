@@ -1720,3 +1720,4 @@ public class DDMStructureVersionModelImpl
 	private DDMStructureVersion _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1158972010

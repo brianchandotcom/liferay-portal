@@ -280,3 +280,4 @@ public interface TrashEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1035015931

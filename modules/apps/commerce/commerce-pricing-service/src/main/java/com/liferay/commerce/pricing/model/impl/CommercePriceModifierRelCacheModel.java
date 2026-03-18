@@ -207,3 +207,4 @@ public class CommercePriceModifierRelCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2113300579

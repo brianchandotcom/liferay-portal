@@ -383,3 +383,4 @@ public class CPInstanceServiceWrapper
 	private CPInstanceService _cpInstanceService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-385079287

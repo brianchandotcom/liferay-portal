@@ -104,3 +104,4 @@ public class AssetCategoryPropertyServiceWrapper
 	private AssetCategoryPropertyService _assetCategoryPropertyService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1693055178

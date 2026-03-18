@@ -408,3 +408,4 @@ public class PatcherProductVersionLocalServiceWrapper
 		_patcherProductVersionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1041434240

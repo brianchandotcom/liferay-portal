@@ -389,3 +389,4 @@ public class SpringEntryLocalServiceWrapper
 	private SpringEntryLocalService _springEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1100410124

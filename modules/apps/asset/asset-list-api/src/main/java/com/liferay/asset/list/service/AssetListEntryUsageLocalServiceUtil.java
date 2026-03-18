@@ -479,3 +479,4 @@ public class AssetListEntryUsageLocalServiceUtil {
 			AssetListEntryUsageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1494666846

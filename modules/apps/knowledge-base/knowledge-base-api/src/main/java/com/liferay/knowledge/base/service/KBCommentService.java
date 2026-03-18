@@ -127,3 +127,4 @@ public interface KBCommentService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1682490356

@@ -513,3 +513,4 @@ public class CTRemoteUtil {
 	private static volatile CTRemotePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1153137874

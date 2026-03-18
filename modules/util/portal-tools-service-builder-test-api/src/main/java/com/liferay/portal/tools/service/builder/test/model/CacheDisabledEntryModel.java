@@ -81,3 +81,4 @@ public interface CacheDisabledEntryModel extends BaseModel<CacheDisabledEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1866846959

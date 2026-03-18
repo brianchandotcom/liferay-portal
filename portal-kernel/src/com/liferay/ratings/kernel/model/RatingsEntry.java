@@ -50,3 +50,4 @@ public interface RatingsEntry extends PersistedModel, RatingsEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:862004336

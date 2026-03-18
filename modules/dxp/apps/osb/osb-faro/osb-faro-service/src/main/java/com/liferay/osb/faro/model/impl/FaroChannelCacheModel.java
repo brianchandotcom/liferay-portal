@@ -219,3 +219,4 @@ public class FaroChannelCacheModel
 	public long workspaceGroupId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:341048033

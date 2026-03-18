@@ -243,3 +243,4 @@ public class MFAFIDO2CredentialEntryCacheModel
 	public long signatureCount;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1525212928

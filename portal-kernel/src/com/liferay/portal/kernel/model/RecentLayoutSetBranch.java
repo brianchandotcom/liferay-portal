@@ -51,3 +51,4 @@ public interface RecentLayoutSetBranch
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:48959793

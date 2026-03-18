@@ -83,3 +83,4 @@ public interface OrganizationFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:468917725

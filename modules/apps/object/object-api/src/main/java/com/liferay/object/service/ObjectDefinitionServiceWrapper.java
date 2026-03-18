@@ -294,3 +294,4 @@ public class ObjectDefinitionServiceWrapper
 	private ObjectDefinitionService _objectDefinitionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1511864280

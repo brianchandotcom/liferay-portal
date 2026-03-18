@@ -1599,3 +1599,4 @@ public class SegmentsEntryModelImpl
 	private SegmentsEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:897123193

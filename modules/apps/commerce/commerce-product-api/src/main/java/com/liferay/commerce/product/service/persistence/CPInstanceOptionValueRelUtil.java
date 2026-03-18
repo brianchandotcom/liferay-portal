@@ -1457,3 +1457,4 @@ public class CPInstanceOptionValueRelUtil {
 	private static volatile CPInstanceOptionValueRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1434808272

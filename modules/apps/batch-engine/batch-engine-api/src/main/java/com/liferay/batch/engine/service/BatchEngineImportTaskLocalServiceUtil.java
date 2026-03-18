@@ -438,3 +438,4 @@ public class BatchEngineImportTaskLocalServiceUtil {
 			BatchEngineImportTaskLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1570142290

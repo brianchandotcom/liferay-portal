@@ -128,3 +128,4 @@ public interface WikiNodeService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-141205797

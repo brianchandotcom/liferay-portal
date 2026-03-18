@@ -354,3 +354,4 @@ public class NotificationQueueEntryLocalServiceUtil {
 			NotificationQueueEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1448158606

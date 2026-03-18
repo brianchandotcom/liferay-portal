@@ -1049,3 +1049,4 @@ public class DLFileEntryLocalServiceUtil {
 	private static volatile DLFileEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-965612732

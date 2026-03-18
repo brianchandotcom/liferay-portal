@@ -914,3 +914,4 @@ public class CommerceInventoryWarehouseServiceHttp {
 			new Class[] {String.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1758645771

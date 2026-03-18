@@ -91,3 +91,4 @@ public class ObjectRelationshipTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1124712290

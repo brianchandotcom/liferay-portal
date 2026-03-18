@@ -3073,3 +3073,4 @@ public class AppPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:297113295

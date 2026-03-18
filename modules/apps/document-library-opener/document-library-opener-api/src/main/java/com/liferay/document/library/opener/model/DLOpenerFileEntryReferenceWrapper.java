@@ -408,3 +408,4 @@ public class DLOpenerFileEntryReferenceWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1427932225

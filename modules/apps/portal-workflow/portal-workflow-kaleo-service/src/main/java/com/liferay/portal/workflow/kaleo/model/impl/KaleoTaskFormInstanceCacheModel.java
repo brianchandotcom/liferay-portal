@@ -310,3 +310,4 @@ public class KaleoTaskFormInstanceCacheModel
 	public String metadata;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1117788744

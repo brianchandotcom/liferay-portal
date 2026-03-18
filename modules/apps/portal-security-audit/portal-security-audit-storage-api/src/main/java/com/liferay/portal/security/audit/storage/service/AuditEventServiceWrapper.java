@@ -132,3 +132,4 @@ public class AuditEventServiceWrapper
 	private AuditEventService _auditEventService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-687197414

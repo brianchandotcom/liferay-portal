@@ -121,3 +121,4 @@ public class AccountEntryOrganizationRelServiceUtil {
 			AccountEntryOrganizationRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:209990210

@@ -343,3 +343,4 @@ public class SamlIdpSsoSessionLocalServiceUtil {
 			SamlIdpSsoSessionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1158652530

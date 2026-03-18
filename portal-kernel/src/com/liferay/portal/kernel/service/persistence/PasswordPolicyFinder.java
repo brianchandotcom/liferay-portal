@@ -33,3 +33,4 @@ public interface PasswordPolicyFinder {
 					orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1223254114

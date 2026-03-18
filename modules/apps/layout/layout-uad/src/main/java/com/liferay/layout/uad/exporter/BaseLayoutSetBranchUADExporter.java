@@ -66,3 +66,4 @@ public abstract class BaseLayoutSetBranchUADExporter
 	protected LayoutSetBranchLocalService layoutSetBranchLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:474990771

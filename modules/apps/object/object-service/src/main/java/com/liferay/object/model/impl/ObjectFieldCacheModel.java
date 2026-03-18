@@ -456,3 +456,4 @@ public class ObjectFieldCacheModel
 	public boolean system;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-179531582

@@ -102,3 +102,4 @@ public class CommerceTaxCategoryMappingServiceUtil {
 			CommerceTaxCategoryMappingService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1795755459

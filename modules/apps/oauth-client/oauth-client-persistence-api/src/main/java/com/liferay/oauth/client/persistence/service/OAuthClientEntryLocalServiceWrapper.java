@@ -451,3 +451,4 @@ public class OAuthClientEntryLocalServiceWrapper
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:706169553

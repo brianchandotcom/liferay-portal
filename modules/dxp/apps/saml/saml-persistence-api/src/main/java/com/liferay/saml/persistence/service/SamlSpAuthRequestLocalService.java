@@ -278,3 +278,4 @@ public interface SamlSpAuthRequestLocalService
 		SamlSpAuthRequest samlSpAuthRequest);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1382093286

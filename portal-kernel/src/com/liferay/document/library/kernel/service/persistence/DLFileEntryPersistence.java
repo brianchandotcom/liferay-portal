@@ -4094,3 +4094,4 @@ public interface DLFileEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:104623152

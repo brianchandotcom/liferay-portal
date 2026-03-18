@@ -109,3 +109,4 @@ public class OAuth2ApplicationTable extends BaseTable<OAuth2ApplicationTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1631243351

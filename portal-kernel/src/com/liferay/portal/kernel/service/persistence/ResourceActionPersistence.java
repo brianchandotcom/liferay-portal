@@ -345,3 +345,4 @@ public interface ResourceActionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1360430017

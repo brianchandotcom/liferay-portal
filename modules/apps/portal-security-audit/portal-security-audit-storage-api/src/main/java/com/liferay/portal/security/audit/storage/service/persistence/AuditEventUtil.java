@@ -442,3 +442,4 @@ public class AuditEventUtil {
 	private static volatile AuditEventPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1145712277

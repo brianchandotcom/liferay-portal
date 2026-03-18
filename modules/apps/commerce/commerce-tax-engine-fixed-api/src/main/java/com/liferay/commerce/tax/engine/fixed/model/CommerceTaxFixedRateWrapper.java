@@ -410,3 +410,4 @@ public class CommerceTaxFixedRateWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1011869353

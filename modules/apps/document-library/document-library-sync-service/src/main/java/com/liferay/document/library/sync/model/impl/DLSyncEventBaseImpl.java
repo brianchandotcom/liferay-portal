@@ -39,3 +39,4 @@ public abstract class DLSyncEventBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2140910628

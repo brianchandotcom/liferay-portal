@@ -53,3 +53,4 @@ public class MBThreadFlagTable extends BaseTable<MBThreadFlagTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1469406796

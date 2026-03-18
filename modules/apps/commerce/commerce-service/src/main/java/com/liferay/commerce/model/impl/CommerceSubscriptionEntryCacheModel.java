@@ -465,3 +465,4 @@ public class CommerceSubscriptionEntryCacheModel
 	public long deliveryStartDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-624400802

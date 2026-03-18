@@ -314,3 +314,4 @@ public class DDMFormInstanceVersionCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:186321038

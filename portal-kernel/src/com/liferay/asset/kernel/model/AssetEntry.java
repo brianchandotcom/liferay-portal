@@ -62,3 +62,4 @@ public interface AssetEntry extends AssetEntryModel, PersistedModel {
 	public long getViewCount();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:976641581

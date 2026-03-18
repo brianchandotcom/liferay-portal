@@ -559,3 +559,4 @@ public class JournalArticleLocalizationUtil {
 	private static volatile JournalArticleLocalizationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1364423880

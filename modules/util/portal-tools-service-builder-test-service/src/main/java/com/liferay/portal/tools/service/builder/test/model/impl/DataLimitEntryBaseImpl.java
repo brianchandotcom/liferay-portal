@@ -39,3 +39,4 @@ public abstract class DataLimitEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1634885776

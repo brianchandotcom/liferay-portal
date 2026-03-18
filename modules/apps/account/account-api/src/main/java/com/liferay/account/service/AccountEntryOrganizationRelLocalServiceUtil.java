@@ -445,3 +445,4 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 			AccountEntryOrganizationRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1191755042

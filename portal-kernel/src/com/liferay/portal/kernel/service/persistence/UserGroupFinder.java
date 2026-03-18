@@ -85,3 +85,4 @@ public interface UserGroupFinder {
 				<com.liferay.portal.kernel.model.UserGroup> orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-551003547

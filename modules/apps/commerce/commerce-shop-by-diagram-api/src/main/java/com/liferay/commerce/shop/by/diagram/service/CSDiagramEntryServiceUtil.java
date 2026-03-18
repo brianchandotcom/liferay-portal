@@ -131,3 +131,4 @@ public class CSDiagramEntryServiceUtil {
 			CSDiagramEntryServiceUtil.class, CSDiagramEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1555756497

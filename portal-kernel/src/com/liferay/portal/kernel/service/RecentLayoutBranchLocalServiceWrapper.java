@@ -389,3 +389,4 @@ public class RecentLayoutBranchLocalServiceWrapper
 	private RecentLayoutBranchLocalService _recentLayoutBranchLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1691548772

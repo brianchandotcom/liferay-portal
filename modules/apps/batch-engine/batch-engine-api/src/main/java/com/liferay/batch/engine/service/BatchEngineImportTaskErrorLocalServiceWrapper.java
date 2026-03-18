@@ -400,3 +400,4 @@ public class BatchEngineImportTaskErrorLocalServiceWrapper
 		_batchEngineImportTaskErrorLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1101923712

@@ -358,3 +358,4 @@ public interface CTRemotePersistence extends BasePersistence<CTRemote> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1765188235

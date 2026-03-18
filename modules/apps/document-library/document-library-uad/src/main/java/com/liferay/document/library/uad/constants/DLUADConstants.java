@@ -26,3 +26,4 @@ public class DLUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:677563458

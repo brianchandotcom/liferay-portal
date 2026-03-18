@@ -135,3 +135,4 @@ public class CompanyInfoCacheModel
 	public String key;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1024442537

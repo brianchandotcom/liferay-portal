@@ -629,3 +629,4 @@ public class RSVEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:191138620

@@ -312,3 +312,4 @@ public class CTSChildWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:414261186

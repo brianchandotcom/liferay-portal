@@ -132,3 +132,4 @@ public class AuditEventModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2115959039

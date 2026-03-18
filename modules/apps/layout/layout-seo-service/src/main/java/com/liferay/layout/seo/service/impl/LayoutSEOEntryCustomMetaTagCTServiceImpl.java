@@ -50,3 +50,4 @@ public class LayoutSEOEntryCustomMetaTagCTServiceImpl
 		_layoutSEOEntryCustomMetaTagPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-600416412

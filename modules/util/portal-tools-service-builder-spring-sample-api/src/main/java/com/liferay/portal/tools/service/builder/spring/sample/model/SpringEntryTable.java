@@ -39,3 +39,4 @@ public class SpringEntryTable extends BaseTable<SpringEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:247969434

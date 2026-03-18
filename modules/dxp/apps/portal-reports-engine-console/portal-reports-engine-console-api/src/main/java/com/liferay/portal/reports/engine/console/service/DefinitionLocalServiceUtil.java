@@ -431,3 +431,4 @@ public class DefinitionLocalServiceUtil {
 			DefinitionLocalServiceUtil.class, DefinitionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1273338097

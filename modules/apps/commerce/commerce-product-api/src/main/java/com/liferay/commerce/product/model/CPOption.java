@@ -50,3 +50,4 @@ public interface CPOption extends CPOptionModel, PersistedModel {
 	public java.util.List<CPOptionValue> getCPOptionValues();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:686904075

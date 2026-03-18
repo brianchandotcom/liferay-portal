@@ -363,3 +363,4 @@ public class CTScoreLocalServiceWrapper
 	private CTScoreLocalService _ctScoreLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1237046449

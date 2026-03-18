@@ -436,3 +436,4 @@ public class CPConfigurationListRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-715195916

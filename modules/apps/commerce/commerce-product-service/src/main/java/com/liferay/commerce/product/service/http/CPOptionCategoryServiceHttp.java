@@ -476,3 +476,4 @@ public class CPOptionCategoryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1801570202

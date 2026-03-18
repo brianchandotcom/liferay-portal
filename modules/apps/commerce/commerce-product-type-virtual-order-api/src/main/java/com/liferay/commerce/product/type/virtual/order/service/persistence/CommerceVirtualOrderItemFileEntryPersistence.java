@@ -826,3 +826,4 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-827420501

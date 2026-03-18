@@ -432,3 +432,4 @@ public interface CommerceNotificationQueueEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:965843723

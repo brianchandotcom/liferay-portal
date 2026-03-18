@@ -584,3 +584,4 @@ public interface SocialRequestLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:760882209

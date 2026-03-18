@@ -437,3 +437,4 @@ public class OrgLaborUtil {
 	private static volatile OrgLaborPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1288855406

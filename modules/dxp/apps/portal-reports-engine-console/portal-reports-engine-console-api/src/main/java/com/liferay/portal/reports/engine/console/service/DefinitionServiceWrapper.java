@@ -122,3 +122,4 @@ public class DefinitionServiceWrapper
 	private DefinitionService _definitionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-61346123

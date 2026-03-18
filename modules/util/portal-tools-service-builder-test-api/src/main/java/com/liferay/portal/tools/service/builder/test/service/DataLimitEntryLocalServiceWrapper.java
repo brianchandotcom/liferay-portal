@@ -352,3 +352,4 @@ public class DataLimitEntryLocalServiceWrapper
 	private DataLimitEntryLocalService _dataLimitEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1956381225

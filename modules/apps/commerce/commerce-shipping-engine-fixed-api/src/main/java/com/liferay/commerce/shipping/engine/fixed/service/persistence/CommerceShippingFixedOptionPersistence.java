@@ -361,3 +361,4 @@ public interface CommerceShippingFixedOptionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:672061126

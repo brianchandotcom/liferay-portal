@@ -121,3 +121,4 @@ public class LocalizedEntryLocalizationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:694116530

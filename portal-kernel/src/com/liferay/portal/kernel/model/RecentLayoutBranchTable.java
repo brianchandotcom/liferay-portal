@@ -50,3 +50,4 @@ public class RecentLayoutBranchTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1414923630

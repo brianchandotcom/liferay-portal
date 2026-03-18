@@ -276,3 +276,4 @@ public interface UserNotificationEventModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1054159924

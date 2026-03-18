@@ -84,3 +84,4 @@ public class KaleoTransitionTable extends BaseTable<KaleoTransitionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:808257456

@@ -123,3 +123,4 @@ public interface NestedSetsTreeEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1312762289

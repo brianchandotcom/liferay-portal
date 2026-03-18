@@ -379,3 +379,4 @@ public class TrashVersionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1394565291

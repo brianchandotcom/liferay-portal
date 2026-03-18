@@ -327,3 +327,4 @@ public class CTScoreUtil {
 	private static volatile CTScorePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:99505047

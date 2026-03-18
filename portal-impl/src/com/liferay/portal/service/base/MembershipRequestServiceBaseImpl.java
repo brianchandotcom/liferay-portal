@@ -207,3 +207,4 @@ public abstract class MembershipRequestServiceBaseImpl
 		MembershipRequestServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:430619447

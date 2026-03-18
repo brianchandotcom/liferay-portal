@@ -744,3 +744,4 @@ public class AssetVocabularyLocalServiceWrapper
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1961859064

@@ -18,3 +18,4 @@ public interface ViewCountEntryFinder {
 		long companyId, long classNameId, long classPK, int increment);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1961334147

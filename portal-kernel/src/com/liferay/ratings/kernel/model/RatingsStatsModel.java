@@ -235,3 +235,4 @@ public interface RatingsStatsModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1324585572

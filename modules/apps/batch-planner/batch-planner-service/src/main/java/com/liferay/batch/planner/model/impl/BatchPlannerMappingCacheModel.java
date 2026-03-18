@@ -271,3 +271,4 @@ public class BatchPlannerMappingCacheModel
 	public String script;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1193654906

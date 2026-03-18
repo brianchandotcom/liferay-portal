@@ -40,3 +40,4 @@ public abstract class MBSuspiciousActivityBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2120276395

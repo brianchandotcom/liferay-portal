@@ -2092,3 +2092,4 @@ public interface SavedContentEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-725420036

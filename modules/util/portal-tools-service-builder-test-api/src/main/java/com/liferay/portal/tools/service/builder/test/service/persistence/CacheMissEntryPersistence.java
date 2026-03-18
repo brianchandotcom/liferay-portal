@@ -154,3 +154,4 @@ public interface CacheMissEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1913999618

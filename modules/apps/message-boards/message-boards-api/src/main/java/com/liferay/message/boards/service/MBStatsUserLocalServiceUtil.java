@@ -87,3 +87,4 @@ public class MBStatsUserLocalServiceUtil {
 			MBStatsUserLocalServiceUtil.class, MBStatsUserLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1665977971

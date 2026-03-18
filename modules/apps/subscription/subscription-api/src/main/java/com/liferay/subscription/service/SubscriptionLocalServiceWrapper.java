@@ -649,3 +649,4 @@ public class SubscriptionLocalServiceWrapper
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1035496999

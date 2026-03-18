@@ -465,3 +465,4 @@ public class CommerceWishListItemWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:102472745

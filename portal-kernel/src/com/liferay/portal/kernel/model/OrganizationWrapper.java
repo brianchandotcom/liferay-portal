@@ -841,3 +841,4 @@ public class OrganizationWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:265208587

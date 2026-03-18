@@ -358,3 +358,4 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 			DDMDataProviderInstanceLinkLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-487695712

@@ -367,3 +367,4 @@ public class ObjectValidationRuleSettingLocalServiceUtil {
 			ObjectValidationRuleSettingLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1973595897

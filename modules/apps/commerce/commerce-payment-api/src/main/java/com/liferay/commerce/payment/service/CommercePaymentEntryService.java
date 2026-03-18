@@ -146,3 +146,4 @@ public interface CommercePaymentEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-265151546

@@ -151,3 +151,4 @@ public class BatchEngineImportTaskServiceWrapper
 	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-837230505

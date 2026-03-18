@@ -381,3 +381,4 @@ public class PatcherProjectVersionLocalServiceUtil {
 			PatcherProjectVersionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-177884504

@@ -126,3 +126,4 @@ public class CommerceDiscountTable extends BaseTable<CommerceDiscountTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:873959903

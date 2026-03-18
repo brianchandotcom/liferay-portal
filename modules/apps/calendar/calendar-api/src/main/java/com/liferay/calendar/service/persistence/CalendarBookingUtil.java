@@ -2071,3 +2071,4 @@ public class CalendarBookingUtil {
 	private static volatile CalendarBookingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-607335367

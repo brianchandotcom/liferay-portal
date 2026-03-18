@@ -1497,3 +1497,4 @@ public interface JournalContentSearchPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:854163562

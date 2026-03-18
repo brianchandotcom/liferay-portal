@@ -55,3 +55,4 @@ public interface CommerceShippingFixedOption
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1773115071

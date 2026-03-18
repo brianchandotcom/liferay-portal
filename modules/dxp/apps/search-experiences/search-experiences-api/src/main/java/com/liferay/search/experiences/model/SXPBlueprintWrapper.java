@@ -990,3 +990,4 @@ public class SXPBlueprintWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1749682556

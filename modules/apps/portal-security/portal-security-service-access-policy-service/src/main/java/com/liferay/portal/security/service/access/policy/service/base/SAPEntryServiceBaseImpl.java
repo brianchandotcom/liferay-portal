@@ -125,3 +125,4 @@ public abstract class SAPEntryServiceBaseImpl
 		SAPEntryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2011422394

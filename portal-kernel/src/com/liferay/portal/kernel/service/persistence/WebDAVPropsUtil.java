@@ -332,3 +332,4 @@ public class WebDAVPropsUtil {
 	private static volatile WebDAVPropsPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:254826298

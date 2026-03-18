@@ -387,3 +387,4 @@ public class ServiceComponentLocalServiceWrapper
 	private ServiceComponentLocalService _serviceComponentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-719625736

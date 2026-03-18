@@ -94,3 +94,4 @@ public class DLFileEntryTypeFinderUtil {
 	private static DLFileEntryTypeFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2010436747

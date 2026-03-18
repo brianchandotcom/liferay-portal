@@ -36,3 +36,4 @@ public class SequenceEntryTable extends BaseTable<SequenceEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:198702684

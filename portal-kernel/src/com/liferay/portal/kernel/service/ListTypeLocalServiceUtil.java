@@ -363,3 +363,4 @@ public class ListTypeLocalServiceUtil {
 	private static volatile ListTypeLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-75455825

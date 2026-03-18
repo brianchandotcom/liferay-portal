@@ -48,3 +48,4 @@ public class CTSContentTable extends BaseTable<CTSContentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:451775653

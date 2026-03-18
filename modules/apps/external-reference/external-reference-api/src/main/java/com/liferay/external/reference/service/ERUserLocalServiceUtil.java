@@ -69,3 +69,4 @@ public class ERUserLocalServiceUtil {
 		new Snapshot<>(ERUserLocalServiceUtil.class, ERUserLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:187338891

@@ -4461,3 +4461,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1815856653

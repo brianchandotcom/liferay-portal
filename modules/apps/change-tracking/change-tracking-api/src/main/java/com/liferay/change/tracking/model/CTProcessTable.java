@@ -45,3 +45,4 @@ public class CTProcessTable extends BaseTable<CTProcessTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1880359404

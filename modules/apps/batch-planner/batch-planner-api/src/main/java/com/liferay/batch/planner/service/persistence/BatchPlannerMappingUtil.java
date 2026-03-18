@@ -543,3 +543,4 @@ public class BatchPlannerMappingUtil {
 	private static volatile BatchPlannerMappingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:86097366

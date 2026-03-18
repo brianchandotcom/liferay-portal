@@ -39,3 +39,4 @@ public abstract class ContactBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1235807566

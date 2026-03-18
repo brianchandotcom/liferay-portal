@@ -4463,3 +4463,4 @@ public interface FragmentEntryVersionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1678944114

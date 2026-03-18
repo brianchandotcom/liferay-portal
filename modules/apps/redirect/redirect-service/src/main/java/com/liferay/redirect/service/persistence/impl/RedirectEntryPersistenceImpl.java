@@ -4353,3 +4353,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:320154676

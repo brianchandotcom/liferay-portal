@@ -39,3 +39,4 @@ public class BrowserTrackerTable extends BaseTable<BrowserTrackerTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-976482027

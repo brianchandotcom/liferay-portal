@@ -328,3 +328,4 @@ public class PluginSettingLocalServiceUtil {
 	private static volatile PluginSettingLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-374338301

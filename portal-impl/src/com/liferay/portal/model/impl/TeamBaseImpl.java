@@ -38,3 +38,4 @@ public abstract class TeamBaseImpl extends TeamModelImpl implements Team {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-727933163

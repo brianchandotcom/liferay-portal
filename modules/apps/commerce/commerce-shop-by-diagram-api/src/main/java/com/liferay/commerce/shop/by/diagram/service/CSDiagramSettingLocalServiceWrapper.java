@@ -457,3 +457,4 @@ public class CSDiagramSettingLocalServiceWrapper
 	private CSDiagramSettingLocalService _csDiagramSettingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:961364154

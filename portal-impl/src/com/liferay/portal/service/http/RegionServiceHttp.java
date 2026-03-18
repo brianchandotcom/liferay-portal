@@ -762,3 +762,4 @@ public class RegionServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-142303530

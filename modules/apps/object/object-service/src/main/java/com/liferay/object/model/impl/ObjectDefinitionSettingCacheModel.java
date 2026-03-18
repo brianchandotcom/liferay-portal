@@ -235,3 +235,4 @@ public class ObjectDefinitionSettingCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1150486650

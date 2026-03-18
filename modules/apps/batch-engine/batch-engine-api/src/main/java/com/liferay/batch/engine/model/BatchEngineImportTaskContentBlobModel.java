@@ -50,3 +50,4 @@ public class BatchEngineImportTaskContentBlobModel {
 	private Blob _contentBlob;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-506160468

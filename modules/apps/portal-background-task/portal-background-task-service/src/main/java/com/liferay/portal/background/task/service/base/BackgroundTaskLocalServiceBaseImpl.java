@@ -458,3 +458,4 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		BackgroundTaskLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-372036556

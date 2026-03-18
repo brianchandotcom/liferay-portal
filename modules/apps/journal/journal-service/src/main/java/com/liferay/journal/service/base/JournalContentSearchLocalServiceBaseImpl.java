@@ -491,3 +491,4 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 		JournalContentSearchLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-576692926

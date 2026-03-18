@@ -406,3 +406,4 @@ public class UserGroupGroupRoleLocalServiceUtil {
 	private static volatile UserGroupGroupRoleLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2053792004

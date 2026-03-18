@@ -489,3 +489,4 @@ public class DLFileEntryServiceUtil {
 	private static volatile DLFileEntryService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1383567555

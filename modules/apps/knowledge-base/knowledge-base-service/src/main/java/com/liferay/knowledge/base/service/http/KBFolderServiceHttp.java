@@ -741,3 +741,4 @@ public class KBFolderServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2002167679

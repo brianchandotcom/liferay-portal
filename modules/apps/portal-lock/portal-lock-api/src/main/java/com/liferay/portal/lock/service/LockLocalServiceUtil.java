@@ -429,3 +429,4 @@ public class LockLocalServiceUtil {
 		new Snapshot<>(LockLocalServiceUtil.class, LockLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:235756908

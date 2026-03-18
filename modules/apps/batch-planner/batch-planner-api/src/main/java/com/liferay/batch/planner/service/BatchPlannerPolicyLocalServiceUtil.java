@@ -355,3 +355,4 @@ public class BatchPlannerPolicyLocalServiceUtil {
 			BatchPlannerPolicyLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1787093338

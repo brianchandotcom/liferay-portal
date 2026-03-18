@@ -122,3 +122,4 @@ public class CommerceTaxCategoryMappingModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1300740199

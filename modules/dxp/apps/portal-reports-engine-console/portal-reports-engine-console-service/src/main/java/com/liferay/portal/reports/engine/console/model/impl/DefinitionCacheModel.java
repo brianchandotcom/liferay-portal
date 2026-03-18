@@ -268,3 +268,4 @@ public class DefinitionCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1283284713

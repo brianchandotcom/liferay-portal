@@ -65,3 +65,4 @@ public class DEDataListViewTable extends BaseTable<DEDataListViewTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1719009268

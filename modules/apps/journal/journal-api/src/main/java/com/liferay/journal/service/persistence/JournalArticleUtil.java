@@ -10539,3 +10539,4 @@ public class JournalArticleUtil {
 	private static volatile JournalArticlePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1584021460

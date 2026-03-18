@@ -54,3 +54,4 @@ public interface CTPreferencesService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:222732877

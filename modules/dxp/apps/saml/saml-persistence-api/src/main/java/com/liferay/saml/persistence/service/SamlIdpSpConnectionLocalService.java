@@ -311,3 +311,4 @@ public interface SamlIdpSpConnectionLocalService
 		SamlIdpSpConnection samlIdpSpConnection);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:337098335

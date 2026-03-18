@@ -198,3 +198,4 @@ public class ChangesetEntryCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:831236302

@@ -77,3 +77,4 @@ public class CountryTable extends BaseTable<CountryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2031535673

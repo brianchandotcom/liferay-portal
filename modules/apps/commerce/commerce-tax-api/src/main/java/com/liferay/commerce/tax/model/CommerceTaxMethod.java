@@ -59,3 +59,4 @@ public interface CommerceTaxMethod
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:453952667

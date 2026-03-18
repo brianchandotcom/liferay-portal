@@ -48,3 +48,4 @@ public class CTSContentDataBlobModel {
 	private Blob _dataBlob;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:585147736

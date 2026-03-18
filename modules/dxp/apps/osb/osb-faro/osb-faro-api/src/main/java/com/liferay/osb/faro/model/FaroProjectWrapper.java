@@ -834,3 +834,4 @@ public class FaroProjectWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-16707228

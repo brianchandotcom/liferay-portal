@@ -91,3 +91,4 @@ public class AnnouncementsDeliveryServiceHttp {
 		new Class[] {long.class, String.class, boolean.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1335837138

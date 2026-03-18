@@ -160,3 +160,4 @@ public class CPInstanceTable extends BaseTable<CPInstanceTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-86441893

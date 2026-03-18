@@ -50,3 +50,4 @@ public interface SocialRequest extends PersistedModel, SocialRequestModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-708588457

@@ -352,3 +352,4 @@ public class DDMFormInstanceReportWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-428310726

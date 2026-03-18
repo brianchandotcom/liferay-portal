@@ -596,3 +596,4 @@ public interface MBDiscussionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1703702295

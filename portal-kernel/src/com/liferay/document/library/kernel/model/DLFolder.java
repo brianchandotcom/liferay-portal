@@ -76,3 +76,4 @@ public interface DLFolder extends DLFolderModel, PersistedModel, TreeModel {
 	public boolean isRoot();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1563391946

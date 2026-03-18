@@ -316,3 +316,4 @@ public class UndefinedDefaultOrderEntryLocalServiceUtil {
 	private static volatile UndefinedDefaultOrderEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-247975014

@@ -97,3 +97,4 @@ public interface FinderWhereClauseEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1988835555

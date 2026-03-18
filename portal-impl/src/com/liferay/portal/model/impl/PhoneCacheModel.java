@@ -282,3 +282,4 @@ public class PhoneCacheModel
 	public boolean primary;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:588255569

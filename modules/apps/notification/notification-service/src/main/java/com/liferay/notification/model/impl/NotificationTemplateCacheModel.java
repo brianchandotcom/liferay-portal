@@ -355,3 +355,4 @@ public class NotificationTemplateCacheModel
 	public String type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1611759298

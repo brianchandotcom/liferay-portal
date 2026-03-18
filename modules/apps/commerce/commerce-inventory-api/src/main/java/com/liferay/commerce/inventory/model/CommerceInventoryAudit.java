@@ -52,3 +52,4 @@ public interface CommerceInventoryAudit
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1739907658

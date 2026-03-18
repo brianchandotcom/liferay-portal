@@ -795,3 +795,4 @@ public interface BatchEngineImportTaskPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1833526881

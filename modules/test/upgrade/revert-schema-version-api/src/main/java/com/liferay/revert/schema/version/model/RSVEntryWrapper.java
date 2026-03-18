@@ -161,3 +161,4 @@ public class RSVEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:865335592

@@ -488,3 +488,4 @@ public class CalendarBookingCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1747727969

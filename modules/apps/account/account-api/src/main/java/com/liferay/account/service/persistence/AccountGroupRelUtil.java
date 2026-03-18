@@ -901,3 +901,4 @@ public class AccountGroupRelUtil {
 	private static volatile AccountGroupRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1662556942

@@ -300,3 +300,4 @@ public class DepotAppCustomizationWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1617202561

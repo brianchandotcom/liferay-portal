@@ -363,3 +363,4 @@ public interface CTCollectionTemplatePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2096255359

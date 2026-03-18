@@ -195,3 +195,4 @@ public class PatcherAccountCacheModel
 	public String accountEntryCode;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-890959155

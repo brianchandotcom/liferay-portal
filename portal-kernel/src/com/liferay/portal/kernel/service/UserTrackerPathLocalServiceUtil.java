@@ -309,3 +309,4 @@ public class UserTrackerPathLocalServiceUtil {
 	private static volatile UserTrackerPathLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-499234263

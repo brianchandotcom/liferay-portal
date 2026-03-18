@@ -397,3 +397,4 @@ public class RoleServiceWrapper
 	private RoleService _roleService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1381691779

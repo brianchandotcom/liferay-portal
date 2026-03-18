@@ -399,3 +399,4 @@ public class AssetCategoryPropertyLocalServiceUtil {
 			AssetCategoryPropertyLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-175459678

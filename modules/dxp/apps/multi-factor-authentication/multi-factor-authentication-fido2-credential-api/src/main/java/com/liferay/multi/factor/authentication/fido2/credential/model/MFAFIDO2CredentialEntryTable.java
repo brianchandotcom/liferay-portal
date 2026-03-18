@@ -73,3 +73,4 @@ public class MFAFIDO2CredentialEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:206940731

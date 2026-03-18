@@ -293,3 +293,4 @@ public interface CommerceVirtualOrderItemFileEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1656076788

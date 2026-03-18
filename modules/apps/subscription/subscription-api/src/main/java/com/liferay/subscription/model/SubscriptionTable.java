@@ -53,3 +53,4 @@ public class SubscriptionTable extends BaseTable<SubscriptionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-464061301

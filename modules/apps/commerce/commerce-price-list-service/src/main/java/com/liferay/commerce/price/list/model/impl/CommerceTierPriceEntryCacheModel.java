@@ -367,3 +367,4 @@ public class CommerceTierPriceEntryCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1245760880

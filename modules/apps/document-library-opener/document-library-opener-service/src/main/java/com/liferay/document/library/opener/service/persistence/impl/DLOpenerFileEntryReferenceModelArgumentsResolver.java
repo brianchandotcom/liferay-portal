@@ -122,3 +122,4 @@ public class DLOpenerFileEntryReferenceModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1542046384

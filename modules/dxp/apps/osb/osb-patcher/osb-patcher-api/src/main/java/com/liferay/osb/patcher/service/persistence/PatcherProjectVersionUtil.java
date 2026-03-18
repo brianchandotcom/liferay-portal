@@ -1563,3 +1563,4 @@ public class PatcherProjectVersionUtil {
 	private static volatile PatcherProjectVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2125427332

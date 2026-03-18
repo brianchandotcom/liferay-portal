@@ -425,3 +425,4 @@ public class ImageUtil {
 	private static volatile ImagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:176042173

@@ -344,3 +344,4 @@ public class AnalyticsDeleteMessageLocalServiceUtil {
 			AnalyticsDeleteMessageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1681007861

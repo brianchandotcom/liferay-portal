@@ -39,3 +39,4 @@ public abstract class EmailAddressBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1534337015

@@ -54,3 +54,4 @@ public interface CommerceDiscount
 		getCommerceDiscountCommerceAccountGroupRels();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1760553485

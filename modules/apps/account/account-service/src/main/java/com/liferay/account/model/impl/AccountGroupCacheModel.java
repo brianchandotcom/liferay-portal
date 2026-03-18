@@ -277,3 +277,4 @@ public class AccountGroupCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1415305287

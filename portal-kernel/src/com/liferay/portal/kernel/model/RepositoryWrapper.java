@@ -639,3 +639,4 @@ public class RepositoryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-779309987

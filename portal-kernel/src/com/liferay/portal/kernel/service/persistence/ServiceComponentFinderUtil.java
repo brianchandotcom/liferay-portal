@@ -36,3 +36,4 @@ public class ServiceComponentFinderUtil {
 	private static ServiceComponentFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1792253532

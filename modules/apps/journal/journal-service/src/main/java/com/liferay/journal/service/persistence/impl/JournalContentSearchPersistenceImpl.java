@@ -6200,3 +6200,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:597038742

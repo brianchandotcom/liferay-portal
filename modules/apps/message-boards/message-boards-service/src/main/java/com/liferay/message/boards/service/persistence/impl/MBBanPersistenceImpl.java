@@ -4119,3 +4119,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:415821415

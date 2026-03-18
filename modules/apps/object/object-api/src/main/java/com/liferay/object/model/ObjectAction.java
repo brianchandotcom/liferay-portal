@@ -51,3 +51,4 @@ public interface ObjectAction extends ObjectActionModel, PersistedModel {
 		getParametersUnicodeProperties();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-434551933

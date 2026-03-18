@@ -3743,3 +3743,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:289377662

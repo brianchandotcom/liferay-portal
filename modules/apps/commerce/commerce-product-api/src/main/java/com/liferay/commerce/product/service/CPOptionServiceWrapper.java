@@ -161,3 +161,4 @@ public class CPOptionServiceWrapper
 	private CPOptionService _cpOptionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1811757224

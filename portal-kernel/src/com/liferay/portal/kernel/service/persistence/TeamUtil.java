@@ -1570,3 +1570,4 @@ public class TeamUtil {
 	private static volatile TeamPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-879679824

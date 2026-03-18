@@ -6954,3 +6954,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1394020551

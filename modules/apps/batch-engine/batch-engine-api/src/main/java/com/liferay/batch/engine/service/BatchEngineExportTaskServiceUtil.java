@@ -112,3 +112,4 @@ public class BatchEngineExportTaskServiceUtil {
 			BatchEngineExportTaskService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:663706958

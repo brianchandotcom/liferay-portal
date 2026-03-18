@@ -134,3 +134,4 @@ public abstract class CommerceNotificationTemplateServiceBaseImpl
 		CommerceNotificationTemplateServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1128723023

@@ -351,3 +351,4 @@ public class DDMFormInstanceReportUtil {
 	private static volatile DDMFormInstanceReportPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1839063839

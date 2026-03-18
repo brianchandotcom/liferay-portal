@@ -39,3 +39,4 @@ public abstract class SXPBlueprintBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1763537938

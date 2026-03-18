@@ -80,3 +80,4 @@ public interface DDLRecordSetFinder {
 					orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1549831141

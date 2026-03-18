@@ -1360,3 +1360,4 @@ public interface OrganizationLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:992780251

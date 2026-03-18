@@ -502,3 +502,4 @@ public class DLSyncEventUtil {
 	private static volatile DLSyncEventPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:654646401

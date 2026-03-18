@@ -1187,3 +1187,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1545120284

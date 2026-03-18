@@ -77,3 +77,4 @@ public abstract class FaroUserFinderBaseImpl
 		FaroUserFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1563366292

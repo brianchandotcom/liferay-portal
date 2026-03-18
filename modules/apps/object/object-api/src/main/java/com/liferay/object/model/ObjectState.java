@@ -53,3 +53,4 @@ public interface ObjectState extends ObjectStateModel, PersistedModel {
 		java.util.List<ObjectStateTransition> objectStateTransitions);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:999998366

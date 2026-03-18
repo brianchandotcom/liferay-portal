@@ -4337,3 +4337,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1008860611

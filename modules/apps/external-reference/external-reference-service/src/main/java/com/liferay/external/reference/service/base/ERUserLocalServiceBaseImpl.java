@@ -109,3 +109,4 @@ public abstract class ERUserLocalServiceBaseImpl
 		ERUserLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1139711116

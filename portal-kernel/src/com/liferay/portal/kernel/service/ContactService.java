@@ -87,3 +87,4 @@ public interface ContactService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1046106180

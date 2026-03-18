@@ -1512,3 +1512,4 @@ public class FaroNotificationUtil {
 	private static volatile FaroNotificationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1340870485

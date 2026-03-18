@@ -1943,3 +1943,4 @@ public class SXPElementUtil {
 	private static volatile SXPElementPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1863484028

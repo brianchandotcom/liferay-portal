@@ -159,3 +159,4 @@ public class AutoEscapeEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-854660693

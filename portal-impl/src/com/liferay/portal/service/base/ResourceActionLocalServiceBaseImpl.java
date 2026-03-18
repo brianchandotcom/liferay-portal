@@ -505,3 +505,4 @@ public abstract class ResourceActionLocalServiceBaseImpl
 		ResourceActionLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-548005883

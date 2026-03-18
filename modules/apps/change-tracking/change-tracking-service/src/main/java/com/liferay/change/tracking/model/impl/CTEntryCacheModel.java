@@ -226,3 +226,4 @@ public class CTEntryCacheModel
 	public int changeType;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-277936240

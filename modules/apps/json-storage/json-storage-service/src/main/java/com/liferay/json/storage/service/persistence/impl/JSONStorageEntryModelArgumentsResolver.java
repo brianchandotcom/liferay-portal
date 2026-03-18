@@ -134,3 +134,4 @@ public class JSONStorageEntryModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1017834560

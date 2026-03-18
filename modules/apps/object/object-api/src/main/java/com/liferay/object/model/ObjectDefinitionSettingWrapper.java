@@ -415,3 +415,4 @@ public class ObjectDefinitionSettingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1178761479

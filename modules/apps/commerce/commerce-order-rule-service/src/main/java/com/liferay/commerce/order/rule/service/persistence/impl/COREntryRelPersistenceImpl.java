@@ -2000,3 +2000,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1089445918

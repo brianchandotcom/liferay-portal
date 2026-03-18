@@ -587,3 +587,4 @@ public abstract class CommerceCurrencyLocalServiceBaseImpl
 		CommerceCurrencyLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1398959801

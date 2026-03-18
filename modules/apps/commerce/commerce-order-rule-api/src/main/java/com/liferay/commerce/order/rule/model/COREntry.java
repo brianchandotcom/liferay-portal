@@ -54,3 +54,4 @@ public interface COREntry extends COREntryModel, PersistedModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1104492781

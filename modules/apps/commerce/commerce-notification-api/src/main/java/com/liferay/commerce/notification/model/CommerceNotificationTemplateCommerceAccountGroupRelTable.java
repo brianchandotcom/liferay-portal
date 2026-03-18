@@ -82,3 +82,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1875377594

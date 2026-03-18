@@ -39,3 +39,4 @@ public abstract class SegmentsEntryRoleBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1529163992

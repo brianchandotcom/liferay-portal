@@ -891,3 +891,4 @@ public class PLOEntryUtil {
 	private static volatile PLOEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-884622599

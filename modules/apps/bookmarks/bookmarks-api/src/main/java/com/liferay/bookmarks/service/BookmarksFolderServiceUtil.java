@@ -207,3 +207,4 @@ public class BookmarksFolderServiceUtil {
 			BookmarksFolderServiceUtil.class, BookmarksFolderService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2125137373

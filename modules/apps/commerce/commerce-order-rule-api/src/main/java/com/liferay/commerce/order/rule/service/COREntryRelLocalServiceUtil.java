@@ -393,3 +393,4 @@ public class COREntryRelLocalServiceUtil {
 			COREntryRelLocalServiceUtil.class, COREntryRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1878759196

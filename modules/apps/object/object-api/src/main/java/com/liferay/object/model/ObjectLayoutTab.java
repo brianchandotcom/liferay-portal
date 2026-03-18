@@ -56,3 +56,4 @@ public interface ObjectLayoutTab extends ObjectLayoutTabModel, PersistedModel {
 		java.util.List<ObjectLayoutBox> objectLayoutBoxes);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-222519801

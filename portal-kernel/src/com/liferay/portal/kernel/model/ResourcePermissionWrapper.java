@@ -456,3 +456,4 @@ public class ResourcePermissionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1514097257

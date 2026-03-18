@@ -509,3 +509,4 @@ public class KaleoTaskWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2042711864

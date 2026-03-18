@@ -1149,3 +1149,4 @@ public class CPDefinitionGroupedEntryUtil {
 	private static volatile CPDefinitionGroupedEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1793185550

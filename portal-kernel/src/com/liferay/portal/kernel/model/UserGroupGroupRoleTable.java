@@ -48,3 +48,4 @@ public class UserGroupGroupRoleTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1254363466

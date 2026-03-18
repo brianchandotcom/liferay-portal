@@ -433,3 +433,4 @@ public interface DDMStructureService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1999983848

@@ -29,3 +29,4 @@ public abstract class IndexEntryBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-367034346

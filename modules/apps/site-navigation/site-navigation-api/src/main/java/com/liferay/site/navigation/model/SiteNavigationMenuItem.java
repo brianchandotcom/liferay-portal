@@ -54,3 +54,4 @@ public interface SiteNavigationMenuItem
 	public java.util.List<SiteNavigationMenuItem> getAncestors();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-896154074

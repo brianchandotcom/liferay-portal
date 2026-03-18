@@ -121,3 +121,4 @@ public class AssetEntryServiceUtil {
 	private static volatile AssetEntryService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1278226575

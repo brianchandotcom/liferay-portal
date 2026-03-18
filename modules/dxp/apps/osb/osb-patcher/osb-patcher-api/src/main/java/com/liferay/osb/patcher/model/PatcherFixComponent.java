@@ -52,3 +52,4 @@ public interface PatcherFixComponent
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1968974795

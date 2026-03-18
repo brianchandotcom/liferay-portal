@@ -75,3 +75,4 @@ public abstract class BaseDLFileEntryUADDisplay
 	protected DLFileEntryLocalService dlFileEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2085406909

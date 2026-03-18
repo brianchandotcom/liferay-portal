@@ -239,3 +239,4 @@ public interface ResourcePermissionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-503164027

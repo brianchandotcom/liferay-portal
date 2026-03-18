@@ -55,3 +55,4 @@ public interface TranslationEntry
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:340106012

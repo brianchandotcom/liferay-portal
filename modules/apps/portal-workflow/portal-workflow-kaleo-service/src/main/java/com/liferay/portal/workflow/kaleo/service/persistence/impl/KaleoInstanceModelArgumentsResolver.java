@@ -130,3 +130,4 @@ public class KaleoInstanceModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-614490161

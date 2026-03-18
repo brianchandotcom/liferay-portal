@@ -62,3 +62,4 @@ public interface CommerceShippingMethod
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1540990264

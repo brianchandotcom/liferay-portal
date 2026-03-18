@@ -88,3 +88,4 @@ public class KaleoNotificationTable extends BaseTable<KaleoNotificationTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2018133128

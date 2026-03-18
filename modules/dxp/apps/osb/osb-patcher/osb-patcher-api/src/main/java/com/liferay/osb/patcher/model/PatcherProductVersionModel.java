@@ -230,3 +230,4 @@ public interface PatcherProductVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1457244215

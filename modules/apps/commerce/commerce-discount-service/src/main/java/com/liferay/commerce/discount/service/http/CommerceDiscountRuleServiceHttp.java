@@ -563,3 +563,4 @@ public class CommerceDiscountRuleServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1464073149

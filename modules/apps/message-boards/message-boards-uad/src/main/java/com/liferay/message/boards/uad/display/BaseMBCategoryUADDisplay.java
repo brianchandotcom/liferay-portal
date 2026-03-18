@@ -75,3 +75,4 @@ public abstract class BaseMBCategoryUADDisplay
 	protected MBCategoryLocalService mbCategoryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-86642959

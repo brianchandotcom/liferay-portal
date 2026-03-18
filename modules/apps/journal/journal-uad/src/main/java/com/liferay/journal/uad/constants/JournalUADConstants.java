@@ -22,3 +22,4 @@ public class JournalUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1677677113

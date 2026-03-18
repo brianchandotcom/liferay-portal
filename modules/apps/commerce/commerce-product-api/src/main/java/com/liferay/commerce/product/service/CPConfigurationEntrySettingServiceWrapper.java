@@ -56,3 +56,4 @@ public class CPConfigurationEntrySettingServiceWrapper
 		_cpConfigurationEntrySettingService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:181837507

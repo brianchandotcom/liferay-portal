@@ -51,3 +51,4 @@ public class CTRemoteTable extends BaseTable<CTRemoteTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1967137931

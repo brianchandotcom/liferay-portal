@@ -3245,3 +3245,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:289053430

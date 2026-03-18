@@ -59,3 +59,4 @@ public class LayoutPrototypeTable extends BaseTable<LayoutPrototypeTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-613521296

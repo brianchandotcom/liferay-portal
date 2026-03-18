@@ -641,3 +641,4 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 			CPDefinitionOptionRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-744639187

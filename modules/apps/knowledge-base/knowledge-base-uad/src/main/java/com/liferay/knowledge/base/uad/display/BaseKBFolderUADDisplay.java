@@ -75,3 +75,4 @@ public abstract class BaseKBFolderUADDisplay
 	protected KBFolderLocalService kbFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1248072141

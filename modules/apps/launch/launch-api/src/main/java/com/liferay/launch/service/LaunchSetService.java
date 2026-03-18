@@ -47,3 +47,4 @@ public interface LaunchSetService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1760952446

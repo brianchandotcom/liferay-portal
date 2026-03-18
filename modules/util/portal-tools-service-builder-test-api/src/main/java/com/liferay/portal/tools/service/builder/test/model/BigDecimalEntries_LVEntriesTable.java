@@ -41,3 +41,4 @@ public class BigDecimalEntries_LVEntriesTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1378915643

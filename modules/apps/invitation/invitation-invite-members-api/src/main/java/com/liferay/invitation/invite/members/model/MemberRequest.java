@@ -50,3 +50,4 @@ public interface MemberRequest extends MemberRequestModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1954488210

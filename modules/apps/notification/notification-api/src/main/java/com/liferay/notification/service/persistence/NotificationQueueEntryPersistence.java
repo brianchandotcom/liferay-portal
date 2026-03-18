@@ -1014,3 +1014,4 @@ public interface NotificationQueueEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1124226569

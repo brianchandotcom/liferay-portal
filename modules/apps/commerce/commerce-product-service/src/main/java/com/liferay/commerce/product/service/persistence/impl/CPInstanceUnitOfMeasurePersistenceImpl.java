@@ -5507,3 +5507,4 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2007841465

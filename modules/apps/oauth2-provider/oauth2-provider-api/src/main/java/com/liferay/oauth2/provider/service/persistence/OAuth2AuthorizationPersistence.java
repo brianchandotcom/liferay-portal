@@ -1106,3 +1106,4 @@ public interface OAuth2AuthorizationPersistence
 			oAuth2ScopeGrants);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-564527651

@@ -408,3 +408,4 @@ public class PortalPreferencesLocalServiceWrapper
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2121725503

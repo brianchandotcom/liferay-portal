@@ -558,3 +558,4 @@ public interface FragmentEntryLinkModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-955673331

@@ -256,3 +256,4 @@ public interface CommerceWishListModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1029621390

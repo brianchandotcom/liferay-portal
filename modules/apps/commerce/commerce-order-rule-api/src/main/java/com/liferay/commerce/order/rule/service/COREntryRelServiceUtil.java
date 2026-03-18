@@ -171,3 +171,4 @@ public class COREntryRelServiceUtil {
 		new Snapshot<>(COREntryRelServiceUtil.class, COREntryRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1889049527

@@ -125,3 +125,4 @@ public class ImageModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1731572079

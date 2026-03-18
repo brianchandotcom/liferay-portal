@@ -211,3 +211,4 @@ public class ResourcePermissionCacheModel
 	public boolean viewActionId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-855719449

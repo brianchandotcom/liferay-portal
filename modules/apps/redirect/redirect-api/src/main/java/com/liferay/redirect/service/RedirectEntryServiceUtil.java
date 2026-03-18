@@ -121,3 +121,4 @@ public class RedirectEntryServiceUtil {
 			RedirectEntryServiceUtil.class, RedirectEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2091177368

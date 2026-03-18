@@ -133,3 +133,4 @@ public class AssetVocabularyModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1091505639

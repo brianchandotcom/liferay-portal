@@ -1388,3 +1388,4 @@ public class KaleoLogUtil {
 	private static volatile KaleoLogPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2022837720

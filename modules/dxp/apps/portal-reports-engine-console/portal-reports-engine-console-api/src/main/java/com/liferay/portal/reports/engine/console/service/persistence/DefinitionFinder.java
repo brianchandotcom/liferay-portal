@@ -41,3 +41,4 @@ public interface DefinitionFinder {
 						orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1679700085

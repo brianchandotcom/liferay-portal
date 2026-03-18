@@ -383,3 +383,4 @@ public class TrashVersionLocalServiceWrapper
 	private TrashVersionLocalService _trashVersionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:457984376

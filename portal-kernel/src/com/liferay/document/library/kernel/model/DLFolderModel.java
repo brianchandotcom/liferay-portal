@@ -634,3 +634,4 @@ public interface DLFolderModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1695109490

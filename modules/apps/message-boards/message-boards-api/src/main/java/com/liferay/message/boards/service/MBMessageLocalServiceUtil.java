@@ -1067,3 +1067,4 @@ public class MBMessageLocalServiceUtil {
 			MBMessageLocalServiceUtil.class, MBMessageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-846832070

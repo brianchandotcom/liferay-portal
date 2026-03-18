@@ -1912,3 +1912,4 @@ public class AssetTagUtil {
 	private static volatile AssetTagPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-310874361

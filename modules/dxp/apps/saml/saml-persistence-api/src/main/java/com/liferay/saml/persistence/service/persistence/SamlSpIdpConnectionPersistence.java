@@ -351,3 +351,4 @@ public interface SamlSpIdpConnectionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2088080303

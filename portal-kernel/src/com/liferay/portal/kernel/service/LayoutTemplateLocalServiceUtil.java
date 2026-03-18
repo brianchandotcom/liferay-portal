@@ -118,3 +118,4 @@ public class LayoutTemplateLocalServiceUtil {
 	private static volatile LayoutTemplateLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1891632745

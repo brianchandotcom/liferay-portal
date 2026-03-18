@@ -118,3 +118,4 @@ public class ObjectFieldSettingModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2076278307

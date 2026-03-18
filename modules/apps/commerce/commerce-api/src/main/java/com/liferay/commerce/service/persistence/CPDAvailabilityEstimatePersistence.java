@@ -652,3 +652,4 @@ public interface CPDAvailabilityEstimatePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1001869137

@@ -101,3 +101,4 @@ public class MBStatsUserLocalServiceWrapper
 	private MBStatsUserLocalService _mbStatsUserLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2139875218

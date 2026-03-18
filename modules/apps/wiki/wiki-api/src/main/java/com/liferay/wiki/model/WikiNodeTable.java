@@ -69,3 +69,4 @@ public class WikiNodeTable extends BaseTable<WikiNodeTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-522564230

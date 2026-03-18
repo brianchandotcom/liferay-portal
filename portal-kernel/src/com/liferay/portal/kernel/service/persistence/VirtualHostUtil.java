@@ -964,3 +964,4 @@ public class VirtualHostUtil {
 	private static volatile VirtualHostPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1304743081

@@ -38,3 +38,4 @@ public class FinderWhereClauseEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1511984637

@@ -116,3 +116,4 @@ public class DDMFieldAttributeModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:7616286

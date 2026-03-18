@@ -849,3 +849,4 @@ public class OAuth2ScopeGrantModelImpl
 	private OAuth2ScopeGrant _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:258627629

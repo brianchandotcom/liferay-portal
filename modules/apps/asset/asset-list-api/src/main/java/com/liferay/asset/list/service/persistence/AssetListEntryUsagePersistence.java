@@ -1568,3 +1568,4 @@ public interface AssetListEntryUsagePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1958115228

@@ -403,3 +403,4 @@ public class CTSChildLocalServiceWrapper
 	private CTSChildLocalService _ctsChildLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:631250197

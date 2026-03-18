@@ -1093,3 +1093,4 @@ public class CommerceDiscountUsageEntryUtil {
 	private static volatile CommerceDiscountUsageEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1961782777

@@ -30,3 +30,4 @@ public abstract class LayoutSEOEntryCustomMetaTagBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1874874558

@@ -89,3 +89,4 @@ public abstract class BaseEntryUADAnonymizer
 	protected EntryLocalService entryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-102012559

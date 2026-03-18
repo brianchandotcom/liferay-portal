@@ -771,3 +771,4 @@ public class CTSChildModelImpl
 	private CTSChild _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2151565

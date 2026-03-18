@@ -192,3 +192,4 @@ public interface AssetAutoTaggerEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:101650286

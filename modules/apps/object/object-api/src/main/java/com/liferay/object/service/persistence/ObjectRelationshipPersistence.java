@@ -3068,3 +3068,4 @@ public interface ObjectRelationshipPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1876475958

@@ -489,3 +489,4 @@ public class AccountRoleLocalServiceWrapper
 	private AccountRoleLocalService _accountRoleLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-521910250

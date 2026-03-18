@@ -476,3 +476,4 @@ public class CProductWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-99126579

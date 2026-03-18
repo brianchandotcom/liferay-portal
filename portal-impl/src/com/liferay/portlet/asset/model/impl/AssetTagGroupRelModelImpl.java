@@ -789,3 +789,4 @@ public class AssetTagGroupRelModelImpl
 	private AssetTagGroupRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-874452739

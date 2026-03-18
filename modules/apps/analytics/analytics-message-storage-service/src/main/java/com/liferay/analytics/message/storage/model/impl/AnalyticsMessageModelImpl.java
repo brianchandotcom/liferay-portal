@@ -785,3 +785,4 @@ public class AnalyticsMessageModelImpl
 	private AnalyticsMessage _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-239252066

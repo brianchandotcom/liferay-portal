@@ -119,3 +119,4 @@ public class FaroProjectEmailDomainModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2097060966

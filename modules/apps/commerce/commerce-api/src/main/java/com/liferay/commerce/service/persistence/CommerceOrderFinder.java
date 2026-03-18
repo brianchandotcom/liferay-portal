@@ -28,3 +28,4 @@ public interface CommerceOrderFinder {
 			long shipmentId, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2050896801

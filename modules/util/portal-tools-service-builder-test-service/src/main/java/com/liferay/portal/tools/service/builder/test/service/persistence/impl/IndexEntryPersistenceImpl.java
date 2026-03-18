@@ -6901,3 +6901,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:126629294

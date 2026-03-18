@@ -65,3 +65,4 @@ public class PasswordPolicyFinderBaseImpl
 		PasswordPolicyFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1377613553

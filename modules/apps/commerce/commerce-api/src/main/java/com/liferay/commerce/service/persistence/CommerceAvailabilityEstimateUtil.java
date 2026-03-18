@@ -1082,3 +1082,4 @@ public class CommerceAvailabilityEstimateUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1816271388

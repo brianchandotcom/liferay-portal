@@ -274,3 +274,4 @@ public interface WorkflowInstanceLinkModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1779364613

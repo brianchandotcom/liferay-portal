@@ -79,3 +79,4 @@ public abstract class GroupBaseImpl extends GroupModelImpl implements Group {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-815606550

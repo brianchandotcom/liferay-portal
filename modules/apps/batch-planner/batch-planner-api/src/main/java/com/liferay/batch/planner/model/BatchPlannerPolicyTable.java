@@ -59,3 +59,4 @@ public class BatchPlannerPolicyTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2085294836

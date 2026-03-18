@@ -68,3 +68,4 @@ public interface CommercePriceModifierRelFinder {
 				boolean inlineSQLHelper);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1381804596

@@ -56,3 +56,4 @@ public class TrashEntryTable extends BaseTable<TrashEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-508885982

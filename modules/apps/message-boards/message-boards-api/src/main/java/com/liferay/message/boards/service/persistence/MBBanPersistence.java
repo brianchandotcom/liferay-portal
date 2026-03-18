@@ -976,3 +976,4 @@ public interface MBBanPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-898427775

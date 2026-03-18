@@ -568,3 +568,4 @@ public class TrashEntryLocalServiceWrapper
 	private TrashEntryLocalService _trashEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1552995298

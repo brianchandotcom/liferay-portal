@@ -1330,3 +1330,4 @@ public class ClientExtensionEntryRelModelImpl
 	private ClientExtensionEntryRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-943163368

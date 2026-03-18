@@ -55,3 +55,4 @@ public interface SocialRequestService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:657835968

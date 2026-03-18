@@ -4574,3 +4574,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:732528638

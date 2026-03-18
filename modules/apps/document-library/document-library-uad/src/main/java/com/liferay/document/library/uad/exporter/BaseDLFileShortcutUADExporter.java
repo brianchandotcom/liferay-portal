@@ -53,12 +53,12 @@ public abstract class BaseDLFileShortcutUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(dlFileShortcut.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(dlFileShortcut.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(dlFileShortcut.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -70,3 +70,4 @@ public abstract class BaseDLFileShortcutUADExporter
 	protected DLFileShortcutLocalService dlFileShortcutLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1241054696

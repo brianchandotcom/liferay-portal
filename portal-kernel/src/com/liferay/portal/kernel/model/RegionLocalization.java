@@ -48,3 +48,4 @@ public interface RegionLocalization extends RegionLocalizationModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-25200840

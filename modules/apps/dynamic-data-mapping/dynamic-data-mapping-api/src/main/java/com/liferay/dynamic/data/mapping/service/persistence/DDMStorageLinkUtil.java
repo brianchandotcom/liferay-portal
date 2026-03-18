@@ -1129,3 +1129,4 @@ public class DDMStorageLinkUtil {
 	private static volatile DDMStorageLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1176381071

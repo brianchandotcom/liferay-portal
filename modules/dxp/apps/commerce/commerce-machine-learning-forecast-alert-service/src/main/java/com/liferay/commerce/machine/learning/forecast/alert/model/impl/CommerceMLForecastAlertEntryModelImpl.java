@@ -1102,3 +1102,4 @@ public class CommerceMLForecastAlertEntryModelImpl
 	private CommerceMLForecastAlertEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1115234506

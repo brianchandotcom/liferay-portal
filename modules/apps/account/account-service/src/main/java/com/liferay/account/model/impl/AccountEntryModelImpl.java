@@ -1689,3 +1689,4 @@ public class AccountEntryModelImpl
 	private AccountEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-9875560

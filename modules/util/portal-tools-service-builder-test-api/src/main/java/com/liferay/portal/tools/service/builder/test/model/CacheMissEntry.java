@@ -50,3 +50,4 @@ public interface CacheMissEntry extends CacheMissEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-546797958

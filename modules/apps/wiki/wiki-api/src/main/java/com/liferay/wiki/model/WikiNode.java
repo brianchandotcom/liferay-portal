@@ -58,3 +58,4 @@ public interface WikiNode extends PersistedModel, WikiNodeModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1935756172

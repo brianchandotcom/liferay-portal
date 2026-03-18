@@ -341,3 +341,4 @@ public class ObjectEntryServiceWrapper
 	private ObjectEntryService _objectEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1947140339

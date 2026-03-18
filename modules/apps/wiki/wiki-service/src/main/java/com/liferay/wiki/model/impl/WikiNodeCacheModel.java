@@ -329,3 +329,4 @@ public class WikiNodeCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:645918854

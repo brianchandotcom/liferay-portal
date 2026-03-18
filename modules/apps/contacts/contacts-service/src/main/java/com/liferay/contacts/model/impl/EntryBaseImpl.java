@@ -38,3 +38,4 @@ public abstract class EntryBaseImpl extends EntryModelImpl implements Entry {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1622515308

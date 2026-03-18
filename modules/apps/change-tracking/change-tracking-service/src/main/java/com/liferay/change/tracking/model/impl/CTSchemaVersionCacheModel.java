@@ -126,3 +126,4 @@ public class CTSchemaVersionCacheModel
 	public Map<String, Serializable> schemaContext;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:512796048

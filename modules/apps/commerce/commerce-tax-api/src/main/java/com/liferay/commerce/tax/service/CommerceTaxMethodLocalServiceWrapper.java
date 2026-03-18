@@ -448,3 +448,4 @@ public class CommerceTaxMethodLocalServiceWrapper
 	private CommerceTaxMethodLocalService _commerceTaxMethodLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1765129663

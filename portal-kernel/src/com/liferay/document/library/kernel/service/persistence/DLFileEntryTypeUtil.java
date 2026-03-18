@@ -1689,3 +1689,4 @@ public class DLFileEntryTypeUtil {
 	private static volatile DLFileEntryTypePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1529744113

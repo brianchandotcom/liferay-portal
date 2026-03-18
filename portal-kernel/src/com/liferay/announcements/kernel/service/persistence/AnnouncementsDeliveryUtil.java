@@ -696,3 +696,4 @@ public class AnnouncementsDeliveryUtil {
 	private static volatile AnnouncementsDeliveryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:65311258

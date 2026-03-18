@@ -163,3 +163,4 @@ public class ServiceComponentCacheModel
 	public String data;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1598905492

@@ -1173,3 +1173,4 @@ public class CommerceDiscountLocalServiceUtil {
 			CommerceDiscountLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1709429236

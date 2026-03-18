@@ -516,3 +516,4 @@ public class MBDiscussionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1990132198

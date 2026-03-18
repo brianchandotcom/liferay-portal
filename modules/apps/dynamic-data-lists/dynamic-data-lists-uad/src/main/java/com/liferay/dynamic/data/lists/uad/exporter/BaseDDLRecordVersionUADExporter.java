@@ -53,12 +53,12 @@ public abstract class BaseDDLRecordVersionUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(ddlRecordVersion.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(ddlRecordVersion.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(ddlRecordVersion.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -70,3 +70,4 @@ public abstract class BaseDDLRecordVersionUADExporter
 	protected DDLRecordVersionLocalService ddlRecordVersionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-452926838

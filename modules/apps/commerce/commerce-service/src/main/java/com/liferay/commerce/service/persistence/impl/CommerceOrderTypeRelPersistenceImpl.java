@@ -3559,3 +3559,4 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1414222018

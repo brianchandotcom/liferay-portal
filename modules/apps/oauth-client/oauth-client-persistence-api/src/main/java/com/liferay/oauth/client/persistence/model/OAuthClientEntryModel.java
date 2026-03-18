@@ -320,3 +320,4 @@ public interface OAuthClientEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:30484475

@@ -210,3 +210,4 @@ public class SharepointOAuth2TokenEntryCacheModel
 	public String refreshToken;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1709083908

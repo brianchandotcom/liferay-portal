@@ -57,3 +57,4 @@ public class PluginSettingServiceUtil {
 	private static volatile PluginSettingService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1024018292

@@ -65,3 +65,4 @@ public interface CalendarResource
 	public boolean isUser();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:641399552

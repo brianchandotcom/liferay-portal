@@ -39,3 +39,4 @@ public class BigDecimalEntryTable extends BaseTable<BigDecimalEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1578244933

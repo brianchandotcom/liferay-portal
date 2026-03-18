@@ -444,3 +444,4 @@ public abstract class CTScoreLocalServiceBaseImpl
 		CTScoreLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-369719705

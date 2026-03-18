@@ -338,3 +338,4 @@ public class CPDefinitionVirtualSettingCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:899876733

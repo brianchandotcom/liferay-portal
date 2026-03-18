@@ -38,3 +38,4 @@ public abstract class LockBaseImpl extends LockModelImpl implements Lock {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1505530633

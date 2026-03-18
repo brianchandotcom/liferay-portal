@@ -188,3 +188,4 @@ public class PatcherFixComponentCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-677876129

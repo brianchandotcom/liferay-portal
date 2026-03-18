@@ -695,3 +695,4 @@ public class CommerceTaxMethodUtil {
 	private static volatile CommerceTaxMethodPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1870965675

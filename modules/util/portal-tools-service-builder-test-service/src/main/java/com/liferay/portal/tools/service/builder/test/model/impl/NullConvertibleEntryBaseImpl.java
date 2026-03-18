@@ -40,3 +40,4 @@ public abstract class NullConvertibleEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:193813752

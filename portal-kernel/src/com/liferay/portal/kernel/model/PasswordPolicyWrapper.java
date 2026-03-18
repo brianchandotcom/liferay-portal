@@ -1142,3 +1142,4 @@ public class PasswordPolicyWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-995873753

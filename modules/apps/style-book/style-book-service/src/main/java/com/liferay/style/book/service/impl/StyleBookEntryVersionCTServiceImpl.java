@@ -48,3 +48,4 @@ public class StyleBookEntryVersionCTServiceImpl
 	private StyleBookEntryVersionPersistence _styleBookEntryVersionPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1106034590

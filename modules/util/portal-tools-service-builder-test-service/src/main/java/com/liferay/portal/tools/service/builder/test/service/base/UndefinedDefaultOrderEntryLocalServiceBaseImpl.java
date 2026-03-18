@@ -548,3 +548,4 @@ public abstract class UndefinedDefaultOrderEntryLocalServiceBaseImpl
 		UndefinedDefaultOrderEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1001523664

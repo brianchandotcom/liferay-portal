@@ -53,3 +53,4 @@ public interface FriendlyURLEntryMapping extends FriendlyURLEntryMappingModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1443917931

@@ -126,3 +126,4 @@ public interface BatchPlannerPlanService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1501700478

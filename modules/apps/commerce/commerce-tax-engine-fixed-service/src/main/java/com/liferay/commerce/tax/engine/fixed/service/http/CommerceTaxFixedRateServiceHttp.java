@@ -425,3 +425,4 @@ public class CommerceTaxFixedRateServiceHttp {
 		new Class[] {long.class, double.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1570287042

@@ -444,3 +444,4 @@ public class DDMStructureLinkLocalServiceUtil {
 			DDMStructureLinkLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-665775855

@@ -269,3 +269,4 @@ public class CommerceTaxMethodCacheModel
 	public String typeSettings;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:786312448

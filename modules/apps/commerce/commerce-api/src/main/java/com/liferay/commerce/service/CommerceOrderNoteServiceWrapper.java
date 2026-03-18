@@ -166,3 +166,4 @@ public class CommerceOrderNoteServiceWrapper
 	private CommerceOrderNoteService _commerceOrderNoteService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-444060886

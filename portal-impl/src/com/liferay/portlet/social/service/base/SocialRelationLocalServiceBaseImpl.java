@@ -553,3 +553,4 @@ public abstract class SocialRelationLocalServiceBaseImpl
 		SocialRelationLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:47123566

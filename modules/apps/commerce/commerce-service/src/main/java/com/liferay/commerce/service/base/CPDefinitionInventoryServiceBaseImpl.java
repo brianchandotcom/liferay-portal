@@ -127,3 +127,4 @@ public abstract class CPDefinitionInventoryServiceBaseImpl
 		CPDefinitionInventoryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-240632218

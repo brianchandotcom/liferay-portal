@@ -482,3 +482,4 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 		ContactsLayoutTemplateLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-929914470

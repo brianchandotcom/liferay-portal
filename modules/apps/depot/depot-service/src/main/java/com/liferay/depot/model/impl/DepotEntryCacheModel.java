@@ -212,3 +212,4 @@ public class DepotEntryCacheModel
 	public int type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1273783026

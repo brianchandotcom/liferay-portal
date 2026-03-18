@@ -859,3 +859,4 @@ public class ExpandoColumnModelImpl
 	private ExpandoColumn _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-624137481

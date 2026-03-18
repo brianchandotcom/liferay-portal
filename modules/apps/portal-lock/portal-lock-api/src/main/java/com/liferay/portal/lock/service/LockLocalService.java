@@ -346,3 +346,4 @@ public interface LockLocalService
 	public Lock updateLock(Lock lock);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:69647325

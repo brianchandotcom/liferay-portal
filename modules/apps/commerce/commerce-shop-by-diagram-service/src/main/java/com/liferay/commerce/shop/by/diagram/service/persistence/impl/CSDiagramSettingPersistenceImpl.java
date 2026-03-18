@@ -2391,3 +2391,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-312043045

@@ -307,3 +307,4 @@ public interface FaroChannelLocalService
 	public FaroChannel updateFaroChannel(FaroChannel faroChannel);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:968393016

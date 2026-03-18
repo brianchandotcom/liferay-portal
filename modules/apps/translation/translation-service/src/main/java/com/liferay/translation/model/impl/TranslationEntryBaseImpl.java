@@ -39,3 +39,4 @@ public abstract class TranslationEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-38254818

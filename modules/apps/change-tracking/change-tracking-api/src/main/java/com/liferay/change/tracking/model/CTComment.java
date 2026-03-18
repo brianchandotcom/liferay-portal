@@ -50,3 +50,4 @@ public interface CTComment extends CTCommentModel, PersistedModel {
 	public boolean isEdited();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-890519605

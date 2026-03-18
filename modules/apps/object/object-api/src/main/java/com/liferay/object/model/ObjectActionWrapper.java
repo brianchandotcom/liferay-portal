@@ -973,3 +973,4 @@ public class ObjectActionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:248300518

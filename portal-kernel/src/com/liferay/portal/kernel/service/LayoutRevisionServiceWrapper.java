@@ -68,3 +68,4 @@ public class LayoutRevisionServiceWrapper
 	private LayoutRevisionService _layoutRevisionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1549799299

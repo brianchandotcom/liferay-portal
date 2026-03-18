@@ -574,3 +574,4 @@ public class FriendlyURLEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1947972105

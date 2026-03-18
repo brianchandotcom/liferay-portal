@@ -351,3 +351,4 @@ public class OpenIdConnectSessionLocalServiceUtil {
 			OpenIdConnectSessionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1092747922

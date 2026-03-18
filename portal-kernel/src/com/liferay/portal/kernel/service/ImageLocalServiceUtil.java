@@ -357,3 +357,4 @@ public class ImageLocalServiceUtil {
 	private static volatile ImageLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:297284853

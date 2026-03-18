@@ -366,3 +366,4 @@ public class AkismetEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:936506622

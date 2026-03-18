@@ -249,3 +249,4 @@ public class LockCacheModel
 	public long expirationDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1456910979

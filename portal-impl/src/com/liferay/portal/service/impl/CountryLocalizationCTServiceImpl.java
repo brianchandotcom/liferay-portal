@@ -44,3 +44,4 @@ public class CountryLocalizationCTServiceImpl
 	private CountryLocalizationPersistence _countryLocalizationPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1899600352

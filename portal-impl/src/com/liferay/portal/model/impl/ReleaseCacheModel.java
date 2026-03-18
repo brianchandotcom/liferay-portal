@@ -242,3 +242,4 @@ public class ReleaseCacheModel
 	public String testString;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2108727790

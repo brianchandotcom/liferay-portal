@@ -399,3 +399,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:393140225

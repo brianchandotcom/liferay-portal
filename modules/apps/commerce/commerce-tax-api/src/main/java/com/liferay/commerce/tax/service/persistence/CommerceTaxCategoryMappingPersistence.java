@@ -757,3 +757,4 @@ public interface CommerceTaxCategoryMappingPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:597152426

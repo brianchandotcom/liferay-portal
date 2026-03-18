@@ -2677,3 +2677,4 @@ public class CPDefinitionLinkUtil {
 	private static volatile CPDefinitionLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-981937551

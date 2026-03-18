@@ -50,3 +50,4 @@ public interface RatingsStats extends PersistedModel, RatingsStatsModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-76753058

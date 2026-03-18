@@ -62,3 +62,4 @@ public class CommerceChannelRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:560182996

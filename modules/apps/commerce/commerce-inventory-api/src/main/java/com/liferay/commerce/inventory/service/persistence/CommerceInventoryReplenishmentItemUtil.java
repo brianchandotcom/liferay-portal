@@ -1765,3 +1765,4 @@ public class CommerceInventoryReplenishmentItemUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1218888137

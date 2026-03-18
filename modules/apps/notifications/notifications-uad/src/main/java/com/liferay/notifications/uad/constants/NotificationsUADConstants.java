@@ -19,3 +19,4 @@ public class NotificationsUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:445450912

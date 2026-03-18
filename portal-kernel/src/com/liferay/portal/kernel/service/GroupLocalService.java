@@ -2213,3 +2213,4 @@ public interface GroupLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1163408328

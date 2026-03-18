@@ -479,3 +479,4 @@ public class DepotEntryPinLocalServiceWrapper
 	private DepotEntryPinLocalService _depotEntryPinLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1992325993

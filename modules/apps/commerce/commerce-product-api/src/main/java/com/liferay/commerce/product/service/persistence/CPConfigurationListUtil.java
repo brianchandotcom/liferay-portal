@@ -2421,3 +2421,4 @@ public class CPConfigurationListUtil {
 	private static volatile CPConfigurationListPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-304210981

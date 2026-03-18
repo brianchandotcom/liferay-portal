@@ -1434,3 +1434,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-533521950

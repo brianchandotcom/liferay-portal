@@ -812,3 +812,4 @@ public class LayoutSetPrototypeWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2028322008

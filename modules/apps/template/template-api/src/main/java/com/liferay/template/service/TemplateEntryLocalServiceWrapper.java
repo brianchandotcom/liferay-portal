@@ -541,3 +541,4 @@ public class TemplateEntryLocalServiceWrapper
 	private TemplateEntryLocalService _templateEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2105821859

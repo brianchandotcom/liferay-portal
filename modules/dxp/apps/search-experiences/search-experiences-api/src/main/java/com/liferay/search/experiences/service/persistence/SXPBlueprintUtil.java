@@ -1109,3 +1109,4 @@ public class SXPBlueprintUtil {
 	private static volatile SXPBlueprintPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:437348392

@@ -255,3 +255,4 @@ public interface LayoutPageTemplateStructureModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1727372030

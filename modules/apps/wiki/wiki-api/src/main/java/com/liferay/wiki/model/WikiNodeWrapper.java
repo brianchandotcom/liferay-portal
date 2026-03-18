@@ -828,3 +828,4 @@ public class WikiNodeWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1051534382

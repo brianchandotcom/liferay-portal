@@ -1087,3 +1087,4 @@ public class MBDiscussionModelImpl
 	private MBDiscussion _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1469095725

@@ -400,3 +400,4 @@ public class CommerceWishListItemLocalServiceUtil {
 			CommerceWishListItemLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:450381434

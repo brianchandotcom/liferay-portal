@@ -1043,3 +1043,4 @@ public class SystemEventUtil {
 	private static volatile SystemEventPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1126879600

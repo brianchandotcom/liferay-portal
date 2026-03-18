@@ -466,3 +466,4 @@ public class COREntryRelLocalServiceWrapper
 	private COREntryRelLocalService _corEntryRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1160037955

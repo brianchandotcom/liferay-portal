@@ -234,3 +234,4 @@ public class CommerceOrderTypeRelCacheModel
 	public long commerceOrderTypeId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1831298130

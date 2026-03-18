@@ -50,3 +50,4 @@ public interface CTSContent extends CTSContentModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1912047280

@@ -998,3 +998,4 @@ public class UserGroupServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1712784384

@@ -5734,3 +5734,4 @@ public class GroupUtil {
 	private static volatile GroupPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1008812383

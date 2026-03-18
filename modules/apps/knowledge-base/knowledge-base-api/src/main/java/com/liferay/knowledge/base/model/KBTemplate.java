@@ -48,3 +48,4 @@ public interface KBTemplate extends KBTemplateModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-298136737

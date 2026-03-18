@@ -62,3 +62,4 @@ public interface CommercePaymentMethodGroupRel
 		getTypeSettingsUnicodeProperties();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-64929974

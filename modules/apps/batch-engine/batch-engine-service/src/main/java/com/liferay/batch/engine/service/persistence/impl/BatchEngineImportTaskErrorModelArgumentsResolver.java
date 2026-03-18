@@ -122,3 +122,4 @@ public class BatchEngineImportTaskErrorModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1373464413

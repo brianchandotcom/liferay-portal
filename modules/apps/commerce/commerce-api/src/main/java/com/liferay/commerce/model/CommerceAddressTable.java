@@ -93,3 +93,4 @@ public class CommerceAddressTable extends BaseTable<CommerceAddressTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-882194115

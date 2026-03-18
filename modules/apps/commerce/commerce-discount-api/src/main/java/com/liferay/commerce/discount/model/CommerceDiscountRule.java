@@ -60,3 +60,4 @@ public interface CommerceDiscountRule
 		com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-125245052

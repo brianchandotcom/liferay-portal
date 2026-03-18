@@ -496,3 +496,4 @@ public interface ObjectStateFlowPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1612208005

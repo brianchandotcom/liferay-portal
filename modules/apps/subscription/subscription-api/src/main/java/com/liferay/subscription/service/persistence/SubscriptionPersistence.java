@@ -1228,3 +1228,4 @@ public interface SubscriptionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1063091327

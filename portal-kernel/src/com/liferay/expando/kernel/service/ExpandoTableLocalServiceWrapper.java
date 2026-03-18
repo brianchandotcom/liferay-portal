@@ -501,3 +501,4 @@ public class ExpandoTableLocalServiceWrapper
 	private ExpandoTableLocalService _expandoTableLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:867980182

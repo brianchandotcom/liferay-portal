@@ -99,3 +99,4 @@ public class LayoutRevisionTable extends BaseTable<LayoutRevisionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1015310158

@@ -437,3 +437,4 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 			AssetEntryAssetCategoryRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:245674036

@@ -205,3 +205,4 @@ public class CPConfigurationListRelCacheModel
 	public long CPConfigurationListId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-17497803

@@ -39,3 +39,4 @@ public abstract class KaleoTransitionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:566609580

@@ -526,3 +526,4 @@ public class TranslationEntryLocalServiceWrapper
 	private TranslationEntryLocalService _translationEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1915830584

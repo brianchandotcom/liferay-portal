@@ -536,3 +536,4 @@ public class CountryLocalizationUtil {
 	private static volatile CountryLocalizationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1378126217

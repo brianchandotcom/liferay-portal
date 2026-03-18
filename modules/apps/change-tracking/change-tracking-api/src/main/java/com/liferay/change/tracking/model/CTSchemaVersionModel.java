@@ -118,3 +118,4 @@ public interface CTSchemaVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1268408876

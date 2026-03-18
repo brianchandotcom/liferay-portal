@@ -454,3 +454,4 @@ public class CPDVirtualSettingFileEntryLocalServiceUtil {
 			CPDVirtualSettingFileEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:749144857

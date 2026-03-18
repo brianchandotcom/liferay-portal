@@ -402,3 +402,4 @@ public class CommerceInventoryAuditLocalServiceWrapper
 		_commerceInventoryAuditLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1298876049

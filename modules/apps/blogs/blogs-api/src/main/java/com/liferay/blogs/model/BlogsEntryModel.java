@@ -690,3 +690,4 @@ public interface BlogsEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1666960447

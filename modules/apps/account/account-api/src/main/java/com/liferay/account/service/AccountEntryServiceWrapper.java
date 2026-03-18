@@ -257,3 +257,4 @@ public class AccountEntryServiceWrapper
 	private AccountEntryService _accountEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1898062959

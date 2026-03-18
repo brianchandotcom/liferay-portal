@@ -292,3 +292,4 @@ public class CommerceAddressServiceUtil {
 			CommerceAddressServiceUtil.class, CommerceAddressService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-830951403

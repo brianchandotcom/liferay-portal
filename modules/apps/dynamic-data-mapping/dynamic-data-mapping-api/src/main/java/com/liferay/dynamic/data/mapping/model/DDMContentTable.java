@@ -56,3 +56,4 @@ public class DDMContentTable extends BaseTable<DDMContentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1131741549

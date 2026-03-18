@@ -689,3 +689,4 @@ public abstract class MBCategoryLocalServiceBaseImpl
 		MBCategoryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:969964375

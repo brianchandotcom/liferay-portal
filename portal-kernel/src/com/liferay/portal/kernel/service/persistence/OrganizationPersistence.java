@@ -2792,3 +2792,4 @@ public interface OrganizationPersistence
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-381778483

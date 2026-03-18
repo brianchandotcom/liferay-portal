@@ -48,3 +48,4 @@ public interface KBComment extends KBCommentModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1770462455

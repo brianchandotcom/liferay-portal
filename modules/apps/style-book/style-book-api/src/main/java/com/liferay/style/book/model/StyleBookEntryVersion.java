@@ -50,3 +50,4 @@ public interface StyleBookEntryVersion extends StyleBookEntryVersionModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1975190723

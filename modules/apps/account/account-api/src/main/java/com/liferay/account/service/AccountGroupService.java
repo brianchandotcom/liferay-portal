@@ -111,3 +111,4 @@ public interface AccountGroupService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1887394258

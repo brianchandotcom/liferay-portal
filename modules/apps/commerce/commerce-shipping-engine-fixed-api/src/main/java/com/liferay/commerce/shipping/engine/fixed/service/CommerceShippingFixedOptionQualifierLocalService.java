@@ -337,3 +337,4 @@ public interface CommerceShippingFixedOptionQualifierLocalService
 				commerceShippingFixedOptionQualifier);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1662461358

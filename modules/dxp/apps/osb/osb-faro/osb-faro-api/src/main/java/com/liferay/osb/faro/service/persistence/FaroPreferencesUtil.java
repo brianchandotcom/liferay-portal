@@ -499,3 +499,4 @@ public class FaroPreferencesUtil {
 	private static volatile FaroPreferencesPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1629989768

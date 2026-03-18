@@ -71,3 +71,4 @@ public class SocialActivityCounterTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1602266895

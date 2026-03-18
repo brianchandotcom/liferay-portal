@@ -325,3 +325,4 @@ public class TranslationEntryCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1053205465

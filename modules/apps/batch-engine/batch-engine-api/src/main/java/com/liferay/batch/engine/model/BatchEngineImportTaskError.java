@@ -55,3 +55,4 @@ public interface BatchEngineImportTaskError
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-78062309

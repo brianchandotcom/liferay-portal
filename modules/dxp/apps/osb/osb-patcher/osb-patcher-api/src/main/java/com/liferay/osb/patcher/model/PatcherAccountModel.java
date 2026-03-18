@@ -214,3 +214,4 @@ public interface PatcherAccountModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:453124320

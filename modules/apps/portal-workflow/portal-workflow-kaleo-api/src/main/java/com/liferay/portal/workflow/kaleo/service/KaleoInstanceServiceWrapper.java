@@ -65,3 +65,4 @@ public class KaleoInstanceServiceWrapper
 	private KaleoInstanceService _kaleoInstanceService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:479928371

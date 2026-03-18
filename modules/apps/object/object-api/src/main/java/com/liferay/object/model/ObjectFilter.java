@@ -48,3 +48,4 @@ public interface ObjectFilter extends ObjectFilterModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-758125736

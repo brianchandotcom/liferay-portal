@@ -560,3 +560,4 @@ public class UserIdMapperUtil {
 	private static volatile UserIdMapperPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1597355601

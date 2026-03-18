@@ -574,3 +574,4 @@ public class CPMeasurementUnitLocalServiceWrapper
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-926071469

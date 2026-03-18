@@ -233,3 +233,4 @@ public interface BlogsEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1099541425

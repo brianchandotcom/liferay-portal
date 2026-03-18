@@ -233,3 +233,4 @@ public class SocialRequestCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:682255251

@@ -290,3 +290,4 @@ public class RSVEntryLocalServiceUtil {
 			RSVEntryLocalServiceUtil.class, RSVEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1193915721

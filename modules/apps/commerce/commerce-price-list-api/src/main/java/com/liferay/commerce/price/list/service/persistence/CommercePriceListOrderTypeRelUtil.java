@@ -919,3 +919,4 @@ public class CommercePriceListOrderTypeRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1671367777

@@ -362,3 +362,4 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	private static volatile UserNotificationDeliveryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1292309648

@@ -462,3 +462,4 @@ public class AddressCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-64076585

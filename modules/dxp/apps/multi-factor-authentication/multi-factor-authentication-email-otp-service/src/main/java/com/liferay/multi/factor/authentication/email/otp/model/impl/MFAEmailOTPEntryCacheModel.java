@@ -239,3 +239,4 @@ public class MFAEmailOTPEntryCacheModel
 	public String lastSuccessIP;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:115841428

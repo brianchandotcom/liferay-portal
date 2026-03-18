@@ -840,3 +840,4 @@ public class CPInstanceUnitOfMeasureWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2007172280

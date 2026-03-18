@@ -176,3 +176,4 @@ public class VirtualHostCacheModel
 	public String languageId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1387684755

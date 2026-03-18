@@ -459,3 +459,4 @@ public class CommerceOrderItemServiceUtil {
 			CommerceOrderItemServiceUtil.class, CommerceOrderItemService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1286208709

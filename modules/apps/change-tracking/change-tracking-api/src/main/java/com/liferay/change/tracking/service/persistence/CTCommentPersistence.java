@@ -437,3 +437,4 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:711124635

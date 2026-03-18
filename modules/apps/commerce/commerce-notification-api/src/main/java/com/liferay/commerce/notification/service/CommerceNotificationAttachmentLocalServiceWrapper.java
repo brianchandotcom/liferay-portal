@@ -521,3 +521,4 @@ public class CommerceNotificationAttachmentLocalServiceWrapper
 		_commerceNotificationAttachmentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-208620042

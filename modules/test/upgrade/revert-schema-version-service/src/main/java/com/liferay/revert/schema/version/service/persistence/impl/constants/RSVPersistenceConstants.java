@@ -21,3 +21,4 @@ public class RSVPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:115569013

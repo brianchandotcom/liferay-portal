@@ -238,3 +238,4 @@ public interface MBCategoryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1563292615

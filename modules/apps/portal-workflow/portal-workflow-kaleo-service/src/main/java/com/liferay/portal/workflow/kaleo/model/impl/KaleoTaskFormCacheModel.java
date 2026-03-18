@@ -360,3 +360,4 @@ public class KaleoTaskFormCacheModel
 	public int priority;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1488308944

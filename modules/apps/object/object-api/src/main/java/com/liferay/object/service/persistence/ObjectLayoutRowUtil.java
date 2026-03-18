@@ -796,3 +796,4 @@ public class ObjectLayoutRowUtil {
 	private static volatile ObjectLayoutRowPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1993566986

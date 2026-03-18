@@ -129,3 +129,4 @@ public abstract class CommerceShipmentServiceBaseImpl
 		CommerceShipmentServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2037320114

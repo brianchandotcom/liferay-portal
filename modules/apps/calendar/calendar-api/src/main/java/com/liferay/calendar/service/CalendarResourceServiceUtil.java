@@ -131,3 +131,4 @@ public class CalendarResourceServiceUtil {
 			CalendarResourceServiceUtil.class, CalendarResourceService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-821897158

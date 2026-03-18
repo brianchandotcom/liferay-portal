@@ -234,3 +234,4 @@ public class AMImageEntryCacheModel
 	public long size;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:657995875

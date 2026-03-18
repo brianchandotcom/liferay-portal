@@ -118,3 +118,4 @@ public class PatcherFixComponentModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1929363221

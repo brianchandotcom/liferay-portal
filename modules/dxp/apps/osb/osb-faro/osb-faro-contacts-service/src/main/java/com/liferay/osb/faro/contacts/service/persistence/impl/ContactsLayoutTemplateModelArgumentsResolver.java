@@ -119,3 +119,4 @@ public class ContactsLayoutTemplateModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1419557288

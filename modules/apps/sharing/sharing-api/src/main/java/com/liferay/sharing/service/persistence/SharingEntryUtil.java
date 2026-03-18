@@ -2252,3 +2252,4 @@ public class SharingEntryUtil {
 	private static volatile SharingEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:335059165

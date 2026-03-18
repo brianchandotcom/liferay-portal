@@ -58,3 +58,4 @@ public class ThemeServiceWrapper
 	private ThemeService _themeService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-927307256

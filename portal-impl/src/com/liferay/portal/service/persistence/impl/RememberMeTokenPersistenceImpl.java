@@ -1721,3 +1721,4 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:883684951

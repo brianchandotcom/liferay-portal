@@ -99,3 +99,4 @@ public interface CPConfigurationEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1363719251

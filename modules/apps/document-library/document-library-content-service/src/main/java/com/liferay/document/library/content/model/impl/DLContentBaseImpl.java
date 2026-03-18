@@ -39,3 +39,4 @@ public abstract class DLContentBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1392996972

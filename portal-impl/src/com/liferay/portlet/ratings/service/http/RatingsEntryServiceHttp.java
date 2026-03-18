@@ -129,3 +129,4 @@ public class RatingsEntryServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1045671291

@@ -1428,3 +1428,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1373261359

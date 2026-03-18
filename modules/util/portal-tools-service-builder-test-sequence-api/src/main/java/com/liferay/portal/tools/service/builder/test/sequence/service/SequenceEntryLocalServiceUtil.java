@@ -326,3 +326,4 @@ public class SequenceEntryLocalServiceUtil {
 			SequenceEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1612608963

@@ -490,3 +490,4 @@ public class CalendarLocalServiceUtil {
 			CalendarLocalServiceUtil.class, CalendarLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:839344023

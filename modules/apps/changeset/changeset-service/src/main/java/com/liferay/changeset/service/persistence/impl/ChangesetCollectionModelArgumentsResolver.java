@@ -118,3 +118,4 @@ public class ChangesetCollectionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:896490413

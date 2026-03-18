@@ -2900,3 +2900,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1596088505

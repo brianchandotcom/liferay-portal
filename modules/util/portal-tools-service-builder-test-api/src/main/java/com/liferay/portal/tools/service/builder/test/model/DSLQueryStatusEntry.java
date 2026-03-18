@@ -52,3 +52,4 @@ public interface DSLQueryStatusEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-342255687

@@ -522,3 +522,4 @@ public class OAuth2ApplicationServiceHttp {
 		new Class[] {long.class, java.util.List.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-471470981

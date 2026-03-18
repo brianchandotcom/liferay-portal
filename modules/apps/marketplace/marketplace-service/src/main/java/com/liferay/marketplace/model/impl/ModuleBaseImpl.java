@@ -38,3 +38,4 @@ public abstract class ModuleBaseImpl extends ModuleModelImpl implements Module {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1522903663

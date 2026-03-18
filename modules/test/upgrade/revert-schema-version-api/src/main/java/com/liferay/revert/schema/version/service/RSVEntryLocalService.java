@@ -257,3 +257,4 @@ public interface RSVEntryLocalService
 	public RSVEntry updateRSVEntry(RSVEntry rsvEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1796599501

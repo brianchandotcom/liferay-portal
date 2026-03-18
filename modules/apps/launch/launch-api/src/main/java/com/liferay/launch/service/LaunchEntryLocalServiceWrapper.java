@@ -421,3 +421,4 @@ public class LaunchEntryLocalServiceWrapper
 	private LaunchEntryLocalService _launchEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2034482999

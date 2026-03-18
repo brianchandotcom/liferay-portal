@@ -60,3 +60,4 @@ public class ObjectViewColumnTable extends BaseTable<ObjectViewColumnTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-818626554

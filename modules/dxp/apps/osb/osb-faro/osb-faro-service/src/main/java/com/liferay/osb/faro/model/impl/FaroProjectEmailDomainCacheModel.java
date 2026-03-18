@@ -152,3 +152,4 @@ public class FaroProjectEmailDomainCacheModel
 	public String emailDomain;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-820900534

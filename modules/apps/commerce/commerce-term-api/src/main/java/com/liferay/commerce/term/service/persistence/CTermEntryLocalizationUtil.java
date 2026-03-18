@@ -544,3 +544,4 @@ public class CTermEntryLocalizationUtil {
 	private static volatile CTermEntryLocalizationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-274202723

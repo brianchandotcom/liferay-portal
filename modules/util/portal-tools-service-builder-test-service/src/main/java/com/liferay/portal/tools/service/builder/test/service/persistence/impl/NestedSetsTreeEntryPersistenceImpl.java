@@ -1003,3 +1003,4 @@ public class NestedSetsTreeEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-999479913

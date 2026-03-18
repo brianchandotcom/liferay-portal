@@ -52,3 +52,4 @@ public class OAuth2ScopeGrantTable extends BaseTable<OAuth2ScopeGrantTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1974332273

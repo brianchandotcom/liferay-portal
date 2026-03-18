@@ -972,3 +972,4 @@ public class CPConfigurationEntrySettingUtil {
 	private static volatile CPConfigurationEntrySettingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:514159630

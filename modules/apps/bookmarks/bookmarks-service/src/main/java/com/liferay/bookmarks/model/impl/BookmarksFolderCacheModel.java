@@ -327,3 +327,4 @@ public class BookmarksFolderCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1650402307

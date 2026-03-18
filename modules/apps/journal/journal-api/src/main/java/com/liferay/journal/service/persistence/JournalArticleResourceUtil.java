@@ -942,3 +942,4 @@ public class JournalArticleResourceUtil {
 	private static volatile JournalArticleResourcePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2103309258

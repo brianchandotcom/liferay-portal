@@ -779,3 +779,4 @@ public class CPDefinitionInventoryUtil {
 	private static volatile CPDefinitionInventoryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1976698916

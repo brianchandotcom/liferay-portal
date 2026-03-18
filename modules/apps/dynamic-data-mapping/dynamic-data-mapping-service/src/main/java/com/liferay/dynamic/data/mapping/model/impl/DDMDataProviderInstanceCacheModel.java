@@ -294,3 +294,4 @@ public class DDMDataProviderInstanceCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-872920271

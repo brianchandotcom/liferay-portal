@@ -237,3 +237,4 @@ public class SamlSpSessionCacheModel
 	public boolean terminated;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-806023120

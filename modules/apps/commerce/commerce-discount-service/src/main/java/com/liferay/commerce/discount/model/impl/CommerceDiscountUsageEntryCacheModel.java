@@ -201,3 +201,4 @@ public class CommerceDiscountUsageEntryCacheModel
 	public long commerceDiscountId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:737730159

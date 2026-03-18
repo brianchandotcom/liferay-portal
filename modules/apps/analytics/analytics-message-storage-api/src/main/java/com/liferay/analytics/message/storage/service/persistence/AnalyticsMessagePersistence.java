@@ -297,3 +297,4 @@ public interface AnalyticsMessagePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:807421360

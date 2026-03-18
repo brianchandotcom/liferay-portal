@@ -41,3 +41,4 @@ public abstract class SubscriptionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1886057830

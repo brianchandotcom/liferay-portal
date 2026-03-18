@@ -940,3 +940,4 @@ public class CalendarResourceWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1378778486

@@ -67,3 +67,4 @@ public class SamlPeerBindingTable extends BaseTable<SamlPeerBindingTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:299668931

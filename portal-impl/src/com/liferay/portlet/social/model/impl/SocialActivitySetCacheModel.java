@@ -207,3 +207,4 @@ public class SocialActivitySetCacheModel
 	public int activityCount;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2053070303

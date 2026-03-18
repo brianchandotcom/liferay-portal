@@ -116,3 +116,4 @@ public class ObjectEntryFolderModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:404465282

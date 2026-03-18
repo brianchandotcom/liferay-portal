@@ -536,3 +536,4 @@ public interface KBFolderModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:227299124

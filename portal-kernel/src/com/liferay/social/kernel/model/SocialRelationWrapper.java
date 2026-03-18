@@ -339,3 +339,4 @@ public class SocialRelationWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1236919062

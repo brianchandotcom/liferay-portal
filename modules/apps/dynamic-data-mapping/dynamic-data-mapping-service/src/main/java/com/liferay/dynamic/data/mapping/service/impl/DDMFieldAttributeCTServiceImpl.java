@@ -48,3 +48,4 @@ public class DDMFieldAttributeCTServiceImpl
 	private DDMFieldAttributePersistence _ddmFieldAttributePersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:525976077

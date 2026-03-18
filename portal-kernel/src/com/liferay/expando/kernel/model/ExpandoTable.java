@@ -52,3 +52,4 @@ public interface ExpandoTable extends ExpandoTableModel, PersistedModel {
 	public boolean isDefaultTable();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1920707035

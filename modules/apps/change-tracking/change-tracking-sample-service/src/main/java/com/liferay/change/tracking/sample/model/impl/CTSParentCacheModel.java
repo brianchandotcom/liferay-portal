@@ -148,3 +148,4 @@ public class CTSParentCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1193262373

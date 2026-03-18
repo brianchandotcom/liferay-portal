@@ -667,3 +667,4 @@ public interface GroupModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1337098590

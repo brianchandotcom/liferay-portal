@@ -820,3 +820,4 @@ public class COREntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1822321939

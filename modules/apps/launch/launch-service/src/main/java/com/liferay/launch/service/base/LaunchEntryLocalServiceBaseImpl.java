@@ -598,3 +598,4 @@ public abstract class LaunchEntryLocalServiceBaseImpl
 		LaunchEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1010179126

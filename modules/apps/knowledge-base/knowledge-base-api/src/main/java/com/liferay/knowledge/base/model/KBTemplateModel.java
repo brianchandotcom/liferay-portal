@@ -284,3 +284,4 @@ public interface KBTemplateModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1583996510

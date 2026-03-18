@@ -722,3 +722,4 @@ public class CommercePricingClassServiceHttp {
 			new Class[] {String.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-755706218

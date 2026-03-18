@@ -530,3 +530,4 @@ public class SamlIdpSpConnectionUtil {
 	private static volatile SamlIdpSpConnectionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1052054115

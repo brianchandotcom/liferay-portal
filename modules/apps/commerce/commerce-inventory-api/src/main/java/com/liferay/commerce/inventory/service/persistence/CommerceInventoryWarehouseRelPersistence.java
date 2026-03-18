@@ -535,3 +535,4 @@ public interface CommerceInventoryWarehouseRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-573333944

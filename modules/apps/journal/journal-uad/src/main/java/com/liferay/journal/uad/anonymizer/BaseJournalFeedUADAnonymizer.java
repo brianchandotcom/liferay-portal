@@ -92,3 +92,4 @@ public abstract class BaseJournalFeedUADAnonymizer
 	protected JournalFeedLocalService journalFeedLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:169764192

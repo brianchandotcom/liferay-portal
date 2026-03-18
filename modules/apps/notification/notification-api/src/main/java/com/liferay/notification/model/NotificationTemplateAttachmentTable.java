@@ -46,3 +46,4 @@ public class NotificationTemplateAttachmentTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1228743325

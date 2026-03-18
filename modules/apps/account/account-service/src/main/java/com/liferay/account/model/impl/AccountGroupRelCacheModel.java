@@ -194,3 +194,4 @@ public class AccountGroupRelCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1129739752

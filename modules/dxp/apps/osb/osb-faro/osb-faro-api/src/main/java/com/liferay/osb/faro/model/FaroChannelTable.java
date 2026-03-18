@@ -53,3 +53,4 @@ public class FaroChannelTable extends BaseTable<FaroChannelTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-961372084

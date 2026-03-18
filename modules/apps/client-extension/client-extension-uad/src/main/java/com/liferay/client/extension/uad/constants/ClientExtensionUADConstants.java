@@ -19,3 +19,4 @@ public class ClientExtensionUADConstants {
 		USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY_REL = {"userId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2098900645

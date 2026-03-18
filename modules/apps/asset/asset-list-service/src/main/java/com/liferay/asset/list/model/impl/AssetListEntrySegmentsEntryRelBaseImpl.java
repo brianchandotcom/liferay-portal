@@ -42,3 +42,4 @@ public abstract class AssetListEntrySegmentsEntryRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1335245670

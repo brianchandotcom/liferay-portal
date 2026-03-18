@@ -62,3 +62,4 @@ public interface DDMStructureLayout
 	public void setDDMFormLayout(DDMFormLayout ddmFormLayout);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1802133378

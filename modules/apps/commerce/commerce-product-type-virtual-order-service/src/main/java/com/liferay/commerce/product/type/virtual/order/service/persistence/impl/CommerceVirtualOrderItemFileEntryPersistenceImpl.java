@@ -3409,3 +3409,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-118164510

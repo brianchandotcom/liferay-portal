@@ -137,3 +137,4 @@ public class CommerceTaxFixedRateModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:637498633

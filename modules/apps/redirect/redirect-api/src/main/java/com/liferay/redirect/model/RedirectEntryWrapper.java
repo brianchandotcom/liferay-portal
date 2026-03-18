@@ -495,3 +495,4 @@ public class RedirectEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-666205322

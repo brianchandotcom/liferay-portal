@@ -1037,3 +1037,4 @@ public class CTEntryModelImpl
 	private CTEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-399262009

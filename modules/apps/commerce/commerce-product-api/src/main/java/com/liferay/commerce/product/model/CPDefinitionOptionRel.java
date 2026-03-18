@@ -75,3 +75,4 @@ public interface CPDefinitionOptionRel
 	public boolean isPriceTypeStatic();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1320628045

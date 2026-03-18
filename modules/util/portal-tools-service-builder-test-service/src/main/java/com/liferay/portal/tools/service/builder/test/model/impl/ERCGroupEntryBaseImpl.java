@@ -39,3 +39,4 @@ public abstract class ERCGroupEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2137682776

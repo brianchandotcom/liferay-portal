@@ -445,3 +445,4 @@ public class CalendarResourceServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:482640267

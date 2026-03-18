@@ -443,3 +443,4 @@ public class MBMailingListCacheModel
 	public boolean active;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:528984383

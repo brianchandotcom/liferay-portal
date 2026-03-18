@@ -50,3 +50,4 @@ public interface UADPartialEntry extends PersistedModel, UADPartialEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2125745000

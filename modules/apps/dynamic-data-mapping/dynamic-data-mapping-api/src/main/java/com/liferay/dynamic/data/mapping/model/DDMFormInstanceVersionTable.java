@@ -85,3 +85,4 @@ public class DDMFormInstanceVersionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-530446648

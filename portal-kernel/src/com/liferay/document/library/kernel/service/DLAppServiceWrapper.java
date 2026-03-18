@@ -2629,3 +2629,4 @@ public class DLAppServiceWrapper
 	private DLAppService _dlAppService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1002062415

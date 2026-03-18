@@ -2678,3 +2678,4 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-53355687

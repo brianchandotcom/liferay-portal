@@ -97,3 +97,4 @@ public class SourceServiceUtil {
 		new Snapshot<>(SourceServiceUtil.class, SourceService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:451843300

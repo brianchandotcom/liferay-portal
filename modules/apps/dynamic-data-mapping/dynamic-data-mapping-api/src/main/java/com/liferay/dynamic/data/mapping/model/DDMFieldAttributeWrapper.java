@@ -375,3 +375,4 @@ public class DDMFieldAttributeWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1935878432

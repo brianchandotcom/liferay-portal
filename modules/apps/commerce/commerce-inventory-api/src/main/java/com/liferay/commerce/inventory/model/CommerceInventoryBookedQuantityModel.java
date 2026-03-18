@@ -262,3 +262,4 @@ public interface CommerceInventoryBookedQuantityModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1943453452

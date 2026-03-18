@@ -450,3 +450,4 @@ public class JSONStorageEntryLocalServiceWrapper
 	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:834568959

@@ -50,3 +50,4 @@ public interface CTPreferences extends CTPreferencesModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-999031791

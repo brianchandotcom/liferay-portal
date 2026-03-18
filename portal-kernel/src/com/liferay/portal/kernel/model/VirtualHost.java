@@ -47,3 +47,4 @@ public interface VirtualHost extends PersistedModel, VirtualHostModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1164707855

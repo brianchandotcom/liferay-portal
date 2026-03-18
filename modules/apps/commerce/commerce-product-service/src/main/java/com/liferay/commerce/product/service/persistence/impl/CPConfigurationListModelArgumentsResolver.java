@@ -141,3 +141,4 @@ public class CPConfigurationListModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-903182294

@@ -48,3 +48,4 @@ public interface RedirectEntry extends PersistedModel, RedirectEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2016999052

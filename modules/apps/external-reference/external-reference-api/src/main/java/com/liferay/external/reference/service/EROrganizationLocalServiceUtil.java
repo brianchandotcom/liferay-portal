@@ -61,3 +61,4 @@ public class EROrganizationLocalServiceUtil {
 			EROrganizationLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1191217152

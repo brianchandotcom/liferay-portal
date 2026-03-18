@@ -1278,3 +1278,4 @@ public interface KBFolderPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2025506085

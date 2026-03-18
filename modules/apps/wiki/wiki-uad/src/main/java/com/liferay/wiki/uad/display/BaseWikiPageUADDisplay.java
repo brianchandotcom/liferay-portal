@@ -75,3 +75,4 @@ public abstract class BaseWikiPageUADDisplay
 	protected WikiPageLocalService wikiPageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1234961201

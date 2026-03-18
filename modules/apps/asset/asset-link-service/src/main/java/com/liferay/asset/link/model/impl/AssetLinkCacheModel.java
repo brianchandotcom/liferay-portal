@@ -196,3 +196,4 @@ public class AssetLinkCacheModel
 	public int weight;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:679864235

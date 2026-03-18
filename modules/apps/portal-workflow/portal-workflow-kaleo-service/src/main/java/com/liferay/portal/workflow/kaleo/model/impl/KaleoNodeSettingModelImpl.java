@@ -916,3 +916,4 @@ public class KaleoNodeSettingModelImpl
 	private KaleoNodeSetting _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:607204274

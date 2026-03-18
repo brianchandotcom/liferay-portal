@@ -74,3 +74,4 @@ public class CommerceInventoryAuditServiceWrapper
 	private CommerceInventoryAuditService _commerceInventoryAuditService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-368625621

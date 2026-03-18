@@ -55,3 +55,4 @@ public interface ObjectViewFilterColumn
 		throws com.liferay.portal.kernel.json.JSONException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-263522420

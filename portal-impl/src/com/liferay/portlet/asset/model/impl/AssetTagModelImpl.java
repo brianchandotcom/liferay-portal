@@ -1089,3 +1089,4 @@ public class AssetTagModelImpl
 	private AssetTag _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2056847965

@@ -480,3 +480,4 @@ public interface KaleoTimerPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1848644969

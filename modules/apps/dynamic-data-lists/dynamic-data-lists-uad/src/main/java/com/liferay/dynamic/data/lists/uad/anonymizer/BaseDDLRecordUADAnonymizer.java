@@ -97,3 +97,4 @@ public abstract class BaseDDLRecordUADAnonymizer
 	protected DDLRecordLocalService ddlRecordLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-410758089

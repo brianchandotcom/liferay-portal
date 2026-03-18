@@ -438,3 +438,4 @@ public class CommerceDiscountServiceWrapper
 	private CommerceDiscountService _commerceDiscountService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:212125822

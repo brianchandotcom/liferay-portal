@@ -275,3 +275,4 @@ public interface CTRemoteLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1945281186

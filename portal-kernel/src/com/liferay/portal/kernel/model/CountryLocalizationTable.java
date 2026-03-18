@@ -50,3 +50,4 @@ public class CountryLocalizationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2019007518

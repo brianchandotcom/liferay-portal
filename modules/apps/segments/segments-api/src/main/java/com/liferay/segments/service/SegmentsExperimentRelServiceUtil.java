@@ -98,3 +98,4 @@ public class SegmentsExperimentRelServiceUtil {
 			SegmentsExperimentRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2036177615

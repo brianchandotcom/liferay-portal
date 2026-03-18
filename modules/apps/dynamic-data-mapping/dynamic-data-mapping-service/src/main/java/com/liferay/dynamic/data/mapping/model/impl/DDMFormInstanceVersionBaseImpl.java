@@ -41,3 +41,4 @@ public abstract class DDMFormInstanceVersionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2100550464

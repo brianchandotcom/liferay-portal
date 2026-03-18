@@ -60,3 +60,4 @@ public class DLFileEntryMetadataTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1604706256

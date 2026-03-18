@@ -188,3 +188,4 @@ public class CTCollectionTemplateCacheModel
 	public String description;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-530525662

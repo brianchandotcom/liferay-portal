@@ -65,3 +65,4 @@ public interface DDMStructureLinkService extends BaseService {
 		String resourceClassName);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:740982666

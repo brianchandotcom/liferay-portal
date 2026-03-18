@@ -534,3 +534,4 @@ public class ResourceLocalServiceWrapper
 	private ResourceLocalService _resourceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1591200749

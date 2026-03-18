@@ -410,3 +410,4 @@ public interface PatcherProductVersionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:274441825

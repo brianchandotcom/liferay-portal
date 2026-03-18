@@ -4150,3 +4150,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:529843565

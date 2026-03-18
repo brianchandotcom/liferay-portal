@@ -38,3 +38,4 @@ public abstract class AppBaseImpl extends AppModelImpl implements App {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1796977361

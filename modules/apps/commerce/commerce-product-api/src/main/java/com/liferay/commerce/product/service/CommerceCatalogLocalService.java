@@ -394,3 +394,4 @@ public interface CommerceCatalogLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-626321432

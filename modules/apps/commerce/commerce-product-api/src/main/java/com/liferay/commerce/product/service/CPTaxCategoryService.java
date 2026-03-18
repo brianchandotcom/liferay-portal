@@ -100,3 +100,4 @@ public interface CPTaxCategoryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2103078654

@@ -2411,3 +2411,4 @@ public class DispatchTriggerUtil {
 	private static volatile DispatchTriggerPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1653775679

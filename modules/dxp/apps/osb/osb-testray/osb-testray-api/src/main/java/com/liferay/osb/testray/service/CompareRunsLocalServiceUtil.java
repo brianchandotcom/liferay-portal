@@ -45,3 +45,4 @@ public class CompareRunsLocalServiceUtil {
 			CompareRunsLocalServiceUtil.class, CompareRunsLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:559429684

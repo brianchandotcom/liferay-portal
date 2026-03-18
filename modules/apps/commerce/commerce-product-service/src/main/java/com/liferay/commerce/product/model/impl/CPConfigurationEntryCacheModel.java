@@ -461,3 +461,4 @@ public class CPConfigurationEntryCacheModel
 	public double width;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-788385515

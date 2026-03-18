@@ -429,3 +429,4 @@ public class ObjectLayoutColumnWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:780726310

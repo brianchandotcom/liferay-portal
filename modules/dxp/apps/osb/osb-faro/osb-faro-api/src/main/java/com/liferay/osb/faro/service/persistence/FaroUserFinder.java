@@ -36,3 +36,4 @@ public interface FaroUserFinder {
 			<com.liferay.osb.faro.model.FaroUser> orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-814703875

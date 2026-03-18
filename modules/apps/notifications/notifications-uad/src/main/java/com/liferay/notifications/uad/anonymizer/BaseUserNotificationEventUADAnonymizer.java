@@ -98,3 +98,4 @@ public abstract class BaseUserNotificationEventUADAnonymizer
 		userNotificationEventLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1060559870

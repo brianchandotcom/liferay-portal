@@ -55,3 +55,4 @@ public interface LayoutClassedModelUsage
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1808905104

@@ -434,3 +434,4 @@ public class FaroNotificationWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:844517581

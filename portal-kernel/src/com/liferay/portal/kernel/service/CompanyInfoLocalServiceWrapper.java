@@ -347,3 +347,4 @@ public class CompanyInfoLocalServiceWrapper
 	private CompanyInfoLocalService _companyInfoLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-479860253

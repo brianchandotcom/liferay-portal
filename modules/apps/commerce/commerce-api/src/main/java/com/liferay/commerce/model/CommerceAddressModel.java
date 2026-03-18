@@ -512,3 +512,4 @@ public interface CommerceAddressModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1331699633

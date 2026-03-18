@@ -453,3 +453,4 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1788093075

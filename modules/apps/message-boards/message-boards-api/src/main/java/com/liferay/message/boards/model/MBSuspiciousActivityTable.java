@@ -70,3 +70,4 @@ public class MBSuspiciousActivityTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1148407390

@@ -494,3 +494,4 @@ public class CPDefinitionGroupedEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:103181981

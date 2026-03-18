@@ -2551,3 +2551,4 @@ public class JournalFolderUtil {
 	private static volatile JournalFolderPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-788694621

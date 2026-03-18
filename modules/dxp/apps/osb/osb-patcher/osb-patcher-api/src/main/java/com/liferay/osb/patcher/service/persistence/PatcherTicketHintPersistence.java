@@ -202,3 +202,4 @@ public interface PatcherTicketHintPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1636162029

@@ -23,3 +23,4 @@ public interface CPAttachmentFileEntryFinder {
 						queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:377648461

@@ -112,3 +112,4 @@ public class ClassNameServiceHttp {
 		new Class[] {String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-821228138

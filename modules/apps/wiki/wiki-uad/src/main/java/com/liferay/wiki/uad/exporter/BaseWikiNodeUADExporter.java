@@ -53,12 +53,12 @@ public abstract class BaseWikiNodeUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(wikiNode.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(wikiNode.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(wikiNode.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -78,3 +78,4 @@ public abstract class BaseWikiNodeUADExporter
 	protected WikiNodeLocalService wikiNodeLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-763668239

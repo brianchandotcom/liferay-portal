@@ -77,3 +77,4 @@ public abstract class SharingEntryFinderBaseImpl
 		SharingEntryFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1880096384

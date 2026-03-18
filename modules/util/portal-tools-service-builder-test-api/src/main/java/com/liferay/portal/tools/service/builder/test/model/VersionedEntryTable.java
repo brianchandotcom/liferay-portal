@@ -39,3 +39,4 @@ public class VersionedEntryTable extends BaseTable<VersionedEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1597645544

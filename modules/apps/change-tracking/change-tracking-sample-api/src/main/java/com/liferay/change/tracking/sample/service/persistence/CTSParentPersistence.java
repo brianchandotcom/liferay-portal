@@ -451,3 +451,4 @@ public interface CTSParentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1485096602

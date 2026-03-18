@@ -1208,3 +1208,4 @@ public class CTSContentUtil {
 	private static volatile CTSContentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-247569359

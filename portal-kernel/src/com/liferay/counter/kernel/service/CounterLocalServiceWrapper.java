@@ -88,3 +88,4 @@ public class CounterLocalServiceWrapper
 	private CounterLocalService _counterLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:481797444

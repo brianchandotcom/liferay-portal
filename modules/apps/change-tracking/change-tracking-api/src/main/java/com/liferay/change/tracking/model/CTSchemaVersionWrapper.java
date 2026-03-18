@@ -191,3 +191,4 @@ public class CTSchemaVersionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2137429906

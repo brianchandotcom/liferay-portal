@@ -1375,3 +1375,4 @@ public class SAPEntryUtil {
 	private static volatile SAPEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-233997740

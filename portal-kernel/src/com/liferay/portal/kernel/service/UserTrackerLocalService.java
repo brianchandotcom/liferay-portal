@@ -271,3 +271,4 @@ public interface UserTrackerLocalService
 	public UserTracker updateUserTracker(UserTracker userTracker);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-503414109

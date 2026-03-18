@@ -242,3 +242,4 @@ public class ObjectViewColumnCacheModel
 	public int priority;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:763797900

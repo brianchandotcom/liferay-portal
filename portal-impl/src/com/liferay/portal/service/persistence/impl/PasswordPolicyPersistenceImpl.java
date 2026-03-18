@@ -3904,3 +3904,4 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1893746831

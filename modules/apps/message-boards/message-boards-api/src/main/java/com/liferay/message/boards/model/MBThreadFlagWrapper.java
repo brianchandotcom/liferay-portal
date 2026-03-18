@@ -447,3 +447,4 @@ public class MBThreadFlagWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:535108728

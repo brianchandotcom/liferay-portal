@@ -23,3 +23,4 @@ public interface KaleoTaskInstanceTokenFinder {
 				KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1786168299

@@ -50,3 +50,4 @@ public interface DEDataListView extends DEDataListViewModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-326242612

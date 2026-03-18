@@ -286,3 +286,4 @@ public class OAuth2ScopeGrantWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:894987621

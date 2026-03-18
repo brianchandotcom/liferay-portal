@@ -3945,3 +3945,4 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		java.util.List<com.liferay.osb.patcher.model.PatcherFix> patcherFixes);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:577621832

@@ -29,3 +29,4 @@ public abstract class FragmentEntryVersionBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-916001827

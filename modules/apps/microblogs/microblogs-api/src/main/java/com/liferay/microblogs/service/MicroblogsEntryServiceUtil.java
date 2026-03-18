@@ -134,3 +134,4 @@ public class MicroblogsEntryServiceUtil {
 			MicroblogsEntryServiceUtil.class, MicroblogsEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-350920860

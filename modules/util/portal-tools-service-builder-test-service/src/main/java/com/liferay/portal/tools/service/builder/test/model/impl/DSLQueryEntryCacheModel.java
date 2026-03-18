@@ -102,3 +102,4 @@ public class DSLQueryEntryCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1998434281

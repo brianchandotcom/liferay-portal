@@ -499,3 +499,4 @@ public class KBTemplateLocalServiceWrapper
 	private KBTemplateLocalService _kbTemplateLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1852310273

@@ -42,3 +42,4 @@ public abstract class LayoutPageTemplateStructureRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1845245268

@@ -154,3 +154,4 @@ public class ExportImportConfigurationFinderUtil {
 	private static ExportImportConfigurationFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1096421956

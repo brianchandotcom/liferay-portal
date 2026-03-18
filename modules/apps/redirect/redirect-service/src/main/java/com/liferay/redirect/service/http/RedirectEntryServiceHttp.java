@@ -419,3 +419,4 @@ public class RedirectEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1720452034

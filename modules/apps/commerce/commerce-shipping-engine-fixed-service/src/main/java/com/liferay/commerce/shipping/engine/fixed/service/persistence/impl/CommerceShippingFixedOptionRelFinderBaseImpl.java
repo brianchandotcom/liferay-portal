@@ -79,3 +79,4 @@ public abstract class CommerceShippingFixedOptionRelFinderBaseImpl
 		CommerceShippingFixedOptionRelFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1248061521

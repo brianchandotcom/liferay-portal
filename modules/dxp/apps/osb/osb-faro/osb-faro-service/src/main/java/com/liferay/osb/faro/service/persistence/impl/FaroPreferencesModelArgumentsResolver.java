@@ -115,3 +115,4 @@ public class FaroPreferencesModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-254287852

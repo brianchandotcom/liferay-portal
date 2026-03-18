@@ -439,3 +439,4 @@ public interface KBFolderLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1432304815

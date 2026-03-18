@@ -157,3 +157,4 @@ public class ThemeLocalServiceWrapper
 	private ThemeLocalService _themeLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1979901694

@@ -56,3 +56,4 @@ public class KBTemplateTable extends BaseTable<KBTemplateTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:235070401

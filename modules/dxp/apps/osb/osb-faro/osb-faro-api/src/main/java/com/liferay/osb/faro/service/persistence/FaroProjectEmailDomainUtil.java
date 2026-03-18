@@ -639,3 +639,4 @@ public class FaroProjectEmailDomainUtil {
 	private static volatile FaroProjectEmailDomainPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-987900409

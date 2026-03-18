@@ -324,3 +324,4 @@ public class CSDiagramPinLocalServiceUtil {
 			CSDiagramPinLocalServiceUtil.class, CSDiagramPinLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-634856479

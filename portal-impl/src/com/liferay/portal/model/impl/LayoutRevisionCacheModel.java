@@ -454,3 +454,4 @@ public class LayoutRevisionCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1232049106

@@ -272,3 +272,4 @@ public class SiteNavigationMenuCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-198178264

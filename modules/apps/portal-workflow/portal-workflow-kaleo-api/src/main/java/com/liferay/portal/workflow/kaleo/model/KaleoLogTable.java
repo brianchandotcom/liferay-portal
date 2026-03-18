@@ -116,3 +116,4 @@ public class KaleoLogTable extends BaseTable<KaleoLogTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1443735839

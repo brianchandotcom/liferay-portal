@@ -913,3 +913,4 @@ public class CommerceShippingFixedOptionRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:918544107

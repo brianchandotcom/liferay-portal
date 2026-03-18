@@ -177,3 +177,4 @@ public class AssetAutoTaggerEntryCacheModel
 	public long assetTagId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1419347101

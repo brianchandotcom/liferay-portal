@@ -67,3 +67,4 @@ public interface KBFolder extends KBFolderModel, PersistedModel {
 	public boolean isRoot();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-794113330

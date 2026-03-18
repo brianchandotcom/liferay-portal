@@ -2219,3 +2219,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1422715035

@@ -31,3 +31,4 @@ public interface CommercePricingClassFinder {
 				boolean inlineSQLHelper);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:169629713

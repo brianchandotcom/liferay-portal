@@ -203,3 +203,4 @@ public class CommercePaymentEntryServiceUtil {
 			CommercePaymentEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:909027213

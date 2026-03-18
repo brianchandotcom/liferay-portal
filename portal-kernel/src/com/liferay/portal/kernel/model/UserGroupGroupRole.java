@@ -63,3 +63,4 @@ public interface UserGroupGroupRole
 	public int hashCode();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:22219763

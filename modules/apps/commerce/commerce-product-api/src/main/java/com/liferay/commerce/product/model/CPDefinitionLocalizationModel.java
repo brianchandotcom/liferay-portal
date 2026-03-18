@@ -254,3 +254,4 @@ public interface CPDefinitionLocalizationModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-103853391

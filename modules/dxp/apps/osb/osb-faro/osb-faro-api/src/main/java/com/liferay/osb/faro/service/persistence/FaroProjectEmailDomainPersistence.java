@@ -444,3 +444,4 @@ public interface FaroProjectEmailDomainPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1601905072

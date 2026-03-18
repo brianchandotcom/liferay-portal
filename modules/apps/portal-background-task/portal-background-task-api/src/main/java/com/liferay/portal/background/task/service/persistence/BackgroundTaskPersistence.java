@@ -2412,3 +2412,4 @@ public interface BackgroundTaskPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:425800961

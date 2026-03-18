@@ -222,3 +222,4 @@ public class ObjectViewCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2134364616

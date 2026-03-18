@@ -807,3 +807,4 @@ public interface PatcherAccountPersistence
 			patcherBuilds);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1447012029

@@ -485,3 +485,4 @@ public class TrashEntryLocalServiceUtil {
 			TrashEntryLocalServiceUtil.class, TrashEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1899887873

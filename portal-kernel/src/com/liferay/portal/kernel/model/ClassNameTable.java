@@ -33,3 +33,4 @@ public class ClassNameTable extends BaseTable<ClassNameTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1954044207

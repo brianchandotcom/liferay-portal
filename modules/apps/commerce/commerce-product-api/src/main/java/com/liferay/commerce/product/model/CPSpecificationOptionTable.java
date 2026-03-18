@@ -85,3 +85,4 @@ public class CPSpecificationOptionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1389560346

@@ -424,3 +424,4 @@ public class KaleoNotificationRecipientLocalServiceWrapper
 		_kaleoNotificationRecipientLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1101759262

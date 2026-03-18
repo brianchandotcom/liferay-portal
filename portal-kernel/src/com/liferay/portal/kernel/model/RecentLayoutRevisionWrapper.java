@@ -320,3 +320,4 @@ public class RecentLayoutRevisionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-600000545

@@ -63,3 +63,4 @@ public interface CommerceTierPriceEntry
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1434072044

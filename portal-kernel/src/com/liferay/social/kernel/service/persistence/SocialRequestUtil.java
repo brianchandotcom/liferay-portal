@@ -2318,3 +2318,4 @@ public class SocialRequestUtil {
 	private static volatile SocialRequestPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1470687725

@@ -37,3 +37,4 @@ public class CTScoreTable extends BaseTable<CTScoreTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-131246946

@@ -66,3 +66,4 @@ public class CommerceInventoryAuditServiceUtil {
 			CommerceInventoryAuditService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-408279485

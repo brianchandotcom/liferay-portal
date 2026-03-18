@@ -353,3 +353,4 @@ public class JournalFolderCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1147138014

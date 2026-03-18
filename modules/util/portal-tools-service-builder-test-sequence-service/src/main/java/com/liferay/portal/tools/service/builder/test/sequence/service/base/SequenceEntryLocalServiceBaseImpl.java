@@ -483,3 +483,4 @@ public abstract class SequenceEntryLocalServiceBaseImpl
 		SequenceEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1817566699

@@ -956,3 +956,4 @@ public interface PortalPreferenceValuePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1854704230

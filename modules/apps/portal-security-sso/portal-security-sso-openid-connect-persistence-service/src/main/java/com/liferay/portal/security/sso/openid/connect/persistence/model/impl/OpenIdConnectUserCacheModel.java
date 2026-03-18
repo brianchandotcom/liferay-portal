@@ -175,3 +175,4 @@ public class OpenIdConnectUserCacheModel
 	public String subject;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:778645172

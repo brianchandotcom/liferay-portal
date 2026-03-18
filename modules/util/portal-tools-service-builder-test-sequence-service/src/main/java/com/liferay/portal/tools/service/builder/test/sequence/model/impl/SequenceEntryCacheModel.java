@@ -134,3 +134,4 @@ public class SequenceEntryCacheModel
 	public long companyId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:777024231

@@ -991,3 +991,4 @@ public interface ObjectDefinitionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-468216887

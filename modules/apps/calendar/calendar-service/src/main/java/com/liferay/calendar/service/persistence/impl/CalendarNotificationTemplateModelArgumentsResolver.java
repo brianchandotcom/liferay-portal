@@ -123,3 +123,4 @@ public class CalendarNotificationTemplateModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:858558917

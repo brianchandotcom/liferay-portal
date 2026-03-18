@@ -74,3 +74,4 @@ public class AssetVocabularyTable extends BaseTable<AssetVocabularyTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1079201385

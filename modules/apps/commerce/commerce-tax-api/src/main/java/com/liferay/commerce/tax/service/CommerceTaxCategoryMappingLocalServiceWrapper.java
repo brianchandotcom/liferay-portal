@@ -533,3 +533,4 @@ public class CommerceTaxCategoryMappingLocalServiceWrapper
 		_commerceTaxCategoryMappingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-908154297

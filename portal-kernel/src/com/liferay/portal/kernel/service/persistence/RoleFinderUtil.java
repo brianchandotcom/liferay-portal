@@ -299,3 +299,4 @@ public class RoleFinderUtil {
 	private static RoleFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:100601961

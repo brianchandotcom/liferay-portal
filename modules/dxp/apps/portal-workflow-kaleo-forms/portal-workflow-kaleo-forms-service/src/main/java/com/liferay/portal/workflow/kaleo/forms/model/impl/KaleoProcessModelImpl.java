@@ -1011,3 +1011,4 @@ public class KaleoProcessModelImpl
 	private KaleoProcess _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-346357542

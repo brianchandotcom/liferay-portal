@@ -524,3 +524,4 @@ public class DLFileEntryCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-573086788

@@ -295,3 +295,4 @@ public class AssetEntryAssetCategoryRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1944327349

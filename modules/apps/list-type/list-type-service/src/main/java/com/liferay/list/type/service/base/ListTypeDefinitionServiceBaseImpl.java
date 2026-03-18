@@ -125,3 +125,4 @@ public abstract class ListTypeDefinitionServiceBaseImpl
 		ListTypeDefinitionServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1949891901

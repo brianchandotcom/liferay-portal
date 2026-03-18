@@ -147,3 +147,4 @@ public class UserGroupRoleCacheModel
 	public long roleId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:300888057

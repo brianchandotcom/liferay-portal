@@ -54,3 +54,4 @@ public interface FriendlyURLEntryLocalization
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-49672019

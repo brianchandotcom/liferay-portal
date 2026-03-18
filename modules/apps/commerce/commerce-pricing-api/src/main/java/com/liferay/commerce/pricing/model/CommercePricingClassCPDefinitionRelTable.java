@@ -64,3 +64,4 @@ public class CommercePricingClassCPDefinitionRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:87080741

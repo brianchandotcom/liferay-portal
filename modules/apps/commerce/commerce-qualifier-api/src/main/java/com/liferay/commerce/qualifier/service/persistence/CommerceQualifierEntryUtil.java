@@ -1204,3 +1204,4 @@ public class CommerceQualifierEntryUtil {
 	private static volatile CommerceQualifierEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1448177539

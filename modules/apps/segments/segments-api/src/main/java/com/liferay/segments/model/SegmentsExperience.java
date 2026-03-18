@@ -69,3 +69,4 @@ public interface SegmentsExperience
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1323565830

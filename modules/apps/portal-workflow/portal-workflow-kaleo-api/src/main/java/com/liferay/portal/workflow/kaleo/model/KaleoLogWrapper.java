@@ -1032,3 +1032,4 @@ public class KaleoLogWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-621151509

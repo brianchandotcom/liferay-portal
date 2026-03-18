@@ -219,3 +219,4 @@ public class FaroNotificationCacheModel
 	public String subtype;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1837741584

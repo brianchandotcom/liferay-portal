@@ -178,3 +178,4 @@ public interface CTSChildModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:760997735

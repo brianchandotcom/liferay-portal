@@ -93,3 +93,4 @@ public interface CalendarResourceFinder {
 					orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1983653852

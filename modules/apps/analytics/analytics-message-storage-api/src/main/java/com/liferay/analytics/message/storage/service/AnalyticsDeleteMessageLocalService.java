@@ -308,3 +308,4 @@ public interface AnalyticsDeleteMessageLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2007759468

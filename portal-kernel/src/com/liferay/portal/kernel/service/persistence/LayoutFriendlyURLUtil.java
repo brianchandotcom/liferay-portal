@@ -2054,3 +2054,4 @@ public class LayoutFriendlyURLUtil {
 	private static volatile LayoutFriendlyURLPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1475714240

@@ -354,3 +354,4 @@ public interface PluginSettingPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1542110463

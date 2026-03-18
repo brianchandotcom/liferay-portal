@@ -189,3 +189,4 @@ public class LocalizedEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2119061864

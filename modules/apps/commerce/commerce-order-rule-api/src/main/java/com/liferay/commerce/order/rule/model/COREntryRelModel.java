@@ -243,3 +243,4 @@ public interface COREntryRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1483723690

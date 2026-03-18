@@ -1879,3 +1879,4 @@ public interface BookmarksFolderPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-989947048

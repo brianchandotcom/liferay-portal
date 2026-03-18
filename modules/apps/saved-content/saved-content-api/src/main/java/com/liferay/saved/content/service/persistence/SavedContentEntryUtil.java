@@ -2657,3 +2657,4 @@ public class SavedContentEntryUtil {
 	private static volatile SavedContentEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1898726860

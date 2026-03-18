@@ -211,3 +211,4 @@ public class ResourcePermissionServiceUtil {
 	private static volatile ResourcePermissionService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1738667227

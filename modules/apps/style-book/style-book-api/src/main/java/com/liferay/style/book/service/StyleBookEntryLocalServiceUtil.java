@@ -586,3 +586,4 @@ public class StyleBookEntryLocalServiceUtil {
 			StyleBookEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1778702003

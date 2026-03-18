@@ -56,3 +56,4 @@ public class ReadingTimeEntryTable extends BaseTable<ReadingTimeEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:231384843

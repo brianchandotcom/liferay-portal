@@ -39,3 +39,4 @@ public abstract class DefinitionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1969902478

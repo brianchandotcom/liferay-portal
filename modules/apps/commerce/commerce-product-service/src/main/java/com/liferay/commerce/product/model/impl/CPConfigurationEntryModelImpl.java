@@ -1988,3 +1988,4 @@ public class CPConfigurationEntryModelImpl
 	private CPConfigurationEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1429379552

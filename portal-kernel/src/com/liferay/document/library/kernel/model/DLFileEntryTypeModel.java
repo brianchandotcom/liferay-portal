@@ -533,3 +533,4 @@ public interface DLFileEntryTypeModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1088933958

@@ -1195,3 +1195,4 @@ public class AssetTagServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1893998655

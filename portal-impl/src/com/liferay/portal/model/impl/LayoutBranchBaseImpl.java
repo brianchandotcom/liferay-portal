@@ -39,3 +39,4 @@ public abstract class LayoutBranchBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-37395395

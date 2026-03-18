@@ -303,3 +303,4 @@ public class CacheFieldEntryLocalServiceUtil {
 	private static volatile CacheFieldEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-619181691

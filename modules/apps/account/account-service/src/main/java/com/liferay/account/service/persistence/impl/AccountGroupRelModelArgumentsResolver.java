@@ -115,3 +115,4 @@ public class AccountGroupRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1863761092

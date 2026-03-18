@@ -388,3 +388,4 @@ public class NullConvertibleEntryLocalServiceWrapper
 	private NullConvertibleEntryLocalService _nullConvertibleEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-476305437

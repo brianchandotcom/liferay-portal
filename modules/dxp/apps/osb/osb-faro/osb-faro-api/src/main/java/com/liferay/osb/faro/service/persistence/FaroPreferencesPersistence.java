@@ -346,3 +346,4 @@ public interface FaroPreferencesPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:776105911

@@ -728,3 +728,4 @@ public class CommerceTermEntryRelUtil {
 	private static volatile CommerceTermEntryRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:875565723

@@ -169,3 +169,4 @@ public class DefinedDefaultOrderEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2067961987

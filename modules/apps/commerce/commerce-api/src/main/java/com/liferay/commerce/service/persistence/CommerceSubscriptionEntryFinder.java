@@ -24,3 +24,4 @@ public interface CommerceSubscriptionEntryFinder {
 		findByA_S(long commerceAccountId, long subscriptionStatus);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-232620011

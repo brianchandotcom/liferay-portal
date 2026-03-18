@@ -65,3 +65,4 @@ public class DLFolderFinderBaseImpl extends BasePersistenceImpl<DLFolder> {
 		DLFolderFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1741460007

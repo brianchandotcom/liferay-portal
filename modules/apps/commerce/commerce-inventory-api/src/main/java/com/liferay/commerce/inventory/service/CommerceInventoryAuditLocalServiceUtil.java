@@ -340,3 +340,4 @@ public class CommerceInventoryAuditLocalServiceUtil {
 			CommerceInventoryAuditLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-919537260

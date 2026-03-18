@@ -46,3 +46,4 @@ public abstract class LVEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-875160385

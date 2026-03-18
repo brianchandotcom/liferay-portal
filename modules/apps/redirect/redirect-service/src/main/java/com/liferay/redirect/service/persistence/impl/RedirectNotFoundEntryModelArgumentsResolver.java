@@ -118,3 +118,4 @@ public class RedirectNotFoundEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:457384465

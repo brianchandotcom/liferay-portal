@@ -368,3 +368,4 @@ public class SocialActivityAchievementLocalServiceUtil {
 	private static volatile SocialActivityAchievementLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1862992362

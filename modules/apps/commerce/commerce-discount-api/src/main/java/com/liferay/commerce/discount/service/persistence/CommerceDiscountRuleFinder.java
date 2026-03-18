@@ -31,3 +31,4 @@ public interface CommerceDiscountRuleFinder {
 				boolean inlineSQLHelper);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-986651563

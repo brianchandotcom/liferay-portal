@@ -26,3 +26,4 @@ public interface EntryFinder {
 		long userId, String keywords, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:572465556

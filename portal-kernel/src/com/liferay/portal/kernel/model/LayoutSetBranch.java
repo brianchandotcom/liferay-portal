@@ -75,3 +75,4 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 			settingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:603131256

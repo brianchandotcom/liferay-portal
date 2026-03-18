@@ -4175,3 +4175,4 @@ public class MicroblogsEntryUtil {
 	private static volatile MicroblogsEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:510420402

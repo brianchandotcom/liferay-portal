@@ -81,3 +81,4 @@ public abstract class MBMessageBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:575015587

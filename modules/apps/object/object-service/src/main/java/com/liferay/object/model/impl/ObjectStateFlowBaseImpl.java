@@ -39,3 +39,4 @@ public abstract class ObjectStateFlowBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-51675967

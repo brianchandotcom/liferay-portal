@@ -237,3 +237,4 @@ public class CProductCacheModel
 	public int latestVersion;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-228023815

@@ -68,3 +68,4 @@ public class RepositoryTable extends BaseTable<RepositoryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1741424737

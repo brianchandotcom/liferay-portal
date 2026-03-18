@@ -205,3 +205,4 @@ public class MicroblogsEntryCacheModel
 	public int socialRelationType;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-840879113

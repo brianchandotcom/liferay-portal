@@ -3097,3 +3097,4 @@ public class LayoutPageTemplateEntryServiceHttp {
 		new Class[] {long.class, int.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1106706765

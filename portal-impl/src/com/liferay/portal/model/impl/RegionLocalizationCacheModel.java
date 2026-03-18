@@ -169,3 +169,4 @@ public class RegionLocalizationCacheModel
 	public String title;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-494709022

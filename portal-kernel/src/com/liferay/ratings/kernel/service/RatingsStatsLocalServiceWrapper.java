@@ -386,3 +386,4 @@ public class RatingsStatsLocalServiceWrapper
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1290369778

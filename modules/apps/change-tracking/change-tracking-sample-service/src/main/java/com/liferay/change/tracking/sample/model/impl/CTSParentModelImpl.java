@@ -686,3 +686,4 @@ public class CTSParentModelImpl
 	private CTSParent _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1633375782

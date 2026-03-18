@@ -686,3 +686,4 @@ public class SegmentsEntryRoleUtil {
 	private static volatile SegmentsEntryRolePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1753413409

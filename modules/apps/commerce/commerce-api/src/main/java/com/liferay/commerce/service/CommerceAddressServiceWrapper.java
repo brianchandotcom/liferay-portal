@@ -351,3 +351,4 @@ public class CommerceAddressServiceWrapper
 	private CommerceAddressService _commerceAddressService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1101072961

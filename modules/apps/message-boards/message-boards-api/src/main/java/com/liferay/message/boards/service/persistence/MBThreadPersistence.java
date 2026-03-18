@@ -3357,3 +3357,4 @@ public interface MBThreadPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-755793772

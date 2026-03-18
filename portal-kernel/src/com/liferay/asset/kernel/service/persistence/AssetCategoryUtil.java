@@ -3767,3 +3767,4 @@ public class AssetCategoryUtil {
 	private static volatile AssetCategoryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1055134447

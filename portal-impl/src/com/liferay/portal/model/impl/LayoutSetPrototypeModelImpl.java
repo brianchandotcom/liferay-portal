@@ -1354,3 +1354,4 @@ public class LayoutSetPrototypeModelImpl
 	private LayoutSetPrototype _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-359839334

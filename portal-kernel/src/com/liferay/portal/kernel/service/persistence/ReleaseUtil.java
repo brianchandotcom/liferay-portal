@@ -327,3 +327,4 @@ public class ReleaseUtil {
 	private static volatile ReleasePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1251732267

@@ -8530,3 +8530,4 @@ public class LayoutPageTemplateEntryUtil {
 	private static volatile LayoutPageTemplateEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1139675013

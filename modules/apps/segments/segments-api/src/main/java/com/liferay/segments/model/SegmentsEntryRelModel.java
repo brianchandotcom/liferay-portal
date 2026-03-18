@@ -278,3 +278,4 @@ public interface SegmentsEntryRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1785507787

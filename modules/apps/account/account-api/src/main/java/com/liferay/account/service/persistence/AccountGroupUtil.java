@@ -2279,3 +2279,4 @@ public class AccountGroupUtil {
 	private static volatile AccountGroupPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1147064661

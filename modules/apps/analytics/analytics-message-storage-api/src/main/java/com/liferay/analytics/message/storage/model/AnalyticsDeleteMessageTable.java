@@ -57,3 +57,4 @@ public class AnalyticsDeleteMessageTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-505603775

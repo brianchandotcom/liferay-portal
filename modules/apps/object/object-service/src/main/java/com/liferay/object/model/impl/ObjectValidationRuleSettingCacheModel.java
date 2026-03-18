@@ -241,3 +241,4 @@ public class ObjectValidationRuleSettingCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:654412221

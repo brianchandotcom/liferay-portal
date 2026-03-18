@@ -484,3 +484,4 @@ public class ObjectFolderLocalServiceWrapper
 	private ObjectFolderLocalService _objectFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1894342813

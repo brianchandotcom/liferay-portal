@@ -6134,3 +6134,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1302835432

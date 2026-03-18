@@ -502,3 +502,4 @@ public class KBArticleCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1657824979

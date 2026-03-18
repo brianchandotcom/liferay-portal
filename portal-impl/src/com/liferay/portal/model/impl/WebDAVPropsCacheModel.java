@@ -178,3 +178,4 @@ public class WebDAVPropsCacheModel
 	public String props;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1094344382

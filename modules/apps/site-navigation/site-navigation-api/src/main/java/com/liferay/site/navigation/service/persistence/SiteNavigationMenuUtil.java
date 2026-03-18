@@ -2357,3 +2357,4 @@ public class SiteNavigationMenuUtil {
 	private static volatile SiteNavigationMenuPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2040916035

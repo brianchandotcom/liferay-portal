@@ -895,3 +895,4 @@ public class RedirectNotFoundEntryModelImpl
 	private RedirectNotFoundEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:731271101

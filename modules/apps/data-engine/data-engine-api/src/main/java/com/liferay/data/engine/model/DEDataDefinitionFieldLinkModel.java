@@ -275,3 +275,4 @@ public interface DEDataDefinitionFieldLinkModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1750215299

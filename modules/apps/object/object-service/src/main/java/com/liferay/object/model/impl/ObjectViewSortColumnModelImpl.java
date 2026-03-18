@@ -1022,3 +1022,4 @@ public class ObjectViewSortColumnModelImpl
 	private ObjectViewSortColumn _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1621698210

@@ -675,3 +675,4 @@ public class WikiNodeLocalServiceWrapper
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1044527331

@@ -346,3 +346,4 @@ public interface DDMStorageLinkLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:91971588

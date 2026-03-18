@@ -450,3 +450,4 @@ public class SamlIdpSpSessionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-832716217

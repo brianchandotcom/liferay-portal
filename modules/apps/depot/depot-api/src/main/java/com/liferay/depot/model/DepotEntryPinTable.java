@@ -44,3 +44,4 @@ public class DepotEntryPinTable extends BaseTable<DepotEntryPinTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2145004676

@@ -475,3 +475,4 @@ public class CommerceAvailabilityEstimateLocalServiceWrapper
 		_commerceAvailabilityEstimateLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-44610525

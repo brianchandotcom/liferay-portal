@@ -265,3 +265,4 @@ public interface DSLQueryEntryLocalService
 	public DSLQueryEntry updateDSLQueryEntry(DSLQueryEntry dslQueryEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-750126249

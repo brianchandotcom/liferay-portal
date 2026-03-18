@@ -347,3 +347,4 @@ public class CommerceOrderPaymentLocalServiceUtil {
 			CommerceOrderPaymentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:167485311

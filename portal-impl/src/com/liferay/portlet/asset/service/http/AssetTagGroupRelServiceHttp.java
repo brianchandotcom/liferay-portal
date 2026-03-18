@@ -172,3 +172,4 @@ public class AssetTagGroupRelServiceHttp {
 		new Class[] {long.class, long[].class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-233832462

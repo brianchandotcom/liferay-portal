@@ -2298,3 +2298,4 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-791884124

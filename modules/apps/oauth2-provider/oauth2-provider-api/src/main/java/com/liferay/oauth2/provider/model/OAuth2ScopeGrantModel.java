@@ -159,3 +159,4 @@ public interface OAuth2ScopeGrantModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2121379094

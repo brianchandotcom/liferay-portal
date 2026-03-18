@@ -115,3 +115,4 @@ public class LayoutFriendlyURLModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:241249352

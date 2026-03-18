@@ -612,3 +612,4 @@ public interface CalendarBookingLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:557816372

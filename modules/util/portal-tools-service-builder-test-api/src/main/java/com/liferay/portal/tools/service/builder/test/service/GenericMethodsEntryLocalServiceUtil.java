@@ -91,3 +91,4 @@ public class GenericMethodsEntryLocalServiceUtil {
 	private static volatile GenericMethodsEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-881473751

@@ -501,3 +501,4 @@ public class SAPEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-272245451

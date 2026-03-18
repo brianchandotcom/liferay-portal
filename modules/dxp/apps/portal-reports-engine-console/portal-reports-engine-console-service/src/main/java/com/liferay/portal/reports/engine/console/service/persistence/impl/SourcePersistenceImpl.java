@@ -3491,3 +3491,4 @@ public class SourcePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:962462605

@@ -40,3 +40,4 @@ public interface DDLRecordFinder {
 			long maxRecordId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1798432322

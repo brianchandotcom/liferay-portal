@@ -945,3 +945,4 @@ public interface UserGroupRolePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-36966780

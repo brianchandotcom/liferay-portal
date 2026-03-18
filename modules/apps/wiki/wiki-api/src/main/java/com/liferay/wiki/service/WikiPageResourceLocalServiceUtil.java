@@ -403,3 +403,4 @@ public class WikiPageResourceLocalServiceUtil {
 			WikiPageResourceLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1418645120

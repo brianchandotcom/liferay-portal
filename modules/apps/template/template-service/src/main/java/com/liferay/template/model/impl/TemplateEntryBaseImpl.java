@@ -39,3 +39,4 @@ public abstract class TemplateEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-272316138

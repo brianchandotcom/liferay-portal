@@ -801,3 +801,4 @@ public interface UserGroupLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1355717681

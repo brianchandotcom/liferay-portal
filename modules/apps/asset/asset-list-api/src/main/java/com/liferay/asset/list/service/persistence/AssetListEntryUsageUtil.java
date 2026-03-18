@@ -1979,3 +1979,4 @@ public class AssetListEntryUsageUtil {
 	private static volatile AssetListEntryUsagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1870336503

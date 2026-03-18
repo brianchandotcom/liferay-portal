@@ -77,3 +77,4 @@ public interface KaleoProcessFinder {
 						orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-985758692

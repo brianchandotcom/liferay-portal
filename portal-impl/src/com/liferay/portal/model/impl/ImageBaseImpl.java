@@ -38,3 +38,4 @@ public abstract class ImageBaseImpl extends ImageModelImpl implements Image {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1394325679

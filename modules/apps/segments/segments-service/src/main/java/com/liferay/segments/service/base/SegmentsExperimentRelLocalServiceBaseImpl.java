@@ -499,3 +499,4 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 		SegmentsExperimentRelLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:220077039

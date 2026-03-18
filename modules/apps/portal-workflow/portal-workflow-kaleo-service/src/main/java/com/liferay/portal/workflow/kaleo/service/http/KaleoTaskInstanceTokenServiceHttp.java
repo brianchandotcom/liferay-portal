@@ -91,3 +91,4 @@ public class KaleoTaskInstanceTokenServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1926139445

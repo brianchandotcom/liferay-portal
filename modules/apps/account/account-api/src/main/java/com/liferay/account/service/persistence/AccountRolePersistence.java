@@ -1143,3 +1143,4 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:796512878

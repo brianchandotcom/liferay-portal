@@ -29,3 +29,4 @@ public interface LayoutFinder {
 			String preferencesValue);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:320540905

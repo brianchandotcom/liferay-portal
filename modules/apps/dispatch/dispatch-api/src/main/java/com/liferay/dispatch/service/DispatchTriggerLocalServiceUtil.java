@@ -477,3 +477,4 @@ public class DispatchTriggerLocalServiceUtil {
 			DispatchTriggerLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-939659000

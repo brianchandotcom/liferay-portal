@@ -3408,3 +3408,4 @@ public interface StyleBookEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:904532510

@@ -120,3 +120,4 @@ public class MFAFIDO2CredentialEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:627302703

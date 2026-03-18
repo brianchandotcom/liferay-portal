@@ -130,3 +130,4 @@ public class AddressModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1891743544

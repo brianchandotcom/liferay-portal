@@ -119,3 +119,4 @@ public interface Company extends CompanyModel, PersistedModel {
 	public void setVirtualHostname(String virtualHostname);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1558084506

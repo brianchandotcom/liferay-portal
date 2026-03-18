@@ -2571,3 +2571,4 @@ public class ObjectEntryUtil {
 	private static volatile ObjectEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-758666542

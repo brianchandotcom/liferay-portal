@@ -916,3 +916,4 @@ public class CommercePriceListDiscountRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2021275938

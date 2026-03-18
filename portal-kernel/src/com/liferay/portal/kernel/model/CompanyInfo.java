@@ -47,3 +47,4 @@ public interface CompanyInfo extends CompanyInfoModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1708359741

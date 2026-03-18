@@ -3224,3 +3224,4 @@ public interface UserPersistence
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2059295739

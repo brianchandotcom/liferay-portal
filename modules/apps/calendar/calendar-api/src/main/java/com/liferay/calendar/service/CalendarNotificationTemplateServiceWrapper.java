@@ -89,3 +89,4 @@ public class CalendarNotificationTemplateServiceWrapper
 		_calendarNotificationTemplateService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:957613048

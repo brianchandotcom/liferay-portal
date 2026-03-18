@@ -16,3 +16,4 @@ public class PasswordPoliciesAdminUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:63737497

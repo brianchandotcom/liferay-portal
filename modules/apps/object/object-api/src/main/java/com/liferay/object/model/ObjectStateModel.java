@@ -231,3 +231,4 @@ public interface ObjectStateModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1522012193

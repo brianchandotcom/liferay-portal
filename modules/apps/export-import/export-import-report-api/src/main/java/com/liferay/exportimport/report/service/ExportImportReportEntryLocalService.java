@@ -305,3 +305,4 @@ public interface ExportImportReportEntryLocalService
 		ExportImportReportEntry exportImportReportEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1768694716

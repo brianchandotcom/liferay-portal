@@ -545,3 +545,4 @@ public interface CommerceTierPriceEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1496648827

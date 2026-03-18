@@ -164,3 +164,4 @@ public interface AssetTagGroupRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1044320999

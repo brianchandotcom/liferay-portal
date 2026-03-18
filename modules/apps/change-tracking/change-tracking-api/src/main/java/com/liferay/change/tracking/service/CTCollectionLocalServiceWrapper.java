@@ -633,3 +633,4 @@ public class CTCollectionLocalServiceWrapper
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1350542652

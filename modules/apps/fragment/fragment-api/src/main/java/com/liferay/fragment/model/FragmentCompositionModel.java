@@ -528,3 +528,4 @@ public interface FragmentCompositionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-338163580

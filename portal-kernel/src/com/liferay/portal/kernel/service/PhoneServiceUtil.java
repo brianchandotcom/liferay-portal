@@ -99,3 +99,4 @@ public class PhoneServiceUtil {
 	private static volatile PhoneService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1033384661

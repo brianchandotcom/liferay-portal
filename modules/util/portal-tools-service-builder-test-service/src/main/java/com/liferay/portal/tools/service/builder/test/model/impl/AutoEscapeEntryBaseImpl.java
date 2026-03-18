@@ -29,3 +29,4 @@ public abstract class AutoEscapeEntryBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1327063568

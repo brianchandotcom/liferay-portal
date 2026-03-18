@@ -422,3 +422,4 @@ public class ObjectStateTransitionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:788061237

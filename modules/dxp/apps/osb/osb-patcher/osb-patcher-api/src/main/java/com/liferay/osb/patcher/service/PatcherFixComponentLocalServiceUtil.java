@@ -329,3 +329,4 @@ public class PatcherFixComponentLocalServiceUtil {
 			PatcherFixComponentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:273808688

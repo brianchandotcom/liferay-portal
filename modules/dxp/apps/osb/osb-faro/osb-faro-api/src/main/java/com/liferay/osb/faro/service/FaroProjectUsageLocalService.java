@@ -279,3 +279,4 @@ public interface FaroProjectUsageLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1658034967

@@ -318,3 +318,4 @@ public interface CTSContentLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1091385980

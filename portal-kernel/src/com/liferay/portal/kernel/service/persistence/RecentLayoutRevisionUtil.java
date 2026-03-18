@@ -886,3 +886,4 @@ public class RecentLayoutRevisionUtil {
 	private static volatile RecentLayoutRevisionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1867197959

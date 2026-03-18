@@ -124,3 +124,4 @@ public class ClassNameCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1113481283

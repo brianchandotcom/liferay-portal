@@ -164,3 +164,4 @@ public interface PluginSettingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2091312150

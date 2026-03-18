@@ -1027,3 +1027,4 @@ public class SamlSpSessionModelImpl
 	private SamlSpSession _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:520253732

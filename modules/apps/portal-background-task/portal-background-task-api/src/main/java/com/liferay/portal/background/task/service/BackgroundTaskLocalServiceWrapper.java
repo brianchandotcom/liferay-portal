@@ -810,3 +810,4 @@ public class BackgroundTaskLocalServiceWrapper
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-454822914

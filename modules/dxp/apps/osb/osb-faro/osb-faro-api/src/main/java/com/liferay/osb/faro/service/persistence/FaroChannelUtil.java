@@ -861,3 +861,4 @@ public class FaroChannelUtil {
 	private static volatile FaroChannelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1783098217

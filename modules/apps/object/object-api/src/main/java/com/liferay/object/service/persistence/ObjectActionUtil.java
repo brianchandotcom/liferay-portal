@@ -1653,3 +1653,4 @@ public class ObjectActionUtil {
 	private static volatile ObjectActionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1460733553

@@ -65,3 +65,4 @@ public interface KaleoDefinitionVersion
 	public void setContentAsXML(String contentAsXML);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1536076810

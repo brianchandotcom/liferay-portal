@@ -604,3 +604,4 @@ public class SystemEventWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1413256790

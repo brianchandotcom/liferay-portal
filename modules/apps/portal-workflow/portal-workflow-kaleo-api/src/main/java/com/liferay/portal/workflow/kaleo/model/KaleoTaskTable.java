@@ -59,3 +59,4 @@ public class KaleoTaskTable extends BaseTable<KaleoTaskTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1562466015

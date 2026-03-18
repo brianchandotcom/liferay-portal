@@ -58,3 +58,4 @@ public abstract class CommercePriceModifierRelFinderBaseImpl
 		commercePriceModifierRelPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:272376251

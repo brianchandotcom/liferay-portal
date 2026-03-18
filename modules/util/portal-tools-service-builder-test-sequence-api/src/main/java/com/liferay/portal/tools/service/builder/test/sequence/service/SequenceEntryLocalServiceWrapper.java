@@ -392,3 +392,4 @@ public class SequenceEntryLocalServiceWrapper
 	private SequenceEntryLocalService _sequenceEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:163775510

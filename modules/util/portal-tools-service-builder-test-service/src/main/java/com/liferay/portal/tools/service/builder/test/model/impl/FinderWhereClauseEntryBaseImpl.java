@@ -41,3 +41,4 @@ public abstract class FinderWhereClauseEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2133791182

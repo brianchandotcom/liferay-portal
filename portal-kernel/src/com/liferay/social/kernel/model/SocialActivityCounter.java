@@ -54,3 +54,4 @@ public interface SocialActivityCounter
 	public boolean isActivePeriod(int periodLength);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1641094290

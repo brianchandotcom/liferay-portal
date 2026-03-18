@@ -1816,3 +1816,4 @@ public interface CommercePriceModifierPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:236756637

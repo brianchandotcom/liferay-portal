@@ -474,3 +474,4 @@ public class AccountGroupLocalServiceUtil {
 			AccountGroupLocalServiceUtil.class, AccountGroupLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1968204458

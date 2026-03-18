@@ -381,3 +381,4 @@ public class DefinedDefaultOrderEntryLocalServiceWrapper
 		_definedDefaultOrderEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2035236040

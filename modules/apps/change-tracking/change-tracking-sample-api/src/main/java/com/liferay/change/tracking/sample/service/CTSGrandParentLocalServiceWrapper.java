@@ -389,3 +389,4 @@ public class CTSGrandParentLocalServiceWrapper
 	private CTSGrandParentLocalService _ctsGrandParentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:602947995

@@ -593,3 +593,4 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1460142805

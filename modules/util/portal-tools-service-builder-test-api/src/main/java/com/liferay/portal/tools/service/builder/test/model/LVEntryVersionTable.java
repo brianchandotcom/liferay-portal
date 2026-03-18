@@ -48,3 +48,4 @@ public class LVEntryVersionTable extends BaseTable<LVEntryVersionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1481906823

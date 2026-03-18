@@ -29,3 +29,4 @@ public abstract class CountryLocalizationBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-420554196

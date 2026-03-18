@@ -404,3 +404,4 @@ public interface OAuth2AuthorizationLocalService
 		String refreshTokenContent, String rememberDeviceContent);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-40561280

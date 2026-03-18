@@ -355,3 +355,4 @@ public interface CTermEntryLocalizationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:84768965

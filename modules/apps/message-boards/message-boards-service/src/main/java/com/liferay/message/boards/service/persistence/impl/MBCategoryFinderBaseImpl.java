@@ -77,3 +77,4 @@ public abstract class MBCategoryFinderBaseImpl
 		MBCategoryFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:403547828

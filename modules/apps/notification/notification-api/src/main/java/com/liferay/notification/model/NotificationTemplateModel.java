@@ -631,3 +631,4 @@ public interface NotificationTemplateModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1184150116

@@ -86,3 +86,4 @@ public class SiteNavigationMenuItemTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:998645569

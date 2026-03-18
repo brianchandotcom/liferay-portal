@@ -48,3 +48,4 @@ public class PermissionCheckFinderEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-754287770

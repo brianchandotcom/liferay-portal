@@ -122,3 +122,4 @@ public class NestedSetsTreeEntryCacheModel
 	public long rightNestedSetsTreeEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-326383710

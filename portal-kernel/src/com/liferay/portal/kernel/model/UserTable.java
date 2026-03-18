@@ -125,3 +125,4 @@ public class UserTable extends BaseTable<UserTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-350539866

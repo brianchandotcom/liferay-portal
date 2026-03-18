@@ -96,3 +96,4 @@ public interface OAuthClientEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-835754809

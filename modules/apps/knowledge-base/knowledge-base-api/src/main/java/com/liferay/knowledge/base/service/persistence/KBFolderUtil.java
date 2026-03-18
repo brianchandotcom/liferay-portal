@@ -1635,3 +1635,4 @@ public class KBFolderUtil {
 	private static volatile KBFolderPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1084029275

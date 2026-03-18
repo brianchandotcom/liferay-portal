@@ -37,3 +37,4 @@ public class UADPartialEntryTable extends BaseTable<UADPartialEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:545493300

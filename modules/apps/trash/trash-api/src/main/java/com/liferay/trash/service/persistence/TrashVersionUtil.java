@@ -685,3 +685,4 @@ public class TrashVersionUtil {
 	private static volatile TrashVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:597929530

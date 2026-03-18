@@ -275,3 +275,4 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:456905102

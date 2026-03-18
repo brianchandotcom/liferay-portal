@@ -280,3 +280,4 @@ public interface ContactsCardTemplateLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1818612800

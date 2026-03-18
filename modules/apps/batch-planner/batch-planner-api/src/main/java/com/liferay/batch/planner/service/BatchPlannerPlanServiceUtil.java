@@ -174,3 +174,4 @@ public class BatchPlannerPlanServiceUtil {
 			BatchPlannerPlanServiceUtil.class, BatchPlannerPlanService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1397074699

@@ -286,3 +286,4 @@ public class DEDataListViewCacheModel
 	public String sortField;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-254346788

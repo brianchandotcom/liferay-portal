@@ -50,3 +50,4 @@ public interface DDMField extends DDMFieldModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1520629146

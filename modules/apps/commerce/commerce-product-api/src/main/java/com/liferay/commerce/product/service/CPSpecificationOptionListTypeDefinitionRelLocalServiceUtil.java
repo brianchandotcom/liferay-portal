@@ -384,3 +384,4 @@ public class CPSpecificationOptionListTypeDefinitionRelLocalServiceUtil {
 				CPSpecificationOptionListTypeDefinitionRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:341090436

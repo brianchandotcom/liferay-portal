@@ -500,3 +500,4 @@ public class FragmentEntryVersionCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1120345985

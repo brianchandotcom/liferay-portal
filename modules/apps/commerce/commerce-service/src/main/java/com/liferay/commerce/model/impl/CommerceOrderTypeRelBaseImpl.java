@@ -40,3 +40,4 @@ public abstract class CommerceOrderTypeRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1775298290

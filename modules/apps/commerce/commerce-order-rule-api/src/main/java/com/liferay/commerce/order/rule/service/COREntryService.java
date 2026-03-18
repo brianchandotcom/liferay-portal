@@ -107,3 +107,4 @@ public interface COREntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1750525657

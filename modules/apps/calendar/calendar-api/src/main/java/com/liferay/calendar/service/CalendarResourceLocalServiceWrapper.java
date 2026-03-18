@@ -560,3 +560,4 @@ public class CalendarResourceLocalServiceWrapper
 	private CalendarResourceLocalService _calendarResourceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:883725680

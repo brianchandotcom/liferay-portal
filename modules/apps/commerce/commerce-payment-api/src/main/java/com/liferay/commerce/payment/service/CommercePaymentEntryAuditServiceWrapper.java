@@ -90,3 +90,4 @@ public class CommercePaymentEntryAuditServiceWrapper
 	private CommercePaymentEntryAuditService _commercePaymentEntryAuditService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1120181022

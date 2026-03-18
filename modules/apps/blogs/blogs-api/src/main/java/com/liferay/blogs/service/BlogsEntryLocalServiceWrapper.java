@@ -1044,3 +1044,4 @@ public class BlogsEntryLocalServiceWrapper
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1939155087

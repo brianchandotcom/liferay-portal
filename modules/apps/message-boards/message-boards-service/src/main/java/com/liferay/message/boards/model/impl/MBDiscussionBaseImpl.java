@@ -39,3 +39,4 @@ public abstract class MBDiscussionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-99930465

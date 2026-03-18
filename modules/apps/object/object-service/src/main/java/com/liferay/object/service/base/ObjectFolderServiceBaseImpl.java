@@ -125,3 +125,4 @@ public abstract class ObjectFolderServiceBaseImpl
 		ObjectFolderServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-801442459

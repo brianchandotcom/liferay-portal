@@ -490,3 +490,4 @@ public class CPTaxCategoryLocalServiceWrapper
 	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1655443680

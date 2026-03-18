@@ -652,3 +652,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:978512940

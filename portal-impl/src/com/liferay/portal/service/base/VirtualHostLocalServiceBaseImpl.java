@@ -521,3 +521,4 @@ public abstract class VirtualHostLocalServiceBaseImpl
 		VirtualHostLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1575524595

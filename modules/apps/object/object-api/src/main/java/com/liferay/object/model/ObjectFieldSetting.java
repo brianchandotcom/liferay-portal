@@ -60,3 +60,4 @@ public interface ObjectFieldSetting
 	public void setObjectStateFlow(ObjectStateFlow objectStateFlow);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-227505178

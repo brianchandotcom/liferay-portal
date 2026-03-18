@@ -4207,3 +4207,4 @@ public class StyleBookEntryUtil {
 	private static volatile StyleBookEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1495690602

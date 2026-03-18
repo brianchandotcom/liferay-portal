@@ -193,3 +193,4 @@ public class LVEntryLocalizationCacheModel
 	public String content;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-996934092

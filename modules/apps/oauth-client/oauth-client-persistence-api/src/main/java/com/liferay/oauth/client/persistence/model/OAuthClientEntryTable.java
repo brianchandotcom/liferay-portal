@@ -77,3 +77,4 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2039921559

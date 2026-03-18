@@ -1692,3 +1692,4 @@ public class CPInstanceWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1827569063

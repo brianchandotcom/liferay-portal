@@ -213,3 +213,4 @@ public class DLOpenerFileEntryReferenceCacheModel
 	public int type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2047306420

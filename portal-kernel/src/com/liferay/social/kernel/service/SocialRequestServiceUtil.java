@@ -56,3 +56,4 @@ public class SocialRequestServiceUtil {
 	private static volatile SocialRequestService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:200522903

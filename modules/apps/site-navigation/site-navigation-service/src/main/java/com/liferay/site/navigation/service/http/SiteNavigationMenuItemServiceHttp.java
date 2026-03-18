@@ -623,3 +623,4 @@ public class SiteNavigationMenuItemServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2036610433

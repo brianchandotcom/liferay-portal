@@ -372,3 +372,4 @@ public class CountryCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1445353593

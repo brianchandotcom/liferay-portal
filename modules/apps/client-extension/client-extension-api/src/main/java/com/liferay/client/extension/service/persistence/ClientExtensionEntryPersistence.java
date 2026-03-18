@@ -1075,3 +1075,4 @@ public interface ClientExtensionEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-512010061

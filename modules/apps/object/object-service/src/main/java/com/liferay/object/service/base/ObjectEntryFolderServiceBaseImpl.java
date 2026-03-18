@@ -125,3 +125,4 @@ public abstract class ObjectEntryFolderServiceBaseImpl
 		ObjectEntryFolderServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-471969467

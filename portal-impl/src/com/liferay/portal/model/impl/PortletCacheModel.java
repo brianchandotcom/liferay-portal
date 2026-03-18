@@ -159,3 +159,4 @@ public class PortletCacheModel
 	public boolean active;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-302983078

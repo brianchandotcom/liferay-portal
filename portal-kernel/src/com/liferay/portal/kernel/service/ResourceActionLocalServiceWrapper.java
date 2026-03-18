@@ -410,3 +410,4 @@ public class ResourceActionLocalServiceWrapper
 	private ResourceActionLocalService _resourceActionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:831804535

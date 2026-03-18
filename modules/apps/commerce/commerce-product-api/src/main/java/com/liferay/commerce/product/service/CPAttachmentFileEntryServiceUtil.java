@@ -191,3 +191,4 @@ public class CPAttachmentFileEntryServiceUtil {
 			CPAttachmentFileEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1213619185

@@ -109,3 +109,4 @@ public abstract class FaroEmailLocalServiceBaseImpl
 		FaroEmailLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1000334260

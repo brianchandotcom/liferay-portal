@@ -148,3 +148,4 @@ public class CPOptionCategoryServiceWrapper
 	private CPOptionCategoryService _cpOptionCategoryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-130748609

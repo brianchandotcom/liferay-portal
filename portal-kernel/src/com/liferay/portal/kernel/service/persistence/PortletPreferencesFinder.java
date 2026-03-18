@@ -36,3 +36,4 @@ public interface PortletPreferencesFinder {
 			String portletId, boolean privateLayout);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1597167270

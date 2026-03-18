@@ -166,3 +166,4 @@ public class AnnouncementsFlagServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1775586229

@@ -295,3 +295,4 @@ public class KaleoInstanceTokenCacheModel
 	public long completionDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1392506892

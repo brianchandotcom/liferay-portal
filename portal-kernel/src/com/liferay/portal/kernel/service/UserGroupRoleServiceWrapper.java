@@ -86,3 +86,4 @@ public class UserGroupRoleServiceWrapper
 	private UserGroupRoleService _userGroupRoleService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-939964213

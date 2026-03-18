@@ -118,3 +118,4 @@ public class AssetDisplayPageEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:132942274

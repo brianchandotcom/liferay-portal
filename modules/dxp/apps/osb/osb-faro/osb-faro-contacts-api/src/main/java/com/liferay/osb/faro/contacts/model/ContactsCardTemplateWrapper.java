@@ -402,3 +402,4 @@ public class ContactsCardTemplateWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1982598346

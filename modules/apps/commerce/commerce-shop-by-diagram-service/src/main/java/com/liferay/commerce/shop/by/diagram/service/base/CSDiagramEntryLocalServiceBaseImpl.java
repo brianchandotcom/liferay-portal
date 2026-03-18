@@ -489,3 +489,4 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 		CSDiagramEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1100313069

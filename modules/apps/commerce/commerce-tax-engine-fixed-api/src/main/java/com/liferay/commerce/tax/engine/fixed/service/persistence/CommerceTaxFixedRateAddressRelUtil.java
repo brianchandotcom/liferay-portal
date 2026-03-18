@@ -849,3 +849,4 @@ public class CommerceTaxFixedRateAddressRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:944731825

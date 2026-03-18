@@ -125,3 +125,4 @@ public abstract class JournalFeedServiceBaseImpl
 		JournalFeedServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:703993795

@@ -198,3 +198,4 @@ public class PatcherTicketHintCacheModel
 	public String script;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1800082266

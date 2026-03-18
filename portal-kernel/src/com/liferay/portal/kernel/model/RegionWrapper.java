@@ -601,3 +601,4 @@ public class RegionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:985624125

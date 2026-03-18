@@ -388,3 +388,4 @@ public interface TemplateEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1176070065

@@ -141,3 +141,4 @@ public class CTSGrandParentCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-997549949

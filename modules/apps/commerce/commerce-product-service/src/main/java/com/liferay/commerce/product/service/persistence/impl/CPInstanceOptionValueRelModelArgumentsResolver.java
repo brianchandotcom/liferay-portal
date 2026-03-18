@@ -120,3 +120,4 @@ public class CPInstanceOptionValueRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1985471320

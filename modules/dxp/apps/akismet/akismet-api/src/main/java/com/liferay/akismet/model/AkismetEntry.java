@@ -48,3 +48,4 @@ public interface AkismetEntry extends AkismetEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1831110971

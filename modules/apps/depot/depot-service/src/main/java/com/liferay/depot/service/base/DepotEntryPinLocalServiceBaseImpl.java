@@ -532,3 +532,4 @@ public abstract class DepotEntryPinLocalServiceBaseImpl
 		DepotEntryPinLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-53808107

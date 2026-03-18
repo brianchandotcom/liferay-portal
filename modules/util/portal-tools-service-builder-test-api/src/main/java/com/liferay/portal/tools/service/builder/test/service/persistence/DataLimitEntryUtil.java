@@ -271,3 +271,4 @@ public class DataLimitEntryUtil {
 	private static volatile DataLimitEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1779503236

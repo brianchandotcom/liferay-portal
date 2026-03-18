@@ -297,3 +297,4 @@ public class CommerceShippingMethodCacheModel
 	public String typeSettings;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1527010396

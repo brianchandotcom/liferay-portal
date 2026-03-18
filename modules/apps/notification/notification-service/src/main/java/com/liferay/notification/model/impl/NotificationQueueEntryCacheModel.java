@@ -283,3 +283,4 @@ public class NotificationQueueEntryCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-692790230

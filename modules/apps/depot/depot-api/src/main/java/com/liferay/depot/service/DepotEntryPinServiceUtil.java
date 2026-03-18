@@ -59,3 +59,4 @@ public class DepotEntryPinServiceUtil {
 			DepotEntryPinServiceUtil.class, DepotEntryPinService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1010640685

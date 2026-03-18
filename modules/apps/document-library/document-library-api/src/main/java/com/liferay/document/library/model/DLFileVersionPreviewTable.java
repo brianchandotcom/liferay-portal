@@ -53,3 +53,4 @@ public class DLFileVersionPreviewTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1557119358

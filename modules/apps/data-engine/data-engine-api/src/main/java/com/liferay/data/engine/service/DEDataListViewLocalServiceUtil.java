@@ -411,3 +411,4 @@ public class DEDataListViewLocalServiceUtil {
 			DEDataListViewLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-320567468

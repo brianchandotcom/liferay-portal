@@ -125,3 +125,4 @@ public abstract class AccountRoleServiceBaseImpl
 		AccountRoleServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:218337363

@@ -477,3 +477,4 @@ public interface BookmarksFolderLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:419786318

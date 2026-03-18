@@ -48,3 +48,4 @@ public interface DispatchLog extends DispatchLogModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1491928493

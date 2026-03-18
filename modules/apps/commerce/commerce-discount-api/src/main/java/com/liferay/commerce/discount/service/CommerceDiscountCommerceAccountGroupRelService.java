@@ -102,3 +102,4 @@ public interface CommerceDiscountCommerceAccountGroupRelService
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1819010945

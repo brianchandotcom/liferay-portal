@@ -985,3 +985,4 @@ public class JournalFeedUtil {
 	private static volatile JournalFeedPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:979481680

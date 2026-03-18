@@ -567,3 +567,4 @@ public class COREntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2091091713

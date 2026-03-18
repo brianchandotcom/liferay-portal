@@ -388,3 +388,4 @@ public class CommerceNotificationQueueEntryCacheModel
 	public long sentDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-271121477

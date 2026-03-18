@@ -1280,3 +1280,4 @@ public class PortalPreferenceValueUtil {
 	private static volatile PortalPreferenceValuePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:665357766

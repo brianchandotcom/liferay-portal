@@ -321,3 +321,4 @@ public class SpringEntryLocalServiceUtil {
 	private static volatile SpringEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1900766125

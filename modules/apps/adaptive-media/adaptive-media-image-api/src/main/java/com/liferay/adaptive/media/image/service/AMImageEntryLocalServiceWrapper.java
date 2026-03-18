@@ -619,3 +619,4 @@ public class AMImageEntryLocalServiceWrapper
 	private AMImageEntryLocalService _amImageEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-384610861

@@ -679,3 +679,4 @@ public class KaleoTaskUtil {
 	private static volatile KaleoTaskPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:623789245

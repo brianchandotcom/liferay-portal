@@ -295,3 +295,4 @@ public interface PasswordTrackerPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1145080379

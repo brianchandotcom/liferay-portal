@@ -1452,3 +1452,4 @@ public class CPOptionCategoryModelImpl
 	private CPOptionCategory _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1686678175

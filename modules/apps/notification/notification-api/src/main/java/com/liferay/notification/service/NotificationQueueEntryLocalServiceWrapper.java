@@ -420,3 +420,4 @@ public class NotificationQueueEntryLocalServiceWrapper
 		_notificationQueueEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1984754713

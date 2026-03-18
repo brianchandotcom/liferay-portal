@@ -63,3 +63,4 @@ public class KaleoDefinitionVersionServiceUtil {
 			KaleoDefinitionVersionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-964411657

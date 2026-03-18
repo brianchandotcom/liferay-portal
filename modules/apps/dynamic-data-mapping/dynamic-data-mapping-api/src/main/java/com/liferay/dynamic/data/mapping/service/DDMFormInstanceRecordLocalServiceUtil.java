@@ -533,3 +533,4 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 			DDMFormInstanceRecordLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:512484366

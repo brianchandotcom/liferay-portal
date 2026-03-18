@@ -1680,3 +1680,4 @@ public class DepotEntryGroupRelUtil {
 	private static volatile DepotEntryGroupRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-968448959

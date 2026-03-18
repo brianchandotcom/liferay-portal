@@ -510,3 +510,4 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:867788264

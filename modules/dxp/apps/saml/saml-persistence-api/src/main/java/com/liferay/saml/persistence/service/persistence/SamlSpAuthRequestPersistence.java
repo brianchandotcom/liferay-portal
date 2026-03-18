@@ -355,3 +355,4 @@ public interface SamlSpAuthRequestPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-709155615

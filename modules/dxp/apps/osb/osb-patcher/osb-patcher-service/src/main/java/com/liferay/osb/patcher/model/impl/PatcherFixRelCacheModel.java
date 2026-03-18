@@ -131,3 +131,4 @@ public class PatcherFixRelCacheModel
 	public long parentPatcherFixId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1917139363

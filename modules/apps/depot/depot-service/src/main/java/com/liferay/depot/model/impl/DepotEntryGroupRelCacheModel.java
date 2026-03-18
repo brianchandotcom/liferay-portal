@@ -260,3 +260,4 @@ public class DepotEntryGroupRelCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1700828813

@@ -687,3 +687,4 @@ public interface CSDiagramEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-128713056

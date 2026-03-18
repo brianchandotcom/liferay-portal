@@ -55,3 +55,4 @@ public interface StyleBookEntry extends PersistedModel, StyleBookEntryModel {
 		throws Exception;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1136805504

@@ -1117,3 +1117,4 @@ public class DDLRecordVersionUtil {
 	private static volatile DDLRecordVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:84416264

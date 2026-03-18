@@ -85,3 +85,4 @@ public class CSDiagramSettingServiceUtil {
 			CSDiagramSettingServiceUtil.class, CSDiagramSettingService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-90579842

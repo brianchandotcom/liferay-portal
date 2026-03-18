@@ -232,3 +232,4 @@ public class ObjectLayoutTabCacheModel
 	public int priority;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1267630415

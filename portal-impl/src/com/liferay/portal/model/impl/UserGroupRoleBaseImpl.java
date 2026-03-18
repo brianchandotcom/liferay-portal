@@ -39,3 +39,4 @@ public abstract class UserGroupRoleBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2107980629

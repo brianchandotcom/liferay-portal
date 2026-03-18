@@ -75,3 +75,4 @@ public interface CPDefinitionVirtualSetting
 	public boolean isUseTermsOfUseJournal();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:483851136

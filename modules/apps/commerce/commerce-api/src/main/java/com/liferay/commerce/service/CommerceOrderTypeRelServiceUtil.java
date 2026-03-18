@@ -114,3 +114,4 @@ public class CommerceOrderTypeRelServiceUtil {
 			CommerceOrderTypeRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2005311215

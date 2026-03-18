@@ -69,3 +69,4 @@ public class PortletPreferencesFinderUtil {
 	private static PortletPreferencesFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1320750448

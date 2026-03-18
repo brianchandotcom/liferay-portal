@@ -90,3 +90,4 @@ public class ClientExtensionEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1401123956

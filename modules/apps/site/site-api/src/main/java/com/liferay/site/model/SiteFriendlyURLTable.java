@@ -58,3 +58,4 @@ public class SiteFriendlyURLTable extends BaseTable<SiteFriendlyURLTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-518305860

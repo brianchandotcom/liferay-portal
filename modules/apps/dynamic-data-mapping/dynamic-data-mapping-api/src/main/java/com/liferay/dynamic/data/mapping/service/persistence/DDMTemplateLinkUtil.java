@@ -512,3 +512,4 @@ public class DDMTemplateLinkUtil {
 	private static volatile DDMTemplateLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1385011254

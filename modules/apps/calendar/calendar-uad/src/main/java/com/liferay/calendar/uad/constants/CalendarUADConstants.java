@@ -16,3 +16,4 @@ public class CalendarUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:746258086

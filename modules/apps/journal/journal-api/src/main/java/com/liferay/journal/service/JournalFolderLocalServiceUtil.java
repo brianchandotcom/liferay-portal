@@ -710,3 +710,4 @@ public class JournalFolderLocalServiceUtil {
 			JournalFolderLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1590034457

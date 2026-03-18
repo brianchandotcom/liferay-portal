@@ -1072,3 +1072,4 @@ public class PatcherAccountUtil {
 	private static volatile PatcherAccountPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1640281785

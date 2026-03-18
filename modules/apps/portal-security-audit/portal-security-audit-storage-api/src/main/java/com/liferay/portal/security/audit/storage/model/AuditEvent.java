@@ -50,3 +50,4 @@ public interface AuditEvent extends AuditEventModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1242002024

@@ -442,3 +442,4 @@ public class CommerceTaxCategoryMappingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:425540191

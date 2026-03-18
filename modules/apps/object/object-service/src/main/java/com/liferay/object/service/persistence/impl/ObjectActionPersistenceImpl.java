@@ -5210,3 +5210,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:209759303

@@ -129,3 +129,4 @@ public class ObjectEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:815213572

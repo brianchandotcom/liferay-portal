@@ -370,3 +370,4 @@ public class PasswordPolicyRelLocalServiceUtil {
 	private static volatile PasswordPolicyRelLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-346764774

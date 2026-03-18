@@ -377,3 +377,4 @@ public class OAuthClientEntryLocalServiceUtil {
 			OAuthClientEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1196147734

@@ -39,3 +39,4 @@ public abstract class DDMFieldBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-129149580

@@ -254,3 +254,4 @@ public class AccountGroupRelServiceHttp {
 		new Class[] {long.class, String.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:660431897

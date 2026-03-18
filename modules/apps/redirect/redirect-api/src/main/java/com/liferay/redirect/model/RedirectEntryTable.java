@@ -61,3 +61,4 @@ public class RedirectEntryTable extends BaseTable<RedirectEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:223891547

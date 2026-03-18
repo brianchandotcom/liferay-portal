@@ -76,3 +76,4 @@ public class DDMStructureLayoutTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:174744208

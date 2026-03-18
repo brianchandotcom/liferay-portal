@@ -1105,3 +1105,4 @@ public class PasswordPolicyUtil {
 	private static volatile PasswordPolicyPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2013258288

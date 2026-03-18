@@ -55,3 +55,4 @@ public interface AssetVocabularyGroupRel
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1848028148

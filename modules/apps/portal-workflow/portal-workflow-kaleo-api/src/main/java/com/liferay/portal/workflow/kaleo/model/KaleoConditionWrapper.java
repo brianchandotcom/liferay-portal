@@ -525,3 +525,4 @@ public class KaleoConditionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-27908702

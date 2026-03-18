@@ -388,3 +388,4 @@ public class CommerceMLForecastAlertEntryServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-216637856

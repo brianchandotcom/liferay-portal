@@ -74,3 +74,4 @@ public interface SegmentsExperiment
 	public String getWinnerSegmentsExperienceKey();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1298640967

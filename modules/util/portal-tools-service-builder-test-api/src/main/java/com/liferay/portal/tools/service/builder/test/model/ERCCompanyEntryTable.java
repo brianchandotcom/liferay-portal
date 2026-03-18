@@ -45,3 +45,4 @@ public class ERCCompanyEntryTable extends BaseTable<ERCCompanyEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2023111401

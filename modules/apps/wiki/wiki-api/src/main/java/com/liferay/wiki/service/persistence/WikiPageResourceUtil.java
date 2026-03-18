@@ -748,3 +748,4 @@ public class WikiPageResourceUtil {
 	private static volatile WikiPageResourcePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:634340333

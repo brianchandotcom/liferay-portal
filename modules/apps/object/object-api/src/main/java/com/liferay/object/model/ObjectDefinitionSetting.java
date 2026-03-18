@@ -57,3 +57,4 @@ public interface ObjectDefinitionSetting
 	public boolean isReadOnly();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1829373237

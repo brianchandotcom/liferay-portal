@@ -530,3 +530,4 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 		AnnouncementsFlagLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:381347477

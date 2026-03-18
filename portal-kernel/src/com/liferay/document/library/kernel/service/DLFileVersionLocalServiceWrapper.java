@@ -524,3 +524,4 @@ public class DLFileVersionLocalServiceWrapper
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-336277103

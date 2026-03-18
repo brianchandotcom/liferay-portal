@@ -61,3 +61,4 @@ public class AnnouncementsFlagServiceUtil {
 	private static volatile AnnouncementsFlagService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-780968435

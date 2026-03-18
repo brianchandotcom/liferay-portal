@@ -320,3 +320,4 @@ public interface OrgLaborModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1385353593

@@ -198,3 +198,4 @@ public interface DLStorageQuotaPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:826906027

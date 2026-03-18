@@ -53,3 +53,4 @@ public class MBBanTable extends BaseTable<MBBanTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:453215005

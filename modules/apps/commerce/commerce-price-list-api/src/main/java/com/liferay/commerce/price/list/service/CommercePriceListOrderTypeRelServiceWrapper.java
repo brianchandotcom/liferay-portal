@@ -122,3 +122,4 @@ public class CommercePriceListOrderTypeRelServiceWrapper
 		_commercePriceListOrderTypeRelService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1567895074

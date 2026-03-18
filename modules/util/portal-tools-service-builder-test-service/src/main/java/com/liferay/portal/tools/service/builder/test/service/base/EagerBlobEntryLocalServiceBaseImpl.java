@@ -536,3 +536,4 @@ public abstract class EagerBlobEntryLocalServiceBaseImpl
 		EagerBlobEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-546043439

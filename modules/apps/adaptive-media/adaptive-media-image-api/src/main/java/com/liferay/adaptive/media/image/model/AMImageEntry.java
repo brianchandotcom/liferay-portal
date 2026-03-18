@@ -50,3 +50,4 @@ public interface AMImageEntry extends AMImageEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:275725380

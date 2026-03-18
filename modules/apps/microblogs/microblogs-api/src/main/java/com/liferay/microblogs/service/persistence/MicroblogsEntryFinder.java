@@ -56,3 +56,4 @@ public interface MicroblogsEntryFinder {
 			String assetTagName, boolean andOperator, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2127992034

@@ -3979,3 +3979,4 @@ public class MBCategoryUtil {
 	private static volatile MBCategoryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:872010104

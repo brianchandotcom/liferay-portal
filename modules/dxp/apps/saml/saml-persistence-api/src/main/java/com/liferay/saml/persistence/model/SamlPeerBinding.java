@@ -50,3 +50,4 @@ public interface SamlPeerBinding extends PersistedModel, SamlPeerBindingModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2085602874

@@ -54,12 +54,12 @@ public abstract class BaseClientExtensionEntryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(clientExtensionEntry.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(clientExtensionEntry.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(clientExtensionEntry.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -71,3 +71,4 @@ public abstract class BaseClientExtensionEntryUADExporter
 	protected ClientExtensionEntryLocalService clientExtensionEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:411707317

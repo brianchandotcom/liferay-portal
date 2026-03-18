@@ -704,3 +704,4 @@ public class AssetCategoryLocalServiceUtil {
 	private static volatile AssetCategoryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:939750165

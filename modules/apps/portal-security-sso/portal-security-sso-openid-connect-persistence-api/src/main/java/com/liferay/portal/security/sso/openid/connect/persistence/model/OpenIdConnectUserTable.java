@@ -47,3 +47,4 @@ public class OpenIdConnectUserTable extends BaseTable<OpenIdConnectUserTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1808362632

@@ -5682,3 +5682,4 @@ public interface MBMessagePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:296450091

@@ -119,3 +119,4 @@ public class CommerceTaxFixedRateServiceUtil {
 			CommerceTaxFixedRateService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:427406493

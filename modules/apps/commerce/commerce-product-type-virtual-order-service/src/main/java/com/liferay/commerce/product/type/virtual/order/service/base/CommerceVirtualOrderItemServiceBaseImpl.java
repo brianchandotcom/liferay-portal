@@ -134,3 +134,4 @@ public abstract class CommerceVirtualOrderItemServiceBaseImpl
 		CommerceVirtualOrderItemServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2080552234

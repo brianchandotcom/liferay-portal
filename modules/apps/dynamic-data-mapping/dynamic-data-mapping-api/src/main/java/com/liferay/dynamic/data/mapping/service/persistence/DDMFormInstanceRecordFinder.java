@@ -25,3 +25,4 @@ public interface DDMFormInstanceRecordFinder {
 						DDMFormInstanceRecord> orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:212252583

@@ -55,3 +55,4 @@ public interface DefinedDefaultOrderEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1365404862

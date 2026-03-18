@@ -238,3 +238,4 @@ public class CTRemoteCacheModel
 	public String clientSecret;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:539038705

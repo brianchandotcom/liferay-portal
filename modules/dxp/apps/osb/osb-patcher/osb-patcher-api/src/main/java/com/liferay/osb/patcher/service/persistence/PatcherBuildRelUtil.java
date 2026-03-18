@@ -633,3 +633,4 @@ public class PatcherBuildRelUtil {
 	private static volatile PatcherBuildRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2078071510

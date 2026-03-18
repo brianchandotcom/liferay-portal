@@ -319,3 +319,4 @@ public class DLStorageQuotaLocalServiceUtil {
 			DLStorageQuotaLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1519845105

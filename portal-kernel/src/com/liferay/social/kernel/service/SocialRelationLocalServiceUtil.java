@@ -578,3 +578,4 @@ public class SocialRelationLocalServiceUtil {
 	private static volatile SocialRelationLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1054660295

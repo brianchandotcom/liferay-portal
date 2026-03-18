@@ -386,3 +386,4 @@ public class ViewCountEntryLocalServiceWrapper
 	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-301936555

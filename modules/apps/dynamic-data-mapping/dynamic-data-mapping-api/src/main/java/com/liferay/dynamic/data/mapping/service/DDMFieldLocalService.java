@@ -313,3 +313,4 @@ public interface DDMFieldLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1458825327

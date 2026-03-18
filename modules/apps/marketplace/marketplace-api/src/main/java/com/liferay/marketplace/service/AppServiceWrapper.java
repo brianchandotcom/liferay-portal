@@ -76,3 +76,4 @@ public class AppServiceWrapper
 	private AppService _appService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1531740435

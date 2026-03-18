@@ -262,3 +262,4 @@ public interface ObjectFilterModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-941466762

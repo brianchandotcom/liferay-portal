@@ -296,3 +296,4 @@ public interface CTSGrandParentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2042176531

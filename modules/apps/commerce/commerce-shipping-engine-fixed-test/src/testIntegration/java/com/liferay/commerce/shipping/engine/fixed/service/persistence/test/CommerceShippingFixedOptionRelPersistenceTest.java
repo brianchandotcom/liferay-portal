@@ -630,3 +630,4 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-775374342

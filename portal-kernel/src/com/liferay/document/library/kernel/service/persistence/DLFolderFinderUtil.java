@@ -152,3 +152,4 @@ public class DLFolderFinderUtil {
 	private static DLFolderFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1997347196

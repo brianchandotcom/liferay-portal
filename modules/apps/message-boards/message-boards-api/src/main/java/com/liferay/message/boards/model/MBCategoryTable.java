@@ -75,3 +75,4 @@ public class MBCategoryTable extends BaseTable<MBCategoryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1704565529

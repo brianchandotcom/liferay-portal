@@ -1898,3 +1898,4 @@ public interface CPConfigurationListPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2003886762

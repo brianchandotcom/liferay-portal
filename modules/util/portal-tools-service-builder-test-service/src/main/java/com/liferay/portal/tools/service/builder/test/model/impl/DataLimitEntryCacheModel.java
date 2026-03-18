@@ -145,3 +145,4 @@ public class DataLimitEntryCacheModel
 	public long modifiedDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2017241075

@@ -39,3 +39,4 @@ public abstract class CacheFieldEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-197650026

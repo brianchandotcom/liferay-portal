@@ -4828,3 +4828,4 @@ public class KaleoActionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1828049387

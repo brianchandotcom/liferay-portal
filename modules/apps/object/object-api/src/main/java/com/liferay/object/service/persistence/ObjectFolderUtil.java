@@ -1156,3 +1156,4 @@ public class ObjectFolderUtil {
 	private static volatile ObjectFolderPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-501164469

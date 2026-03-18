@@ -47,3 +47,4 @@ public class IndexEntryTable extends BaseTable<IndexEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1843365223

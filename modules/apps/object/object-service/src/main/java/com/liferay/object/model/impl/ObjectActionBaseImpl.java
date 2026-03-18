@@ -39,3 +39,4 @@ public abstract class ObjectActionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:126943195

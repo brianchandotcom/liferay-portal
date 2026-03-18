@@ -337,3 +337,4 @@ public interface CommerceShippingFixedOptionRelLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1736111009

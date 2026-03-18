@@ -670,3 +670,4 @@ public class AnnouncementsEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-467606707

@@ -115,3 +115,4 @@ public class CPAttachmentFileEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2065037845

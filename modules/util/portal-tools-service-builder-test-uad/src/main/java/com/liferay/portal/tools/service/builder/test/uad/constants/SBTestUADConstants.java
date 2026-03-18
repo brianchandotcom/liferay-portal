@@ -16,3 +16,4 @@ public class SBTestUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2008010528

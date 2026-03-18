@@ -390,3 +390,4 @@ public class EntryLocalServiceWrapper
 	private EntryLocalService _entryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:166147089

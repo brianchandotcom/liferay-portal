@@ -47,3 +47,4 @@ public interface ListType extends ListTypeModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1214365761

@@ -354,3 +354,4 @@ public class JournalFolderServiceUtil {
 			JournalFolderServiceUtil.class, JournalFolderService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:812771123

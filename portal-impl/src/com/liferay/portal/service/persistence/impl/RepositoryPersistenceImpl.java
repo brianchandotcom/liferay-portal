@@ -3997,3 +3997,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1584702290

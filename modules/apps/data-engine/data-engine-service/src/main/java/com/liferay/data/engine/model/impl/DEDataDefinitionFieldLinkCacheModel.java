@@ -240,3 +240,4 @@ public class DEDataDefinitionFieldLinkCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2051380113

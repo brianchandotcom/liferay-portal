@@ -344,3 +344,4 @@ public class KBFolderCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1975158687

@@ -456,3 +456,4 @@ public abstract class SamlPeerBindingLocalServiceBaseImpl
 		SamlPeerBindingLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1285796022

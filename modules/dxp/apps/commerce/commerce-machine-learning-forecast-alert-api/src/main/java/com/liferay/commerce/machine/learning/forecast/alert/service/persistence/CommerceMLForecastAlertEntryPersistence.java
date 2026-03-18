@@ -1348,3 +1348,4 @@ public interface CommerceMLForecastAlertEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1433043210

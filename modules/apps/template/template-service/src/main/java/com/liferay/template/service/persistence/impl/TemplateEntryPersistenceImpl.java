@@ -5455,3 +5455,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-930163066

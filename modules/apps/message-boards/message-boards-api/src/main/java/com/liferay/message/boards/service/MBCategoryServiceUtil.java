@@ -375,3 +375,4 @@ public class MBCategoryServiceUtil {
 		new Snapshot<>(MBCategoryServiceUtil.class, MBCategoryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-298457976

@@ -280,3 +280,4 @@ public interface CommercePriceListOrderTypeRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1195631665

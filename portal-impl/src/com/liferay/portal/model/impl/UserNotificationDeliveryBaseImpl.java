@@ -42,3 +42,4 @@ public abstract class UserNotificationDeliveryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1857671765

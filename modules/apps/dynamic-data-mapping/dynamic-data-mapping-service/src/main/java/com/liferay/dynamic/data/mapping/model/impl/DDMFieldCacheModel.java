@@ -217,3 +217,4 @@ public class DDMFieldCacheModel
 	public int priority;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1843618745

@@ -385,3 +385,4 @@ public class ObjectFieldSettingLocalServiceUtil {
 			ObjectFieldSettingLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-773108997

@@ -273,3 +273,4 @@ public class CommercePriceListServiceWrapper
 	private CommercePriceListService _commercePriceListService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:136129616

@@ -1238,3 +1238,4 @@ public class CPInstanceServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:459949702

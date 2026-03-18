@@ -396,3 +396,4 @@ public class FaroPreferencesLocalServiceWrapper
 	private FaroPreferencesLocalService _faroPreferencesLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1714061713

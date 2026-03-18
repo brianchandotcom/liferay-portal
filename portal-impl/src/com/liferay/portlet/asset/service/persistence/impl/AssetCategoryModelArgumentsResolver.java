@@ -132,3 +132,4 @@ public class AssetCategoryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1696475417

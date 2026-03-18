@@ -3023,3 +3023,4 @@ public class BackgroundTaskUtil {
 	private static volatile BackgroundTaskPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1401022849

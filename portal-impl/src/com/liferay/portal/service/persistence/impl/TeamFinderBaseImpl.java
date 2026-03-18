@@ -62,3 +62,4 @@ public class TeamFinderBaseImpl extends BasePersistenceImpl<Team> {
 		TeamFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-479558585

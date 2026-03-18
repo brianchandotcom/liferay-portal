@@ -1351,3 +1351,4 @@ public interface CommerceChannelAccountEntryRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1937925986

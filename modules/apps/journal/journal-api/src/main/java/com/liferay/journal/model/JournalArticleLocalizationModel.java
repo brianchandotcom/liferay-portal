@@ -180,3 +180,4 @@ public interface JournalArticleLocalizationModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1038344503

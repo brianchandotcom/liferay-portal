@@ -1019,3 +1019,4 @@ public class ObjectViewSortColumnUtil {
 	private static volatile ObjectViewSortColumnPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1834404361

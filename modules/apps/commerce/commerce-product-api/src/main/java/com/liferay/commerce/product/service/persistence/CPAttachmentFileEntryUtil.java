@@ -3133,3 +3133,4 @@ public class CPAttachmentFileEntryUtil {
 	private static volatile CPAttachmentFileEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1395727166

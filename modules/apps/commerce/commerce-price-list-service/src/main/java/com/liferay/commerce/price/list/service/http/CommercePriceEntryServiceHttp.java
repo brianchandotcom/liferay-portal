@@ -1029,3 +1029,4 @@ public class CommercePriceEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2060507456

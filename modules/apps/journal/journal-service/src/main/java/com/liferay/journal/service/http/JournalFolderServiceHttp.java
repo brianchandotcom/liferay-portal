@@ -1685,3 +1685,4 @@ public class JournalFolderServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1402209764

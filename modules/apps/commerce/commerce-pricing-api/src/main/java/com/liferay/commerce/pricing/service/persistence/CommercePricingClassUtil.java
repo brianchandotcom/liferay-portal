@@ -1135,3 +1135,4 @@ public class CommercePricingClassUtil {
 	private static volatile CommercePricingClassPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2068311409

@@ -463,3 +463,4 @@ public class ViewCountEntryUtil {
 	private static volatile ViewCountEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1687991441

@@ -39,3 +39,4 @@ public abstract class AccountGroupRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:155065364

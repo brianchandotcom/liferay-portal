@@ -567,3 +567,4 @@ public class BookmarksEntryLocalServiceUtil {
 			BookmarksEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1049131598

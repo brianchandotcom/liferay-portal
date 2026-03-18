@@ -127,3 +127,4 @@ public interface ViewCountEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2057059163

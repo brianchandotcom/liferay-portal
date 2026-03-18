@@ -219,3 +219,4 @@ public class SubscriptionCacheModel
 	public String frequency;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2144799818

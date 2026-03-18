@@ -67,3 +67,4 @@ public class CommerceOrderTypeRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1033929824

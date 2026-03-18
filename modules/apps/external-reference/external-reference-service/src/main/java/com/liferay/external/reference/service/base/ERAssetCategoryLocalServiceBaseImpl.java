@@ -110,3 +110,4 @@ public abstract class ERAssetCategoryLocalServiceBaseImpl
 		ERAssetCategoryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1219856608

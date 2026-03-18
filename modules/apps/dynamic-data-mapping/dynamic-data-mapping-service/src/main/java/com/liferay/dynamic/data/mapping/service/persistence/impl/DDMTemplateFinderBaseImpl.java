@@ -79,3 +79,4 @@ public abstract class DDMTemplateFinderBaseImpl
 		DDMTemplateFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:161472208

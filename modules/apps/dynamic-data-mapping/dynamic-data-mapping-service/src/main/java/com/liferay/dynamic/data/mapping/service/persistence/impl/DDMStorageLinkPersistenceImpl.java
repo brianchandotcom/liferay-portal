@@ -3764,3 +3764,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1758518260

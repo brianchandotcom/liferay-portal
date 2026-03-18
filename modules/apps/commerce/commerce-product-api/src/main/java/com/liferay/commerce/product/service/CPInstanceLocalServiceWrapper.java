@@ -899,3 +899,4 @@ public class CPInstanceLocalServiceWrapper
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1744458225

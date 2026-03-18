@@ -48,3 +48,4 @@ public interface CTProcess extends CTProcessModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2109382993

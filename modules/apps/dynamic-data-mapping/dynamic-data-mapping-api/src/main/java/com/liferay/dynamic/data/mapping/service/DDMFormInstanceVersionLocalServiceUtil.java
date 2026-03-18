@@ -360,3 +360,4 @@ public class DDMFormInstanceVersionLocalServiceUtil {
 			DDMFormInstanceVersionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-162746067

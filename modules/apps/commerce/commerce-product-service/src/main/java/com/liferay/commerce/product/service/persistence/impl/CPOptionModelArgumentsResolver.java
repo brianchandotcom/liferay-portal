@@ -130,3 +130,4 @@ public class CPOptionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:478862487

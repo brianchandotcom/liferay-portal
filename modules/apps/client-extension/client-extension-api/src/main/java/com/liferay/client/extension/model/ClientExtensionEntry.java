@@ -52,3 +52,4 @@ public interface ClientExtensionEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-418722787

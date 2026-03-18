@@ -174,3 +174,4 @@ public class DDMStorageLinkCacheModel
 	public long structureVersionId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:82595254

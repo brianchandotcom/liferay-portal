@@ -901,3 +901,4 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {long.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:456280664

@@ -525,3 +525,4 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-703670949

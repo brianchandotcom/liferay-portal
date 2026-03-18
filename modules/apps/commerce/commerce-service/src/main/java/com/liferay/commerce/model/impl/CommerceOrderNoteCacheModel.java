@@ -252,3 +252,4 @@ public class CommerceOrderNoteCacheModel
 	public boolean restricted;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2086113969

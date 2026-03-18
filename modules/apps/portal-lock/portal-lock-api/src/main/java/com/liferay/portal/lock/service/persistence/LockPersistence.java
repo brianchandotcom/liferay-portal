@@ -1104,3 +1104,4 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1471750913

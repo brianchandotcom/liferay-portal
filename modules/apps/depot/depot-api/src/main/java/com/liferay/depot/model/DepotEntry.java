@@ -51,3 +51,4 @@ public interface DepotEntry extends DepotEntryModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1624791468

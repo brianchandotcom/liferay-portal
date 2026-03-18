@@ -560,3 +560,4 @@ public class NotificationQueueEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-819545515

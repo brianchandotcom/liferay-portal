@@ -480,3 +480,4 @@ public class CommerceQualifierEntryLocalServiceWrapper
 		_commerceQualifierEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1059012223

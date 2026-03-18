@@ -29,3 +29,4 @@ public abstract class CounterBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1666975368

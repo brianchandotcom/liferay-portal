@@ -49,3 +49,4 @@ public interface Ticket extends PersistedModel, TicketModel {
 	public boolean isExpired();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:170180618

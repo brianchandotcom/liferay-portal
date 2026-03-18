@@ -326,3 +326,4 @@ public class AnnouncementsFlagLocalServiceUtil {
 	private static volatile AnnouncementsFlagLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-937989712

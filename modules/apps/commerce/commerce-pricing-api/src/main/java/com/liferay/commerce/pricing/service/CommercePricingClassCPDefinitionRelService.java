@@ -118,3 +118,4 @@ public interface CommercePricingClassCPDefinitionRelService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1392094271

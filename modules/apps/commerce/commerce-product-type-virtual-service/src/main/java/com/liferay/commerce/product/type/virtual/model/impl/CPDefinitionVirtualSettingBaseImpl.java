@@ -42,3 +42,4 @@ public abstract class CPDefinitionVirtualSettingBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2106658725

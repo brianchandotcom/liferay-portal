@@ -547,3 +547,4 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 		UserNotificationDeliveryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-902812745

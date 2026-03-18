@@ -39,3 +39,4 @@ public abstract class FaroPreferencesBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:833198433

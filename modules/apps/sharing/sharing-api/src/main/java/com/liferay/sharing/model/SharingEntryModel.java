@@ -355,3 +355,4 @@ public interface SharingEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1352282567

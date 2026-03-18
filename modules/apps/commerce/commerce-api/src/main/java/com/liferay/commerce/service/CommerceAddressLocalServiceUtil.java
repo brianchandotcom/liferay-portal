@@ -322,3 +322,4 @@ public class CommerceAddressLocalServiceUtil {
 			CommerceAddressLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1116480905

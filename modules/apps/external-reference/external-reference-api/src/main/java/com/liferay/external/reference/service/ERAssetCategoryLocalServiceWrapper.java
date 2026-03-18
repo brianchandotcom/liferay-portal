@@ -68,3 +68,4 @@ public class ERAssetCategoryLocalServiceWrapper
 	private ERAssetCategoryLocalService _erAssetCategoryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1257149090

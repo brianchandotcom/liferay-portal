@@ -120,3 +120,4 @@ public class ObjectDefinitionSettingModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1176791640

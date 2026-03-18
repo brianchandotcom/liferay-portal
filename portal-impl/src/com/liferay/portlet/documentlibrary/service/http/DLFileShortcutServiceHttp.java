@@ -461,3 +461,4 @@ public class DLFileShortcutServiceHttp {
 		new Class[] {long.class, long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-760625475

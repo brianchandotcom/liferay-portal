@@ -501,3 +501,4 @@ public abstract class AnalyticsDeleteMessageLocalServiceBaseImpl
 		AnalyticsDeleteMessageLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1345809519

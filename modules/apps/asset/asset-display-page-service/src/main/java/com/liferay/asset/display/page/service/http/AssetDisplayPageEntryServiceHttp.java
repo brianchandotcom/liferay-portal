@@ -482,3 +482,4 @@ public class AssetDisplayPageEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1794045497

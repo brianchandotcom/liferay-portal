@@ -1185,3 +1185,4 @@ public class ObjectViewColumnModelImpl
 	private ObjectViewColumn _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-43850730

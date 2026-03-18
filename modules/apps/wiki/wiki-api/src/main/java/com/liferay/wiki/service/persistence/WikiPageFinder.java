@@ -101,3 +101,4 @@ public interface WikiPageFinder {
 			<com.liferay.wiki.model.WikiPage> queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2080839892

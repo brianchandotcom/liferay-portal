@@ -544,3 +544,4 @@ public class CommerceTermEntryRelServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-280460120

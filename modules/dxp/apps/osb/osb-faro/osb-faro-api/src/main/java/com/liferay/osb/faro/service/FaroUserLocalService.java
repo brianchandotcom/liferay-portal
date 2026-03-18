@@ -314,3 +314,4 @@ public interface FaroUserLocalService
 	public FaroUser updateFaroUser(FaroUser faroUser);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1643022464

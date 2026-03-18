@@ -854,3 +854,4 @@ public class FragmentEntryLinkLocalServiceWrapper
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-15895300

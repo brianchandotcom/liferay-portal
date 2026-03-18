@@ -4655,3 +4655,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:822964477

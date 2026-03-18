@@ -307,3 +307,4 @@ public class RedundantIndexEntryLocalServiceUtil {
 	private static volatile RedundantIndexEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:765595225

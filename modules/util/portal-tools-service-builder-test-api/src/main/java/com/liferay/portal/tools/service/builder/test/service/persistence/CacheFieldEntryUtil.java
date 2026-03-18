@@ -441,3 +441,4 @@ public class CacheFieldEntryUtil {
 	private static volatile CacheFieldEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:450386421

@@ -347,3 +347,4 @@ public class ChangesetCollectionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:913892304

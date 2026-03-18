@@ -66,3 +66,4 @@ public class AnnouncementsEntryFinderBaseImpl
 		AnnouncementsEntryFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1122899507

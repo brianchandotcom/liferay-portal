@@ -80,3 +80,4 @@ public interface MBMessageFinder {
 		int status, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1896185529

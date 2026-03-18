@@ -80,3 +80,4 @@ public class AssetVocabularyGroupRelServiceWrapper
 	private AssetVocabularyGroupRelService _assetVocabularyGroupRelService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-628723472

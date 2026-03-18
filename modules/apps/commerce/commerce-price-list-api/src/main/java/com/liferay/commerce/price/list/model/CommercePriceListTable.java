@@ -101,3 +101,4 @@ public class CommercePriceListTable extends BaseTable<CommercePriceListTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:270303438

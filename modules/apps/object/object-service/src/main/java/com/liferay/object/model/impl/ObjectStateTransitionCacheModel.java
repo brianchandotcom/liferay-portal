@@ -215,3 +215,4 @@ public class ObjectStateTransitionCacheModel
 	public long targetObjectStateId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1377472336

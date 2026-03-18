@@ -42,3 +42,4 @@ public abstract class CommerceShippingFixedOptionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2144250570

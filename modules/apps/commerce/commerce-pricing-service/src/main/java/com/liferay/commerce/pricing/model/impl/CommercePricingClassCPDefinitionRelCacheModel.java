@@ -209,3 +209,4 @@ public class CommercePricingClassCPDefinitionRelCacheModel
 	public long CPDefinitionId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-175373857

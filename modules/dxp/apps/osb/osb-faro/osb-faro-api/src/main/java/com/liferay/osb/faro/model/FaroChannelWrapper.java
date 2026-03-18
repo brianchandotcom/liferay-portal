@@ -424,3 +424,4 @@ public class FaroChannelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-711531208

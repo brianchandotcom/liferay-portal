@@ -355,3 +355,4 @@ public class SocialActivitySettingServiceHttp {
 		new Class[] {long.class, String.class, int.class, java.util.List.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1690987233

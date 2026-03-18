@@ -195,3 +195,4 @@ public interface CTScorePersistence extends BasePersistence<CTScore> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-321864282

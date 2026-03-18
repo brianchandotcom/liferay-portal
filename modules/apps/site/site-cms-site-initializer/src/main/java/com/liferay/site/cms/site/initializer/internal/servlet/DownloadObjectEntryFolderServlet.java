@@ -69,16 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Servlet.class
 )
-public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
-
-	@Override
-	public void service(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
-
-		super.service(httpServletRequest, httpServletResponse);
-	}
+public class DownloadObjectEntryFolderServlet extends BaseCMSServlet {
 
 	@Override
 	protected void doGet(

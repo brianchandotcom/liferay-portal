@@ -66,10 +66,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	public void addGroupOrganizations(long groupId, long[] organizationIds)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
-
-		_checkUserOrganizationsViewPermission(organizationIds);
+		_checkGroupOrganizationsPermission(groupId, organizationIds);
 
 		organizationLocalService.addGroupOrganizations(
 			groupId, organizationIds);
@@ -705,10 +702,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	public void setGroupOrganizations(long groupId, long[] organizationIds)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
-
-		_checkUserOrganizationsViewPermission(organizationIds);
+		_checkGroupOrganizationsPermission(groupId, organizationIds);
 
 		organizationLocalService.setGroupOrganizations(
 			groupId, organizationIds);
@@ -724,10 +718,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	public void unsetGroupOrganizations(long groupId, long[] organizationIds)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
-
-		_checkUserOrganizationsViewPermission(organizationIds);
+		_checkGroupOrganizationsPermission(groupId, organizationIds);
 
 		organizationLocalService.unsetGroupOrganizations(
 			groupId, organizationIds);
@@ -907,12 +898,16 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			site, null, null, null, null, null, serviceContext);
 	}
 
-	private void _checkUserOrganizationsViewPermission(long[] organizationIds)
+	private void _checkGroupOrganizationsPermission(
+			long groupId, long[] organizationIds)
 		throws PortalException {
 
 		if (ArrayUtil.isEmpty(organizationIds)) {
 			return;
 		}
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
 
 		Set<Long> userOrganizationIds = SetUtil.fromArray(
 			organizationLocalService.getUserOrganizationIds(getUserId(), true));

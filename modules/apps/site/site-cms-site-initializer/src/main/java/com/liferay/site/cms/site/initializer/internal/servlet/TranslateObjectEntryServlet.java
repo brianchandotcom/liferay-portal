@@ -65,16 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Servlet.class
 )
-public class TranslateObjectEntryServlet extends BaseBulkActionServlet {
-
-	@Override
-	public void service(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
-
-		super.service(httpServletRequest, httpServletResponse);
-	}
+public class TranslateObjectEntryServlet extends BaseCMSServlet {
 
 	@Override
 	protected void doGet(

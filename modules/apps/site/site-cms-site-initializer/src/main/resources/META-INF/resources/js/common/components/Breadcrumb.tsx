@@ -7,7 +7,7 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClaySticker from '@clayui/sticker';
-import {openToast} from 'frontend-js-components-web';
+import {FeatureIndicator, openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
@@ -22,7 +22,6 @@ import ApiHelper from '../services/ApiHelper';
 import {LogoColor} from '../types/Space';
 import {openCMSModal} from '../utils/openCMSModal';
 import {displayErrorToast} from '../utils/toastUtil';
-import EnterpriseFeatureIndicator from './EnterpriseFeatureIndicator';
 import SpaceSticker from './SpaceSticker';
 
 export interface ActionDropdownItemProps {
@@ -231,7 +230,9 @@ export default function Breadcrumb({
 							{breadcrumbItems[0]?.label}
 						</h2>
 
-						{freeTier && <EnterpriseFeatureIndicator showTooltip />}
+						{freeTier && (
+							<FeatureIndicator interactive type="enterprise" />
+						)}
 					</div>
 				) : (
 					<ClayBreadcrumb className="p-0" items={breadcrumbItems} />

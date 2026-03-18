@@ -9,9 +9,12 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
-import {EnterpriseFeatureIndicator} from '@liferay/site-cms-site-initializer';
 import classNames from 'classnames';
-import {openConfirmModal, openToast} from 'frontend-js-components-web';
+import {
+	FeatureIndicator,
+	openConfirmModal,
+	openToast,
+} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -148,10 +151,7 @@ function ToolbarBody({className}) {
 				) : null}
 
 				{isCMSFreeTier && (
-					<EnterpriseFeatureIndicator
-						alignPosition="bottom-left"
-						showTooltip
-					/>
+					<FeatureIndicator interactive type="enterprise" />
 				)}
 
 				<li className="nav-item">

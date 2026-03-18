@@ -414,7 +414,8 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 		if (ExportImportThreadLocal.isPortletStagingInProcess() &&
 			ExportImportDateUtil.isRangeFromLastPublishDate(
-				portletDataContext)) {
+				portletDataContext) &&
+			!portletDataHandler.isBatch()) {
 
 			String changesetPortletId = ChangesetPortletKeys.CHANGESET;
 

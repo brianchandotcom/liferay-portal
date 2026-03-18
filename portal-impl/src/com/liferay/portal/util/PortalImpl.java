@@ -955,10 +955,10 @@ public class PortalImpl implements Portal {
 					ServiceContext serviceContext =
 						ServiceContextThreadLocal.getServiceContext();
 
-					ThemeDisplay themeDisplay =
-						serviceContext.getThemeDisplay();
+					if (domain.equals(
+							HttpComponentsUtil.getDomain(
+								serviceContext.getPortalURL()))) {
 
-					if (domain.equals(themeDisplay.getPortalDomain())) {
 						return url;
 					}
 				}

@@ -26,7 +26,7 @@ DesignLibraryResourcesDisplayContext designLibraryResourcesDisplayContext = new 
 			apiURL="<%= designLibraryResourcesDisplayContext.getAPIURL() %>"
 			emptyState="<%= designLibraryResourcesDisplayContext.getEmptyState() %>"
 			formName="fm"
-			id="<%= DesignLibraryAdminFDSNames.DESIGN_LIBRARIES_RESOURCES %>"
+			id="<%= DesignLibraryAdminFDSNames.DESIGN_LIBRARY_RESOURCES %>"
 			propsTransformer="{DesignLibraryResourcesFDSPropsTransformer} from design-library-web"
 		/>
 	</div>

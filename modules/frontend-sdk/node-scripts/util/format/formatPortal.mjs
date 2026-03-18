@@ -1,0 +1,104 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import getProjectDirs from '../getProjectDirs.mjs';
+import {PLAYWRIGHT_DIR} from '../locations.mjs';
+import formatAPISubmodules from './formatters/formatAPISubmodules.mjs';
+import formatConfigFileNames from './formatters/formatConfigFileNames.mjs';
+import formatGlobalNodeScriptsConfig from './formatters/formatGlobalNodeScriptsConfig.mjs';
+import formatIgnoreFilePatterns from './formatters/formatIgnoreFilePatterns.mjs';
+import formatNodeScriptsHash from './formatters/formatNodeScriptsHash.mjs';
+import formatPackageJSONFiles from './formatters/formatPackageJSONFiles.mjs';
+import formatSourceFiles from './formatters/formatSourceFiles.mjs';
+import formatTsconfigFiles from './formatters/formatTsconfigFiles.mjs';
+import formatTypeScript from './formatters/formatTypeScript.mjs';
+import formatYarnLock from './formatters/formatYarnLock.mjs';
+
+export default async function formatPortal(check, files) {
+	let checksPassed = true;
+
+	if (!(await formatConfigFileNames())) {
+		checksPassed = false;
+	}
+
+	if (!(await formatIgnoreFilePatterns())) {
+		checksPassed = false;
+	}
+
+	if (
+		(!files ||
+			!!files.find((file) => file.endsWith('/node-scripts.config.js'))) &&
+		!(await formatGlobalNodeScriptsConfig(check))
+	) {
+		checksPassed = false;
+	}
+
+	if (
+		(!files || !!files.find((file) => file.endsWith('/package.json'))) &&
+		!(await formatTsconfigFiles(check))
+	) {
+		checksPassed = false;
+	}
+
+	if (!(await formatSourceFiles(check, files))) {
+		checksPassed = false;
+	}
+
+	if (
+		(!files || !!files.find((file) => file.includes('/node-scripts/'))) &&
+		!(await formatNodeScriptsHash(check))
+	) {
+		checksPassed = false;
+	}
+
+	if (
+		(!files ||
+			!!files.find((file) => file.endsWith('/node-scripts.config.js'))) &&
+		!(await formatAPISubmodules())
+	) {
+		checksPassed = false;
+	}
+
+	if (
+		(!files || !!files.find((file) => file.endsWith('/package.json'))) &&
+		!(await formatPackageJSONFiles())
+	) {
+		checksPassed = false;
+	}
+
+	if (
+		(!files || !!files.find((file) => file.endsWith('/yarn.lock'))) &&
+		!(await formatYarnLock())
+	) {
+		checksPassed = false;
+	}
+
+	if (
+		!files ||
+		!!files.find(
+			(file) =>
+				file.endsWith('/node-scripts.config.js') ||
+				file.endsWith('/package.json') ||
+				file.endsWith('.ts') ||
+				file.endsWith('.tsx')
+		)
+	) {
+
+		// We check all projects no matter if formatting current branch, local
+		// changes or everything because a change in one project may break
+		// others
+
+		if (
+			!(await formatTypeScript([
+				...(await getProjectDirs()),
+				PLAYWRIGHT_DIR,
+			]))
+		) {
+			checksPassed = false;
+		}
+	}
+
+	return checksPassed;
+}

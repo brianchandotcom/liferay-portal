@@ -8,11 +8,11 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import DateFilter from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date-filter';
+import DateFilter from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter';
 import {
 	FilterType,
 	ModifiedLastType,
-} from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date-filter/types';
+} from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter/types';
 
 describe('DateFilter', () => {
 	beforeAll(() => {

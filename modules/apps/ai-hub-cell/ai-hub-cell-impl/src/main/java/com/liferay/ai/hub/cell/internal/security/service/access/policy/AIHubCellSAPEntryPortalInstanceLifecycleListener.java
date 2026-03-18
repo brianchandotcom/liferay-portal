@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.internal.security.service.access.policy;
+package com.liferay.ai.hub.cell.internal.security.service.access.policy;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Victor Silvestre
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class AIHubSAPEntryPortalInstanceLifecycleListener
+public class AIHubCellSAPEntryPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
@@ -63,10 +63,10 @@ public class AIHubSAPEntryPortalInstanceLifecycleListener
 		}
 	}
 
-	private static final String _SAP_ENTRY_NAME = "AI_HUB_TOKEN";
+	private static final String _SAP_ENTRY_NAME = "AI_HUB_CELL_TOKEN";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AIHubSAPEntryPortalInstanceLifecycleListener.class);
+		AIHubCellSAPEntryPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;

@@ -11,8 +11,10 @@ import {Space} from '../../../common/types/Space';
 import SpaceRenderer from './SpaceRenderer';
 
 const SpaceRendererWithCache = ({
+	scopeKey,
 	spaceExternalReferenceCode,
 }: {
+	scopeKey: string;
 	spaceExternalReferenceCode: string;
 }) => {
 	const [loading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ const SpaceRendererWithCache = ({
 	useEffect(() => {
 		let isMounted = true;
 
-		SpaceService.getSpaceWithCache(spaceExternalReferenceCode)
+		SpaceService.getSpaceWithCache(spaceExternalReferenceCode, scopeKey)
 			.then((space) => {
 				if (isMounted) {
 					setSpace(space);
@@ -42,7 +44,7 @@ const SpaceRendererWithCache = ({
 		return () => {
 			isMounted = false;
 		};
-	}, [spaceExternalReferenceCode]);
+	}, [spaceExternalReferenceCode, scopeKey]);
 
 	if (loading) {
 		return (

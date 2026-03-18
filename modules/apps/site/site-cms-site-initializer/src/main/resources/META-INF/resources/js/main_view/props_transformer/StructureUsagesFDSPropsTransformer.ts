@@ -27,6 +27,7 @@ export default function StructureUsagesFDSPropsTransformer({
 				{
 					component: ({itemData}) =>
 						SpaceRendererWithCache({
+							scopeKey: itemData.embedded.scopeKey,
 							spaceExternalReferenceCode:
 								getScopeExternalReferenceCode(itemData),
 						}),

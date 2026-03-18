@@ -42,18 +42,21 @@ async function getSpace(externalReferenceCode: string): Promise<Space> {
 const spaceCache = new Map<string, Promise<Space>>();
 
 async function getSpaceWithCache(
-	externalReferenceCode: string
+	externalReferenceCode: string,
+	scopeKey: string
 ): Promise<Space> {
-	if (spaceCache.has(externalReferenceCode)) {
-		return spaceCache.get(externalReferenceCode)!;
+	const cacheKey = JSON.stringify([externalReferenceCode, scopeKey]);
+
+	if (spaceCache.has(cacheKey)) {
+		return spaceCache.get(cacheKey)!;
 	}
 
 	const fetchPromise = getSpace(externalReferenceCode).catch((error) => {
-		spaceCache.delete(externalReferenceCode);
+		spaceCache.delete(cacheKey);
 		throw error;
 	});
 
-	spaceCache.set(externalReferenceCode, fetchPromise);
+	spaceCache.set(cacheKey, fetchPromise);
 
 	return fetchPromise;
 }

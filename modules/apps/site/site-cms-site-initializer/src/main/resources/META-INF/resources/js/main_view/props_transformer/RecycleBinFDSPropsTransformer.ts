@@ -43,6 +43,7 @@ export default function RecycleBinFDSPropsTransformer({
 				{
 					component: ({itemData}) =>
 						SpaceRendererWithCache({
+							scopeKey: itemData.embedded.scopeKey,
 							spaceExternalReferenceCode:
 								getScopeExternalReferenceCode(itemData),
 						}),

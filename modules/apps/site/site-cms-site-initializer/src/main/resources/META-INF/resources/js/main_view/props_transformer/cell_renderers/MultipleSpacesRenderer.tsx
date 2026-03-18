@@ -42,7 +42,8 @@ export default function MultipleSpacesRenderer({
 			const spacePromises = assetLibraries.map(async (assetLib) => {
 				try {
 					return await SpaceService.getSpaceWithCache(
-						assetLib.externalReferenceCode
+						assetLib.externalReferenceCode,
+						assetLib.name
 					);
 				}
 				catch (error) {

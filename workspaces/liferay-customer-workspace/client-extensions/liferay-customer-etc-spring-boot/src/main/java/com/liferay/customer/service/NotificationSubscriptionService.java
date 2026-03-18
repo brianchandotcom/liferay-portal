@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class NotificationSubscriptionService extends BaseNotificationService {
 
-	public JSONArray getNotificationSubscriptionsJSONArray(String filter)
+	public JSONArray getNotificationSubscriptionsJSONArray(String filterString)
 		throws Exception {
 
 		UriComponentsBuilder uriComponentsBuilder =
@@ -34,8 +34,8 @@ public class NotificationSubscriptionService extends BaseNotificationService {
 				NotificationSubscriptionConstants.FIELD_NOTIFICATION_TARGET
 			);
 
-		if (filter != null) {
-			uriComponentsBuilder.queryParam("filter", filter);
+		if (filterString != null) {
+			uriComponentsBuilder.queryParam("filter", filterString);
 		}
 
 		String response = get(

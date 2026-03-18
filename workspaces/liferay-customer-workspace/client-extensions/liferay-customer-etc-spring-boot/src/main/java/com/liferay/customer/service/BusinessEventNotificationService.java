@@ -106,10 +106,11 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				continue;
 			}
 
-			String regionFilter = StringPool.BLANK;
+			String regionFilterString = StringPool.BLANK;
 
 			try {
-				regionFilter = _getRegionFilter(koroneikiAccountJSONObject);
+				regionFilterString = _getRegionFilterString(
+					koroneikiAccountJSONObject);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -117,14 +118,15 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				}
 			}
 
-			String subscriptionFilter = StringBundler.concat(
+			String subscriptionFilterString = StringBundler.concat(
 				"type eq 'businessEvent' and (contains(filter, '",
 				escapeFilterValue(accountExternalReferenceCode), "')",
-				regionFilter, ") and active eq true");
+				regionFilterString, ") and active eq true");
 
 			JSONArray subscriptionsJSONArray =
 				_notificationSubscriptionService.
-					getNotificationSubscriptionsJSONArray(subscriptionFilter);
+					getNotificationSubscriptionsJSONArray(
+						subscriptionFilterString);
 
 			if (subscriptionsJSONArray.length() == 0) {
 				continue;
@@ -217,7 +219,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 			String fromDate, long businessEventId)
 		throws Exception {
 
-		String filter = String.format(
+		String filterString = String.format(
 			NotificationSubscriptionConstants.
 				FIELD_BUSINESS_EVENT_TO_BUSINESS_EVENT_VERSION +
 					" eq '%s' and dateModified gt %s",
@@ -229,7 +231,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 				UriComponentsBuilder.fromPath(
 					"/o/c/businesseventversions"
 				).queryParam(
-					"filter", filter
+					"filter", filterString
 				).queryParam(
 					"sort", "dateModified:desc"
 				).build(
@@ -280,7 +282,7 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 		return sb.toString();
 	}
 
-	private String _getRegionFilter(JSONObject koroneikiAccountJSONObject)
+	private String _getRegionFilterString(JSONObject koroneikiAccountJSONObject)
 		throws Exception {
 
 		String region = koroneikiAccountJSONObject.getString("region");

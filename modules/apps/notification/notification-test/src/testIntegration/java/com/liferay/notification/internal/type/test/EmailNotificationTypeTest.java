@@ -26,6 +26,7 @@ import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -2179,14 +2180,15 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			String to)
 		throws Exception {
 
-		String content = StringUtil.randomId(8);
-
 		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
 				StringUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(content.getBytes()),
+			FileUtil.createTempFile(
+				DLTestUtil.randomTextFileContent(
+					8
+				).getBytes()),
 			ContentTypes.TEXT_PLAIN);
 
 		executeNotificationObjectAction(

@@ -16,6 +16,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
@@ -3653,14 +3654,14 @@ public class BatchEnginePortletDataHandlerTest {
 		"xText" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
-		StringUtil.randomId(8);
+		DLTestUtil.randomTextFileContent(8);
 
 	private static final String
 		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
-			StringUtil.randomId(8);
+			DLTestUtil.randomTextFileContent(8);
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
-		StringUtil.randomId(8);
+		DLTestUtil.randomTextFileContent(8);
 
 	private static BundleContext _bundleContext;
 	private static final BiFunction

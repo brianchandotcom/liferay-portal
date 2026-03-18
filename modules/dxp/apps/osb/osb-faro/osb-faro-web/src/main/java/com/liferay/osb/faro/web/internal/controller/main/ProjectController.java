@@ -483,6 +483,21 @@ public class ProjectController extends BaseFaroController {
 	}
 
 	@GET
+	@Path("/{groupId}/feature-usages")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public List<?> getFeatureUsages(@PathParam("groupId") long groupId)
+		throws Exception {
+
+		FaroProject faroProject =
+			faroProjectLocalService.getFaroProjectByGroupId(groupId);
+
+		return contactsEngineClient.get(
+			faroProject, Collections.emptyMap(),
+			"/projects/" + faroProject.getProjectId() + "/feature-usages",
+			Collections.emptyMap(), List.class);
+	}
+
+	@GET
 	@Path("/joinable")
 	public List<JoinableProjectDisplay> getJoinableProjectDisplays()
 		throws PortalException {

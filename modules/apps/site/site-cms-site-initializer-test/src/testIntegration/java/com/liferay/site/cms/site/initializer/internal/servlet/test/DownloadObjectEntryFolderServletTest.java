@@ -6,9 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -23,23 +20,16 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -47,7 +37,6 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletResponse;
@@ -55,13 +44,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.HashMap;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -77,48 +62,13 @@ import org.springframework.mock.web.MockHttpServletResponse;
 	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-34594")}
 )
 @RunWith(Arquillian.class)
-public class DownloadObjectEntryFolderServletTest {
+public class DownloadObjectEntryFolderServletTest
+	extends BaseCMSServletTestCase {
 
 	@ClassRule
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-		PrincipalThreadLocal.setName(_originalName);
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_group = CMSTestUtil.getOrAddGroup(
-			DownloadObjectEntryFolderServletTest.class);
-
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_SPACE,
-			new ServiceContext() {
-				{
-					setCompanyId(_group.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
-	}
 
 	@Test
 	public void testDownloadBulkAction() throws Exception {
@@ -149,7 +99,7 @@ public class DownloadObjectEntryFolderServletTest {
 	}
 
 	private long _addFileEntry() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addDLFolder(_depotEntry.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(depotEntry.getGroupId());
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), dlFolder.getGroupId(),
@@ -170,8 +120,8 @@ public class DownloadObjectEntryFolderServletTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			_depotEntry.getGroupId(), _depotEntry.getUserId(),
-			objectDefinitionId, objectEntryFolderId, "en_US",
+			depotEntry.getGroupId(), depotEntry.getUserId(), objectDefinitionId,
+			objectEntryFolderId, "en_US",
 			HashMapBuilder.<String, Serializable>put(
 				"file", String.valueOf(_addFileEntry())
 			).put(
@@ -188,7 +138,7 @@ public class DownloadObjectEntryFolderServletTest {
 		throws Exception {
 
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
-			StringUtil.randomString(), _depotEntry.getGroupId(),
+			StringUtil.randomString(), depotEntry.getGroupId(),
 			TestPropsValues.getUserId(), parentObjectEntryFolderId,
 			RandomTestUtil.randomString(), null, StringUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
@@ -245,12 +195,12 @@ public class DownloadObjectEntryFolderServletTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_DOCUMENT", _group.getCompanyId());
+					"L_CMS_BASIC_DOCUMENT", group.getCompanyId());
 		ObjectEntryFolder parentObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
-					"L_FILES", _depotEntry.getGroupId(),
-					_depotEntry.getCompanyId());
+					"L_FILES", depotEntry.getGroupId(),
+					depotEntry.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -301,12 +251,12 @@ public class DownloadObjectEntryFolderServletTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_DOCUMENT", _group.getCompanyId());
+					"L_CMS_BASIC_DOCUMENT", group.getCompanyId());
 		ObjectEntryFolder parentObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
-					"L_FILES", _depotEntry.getGroupId(),
-					_depotEntry.getCompanyId());
+					"L_FILES", depotEntry.getGroupId(),
+					depotEntry.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -359,22 +309,11 @@ public class DownloadObjectEntryFolderServletTest {
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 	}
 
-	private static String _originalName;
-	private static PermissionChecker _originalPermissionChecker;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@DeleteAfterTestRun
-	private DepotEntry _depotEntry;
-
-	@Inject
-	private DepotEntryLocalService _depotEntryLocalService;
-
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	private Group _group;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

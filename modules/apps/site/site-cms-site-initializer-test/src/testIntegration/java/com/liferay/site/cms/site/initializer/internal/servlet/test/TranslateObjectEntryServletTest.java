@@ -6,9 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -17,22 +14,15 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectEntryFolderTestUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
@@ -40,7 +30,6 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,14 +37,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,63 +57,32 @@ import org.springframework.mock.web.MockHttpServletResponse;
 	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-34594")}
 )
 @RunWith(Arquillian.class)
-public class TranslateObjectEntryServletTest {
+public class TranslateObjectEntryServletTest extends BaseCMSServletTestCase {
 
 	@ClassRule
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-		PrincipalThreadLocal.setName(_originalName);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_group = CMSTestUtil.getOrAddGroup(
-			DownloadObjectEntryFolderServletTest.class);
-
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_SPACE,
-			new ServiceContext() {
-				{
-					setCompanyId(_group.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
+		super.setUp();
 
 		_basicWebContentObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_WEB_CONTENT", _group.getCompanyId());
+					"L_CMS_BASIC_WEB_CONTENT", group.getCompanyId());
 
 		_blogObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BLOG", _group.getCompanyId());
+					"L_CMS_BLOG", group.getCompanyId());
 
 		_contentsObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
-					"L_CONTENTS", _depotEntry.getGroupId(),
-					_depotEntry.getCompanyId());
+					"L_CONTENTS", depotEntry.getGroupId(),
+					depotEntry.getCompanyId());
 	}
 
 	@Test
@@ -142,8 +97,8 @@ public class TranslateObjectEntryServletTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			_depotEntry.getGroupId(), _depotEntry.getUserId(),
-			objectDefinitionId, objectEntryFolderId, "en_US",
+			depotEntry.getGroupId(), depotEntry.getUserId(), objectDefinitionId,
+			objectEntryFolderId, "en_US",
 			HashMapBuilder.<String, Serializable>put(
 				"content_i18n",
 				HashMapBuilder.put(
@@ -221,7 +176,7 @@ public class TranslateObjectEntryServletTest {
 
 		ObjectEntryFolder objectEntryFolder =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(
-				_depotEntry.getGroupId(),
+				depotEntry.getGroupId(),
 				_contentsObjectEntryFolder.getObjectEntryFolderId());
 
 		_addObjectEntry(
@@ -315,7 +270,7 @@ public class TranslateObjectEntryServletTest {
 
 		ObjectEntryFolder objectEntryFolder =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(
-				_depotEntry.getGroupId(),
+				depotEntry.getGroupId(),
 				_contentsObjectEntryFolder.getObjectEntryFolderId());
 
 		_addObjectEntry(
@@ -365,9 +320,6 @@ public class TranslateObjectEntryServletTest {
 		Assert.assertTrue(entries.contains("Blog Translations-en_US.zip"));
 	}
 
-	private static String _originalName;
-	private static PermissionChecker _originalPermissionChecker;
-
 	private ObjectDefinition _basicWebContentObjectDefinition;
 	private ObjectDefinition _blogObjectDefinition;
 
@@ -375,14 +327,6 @@ public class TranslateObjectEntryServletTest {
 	private CompanyLocalService _companyLocalService;
 
 	private ObjectEntryFolder _contentsObjectEntryFolder;
-
-	@DeleteAfterTestRun
-	private DepotEntry _depotEntry;
-
-	@Inject
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	private Group _group;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

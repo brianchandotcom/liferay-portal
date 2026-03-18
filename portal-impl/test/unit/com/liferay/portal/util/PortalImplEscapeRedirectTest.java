@@ -15,12 +15,10 @@ import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -38,8 +36,6 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Tomas Polesovsky
@@ -81,18 +77,8 @@ public class PortalImplEscapeRedirectTest {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setRequest(
-			new MockHttpServletRequest() {
-				{
-					setAttribute(
-						WebKeys.THEME_DISPLAY,
-						new ThemeDisplay() {
-							{
-								setPortalDomain(_HOSTNAME_PORTAL_DOMAIN);
-							}
-						});
-				}
-			});
+		serviceContext.setPortalURL(
+			"https://" + _HOSTNAME_PORTAL_DOMAIN + ":8080");
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}

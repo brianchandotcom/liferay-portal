@@ -412,7 +412,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 			resultSet.next();
 
-			Assert.assertEquals("testValue", resultSet.getString(1));
+			Assert.assertEquals("testValue", resultSet.getString("typeString"));
 		}
 	}
 
@@ -703,7 +703,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	private void _validateTableContent() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(1) from " + _TABLE_NAME +
+				"select count(1) as count from " + _TABLE_NAME +
 					" where id >= 1 and id <= ? and typeInteger = id")) {
 
 			preparedStatement.setInt(1, _PROCESS_CONCURRENTLY_COUNT);
@@ -712,7 +712,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 				resultSet.next();
 
 				Assert.assertEquals(
-					_PROCESS_CONCURRENTLY_COUNT, resultSet.getInt(1));
+					_PROCESS_CONCURRENTLY_COUNT, resultSet.getInt("count"));
 			}
 		}
 	}

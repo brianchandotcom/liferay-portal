@@ -5,6 +5,8 @@ backup:
             ruleName: daily-backups
             schedule: cron(0 5 * * ? *)
             startWindow: 60
+cmk:
+    enabled: false
 database:
     autoMinorVersionUpgrade: true
     databaseInsightsMode: standard

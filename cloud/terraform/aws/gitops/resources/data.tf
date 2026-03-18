@@ -240,17 +240,24 @@ data "aws_iam_policy_document" "provider_aws_kms_policy_document" {
 	statement {
 		actions=[
 			"kms:CancelKeyDeletion",
+			"kms:CreateAlias",
 			"kms:CreateKey",
+			"kms:DeleteAlias",
 			"kms:DescribeKey",
 			"kms:DisableKey",
+			"kms:DisableKeyRotation",
 			"kms:EnableKey",
+			"kms:EnableKeyRotation",
 			"kms:GetKeyPolicy",
+			"kms:GetKeyRotationStatus",
+			"kms:ListAliases",
 			"kms:ListKeys",
 			"kms:ListResourceTags",
 			"kms:PutKeyPolicy",
 			"kms:ScheduleKeyDeletion",
 			"kms:TagResource",
 			"kms:UntagResource",
+			"kms:UpdateAlias",
 			"kms:UpdateKeyDescription",
 		]
 		effect="Allow"
@@ -293,6 +300,8 @@ data "aws_iam_policy_document" "provider_aws_opensearch_policy_document" {
 			"es:ListTags",
 			"es:RemoveTags",
 			"es:UpdateDomainConfig",
+			"kms:CreateGrant",
+			"kms:DescribeKey",
 		]
 		effect="Allow"
 		resources=["*"]

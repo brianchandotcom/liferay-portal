@@ -9,6 +9,7 @@ metadata:
     namespace: {{ .Release.Namespace }}
 spec:
     backup: {{ .Values.backup | toYaml | nindent 8 }}
+    cmk: {{ .Values.cmk | toYaml | nindent 8 }}
     commonTags:
         EnvironmentId: {{ .Values.environmentId }}
         ProjectId: {{ .Values.projectId }}

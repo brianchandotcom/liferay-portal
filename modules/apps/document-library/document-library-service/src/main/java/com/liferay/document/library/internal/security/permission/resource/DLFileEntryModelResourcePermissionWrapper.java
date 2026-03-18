@@ -44,7 +44,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	property = {
+		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+		"permissions.view.dynamic.inheritance.checking=true"
+	},
 	service = ModelResourcePermission.class
 )
 public class DLFileEntryModelResourcePermissionWrapper

@@ -29,7 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	property = "model.class.name=com.liferay.bookmarks.model.BookmarksFolder",
+	property = {
+		"model.class.name=com.liferay.bookmarks.model.BookmarksFolder",
+		"permissions.view.dynamic.inheritance.checking=true"
+	},
 	service = ModelResourcePermission.class
 )
 public class BookmarksFolderModelResourcePermissionWrapper

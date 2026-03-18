@@ -49,6 +49,8 @@ public class MBMessagePermissionRegistrar {
 		Dictionary<String, Object> properties =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"model.class.name", MBMessage.class.getName()
+			).put(
+				"permissions.view.dynamic.inheritance.checking", "true"
 			).build();
 
 		_serviceRegistration = bundleContext.registerService(

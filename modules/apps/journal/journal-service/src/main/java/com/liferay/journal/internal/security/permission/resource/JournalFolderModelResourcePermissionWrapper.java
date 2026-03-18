@@ -30,7 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalFolder",
+	property = {
+		"model.class.name=com.liferay.journal.model.JournalFolder",
+		"permissions.view.dynamic.inheritance.checking=true"
+	},
 	service = ModelResourcePermission.class
 )
 public class JournalFolderModelResourcePermissionWrapper

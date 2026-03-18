@@ -116,7 +116,7 @@ export default async function handlePublishStructure({
 	const name = selectStructureName(state);
 	const spaces = selectStructureSpaces(state);
 	const status = selectStructureStatus(state);
-	const structureId = selectStructureId(state);
+	let structureId = selectStructureId(state);
 	const workflows = selectStructureWorkflows(state);
 	const uuid = selectStructureUuid(state);
 
@@ -203,6 +203,8 @@ export default async function handlePublishStructure({
 			return;
 		}
 		else if (data) {
+			structureId = data.id;
+
 			dispatch({id: data.id, type: 'publish-structure'});
 		}
 	}

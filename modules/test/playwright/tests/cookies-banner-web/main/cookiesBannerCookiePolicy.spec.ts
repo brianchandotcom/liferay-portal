@@ -56,9 +56,7 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({page}) => {
 		await page.goto('/');
 
 		await page
-			.locator(
-				'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-			)
+			.getByRole('dialog', {name: 'banner cookies'})
 			.waitFor({state: 'visible'});
 
 		const cookiesBannerContainer = page.locator(
@@ -121,9 +119,9 @@ test(
 			});
 		});
 
-		const cookiesBanner = await page.locator(
-			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-		);
+		const cookiesBanner = await page.getByRole('dialog', {
+			name: 'banner cookies',
+		});
 
 		// Accept All cookies so the Cookies Banner doesn't break the test
 

@@ -46,9 +46,7 @@ test('LPD-25440 Cookie Banner Cadmin', async ({page}) => {
 		await page.goto('/');
 
 		await page
-			.locator(
-				'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-			)
+			.getByRole('dialog', {name: 'banner cookies'})
 			.waitFor({state: 'visible'});
 
 		const configuration = page.getByRole('button', {name: 'Configuration'});

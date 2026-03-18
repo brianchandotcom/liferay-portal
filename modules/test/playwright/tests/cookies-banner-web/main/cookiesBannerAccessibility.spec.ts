@@ -44,12 +44,10 @@ test('LPD-30822 Cookie Banner Accessibility', async ({page}) => {
 		await page.goto('/');
 
 		await page
-			.locator(
-				'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-			)
+			.getByRole('dialog', {name: 'banner cookies'})
 			.waitFor({state: 'visible'});
 
-		const cookiesBannerContainer = page.locator(
+		const cookiesBannerContainer = await page.locator(
 			'//div[@role="dialog"][@aria-label="banner cookies"]'
 		);
 

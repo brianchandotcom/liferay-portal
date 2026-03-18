@@ -46,6 +46,20 @@ public class AssetLibrarySerDes {
 
 		sb.append("{");
 
+		if (assetLibrary.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(assetLibrary.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (assetLibrary.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -113,6 +127,15 @@ public class AssetLibrarySerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (assetLibrary.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(assetLibrary.getExternalReferenceCode()));
+		}
+
 		if (assetLibrary.getId() == null) {
 			map.put("id", null);
 		}
@@ -159,7 +182,10 @@ public class AssetLibrarySerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -180,7 +206,13 @@ public class AssetLibrarySerDes {
 			AssetLibrary assetLibrary, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					assetLibrary.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					assetLibrary.setId(
 						Long.valueOf((String)jsonParserFieldValue));

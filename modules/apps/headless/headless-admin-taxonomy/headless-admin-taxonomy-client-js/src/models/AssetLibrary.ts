@@ -10,6 +10,7 @@
  */
 
 	export class AssetLibrary {
+			"externalReferenceCode"?: string;
 			"id"?: number;
 			"name"?: string;
 			"name_i18n"?: {[key: string]: string;};
@@ -22,6 +23,11 @@
 		name: string;
 		type: string;
 	}> = [
+		{
+			baseName: "externalReferenceCode",
+			name: "externalReferenceCode",
+			type: "string",
+		},
 		{
 			baseName: "id",
 			name: "id",

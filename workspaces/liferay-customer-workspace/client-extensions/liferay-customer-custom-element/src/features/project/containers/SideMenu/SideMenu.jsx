@@ -42,9 +42,7 @@ const SideMenu = () => {
 			hasExperienceSubscription,
 			hasLegacySubscription,
 			hasPlanSubscription,
-			project,
 			subscriptionGroups,
-			subscriptions,
 		},
 	] = useAppContext();
 	const [isOpenedProductsMenu, setIsOpenedProductsMenu] = useState(false);
@@ -267,6 +265,7 @@ const SideMenu = () => {
 				{(((loggedUserAccount?.isLiferayStaff || loggedUserAccount?.isPartner) &&
 					(hasPlanSubscription || hasLegacySubscription)) ||
 					(featureFlags.includes('LRSD-12003') &&
+						loggedUserAccount?.isLiferayStaff &&
 						hasExperienceSubscription)) && (
 					<div className="d-flex">
 						<MenuItem

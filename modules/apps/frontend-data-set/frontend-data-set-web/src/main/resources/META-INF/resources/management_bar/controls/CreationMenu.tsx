@@ -61,6 +61,11 @@ const DropdownTrigger = React.forwardRef(
 					aria-label={Liferay.Language.get('new')}
 					className="nav-btn nav-btn-monospaced"
 					data-testid="fdsCreationActionButton"
+					displayType={
+						inEmptyState && hideManagementBarInEmptyState
+							? 'primary'
+							: 'secondary'
+					}
 					ref={ref}
 					title={Liferay.Language.get('new')}
 				>

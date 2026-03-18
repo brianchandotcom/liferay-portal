@@ -70,12 +70,12 @@ public class BaseUuidUpgradeProcessTest extends BaseUuidUpgradeProcess {
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(distinct(uuid_)) from " + tableName)) {
+				"select count(distinct(uuid_)) as count from " + tableName)) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 	}

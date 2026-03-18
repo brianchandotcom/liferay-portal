@@ -140,7 +140,7 @@ public class UpgradeDocumentLibraryTest {
 
 			resultSet.next();
 
-			return resultSet.getString(1);
+			return resultSet.getString("value");
 		}
 	}
 

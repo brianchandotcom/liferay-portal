@@ -145,7 +145,8 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(sanitizedContent, resultSet.getString(1));
+				Assert.assertEquals(
+					sanitizedContent, resultSet.getString("data_"));
 			}
 		}
 
@@ -157,7 +158,8 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(sanitizedContent, resultSet.getString(1));
+				Assert.assertEquals(
+					sanitizedContent, resultSet.getString("content"));
 			}
 		}
 	}
@@ -259,7 +261,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 					Assert.assertTrue(resultSet.next());
 
 					Assert.assertEquals(
-						sanitizedContent, resultSet.getString(1));
+						sanitizedContent, resultSet.getString("data_"));
 				}
 			}
 
@@ -273,7 +275,7 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 					Assert.assertTrue(resultSet.next());
 
 					Assert.assertEquals(
-						sanitizedContent, resultSet.getString(1));
+						sanitizedContent, resultSet.getString("content"));
 				}
 			}
 		}

@@ -121,7 +121,7 @@ public class DBUpgraderTest {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				currentSchemaVersion = resultSet.getString(1);
+				currentSchemaVersion = resultSet.getString("schemaVersion");
 			}
 		}
 

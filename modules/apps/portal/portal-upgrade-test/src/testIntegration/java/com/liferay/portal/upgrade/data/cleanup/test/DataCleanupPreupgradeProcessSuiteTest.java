@@ -69,7 +69,8 @@ public class DataCleanupPreupgradeProcessSuiteTest
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				_currentPortalSchemaVersion = resultSet.getString(1);
+				_currentPortalSchemaVersion = resultSet.getString(
+					"schemaVersion");
 
 				_updatePortalSchemaVersion(_currentPortalSchemaVersion + ".0");
 			}

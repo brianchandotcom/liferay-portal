@@ -206,8 +206,9 @@ public class UpgradeJakartaTest {
 					Assert.assertTrue(resultSet.next());
 
 					Assert.assertEquals(
-						resultSet.getString(1), "key=" + _JAKARTA_CLASS_NAME,
-						resultSet.getString(1));
+						resultSet.getString("dictionary"),
+						"key=" + _JAKARTA_CLASS_NAME,
+						resultSet.getString("dictionary"));
 				}
 			}
 		}
@@ -249,7 +250,9 @@ public class UpgradeJakartaTest {
 
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(_JAKARTA_IMPORT, resultSet.getString(1));
+				Assert.assertEquals(
+					_JAKARTA_IMPORT,
+					resultSet.getString("largeAttributeValue"));
 			}
 		}
 		finally {

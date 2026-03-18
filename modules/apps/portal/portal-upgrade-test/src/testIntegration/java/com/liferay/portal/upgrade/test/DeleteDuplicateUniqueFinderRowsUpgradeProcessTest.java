@@ -227,7 +227,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) from ", tableName, " group by ",
+					"select count(*) as count from ", tableName, " group by ",
 					String.join(", ", columnNames), " having count(*) > 1"));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -235,7 +235,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			if (!duplicatesRemoved) {
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(2, resultSet.getInt(1));
+				Assert.assertEquals(2, resultSet.getInt("count"));
 
 				return;
 			}

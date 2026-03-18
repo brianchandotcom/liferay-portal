@@ -97,7 +97,7 @@ public class UpgradeOracleTest {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				return resultSet.getString(1);
+				return resultSet.getString("char_used");
 			}
 		}
 	}

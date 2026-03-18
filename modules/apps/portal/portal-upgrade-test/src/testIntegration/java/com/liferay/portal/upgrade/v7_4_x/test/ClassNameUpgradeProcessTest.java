@@ -501,7 +501,7 @@ public class ClassNameUpgradeProcessTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) from ", table, " where ", column,
+					"select count(*) as count from ", table, " where ", column,
 					" = ?"))) {
 
 			preparedStatement.setLong(1, structureId);
@@ -509,7 +509,7 @@ public class ClassNameUpgradeProcessTest {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 

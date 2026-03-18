@@ -1,5 +1,5 @@
 ext {
-	gitHash = "f58af699325311418afb2f08122c92e6574fcca9"
+	gitHash = "9f0e9a3100140368631618f84fc5dae5e33d79bd"
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-bridge-impl"
 	mvnTargetDir = "bridge-impl/target"

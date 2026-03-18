@@ -1,5 +1,5 @@
 ext {
-	gitHash = "2f8449a1204934d47b4e7f03fad668d7042821e8"
+	gitHash = "0f1deecb36977a7bc84d2da69ff2bbcd18bb4b67"
 	gitHubOwner = "liferay"
 	gitHubRepository = "liferay-faces-util"
 	mvnTargetDir = "target"

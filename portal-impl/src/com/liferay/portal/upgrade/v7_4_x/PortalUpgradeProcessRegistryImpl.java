@@ -747,6 +747,11 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.portal.search.elasticsearch8.impl"},
 				null));
+
+		upgradeVersionTreeMap.put(
+			new Version(38, 2, 3),
+			UpgradeModulesFactory.create(
+				new String[] {"com.liferay.portal.vulcan.impl"}, null));
 	}
 
 }

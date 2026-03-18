@@ -786,13 +786,14 @@ public class UpgradeReport {
 
 					try (PreparedStatement preparedStatement =
 							connection.prepareStatement(
-								"select count(*) from " + tableName);
+								"select count(*) as count from " + tableName);
 
 						ResultSet resultSet2 =
 							preparedStatement.executeQuery()) {
 
 						if (resultSet2.next()) {
-							tableCounts.put(tableName, resultSet2.getLong(1));
+							tableCounts.put(
+								tableName, resultSet2.getLong("count"));
 						}
 					}
 					catch (SQLException sqlException) {

@@ -41,9 +41,9 @@ test.beforeEach(async ({page}) => {
 	});
 
 	await test.step('Verify Cookies Banner appears, then Accept All cookies', async () => {
-		const cookiesBanner = await page.locator(
-			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-		);
+		const cookiesBanner = await page.getByRole('dialog', {
+			name: 'banner cookies',
+		});
 
 		await expect(cookiesBanner).toBeVisible();
 

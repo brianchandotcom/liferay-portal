@@ -206,9 +206,9 @@ test(
 		await test.step('Open the Cookie Banner Consent Panel', async () => {
 			await page.goto('/');
 
-			const cookiesBanner = await page.locator(
-				'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-			);
+			const cookiesBanner = await page.getByRole('dialog', {
+				name: 'banner cookies',
+			});
 
 			await cookiesBanner.waitFor();
 
@@ -403,9 +403,9 @@ test(
 
 		await waitForAlert(page);
 
-		const cookiesBanner = await page.locator(
-			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-		);
+		const cookiesBanner = await page.getByRole('dialog', {
+			name: 'banner cookies',
+		});
 
 		await cookiesBanner.waitFor();
 

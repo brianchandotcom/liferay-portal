@@ -51,9 +51,7 @@ test(
 			await page.goto('/');
 
 			await page
-				.locator(
-					'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
-				)
+				.getByRole('dialog', {name: 'banner cookies'})
 				.waitFor({state: 'visible'});
 
 			const acceptAll = page.getByRole('button', {name: 'Accept All'});

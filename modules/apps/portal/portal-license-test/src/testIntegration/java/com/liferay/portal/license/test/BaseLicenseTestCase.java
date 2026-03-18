@@ -135,11 +135,13 @@ public abstract class BaseLicenseTestCase {
 	public File deployFreeTierLicense(long validityPeriod) throws Exception {
 		long currentTimeMillis = System.currentTimeMillis();
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(20);
 
 		sb.append("<?xml version=\"1.0\"?><license><account-name>");
 		sb.append(_FREE_TIER_ACCOUNT_NAME);
-		sb.append("</account-name><product-name>");
+		sb.append("</account-name><product-id>");
+		sb.append(getPortalProductId());
+		sb.append("</product-id><product-name>");
 		sb.append(_FREE_TIER_PRODUCT_NAME);
 		sb.append("</product-name><product-version>2026.Q1</product-version>");
 		sb.append("<license-type>");

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.permission;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
@@ -12,6 +13,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -55,10 +58,8 @@ import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -80,7 +81,10 @@ public class DefaultSearchResultPermissionFilter
 		Function<SearchContext, Hits> searchFunction,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		DefaultSearchResultPermissionFilterConfiguration
-			defaultSearchResultPermissionFilterConfiguration) {
+			defaultSearchResultPermissionFilterConfiguration,
+		ServiceTrackerMap
+			<String, ModelResourcePermission<? extends ClassedModel>>
+				serviceTrackerMap) {
 
 		_facetPostProcessor = facetPostProcessor;
 		_indexerRegistry = indexerRegistry;
@@ -88,6 +92,7 @@ public class DefaultSearchResultPermissionFilter
 		_relatedEntryIndexerRegistry = relatedEntryIndexerRegistry;
 		_searchFunction = searchFunction;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+		_serviceTrackerMap = serviceTrackerMap;
 
 		_accurateCountThreshold =
 			defaultSearchResultPermissionFilterConfiguration.
@@ -136,12 +141,6 @@ public class DefaultSearchResultPermissionFilter
 			new SlidingWindowSearcher();
 
 		return slidingWindowSearcher.search(start, end, searchContext);
-	}
-
-	private boolean _classWithDynamicInheritanceChecking(
-		String entryClassName) {
-
-		return _classesWithDynamicInheritanceChecking.contains(entryClassName);
 	}
 
 	private int _filterHits(
@@ -299,7 +298,7 @@ public class DefaultSearchResultPermissionFilter
 
 		String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
 
-		if (!_classWithDynamicInheritanceChecking(entryClassName) ||
+		if (!_serviceTrackerMap.containsKey(entryClassName) ||
 			!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			boolean hasCompanyScopeViewPermission =
@@ -402,18 +401,6 @@ public class DefaultSearchResultPermissionFilter
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSearchResultPermissionFilter.class);
 
-	private static final Set<String> _classesWithDynamicInheritanceChecking =
-		new HashSet<>(
-			Arrays.asList(
-				"com.liferay.bookmarks.model.BookmarksEntry",
-				"com.liferay.bookmarks.model.BookmarksFolder",
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				"com.liferay.document.library.kernel.model.DLFolder",
-				"com.liferay.journal.model.JournalArticle",
-				"com.liferay.journal.model.JournalFolder",
-				"com.liferay.message.boards.model.impl.MBCategoryImpl",
-				"com.liferay.message.boards.model.impl.MBMessageImpl"));
-
 	private final int _accurateCountThreshold;
 	private final FacetPostProcessor _facetPostProcessor;
 	private final IndexerRegistry _indexerRegistry;
@@ -422,6 +409,9 @@ public class DefaultSearchResultPermissionFilter
 	private final Function<SearchContext, Hits> _searchFunction;
 	private final int _searchQueryResultWindowLimit;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private volatile ServiceTrackerMap
+		<String, ModelResourcePermission<? extends ClassedModel>>
+			_serviceTrackerMap;
 	private final long _timeLimit;
 
 	private class SlidingWindowSearcher {

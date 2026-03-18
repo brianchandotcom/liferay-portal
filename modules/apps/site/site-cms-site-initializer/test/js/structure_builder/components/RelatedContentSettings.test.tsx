@@ -70,6 +70,7 @@ const DEFAULT_STATE: State = {
 		spaces: [],
 		status: 'draft',
 		system: false,
+		type: 'L_CMS_CONTENT_STRUCTURES',
 		uuid: getUuid(),
 		workflows: {},
 	},

@@ -65,6 +65,7 @@ describe('refreshReferencedStructures', () => {
 			spaces: [],
 			status: 'published',
 			system: false,
+			type: 'L_CMS_CONTENT_STRUCTURES',
 			uuid: structureUuid,
 			workflows: {},
 		};

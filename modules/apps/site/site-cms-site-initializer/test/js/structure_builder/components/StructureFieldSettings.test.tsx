@@ -60,6 +60,7 @@ const DEFAULT_STATE: State = {
 		spaces: [],
 		status: 'new',
 		system: false,
+		type: 'L_CMS_CONTENT_STRUCTURES',
 		uuid: getUuid(),
 		workflows: {},
 	},

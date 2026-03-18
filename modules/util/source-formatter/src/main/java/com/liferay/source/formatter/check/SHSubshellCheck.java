@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.io.unsync.UnsyncStringReader;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,9 +59,11 @@ public class SHSubshellCheck extends BaseFileCheck {
 
 					addMessage(
 						fileName,
-						"Do not assign subshell outputs directly to 'local' " +
-							"variables, extract the subshell call into a " +
-								"separate assignment",
+						StringBundler.concat(
+							"Do not declare and assign 'local' variables ",
+							"using subshell outputs in a single line, extract ",
+							"'local' variable declaration and assignment via ",
+							"subshell into two separate lines"),
 						lineNumber);
 				}
 			}

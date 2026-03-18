@@ -103,12 +103,11 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testServeResourceExportsCollectionWithExportableItems()
+	public void testServeResourceExportableFragmentCollection()
 		throws Exception {
 
 		Mockito.when(
-			_fragmentCollection.
-				hasExportableFragmentCompositionsAndFragmentEntries()
+			_fragmentCollection.isExportable()
 		).thenReturn(
 			true
 		);
@@ -126,12 +125,11 @@ public class ExportFragmentCollectionsMVCResourceCommandTest {
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testServeResourceSkipsCollectionWithoutExportableItems()
+	public void testServeResourceNonexportableFragmentCollection()
 		throws Exception {
 
 		Mockito.when(
-			_fragmentCollection.
-				hasExportableFragmentCompositionsAndFragmentEntries()
+			_fragmentCollection.isExportable()
 		).thenReturn(
 			false
 		);

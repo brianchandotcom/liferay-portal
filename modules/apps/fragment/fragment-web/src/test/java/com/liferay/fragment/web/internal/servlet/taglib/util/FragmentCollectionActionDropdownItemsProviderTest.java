@@ -39,10 +39,12 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testGetActionDropdowns() {
+	public void testGetActionDropdownItemsExportableFragmentCollection()
+		throws Exception {
+
 		setUpFragmentPermission(true);
 
-		_setUpFragmentCollection(false, true);
+		_setUpFragmentCollection(true, false);
 
 		FragmentCollectionActionDropdownItemsProvider
 			fragmentCollectionActionDropdownItemsProvider =
@@ -58,26 +60,9 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testGetActionDropdownsForFragmentCollectionWithExportableComposition() {
-		setUpFragmentPermission(true);
+	public void testGetActionDropdownItemsNonexportableFragmentCollection()
+		throws Exception {
 
-		_setUpFragmentCollection(false, true);
-
-		FragmentCollectionActionDropdownItemsProvider
-			fragmentCollectionActionDropdownItemsProvider =
-				new FragmentCollectionActionDropdownItemsProvider(
-					_fragmentDisplayContext, httpServletRequest,
-					renderResponse);
-
-		assertDropdownItemsInCorrectOrder(
-			fragmentCollectionActionDropdownItemsProvider.
-				getActionDropdownItems(),
-			"edit", "export", "import", "delete");
-	}
-
-	@Test
-	@TestInfo("LPD-82487")
-	public void testGetActionDropdownsForFragmentCollectionWithOnlyMarketplaceFragments() {
 		setUpFragmentPermission(true);
 
 		_setUpFragmentCollection(false, false);
@@ -96,10 +81,12 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testGetActionDropdownsForMarketplaceFragmentCollection() {
+	public void testGetActionDropdownItemsForMarketplaceFragmentCollection()
+		throws Exception {
+
 		setUpFragmentPermission(true);
 
-		_setUpFragmentCollection(true, false);
+		_setUpFragmentCollection(false, true);
 
 		FragmentCollectionActionDropdownItemsProvider
 			fragmentCollectionActionDropdownItemsProvider =
@@ -115,7 +102,9 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testGetActionDropdownsForMarketplaceFragmentCollectionWithExportableFragment() {
+	public void testGetActionDropdownItemsForMarketplaceFragmentCollectionWithExportable()
+		throws Exception {
+
 		setUpFragmentPermission(true);
 
 		_setUpFragmentCollection(true, true);
@@ -132,27 +121,9 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 			"edit", "export", "import", "delete");
 	}
 
-	@Test
-	@TestInfo("LPD-82487")
-	public void testGetActionDropdownsWithReactFragment() {
-		setUpFragmentPermission(true);
-
-		_setUpFragmentCollection(false, false);
-
-		FragmentCollectionActionDropdownItemsProvider
-			fragmentCollectionActionDropdownItemsProvider =
-				new FragmentCollectionActionDropdownItemsProvider(
-					_fragmentDisplayContext, httpServletRequest,
-					renderResponse);
-
-		assertDropdownItemsInCorrectOrder(
-			fragmentCollectionActionDropdownItemsProvider.
-				getActionDropdownItems(),
-			"edit", "import", "delete");
-	}
-
 	private void _setUpFragmentCollection(
-		boolean marketplace, boolean hasExportableFragments) {
+			boolean exportable, boolean marketplace)
+		throws Exception {
 
 		Mockito.when(
 			_fragmentCollection.getFragmentCollectionId()
@@ -167,16 +138,15 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 		);
 
 		Mockito.when(
-			_fragmentCollection.isMarketplace()
+			_fragmentCollection.isExportable()
 		).thenReturn(
-			marketplace
+			exportable
 		);
 
 		Mockito.when(
-			_fragmentCollection.
-				hasExportableFragmentCompositionsAndFragmentEntries()
+			_fragmentCollection.isMarketplace()
 		).thenReturn(
-			hasExportableFragments
+			marketplace
 		);
 	}
 

@@ -107,16 +107,17 @@ public class FragmentCollectionImplTest {
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testHasExportableFragmentCompositionsAndFragmentEntries()
-		throws Exception {
+	public void testIsExportable() throws Exception {
+		Assert.assertTrue(_fragmentCollection.isExportable());
 
-		Assert.assertFalse(
-			_fragmentCollection.
-				hasExportableFragmentCompositionsAndFragmentEntries());
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		Assert.assertFalse(fragmentCollection.isExportable());
 
 		FragmentComposition marketplaceFragmentComposition =
 			FragmentCompositionTestUtil.addFragmentComposition(
-				_fragmentCollection.getFragmentCollectionId(),
+				fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString());
 
 		marketplaceFragmentComposition.setMarketplace(true);
@@ -124,44 +125,36 @@ public class FragmentCollectionImplTest {
 		_fragmentCompositionLocalService.updateFragmentComposition(
 			marketplaceFragmentComposition);
 
-		Assert.assertFalse(
-			_fragmentCollection.
-				hasExportableFragmentCompositionsAndFragmentEntries());
+		Assert.assertFalse(fragmentCollection.isExportable());
 
 		FragmentEntry reactFragmentEntry =
 			FragmentEntryTestUtil.addFragmentEntryByType(
-				_fragmentCollection.getFragmentCollectionId(),
+				fragmentCollection.getFragmentCollectionId(),
 				FragmentConstants.TYPE_REACT);
 
 		Assert.assertTrue(reactFragmentEntry.isTypeReact());
 
-		Assert.assertFalse(
-			_fragmentCollection.
-				hasExportableFragmentCompositionsAndFragmentEntries());
+		Assert.assertFalse(fragmentCollection.isExportable());
 
 		FragmentEntry marketplaceFragmentEntry =
 			FragmentEntryTestUtil.addFragmentEntry(
-				_fragmentCollection.getFragmentCollectionId());
+				fragmentCollection.getFragmentCollectionId());
 
 		marketplaceFragmentEntry.setMarketplace(true);
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			marketplaceFragmentEntry);
 
-		Assert.assertFalse(
-			_fragmentCollection.
-				hasExportableFragmentCompositionsAndFragmentEntries());
+		Assert.assertFalse(fragmentCollection.isExportable());
 
 		FragmentComposition exportableFragmentComposition =
 			FragmentCompositionTestUtil.addFragmentComposition(
-				_fragmentCollection.getFragmentCollectionId(),
+				fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString());
 
 		Assert.assertFalse(exportableFragmentComposition.isMarketplace());
 
-		Assert.assertTrue(
-			_fragmentCollection.
-				hasExportableFragmentCompositionsAndFragmentEntries());
+		Assert.assertTrue(fragmentCollection.isExportable());
 	}
 
 	@Test

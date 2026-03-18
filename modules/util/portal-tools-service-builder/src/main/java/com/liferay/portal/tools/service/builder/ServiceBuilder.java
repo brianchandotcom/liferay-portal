@@ -175,6 +175,19 @@ public class ServiceBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
+		String inputFilesDirName = arguments.get("service.input.files.dir");
+
+		if (Validator.isNotNull(inputFilesDirName)) {
+			List<String> apiModulePaths = _processModuleServiceFiles(
+				Paths.get(inputFilesDirName), arguments);
+
+			System.out.println(
+				"service.builder.baseline.tasks=" +
+					StringUtil.merge(apiModulePaths, StringPool.SPACE));
+
+			return;
+		}
+
 		String apiDirName = arguments.get("service.api.dir");
 		boolean autoImportDefaultReferences = GetterUtil.getBoolean(
 			arguments.get("service.auto.import.default.references"), true);
@@ -2190,6 +2203,250 @@ public class ServiceBuilder {
 
 	private static SAXReader _getSAXReader() {
 		return SAXReaderFactory.getSAXReader(null, false, false);
+	}
+
+	private static Map<String, String> _parseBuildServiceProperties(
+		String buildGradleContent) {
+
+		Map<String, String> properties = new HashMap<>();
+
+		int buildServiceIndex = buildGradleContent.indexOf("buildService {");
+
+		if (buildServiceIndex == -1) {
+			return properties;
+		}
+
+		int closingBraceIndex = buildGradleContent.indexOf(
+			'}', buildServiceIndex);
+
+		if (closingBraceIndex == -1) {
+			return properties;
+		}
+
+		String buildServiceBlock = buildGradleContent.substring(
+			buildServiceIndex, closingBraceIndex);
+
+		Matcher matcher = _buildServicePropertyPattern.matcher(
+			buildServiceBlock);
+
+		while (matcher.find()) {
+			String value = matcher.group(2);
+
+			if (value == null) {
+				value = matcher.group(3);
+			}
+
+			properties.put(matcher.group(1), value);
+		}
+
+		return properties;
+	}
+
+	private static List<String> _processModuleServiceFiles(
+			Path baseDirPath, Map<String, String> arguments)
+		throws Exception {
+
+		List<Path> serviceXmlPaths = new ArrayList<>();
+
+		Files.walkFileTree(
+			baseDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dir, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String dirName = String.valueOf(dir.getFileName());
+
+					if (dirName.equals("build") || dirName.equals("classes") ||
+						dirName.equals("node_modules") ||
+						dirName.equals("src") ||
+						dirName.equals("test-classes") ||
+						dirName.startsWith(".")) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+					Path file, BasicFileAttributes basicFileAttributes) {
+
+					if (!Objects.equals(
+							String.valueOf(file.getFileName()),
+							"service.xml")) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					Path moduleDir = file.getParent();
+
+					String moduleName = String.valueOf(moduleDir.getFileName());
+
+					if (!moduleName.endsWith("-service") ||
+						moduleName.startsWith(
+							"portal-tools-service-builder-test-compat") ||
+						!Files.exists(moduleDir.resolve("build.gradle"))) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					serviceXmlPaths.add(file);
+
+					return FileVisitResult.SKIP_SIBLINGS;
+				}
+
+			});
+
+		String[] readOnlyPrefixes = StringUtil.split(
+			GetterUtil.getString(
+				arguments.get("service.read.only.prefixes"),
+				StringUtil.merge(ServiceBuilderArgs.READ_ONLY_PREFIXES)));
+		String[] resourceActionsConfigs = StringUtil.split(
+			GetterUtil.getString(
+				arguments.get("service.resource.actions.configs"),
+				StringUtil.merge(ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS)));
+
+		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
+
+		List<Exception> exceptions = new ArrayList<>();
+		List<String> apiModulePaths = new ArrayList<>();
+
+		for (Path serviceXmlPath : serviceXmlPaths) {
+			Path moduleDir = serviceXmlPath.getParent();
+
+			String moduleName = String.valueOf(moduleDir.getFileName());
+
+			String buildGradleContent = new String(
+				Files.readAllBytes(moduleDir.resolve("build.gradle")),
+				StandardCharsets.UTF_8);
+
+			Map<String, String> buildServiceProperties =
+				_parseBuildServiceProperties(buildGradleContent);
+
+			String apiDirValue = buildServiceProperties.get("apiDir");
+
+			if (apiDirValue == null) {
+				String apiModuleName =
+					moduleName.substring(0, moduleName.length() - 8) + "-api";
+
+				apiDirValue = "../" + apiModuleName + "/src/main/java";
+			}
+
+			Path apiDir = moduleDir.resolve(apiDirValue);
+			Path implDir = moduleDir.resolve("src/main/java");
+			Path resourcesDir = moduleDir.resolve("src/main/resources");
+
+			boolean autoNamespaceTables = GetterUtil.getBoolean(
+				buildServiceProperties.get("autoNamespaceTables"), true);
+
+			int databaseNameMaxLength = GetterUtil.getInteger(
+				buildServiceProperties.get("databaseNameMaxLength"), 30);
+
+			String[] incubationFeatures = StringUtil.split(
+				buildServiceProperties.getOrDefault(
+					"incubationFeatures",
+					arguments.get("service.incubation.features")));
+
+			Path hbmFile = resourcesDir.resolve("META-INF/module-hbm.xml");
+			Path springFile = resourcesDir.resolve(
+				"META-INF/spring/module-spring.xml");
+			Path modelHintsFile = resourcesDir.resolve(
+				"META-INF/portlet-model-hints.xml");
+			Path sqlDir = resourcesDir.resolve("META-INF/sql");
+
+			String testDirValue = buildServiceProperties.get("testDir");
+
+			String testDirName = null;
+
+			if (testDirValue != null) {
+				Path testDir = moduleDir.resolve(testDirValue);
+
+				if (Files.exists(testDir)) {
+					testDirName = testDir.toString();
+				}
+			}
+
+			String bundleSymbolicName = StringUtil.replace(
+				moduleName, '-', '.');
+
+			String propsUtil = StringBundler.concat(
+				"com.liferay.", bundleSymbolicName, ".util.ServiceProps");
+
+			Set<String> resourceActionModels = readResourceActionModels(
+				implDir.toString(), resourcesDir.toString(),
+				resourceActionsConfigs);
+
+			ModelHintsImpl moduleModelHintsImpl = new ModelHintsImpl();
+
+			moduleModelHintsImpl.setModelHintsConfigs(
+				new String[] {
+					"classpath*:META-INF/portal-model-hints.xml",
+					"META-INF/portal-model-hints.xml",
+					"classpath*:META-INF/ext-model-hints.xml",
+					"classpath*:META-INF/portlet-model-hints.xml",
+					String.valueOf(modelHintsFile)
+				});
+
+			moduleModelHintsImpl.afterPropertiesSet();
+
+			modelHintsUtil.setModelHints(moduleModelHintsImpl);
+
+			try {
+				System.err.println("Processing " + moduleDir.getFileName());
+
+				new ServiceBuilder(
+					apiDir.toString(), true, autoNamespaceTables,
+					"com.liferay.util.bean.PortletBeanLocatorUtil", 1, true,
+					databaseNameMaxLength, hbmFile.toString(),
+					implDir.toString(), incubationFeatures,
+					serviceXmlPath.toString(), String.valueOf(modelHintsFile),
+					true, "", propsUtil, readOnlyPrefixes, resourceActionModels,
+					resourcesDir.toString(), springFile.toString(),
+					new String[] {"beans"}, sqlDir.toString(), "tables.sql",
+					"indexes.sql", "sequences.sql", null, testDirName, null,
+					true);
+
+				Path apiModuleDir = apiDir.getParent(
+				).getParent(
+				).getParent();
+
+				Path relativePath = baseDirPath.relativize(
+					apiModuleDir.normalize());
+
+				String gradleProjectPath = StringUtil.replace(
+					relativePath.toString(), File.separatorChar, ':');
+
+				String baselineTask = ":" + gradleProjectPath + ":baseline";
+
+				apiModulePaths.add(baselineTask);
+			}
+			catch (Exception exception) {
+				System.err.println(
+					StringBundler.concat(
+						"Error processing ", moduleDir, ": ",
+						exception.getMessage()));
+
+				exceptions.add(exception);
+			}
+		}
+
+		if (!exceptions.isEmpty()) {
+			RuntimeException runtimeException = new RuntimeException(
+				StringBundler.concat(
+					"Failed to process ", exceptions.size(), " module(s)"));
+
+			for (Exception exception : exceptions) {
+				runtimeException.addSuppressed(exception);
+			}
+
+			throw runtimeException;
+		}
+
+		return apiModulePaths;
 	}
 
 	private static void _readResourceActionModels(
@@ -8362,6 +8619,8 @@ public class ServiceBuilder {
 		"\\s+([^=]*)=\\s*\"([^\"]*)\"");
 	private static final Pattern _beansPattern = Pattern.compile(
 		"<beans[^>]*>");
+	private static final Pattern _buildServicePropertyPattern = Pattern.compile(
+		"(\\w+)\\s*=\\s*(?:\"([^\"]*)\"|([\\w]+))");
 	private static Configuration _configuration;
 	private static final Pattern _dtdVersionPattern = Pattern.compile(
 		".*service-builder_([^\\.]+)\\.dtd");

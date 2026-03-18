@@ -12,6 +12,13 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
+	<path id="service.builder.classpath">
+		<fileset
+			dir="${sdk.dir}/dependencies/com.liferay.portal.tools.service.builder/lib"
+			includes="*.jar"
+		/>
+	</path>
+
 	<target name="build-db">
 		<ant dir="../sql" target="build-db" />
 	</target>
@@ -170,13 +177,6 @@
 	</target>
 
 	<target name="build-service">
-		<path id="service.builder.classpath">
-			<fileset
-				dir="${sdk.dir}/dependencies/com.liferay.portal.tools.service.builder/lib"
-				includes="*.jar"
-			/>
-		</path>
-
 		<property name="hbm.file" value="portal-hbm.xml" />
 
 		<java
@@ -296,11 +296,49 @@
 		<antcall target="build-service-portal" />
 		<antcall target="build-service-portlets" />
 
-		<gradle-execute dir="../modules" forcedcacheenabled="false" task="buildService">
-			<arg value="--continue" />
-			<arg unless:true="${build.services.baseline.enabled}" value="--exclude-task" />
-			<arg unless:true="${build.services.baseline.enabled}" value="baseline" />
-		</gradle-execute>
+		<java
+			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
+			classpathref="service.builder.classpath"
+			failonerror="true"
+			fork="true"
+			logError="true"
+			newenvironment="true"
+			outputproperty="service.builder.batch.output"
+		>
+			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
+			<jvmarg value="-XX:MaxMetaspaceSize=768m" />
+			<jvmarg value="-Xms512m" />
+			<jvmarg value="-Xmx2048m" />
+			<jvmarg value="-Xss2048k" />
+			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
+			<arg value="service.incubation.features=${service.builder.incubation.features}" />
+			<arg value="service.input.files.dir=${basedir}/../modules" />
+		</java>
+
+		<if>
+			<istrue value="${build.services.baseline.enabled}" />
+			<then>
+				<propertyregex
+					input="${service.builder.batch.output}"
+					override="true"
+					property="service.builder.baseline.tasks"
+					regexp="service\.builder\.baseline\.tasks=(.*)"
+					select="\1"
+				/>
+
+				<if>
+					<isset property="service.builder.baseline.tasks" />
+					<then>
+						<gradle-execute dir="../modules" forcedcacheenabled="false" task="${service.builder.baseline.tasks}">
+							<arg value="--parallel" />
+							<arg value="--quiet" />
+						</gradle-execute>
+					</then>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="build-upgrade-table">

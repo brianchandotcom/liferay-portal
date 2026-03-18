@@ -16,6 +16,21 @@ const renderComponent = () => {
 };
 
 describe('NewExport', () => {
+	beforeAll(() => {
+		global.Liferay = {
+			...global?.Liferay,
+			Language: {
+				...global.Liferay?.Language,
+				get: (key: string) => key,
+			},
+			ThemeDisplay: {
+				...global.Liferay?.ThemeDisplay,
+				getBCP47LanguageId: () => 'en-US',
+				getTimeZone: () => 'UTC',
+			},
+		};
+	});
+
 	it('renders the SetupStep', async () => {
 		const {container} = renderComponent();
 
@@ -71,5 +86,33 @@ describe('NewExport', () => {
 		await waitFor(() => {
 			expect(continueButton).toBeEnabled();
 		});
+	});
+
+	it('renders the DataSelectionStep (Step 2) and checks accessibility', async () => {
+		const {container} = renderComponent();
+
+		const fileNameInput = await screen.findByRole('textbox', {
+			name: /file-name/,
+		});
+
+		await userEvent.type(fileNameInput, 'test-file');
+
+		const designCheckbox = await screen.findByRole('checkbox', {
+			name: /Design/,
+		});
+
+		await userEvent.click(designCheckbox);
+
+		const continueButton = screen.getByRole('button', {name: /continue/i});
+
+		await waitFor(() => {
+			expect(continueButton).toBeEnabled();
+		});
+
+		await userEvent.click(continueButton);
+
+		expect(screen.getByText('filter-content-by')).toBeInTheDocument();
+
+		await checkAccessibility({context: container});
 	});
 });

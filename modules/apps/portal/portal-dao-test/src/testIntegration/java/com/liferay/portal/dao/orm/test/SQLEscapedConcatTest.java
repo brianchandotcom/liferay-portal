@@ -69,14 +69,15 @@ public class SQLEscapedConcatTest {
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					"select CONCAT('This is a \\'', data, '\\' for escaped " +
-						"quotes') from SQLConcatTest"));
+						"quotes') as message from SQLConcatTest"));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
 
 			Assert.assertEquals(
-				"This is a 'test' for escaped quotes", resultSet.getString(1));
+				"This is a 'test' for escaped quotes",
+				resultSet.getString("message"));
 
 			Assert.assertFalse(resultSet.next());
 		}

@@ -242,11 +242,11 @@ public class DBTest {
 
 			resultSet.next();
 
-			Assert.assertEquals("test", resultSet.getString(1));
+			Assert.assertEquals("test", resultSet.getString("nilColumn"));
 
 			resultSet.next();
 
-			Assert.assertEquals("nil", resultSet.getString(1));
+			Assert.assertEquals("nil", resultSet.getString("nilColumn"));
 		}
 	}
 
@@ -288,7 +288,7 @@ public class DBTest {
 
 			resultSet.next();
 
-			Assert.assertEquals("testValue", resultSet.getString(1));
+			Assert.assertEquals("testValue", resultSet.getString("typeString"));
 		}
 	}
 
@@ -373,7 +373,7 @@ public class DBTest {
 
 			resultSet.next();
 
-			Assert.assertEquals(2, resultSet.getLong(1));
+			Assert.assertEquals(2, resultSet.getLong("testColumn"));
 		}
 
 		Assert.assertTrue(
@@ -400,7 +400,8 @@ public class DBTest {
 
 			resultSet.next();
 
-			Assert.assertEquals("test value", resultSet.getString(1));
+			Assert.assertEquals(
+				"test value", resultSet.getString("testColumn"));
 		}
 
 		Assert.assertTrue(

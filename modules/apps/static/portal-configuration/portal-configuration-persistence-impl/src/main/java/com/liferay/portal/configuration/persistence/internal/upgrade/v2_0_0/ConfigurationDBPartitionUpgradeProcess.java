@@ -50,29 +50,34 @@ public class ConfigurationDBPartitionUpgradeProcess extends UpgradeProcess {
 				while (resultSet.next()) {
 					ScopeConfiguration scopeConfiguration =
 						_getScopeConfiguration(
-							resultSet.getString(1), resultSet.getString(2));
+							resultSet.getString("configurationId"),
+							resultSet.getString("dictionary"));
 
-					if (scopeConfiguration != null) {
-						if (Objects.equals(
-								scopeConfiguration.getScope(),
-								ExtendedObjectClassDefinition.Scope.
-									PORTLET_INSTANCE)) {
-
-							_scopeConfigurations.add(scopeConfiguration);
-
-							continue;
-						}
-
-						if (!_isApplicable(
-								scopeConfiguration,
-								PortalInstancePool.getDefaultCompanyId())) {
-
-							_scopeConfigurations.add(scopeConfiguration);
-
-							_removeConfiguration(
-								scopeConfiguration.getConfigurationId());
-						}
+					if (scopeConfiguration == null) {
+						continue;
 					}
+
+					if (Objects.equals(
+							scopeConfiguration.getScope(),
+							ExtendedObjectClassDefinition.Scope.
+								PORTLET_INSTANCE)) {
+
+						_scopeConfigurations.add(scopeConfiguration);
+
+						continue;
+					}
+
+					if (_isApplicable(
+							scopeConfiguration,
+							PortalInstancePool.getDefaultCompanyId())) {
+
+						continue;
+					}
+
+					_scopeConfigurations.add(scopeConfiguration);
+
+					_removeConfiguration(
+						scopeConfiguration.getConfigurationId());
 				}
 			}
 

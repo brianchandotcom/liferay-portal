@@ -130,7 +130,7 @@ public class ConfigurationUpgradeProcessTest {
 				count += 1;
 
 				Dictionary<String, Object> dictionary = _toDictionary(
-					resultSet.getString(1));
+					resultSet.getString("dictionary"));
 
 				Assert.assertEquals(
 					companyId,

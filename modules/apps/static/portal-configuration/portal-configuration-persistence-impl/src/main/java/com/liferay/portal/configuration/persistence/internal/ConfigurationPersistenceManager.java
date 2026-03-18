@@ -377,7 +377,7 @@ public class ConfigurationPersistenceManager
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					String dictionaryString = resultSet.getString(1);
+					String dictionaryString = resultSet.getString("dictionary");
 
 					if (dictionaryString == null) {
 						return new HashMapDictionary<>();
@@ -461,30 +461,33 @@ public class ConfigurationPersistenceManager
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {
-						String pid = resultSet.getString(1);
+						String pid = resultSet.getString("configurationId");
 
 						Dictionary<Object, Object> dictionary =
-							_verifyDictionary(pid, resultSet.getString(2));
+							_verifyDictionary(
+								pid, resultSet.getString("dictionary"));
 
-						if (dictionary != null) {
-							if (PropsValues.DATABASE_PARTITION_ENABLED) {
-								Long scopeCompanyId = (Long)dictionary.get(
-									ExtendedObjectClassDefinition.Scope.COMPANY.
-										getPropertyKey());
-
-								if ((scopeCompanyId != null) &&
-									(scopeCompanyId != 0) &&
-									!scopeCompanyId.equals(companyId)) {
-
-									continue;
-								}
-							}
-
-							overridePropertiesMap.remove(pid);
-
-							_dictionaries.put(
-								pid, _overrideDictionary(pid, dictionary));
+						if (dictionary == null) {
+							continue;
 						}
+
+						if (PropsValues.DATABASE_PARTITION_ENABLED) {
+							Long scopeCompanyId = (Long)dictionary.get(
+								ExtendedObjectClassDefinition.Scope.COMPANY.
+									getPropertyKey());
+
+							if ((scopeCompanyId != null) &&
+								(scopeCompanyId != 0) &&
+								!scopeCompanyId.equals(companyId)) {
+
+								continue;
+							}
+						}
+
+						overridePropertiesMap.remove(pid);
+
+						_dictionaries.put(
+							pid, _overrideDictionary(pid, dictionary));
 					}
 				}
 			});

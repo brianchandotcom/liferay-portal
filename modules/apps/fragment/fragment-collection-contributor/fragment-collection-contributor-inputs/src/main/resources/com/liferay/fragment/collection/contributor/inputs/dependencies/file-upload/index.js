@@ -7,6 +7,13 @@ const wrapper = fragmentElement;
 
 const fileInput = document.getElementById(`${fragmentElementId}-file-upload`);
 const fileName = wrapper.querySelector('.forms-file-upload-file-name');
+const fileSizeError = document.getElementById(
+	`${fragmentElementId}-file-upload-error`
+);
+const fileSizeErrorMessage = document.getElementById(
+	`${fragmentElementId}-file-upload-error-message`
+);
+const formGroup = wrapper.querySelector('.form-group');
 const hiddenFileInput = document.getElementById(
 	`${fragmentElementId}-file-upload-hidden`
 );
@@ -31,12 +38,34 @@ if (
 }
 
 let previousFiles = null;
+let showInputError = null;
 
 function mbToBytes(mb) {
 	return mb * 1024 * 1024;
 }
 
 function onInputChange() {
+	if (
+		input.attributes.maxFileSize &&
+		fileInput.files[0] &&
+		fileInput.files[0].size > mbToBytes(input.attributes.maxFileSize)
+	) {
+		showInputError({
+			errorContainer: fileSizeError,
+			errorMessageContainer: fileSizeErrorMessage,
+			errorType: 'file-size',
+			formGroup,
+		});
+
+		fileInput.value = '';
+
+		return;
+	}
+	else {
+		fileSizeError.classList.add('sr-only');
+		formGroup.classList.remove('has-error');
+	}
+
 	if (!fileInput.files.length && previousFiles) {
 		const dataTransfer = new DataTransfer();
 
@@ -196,7 +225,10 @@ else {
 			getTranslationInput,
 			registerLocalizedInput,
 			registerUnlocalizedInput,
+			showInputError: showInputErrorFn,
 		}) => {
+			showInputError = showInputErrorFn;
+
 			if (input.localizable) {
 
 				// Set initial values

@@ -46,17 +46,15 @@
 			</div>
 		[/#if]
 
-		[#if input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentElementId}-file-upload-error-message">
-				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
-					<use xlink:href="${siteSpritemap}#info-circle" />
-				</svg>
+		<p class="font-weight-semi-bold mt-1 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-file-upload-error">
+			[@clay["icon"] symbol="info-circle" /]
 
-				<span>
+			<span data-file-size-feedback="${languageUtil.format(locale, "please-enter-a-file-with-a-valid-file-size-no-larger-than-x-mb", input.attributes.maxFileSize!"")}" id="${fragmentElementId}-file-upload-error-message" role="alert">
+				[#if input.errorMessage?has_content]
 					${input.errorMessage}
-				</span>
-			</p>
-		[/#if]
+				[/#if]
+			</span>
+		</p>
 
 		[#if !input.readOnly && ((input.showHelpText && input.helpText?has_content) || (configuration.showSupportedFileInfo && input.attributes.allowedFileExtensions?? && input.attributes.maxFileSize??))]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentElementId}-file-upload-help-text">

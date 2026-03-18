@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -641,7 +642,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		_addObjectDefinition(objectField);
 
-		String content = "test\n" + RandomTestUtil.randomString();
+		String content = StringUtil.randomId(8);
 
 		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),

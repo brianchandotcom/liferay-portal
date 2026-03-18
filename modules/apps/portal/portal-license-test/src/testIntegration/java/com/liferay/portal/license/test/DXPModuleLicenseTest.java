@@ -251,24 +251,4 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 	private static ResettableClassFileTransformer
 		_setVersionResettableClassFileTransformer;
 
-	private static class WrapperClassLoader extends ClassLoader {
-
-		public WrapperClassLoader(ClassLoader classLoader) {
-			_classLoader = classLoader;
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			return _classLoader.equals(object);
-		}
-
-		@Override
-		public int hashCode() {
-			return _classLoader.hashCode();
-		}
-
-		private final ClassLoader _classLoader;
-
-	}
-
 }

@@ -3,13 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import formatWithPrettier from '../prettier/formatWithPrettier.mjs';
 import dedent from './dedent.mjs';
 import extractJS from './extractJS.mjs';
+import {ID_END, ID_START} from './getPaddedReplacement.mjs';
 import indent from './indent.mjs';
 import padLines from './padLines.mjs';
 import restoreTags from './restoreTags.mjs';
 import stripIndents from './stripIndents.mjs';
-import substituteTags from './substituteTags.mjs';
+import substituteTags, {SCRIPTLET_CONTENT} from './substituteTags.mjs';
+import {BLOCK_CLOSE, BLOCK_OPEN} from './tagReplacements.mjs';
+import {FILLER_CHAR, SPACE_CHAR, TAB_CHAR} from './toFiller.mjs';
 import trim from './trim.mjs';
 
 const {PADDING_LINE} = padLines;
@@ -19,7 +23,7 @@ const {PADDING_LINE} = padLines;
  *
  * Currently, the only processable elements are script tags.
  */
-async function processJSP(source, onFormat) {
+async function formatScriptTagsWithPrettier(source) {
 	const blocks = extractJS(source);
 
 	// TODO: may want to pass filename here too, but I am not sure.
@@ -59,9 +63,20 @@ async function processJSP(source, onFormat) {
 
 		const padded = padLines(stripped, range.start.line);
 
-		// (Optionally) actually format.
+		// Actually format.
 
-		const formatted = onFormat ? await onFormat(padded) : padded;
+		const formatted = await formatWithPrettier(padded, '__fallback__.js', {
+			commentIgnorePatterns: [
+				BLOCK_CLOSE,
+				BLOCK_OPEN,
+				FILLER_CHAR,
+				ID_END,
+				ID_START,
+				SCRIPTLET_CONTENT,
+				SPACE_CHAR,
+				TAB_CHAR,
+			],
+		});
 
 		// Remove previously inserted padding lines.
 
@@ -100,4 +115,4 @@ async function processJSP(source, onFormat) {
 	return result + source.slice(lastIndex);
 }
 
-export default processJSP;
+export default formatScriptTagsWithPrettier;

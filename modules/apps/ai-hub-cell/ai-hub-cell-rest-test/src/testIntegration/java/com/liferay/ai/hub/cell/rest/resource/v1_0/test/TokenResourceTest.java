@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.resource.v1_0.test;
+package com.liferay.ai.hub.cell.rest.resource.v1_0.test;
 
-import com.liferay.ai.hub.configuration.AIHubConfiguration;
-import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,11 +40,9 @@ public class TokenResourceTest extends BaseTokenResourceTestCase {
 
 	@After
 	public void tearDown() {
-		SseUtil.closeAll();
-
 		try {
 			ConfigurationTestUtil.deleteConfiguration(
-				AIHubConfiguration.class.getName());
+				AIHubCellConfiguration.class.getName());
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -73,7 +68,7 @@ public class TokenResourceTest extends BaseTokenResourceTestCase {
 				new ServiceContext());
 
 		ConfigurationTestUtil.saveConfiguration(
-			AIHubConfiguration.class.getName(),
+			AIHubCellConfiguration.class.getName(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"clientId", oAuth2Application.getClientId()
 			).put(
@@ -83,16 +78,11 @@ public class TokenResourceTest extends BaseTokenResourceTestCase {
 			).build());
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, "ai-hub/v1.0/tokens", Http.Method.POST);
+			null, "ai-hub-cell/v1.0/tokens", Http.Method.POST);
 
 		Assert.assertTrue(jsonObject.has("accessToken"));
 		Assert.assertTrue(jsonObject.has("scope"));
 		Assert.assertTrue(jsonObject.has("userToken"));
-
-		Assert.assertNotNull(
-			SseEventSourceTestUtil.open(
-				"Bearer " + jsonObject.getString("accessToken"), List.of(),
-				new ArrayList<>(), "chats/subscribe"));
 	}
 
 	@Inject

@@ -1,9 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.resource.v1_0.test;
+package com.liferay.ai.hub.cell.rest.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.Token;
-import com.liferay.ai.hub.rest.client.http.HttpInvoker;
-import com.liferay.ai.hub.rest.client.pagination.Page;
-import com.liferay.ai.hub.rest.client.resource.v1_0.TokenResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.TokenSerDes;
+import com.liferay.ai.hub.cell.rest.client.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.client.http.HttpInvoker;
+import com.liferay.ai.hub.cell.rest.client.pagination.Page;
+import com.liferay.ai.hub.cell.rest.client.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.cell.rest.client.serdes.v1_0.TokenSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -358,7 +358,7 @@ public abstract class BaseTokenResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.Token.class)) {
+					com.liferay.ai.hub.cell.rest.dto.v1_0.Token.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -1015,6 +1015,7 @@ public abstract class BaseTokenResourceTestCase {
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.TokenResource _tokenResource;
+	private com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource
+		_tokenResource;
 
 }

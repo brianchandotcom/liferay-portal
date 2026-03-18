@@ -124,13 +124,14 @@ resource "google_gke_hub_membership" "membership" {
 	project=var.project_id
 }
 resource "google_project_iam_member" "node_permissions" {
-	for_each=toset([
-		"roles/artifactregistry.reader",
-		"roles/gkehub.gatewayAdmin",
-		"roles/gkehub.viewer",
-		"roles/logging.logWriter",
-		"roles/monitoring.metricWriter",
-	])
+	for_each=toset(
+		[
+			"roles/artifactregistry.reader",
+			"roles/gkehub.gatewayAdmin",
+			"roles/gkehub.viewer",
+			"roles/logging.logWriter",
+			"roles/monitoring.metricWriter",
+		])
 	member="serviceAccount:${google_service_account.node_sa.email}"
 	project=var.project_id
 	role=each.key

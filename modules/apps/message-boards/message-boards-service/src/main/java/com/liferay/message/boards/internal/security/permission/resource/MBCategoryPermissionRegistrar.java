@@ -43,6 +43,8 @@ public class MBCategoryPermissionRegistrar {
 		Dictionary<String, Object> properties =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"model.class.name", MBCategory.class.getName()
+			).put(
+				"permissions.view.dynamic.inheritance.checking", "true"
 			).build();
 
 		_serviceRegistration = bundleContext.registerService(

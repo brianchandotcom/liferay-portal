@@ -87,11 +87,11 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				PermissionThreadLocal.setPermissionChecker(
 					invocationParameters.get("permissionChecker"));
 
-				KaleoInstanceToken kaleoInstanceToken =
-					executionContext.getKaleoInstanceToken();
-
 				ExecutionContext executionContext = invocationParameters.get(
 					"executionContext");
+
+				KaleoInstanceToken kaleoInstanceToken =
+					executionContext.getKaleoInstanceToken();
 
 				Map<String, Serializable> workflowContext =
 					executionContext.getWorkflowContext();

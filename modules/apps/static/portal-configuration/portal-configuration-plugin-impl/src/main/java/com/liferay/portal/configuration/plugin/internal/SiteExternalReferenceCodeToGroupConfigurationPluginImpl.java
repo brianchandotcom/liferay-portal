@@ -75,7 +75,7 @@ public class SiteExternalReferenceCodeToGroupConfigurationPluginImpl
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					if (resultSet.next()) {
-						long groupId = resultSet.getLong(1);
+						long groupId = resultSet.getLong("groupId");
 
 						properties.put("groupId", groupId);
 

@@ -355,6 +355,12 @@ public class CTEntryModelDocumentContributor
 
 		Map<String, Object> modelAttributes = model.getModelAttributes();
 
+		if (modelAttributes.containsKey("plid")) {
+			long plid = (long)modelAttributes.get("plid");
+
+			document.addKeyword("plid", plid);
+		}
+
 		if (modelAttributes.containsKey("status")) {
 			int status = (int)modelAttributes.get("status");
 

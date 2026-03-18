@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Balázs Sáfrány-Kovalik
  */
-public abstract class BaseBulkActionServlet extends HttpServlet {
+public abstract class BaseCMSServlet extends HttpServlet {
 
 	@Override
 	public void service(
@@ -227,7 +227,6 @@ public abstract class BaseBulkActionServlet extends HttpServlet {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseBulkActionServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseCMSServlet.class);
 
 }

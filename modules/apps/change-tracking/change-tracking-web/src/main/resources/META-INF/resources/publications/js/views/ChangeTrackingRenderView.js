@@ -1552,14 +1552,18 @@ export default function ChangeTrackingRenderView({
 								!!state.renderData.segmentsExperiences
 									.length && (
 									<ExperienceDropdown
-										activeSegmentsExperience={
-											state.renderData.segmentsExperiences.filter(
-												(experience) =>
-													experience.active
-											)[0]
-										}
 										segmentsExperiences={
 											state.renderData.segmentsExperiences
+										}
+										selectedSegmentsExperience={
+											(selectedSegmentsExperienceId &&
+												state.renderData.segmentsExperiences.find(
+													(experience) =>
+														experience.id ===
+														selectedSegmentsExperienceId
+												)) ||
+											state.renderData
+												.segmentsExperiences[0]
 										}
 										updatePreviewRender={
 											updatePreviewRender

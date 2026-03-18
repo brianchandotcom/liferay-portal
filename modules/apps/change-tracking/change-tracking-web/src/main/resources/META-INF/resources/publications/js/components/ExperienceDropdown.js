@@ -7,21 +7,20 @@ import {Option, Picker, Text} from '@clayui/core';
 import ClayLabel from '@clayui/label';
 import Layout from '@clayui/layout';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 const ExperienceDropdown = ({
-	activeSegmentsExperience,
+	selectedSegmentsExperience,
 	updatePreviewRender,
 	...props
 }) => {
-	const [selectedKey, setSelectedKey] = useState(activeSegmentsExperience.id);
-
-	useEffect(() => {
-		updatePreviewRender(selectedKey);
-	}, [activeSegmentsExperience.id, selectedKey, updatePreviewRender]);
+	const [selectedKey, setSelectedKey] = useState(
+		selectedSegmentsExperience.id
+	);
 
 	const handleSelectionChange = (key) => {
 		setSelectedKey(key);
+		updatePreviewRender(key);
 	};
 
 	return (
@@ -42,7 +41,7 @@ const ExperienceDropdown = ({
 					}}
 					onSelectionChange={handleSelectionChange}
 					selectedKey={selectedKey}
-					selecteditem={activeSegmentsExperience}
+					selecteditem={selectedSegmentsExperience}
 				>
 					{(experience) => (
 						<Option key={experience.id} textValue={experience.name}>

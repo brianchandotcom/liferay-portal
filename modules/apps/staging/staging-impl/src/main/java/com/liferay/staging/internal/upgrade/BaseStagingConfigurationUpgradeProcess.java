@@ -45,13 +45,13 @@ public abstract class BaseStagingConfigurationUpgradeProcess
 				continue;
 			}
 
-			properties.remove(getStagingConfigurationName());
+			properties.remove(getPropertyName());
 
 			configuration.update(properties);
 		}
 	}
 
-	protected abstract String getStagingConfigurationName();
+	protected abstract String getPropertyName();
 
 	private final ConfigurationAdmin _configurationAdmin;
 

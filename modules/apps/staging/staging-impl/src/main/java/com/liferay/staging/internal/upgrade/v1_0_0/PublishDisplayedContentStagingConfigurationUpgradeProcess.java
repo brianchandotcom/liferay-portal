@@ -22,7 +22,7 @@ public class PublishDisplayedContentStagingConfigurationUpgradeProcess
 	}
 
 	@Override
-	protected String getStagingConfigurationName() {
+	protected String getPropertyName() {
 		return "publishDisplayedContent";
 	}
 

@@ -22,7 +22,7 @@ public class PublishParentLayoutsByDefaultStagingConfigurationUpgradeProcess
 	}
 
 	@Override
-	protected String getStagingConfigurationName() {
+	protected String getPropertyName() {
 		return "publishParentLayoutsByDefault";
 	}
 

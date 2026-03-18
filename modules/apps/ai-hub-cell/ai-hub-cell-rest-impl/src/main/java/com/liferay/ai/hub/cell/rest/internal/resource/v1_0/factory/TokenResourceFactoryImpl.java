@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.internal.resource.v1_0.factory;
+package com.liferay.ai.hub.cell.rest.internal.resource.v1_0.factory;
 
-import com.liferay.ai.hub.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.ai.hub.rest.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.cell.rest.internal.security.permission.LiberalPermissionChecker;
+import com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/ai-hub/v1.0/Token",
+	property = "resource.locator.key=/ai-hub-cell/v1.0/Token",
 	service = TokenResource.Factory.class
 )
 @Generated("")

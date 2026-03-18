@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.internal.resource.v1_0;
+package com.liferay.ai.hub.cell.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.Token;
-import com.liferay.ai.hub.rest.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.cell.rest.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -71,7 +71,7 @@ public abstract class BaseTokenResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/tokens'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-cell/v1.0/tokens'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Token")}
@@ -87,7 +87,7 @@ public abstract class BaseTokenResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/tokens/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub-cell/v1.0/tokens/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -333,7 +333,7 @@ public abstract class BaseTokenResourceImpl
 	}
 
 	protected String getApplicationPath() {
-		return "ai-hub";
+		return "ai-hub-cell";
 	}
 
 	public void setVulcanBatchEngineExportTaskResource(

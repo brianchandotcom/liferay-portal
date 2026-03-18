@@ -65,8 +65,8 @@
 	},
 	"name": "@liferay/node-scripts",
 	"scripts": {
-		"checkFormat": "node-scripts format:self --check",
-		"format": "node-scripts format:self",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
 		"install": "node-scripts setup"
 	},
 	"version": "1.0.0"

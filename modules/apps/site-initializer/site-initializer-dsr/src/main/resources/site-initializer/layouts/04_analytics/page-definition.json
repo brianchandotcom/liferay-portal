@@ -1,7 +1,19 @@
 {
 	"pageElement": {
-		"id": "cf15ab1c-5f86-60e6-1234-5c1e44a5c2a9",
 		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "com.liferay.site.dsr.site.initializer.internal.fragment.renderer.ViewAnalyticsJSPSectionFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
 		],
 		"type": "Root"
 	},

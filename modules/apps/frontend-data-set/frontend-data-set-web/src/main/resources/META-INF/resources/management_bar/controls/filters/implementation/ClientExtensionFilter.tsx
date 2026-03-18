@@ -157,9 +157,13 @@ function ClientExtensionFilter({
 				filter: {
 					selectedData,
 				},
-				setFilter: ({odataFilterString, selectedData}: SetFilterArgs) =>
+				setFilter: ({
+					active = true,
+					odataFilterString,
+					selectedData,
+				}: SetFilterArgs) =>
 					setFilter({
-						active: true,
+						active,
 						...{
 							odataFilterString,
 							selectedData,

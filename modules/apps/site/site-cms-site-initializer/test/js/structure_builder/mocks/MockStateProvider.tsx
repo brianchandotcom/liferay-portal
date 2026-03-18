@@ -13,7 +13,7 @@ import {
 import {Structure} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
-const DEFAULT_STRUCTURE: Structure = {
+export const DEFAULT_STRUCTURE: Structure = {
 	children: new Map(),
 	erc: 'default-erc',
 	label: {

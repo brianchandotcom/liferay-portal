@@ -1716,7 +1716,7 @@ public class ObjectFieldLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"upload",
 				() -> {
-					String content = "test\n" + RandomTestUtil.randomString();
+					String content = StringUtil.randomId(8);
 
 					FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 						TestPropsValues.getGroupId(),

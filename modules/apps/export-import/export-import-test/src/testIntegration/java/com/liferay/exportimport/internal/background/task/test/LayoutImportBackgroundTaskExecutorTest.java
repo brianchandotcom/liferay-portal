@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
@@ -461,14 +462,14 @@ public class LayoutImportBackgroundTaskExecutorTest {
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
-		"test\n" + RandomTestUtil.randomString();
+		StringUtil.randomId(8);
 
 	private static final String
 		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
-			"test\n" + RandomTestUtil.randomString();
+			StringUtil.randomId(8);
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
-		"test\n" + RandomTestUtil.randomString();
+		StringUtil.randomId(8);
 
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

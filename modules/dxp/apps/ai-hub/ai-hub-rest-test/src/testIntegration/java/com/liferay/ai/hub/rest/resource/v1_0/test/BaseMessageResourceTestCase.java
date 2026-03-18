@@ -280,14 +280,6 @@ public abstract class BaseMessageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("scope", additionalAssertFieldName)) {
-				if (message.getScope() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("text", additionalAssertFieldName)) {
 				if (message.getText() == null) {
 					valid = false;
@@ -432,16 +424,6 @@ public abstract class BaseMessageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("scope", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						message1.getScope(), message2.getScope())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("text", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						message1.getText(), message2.getText())) {
@@ -565,11 +547,6 @@ public abstract class BaseMessageResourceTestCase {
 		}
 
 		if (entityFieldName.equals("context")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("scope")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

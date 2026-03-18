@@ -64,16 +64,6 @@ public class MessageSerDes {
 			sb.append(_toJSON(message.getContext()));
 		}
 
-		if (message.getScope() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"scope\": ");
-
-			sb.append(String.valueOf(message.getScope()));
-		}
-
 		if (message.getText() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -120,13 +110,6 @@ public class MessageSerDes {
 			map.put("context", String.valueOf(message.getContext()));
 		}
 
-		if (message.getScope() == null) {
-			map.put("scope", null);
-		}
-		else {
-			map.put("scope", String.valueOf(message.getScope()));
-		}
-
 		if (message.getText() == null) {
 			map.put("text", null);
 		}
@@ -157,9 +140,6 @@ public class MessageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "context")) {
 				return true;
 			}
-			else if (Objects.equals(jsonParserFieldName, "scope")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "text")) {
 				return false;
 			}
@@ -181,12 +161,6 @@ public class MessageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "context")) {
 				if (jsonParserFieldValue != null) {
 					message.setContext((Map<String, ?>)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "scope")) {
-				if (jsonParserFieldValue != null) {
-					message.setScope(
-						ScopeSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "text")) {

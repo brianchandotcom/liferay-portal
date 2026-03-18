@@ -66,25 +66,6 @@ public class Message implements Cloneable, Serializable {
 
 	protected Map<String, ?> context;
 
-	public Scope getScope() {
-		return scope;
-	}
-
-	public void setScope(Scope scope) {
-		this.scope = scope;
-	}
-
-	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
-		try {
-			scope = scopeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Scope scope;
-
 	public String getText() {
 		return text;
 	}

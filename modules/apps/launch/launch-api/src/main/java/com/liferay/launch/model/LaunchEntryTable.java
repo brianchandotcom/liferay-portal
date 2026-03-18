@@ -55,3 +55,4 @@ public class LaunchEntryTable extends BaseTable<LaunchEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1076527521

@@ -36,3 +36,4 @@ public class CacheMissEntryTable extends BaseTable<CacheMissEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2141387998

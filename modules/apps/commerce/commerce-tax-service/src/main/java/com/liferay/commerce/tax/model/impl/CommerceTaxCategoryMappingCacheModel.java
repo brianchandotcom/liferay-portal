@@ -239,3 +239,4 @@ public class CommerceTaxCategoryMappingCacheModel
 	public long CPTaxCategoryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-840371906

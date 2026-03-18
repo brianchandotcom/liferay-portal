@@ -3160,3 +3160,4 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1062008033

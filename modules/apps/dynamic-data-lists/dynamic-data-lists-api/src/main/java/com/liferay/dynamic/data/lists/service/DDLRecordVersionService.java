@@ -128,3 +128,4 @@ public interface DDLRecordVersionService extends BaseService {
 	public int getRecordVersionsCount(long recordId) throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-667381931

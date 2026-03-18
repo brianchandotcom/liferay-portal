@@ -55,3 +55,4 @@ public class SAPEntryTable extends BaseTable<SAPEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1745213270

@@ -70,3 +70,4 @@ public abstract class BaseKBCommentUADExporter
 	protected KBCommentLocalService kbCommentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1717191844

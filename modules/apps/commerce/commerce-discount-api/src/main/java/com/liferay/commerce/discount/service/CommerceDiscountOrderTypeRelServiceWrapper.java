@@ -124,3 +124,4 @@ public class CommerceDiscountOrderTypeRelServiceWrapper
 		_commerceDiscountOrderTypeRelService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1400244712

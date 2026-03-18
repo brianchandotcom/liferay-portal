@@ -325,3 +325,4 @@ public class SocialActivityLimitLocalServiceUtil {
 	private static volatile SocialActivityLimitLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1958659758

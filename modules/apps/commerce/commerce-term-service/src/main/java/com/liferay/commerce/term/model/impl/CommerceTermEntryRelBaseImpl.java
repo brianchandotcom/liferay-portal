@@ -40,3 +40,4 @@ public abstract class CommerceTermEntryRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1445622567

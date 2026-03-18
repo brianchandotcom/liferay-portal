@@ -664,3 +664,4 @@ public interface DLFolderLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:482380513

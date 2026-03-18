@@ -63,3 +63,4 @@ public interface App extends AppModel, PersistedModel {
 	public boolean isInstalled();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1960665276

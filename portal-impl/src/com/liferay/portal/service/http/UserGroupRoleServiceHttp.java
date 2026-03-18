@@ -241,3 +241,4 @@ public class UserGroupRoleServiceHttp {
 		new Class[] {long.class, long.class, long[].class, long[].class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1814189434

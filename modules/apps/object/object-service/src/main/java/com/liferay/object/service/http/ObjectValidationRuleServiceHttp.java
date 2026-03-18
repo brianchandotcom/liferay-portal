@@ -248,3 +248,4 @@ public class ObjectValidationRuleServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1034426597

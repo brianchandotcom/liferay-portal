@@ -14,3 +14,4 @@ public class UsersAdminUADConstants {
 	public static final String[] USER_ID_FIELD_NAMES_USER_TRACKER = {"userId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1688001857

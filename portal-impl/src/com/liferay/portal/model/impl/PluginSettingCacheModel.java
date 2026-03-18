@@ -178,3 +178,4 @@ public class PluginSettingCacheModel
 	public boolean active;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-533442830

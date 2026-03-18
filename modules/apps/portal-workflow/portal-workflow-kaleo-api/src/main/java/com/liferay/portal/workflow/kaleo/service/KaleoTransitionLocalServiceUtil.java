@@ -357,3 +357,4 @@ public class KaleoTransitionLocalServiceUtil {
 			KaleoTransitionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:669377692

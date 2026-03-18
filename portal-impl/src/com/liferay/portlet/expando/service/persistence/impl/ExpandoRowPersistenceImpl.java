@@ -2171,3 +2171,4 @@ public class ExpandoRowPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1377291001

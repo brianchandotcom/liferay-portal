@@ -1135,3 +1135,4 @@ public class UserNotificationEventModelImpl
 	private UserNotificationEvent _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1766377671

@@ -391,3 +391,4 @@ public class ObjectLayoutLocalServiceUtil {
 			ObjectLayoutLocalServiceUtil.class, ObjectLayoutLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-877871161

@@ -1133,3 +1133,4 @@ public class FragmentEntryVersionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2005654003

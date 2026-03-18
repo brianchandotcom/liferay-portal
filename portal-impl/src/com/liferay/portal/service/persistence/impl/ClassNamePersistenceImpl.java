@@ -812,3 +812,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1152174268

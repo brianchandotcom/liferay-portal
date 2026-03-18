@@ -4020,3 +4020,4 @@ public class BookmarksEntryUtil {
 	private static volatile BookmarksEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1212514243

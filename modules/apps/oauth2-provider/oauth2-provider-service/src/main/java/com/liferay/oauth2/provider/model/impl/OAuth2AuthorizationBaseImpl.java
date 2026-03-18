@@ -39,3 +39,4 @@ public abstract class OAuth2AuthorizationBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-629994232

@@ -219,3 +219,4 @@ public class CommerceInventoryWarehouseServiceUtil {
 			CommerceInventoryWarehouseService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-686729253

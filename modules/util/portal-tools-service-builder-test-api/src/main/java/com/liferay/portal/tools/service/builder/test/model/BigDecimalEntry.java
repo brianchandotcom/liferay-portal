@@ -49,3 +49,4 @@ public interface BigDecimalEntry extends BigDecimalEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-664083809

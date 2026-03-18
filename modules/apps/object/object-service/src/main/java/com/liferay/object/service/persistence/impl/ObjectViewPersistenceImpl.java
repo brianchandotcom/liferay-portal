@@ -2966,3 +2966,4 @@ public class ObjectViewPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1534670920

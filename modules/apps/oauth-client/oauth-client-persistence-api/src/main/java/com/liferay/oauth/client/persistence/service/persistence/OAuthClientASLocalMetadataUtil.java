@@ -1300,3 +1300,4 @@ public class OAuthClientASLocalMetadataUtil {
 	private static volatile OAuthClientASLocalMetadataPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2129616389

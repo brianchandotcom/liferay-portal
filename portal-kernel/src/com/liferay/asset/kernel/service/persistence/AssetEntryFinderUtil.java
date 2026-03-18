@@ -39,3 +39,4 @@ public class AssetEntryFinderUtil {
 	private static AssetEntryFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-668124299

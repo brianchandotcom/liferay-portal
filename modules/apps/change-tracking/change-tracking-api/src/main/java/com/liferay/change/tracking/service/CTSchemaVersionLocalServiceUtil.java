@@ -319,3 +319,4 @@ public class CTSchemaVersionLocalServiceUtil {
 			CTSchemaVersionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-282443102

@@ -132,3 +132,4 @@ public class LayoutRevisionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1506961099

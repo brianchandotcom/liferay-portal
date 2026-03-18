@@ -1442,3 +1442,4 @@ public class SocialActivitySetUtil {
 	private static volatile SocialActivitySetPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:66183888

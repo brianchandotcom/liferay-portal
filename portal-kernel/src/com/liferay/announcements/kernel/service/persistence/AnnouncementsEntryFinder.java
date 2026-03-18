@@ -56,3 +56,4 @@ public interface AnnouncementsEntryFinder {
 				int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:397008289

@@ -224,3 +224,4 @@ public class MBThreadFlagCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1639322085

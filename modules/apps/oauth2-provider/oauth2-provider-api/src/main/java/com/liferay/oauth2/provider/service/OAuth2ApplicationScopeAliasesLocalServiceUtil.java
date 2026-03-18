@@ -368,3 +368,4 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 			OAuth2ApplicationScopeAliasesLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1000544962

@@ -81,3 +81,4 @@ public class DLFileShortcutTable extends BaseTable<DLFileShortcutTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-546292692

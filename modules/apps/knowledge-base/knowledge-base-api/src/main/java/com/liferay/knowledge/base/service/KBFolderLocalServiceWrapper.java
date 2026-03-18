@@ -630,3 +630,4 @@ public class KBFolderLocalServiceWrapper
 	private KBFolderLocalService _kbFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-529300596

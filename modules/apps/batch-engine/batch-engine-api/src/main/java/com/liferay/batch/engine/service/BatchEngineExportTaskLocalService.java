@@ -347,3 +347,4 @@ public interface BatchEngineExportTaskLocalService
 		BatchEngineExportTask batchEngineExportTask);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:851719175

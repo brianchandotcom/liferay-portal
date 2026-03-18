@@ -2471,3 +2471,4 @@ public class LayoutClassedModelUsageUtil {
 	private static volatile LayoutClassedModelUsagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-230468910

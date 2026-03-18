@@ -973,3 +973,4 @@ public class CommerceDiscountRelModelImpl
 	private CommerceDiscountRel _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:766470497

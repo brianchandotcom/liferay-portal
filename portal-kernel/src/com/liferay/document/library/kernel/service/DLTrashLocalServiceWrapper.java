@@ -79,3 +79,4 @@ public class DLTrashLocalServiceWrapper
 	private DLTrashLocalService _dlTrashLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1231523835

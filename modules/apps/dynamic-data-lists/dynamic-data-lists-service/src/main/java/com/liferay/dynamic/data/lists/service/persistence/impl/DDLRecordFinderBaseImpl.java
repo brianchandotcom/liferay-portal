@@ -77,3 +77,4 @@ public abstract class DDLRecordFinderBaseImpl
 		DDLRecordFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1105059004

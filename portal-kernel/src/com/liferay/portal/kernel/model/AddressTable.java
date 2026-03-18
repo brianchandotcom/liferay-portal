@@ -91,3 +91,4 @@ public class AddressTable extends BaseTable<AddressTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:61083401

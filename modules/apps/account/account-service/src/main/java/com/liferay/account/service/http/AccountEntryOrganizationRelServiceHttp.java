@@ -458,3 +458,4 @@ public class AccountEntryOrganizationRelServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1353302028

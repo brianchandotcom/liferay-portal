@@ -51,3 +51,4 @@ public class DepotAppCustomizationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-147469122

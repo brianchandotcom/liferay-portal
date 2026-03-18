@@ -380,3 +380,4 @@ public class RenameFinderColumnEntryLocalServiceWrapper
 		_renameFinderColumnEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:974259209

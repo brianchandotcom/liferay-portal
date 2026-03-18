@@ -292,3 +292,4 @@ public interface CommerceOrderPaymentLocalService
 		CommerceOrderPayment commerceOrderPayment);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1264538637

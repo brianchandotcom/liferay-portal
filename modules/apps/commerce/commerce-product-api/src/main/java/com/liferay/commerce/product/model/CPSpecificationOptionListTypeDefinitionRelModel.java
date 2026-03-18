@@ -150,3 +150,4 @@ public interface CPSpecificationOptionListTypeDefinitionRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1031778803

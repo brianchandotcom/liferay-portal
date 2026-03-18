@@ -50,3 +50,4 @@ public class JournalArticleLocalizationCTServiceImpl
 		_journalArticleLocalizationPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2074742595

@@ -67,3 +67,4 @@ public class CommerceTaxMethodTable extends BaseTable<CommerceTaxMethodTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1687094994

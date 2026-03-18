@@ -99,3 +99,4 @@ public class CSDiagramSettingServiceWrapper
 	private CSDiagramSettingService _csDiagramSettingService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-365152758

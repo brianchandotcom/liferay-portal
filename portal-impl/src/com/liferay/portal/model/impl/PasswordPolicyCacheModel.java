@@ -436,3 +436,4 @@ public class PasswordPolicyCacheModel
 	public long resetTicketMaxAge;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1245164763

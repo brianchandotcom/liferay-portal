@@ -3546,3 +3546,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1205930680

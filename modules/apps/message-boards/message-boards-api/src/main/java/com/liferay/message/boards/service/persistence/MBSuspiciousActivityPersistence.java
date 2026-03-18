@@ -891,3 +891,4 @@ public interface MBSuspiciousActivityPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:4408305

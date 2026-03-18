@@ -280,3 +280,4 @@ public interface BatchPlannerPlanLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2031540960

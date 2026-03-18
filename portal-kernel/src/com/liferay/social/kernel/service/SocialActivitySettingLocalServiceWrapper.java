@@ -471,3 +471,4 @@ public class SocialActivitySettingLocalServiceWrapper
 		_socialActivitySettingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1704419431

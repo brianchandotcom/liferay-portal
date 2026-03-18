@@ -40,3 +40,4 @@ public abstract class AssetAutoTaggerEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1270751952

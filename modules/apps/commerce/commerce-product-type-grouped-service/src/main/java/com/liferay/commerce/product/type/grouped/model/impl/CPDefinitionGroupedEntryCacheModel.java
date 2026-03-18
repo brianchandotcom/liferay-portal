@@ -233,3 +233,4 @@ public class CPDefinitionGroupedEntryCacheModel
 	public int quantity;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:435549080

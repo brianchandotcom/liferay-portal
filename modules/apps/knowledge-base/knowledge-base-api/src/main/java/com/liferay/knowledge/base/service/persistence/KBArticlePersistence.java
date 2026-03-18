@@ -14912,3 +14912,4 @@ public interface KBArticlePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-999982482

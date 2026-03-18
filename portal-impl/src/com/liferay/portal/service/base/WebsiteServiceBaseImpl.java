@@ -202,3 +202,4 @@ public abstract class WebsiteServiceBaseImpl
 		WebsiteServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:155349361

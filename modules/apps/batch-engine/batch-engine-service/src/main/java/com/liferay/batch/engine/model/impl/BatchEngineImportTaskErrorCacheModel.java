@@ -213,3 +213,4 @@ public class BatchEngineImportTaskErrorCacheModel
 	public String message;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-939364047

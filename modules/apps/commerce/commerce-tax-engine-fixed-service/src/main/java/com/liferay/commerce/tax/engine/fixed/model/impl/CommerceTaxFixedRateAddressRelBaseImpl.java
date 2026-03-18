@@ -42,3 +42,4 @@ public abstract class CommerceTaxFixedRateAddressRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1835767686

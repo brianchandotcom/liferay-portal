@@ -144,3 +144,4 @@ public abstract class PortalLocalServiceBaseImpl
 		PortalLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:298830098

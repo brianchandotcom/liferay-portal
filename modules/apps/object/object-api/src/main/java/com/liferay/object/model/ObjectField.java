@@ -79,3 +79,4 @@ public interface ObjectField extends ObjectFieldModel, PersistedModel {
 		java.util.List<ObjectFieldSetting> objectFieldSettings);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1845831083

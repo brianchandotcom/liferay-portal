@@ -39,3 +39,4 @@ public abstract class VirtualHostBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1338175431

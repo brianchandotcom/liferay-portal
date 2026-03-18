@@ -52,3 +52,4 @@ public interface MFAEmailOTPEntry
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1342458726

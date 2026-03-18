@@ -904,3 +904,4 @@ public class CommerceOrderCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1822752915

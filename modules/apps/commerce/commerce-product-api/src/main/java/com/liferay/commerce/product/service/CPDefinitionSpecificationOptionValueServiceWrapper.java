@@ -192,3 +192,4 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 		_cpDefinitionSpecificationOptionValueService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:982977229

@@ -138,3 +138,4 @@ public class DefinedDefaultOrderEntryModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:490374042

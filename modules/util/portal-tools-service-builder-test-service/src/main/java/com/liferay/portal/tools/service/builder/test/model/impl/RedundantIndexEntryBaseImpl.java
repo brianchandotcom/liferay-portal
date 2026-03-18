@@ -39,3 +39,4 @@ public abstract class RedundantIndexEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-111219662

@@ -77,3 +77,4 @@ public abstract class DefinitionFinderBaseImpl
 		DefinitionFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-171966176

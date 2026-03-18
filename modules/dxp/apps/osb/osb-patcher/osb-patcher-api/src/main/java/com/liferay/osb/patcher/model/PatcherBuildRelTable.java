@@ -43,3 +43,4 @@ public class PatcherBuildRelTable extends BaseTable<PatcherBuildRelTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1351732192

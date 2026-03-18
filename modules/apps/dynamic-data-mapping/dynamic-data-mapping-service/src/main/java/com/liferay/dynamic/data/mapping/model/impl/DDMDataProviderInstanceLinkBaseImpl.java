@@ -42,3 +42,4 @@ public abstract class DDMDataProviderInstanceLinkBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1036738294

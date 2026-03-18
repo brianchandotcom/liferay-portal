@@ -985,3 +985,4 @@ public class ObjectFilterModelImpl
 	private ObjectFilter _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-205416897

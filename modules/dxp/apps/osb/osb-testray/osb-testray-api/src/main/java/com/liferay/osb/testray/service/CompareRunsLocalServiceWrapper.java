@@ -53,3 +53,4 @@ public class CompareRunsLocalServiceWrapper
 	private CompareRunsLocalService _compareRunsLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2027130263

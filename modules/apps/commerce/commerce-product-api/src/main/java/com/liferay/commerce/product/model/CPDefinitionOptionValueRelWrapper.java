@@ -842,3 +842,4 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1138083899

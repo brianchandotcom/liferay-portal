@@ -336,3 +336,4 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1378268017

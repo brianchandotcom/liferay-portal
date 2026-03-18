@@ -521,3 +521,4 @@ public interface WikiNodeModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:894928020

@@ -130,3 +130,4 @@ public interface CTSGrandParentModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1143545905

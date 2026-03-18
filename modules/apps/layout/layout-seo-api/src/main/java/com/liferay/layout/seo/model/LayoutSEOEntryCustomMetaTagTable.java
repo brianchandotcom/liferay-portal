@@ -55,3 +55,4 @@ public class LayoutSEOEntryCustomMetaTagTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-562862906

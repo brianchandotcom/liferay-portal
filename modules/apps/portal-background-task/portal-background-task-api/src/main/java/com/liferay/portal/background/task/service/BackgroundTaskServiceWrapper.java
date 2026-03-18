@@ -72,3 +72,4 @@ public class BackgroundTaskServiceWrapper
 	private BackgroundTaskService _backgroundTaskService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1713220582

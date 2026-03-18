@@ -846,3 +846,4 @@ public interface CPTaxCategoryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-677022627

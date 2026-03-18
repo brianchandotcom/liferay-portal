@@ -480,3 +480,4 @@ public interface AMImageEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-181308808

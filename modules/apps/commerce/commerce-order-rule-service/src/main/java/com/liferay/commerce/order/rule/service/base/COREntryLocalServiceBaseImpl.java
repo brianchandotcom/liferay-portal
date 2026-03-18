@@ -607,3 +607,4 @@ public abstract class COREntryLocalServiceBaseImpl
 		COREntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:168433512

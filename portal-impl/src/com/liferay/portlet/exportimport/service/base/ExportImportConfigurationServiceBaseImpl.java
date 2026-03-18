@@ -247,3 +247,4 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 		ExportImportConfigurationServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-113462125

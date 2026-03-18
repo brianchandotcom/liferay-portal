@@ -53,3 +53,4 @@ public class FaroUserTable extends BaseTable<FaroUserTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:673986360

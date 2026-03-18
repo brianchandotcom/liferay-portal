@@ -80,3 +80,4 @@ public abstract class CommerceSubscriptionEntryFinderBaseImpl
 		CommerceSubscriptionEntryFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-683180184

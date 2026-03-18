@@ -96,3 +96,4 @@ public interface RenameFinderColumnEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1985604752

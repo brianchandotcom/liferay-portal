@@ -20,3 +20,4 @@ public class BookmarksUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1099890512

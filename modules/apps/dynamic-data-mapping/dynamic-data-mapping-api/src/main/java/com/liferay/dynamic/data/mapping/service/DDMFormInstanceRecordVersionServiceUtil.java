@@ -103,3 +103,4 @@ public class DDMFormInstanceRecordVersionServiceUtil {
 			DDMFormInstanceRecordVersionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1084689407

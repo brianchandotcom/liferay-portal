@@ -101,3 +101,4 @@ public class GenericMethodsEntryLocalServiceWrapper
 	private GenericMethodsEntryLocalService _genericMethodsEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1420971033

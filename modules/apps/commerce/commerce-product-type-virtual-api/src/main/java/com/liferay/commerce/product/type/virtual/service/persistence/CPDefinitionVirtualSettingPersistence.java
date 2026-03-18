@@ -559,3 +559,4 @@ public interface CPDefinitionVirtualSettingPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1096443629

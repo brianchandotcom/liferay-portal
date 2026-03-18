@@ -2576,3 +2576,4 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:890382920

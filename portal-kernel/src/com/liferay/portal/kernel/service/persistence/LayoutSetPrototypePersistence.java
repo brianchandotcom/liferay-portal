@@ -1020,3 +1020,4 @@ public interface LayoutSetPrototypePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1198588663

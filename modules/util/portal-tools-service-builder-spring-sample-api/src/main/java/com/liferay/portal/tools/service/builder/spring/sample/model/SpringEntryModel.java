@@ -132,3 +132,4 @@ public interface SpringEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:966187143

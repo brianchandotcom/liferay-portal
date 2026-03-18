@@ -1376,3 +1376,4 @@ public class ModuleUtil {
 	private static volatile ModulePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1743352566

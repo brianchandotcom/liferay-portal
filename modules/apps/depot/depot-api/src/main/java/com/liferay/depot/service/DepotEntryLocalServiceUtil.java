@@ -463,3 +463,4 @@ public class DepotEntryLocalServiceUtil {
 			DepotEntryLocalServiceUtil.class, DepotEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:239845251

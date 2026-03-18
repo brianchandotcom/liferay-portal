@@ -482,3 +482,4 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 		CommerceDiscountRuleLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:154948961

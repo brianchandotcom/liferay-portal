@@ -380,3 +380,4 @@ public class DDLRecordSetServiceUtil {
 			DDLRecordSetServiceUtil.class, DDLRecordSetService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-510908581

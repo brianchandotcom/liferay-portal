@@ -566,3 +566,4 @@ public interface CalendarResourceModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1524547030

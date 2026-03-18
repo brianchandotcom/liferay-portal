@@ -77,3 +77,4 @@ public abstract class CPTaxCategoryFinderBaseImpl
 		CPTaxCategoryFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:311979853

@@ -193,3 +193,4 @@ public class COREntryRelCacheModel
 	public long COREntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-886758463

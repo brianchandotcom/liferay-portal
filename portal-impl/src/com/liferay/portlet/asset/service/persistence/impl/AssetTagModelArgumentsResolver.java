@@ -129,3 +129,4 @@ public class AssetTagModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:589682221

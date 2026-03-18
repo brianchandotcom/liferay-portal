@@ -39,3 +39,4 @@ public abstract class PLOEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1407951201

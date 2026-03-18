@@ -495,3 +495,4 @@ public interface AssetAutoTaggerEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-377896856

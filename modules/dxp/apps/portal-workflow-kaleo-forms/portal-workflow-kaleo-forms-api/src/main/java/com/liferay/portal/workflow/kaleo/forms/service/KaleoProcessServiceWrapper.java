@@ -218,3 +218,4 @@ public class KaleoProcessServiceWrapper
 	private KaleoProcessService _kaleoProcessService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1486441166

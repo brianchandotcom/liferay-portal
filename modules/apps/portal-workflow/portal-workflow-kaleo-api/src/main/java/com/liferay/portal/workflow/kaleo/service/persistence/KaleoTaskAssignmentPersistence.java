@@ -772,3 +772,4 @@ public interface KaleoTaskAssignmentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-315920362

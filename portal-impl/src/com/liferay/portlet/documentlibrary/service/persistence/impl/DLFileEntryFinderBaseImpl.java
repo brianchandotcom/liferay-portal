@@ -66,3 +66,4 @@ public class DLFileEntryFinderBaseImpl
 		DLFileEntryFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:829543537

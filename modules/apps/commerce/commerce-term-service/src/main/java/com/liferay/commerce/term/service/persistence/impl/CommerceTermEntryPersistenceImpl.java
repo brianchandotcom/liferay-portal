@@ -8889,3 +8889,4 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1228926659

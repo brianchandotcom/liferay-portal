@@ -347,3 +347,4 @@ public class PatcherTicketHintWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1069438450

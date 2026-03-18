@@ -67,3 +67,4 @@ public class SegmentsExperimentRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1226765029

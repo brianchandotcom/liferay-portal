@@ -208,3 +208,4 @@ public interface DLContentModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-481721873

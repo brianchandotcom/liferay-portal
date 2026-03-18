@@ -45,3 +45,4 @@ public class PasswordPolicyRelTable extends BaseTable<PasswordPolicyRelTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1443551435

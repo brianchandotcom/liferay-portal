@@ -730,3 +730,4 @@ public class LVEntryLocalServiceWrapper
 	private LVEntryLocalService _lvEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-343039805

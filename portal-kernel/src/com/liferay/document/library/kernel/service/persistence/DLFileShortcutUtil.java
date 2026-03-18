@@ -2440,3 +2440,4 @@ public class DLFileShortcutUtil {
 	private static volatile DLFileShortcutPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1699566446

@@ -266,3 +266,4 @@ public class UserGroupCacheModel
 	public boolean addedByLDAPImport;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1569303194

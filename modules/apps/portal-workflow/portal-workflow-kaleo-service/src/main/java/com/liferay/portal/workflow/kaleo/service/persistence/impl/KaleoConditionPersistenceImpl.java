@@ -2272,3 +2272,4 @@ public class KaleoConditionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-939921656

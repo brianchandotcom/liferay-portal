@@ -757,3 +757,4 @@ public interface UserModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:73947158

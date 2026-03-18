@@ -358,3 +358,4 @@ public class CommercePaymentEntryAuditLocalServiceUtil {
 			CommercePaymentEntryAuditLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1473371929

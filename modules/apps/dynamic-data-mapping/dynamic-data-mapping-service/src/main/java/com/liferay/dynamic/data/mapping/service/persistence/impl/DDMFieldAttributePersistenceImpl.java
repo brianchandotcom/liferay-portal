@@ -4007,3 +4007,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:727851501

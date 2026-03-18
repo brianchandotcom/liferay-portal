@@ -274,3 +274,4 @@ public class ModuleWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1676110192

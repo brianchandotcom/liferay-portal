@@ -454,3 +454,4 @@ public class CommerceTaxFixedRateLocalServiceWrapper
 	private CommerceTaxFixedRateLocalService _commerceTaxFixedRateLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1055913208

@@ -288,3 +288,4 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	public String unitOfMeasureKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-849313060

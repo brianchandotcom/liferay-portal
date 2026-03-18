@@ -273,3 +273,4 @@ public interface DSLQueryStatusEntryLocalService
 		DSLQueryStatusEntry dslQueryStatusEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1476108015

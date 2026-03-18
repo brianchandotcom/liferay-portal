@@ -64,3 +64,4 @@ public class CPOptionValueTable extends BaseTable<CPOptionValueTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1766064349

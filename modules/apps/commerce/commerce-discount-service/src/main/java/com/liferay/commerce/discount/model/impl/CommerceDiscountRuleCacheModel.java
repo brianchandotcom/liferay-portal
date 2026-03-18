@@ -236,3 +236,4 @@ public class CommerceDiscountRuleCacheModel
 	public String typeSettings;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1003178708

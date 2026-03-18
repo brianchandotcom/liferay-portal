@@ -61,3 +61,4 @@ public class ObjectFieldSettingTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:443482018

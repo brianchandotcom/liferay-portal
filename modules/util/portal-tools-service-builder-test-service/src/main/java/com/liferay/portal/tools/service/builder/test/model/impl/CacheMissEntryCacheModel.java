@@ -115,3 +115,4 @@ public class CacheMissEntryCacheModel
 	public long cacheMissEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1925407122

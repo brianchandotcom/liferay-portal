@@ -495,3 +495,4 @@ public interface MBThreadLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:882535678

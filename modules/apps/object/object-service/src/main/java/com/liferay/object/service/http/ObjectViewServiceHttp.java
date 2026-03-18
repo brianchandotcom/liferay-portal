@@ -240,3 +240,4 @@ public class ObjectViewServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:510148744

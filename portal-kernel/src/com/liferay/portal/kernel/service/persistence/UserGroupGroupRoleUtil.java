@@ -1255,3 +1255,4 @@ public class UserGroupGroupRoleUtil {
 	private static volatile UserGroupGroupRolePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:648051019

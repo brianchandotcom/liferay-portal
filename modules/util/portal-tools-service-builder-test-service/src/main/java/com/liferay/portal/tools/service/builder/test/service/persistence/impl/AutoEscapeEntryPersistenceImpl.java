@@ -600,3 +600,4 @@ public class AutoEscapeEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1790548905

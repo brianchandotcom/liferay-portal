@@ -55,3 +55,4 @@ public interface PushNotificationsDevice
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-538501310

@@ -180,3 +180,4 @@ public interface VirtualHostModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1141955909

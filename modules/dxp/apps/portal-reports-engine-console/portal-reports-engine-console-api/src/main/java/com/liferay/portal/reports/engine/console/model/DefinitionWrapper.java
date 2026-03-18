@@ -764,3 +764,4 @@ public class DefinitionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-712029497

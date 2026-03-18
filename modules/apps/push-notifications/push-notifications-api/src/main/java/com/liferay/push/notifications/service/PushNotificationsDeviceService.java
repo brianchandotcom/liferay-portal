@@ -69,3 +69,4 @@ public interface PushNotificationsDeviceService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1846438591

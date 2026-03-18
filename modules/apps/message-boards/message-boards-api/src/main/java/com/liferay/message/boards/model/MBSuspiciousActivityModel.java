@@ -345,3 +345,4 @@ public interface MBSuspiciousActivityModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-383042637

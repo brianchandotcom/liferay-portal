@@ -158,3 +158,4 @@ public class DLFileVersionPreviewCacheModel
 	public int previewStatus;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-500894296

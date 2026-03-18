@@ -235,3 +235,4 @@ public class CommerceWishListItemCacheModel
 	public String json;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-976634679

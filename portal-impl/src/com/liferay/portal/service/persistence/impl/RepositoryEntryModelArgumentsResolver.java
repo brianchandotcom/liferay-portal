@@ -114,3 +114,4 @@ public class RepositoryEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-27413076

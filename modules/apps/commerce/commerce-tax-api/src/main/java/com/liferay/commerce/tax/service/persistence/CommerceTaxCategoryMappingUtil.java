@@ -1050,3 +1050,4 @@ public class CommerceTaxCategoryMappingUtil {
 	private static volatile CommerceTaxCategoryMappingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1048270918

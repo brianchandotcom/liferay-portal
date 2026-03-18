@@ -1608,3 +1608,4 @@ public class CommerceChannelUtil {
 	private static volatile CommerceChannelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1964033549

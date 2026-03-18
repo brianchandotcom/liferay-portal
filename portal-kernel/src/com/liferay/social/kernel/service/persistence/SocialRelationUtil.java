@@ -2093,3 +2093,4 @@ public class SocialRelationUtil {
 	private static volatile SocialRelationPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:39023430

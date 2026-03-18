@@ -1124,3 +1124,4 @@ public interface KaleoTaskInstanceTokenPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1321768061

@@ -5044,3 +5044,4 @@ public class FragmentEntryLinkUtil {
 	private static volatile FragmentEntryLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2118622788

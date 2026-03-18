@@ -142,3 +142,4 @@ public class CommerceInventoryAuditServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2142714159

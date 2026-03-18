@@ -180,3 +180,4 @@ public interface RecentLayoutRevisionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1974012217

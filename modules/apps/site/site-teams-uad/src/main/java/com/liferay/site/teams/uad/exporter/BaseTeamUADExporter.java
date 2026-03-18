@@ -66,3 +66,4 @@ public abstract class BaseTeamUADExporter
 	protected TeamLocalService teamLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:318787252

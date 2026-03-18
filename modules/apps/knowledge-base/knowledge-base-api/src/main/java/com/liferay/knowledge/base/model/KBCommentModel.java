@@ -340,3 +340,4 @@ public interface KBCommentModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1942768807

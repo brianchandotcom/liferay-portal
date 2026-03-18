@@ -1473,3 +1473,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1795129120

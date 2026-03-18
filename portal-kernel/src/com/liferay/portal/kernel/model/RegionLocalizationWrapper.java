@@ -282,3 +282,4 @@ public class RegionLocalizationWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1025113688

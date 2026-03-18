@@ -55,3 +55,4 @@ public interface AssetListEntry extends AssetListEntryModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2085592298

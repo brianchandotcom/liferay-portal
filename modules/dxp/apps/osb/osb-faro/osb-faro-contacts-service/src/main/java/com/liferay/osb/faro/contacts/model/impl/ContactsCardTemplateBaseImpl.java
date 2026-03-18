@@ -40,3 +40,4 @@ public abstract class ContactsCardTemplateBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1791963982

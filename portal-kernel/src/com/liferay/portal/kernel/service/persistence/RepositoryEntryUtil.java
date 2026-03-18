@@ -938,3 +938,4 @@ public class RepositoryEntryUtil {
 	private static volatile RepositoryEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1292265199

@@ -475,3 +475,4 @@ public class JournalFeedLocalServiceUtil {
 			JournalFeedLocalServiceUtil.class, JournalFeedLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:760147481

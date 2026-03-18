@@ -809,3 +809,4 @@ public class CommerceShippingFixedOptionQualifierUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-765429527

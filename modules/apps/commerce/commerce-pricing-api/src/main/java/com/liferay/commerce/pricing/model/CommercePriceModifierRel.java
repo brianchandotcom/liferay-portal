@@ -58,3 +58,4 @@ public interface CommercePriceModifierRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-463073262

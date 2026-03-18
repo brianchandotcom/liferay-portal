@@ -266,3 +266,4 @@ public class CommerceVirtualOrderItemCacheModel
 	public long endDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:820914370

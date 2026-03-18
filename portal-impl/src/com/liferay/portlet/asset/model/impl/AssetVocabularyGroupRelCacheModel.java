@@ -161,3 +161,4 @@ public class AssetVocabularyGroupRelCacheModel
 	public long vocabularyId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:282957432

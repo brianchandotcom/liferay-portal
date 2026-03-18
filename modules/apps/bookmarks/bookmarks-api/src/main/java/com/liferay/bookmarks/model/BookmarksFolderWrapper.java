@@ -844,3 +844,4 @@ public class BookmarksFolderWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:851195866

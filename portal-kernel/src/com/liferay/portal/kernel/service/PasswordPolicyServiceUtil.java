@@ -115,3 +115,4 @@ public class PasswordPolicyServiceUtil {
 	private static volatile PasswordPolicyService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1767974480

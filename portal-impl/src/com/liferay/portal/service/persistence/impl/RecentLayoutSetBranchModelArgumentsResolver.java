@@ -117,3 +117,4 @@ public class RecentLayoutSetBranchModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1846455262

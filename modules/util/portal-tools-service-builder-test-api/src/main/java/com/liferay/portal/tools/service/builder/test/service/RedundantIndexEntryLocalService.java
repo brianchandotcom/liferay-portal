@@ -273,3 +273,4 @@ public interface RedundantIndexEntryLocalService
 		RedundantIndexEntry redundantIndexEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:901513715

@@ -79,3 +79,4 @@ public abstract class CPInstanceFinderBaseImpl
 		CPInstanceFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:670720695

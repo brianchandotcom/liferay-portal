@@ -599,3 +599,4 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 		CommerceMLForecastAlertEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:64416323

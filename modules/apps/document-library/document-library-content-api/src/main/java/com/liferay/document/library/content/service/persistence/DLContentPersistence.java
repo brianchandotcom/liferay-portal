@@ -706,3 +706,4 @@ public interface DLContentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1401636760

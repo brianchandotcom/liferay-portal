@@ -311,3 +311,4 @@ public class KaleoTaskAssignmentInstanceCacheModel
 	public long completionDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-138361338

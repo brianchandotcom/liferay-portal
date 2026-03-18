@@ -231,3 +231,4 @@ public abstract class ResourcePermissionServiceBaseImpl
 		ResourcePermissionServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-353967758

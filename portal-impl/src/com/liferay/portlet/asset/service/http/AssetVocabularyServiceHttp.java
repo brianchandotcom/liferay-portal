@@ -1546,3 +1546,4 @@ public class AssetVocabularyServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-872979176

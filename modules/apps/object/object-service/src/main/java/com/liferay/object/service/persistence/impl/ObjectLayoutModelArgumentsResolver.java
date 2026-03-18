@@ -113,3 +113,4 @@ public class ObjectLayoutModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2138279947

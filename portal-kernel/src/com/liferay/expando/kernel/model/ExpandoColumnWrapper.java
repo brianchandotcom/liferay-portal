@@ -394,3 +394,4 @@ public class ExpandoColumnWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1586270934

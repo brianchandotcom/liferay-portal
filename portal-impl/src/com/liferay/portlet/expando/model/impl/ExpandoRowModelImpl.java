@@ -717,3 +717,4 @@ public class ExpandoRowModelImpl
 	private ExpandoRow _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2010274468

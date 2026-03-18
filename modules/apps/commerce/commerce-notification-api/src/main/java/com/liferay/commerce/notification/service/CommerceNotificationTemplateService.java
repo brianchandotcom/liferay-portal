@@ -112,3 +112,4 @@ public interface CommerceNotificationTemplateService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1117458388

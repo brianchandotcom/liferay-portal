@@ -39,3 +39,4 @@ public abstract class AkismetEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:120963317

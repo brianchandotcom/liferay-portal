@@ -522,3 +522,4 @@ public class WikiPageServiceWrapper
 	private WikiPageService _wikiPageService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-740711091

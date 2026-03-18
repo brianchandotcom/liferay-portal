@@ -251,3 +251,4 @@ public class SharingEntryCacheModel
 	public long expirationDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:376552530

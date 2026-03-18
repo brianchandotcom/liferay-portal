@@ -6334,3 +6334,4 @@ public interface WikiPagePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1663500093

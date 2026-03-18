@@ -123,3 +123,4 @@ public class CPDefinitionVirtualSettingServiceUtil {
 			CPDefinitionVirtualSettingService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1442498

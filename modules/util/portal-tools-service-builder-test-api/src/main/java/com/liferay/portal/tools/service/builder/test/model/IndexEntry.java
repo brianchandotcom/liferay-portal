@@ -49,3 +49,4 @@ public interface IndexEntry extends IndexEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:335457464

@@ -132,3 +132,4 @@ public class KBTemplateModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1817173837

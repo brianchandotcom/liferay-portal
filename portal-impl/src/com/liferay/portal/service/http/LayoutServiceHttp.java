@@ -3123,3 +3123,4 @@ public class LayoutServiceHttp {
 		new Class[] {long.class, boolean.class, long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1290897236

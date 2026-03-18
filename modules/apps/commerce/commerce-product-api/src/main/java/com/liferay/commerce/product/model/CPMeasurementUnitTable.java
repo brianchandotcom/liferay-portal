@@ -75,3 +75,4 @@ public class CPMeasurementUnitTable extends BaseTable<CPMeasurementUnitTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-37345770

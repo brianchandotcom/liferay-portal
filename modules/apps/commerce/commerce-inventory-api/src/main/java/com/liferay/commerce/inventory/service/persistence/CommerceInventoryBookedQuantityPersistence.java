@@ -624,3 +624,4 @@ public interface CommerceInventoryBookedQuantityPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-331099670

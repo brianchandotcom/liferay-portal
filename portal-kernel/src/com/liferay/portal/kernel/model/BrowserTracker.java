@@ -47,3 +47,4 @@ public interface BrowserTracker extends BrowserTrackerModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1718716449

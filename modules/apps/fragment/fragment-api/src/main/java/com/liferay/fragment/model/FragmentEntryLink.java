@@ -83,3 +83,4 @@ public interface FragmentEntryLink
 	public boolean isTypeSection();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-815531985

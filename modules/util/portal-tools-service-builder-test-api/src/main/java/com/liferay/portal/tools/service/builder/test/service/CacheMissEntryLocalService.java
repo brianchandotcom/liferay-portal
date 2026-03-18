@@ -286,3 +286,4 @@ public interface CacheMissEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1361304488

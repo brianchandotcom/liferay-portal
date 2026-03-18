@@ -216,3 +216,4 @@ public class PortalPreferencesWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:780899414

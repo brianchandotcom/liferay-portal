@@ -404,3 +404,4 @@ public class JournalFolderServiceWrapper
 	private JournalFolderService _journalFolderService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-315502373

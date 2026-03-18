@@ -505,3 +505,4 @@ public class CommercePriceListChannelRelServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1897179319

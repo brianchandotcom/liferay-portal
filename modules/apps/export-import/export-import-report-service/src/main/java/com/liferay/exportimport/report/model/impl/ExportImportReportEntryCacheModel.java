@@ -267,3 +267,4 @@ public class ExportImportReportEntryCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:406694735

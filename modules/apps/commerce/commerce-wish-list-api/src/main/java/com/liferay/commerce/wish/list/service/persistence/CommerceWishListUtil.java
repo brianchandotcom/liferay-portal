@@ -1618,3 +1618,4 @@ public class CommerceWishListUtil {
 	private static volatile CommerceWishListPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2059662639

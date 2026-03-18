@@ -290,3 +290,4 @@ public class PatcherProjectVersionCacheModel
 	public String repositoryName;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1840797079

@@ -511,3 +511,4 @@ public interface DDMStructureLinkPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1421080364

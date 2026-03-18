@@ -156,3 +156,4 @@ public class GroupFinderUtil {
 	private static GroupFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-381314832

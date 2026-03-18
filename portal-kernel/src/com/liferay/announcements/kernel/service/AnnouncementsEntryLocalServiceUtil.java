@@ -512,3 +512,4 @@ public class AnnouncementsEntryLocalServiceUtil {
 	private static volatile AnnouncementsEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1296821060

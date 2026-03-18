@@ -39,3 +39,4 @@ public abstract class EagerBlobEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1779547012

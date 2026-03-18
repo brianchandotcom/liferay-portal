@@ -131,3 +131,4 @@ public class CProductModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1554513456

@@ -313,3 +313,4 @@ public interface SystemEventLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1509482717

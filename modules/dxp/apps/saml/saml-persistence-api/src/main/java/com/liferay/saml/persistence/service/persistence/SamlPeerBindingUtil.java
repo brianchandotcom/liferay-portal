@@ -711,3 +711,4 @@ public class SamlPeerBindingUtil {
 	private static volatile SamlPeerBindingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-88985039

@@ -115,3 +115,4 @@ public class CommerceShippingOptionAccountEntryRelServiceUtil {
 			CommerceShippingOptionAccountEntryRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-826551785

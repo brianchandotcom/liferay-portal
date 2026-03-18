@@ -2145,3 +2145,4 @@ public class IndexEntryUtil {
 	private static volatile IndexEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-761769202

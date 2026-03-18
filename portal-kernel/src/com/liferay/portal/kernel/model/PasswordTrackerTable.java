@@ -43,3 +43,4 @@ public class PasswordTrackerTable extends BaseTable<PasswordTrackerTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-929923032

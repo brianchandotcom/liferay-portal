@@ -344,3 +344,4 @@ public class NullConvertibleEntryUtil {
 	private static volatile NullConvertibleEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:348491736

@@ -250,3 +250,4 @@ public class ObjectFilterCacheModel
 	public String json;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1163233975

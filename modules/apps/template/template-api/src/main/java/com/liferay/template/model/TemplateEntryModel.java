@@ -317,3 +317,4 @@ public interface TemplateEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:733613959

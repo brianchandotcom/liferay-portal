@@ -294,3 +294,4 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1077540508

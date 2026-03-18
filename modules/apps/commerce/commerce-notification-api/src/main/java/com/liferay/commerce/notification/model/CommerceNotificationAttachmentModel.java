@@ -273,3 +273,4 @@ public interface CommerceNotificationAttachmentModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1026889809

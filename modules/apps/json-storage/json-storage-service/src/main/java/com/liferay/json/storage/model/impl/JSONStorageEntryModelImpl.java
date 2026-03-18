@@ -1026,3 +1026,4 @@ public class JSONStorageEntryModelImpl
 	private JSONStorageEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:371648155

@@ -71,3 +71,4 @@ public class ExportImportConfigurationFinderBaseImpl
 		ExportImportConfigurationFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1957604870

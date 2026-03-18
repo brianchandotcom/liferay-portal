@@ -506,3 +506,4 @@ public abstract class DataLimitEntryLocalServiceBaseImpl
 		DataLimitEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2022566243

@@ -539,3 +539,4 @@ public class AMImageEntryLocalServiceUtil {
 			AMImageEntryLocalServiceUtil.class, AMImageEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1474837060

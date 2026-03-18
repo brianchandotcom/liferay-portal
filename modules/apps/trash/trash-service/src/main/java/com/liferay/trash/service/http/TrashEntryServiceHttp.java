@@ -592,3 +592,4 @@ public class TrashEntryServiceHttp {
 		new Class[] {String.class, long.class, long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:764019963

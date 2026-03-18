@@ -56,3 +56,4 @@ public interface ObjectRelationship
 	public boolean isSelf();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-561398511

@@ -45,3 +45,4 @@ public class PortletPreferencesFinderBaseImpl
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1570801412

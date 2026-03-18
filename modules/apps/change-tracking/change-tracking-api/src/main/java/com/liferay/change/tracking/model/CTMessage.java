@@ -48,3 +48,4 @@ public interface CTMessage extends CTMessageModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1798717615

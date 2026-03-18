@@ -17,3 +17,4 @@ public interface CommerceCurrencyFinder {
 	public java.util.List<Long> getCompanyIds();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1496548134

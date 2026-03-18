@@ -319,3 +319,4 @@ public class CPSpecificationOptionCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1885152135

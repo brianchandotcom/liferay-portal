@@ -4521,3 +4521,4 @@ public class KaleoLogPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-212863112

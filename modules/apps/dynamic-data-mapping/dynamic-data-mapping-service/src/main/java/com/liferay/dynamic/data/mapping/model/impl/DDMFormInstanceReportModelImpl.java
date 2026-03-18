@@ -828,3 +828,4 @@ public class DDMFormInstanceReportModelImpl
 	private DDMFormInstanceReport _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1291270749

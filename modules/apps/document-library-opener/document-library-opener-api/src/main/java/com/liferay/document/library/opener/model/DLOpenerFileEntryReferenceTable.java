@@ -64,3 +64,4 @@ public class DLOpenerFileEntryReferenceTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1970337187

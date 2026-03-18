@@ -489,3 +489,4 @@ public class CommercePriceListDiscountRelLocalServiceWrapper
 		_commercePriceListDiscountRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:828994561

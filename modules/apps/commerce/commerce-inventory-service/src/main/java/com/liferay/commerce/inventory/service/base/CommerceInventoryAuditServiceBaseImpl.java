@@ -130,3 +130,4 @@ public abstract class CommerceInventoryAuditServiceBaseImpl
 		CommerceInventoryAuditServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1148018115

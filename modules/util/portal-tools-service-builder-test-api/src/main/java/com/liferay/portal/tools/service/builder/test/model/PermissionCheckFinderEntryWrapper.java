@@ -299,3 +299,4 @@ public class PermissionCheckFinderEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:783406413

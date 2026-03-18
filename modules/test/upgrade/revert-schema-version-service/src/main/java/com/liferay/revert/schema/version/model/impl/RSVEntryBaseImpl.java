@@ -39,3 +39,4 @@ public abstract class RSVEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1263350746

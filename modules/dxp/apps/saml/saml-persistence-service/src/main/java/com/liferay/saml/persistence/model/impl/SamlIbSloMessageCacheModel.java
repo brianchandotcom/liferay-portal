@@ -164,3 +164,4 @@ public class SamlIbSloMessageCacheModel
 	public String samlIdpSessionIndex;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-411435591

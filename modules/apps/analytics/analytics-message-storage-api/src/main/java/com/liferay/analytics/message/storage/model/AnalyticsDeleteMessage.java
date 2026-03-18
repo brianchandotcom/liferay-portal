@@ -52,3 +52,4 @@ public interface AnalyticsDeleteMessage
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:98827335

@@ -81,3 +81,4 @@ public interface CommerceSubscriptionEntry
 			subscriptionTypeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2115129686

@@ -47,3 +47,4 @@ public interface PasswordTracker extends PasswordTrackerModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-341121037

@@ -494,3 +494,4 @@ public interface AnnouncementsDeliveryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-889993708

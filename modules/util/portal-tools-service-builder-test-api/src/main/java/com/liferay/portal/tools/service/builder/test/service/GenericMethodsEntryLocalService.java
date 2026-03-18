@@ -71,3 +71,4 @@ public interface GenericMethodsEntryLocalService extends BaseLocalService {
 				BiConsumer<Long, N> biConsumer);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:603507821

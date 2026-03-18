@@ -88,3 +88,4 @@ public class MembershipRequestServiceWrapper
 	private MembershipRequestService _membershipRequestService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:427188046

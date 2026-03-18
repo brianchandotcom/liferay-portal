@@ -230,3 +230,4 @@ public class AssetTagServiceUtil {
 	private static volatile AssetTagService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-841028467

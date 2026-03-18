@@ -2100,3 +2100,4 @@ public interface PatcherFixPackPersistence
 		java.util.List<com.liferay.osb.patcher.model.PatcherFix> patcherFixes);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1000215310

@@ -59,3 +59,4 @@ public interface CommercePriceListOrderTypeRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-859856821

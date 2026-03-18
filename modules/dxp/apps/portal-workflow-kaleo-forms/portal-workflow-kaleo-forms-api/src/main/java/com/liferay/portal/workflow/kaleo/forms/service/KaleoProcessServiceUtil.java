@@ -206,3 +206,4 @@ public class KaleoProcessServiceUtil {
 			KaleoProcessServiceUtil.class, KaleoProcessService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:916496015

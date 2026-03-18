@@ -77,3 +77,4 @@ public abstract class FaroProjectFinderBaseImpl
 		FaroProjectFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2023848008

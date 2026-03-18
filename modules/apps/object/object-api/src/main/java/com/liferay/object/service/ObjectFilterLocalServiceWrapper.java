@@ -406,3 +406,4 @@ public class ObjectFilterLocalServiceWrapper
 	private ObjectFilterLocalService _objectFilterLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1415020648

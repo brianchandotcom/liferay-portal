@@ -522,3 +522,4 @@ public class DefinitionLocalServiceWrapper
 	private DefinitionLocalService _definitionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2119336597

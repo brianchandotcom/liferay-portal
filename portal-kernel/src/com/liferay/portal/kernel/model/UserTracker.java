@@ -59,3 +59,4 @@ public interface UserTracker extends PersistedModel, UserTrackerModel {
 	public java.util.List<UserTrackerPath> getPaths();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:492142747

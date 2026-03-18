@@ -14,3 +14,4 @@ public class RolesUADConstants {
 	public static final String[] USER_ID_FIELD_NAMES_ROLE = {"userId"};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-408678263

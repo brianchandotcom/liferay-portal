@@ -53,3 +53,4 @@ public class ObjectFilterTable extends BaseTable<ObjectFilterTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-639875678

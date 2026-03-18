@@ -320,3 +320,4 @@ public class KaleoNodeLocalServiceUtil {
 			KaleoNodeLocalServiceUtil.class, KaleoNodeLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:603328108

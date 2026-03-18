@@ -567,3 +567,4 @@ public class LayoutPageTemplateStructureRelLocalServiceWrapper
 		_layoutPageTemplateStructureRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-234353878

@@ -2448,3 +2448,4 @@ public class DLFileEntryServiceHttp {
 		new Class[] {long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-399461420

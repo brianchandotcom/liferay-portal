@@ -1349,3 +1349,4 @@ public abstract class UserLocalServiceBaseImpl
 		UserLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-726033299

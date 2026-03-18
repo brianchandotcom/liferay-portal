@@ -67,3 +67,4 @@ public class CPSpecificationOptionListTypeDefinitionRelServiceUtil {
 				CPSpecificationOptionListTypeDefinitionRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:55874887

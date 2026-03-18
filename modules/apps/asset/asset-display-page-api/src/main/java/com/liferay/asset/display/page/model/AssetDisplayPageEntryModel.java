@@ -325,3 +325,4 @@ public interface AssetDisplayPageEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1987595277

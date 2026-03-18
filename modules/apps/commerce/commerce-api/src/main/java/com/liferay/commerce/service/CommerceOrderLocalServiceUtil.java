@@ -1153,3 +1153,4 @@ public class CommerceOrderLocalServiceUtil {
 			CommerceOrderLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2075724431

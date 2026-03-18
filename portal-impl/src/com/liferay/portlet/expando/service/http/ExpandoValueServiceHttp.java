@@ -317,3 +317,4 @@ public class ExpandoValueServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1005932750

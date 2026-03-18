@@ -1351,3 +1351,4 @@ public class NotificationQueueEntryUtil {
 	private static volatile NotificationQueueEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:457553654

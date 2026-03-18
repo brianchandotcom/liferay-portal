@@ -378,3 +378,4 @@ public class FinderWhereClauseEntryLocalServiceWrapper
 		_finderWhereClauseEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1750090517

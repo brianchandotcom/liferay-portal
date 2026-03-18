@@ -874,3 +874,4 @@ public class DDMTemplateServiceUtil {
 		new Snapshot<>(DDMTemplateServiceUtil.class, DDMTemplateService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:584877202

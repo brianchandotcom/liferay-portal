@@ -910,3 +910,4 @@ public class CProductUtil {
 	private static volatile CProductPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1485762904

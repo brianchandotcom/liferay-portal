@@ -1294,3 +1294,4 @@ public interface EmailAddressPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1368421650

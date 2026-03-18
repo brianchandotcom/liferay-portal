@@ -67,3 +67,4 @@ public class OrganizationFinderBaseImpl
 		OrganizationFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1798811433

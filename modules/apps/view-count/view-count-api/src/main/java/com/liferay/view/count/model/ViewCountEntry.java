@@ -86,3 +86,4 @@ public interface ViewCountEntry extends PersistedModel, ViewCountEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1587178243

@@ -776,3 +776,4 @@ public interface JSONStorageEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:313603527

@@ -203,3 +203,4 @@ public class CPConfigurationListRelServiceUtil {
 			CPConfigurationListRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1990279094

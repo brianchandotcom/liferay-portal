@@ -38,3 +38,4 @@ public abstract class MBBanBaseImpl extends MBBanModelImpl implements MBBan {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1746541951

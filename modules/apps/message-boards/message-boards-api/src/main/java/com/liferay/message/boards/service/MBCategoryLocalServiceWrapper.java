@@ -849,3 +849,4 @@ public class MBCategoryLocalServiceWrapper
 	private MBCategoryLocalService _mbCategoryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1292290282

@@ -129,3 +129,4 @@ public interface AccountEntryUserRelService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1436764763

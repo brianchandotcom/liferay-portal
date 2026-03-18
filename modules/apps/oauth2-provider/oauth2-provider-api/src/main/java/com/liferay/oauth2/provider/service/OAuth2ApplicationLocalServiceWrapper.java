@@ -637,3 +637,4 @@ public class OAuth2ApplicationLocalServiceWrapper
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:682669637

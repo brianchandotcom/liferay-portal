@@ -605,3 +605,4 @@ public class TestEntityPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1336722572

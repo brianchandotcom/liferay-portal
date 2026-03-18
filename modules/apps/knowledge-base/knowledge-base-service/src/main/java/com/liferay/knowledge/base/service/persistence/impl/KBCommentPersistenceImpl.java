@@ -6143,3 +6143,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:313642548

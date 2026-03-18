@@ -41,3 +41,4 @@ public abstract class AssetDisplayPageEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1431617912

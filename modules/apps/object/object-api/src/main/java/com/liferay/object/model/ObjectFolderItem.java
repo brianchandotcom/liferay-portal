@@ -50,3 +50,4 @@ public interface ObjectFolderItem
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1587391558

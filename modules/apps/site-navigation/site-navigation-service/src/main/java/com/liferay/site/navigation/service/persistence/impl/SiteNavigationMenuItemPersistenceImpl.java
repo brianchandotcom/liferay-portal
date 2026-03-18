@@ -6242,3 +6242,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-450409815

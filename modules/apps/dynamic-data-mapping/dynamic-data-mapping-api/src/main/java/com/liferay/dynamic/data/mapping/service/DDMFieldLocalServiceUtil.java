@@ -353,3 +353,4 @@ public class DDMFieldLocalServiceUtil {
 			DDMFieldLocalServiceUtil.class, DDMFieldLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1250580935

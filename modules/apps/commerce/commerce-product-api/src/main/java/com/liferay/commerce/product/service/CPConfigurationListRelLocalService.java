@@ -359,3 +359,4 @@ public interface CPConfigurationListRelLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1809342912

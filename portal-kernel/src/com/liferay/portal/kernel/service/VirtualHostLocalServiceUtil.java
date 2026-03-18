@@ -332,3 +332,4 @@ public class VirtualHostLocalServiceUtil {
 	private static volatile VirtualHostLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-219097511

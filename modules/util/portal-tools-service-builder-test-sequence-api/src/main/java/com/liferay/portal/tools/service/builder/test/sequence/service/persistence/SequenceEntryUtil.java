@@ -627,3 +627,4 @@ public class SequenceEntryUtil {
 	private static volatile SequenceEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-264956795

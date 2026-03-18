@@ -230,3 +230,4 @@ public class CalendarServiceUtil {
 		new Snapshot<>(CalendarServiceUtil.class, CalendarService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1761345391

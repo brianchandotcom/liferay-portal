@@ -52,3 +52,4 @@ public interface SamlIbSloMessage
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1568481470

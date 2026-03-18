@@ -103,3 +103,4 @@ public class DLFileVersionTable extends BaseTable<DLFileVersionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1136925177

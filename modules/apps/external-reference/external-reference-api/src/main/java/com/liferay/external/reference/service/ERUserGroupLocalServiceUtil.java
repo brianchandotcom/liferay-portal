@@ -57,3 +57,4 @@ public class ERUserGroupLocalServiceUtil {
 			ERUserGroupLocalServiceUtil.class, ERUserGroupLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-415319211

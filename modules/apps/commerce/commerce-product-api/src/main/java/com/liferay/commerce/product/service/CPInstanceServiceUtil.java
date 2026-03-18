@@ -357,3 +357,4 @@ public class CPInstanceServiceUtil {
 		new Snapshot<>(CPInstanceServiceUtil.class, CPInstanceService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:341622076

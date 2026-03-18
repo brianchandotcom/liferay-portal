@@ -188,3 +188,4 @@ public class SequenceEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2028042711

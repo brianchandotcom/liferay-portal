@@ -95,3 +95,4 @@ public class OAuth2AuthorizationTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-479389449

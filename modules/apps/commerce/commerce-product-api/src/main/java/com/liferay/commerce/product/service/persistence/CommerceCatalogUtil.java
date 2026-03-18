@@ -1625,3 +1625,4 @@ public class CommerceCatalogUtil {
 	private static volatile CommerceCatalogPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1425654977

@@ -843,3 +843,4 @@ public class JournalFolderLocalServiceWrapper
 	private JournalFolderLocalService _journalFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:747465235

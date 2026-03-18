@@ -403,3 +403,4 @@ public class NotificationTemplateLocalServiceUtil {
 			NotificationTemplateLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-298831699

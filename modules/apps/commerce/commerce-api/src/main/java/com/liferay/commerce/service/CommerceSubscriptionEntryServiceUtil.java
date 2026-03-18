@@ -183,3 +183,4 @@ public class CommerceSubscriptionEntryServiceUtil {
 			CommerceSubscriptionEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1485719285

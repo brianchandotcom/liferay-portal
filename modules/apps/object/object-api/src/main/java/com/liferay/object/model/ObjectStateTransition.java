@@ -57,3 +57,4 @@ public interface ObjectStateTransition
 		long targetObjectStateListTypeEntryId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1518933783

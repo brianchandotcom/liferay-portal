@@ -378,3 +378,4 @@ public class SamlIdpSpConnectionLocalServiceUtil {
 			SamlIdpSpConnectionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1386259657

@@ -339,3 +339,4 @@ public class DDMTemplateVersionCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-148566686

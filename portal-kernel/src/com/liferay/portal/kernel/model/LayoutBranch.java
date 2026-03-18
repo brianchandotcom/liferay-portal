@@ -47,3 +47,4 @@ public interface LayoutBranch extends LayoutBranchModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1887550161

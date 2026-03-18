@@ -84,3 +84,4 @@ public class SocialActivitySetFinderUtil {
 	private static SocialActivitySetFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-733932497

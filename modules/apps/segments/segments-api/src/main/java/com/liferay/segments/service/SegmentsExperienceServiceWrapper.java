@@ -243,3 +243,4 @@ public class SegmentsExperienceServiceWrapper
 	private SegmentsExperienceService _segmentsExperienceService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1269078908

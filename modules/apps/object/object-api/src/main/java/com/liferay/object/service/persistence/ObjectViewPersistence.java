@@ -751,3 +751,4 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:880738889

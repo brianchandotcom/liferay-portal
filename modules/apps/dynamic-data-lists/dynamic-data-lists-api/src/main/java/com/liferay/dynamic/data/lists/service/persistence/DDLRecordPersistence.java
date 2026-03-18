@@ -1249,3 +1249,4 @@ public interface DDLRecordPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1605219854

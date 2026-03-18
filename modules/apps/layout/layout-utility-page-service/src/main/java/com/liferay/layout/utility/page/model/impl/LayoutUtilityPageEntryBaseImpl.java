@@ -41,3 +41,4 @@ public abstract class LayoutUtilityPageEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:686807814

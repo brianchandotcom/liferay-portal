@@ -266,3 +266,4 @@ public class RedirectEntryCacheModel
 	public String sourceURL;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:827461505

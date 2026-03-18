@@ -50,3 +50,4 @@ public class ExpandoColumnTable extends BaseTable<ExpandoColumnTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-334201059

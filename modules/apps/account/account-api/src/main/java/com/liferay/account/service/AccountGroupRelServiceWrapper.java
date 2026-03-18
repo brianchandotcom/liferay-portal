@@ -96,3 +96,4 @@ public class AccountGroupRelServiceWrapper
 	private AccountGroupRelService _accountGroupRelService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2087676286

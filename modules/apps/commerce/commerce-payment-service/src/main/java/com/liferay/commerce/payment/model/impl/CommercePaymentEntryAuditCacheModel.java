@@ -249,3 +249,4 @@ public class CommercePaymentEntryAuditCacheModel
 	public String logTypeSettings;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:30329954

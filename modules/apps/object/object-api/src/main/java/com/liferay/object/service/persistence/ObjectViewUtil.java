@@ -988,3 +988,4 @@ public class ObjectViewUtil {
 	private static volatile ObjectViewPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1699141227

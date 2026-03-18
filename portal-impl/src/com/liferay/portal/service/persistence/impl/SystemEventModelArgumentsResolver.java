@@ -131,3 +131,4 @@ public class SystemEventModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:571328842

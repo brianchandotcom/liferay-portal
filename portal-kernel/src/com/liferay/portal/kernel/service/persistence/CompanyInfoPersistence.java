@@ -195,3 +195,4 @@ public interface CompanyInfoPersistence extends BasePersistence<CompanyInfo> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:379282094

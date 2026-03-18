@@ -47,3 +47,4 @@ public class NestedSetsTreeEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1423087685

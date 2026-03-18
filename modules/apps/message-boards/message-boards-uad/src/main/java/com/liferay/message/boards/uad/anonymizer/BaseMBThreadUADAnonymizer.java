@@ -105,3 +105,4 @@ public abstract class BaseMBThreadUADAnonymizer
 	protected MBThreadLocalService mbThreadLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1861198087

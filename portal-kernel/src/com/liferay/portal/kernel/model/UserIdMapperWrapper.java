@@ -288,3 +288,4 @@ public class UserIdMapperWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1617128567

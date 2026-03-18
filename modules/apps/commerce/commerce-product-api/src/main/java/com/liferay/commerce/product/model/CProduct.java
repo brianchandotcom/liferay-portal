@@ -48,3 +48,4 @@ public interface CProduct extends CProductModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2105964985

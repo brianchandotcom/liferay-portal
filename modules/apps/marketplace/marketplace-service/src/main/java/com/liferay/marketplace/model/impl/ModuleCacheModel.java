@@ -171,3 +171,4 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 	public String contextName;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1895968407

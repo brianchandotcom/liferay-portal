@@ -47,3 +47,4 @@ public interface ObjectViewColumnService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1978450877

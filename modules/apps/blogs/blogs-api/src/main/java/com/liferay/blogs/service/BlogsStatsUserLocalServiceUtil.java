@@ -74,3 +74,4 @@ public class BlogsStatsUserLocalServiceUtil {
 			BlogsStatsUserLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1093861939

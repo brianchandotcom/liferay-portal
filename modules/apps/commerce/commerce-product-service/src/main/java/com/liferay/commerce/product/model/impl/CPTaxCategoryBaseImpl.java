@@ -39,3 +39,4 @@ public abstract class CPTaxCategoryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1063278085

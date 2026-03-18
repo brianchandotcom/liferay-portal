@@ -1155,3 +1155,4 @@ public class RepositoryUtil {
 	private static volatile RepositoryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1060959011

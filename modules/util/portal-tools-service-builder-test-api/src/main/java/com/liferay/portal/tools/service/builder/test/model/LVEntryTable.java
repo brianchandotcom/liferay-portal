@@ -45,3 +45,4 @@ public class LVEntryTable extends BaseTable<LVEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1977870371

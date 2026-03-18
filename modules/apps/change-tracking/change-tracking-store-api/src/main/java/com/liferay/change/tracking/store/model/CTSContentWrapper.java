@@ -368,3 +368,4 @@ public class CTSContentWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:507116314

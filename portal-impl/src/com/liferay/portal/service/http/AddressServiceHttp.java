@@ -506,3 +506,4 @@ public class AddressServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-775383636

@@ -272,3 +272,4 @@ public interface AkismetEntryLocalService
 		String referrer, String userAgent, String userIP, String userURL);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1212271301

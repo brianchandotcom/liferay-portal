@@ -53,12 +53,12 @@ public abstract class BaseKBFolderUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(kbFolder.getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(kbFolder.getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(kbFolder.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -82,3 +82,4 @@ public abstract class BaseKBFolderUADExporter
 	protected KBFolderLocalService kbFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:63735682

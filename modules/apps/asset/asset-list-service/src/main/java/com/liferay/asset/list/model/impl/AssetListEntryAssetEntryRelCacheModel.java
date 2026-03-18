@@ -257,3 +257,4 @@ public class AssetListEntryAssetEntryRelCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-486717449

@@ -625,3 +625,4 @@ public class PushNotificationsDeviceUtil {
 	private static volatile PushNotificationsDevicePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1825778308

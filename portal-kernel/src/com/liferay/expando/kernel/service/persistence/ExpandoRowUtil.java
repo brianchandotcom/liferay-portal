@@ -663,3 +663,4 @@ public class ExpandoRowUtil {
 	private static volatile ExpandoRowPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-465911317

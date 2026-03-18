@@ -420,3 +420,4 @@ public interface AnnouncementsEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-519188019

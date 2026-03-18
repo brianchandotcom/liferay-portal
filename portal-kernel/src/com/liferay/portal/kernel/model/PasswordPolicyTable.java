@@ -116,3 +116,4 @@ public class PasswordPolicyTable extends BaseTable<PasswordPolicyTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1383288366

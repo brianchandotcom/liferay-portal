@@ -38,3 +38,4 @@ public abstract class LayoutBaseImpl extends LayoutModelImpl implements Layout {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1619053345

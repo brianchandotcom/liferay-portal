@@ -55,3 +55,4 @@ public interface CPConfigurationEntrySetting
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1028692345

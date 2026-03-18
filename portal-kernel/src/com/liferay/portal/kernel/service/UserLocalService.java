@@ -2492,3 +2492,4 @@ public interface UserLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1183228043

@@ -305,3 +305,4 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:102425204

@@ -296,3 +296,4 @@ public class ExportImportConfigurationCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2053972550

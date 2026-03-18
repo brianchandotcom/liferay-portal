@@ -95,3 +95,4 @@ public class CommerceNotificationQueueEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1672540939

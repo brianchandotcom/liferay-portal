@@ -77,3 +77,4 @@ public abstract class CommerceShipmentItemFinderBaseImpl
 		CommerceShipmentItemFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:201336436

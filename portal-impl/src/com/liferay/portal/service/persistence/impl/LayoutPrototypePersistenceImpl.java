@@ -4996,3 +4996,4 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1255402069

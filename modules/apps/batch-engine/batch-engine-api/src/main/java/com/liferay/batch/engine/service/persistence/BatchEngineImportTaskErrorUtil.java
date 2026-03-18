@@ -487,3 +487,4 @@ public class BatchEngineImportTaskErrorUtil {
 	private static volatile BatchEngineImportTaskErrorPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2066925492

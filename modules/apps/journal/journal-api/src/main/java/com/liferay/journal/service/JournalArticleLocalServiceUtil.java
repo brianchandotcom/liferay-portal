@@ -3128,3 +3128,4 @@ public class JournalArticleLocalServiceUtil {
 			JournalArticleLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1821916815

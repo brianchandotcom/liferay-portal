@@ -57,3 +57,4 @@ public class KaleoProcessTable extends BaseTable<KaleoProcessTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2036324678

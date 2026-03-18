@@ -196,3 +196,4 @@ public interface IndexEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-472408621

@@ -682,3 +682,4 @@ public interface CommerceDiscountModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-749366415

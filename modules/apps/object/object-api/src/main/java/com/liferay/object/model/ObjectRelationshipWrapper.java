@@ -869,3 +869,4 @@ public class ObjectRelationshipWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:629820616

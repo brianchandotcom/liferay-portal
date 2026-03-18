@@ -538,3 +538,4 @@ public class RedirectEntryLocalServiceWrapper
 	private RedirectEntryLocalService _redirectEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:500715199

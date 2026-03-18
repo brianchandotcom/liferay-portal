@@ -65,3 +65,4 @@ public class CPDAvailabilityEstimateTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1561012143

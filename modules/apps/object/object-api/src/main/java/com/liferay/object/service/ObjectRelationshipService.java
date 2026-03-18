@@ -96,3 +96,4 @@ public interface ObjectRelationshipService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-728757280

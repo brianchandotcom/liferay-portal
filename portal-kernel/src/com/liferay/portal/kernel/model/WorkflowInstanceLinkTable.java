@@ -66,3 +66,4 @@ public class WorkflowInstanceLinkTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:443353980

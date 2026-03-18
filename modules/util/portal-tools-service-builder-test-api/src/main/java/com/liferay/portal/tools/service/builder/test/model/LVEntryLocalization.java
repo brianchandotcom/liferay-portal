@@ -50,3 +50,4 @@ public interface LVEntryLocalization extends LVEntryLocalizationModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-112738507

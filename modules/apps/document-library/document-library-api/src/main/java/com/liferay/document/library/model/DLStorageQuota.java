@@ -50,3 +50,4 @@ public interface DLStorageQuota extends DLStorageQuotaModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:115790823

@@ -480,3 +480,4 @@ public class CompanyCacheModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2036967449

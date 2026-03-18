@@ -38,3 +38,4 @@ public abstract class UserBaseImpl extends UserModelImpl implements User {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-364565606

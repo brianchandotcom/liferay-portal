@@ -481,3 +481,4 @@ public class CommerceWishListItemLocalServiceWrapper
 	private CommerceWishListItemLocalService _commerceWishListItemLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1096313181

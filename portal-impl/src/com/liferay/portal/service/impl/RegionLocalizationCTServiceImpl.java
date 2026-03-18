@@ -44,3 +44,4 @@ public class RegionLocalizationCTServiceImpl
 	private RegionLocalizationPersistence _regionLocalizationPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-451797780

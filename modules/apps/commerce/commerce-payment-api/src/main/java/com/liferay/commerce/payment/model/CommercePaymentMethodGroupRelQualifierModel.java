@@ -246,3 +246,4 @@ public interface CommercePaymentMethodGroupRelQualifierModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1736916940

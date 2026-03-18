@@ -961,3 +961,4 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2010058199

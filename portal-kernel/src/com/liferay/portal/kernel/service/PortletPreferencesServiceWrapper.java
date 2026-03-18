@@ -104,3 +104,4 @@ public class PortletPreferencesServiceWrapper
 	private PortletPreferencesService _portletPreferencesService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:905619454

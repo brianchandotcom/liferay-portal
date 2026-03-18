@@ -495,3 +495,4 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 		CommerceShippingFixedOptionRelLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1877916120

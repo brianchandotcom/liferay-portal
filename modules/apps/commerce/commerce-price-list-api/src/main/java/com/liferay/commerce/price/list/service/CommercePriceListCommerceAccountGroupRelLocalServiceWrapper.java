@@ -568,3 +568,4 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceWrapper
 		_commercePriceListCommerceAccountGroupRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-921011585

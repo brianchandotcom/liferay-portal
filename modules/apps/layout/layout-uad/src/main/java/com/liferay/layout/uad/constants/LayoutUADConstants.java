@@ -38,3 +38,4 @@ public class LayoutUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:45034899

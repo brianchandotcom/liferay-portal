@@ -46,3 +46,4 @@ public class PortalLocalServiceWrapper
 	private PortalLocalService _portalLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1304434004

@@ -57,3 +57,4 @@ public abstract class ViewCountEntryFinderBaseImpl
 	protected ViewCountEntryPersistence viewCountEntryPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1312937333

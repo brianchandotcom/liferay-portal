@@ -235,3 +235,4 @@ public class CPInstanceOptionValueRelCacheModel
 	public long CPInstanceId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1620172579

@@ -437,3 +437,4 @@ public class CPSpecificationOptionLocalServiceUtil {
 			CPSpecificationOptionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:322835932

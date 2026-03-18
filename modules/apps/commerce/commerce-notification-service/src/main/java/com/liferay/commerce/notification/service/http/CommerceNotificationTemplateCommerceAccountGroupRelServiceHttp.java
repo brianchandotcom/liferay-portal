@@ -259,3 +259,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelServiceHttp {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:876324428

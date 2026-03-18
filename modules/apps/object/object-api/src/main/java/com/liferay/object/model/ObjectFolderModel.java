@@ -366,3 +366,4 @@ public interface ObjectFolderModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1995154215

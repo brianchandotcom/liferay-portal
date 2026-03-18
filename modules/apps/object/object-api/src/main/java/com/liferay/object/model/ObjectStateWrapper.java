@@ -389,3 +389,4 @@ public class ObjectStateWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1770847417

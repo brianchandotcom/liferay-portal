@@ -9120,3 +9120,4 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1781849094

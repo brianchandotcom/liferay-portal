@@ -101,3 +101,4 @@ public class ObjectActionServiceWrapper
 	private ObjectActionService _objectActionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1220317811

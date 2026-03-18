@@ -287,3 +287,4 @@ public class CommerceCatalogCacheModel
 	public boolean system;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1030211326

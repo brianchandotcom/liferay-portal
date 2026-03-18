@@ -39,3 +39,4 @@ public abstract class DLStorageQuotaBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1958981874

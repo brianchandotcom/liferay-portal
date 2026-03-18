@@ -515,3 +515,4 @@ public class SiteFriendlyURLLocalServiceWrapper
 	private SiteFriendlyURLLocalService _siteFriendlyURLLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:477137480

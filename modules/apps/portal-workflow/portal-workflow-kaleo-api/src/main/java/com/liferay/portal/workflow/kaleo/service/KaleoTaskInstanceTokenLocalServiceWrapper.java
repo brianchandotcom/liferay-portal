@@ -829,3 +829,4 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 		_kaleoTaskInstanceTokenLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:734348315

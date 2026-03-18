@@ -145,3 +145,4 @@ public class CommerceTermEntryServiceUtil {
 			CommerceTermEntryServiceUtil.class, CommerceTermEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:101188878

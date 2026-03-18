@@ -394,3 +394,4 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-620022076

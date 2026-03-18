@@ -41,3 +41,4 @@ public abstract class SocialActivitySettingBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1873086741

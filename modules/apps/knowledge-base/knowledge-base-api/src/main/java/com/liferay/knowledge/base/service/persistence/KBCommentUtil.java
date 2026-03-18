@@ -1903,3 +1903,4 @@ public class KBCommentUtil {
 	private static volatile KBCommentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:942295529

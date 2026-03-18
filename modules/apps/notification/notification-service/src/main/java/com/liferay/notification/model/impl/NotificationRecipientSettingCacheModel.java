@@ -242,3 +242,4 @@ public class NotificationRecipientSettingCacheModel
 	public String value;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1869964195

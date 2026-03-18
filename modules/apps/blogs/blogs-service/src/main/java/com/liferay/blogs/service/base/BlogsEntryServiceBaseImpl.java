@@ -129,3 +129,4 @@ public abstract class BlogsEntryServiceBaseImpl
 		BlogsEntryServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-829271658

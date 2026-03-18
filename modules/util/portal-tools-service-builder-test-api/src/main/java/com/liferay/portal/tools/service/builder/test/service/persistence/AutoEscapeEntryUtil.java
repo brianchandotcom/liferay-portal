@@ -272,3 +272,4 @@ public class AutoEscapeEntryUtil {
 	private static volatile AutoEscapeEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2081174601

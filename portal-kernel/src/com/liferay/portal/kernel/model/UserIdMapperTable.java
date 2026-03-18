@@ -42,3 +42,4 @@ public class UserIdMapperTable extends BaseTable<UserIdMapperTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1102060372

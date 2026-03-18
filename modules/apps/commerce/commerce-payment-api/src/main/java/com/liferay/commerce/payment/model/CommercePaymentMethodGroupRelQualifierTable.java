@@ -65,3 +65,4 @@ public class CommercePaymentMethodGroupRelQualifierTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1818583170

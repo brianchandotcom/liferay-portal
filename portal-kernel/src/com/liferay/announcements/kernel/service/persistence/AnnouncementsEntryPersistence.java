@@ -1978,3 +1978,4 @@ public interface AnnouncementsEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:267018696

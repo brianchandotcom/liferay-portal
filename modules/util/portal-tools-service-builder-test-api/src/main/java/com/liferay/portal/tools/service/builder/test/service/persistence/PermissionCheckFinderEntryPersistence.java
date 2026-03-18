@@ -493,3 +493,4 @@ public interface PermissionCheckFinderEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1025880901

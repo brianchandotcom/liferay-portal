@@ -178,3 +178,4 @@ public class UserNotificationDeliveryCacheModel
 	public boolean deliver;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1753951210

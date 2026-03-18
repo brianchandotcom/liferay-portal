@@ -457,3 +457,4 @@ public class CPDefinitionServiceWrapper
 	private CPDefinitionService _cpDefinitionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2102707205

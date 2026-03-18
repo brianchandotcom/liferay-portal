@@ -55,3 +55,4 @@ public interface PortletPreferenceValue
 	public void setValue(String value);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-479134065

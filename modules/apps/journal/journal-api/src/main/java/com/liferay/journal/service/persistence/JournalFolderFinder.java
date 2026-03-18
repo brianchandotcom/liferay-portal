@@ -49,3 +49,4 @@ public interface JournalFolderFinder {
 		findF_ByNoAssets();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1676683917

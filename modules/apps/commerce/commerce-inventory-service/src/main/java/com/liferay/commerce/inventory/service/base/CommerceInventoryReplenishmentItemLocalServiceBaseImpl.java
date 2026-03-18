@@ -631,3 +631,4 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 		CommerceInventoryReplenishmentItemLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:470360574

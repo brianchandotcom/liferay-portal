@@ -349,3 +349,4 @@ public class ResourceActionLocalServiceUtil {
 	private static volatile ResourceActionLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1650648669

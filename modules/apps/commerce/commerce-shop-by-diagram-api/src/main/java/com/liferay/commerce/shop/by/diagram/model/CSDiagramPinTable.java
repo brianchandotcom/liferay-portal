@@ -53,3 +53,4 @@ public class CSDiagramPinTable extends BaseTable<CSDiagramPinTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-189536314

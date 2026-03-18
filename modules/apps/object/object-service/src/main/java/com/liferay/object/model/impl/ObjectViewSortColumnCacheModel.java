@@ -244,3 +244,4 @@ public class ObjectViewSortColumnCacheModel
 	public String sortOrder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-954167380

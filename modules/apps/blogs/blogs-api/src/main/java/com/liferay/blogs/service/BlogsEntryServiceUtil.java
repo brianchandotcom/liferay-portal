@@ -363,3 +363,4 @@ public class BlogsEntryServiceUtil {
 		new Snapshot<>(BlogsEntryServiceUtil.class, BlogsEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1361543771

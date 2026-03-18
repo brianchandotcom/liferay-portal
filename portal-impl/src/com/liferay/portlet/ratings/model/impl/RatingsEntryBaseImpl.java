@@ -39,3 +39,4 @@ public abstract class RatingsEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1471989947

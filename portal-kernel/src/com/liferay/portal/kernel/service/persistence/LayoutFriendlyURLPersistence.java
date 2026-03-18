@@ -1612,3 +1612,4 @@ public interface LayoutFriendlyURLPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:417769729

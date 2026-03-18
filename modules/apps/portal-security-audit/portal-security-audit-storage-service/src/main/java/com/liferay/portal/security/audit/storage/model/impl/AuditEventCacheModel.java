@@ -314,3 +314,4 @@ public class AuditEventCacheModel
 	public String additionalInfo;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2002660291

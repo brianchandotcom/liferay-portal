@@ -98,3 +98,4 @@ public class MBSuspiciousActivityServiceUtil {
 			MBSuspiciousActivityService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-619389639

@@ -880,3 +880,4 @@ public class AssetLinkModelImpl
 	private AssetLink _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-398570963

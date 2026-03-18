@@ -48,3 +48,4 @@ public interface FaroPreferences extends FaroPreferencesModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-970340881

@@ -48,3 +48,4 @@ public class LaunchSetServiceWrapper
 	private LaunchSetService _launchSetService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1769804218

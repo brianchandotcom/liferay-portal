@@ -1765,3 +1765,4 @@ public class MBCategoryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1326649201

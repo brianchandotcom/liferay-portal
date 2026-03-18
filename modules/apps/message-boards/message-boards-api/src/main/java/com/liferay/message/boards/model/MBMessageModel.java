@@ -687,3 +687,4 @@ public interface MBMessageModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:850737581

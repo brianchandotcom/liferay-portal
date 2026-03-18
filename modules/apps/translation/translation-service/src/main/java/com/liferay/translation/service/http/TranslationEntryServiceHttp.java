@@ -195,3 +195,4 @@ public class TranslationEntryServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1489942510

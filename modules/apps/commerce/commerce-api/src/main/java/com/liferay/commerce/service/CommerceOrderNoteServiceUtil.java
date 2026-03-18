@@ -141,3 +141,4 @@ public class CommerceOrderNoteServiceUtil {
 			CommerceOrderNoteServiceUtil.class, CommerceOrderNoteService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:342908630

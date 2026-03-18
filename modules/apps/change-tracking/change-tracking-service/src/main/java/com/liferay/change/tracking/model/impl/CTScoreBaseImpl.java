@@ -39,3 +39,4 @@ public abstract class CTScoreBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1107613844

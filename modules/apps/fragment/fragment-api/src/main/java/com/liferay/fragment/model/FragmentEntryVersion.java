@@ -50,3 +50,4 @@ public interface FragmentEntryVersion extends FragmentEntryVersionModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1338328060

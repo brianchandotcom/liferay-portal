@@ -193,3 +193,4 @@ public class FaroPreferencesCacheModel
 	public String preferences;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1847864437

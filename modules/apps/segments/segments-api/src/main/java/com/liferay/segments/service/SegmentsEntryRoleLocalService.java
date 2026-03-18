@@ -322,3 +322,4 @@ public interface SegmentsEntryRoleLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:96288749

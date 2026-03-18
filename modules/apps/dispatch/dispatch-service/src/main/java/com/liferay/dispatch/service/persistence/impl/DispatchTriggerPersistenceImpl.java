@@ -8782,3 +8782,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1449538214

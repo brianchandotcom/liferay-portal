@@ -800,3 +800,4 @@ public class JournalFeedWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1254888805

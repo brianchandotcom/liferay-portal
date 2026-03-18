@@ -396,3 +396,4 @@ public class VirtualHostLocalServiceWrapper
 	private VirtualHostLocalService _virtualHostLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1070851949

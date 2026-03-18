@@ -303,3 +303,4 @@ public class UADPartialEntryLocalServiceUtil {
 	private static volatile UADPartialEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2014504495

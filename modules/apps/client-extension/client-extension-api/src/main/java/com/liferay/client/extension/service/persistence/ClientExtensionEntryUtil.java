@@ -1409,3 +1409,4 @@ public class ClientExtensionEntryUtil {
 	private static volatile ClientExtensionEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-495904513

@@ -1413,3 +1413,4 @@ public class DDLRecordSetUtil {
 	private static volatile DDLRecordSetPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-106114898

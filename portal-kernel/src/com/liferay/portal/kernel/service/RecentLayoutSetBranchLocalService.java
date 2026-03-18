@@ -282,3 +282,4 @@ public interface RecentLayoutSetBranchLocalService
 		RecentLayoutSetBranch recentLayoutSetBranch);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:475754838

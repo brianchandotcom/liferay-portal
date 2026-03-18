@@ -76,3 +76,4 @@ public class SXPElementTable extends BaseTable<SXPElementTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-282250196

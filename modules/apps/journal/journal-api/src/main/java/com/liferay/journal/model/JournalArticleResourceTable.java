@@ -48,3 +48,4 @@ public class JournalArticleResourceTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-816359559

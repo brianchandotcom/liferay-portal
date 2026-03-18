@@ -55,3 +55,4 @@ public class ObjectLayoutTable extends BaseTable<ObjectLayoutTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-884988450

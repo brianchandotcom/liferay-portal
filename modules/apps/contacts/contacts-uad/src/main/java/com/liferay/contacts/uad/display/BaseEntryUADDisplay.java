@@ -73,3 +73,4 @@ public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
 	protected EntryLocalService entryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1473616003

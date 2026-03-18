@@ -277,3 +277,4 @@ public class BatchPlannerMappingServiceHttp {
 		new Class[] {long.class, String.class, String.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1257174693

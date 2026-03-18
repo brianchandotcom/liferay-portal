@@ -905,3 +905,4 @@ public interface DDMFieldAttributePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1946103791

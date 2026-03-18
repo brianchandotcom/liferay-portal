@@ -224,3 +224,4 @@ public class SocialActivityCounterCacheModel
 	public boolean active;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-28698617

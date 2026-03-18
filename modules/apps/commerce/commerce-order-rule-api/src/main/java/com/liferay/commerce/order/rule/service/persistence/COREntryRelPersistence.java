@@ -509,3 +509,4 @@ public interface COREntryRelPersistence extends BasePersistence<COREntryRel> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:315398935

@@ -148,3 +148,4 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 			commerceDiscountValue);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1004683718

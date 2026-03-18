@@ -988,3 +988,4 @@ public class SocialActivityLimitModelImpl
 	private SocialActivityLimit _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1429465150

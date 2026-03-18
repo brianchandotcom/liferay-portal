@@ -568,3 +568,4 @@ public class DLFileShortcutLocalServiceUtil {
 	private static volatile DLFileShortcutLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:209962351

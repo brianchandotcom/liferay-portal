@@ -856,3 +856,4 @@ public interface OAuthClientEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1164581258

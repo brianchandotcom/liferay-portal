@@ -356,3 +356,4 @@ public interface SharepointOAuth2TokenEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:913934506

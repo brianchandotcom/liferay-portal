@@ -259,3 +259,4 @@ public class PatcherFixPackCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1915150801

@@ -695,3 +695,4 @@ public interface RepositoryEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-197223202

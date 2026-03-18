@@ -413,3 +413,4 @@ public class GroupCacheModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-130488928

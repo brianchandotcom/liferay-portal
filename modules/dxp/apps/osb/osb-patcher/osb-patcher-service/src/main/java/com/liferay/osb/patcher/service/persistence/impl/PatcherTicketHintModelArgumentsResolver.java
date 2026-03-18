@@ -116,3 +116,4 @@ public class PatcherTicketHintModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1482138251

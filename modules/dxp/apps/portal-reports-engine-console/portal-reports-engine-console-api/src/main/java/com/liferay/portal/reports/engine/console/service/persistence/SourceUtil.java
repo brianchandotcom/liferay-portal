@@ -1096,3 +1096,4 @@ public class SourceUtil {
 	private static volatile SourcePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-337920531

@@ -39,3 +39,4 @@ public abstract class CPDefinitionLinkBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-124675123

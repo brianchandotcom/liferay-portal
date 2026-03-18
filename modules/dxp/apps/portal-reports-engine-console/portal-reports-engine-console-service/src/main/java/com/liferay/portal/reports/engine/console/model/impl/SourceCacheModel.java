@@ -272,3 +272,4 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 	public String driverPassword;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:74262571

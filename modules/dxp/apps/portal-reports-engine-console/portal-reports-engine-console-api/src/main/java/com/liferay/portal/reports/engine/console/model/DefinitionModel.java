@@ -479,3 +479,4 @@ public interface DefinitionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-146973486

@@ -235,3 +235,4 @@ public interface AssetLinkModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:730723285

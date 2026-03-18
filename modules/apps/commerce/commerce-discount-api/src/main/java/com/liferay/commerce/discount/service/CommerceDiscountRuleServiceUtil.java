@@ -137,3 +137,4 @@ public class CommerceDiscountRuleServiceUtil {
 			CommerceDiscountRuleService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:746872371

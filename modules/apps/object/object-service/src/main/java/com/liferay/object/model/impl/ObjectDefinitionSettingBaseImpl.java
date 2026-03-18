@@ -42,3 +42,4 @@ public abstract class ObjectDefinitionSettingBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1768119950

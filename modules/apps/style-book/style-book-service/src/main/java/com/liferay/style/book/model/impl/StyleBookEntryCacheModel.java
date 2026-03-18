@@ -327,3 +327,4 @@ public class StyleBookEntryCacheModel
 	public String themeId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-575322181

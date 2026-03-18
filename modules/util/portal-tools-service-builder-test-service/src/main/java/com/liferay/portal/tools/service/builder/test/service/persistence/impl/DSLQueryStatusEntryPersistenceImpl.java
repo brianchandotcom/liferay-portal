@@ -607,3 +607,4 @@ public class DSLQueryStatusEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1491465531

@@ -369,3 +369,4 @@ public class DLSyncEventLocalServiceWrapper
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1453797240

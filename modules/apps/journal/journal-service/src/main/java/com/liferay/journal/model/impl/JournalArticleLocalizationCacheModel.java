@@ -190,3 +190,4 @@ public class JournalArticleLocalizationCacheModel
 	public String languageId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:655599786

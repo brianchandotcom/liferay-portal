@@ -5033,3 +5033,4 @@ public class ERCVersionedEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1459851392

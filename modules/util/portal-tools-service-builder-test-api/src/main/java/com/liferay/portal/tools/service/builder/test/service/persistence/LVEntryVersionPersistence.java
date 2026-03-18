@@ -1881,3 +1881,4 @@ public interface LVEntryVersionPersistence
 				BigDecimalEntry> bigDecimalEntries);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-730867572

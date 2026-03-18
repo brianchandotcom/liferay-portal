@@ -270,3 +270,4 @@ public class TestEntityUtil {
 	private static volatile TestEntityPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1765080221

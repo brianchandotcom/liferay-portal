@@ -963,3 +963,4 @@ public class ClientExtensionEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:113131057

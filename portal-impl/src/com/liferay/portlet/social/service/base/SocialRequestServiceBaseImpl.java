@@ -207,3 +207,4 @@ public abstract class SocialRequestServiceBaseImpl
 		SocialRequestServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1101871699

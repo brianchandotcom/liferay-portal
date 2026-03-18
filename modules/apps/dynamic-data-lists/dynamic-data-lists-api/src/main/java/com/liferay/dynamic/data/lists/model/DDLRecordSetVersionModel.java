@@ -615,3 +615,4 @@ public interface DDLRecordSetVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:426449407

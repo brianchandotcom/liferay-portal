@@ -55,3 +55,4 @@ public interface CommerceAvailabilityEstimate
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:585774826

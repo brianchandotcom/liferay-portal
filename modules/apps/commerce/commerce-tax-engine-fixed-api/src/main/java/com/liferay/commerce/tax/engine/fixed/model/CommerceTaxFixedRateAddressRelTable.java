@@ -72,3 +72,4 @@ public class CommerceTaxFixedRateAddressRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:847009023

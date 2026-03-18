@@ -1067,3 +1067,4 @@ public class LaunchEntryModelImpl
 	private LaunchEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1706160631

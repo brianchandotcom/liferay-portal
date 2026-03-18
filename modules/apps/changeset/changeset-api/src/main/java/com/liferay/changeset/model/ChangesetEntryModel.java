@@ -258,3 +258,4 @@ public interface ChangesetEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-854234712

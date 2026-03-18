@@ -114,3 +114,4 @@ public class CommercePaymentEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1527145486

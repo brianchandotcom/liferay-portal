@@ -341,3 +341,4 @@ public interface CommerceNotificationQueueEntryLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1259327200

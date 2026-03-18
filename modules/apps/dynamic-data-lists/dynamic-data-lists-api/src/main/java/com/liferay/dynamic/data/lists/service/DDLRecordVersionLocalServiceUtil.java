@@ -399,3 +399,4 @@ public class DDLRecordVersionLocalServiceUtil {
 			DDLRecordVersionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1222689227

@@ -901,3 +901,4 @@ public class OAuth2ApplicationWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-237298256

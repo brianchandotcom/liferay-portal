@@ -3972,3 +3972,4 @@ public class KaleoTaskFormInstancePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1655380927

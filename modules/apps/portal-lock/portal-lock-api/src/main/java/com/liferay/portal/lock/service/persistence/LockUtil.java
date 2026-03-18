@@ -1394,3 +1394,4 @@ public class LockUtil {
 	private static volatile LockPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1755081991

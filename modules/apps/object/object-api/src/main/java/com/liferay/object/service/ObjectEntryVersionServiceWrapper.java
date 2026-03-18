@@ -122,3 +122,4 @@ public class ObjectEntryVersionServiceWrapper
 	private ObjectEntryVersionService _objectEntryVersionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1024334129

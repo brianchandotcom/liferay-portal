@@ -705,3 +705,4 @@ public interface LaunchEntryPersistence extends BasePersistence<LaunchEntry> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1056526949

@@ -85,3 +85,4 @@ public class LayoutPageTemplateCollectionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-614490178

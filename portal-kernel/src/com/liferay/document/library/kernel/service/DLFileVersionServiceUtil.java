@@ -82,3 +82,4 @@ public class DLFileVersionServiceUtil {
 	private static volatile DLFileVersionService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:159285511

@@ -298,3 +298,4 @@ public interface ObjectFilterLocalService
 	public ObjectFilter updateObjectFilter(ObjectFilter objectFilter);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:141060337

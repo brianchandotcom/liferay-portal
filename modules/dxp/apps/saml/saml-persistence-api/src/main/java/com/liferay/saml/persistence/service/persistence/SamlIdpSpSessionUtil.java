@@ -630,3 +630,4 @@ public class SamlIdpSpSessionUtil {
 	private static volatile SamlIdpSpSessionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-178803535

@@ -1146,3 +1146,4 @@ public class OAuthClientASLocalMetadataModelImpl
 	private OAuthClientASLocalMetadata _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-578211203

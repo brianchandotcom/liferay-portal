@@ -259,3 +259,4 @@ public class CommerceInventoryBookedQuantityCacheModel
 	public String unitOfMeasureKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1085849613

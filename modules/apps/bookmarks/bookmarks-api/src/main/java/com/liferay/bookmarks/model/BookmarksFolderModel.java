@@ -518,3 +518,4 @@ public interface BookmarksFolderModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-217609158

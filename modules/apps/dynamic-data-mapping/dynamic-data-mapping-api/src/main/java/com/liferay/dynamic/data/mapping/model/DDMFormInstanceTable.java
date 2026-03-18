@@ -74,3 +74,4 @@ public class DDMFormInstanceTable extends BaseTable<DDMFormInstanceTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:525121891

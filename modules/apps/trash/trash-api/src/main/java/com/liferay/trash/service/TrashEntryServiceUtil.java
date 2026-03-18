@@ -259,3 +259,4 @@ public class TrashEntryServiceUtil {
 		new Snapshot<>(TrashEntryServiceUtil.class, TrashEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:376284924

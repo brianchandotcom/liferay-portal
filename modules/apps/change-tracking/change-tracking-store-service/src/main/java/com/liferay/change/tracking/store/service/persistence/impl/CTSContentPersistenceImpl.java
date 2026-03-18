@@ -4039,3 +4039,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1769280525

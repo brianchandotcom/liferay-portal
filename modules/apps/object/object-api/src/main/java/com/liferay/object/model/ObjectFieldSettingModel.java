@@ -247,3 +247,4 @@ public interface ObjectFieldSettingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1326391818

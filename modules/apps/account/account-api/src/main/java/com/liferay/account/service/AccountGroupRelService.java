@@ -68,3 +68,4 @@ public interface AccountGroupRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:831527514

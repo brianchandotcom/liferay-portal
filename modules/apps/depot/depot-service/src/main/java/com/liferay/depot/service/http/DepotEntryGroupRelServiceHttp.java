@@ -451,3 +451,4 @@ public class DepotEntryGroupRelServiceHttp {
 		new Class[] {long.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-226627929

@@ -457,3 +457,4 @@ public class SXPElementLocalServiceWrapper
 	private SXPElementLocalService _sxpElementLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1454622549

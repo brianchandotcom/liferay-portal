@@ -35,3 +35,4 @@ public interface SocialActivityCounterFinder {
 		long groupId, String[] names, int start, int end);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-654931289

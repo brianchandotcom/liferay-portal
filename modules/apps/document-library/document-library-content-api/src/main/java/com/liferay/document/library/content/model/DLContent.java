@@ -50,3 +50,4 @@ public interface DLContent extends DLContentModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1596006800

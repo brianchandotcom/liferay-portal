@@ -9561,3 +9561,4 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:80672751

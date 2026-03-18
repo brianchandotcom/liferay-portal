@@ -106,3 +106,4 @@ public abstract class BaseKaleoTaskInstanceTokenUADAnonymizer
 		kaleoTaskInstanceTokenLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:659170580

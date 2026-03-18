@@ -52,3 +52,4 @@ public interface SamlSpAuthRequest
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1199833477

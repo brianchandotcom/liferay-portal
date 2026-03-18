@@ -74,3 +74,4 @@ public class DLFileEntryTypeTable extends BaseTable<DLFileEntryTypeTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1566332495

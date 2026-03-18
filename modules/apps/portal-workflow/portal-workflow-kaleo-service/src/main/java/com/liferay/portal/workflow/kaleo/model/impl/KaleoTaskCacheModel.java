@@ -244,3 +244,4 @@ public class KaleoTaskCacheModel
 	public String description;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2113564377

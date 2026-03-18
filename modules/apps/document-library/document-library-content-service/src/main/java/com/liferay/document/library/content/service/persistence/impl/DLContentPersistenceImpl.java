@@ -3113,3 +3113,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1830639004

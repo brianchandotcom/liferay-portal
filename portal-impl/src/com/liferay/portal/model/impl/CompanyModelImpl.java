@@ -1479,3 +1479,4 @@ public class CompanyModelImpl
 	private Company _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:988125139

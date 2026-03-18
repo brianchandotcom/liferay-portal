@@ -532,3 +532,4 @@ public class ObjectValidationRuleLocalServiceWrapper
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:722706568

@@ -959,3 +959,4 @@ public interface CommerceWishListItemPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-796510598

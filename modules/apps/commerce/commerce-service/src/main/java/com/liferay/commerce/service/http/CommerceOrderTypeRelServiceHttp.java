@@ -418,3 +418,4 @@ public class CommerceOrderTypeRelServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-62379437

@@ -77,3 +77,4 @@ public interface LayoutPageTemplateEntry
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:542442611

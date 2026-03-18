@@ -3318,3 +3318,4 @@ public class DDMStructureUtil {
 	private static volatile DDMStructurePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-580863206

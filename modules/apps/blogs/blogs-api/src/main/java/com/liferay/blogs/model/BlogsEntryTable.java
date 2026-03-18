@@ -106,3 +106,4 @@ public class BlogsEntryTable extends BaseTable<BlogsEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1830745013

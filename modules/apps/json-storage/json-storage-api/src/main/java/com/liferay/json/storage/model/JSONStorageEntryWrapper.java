@@ -447,3 +447,4 @@ public class JSONStorageEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-857369336

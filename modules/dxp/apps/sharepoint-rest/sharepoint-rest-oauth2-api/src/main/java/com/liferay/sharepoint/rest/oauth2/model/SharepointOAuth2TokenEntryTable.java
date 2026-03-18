@@ -61,3 +61,4 @@ public class SharepointOAuth2TokenEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-828757236

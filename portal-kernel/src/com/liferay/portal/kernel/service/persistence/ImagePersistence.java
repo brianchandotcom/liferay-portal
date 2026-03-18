@@ -293,3 +293,4 @@ public interface ImagePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-505260372

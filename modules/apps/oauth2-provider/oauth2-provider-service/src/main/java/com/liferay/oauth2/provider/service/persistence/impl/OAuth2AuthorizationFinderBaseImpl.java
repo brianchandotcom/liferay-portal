@@ -78,3 +78,4 @@ public abstract class OAuth2AuthorizationFinderBaseImpl
 		OAuth2AuthorizationFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1663582989

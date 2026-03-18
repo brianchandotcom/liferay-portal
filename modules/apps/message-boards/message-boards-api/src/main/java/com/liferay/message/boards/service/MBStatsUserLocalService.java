@@ -74,3 +74,4 @@ public interface MBStatsUserLocalService extends BaseLocalService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1841915595

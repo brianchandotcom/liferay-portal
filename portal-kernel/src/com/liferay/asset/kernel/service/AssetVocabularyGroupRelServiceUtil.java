@@ -71,3 +71,4 @@ public class AssetVocabularyGroupRelServiceUtil {
 	private static volatile AssetVocabularyGroupRelService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1340836508

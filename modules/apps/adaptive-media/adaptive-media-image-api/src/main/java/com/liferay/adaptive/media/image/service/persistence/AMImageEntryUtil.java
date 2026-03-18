@@ -1644,3 +1644,4 @@ public class AMImageEntryUtil {
 	private static volatile AMImageEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-623031888

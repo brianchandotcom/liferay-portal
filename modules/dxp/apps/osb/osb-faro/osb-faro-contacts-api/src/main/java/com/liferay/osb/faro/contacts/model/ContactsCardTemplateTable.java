@@ -59,3 +59,4 @@ public class ContactsCardTemplateTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-479838441

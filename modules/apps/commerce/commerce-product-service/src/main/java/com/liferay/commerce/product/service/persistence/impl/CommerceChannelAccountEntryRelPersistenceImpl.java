@@ -5567,3 +5567,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:578447871

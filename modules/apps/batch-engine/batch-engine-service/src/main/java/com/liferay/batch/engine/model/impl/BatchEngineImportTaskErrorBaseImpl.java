@@ -42,3 +42,4 @@ public abstract class BatchEngineImportTaskErrorBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-353847750

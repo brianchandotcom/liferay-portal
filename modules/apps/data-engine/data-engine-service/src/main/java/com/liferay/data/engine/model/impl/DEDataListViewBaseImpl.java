@@ -39,3 +39,4 @@ public abstract class DEDataListViewBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1793961442

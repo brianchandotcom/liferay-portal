@@ -571,3 +571,4 @@ public class ObjectViewColumnWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1404036225

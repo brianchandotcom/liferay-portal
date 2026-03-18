@@ -207,3 +207,4 @@ public interface TrashVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1993934895

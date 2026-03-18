@@ -169,3 +169,4 @@ public class CommercePriceModifierRelServiceUtil {
 			CommercePriceModifierRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:276142773

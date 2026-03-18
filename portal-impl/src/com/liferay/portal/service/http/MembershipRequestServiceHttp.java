@@ -217,3 +217,4 @@ public class MembershipRequestServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:160834976

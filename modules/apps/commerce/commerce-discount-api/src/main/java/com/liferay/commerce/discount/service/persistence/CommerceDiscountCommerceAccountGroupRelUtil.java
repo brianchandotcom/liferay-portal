@@ -787,3 +787,4 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:77439825

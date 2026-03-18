@@ -155,3 +155,4 @@ public class SamlSpMessageCacheModel
 	public String samlIdpResponseKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1921236859

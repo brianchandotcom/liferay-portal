@@ -266,3 +266,4 @@ public class CTCollectionTemplateServiceHttp {
 		new Class[] {long.class, String.class, String.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-950225954

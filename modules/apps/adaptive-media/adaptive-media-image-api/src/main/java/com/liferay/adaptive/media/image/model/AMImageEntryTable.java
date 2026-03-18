@@ -57,3 +57,4 @@ public class AMImageEntryTable extends BaseTable<AMImageEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:420195401

@@ -360,3 +360,4 @@ public class ObjectStateFlowWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1999558749

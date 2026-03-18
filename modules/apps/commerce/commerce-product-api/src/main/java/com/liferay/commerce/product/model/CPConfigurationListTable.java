@@ -98,3 +98,4 @@ public class CPConfigurationListTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1028447442

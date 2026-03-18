@@ -715,3 +715,4 @@ public class EntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-315720658

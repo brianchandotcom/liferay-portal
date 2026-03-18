@@ -208,3 +208,4 @@ public class PortalPreferenceValueCacheModel
 	public String smallValue;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1494102623

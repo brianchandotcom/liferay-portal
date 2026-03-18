@@ -1102,3 +1102,4 @@ public interface ObjectEntryVersionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:726154247

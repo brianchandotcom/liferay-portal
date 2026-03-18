@@ -47,3 +47,4 @@ public interface UserIdMapper extends PersistedModel, UserIdMapperModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1524247298

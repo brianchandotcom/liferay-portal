@@ -39,3 +39,4 @@ public abstract class PasswordTrackerBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-691130925

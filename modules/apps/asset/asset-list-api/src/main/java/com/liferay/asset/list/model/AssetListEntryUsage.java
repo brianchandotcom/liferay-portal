@@ -52,3 +52,4 @@ public interface AssetListEntryUsage
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1519186726

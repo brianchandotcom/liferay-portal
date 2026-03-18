@@ -42,3 +42,4 @@ public abstract class UndefinedDefaultOrderEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-254988171

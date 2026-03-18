@@ -971,3 +971,4 @@ public class CalendarServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-77976507

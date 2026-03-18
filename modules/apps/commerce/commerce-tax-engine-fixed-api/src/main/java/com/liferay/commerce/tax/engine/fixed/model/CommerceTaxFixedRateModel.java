@@ -244,3 +244,4 @@ public interface CommerceTaxFixedRateModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:537273825

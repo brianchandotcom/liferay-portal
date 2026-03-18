@@ -357,3 +357,4 @@ public class EmailAddressServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:684400517

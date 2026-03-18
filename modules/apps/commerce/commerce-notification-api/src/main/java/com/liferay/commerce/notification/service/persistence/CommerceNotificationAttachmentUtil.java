@@ -934,3 +934,4 @@ public class CommerceNotificationAttachmentUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2001234462

@@ -690,3 +690,4 @@ public class AnnouncementsFlagUtil {
 	private static volatile AnnouncementsFlagPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:747143823

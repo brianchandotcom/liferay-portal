@@ -721,3 +721,4 @@ public interface CPAttachmentFileEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2121880123

@@ -1429,3 +1429,4 @@ public class DDMDataProviderInstanceModelImpl
 	private DDMDataProviderInstance _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-610484492

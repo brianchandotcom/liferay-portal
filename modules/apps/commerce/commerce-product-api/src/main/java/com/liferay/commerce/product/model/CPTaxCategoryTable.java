@@ -56,3 +56,4 @@ public class CPTaxCategoryTable extends BaseTable<CPTaxCategoryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-312593471

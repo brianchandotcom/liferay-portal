@@ -135,3 +135,4 @@ public class BookmarksEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1253553403

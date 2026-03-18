@@ -650,3 +650,4 @@ public class CacheFieldEntryModelImpl
 	private CacheFieldEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1367683824

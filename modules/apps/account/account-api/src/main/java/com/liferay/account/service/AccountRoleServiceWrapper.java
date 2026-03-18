@@ -135,3 +135,4 @@ public class AccountRoleServiceWrapper
 	private AccountRoleService _accountRoleService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1900220341

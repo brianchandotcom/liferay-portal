@@ -445,3 +445,4 @@ public class WorkflowMetricsSLADefinitionVersionCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:640259773

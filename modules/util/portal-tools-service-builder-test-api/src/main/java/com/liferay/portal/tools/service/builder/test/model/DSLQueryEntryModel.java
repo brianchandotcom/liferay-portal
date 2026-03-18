@@ -81,3 +81,4 @@ public interface DSLQueryEntryModel extends BaseModel<DSLQueryEntry> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2008003993

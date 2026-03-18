@@ -574,3 +574,4 @@ public class LVEntryLocalServiceUtil {
 	private static volatile LVEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:972932743

@@ -196,3 +196,4 @@ public interface AnalyticsMessageModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-935334122

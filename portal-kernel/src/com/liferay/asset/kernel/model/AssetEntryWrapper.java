@@ -1332,3 +1332,4 @@ public class AssetEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1790833449

@@ -253,3 +253,4 @@ public class SamlPeerBindingCacheModel
 	public String samlNameIdValue;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-679423388

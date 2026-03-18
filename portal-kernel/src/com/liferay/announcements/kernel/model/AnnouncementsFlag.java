@@ -51,3 +51,4 @@ public interface AnnouncementsFlag
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1301617302

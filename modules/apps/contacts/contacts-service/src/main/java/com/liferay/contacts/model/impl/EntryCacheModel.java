@@ -205,3 +205,4 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public String comments;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1380697228

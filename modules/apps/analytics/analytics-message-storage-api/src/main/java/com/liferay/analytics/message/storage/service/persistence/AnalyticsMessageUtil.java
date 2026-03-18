@@ -448,3 +448,4 @@ public class AnalyticsMessageUtil {
 	private static volatile AnalyticsMessagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-194497642

@@ -297,3 +297,4 @@ public interface ViewCountEntryLocalService
 	public ViewCountEntry updateViewCountEntry(ViewCountEntry viewCountEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:258927105

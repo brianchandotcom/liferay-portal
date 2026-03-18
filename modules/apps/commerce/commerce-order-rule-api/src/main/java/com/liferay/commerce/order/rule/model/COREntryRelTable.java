@@ -49,3 +49,4 @@ public class COREntryRelTable extends BaseTable<COREntryRelTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-519273477

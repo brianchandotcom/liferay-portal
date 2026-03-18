@@ -61,3 +61,4 @@ public class CTPreferencesServiceUtil {
 			CTPreferencesServiceUtil.class, CTPreferencesService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1989569966

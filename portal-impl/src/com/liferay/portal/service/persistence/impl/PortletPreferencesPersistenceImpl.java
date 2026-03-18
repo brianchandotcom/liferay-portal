@@ -6679,3 +6679,4 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-490673661

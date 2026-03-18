@@ -90,3 +90,4 @@ public class CTRemoteServiceUtil {
 		new Snapshot<>(CTRemoteServiceUtil.class, CTRemoteService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-720461924

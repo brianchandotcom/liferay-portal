@@ -234,3 +234,4 @@ public class SAPEntryCacheModel
 	public String title;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:404461374

@@ -108,3 +108,4 @@ public class BatchPlannerPolicyServiceWrapper
 	private BatchPlannerPolicyService _batchPlannerPolicyService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-475303094

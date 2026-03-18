@@ -118,3 +118,4 @@ public class AccountRoleServiceUtil {
 		new Snapshot<>(AccountRoleServiceUtil.class, AccountRoleService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1965524121

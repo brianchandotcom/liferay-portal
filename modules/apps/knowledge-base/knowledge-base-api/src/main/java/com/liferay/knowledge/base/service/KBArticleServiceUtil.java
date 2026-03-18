@@ -457,3 +457,4 @@ public class KBArticleServiceUtil {
 		new Snapshot<>(KBArticleServiceUtil.class, KBArticleService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-526496934

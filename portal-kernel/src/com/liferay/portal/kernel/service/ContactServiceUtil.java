@@ -111,3 +111,4 @@ public class ContactServiceUtil {
 	private static volatile ContactService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1303040600

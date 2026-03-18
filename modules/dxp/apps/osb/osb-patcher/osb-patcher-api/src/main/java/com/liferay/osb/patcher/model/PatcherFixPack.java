@@ -50,3 +50,4 @@ public interface PatcherFixPack extends PatcherFixPackModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-12960491

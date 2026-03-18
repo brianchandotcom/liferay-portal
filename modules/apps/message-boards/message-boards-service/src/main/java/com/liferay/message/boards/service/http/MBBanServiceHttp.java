@@ -127,3 +127,4 @@ public class MBBanServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:346310940

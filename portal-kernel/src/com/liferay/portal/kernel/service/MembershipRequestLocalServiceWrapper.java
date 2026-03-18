@@ -437,3 +437,4 @@ public class MembershipRequestLocalServiceWrapper
 	private MembershipRequestLocalService _membershipRequestLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-550777961

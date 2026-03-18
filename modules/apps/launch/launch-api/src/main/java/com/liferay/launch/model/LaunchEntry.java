@@ -48,3 +48,4 @@ public interface LaunchEntry extends LaunchEntryModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-343509717

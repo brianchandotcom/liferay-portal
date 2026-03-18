@@ -406,3 +406,4 @@ public class ContactsLayoutTemplateLocalServiceWrapper
 		_contactsLayoutTemplateLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1720478601

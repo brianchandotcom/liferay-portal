@@ -100,3 +100,4 @@ public interface RSVEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-22932925

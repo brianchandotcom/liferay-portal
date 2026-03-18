@@ -78,3 +78,4 @@ public class BookmarksEntryTable extends BaseTable<BookmarksEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1306672575

@@ -190,3 +190,4 @@ public interface ImageModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-626624935

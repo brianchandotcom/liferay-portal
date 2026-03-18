@@ -81,3 +81,4 @@ public interface CounterModel extends BaseModel<Counter> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-862504453

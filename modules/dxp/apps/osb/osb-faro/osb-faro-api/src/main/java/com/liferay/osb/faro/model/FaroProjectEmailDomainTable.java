@@ -48,3 +48,4 @@ public class FaroProjectEmailDomainTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1867875509

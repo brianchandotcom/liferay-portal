@@ -78,3 +78,4 @@ public abstract class CPAttachmentFileEntryFinderBaseImpl
 		CPAttachmentFileEntryFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:545005899

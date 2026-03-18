@@ -162,3 +162,4 @@ public class CPDefinitionSpecificationOptionValueServiceUtil {
 			CPDefinitionSpecificationOptionValueService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1610843471

@@ -41,3 +41,4 @@ public class AccountRoleTable extends BaseTable<AccountRoleTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-992234230

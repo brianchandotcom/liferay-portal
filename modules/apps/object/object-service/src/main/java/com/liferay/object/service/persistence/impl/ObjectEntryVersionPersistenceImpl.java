@@ -4343,3 +4343,4 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:420117763

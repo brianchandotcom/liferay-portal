@@ -1308,3 +1308,4 @@ public interface DepotEntryGroupRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-454967797

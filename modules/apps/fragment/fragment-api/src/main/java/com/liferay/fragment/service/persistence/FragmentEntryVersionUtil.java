@@ -5523,3 +5523,4 @@ public class FragmentEntryVersionUtil {
 	private static volatile FragmentEntryVersionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1688268394

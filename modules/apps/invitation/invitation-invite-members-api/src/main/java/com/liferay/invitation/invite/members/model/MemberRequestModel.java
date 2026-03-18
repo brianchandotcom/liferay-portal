@@ -269,3 +269,4 @@ public interface MemberRequestModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1386241458

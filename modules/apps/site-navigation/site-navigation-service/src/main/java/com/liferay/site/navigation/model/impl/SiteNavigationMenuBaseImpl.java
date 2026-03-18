@@ -39,3 +39,4 @@ public abstract class SiteNavigationMenuBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:794751246

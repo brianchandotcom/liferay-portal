@@ -50,3 +50,4 @@ public interface PatcherBuildRel extends PatcherBuildRelModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1204215165

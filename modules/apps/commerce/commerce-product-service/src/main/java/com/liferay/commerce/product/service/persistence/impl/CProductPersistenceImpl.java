@@ -3191,3 +3191,4 @@ public class CProductPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2119502543

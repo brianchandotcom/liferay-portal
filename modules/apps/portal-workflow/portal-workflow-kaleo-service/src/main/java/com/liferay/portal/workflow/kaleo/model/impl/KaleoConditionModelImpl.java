@@ -1078,3 +1078,4 @@ public class KaleoConditionModelImpl
 	private KaleoCondition _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:529584154

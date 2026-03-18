@@ -40,3 +40,4 @@ public abstract class OpenIdConnectSessionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1808013579

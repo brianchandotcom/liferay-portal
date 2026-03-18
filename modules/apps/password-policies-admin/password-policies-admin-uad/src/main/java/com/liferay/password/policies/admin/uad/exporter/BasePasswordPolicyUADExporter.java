@@ -67,3 +67,4 @@ public abstract class BasePasswordPolicyUADExporter
 	protected PasswordPolicyLocalService passwordPolicyLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1740652412

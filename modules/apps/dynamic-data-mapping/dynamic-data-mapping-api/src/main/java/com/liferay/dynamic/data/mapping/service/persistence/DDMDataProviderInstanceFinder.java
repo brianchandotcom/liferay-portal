@@ -71,3 +71,4 @@ public interface DDMDataProviderInstanceFinder {
 						DDMDataProviderInstance> orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1399964584

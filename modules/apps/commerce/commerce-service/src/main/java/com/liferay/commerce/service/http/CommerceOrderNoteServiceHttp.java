@@ -584,3 +584,4 @@ public class CommerceOrderNoteServiceHttp {
 		new Class[] {long.class, String.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1906436817

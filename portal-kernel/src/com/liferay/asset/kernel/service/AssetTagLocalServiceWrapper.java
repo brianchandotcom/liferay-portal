@@ -1021,3 +1021,4 @@ public class AssetTagLocalServiceWrapper
 	private AssetTagLocalService _assetTagLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:690280147

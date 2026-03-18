@@ -39,3 +39,4 @@ public abstract class SamlSpAuthRequestBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1361076513

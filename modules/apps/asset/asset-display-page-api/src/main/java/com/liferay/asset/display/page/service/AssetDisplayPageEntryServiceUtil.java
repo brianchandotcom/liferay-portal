@@ -142,3 +142,4 @@ public class AssetDisplayPageEntryServiceUtil {
 			AssetDisplayPageEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:878292724

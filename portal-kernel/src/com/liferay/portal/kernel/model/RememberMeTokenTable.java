@@ -46,3 +46,4 @@ public class RememberMeTokenTable extends BaseTable<RememberMeTokenTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1075978189

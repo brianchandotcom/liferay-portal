@@ -107,3 +107,4 @@ public class DefinitionServiceUtil {
 		new Snapshot<>(DefinitionServiceUtil.class, DefinitionService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1206443088

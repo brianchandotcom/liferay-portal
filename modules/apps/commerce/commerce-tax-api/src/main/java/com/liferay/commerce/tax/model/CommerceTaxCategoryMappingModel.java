@@ -267,3 +267,4 @@ public interface CommerceTaxCategoryMappingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-990816001

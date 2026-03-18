@@ -245,3 +245,4 @@ public class ObjectFieldServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1228718403

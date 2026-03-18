@@ -798,3 +798,4 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-157285789

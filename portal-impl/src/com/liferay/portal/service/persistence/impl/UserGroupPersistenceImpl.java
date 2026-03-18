@@ -8170,3 +8170,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:876594850

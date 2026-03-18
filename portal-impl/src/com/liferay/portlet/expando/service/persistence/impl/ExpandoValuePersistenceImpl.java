@@ -5847,3 +5847,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:490462112

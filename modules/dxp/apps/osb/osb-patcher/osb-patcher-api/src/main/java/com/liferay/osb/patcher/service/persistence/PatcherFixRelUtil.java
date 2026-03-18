@@ -621,3 +621,4 @@ public class PatcherFixRelUtil {
 	private static volatile PatcherFixRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1295025339

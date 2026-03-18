@@ -50,3 +50,4 @@ public interface CountryLocalization extends CountryLocalizationModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1063650550

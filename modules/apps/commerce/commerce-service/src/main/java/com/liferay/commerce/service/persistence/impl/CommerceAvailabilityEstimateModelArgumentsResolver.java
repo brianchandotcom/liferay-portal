@@ -142,3 +142,4 @@ public class CommerceAvailabilityEstimateModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2006963788

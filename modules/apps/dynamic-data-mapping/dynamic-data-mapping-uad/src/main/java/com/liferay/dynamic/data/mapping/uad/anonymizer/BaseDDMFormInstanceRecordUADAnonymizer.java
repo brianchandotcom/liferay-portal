@@ -107,3 +107,4 @@ public abstract class BaseDDMFormInstanceRecordUADAnonymizer
 		ddmFormInstanceRecordLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-665240318

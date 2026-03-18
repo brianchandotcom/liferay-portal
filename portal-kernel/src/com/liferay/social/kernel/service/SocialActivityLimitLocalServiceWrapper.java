@@ -392,3 +392,4 @@ public class SocialActivityLimitLocalServiceWrapper
 	private SocialActivityLimitLocalService _socialActivityLimitLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-22601915

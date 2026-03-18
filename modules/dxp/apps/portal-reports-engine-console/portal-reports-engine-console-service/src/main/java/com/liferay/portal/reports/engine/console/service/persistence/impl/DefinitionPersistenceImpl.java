@@ -3521,3 +3521,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:200744437

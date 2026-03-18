@@ -75,3 +75,4 @@ public abstract class BaseJournalFolderUADDisplay
 	protected JournalFolderLocalService journalFolderLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:944408811

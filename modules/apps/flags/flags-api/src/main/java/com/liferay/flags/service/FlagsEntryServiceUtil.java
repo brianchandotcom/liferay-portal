@@ -56,3 +56,4 @@ public class FlagsEntryServiceUtil {
 		new Snapshot<>(FlagsEntryServiceUtil.class, FlagsEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-624484968

@@ -212,3 +212,4 @@ public class SegmentsExperimentRelCacheModel
 	public double split;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1750678973

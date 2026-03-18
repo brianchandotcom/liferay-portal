@@ -52,3 +52,4 @@ public interface OpenIdConnectSession
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-304756934

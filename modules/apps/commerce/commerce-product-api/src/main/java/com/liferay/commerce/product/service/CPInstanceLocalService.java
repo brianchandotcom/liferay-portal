@@ -589,3 +589,4 @@ public interface CPInstanceLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:37256504

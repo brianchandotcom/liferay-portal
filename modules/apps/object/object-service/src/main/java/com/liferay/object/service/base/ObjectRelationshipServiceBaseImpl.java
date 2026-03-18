@@ -125,3 +125,4 @@ public abstract class ObjectRelationshipServiceBaseImpl
 		ObjectRelationshipServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1937644432

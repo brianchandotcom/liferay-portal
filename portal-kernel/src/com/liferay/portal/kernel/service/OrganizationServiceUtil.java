@@ -536,3 +536,4 @@ public class OrganizationServiceUtil {
 	private static volatile OrganizationService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-910691440

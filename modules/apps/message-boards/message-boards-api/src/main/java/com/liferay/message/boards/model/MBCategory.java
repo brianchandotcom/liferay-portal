@@ -63,3 +63,4 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 	public boolean isRoot();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1555503697

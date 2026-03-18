@@ -99,3 +99,4 @@ public class KaleoNotificationRecipientTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-516196384

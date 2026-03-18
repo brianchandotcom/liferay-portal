@@ -219,3 +219,4 @@ public class CSDiagramPinCacheModel
 	public String sequence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1493420457

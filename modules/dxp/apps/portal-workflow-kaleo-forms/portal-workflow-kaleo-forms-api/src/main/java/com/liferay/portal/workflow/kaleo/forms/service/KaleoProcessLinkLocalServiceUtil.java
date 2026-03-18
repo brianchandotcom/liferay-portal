@@ -432,3 +432,4 @@ public class KaleoProcessLinkLocalServiceUtil {
 			KaleoProcessLinkLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1997825831

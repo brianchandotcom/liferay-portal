@@ -203,3 +203,4 @@ public class CommerceInventoryWarehouseRelCacheModel
 	public long commerceInventoryWarehouseId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:63090527

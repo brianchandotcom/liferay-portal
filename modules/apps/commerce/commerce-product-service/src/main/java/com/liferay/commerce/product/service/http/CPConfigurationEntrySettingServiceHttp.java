@@ -33,3 +33,4 @@ package com.liferay.commerce.product.service.http;
  */
 public class CPConfigurationEntrySettingServiceHttp {
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1380281389

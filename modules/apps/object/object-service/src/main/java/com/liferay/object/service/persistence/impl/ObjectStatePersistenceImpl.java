@@ -3148,3 +3148,4 @@ public class ObjectStatePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:865145107

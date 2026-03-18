@@ -264,3 +264,4 @@ public class ObjectFolderServiceHttp {
 		new Class[] {String.class, long.class, java.util.Map.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-974151628

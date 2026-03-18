@@ -42,3 +42,4 @@ public abstract class CPConfigurationEntrySettingBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-819891093

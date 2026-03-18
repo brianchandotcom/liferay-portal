@@ -321,3 +321,4 @@ public class RoleCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-954083393

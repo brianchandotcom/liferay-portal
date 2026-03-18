@@ -3933,3 +3933,4 @@ public class RegionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-271370535

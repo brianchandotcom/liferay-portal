@@ -63,3 +63,4 @@ public class PortletServiceUtil {
 	private static volatile PortletService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:659369698

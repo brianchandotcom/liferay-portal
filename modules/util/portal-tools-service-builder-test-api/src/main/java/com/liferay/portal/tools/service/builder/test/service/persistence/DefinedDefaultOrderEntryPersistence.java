@@ -346,3 +346,4 @@ public interface DefinedDefaultOrderEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-124657409

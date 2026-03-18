@@ -39,3 +39,4 @@ public abstract class ChangesetCollectionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:316387270

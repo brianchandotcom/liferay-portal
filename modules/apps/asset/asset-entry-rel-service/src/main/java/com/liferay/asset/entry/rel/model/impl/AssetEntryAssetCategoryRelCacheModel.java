@@ -153,3 +153,4 @@ public class AssetEntryAssetCategoryRelCacheModel
 	public int priority;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:164418445

@@ -60,3 +60,4 @@ public class SavedContentEntryTable extends BaseTable<SavedContentEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1256729837

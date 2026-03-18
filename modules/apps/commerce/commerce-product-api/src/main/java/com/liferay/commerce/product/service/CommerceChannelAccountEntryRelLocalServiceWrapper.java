@@ -517,3 +517,4 @@ public class CommerceChannelAccountEntryRelLocalServiceWrapper
 		_commerceChannelAccountEntryRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1421707885

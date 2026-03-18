@@ -444,3 +444,4 @@ public class ObjectViewFilterColumnWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:260123676

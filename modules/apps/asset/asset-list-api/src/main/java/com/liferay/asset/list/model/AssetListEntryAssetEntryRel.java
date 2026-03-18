@@ -59,3 +59,4 @@ public interface AssetListEntryAssetEntryRel
 	public void setAssetEntryUuid(String assetEntryUuid);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-527007039

@@ -744,3 +744,4 @@ public class ObjectFieldLocalServiceWrapper
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-411128897

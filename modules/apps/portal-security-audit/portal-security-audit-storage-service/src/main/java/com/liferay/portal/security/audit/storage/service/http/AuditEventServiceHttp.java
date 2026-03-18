@@ -365,3 +365,4 @@ public class AuditEventServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2047162558

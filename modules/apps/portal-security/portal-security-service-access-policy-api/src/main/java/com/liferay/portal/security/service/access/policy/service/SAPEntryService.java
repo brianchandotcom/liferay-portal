@@ -93,3 +93,4 @@ public interface SAPEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1969787790

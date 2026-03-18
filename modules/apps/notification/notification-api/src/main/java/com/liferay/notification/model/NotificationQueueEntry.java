@@ -54,3 +54,4 @@ public interface NotificationQueueEntry
 	public NotificationRecipient getNotificationRecipient();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:417033831

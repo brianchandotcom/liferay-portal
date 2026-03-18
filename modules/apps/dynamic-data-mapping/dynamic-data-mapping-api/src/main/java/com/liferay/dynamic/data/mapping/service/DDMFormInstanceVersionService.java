@@ -78,3 +78,4 @@ public interface DDMFormInstanceVersionService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-468002539

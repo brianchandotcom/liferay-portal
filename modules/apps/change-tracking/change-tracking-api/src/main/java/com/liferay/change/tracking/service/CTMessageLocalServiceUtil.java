@@ -305,3 +305,4 @@ public class CTMessageLocalServiceUtil {
 			CTMessageLocalServiceUtil.class, CTMessageLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-899014813

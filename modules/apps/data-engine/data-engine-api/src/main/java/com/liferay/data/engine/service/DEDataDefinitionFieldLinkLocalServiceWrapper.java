@@ -607,3 +607,4 @@ public class DEDataDefinitionFieldLinkLocalServiceWrapper
 		_deDataDefinitionFieldLinkLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1526274314

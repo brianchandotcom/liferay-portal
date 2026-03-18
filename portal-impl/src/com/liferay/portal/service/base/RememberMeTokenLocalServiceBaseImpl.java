@@ -509,3 +509,4 @@ public abstract class RememberMeTokenLocalServiceBaseImpl
 		RememberMeTokenLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1420066213

@@ -491,3 +491,4 @@ public interface CommerceTaxMethodModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1245964574

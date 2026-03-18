@@ -367,3 +367,4 @@ public interface OpenIdConnectUserPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:980887247

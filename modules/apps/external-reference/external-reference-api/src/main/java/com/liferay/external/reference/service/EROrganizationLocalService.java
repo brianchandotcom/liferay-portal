@@ -52,3 +52,4 @@ public interface EROrganizationLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1378807779

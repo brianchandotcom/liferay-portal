@@ -2076,3 +2076,4 @@ public class AssetVocabularyUtil {
 	private static volatile AssetVocabularyPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1951033324

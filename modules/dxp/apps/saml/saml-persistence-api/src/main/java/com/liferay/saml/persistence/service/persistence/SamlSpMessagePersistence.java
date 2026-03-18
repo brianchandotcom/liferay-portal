@@ -354,3 +354,4 @@ public interface SamlSpMessagePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:786604793

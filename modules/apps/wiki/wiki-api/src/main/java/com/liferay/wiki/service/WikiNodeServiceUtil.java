@@ -167,3 +167,4 @@ public class WikiNodeServiceUtil {
 		new Snapshot<>(WikiNodeServiceUtil.class, WikiNodeService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1124763583

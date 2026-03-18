@@ -55,3 +55,4 @@ public class AnnouncementsDeliveryServiceUtil {
 	private static volatile AnnouncementsDeliveryService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:671187342

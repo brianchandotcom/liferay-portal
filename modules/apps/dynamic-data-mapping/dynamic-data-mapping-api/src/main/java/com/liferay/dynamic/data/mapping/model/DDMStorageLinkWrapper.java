@@ -368,3 +368,4 @@ public class DDMStorageLinkWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:799729570

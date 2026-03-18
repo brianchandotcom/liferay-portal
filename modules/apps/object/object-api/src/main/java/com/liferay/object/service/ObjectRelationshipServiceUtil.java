@@ -124,3 +124,4 @@ public class ObjectRelationshipServiceUtil {
 			ObjectRelationshipService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1657021465

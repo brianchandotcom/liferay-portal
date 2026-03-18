@@ -71,3 +71,4 @@ public interface KaleoInstanceToken
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2021610894

@@ -55,3 +55,4 @@ public interface DDMDataProviderInstanceLink
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2020422053

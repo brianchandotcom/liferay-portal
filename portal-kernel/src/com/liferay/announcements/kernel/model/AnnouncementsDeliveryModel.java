@@ -227,3 +227,4 @@ public interface AnnouncementsDeliveryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-883909473

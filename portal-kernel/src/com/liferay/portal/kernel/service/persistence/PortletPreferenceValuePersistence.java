@@ -856,3 +856,4 @@ public interface PortletPreferenceValuePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1362441357

@@ -117,3 +117,4 @@ public class LayoutSEOEntryServiceUtil {
 			LayoutSEOEntryServiceUtil.class, LayoutSEOEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-772633419

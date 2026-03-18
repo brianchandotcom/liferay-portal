@@ -161,3 +161,4 @@ public class CTProcessCacheModel
 	public int type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2046323675

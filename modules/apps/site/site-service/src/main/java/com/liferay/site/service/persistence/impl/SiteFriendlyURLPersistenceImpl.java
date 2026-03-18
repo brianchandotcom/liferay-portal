@@ -3397,3 +3397,4 @@ public class SiteFriendlyURLPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1666922146

@@ -85,3 +85,4 @@ public class DDMTemplateVersionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1998668051

@@ -422,3 +422,4 @@ public class AssetAutoTaggerEntryLocalServiceWrapper
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:81408473

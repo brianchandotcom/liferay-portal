@@ -1126,3 +1126,4 @@ public class CommerceOrderNoteUtil {
 	private static volatile CommerceOrderNotePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1727113238

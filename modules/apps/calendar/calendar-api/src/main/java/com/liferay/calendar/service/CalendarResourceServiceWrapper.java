@@ -150,3 +150,4 @@ public class CalendarResourceServiceWrapper
 	private CalendarResourceService _calendarResourceService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-600275184

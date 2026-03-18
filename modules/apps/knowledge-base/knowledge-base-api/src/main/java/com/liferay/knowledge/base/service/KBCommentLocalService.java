@@ -420,3 +420,4 @@ public interface KBCommentLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:432450978

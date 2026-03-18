@@ -197,3 +197,4 @@ public class CommerceVirtualOrderItemFileEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:227458154

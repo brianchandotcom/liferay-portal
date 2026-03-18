@@ -1524,3 +1524,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:195248408

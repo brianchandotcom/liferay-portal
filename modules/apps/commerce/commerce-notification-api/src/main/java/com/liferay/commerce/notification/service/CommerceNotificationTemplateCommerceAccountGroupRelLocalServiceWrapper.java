@@ -468,3 +468,4 @@ public class
 		_commerceNotificationTemplateCommerceAccountGroupRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:806183558

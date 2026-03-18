@@ -61,3 +61,4 @@ public class FlagsEntryServiceWrapper
 	private FlagsEntryService _flagsEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-891586125

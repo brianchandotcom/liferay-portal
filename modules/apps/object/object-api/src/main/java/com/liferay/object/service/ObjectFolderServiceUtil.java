@@ -86,3 +86,4 @@ public class ObjectFolderServiceUtil {
 			ObjectFolderServiceUtil.class, ObjectFolderService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1600401000

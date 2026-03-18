@@ -1269,3 +1269,4 @@ public class CommerceShipmentServiceHttp {
 		new Class[] {long.class, int.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-380570676

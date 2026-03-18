@@ -312,3 +312,4 @@ public class AssetListEntryServiceUtil {
 			AssetListEntryServiceUtil.class, AssetListEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1543305840

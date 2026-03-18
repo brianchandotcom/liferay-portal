@@ -68,3 +68,4 @@ public class CPDefinitionGroupedEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-857354936

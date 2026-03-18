@@ -609,3 +609,4 @@ public class BackgroundTaskWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1524541644

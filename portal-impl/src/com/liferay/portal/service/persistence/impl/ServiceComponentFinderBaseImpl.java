@@ -65,3 +65,4 @@ public class ServiceComponentFinderBaseImpl
 		ServiceComponentFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1024976263

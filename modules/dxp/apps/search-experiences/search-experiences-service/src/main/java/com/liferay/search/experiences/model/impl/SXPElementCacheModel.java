@@ -368,3 +368,4 @@ public class SXPElementCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-138490022

@@ -49,3 +49,4 @@ public class AkismetEntryTable extends BaseTable<AkismetEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1032254825

@@ -419,3 +419,4 @@ public class CommercePriceListChannelRelLocalServiceUtil {
 			CommercePriceListChannelRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2141169675

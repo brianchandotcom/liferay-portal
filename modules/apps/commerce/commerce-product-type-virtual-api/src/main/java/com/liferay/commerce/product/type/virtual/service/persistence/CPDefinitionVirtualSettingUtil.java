@@ -791,3 +791,4 @@ public class CPDefinitionVirtualSettingUtil {
 	private static volatile CPDefinitionVirtualSettingPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:591240619

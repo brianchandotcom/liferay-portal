@@ -598,3 +598,4 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1967639787

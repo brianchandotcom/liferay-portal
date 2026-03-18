@@ -61,3 +61,4 @@ public interface LayoutPageTemplateStructure
 	public String getDefaultSegmentsExperienceData();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1608070909

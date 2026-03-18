@@ -2102,3 +2102,4 @@ public interface LayoutPageTemplateCollectionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2062240544

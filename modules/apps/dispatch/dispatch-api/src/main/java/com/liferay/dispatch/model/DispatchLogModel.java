@@ -271,3 +271,4 @@ public interface DispatchLogModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-840318982

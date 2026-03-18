@@ -401,3 +401,4 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceUtil {
 				CommerceShippingOptionAccountEntryRelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1002657821

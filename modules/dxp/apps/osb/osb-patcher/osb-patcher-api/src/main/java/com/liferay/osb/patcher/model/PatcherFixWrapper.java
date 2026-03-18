@@ -1043,3 +1043,4 @@ public class PatcherFixWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-329248555

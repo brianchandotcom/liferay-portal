@@ -133,3 +133,4 @@ public class CommercePriceListChannelRelServiceUtil {
 			CommercePriceListChannelRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1041873305

@@ -50,3 +50,4 @@ public class AnalyticsMessageTable extends BaseTable<AnalyticsMessageTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:388558911

@@ -67,3 +67,4 @@ public class CSDiagramEntryTable extends BaseTable<CSDiagramEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1434255301

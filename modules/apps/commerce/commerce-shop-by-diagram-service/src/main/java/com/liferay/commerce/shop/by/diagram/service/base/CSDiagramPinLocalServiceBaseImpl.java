@@ -469,3 +469,4 @@ public abstract class CSDiagramPinLocalServiceBaseImpl
 		CSDiagramPinLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1702196982

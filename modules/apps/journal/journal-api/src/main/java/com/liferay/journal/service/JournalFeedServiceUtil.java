@@ -99,3 +99,4 @@ public class JournalFeedServiceUtil {
 		new Snapshot<>(JournalFeedServiceUtil.class, JournalFeedService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-462974570

@@ -125,3 +125,4 @@ public abstract class KBTemplateServiceBaseImpl
 		KBTemplateServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-788212067

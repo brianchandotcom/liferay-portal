@@ -122,3 +122,4 @@ public abstract class AppServiceBaseImpl
 		AppServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-830202280

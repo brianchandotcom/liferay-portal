@@ -917,3 +917,4 @@ public interface CTSContentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:993521906

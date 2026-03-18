@@ -123,3 +123,4 @@ public class ObjectValidationRuleSettingModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1317302287

@@ -837,3 +837,4 @@ public class RecentLayoutRevisionModelImpl
 	private RecentLayoutRevision _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1776211389

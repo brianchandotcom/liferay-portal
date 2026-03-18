@@ -50,3 +50,4 @@ public interface KaleoTaskForm extends KaleoTaskFormModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1733461178

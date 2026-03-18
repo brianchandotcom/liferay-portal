@@ -76,3 +76,4 @@ public class DepotEntryGroupRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:295049549

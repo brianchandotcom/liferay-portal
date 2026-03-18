@@ -130,3 +130,4 @@ public class SocialRequestInterpreterLocalServiceWrapper
 		_socialRequestInterpreterLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1596915978

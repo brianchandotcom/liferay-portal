@@ -827,3 +827,4 @@ public class DLFileEntryTypeLocalServiceWrapper
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1584263654

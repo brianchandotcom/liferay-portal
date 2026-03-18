@@ -311,3 +311,4 @@ public class WebsiteServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:779358190

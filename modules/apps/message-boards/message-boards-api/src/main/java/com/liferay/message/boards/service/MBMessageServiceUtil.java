@@ -425,3 +425,4 @@ public class MBMessageServiceUtil {
 		new Snapshot<>(MBMessageServiceUtil.class, MBMessageService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2007273742

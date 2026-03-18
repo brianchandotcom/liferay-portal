@@ -327,3 +327,4 @@ public interface BackgroundTaskModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1271516764

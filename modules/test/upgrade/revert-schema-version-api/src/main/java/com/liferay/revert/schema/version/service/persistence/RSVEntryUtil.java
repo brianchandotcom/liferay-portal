@@ -270,3 +270,4 @@ public class RSVEntryUtil {
 	private static volatile RSVEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1131544031

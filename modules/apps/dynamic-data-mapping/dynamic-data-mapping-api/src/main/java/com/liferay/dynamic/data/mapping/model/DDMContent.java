@@ -50,3 +50,4 @@ public interface DDMContent extends DDMContentModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-773895450

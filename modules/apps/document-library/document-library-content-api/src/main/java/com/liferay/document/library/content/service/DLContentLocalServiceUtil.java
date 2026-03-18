@@ -424,3 +424,4 @@ public class DLContentLocalServiceUtil {
 			DLContentLocalServiceUtil.class, DLContentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1385541685

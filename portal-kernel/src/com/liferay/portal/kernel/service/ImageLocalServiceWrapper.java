@@ -419,3 +419,4 @@ public class ImageLocalServiceWrapper
 	private ImageLocalService _imageLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1051363595

@@ -792,3 +792,4 @@ public interface ObjectFolderItemPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:372355483

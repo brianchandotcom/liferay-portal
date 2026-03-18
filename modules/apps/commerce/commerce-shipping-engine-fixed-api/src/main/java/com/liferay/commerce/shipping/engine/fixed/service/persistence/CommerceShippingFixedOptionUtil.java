@@ -564,3 +564,4 @@ public class CommerceShippingFixedOptionUtil {
 	private static volatile CommerceShippingFixedOptionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:109916410

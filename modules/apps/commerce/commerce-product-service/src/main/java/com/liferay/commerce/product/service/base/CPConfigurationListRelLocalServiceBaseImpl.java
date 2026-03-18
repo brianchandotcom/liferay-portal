@@ -503,3 +503,4 @@ public abstract class CPConfigurationListRelLocalServiceBaseImpl
 		CPConfigurationListRelLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1323912860

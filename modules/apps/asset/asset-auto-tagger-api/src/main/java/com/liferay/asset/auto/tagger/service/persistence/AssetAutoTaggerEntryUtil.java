@@ -698,3 +698,4 @@ public class AssetAutoTaggerEntryUtil {
 	private static volatile AssetAutoTaggerEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1080194925

@@ -381,3 +381,4 @@ public interface StyleBookEntryVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-129065977

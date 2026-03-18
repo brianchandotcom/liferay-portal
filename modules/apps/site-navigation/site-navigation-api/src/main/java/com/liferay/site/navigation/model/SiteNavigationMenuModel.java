@@ -323,3 +323,4 @@ public interface SiteNavigationMenuModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-868287356

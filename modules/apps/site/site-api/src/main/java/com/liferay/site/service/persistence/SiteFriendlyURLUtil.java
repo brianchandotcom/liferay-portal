@@ -1091,3 +1091,4 @@ public class SiteFriendlyURLUtil {
 	private static volatile SiteFriendlyURLPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1293200671

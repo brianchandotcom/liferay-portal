@@ -368,3 +368,4 @@ public class RedundantIndexEntryLocalServiceWrapper
 	private RedundantIndexEntryLocalService _redundantIndexEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:366558297

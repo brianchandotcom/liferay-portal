@@ -815,3 +815,4 @@ public interface DEDataListViewPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:517160074

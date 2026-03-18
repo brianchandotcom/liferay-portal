@@ -1989,3 +1989,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1323986582

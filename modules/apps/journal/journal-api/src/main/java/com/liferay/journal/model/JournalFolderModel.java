@@ -550,3 +550,4 @@ public interface JournalFolderModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2052429679

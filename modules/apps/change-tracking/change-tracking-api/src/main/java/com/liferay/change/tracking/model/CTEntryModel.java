@@ -270,3 +270,4 @@ public interface CTEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1529058129

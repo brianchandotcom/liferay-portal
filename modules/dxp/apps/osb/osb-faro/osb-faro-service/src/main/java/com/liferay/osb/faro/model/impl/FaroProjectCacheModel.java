@@ -436,3 +436,4 @@ public class FaroProjectCacheModel
 	public String weDeployKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:874254404

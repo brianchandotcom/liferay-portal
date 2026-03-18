@@ -160,3 +160,4 @@ public interface CTermEntryLocalizationModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1150090215

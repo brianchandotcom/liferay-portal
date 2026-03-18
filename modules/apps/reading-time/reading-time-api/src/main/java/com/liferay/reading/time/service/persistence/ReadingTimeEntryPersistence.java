@@ -561,3 +561,4 @@ public interface ReadingTimeEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1658794586

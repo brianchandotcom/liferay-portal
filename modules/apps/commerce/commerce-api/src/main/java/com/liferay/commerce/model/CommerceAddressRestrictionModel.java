@@ -260,3 +260,4 @@ public interface CommerceAddressRestrictionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1195497336

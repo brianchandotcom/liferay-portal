@@ -50,3 +50,4 @@ public class AnalyticsMessageBodyBlobModel {
 	private Blob _bodyBlob;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1981279260

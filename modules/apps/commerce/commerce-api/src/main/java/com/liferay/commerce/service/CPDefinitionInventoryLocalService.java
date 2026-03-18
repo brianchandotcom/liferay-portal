@@ -379,3 +379,4 @@ public interface CPDefinitionInventoryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-635885253

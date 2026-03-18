@@ -73,3 +73,4 @@ public class CalendarResourceTable extends BaseTable<CalendarResourceTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-79283774

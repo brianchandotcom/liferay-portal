@@ -446,3 +446,4 @@ public class ObjectLayoutTabLocalServiceWrapper
 	private ObjectLayoutTabLocalService _objectLayoutTabLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2011803793

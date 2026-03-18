@@ -343,3 +343,4 @@ public class MBThreadCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1050973563

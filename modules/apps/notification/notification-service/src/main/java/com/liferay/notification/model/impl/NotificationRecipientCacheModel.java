@@ -207,3 +207,4 @@ public class NotificationRecipientCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-230561563

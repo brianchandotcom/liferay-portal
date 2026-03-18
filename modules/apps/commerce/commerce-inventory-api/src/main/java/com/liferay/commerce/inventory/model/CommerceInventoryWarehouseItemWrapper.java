@@ -513,3 +513,4 @@ public class CommerceInventoryWarehouseItemWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1336790070

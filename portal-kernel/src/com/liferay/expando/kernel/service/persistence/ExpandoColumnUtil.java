@@ -688,3 +688,4 @@ public class ExpandoColumnUtil {
 	private static volatile ExpandoColumnPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-219109241

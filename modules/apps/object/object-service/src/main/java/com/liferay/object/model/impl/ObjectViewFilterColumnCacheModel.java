@@ -255,3 +255,4 @@ public class ObjectViewFilterColumnCacheModel
 	public String objectFieldName;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:807229628

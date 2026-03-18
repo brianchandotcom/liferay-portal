@@ -226,3 +226,4 @@ public abstract class RegionServiceBaseImpl
 		RegionServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-226444007

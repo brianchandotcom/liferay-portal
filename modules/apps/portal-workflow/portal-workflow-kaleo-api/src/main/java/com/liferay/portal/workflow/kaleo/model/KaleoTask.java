@@ -55,3 +55,4 @@ public interface KaleoTask extends KaleoTaskModel, PersistedModel {
 	public java.util.List<KaleoTaskAssignment> getKaleoTaskAssignments();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:718237956

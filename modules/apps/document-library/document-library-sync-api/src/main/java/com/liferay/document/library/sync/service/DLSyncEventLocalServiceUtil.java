@@ -310,3 +310,4 @@ public class DLSyncEventLocalServiceUtil {
 			DLSyncEventLocalServiceUtil.class, DLSyncEventLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1923332020

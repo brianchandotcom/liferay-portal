@@ -770,3 +770,4 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:766661559

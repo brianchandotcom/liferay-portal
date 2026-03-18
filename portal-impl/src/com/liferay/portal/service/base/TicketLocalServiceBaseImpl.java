@@ -492,3 +492,4 @@ public abstract class TicketLocalServiceBaseImpl
 		TicketLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2080960721

@@ -48,3 +48,4 @@ public class PushNotificationsDeviceTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1734785190

@@ -362,3 +362,4 @@ public class AuditEventLocalServiceUtil {
 			AuditEventLocalServiceUtil.class, AuditEventLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-842539148

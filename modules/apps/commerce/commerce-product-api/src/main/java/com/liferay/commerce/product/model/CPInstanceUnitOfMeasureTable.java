@@ -90,3 +90,4 @@ public class CPInstanceUnitOfMeasureTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1577809051

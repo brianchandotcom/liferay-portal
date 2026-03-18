@@ -141,3 +141,4 @@ public class PasswordPolicyRelCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1748427179

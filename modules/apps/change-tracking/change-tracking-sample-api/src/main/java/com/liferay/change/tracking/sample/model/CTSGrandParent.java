@@ -50,3 +50,4 @@ public interface CTSGrandParent extends CTSGrandParentModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:818677815

@@ -858,3 +858,4 @@ public class ObjectDefinitionLocalServiceWrapper
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-697420297

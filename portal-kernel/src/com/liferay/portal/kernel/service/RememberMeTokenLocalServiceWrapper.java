@@ -381,3 +381,4 @@ public class RememberMeTokenLocalServiceWrapper
 	private RememberMeTokenLocalService _rememberMeTokenLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1288977252

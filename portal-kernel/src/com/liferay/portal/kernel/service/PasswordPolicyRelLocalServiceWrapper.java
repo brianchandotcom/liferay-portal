@@ -437,3 +437,4 @@ public class PasswordPolicyRelLocalServiceWrapper
 	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:753799048

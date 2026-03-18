@@ -252,3 +252,4 @@ public class RepositoryEntryCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2046801833

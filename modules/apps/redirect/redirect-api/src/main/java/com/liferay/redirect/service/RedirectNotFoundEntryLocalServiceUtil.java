@@ -379,3 +379,4 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 			RedirectNotFoundEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:972034836

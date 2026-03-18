@@ -50,3 +50,4 @@ public interface SequenceEntry extends PersistedModel, SequenceEntryModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-448461652

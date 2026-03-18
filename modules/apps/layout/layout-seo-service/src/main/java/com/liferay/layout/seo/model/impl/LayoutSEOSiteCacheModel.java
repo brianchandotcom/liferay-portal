@@ -240,3 +240,4 @@ public class LayoutSEOSiteCacheModel
 	public long openGraphImageFileEntryId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-408639822

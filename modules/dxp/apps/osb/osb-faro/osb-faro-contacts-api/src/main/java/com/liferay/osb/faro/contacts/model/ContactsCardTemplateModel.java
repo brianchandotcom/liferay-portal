@@ -230,3 +230,4 @@ public interface ContactsCardTemplateModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1629582941

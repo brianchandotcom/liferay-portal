@@ -76,3 +76,4 @@ public class TeamFinderUtil {
 	private static TeamFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-431415399

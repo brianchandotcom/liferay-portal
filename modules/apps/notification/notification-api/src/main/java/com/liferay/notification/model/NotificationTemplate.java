@@ -54,3 +54,4 @@ public interface NotificationTemplate
 	public NotificationRecipient getNotificationRecipient();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:92732762

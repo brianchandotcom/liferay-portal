@@ -878,3 +878,4 @@ public class RecentLayoutSetBranchUtil {
 	private static volatile RecentLayoutSetBranchPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-715403392

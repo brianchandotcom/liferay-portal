@@ -2002,3 +2002,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:296964697

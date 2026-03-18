@@ -213,3 +213,4 @@ public interface SocialActivityAchievementModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-843143563

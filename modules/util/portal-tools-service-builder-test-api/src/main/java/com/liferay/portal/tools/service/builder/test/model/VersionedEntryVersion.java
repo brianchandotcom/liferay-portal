@@ -50,3 +50,4 @@ public interface VersionedEntryVersion extends VersionedEntryVersionModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1053789633

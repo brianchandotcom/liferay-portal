@@ -247,3 +247,4 @@ public class CommercePriceListServiceUtil {
 			CommercePriceListServiceUtil.class, CommercePriceListService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:969826073

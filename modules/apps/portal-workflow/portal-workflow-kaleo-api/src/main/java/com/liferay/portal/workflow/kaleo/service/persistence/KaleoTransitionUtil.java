@@ -946,3 +946,4 @@ public class KaleoTransitionUtil {
 	private static volatile KaleoTransitionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1976673025

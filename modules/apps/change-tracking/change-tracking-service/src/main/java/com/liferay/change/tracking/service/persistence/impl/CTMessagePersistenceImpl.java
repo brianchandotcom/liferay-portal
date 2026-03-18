@@ -1176,3 +1176,4 @@ public class CTMessagePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1653290283

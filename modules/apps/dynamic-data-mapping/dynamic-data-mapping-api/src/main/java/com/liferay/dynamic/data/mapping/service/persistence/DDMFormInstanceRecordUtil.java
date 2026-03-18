@@ -1456,3 +1456,4 @@ public class DDMFormInstanceRecordUtil {
 	private static volatile DDMFormInstanceRecordPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1782993367

@@ -567,3 +567,4 @@ public class WikiNodeLocalServiceUtil {
 			WikiNodeLocalServiceUtil.class, WikiNodeLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-163142812

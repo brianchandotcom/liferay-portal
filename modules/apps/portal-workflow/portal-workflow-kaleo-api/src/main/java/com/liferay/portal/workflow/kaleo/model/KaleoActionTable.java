@@ -81,3 +81,4 @@ public class KaleoActionTable extends BaseTable<KaleoActionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1328646210

@@ -102,3 +102,4 @@ public class BigDecimalEntryCacheModel
 	public BigDecimal bigDecimalValue;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1249561345

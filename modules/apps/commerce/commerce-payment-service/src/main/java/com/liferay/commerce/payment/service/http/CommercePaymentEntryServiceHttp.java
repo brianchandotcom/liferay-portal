@@ -806,3 +806,4 @@ public class CommercePaymentEntryServiceHttp {
 		new Class[] {long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-224853134

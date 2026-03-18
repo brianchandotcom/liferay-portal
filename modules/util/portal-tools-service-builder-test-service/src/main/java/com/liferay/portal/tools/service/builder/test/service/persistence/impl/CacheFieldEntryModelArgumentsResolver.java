@@ -114,3 +114,4 @@ public class CacheFieldEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1156642818

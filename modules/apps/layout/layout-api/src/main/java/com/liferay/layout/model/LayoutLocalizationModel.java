@@ -245,3 +245,4 @@ public interface LayoutLocalizationModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-171705222

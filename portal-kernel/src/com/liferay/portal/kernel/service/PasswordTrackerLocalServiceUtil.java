@@ -326,3 +326,4 @@ public class PasswordTrackerLocalServiceUtil {
 	private static volatile PasswordTrackerLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1187341279

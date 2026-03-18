@@ -599,3 +599,4 @@ public class OrgLaborWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:474940171

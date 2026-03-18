@@ -30,3 +30,4 @@ public abstract class CPDefinitionLocalizationBaseImpl
 	 */
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-109521035

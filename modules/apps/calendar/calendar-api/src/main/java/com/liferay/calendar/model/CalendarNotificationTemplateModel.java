@@ -345,3 +345,4 @@ public interface CalendarNotificationTemplateModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:399319176

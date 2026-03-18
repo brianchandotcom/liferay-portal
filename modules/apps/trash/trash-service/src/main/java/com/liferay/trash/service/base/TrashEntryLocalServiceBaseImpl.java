@@ -463,3 +463,4 @@ public abstract class TrashEntryLocalServiceBaseImpl
 		TrashEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1318747719

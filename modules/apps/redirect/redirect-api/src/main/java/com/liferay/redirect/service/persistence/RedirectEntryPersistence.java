@@ -983,3 +983,4 @@ public interface RedirectEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1087508230

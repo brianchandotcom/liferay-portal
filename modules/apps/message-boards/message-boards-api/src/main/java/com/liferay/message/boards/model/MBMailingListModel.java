@@ -535,3 +535,4 @@ public interface MBMailingListModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:889968988

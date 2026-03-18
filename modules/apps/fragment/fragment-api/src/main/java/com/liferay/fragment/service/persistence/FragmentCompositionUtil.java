@@ -2014,3 +2014,4 @@ public class FragmentCompositionUtil {
 	private static volatile FragmentCompositionPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-336609856

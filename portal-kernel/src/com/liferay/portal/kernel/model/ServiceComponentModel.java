@@ -140,3 +140,4 @@ public interface ServiceComponentModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:797773468

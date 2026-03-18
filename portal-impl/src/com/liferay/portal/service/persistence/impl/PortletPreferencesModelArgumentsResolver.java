@@ -117,3 +117,4 @@ public class PortletPreferencesModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:141238374

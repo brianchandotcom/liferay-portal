@@ -48,3 +48,4 @@ public interface ObjectViewColumn extends ObjectViewColumnModel {
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1648498228

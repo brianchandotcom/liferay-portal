@@ -106,3 +106,4 @@ public class BatchPlannerMappingServiceWrapper
 	private BatchPlannerMappingService _batchPlannerMappingService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2041702507

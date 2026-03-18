@@ -2051,3 +2051,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-829860446

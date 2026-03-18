@@ -1271,3 +1271,4 @@ public class SegmentsExperimentUtil {
 	private static volatile SegmentsExperimentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:132490067

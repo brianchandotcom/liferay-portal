@@ -899,3 +899,4 @@ public class JournalFolderWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1917630208

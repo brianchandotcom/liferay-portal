@@ -55,3 +55,4 @@ public class FaroNotificationTable extends BaseTable<FaroNotificationTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:962595360

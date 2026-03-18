@@ -191,3 +191,4 @@ public class FaroProjectUsageCacheModel
 	public long usageTime;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1117778720

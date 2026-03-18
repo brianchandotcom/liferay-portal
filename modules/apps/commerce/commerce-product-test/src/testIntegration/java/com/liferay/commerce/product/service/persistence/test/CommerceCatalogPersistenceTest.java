@@ -624,3 +624,4 @@ public class CommerceCatalogPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:563567602

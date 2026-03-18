@@ -562,3 +562,4 @@ public class SegmentsExperimentLocalServiceWrapper
 	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1227256236

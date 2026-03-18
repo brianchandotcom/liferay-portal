@@ -83,3 +83,4 @@ public interface AccountEntry extends AccountEntryModel, PersistedModel {
 	public boolean isPersonalAccount();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:606530163

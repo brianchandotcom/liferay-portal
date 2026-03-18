@@ -34,3 +34,4 @@ public interface BookmarksFolderFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:337578147

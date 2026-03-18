@@ -200,3 +200,4 @@ public class ObjectEntryFolderServiceUtil {
 			ObjectEntryFolderServiceUtil.class, ObjectEntryFolderService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1961010077

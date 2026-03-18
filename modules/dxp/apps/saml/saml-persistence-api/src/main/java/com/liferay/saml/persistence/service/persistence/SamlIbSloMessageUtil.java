@@ -340,3 +340,4 @@ public class SamlIbSloMessageUtil {
 	private static volatile SamlIbSloMessagePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:247330687

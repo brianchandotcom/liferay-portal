@@ -75,3 +75,4 @@ public class AnnouncementsFlagServiceWrapper
 	private AnnouncementsFlagService _announcementsFlagService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-346499661

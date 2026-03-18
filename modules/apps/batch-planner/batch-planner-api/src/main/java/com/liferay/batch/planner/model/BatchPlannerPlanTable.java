@@ -75,3 +75,4 @@ public class BatchPlannerPlanTable extends BaseTable<BatchPlannerPlanTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:317273271

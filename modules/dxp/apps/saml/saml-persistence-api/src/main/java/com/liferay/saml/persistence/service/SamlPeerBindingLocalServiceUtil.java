@@ -343,3 +343,4 @@ public class SamlPeerBindingLocalServiceUtil {
 			SamlPeerBindingLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-38620944

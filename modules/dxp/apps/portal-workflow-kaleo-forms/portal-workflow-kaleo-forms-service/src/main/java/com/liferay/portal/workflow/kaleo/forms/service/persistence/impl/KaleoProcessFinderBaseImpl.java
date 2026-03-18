@@ -77,3 +77,4 @@ public abstract class KaleoProcessFinderBaseImpl
 		KaleoProcessFinderBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2027006931

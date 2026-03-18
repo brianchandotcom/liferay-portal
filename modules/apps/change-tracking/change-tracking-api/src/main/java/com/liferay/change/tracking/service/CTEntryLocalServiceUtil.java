@@ -432,3 +432,4 @@ public class CTEntryLocalServiceUtil {
 			CTEntryLocalServiceUtil.class, CTEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:388473024

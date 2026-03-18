@@ -83,3 +83,4 @@ public class CommerceVirtualOrderItemServiceUtil {
 			CommerceVirtualOrderItemService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1772090751

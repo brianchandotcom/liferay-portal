@@ -398,3 +398,4 @@ public interface CPDefinitionGroupedEntryLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-810745278

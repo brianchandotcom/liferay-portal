@@ -123,3 +123,4 @@ public class AccountEntryOrganizationRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1947483588

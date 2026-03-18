@@ -297,3 +297,4 @@ public class CTRemoteServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2019459424

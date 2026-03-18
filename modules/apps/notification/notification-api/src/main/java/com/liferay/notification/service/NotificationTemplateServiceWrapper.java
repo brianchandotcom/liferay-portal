@@ -115,3 +115,4 @@ public class NotificationTemplateServiceWrapper
 	private NotificationTemplateService _notificationTemplateService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2032659278

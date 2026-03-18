@@ -103,3 +103,4 @@ public interface MicroblogsEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:592626924

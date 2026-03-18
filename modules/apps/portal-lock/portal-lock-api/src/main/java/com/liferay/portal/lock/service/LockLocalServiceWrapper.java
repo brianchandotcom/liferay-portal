@@ -507,3 +507,4 @@ public class LockLocalServiceWrapper
 	private LockLocalService _lockLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:700314745

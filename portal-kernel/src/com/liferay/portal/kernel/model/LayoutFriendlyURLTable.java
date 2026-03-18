@@ -70,3 +70,4 @@ public class LayoutFriendlyURLTable extends BaseTable<LayoutFriendlyURLTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-550303707

@@ -72,3 +72,4 @@ public interface PortalService extends BaseService {
 	public boolean testHasClassName();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1747679288

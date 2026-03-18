@@ -49,3 +49,4 @@ public interface MembershipRequest
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1916085759

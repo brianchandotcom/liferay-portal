@@ -644,3 +644,4 @@ public class CTMessageModelImpl
 	private CTMessage _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1951101184

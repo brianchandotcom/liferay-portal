@@ -47,3 +47,4 @@ public interface Counter extends CounterModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1340512837

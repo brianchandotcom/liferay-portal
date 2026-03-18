@@ -81,3 +81,4 @@ public class CommerceShipmentItemTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1774376968

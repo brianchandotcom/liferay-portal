@@ -131,3 +131,4 @@ public class CPConfigurationEntryServiceUtil {
 			CPConfigurationEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-150073476

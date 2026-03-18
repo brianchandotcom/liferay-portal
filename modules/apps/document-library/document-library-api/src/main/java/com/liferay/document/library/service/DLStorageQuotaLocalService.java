@@ -273,3 +273,4 @@ public interface DLStorageQuotaLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1853800234

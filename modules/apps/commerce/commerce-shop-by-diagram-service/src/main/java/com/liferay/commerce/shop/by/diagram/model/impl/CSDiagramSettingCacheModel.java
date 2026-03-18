@@ -259,3 +259,4 @@ public class CSDiagramSettingCacheModel
 	public String type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1642757794

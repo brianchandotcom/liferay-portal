@@ -208,3 +208,4 @@ public class CommercePaymentMethodGroupRelQualifierCacheModel
 	public long commercePaymentMethodGroupRelId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1212643412

@@ -299,3 +299,4 @@ public class DataLimitEntryLocalServiceUtil {
 	private static volatile DataLimitEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1620982199

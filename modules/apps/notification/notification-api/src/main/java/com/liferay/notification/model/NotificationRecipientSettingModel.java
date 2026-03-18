@@ -349,3 +349,4 @@ public interface NotificationRecipientSettingModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1211658872

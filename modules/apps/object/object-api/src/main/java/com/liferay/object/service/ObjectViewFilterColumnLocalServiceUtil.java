@@ -372,3 +372,4 @@ public class ObjectViewFilterColumnLocalServiceUtil {
 			ObjectViewFilterColumnLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1869740608

@@ -341,3 +341,4 @@ public class ClassNameLocalServiceUtil {
 	private static volatile ClassNameLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:758886105

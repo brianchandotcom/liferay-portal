@@ -500,3 +500,4 @@ public class DEDataDefinitionFieldLinkLocalServiceUtil {
 			DEDataDefinitionFieldLinkLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:554362239

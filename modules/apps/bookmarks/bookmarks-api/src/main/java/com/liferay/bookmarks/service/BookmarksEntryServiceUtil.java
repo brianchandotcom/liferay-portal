@@ -198,3 +198,4 @@ public class BookmarksEntryServiceUtil {
 			BookmarksEntryServiceUtil.class, BookmarksEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1348808327

@@ -58,3 +58,4 @@ public class JSONStorageEntryTable extends BaseTable<JSONStorageEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-284821332

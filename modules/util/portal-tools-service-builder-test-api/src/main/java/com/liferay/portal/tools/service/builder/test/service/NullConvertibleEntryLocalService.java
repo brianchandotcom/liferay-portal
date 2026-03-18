@@ -278,3 +278,4 @@ public interface NullConvertibleEntryLocalService
 		NullConvertibleEntry nullConvertibleEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-960048725

@@ -167,3 +167,4 @@ public interface ObjectDefinitionService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1032755340

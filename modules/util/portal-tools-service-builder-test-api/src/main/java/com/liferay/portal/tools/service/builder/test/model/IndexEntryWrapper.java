@@ -335,3 +335,4 @@ public class IndexEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1167005434

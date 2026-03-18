@@ -1428,3 +1428,4 @@ public class DDMStructureServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1196307000

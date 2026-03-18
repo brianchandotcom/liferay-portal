@@ -648,3 +648,4 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 		SegmentsExperienceLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-486503726

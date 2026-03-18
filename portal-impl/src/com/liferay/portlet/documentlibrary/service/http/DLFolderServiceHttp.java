@@ -1999,3 +1999,4 @@ public class DLFolderServiceHttp {
 		new Class[] {long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:795587537

@@ -39,3 +39,4 @@ public abstract class SamlPeerBindingBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2072268983

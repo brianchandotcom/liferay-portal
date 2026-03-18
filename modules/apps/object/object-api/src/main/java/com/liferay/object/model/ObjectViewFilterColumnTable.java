@@ -67,3 +67,4 @@ public class ObjectViewFilterColumnTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-152233888

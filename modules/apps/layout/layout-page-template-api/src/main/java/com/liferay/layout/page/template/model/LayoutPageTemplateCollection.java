@@ -59,3 +59,4 @@ public interface LayoutPageTemplateCollection
 	public java.util.List<LayoutPageTemplateCollection> getAncestors();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-834687522

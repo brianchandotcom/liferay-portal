@@ -665,3 +665,4 @@ public class CommercePriceModifierServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-912168906

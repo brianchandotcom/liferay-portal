@@ -233,3 +233,4 @@ public class CommerceDiscountAccountRelCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1805613425

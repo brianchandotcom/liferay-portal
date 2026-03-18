@@ -228,3 +228,4 @@ public interface FaroProjectUsageModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:906419954

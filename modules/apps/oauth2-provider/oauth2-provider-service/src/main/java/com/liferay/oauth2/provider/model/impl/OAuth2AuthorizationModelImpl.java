@@ -1337,3 +1337,4 @@ public class OAuth2AuthorizationModelImpl
 	private OAuth2Authorization _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1833012083

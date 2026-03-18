@@ -2023,3 +2023,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:686131581

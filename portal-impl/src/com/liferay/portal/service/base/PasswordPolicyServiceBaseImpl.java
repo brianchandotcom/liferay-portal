@@ -231,3 +231,4 @@ public abstract class PasswordPolicyServiceBaseImpl
 		PasswordPolicyServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-580715392

@@ -1849,3 +1849,4 @@ public interface CommerceDiscountPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1725055312

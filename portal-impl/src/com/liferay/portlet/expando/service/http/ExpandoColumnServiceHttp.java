@@ -343,3 +343,4 @@ public class ExpandoColumnServiceHttp {
 		new Class[] {long.class, String.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:623651116

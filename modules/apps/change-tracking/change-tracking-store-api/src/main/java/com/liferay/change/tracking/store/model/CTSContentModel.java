@@ -210,3 +210,4 @@ public interface CTSContentModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1724842015

@@ -120,3 +120,4 @@ public class CommerceTierPriceEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:580761104

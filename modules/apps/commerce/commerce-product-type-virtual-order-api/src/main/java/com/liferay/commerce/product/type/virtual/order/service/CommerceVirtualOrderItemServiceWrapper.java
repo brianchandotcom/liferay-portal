@@ -97,3 +97,4 @@ public class CommerceVirtualOrderItemServiceWrapper
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1497462097

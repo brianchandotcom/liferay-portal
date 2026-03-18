@@ -79,3 +79,4 @@ public class ListTypeServiceUtil {
 	private static volatile ListTypeService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1001508198

@@ -52,3 +52,4 @@ public interface PatcherTicketHint
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2133645379

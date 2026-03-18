@@ -221,3 +221,4 @@ public class CPDAvailabilityEstimateCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1688101423

@@ -149,3 +149,4 @@ public interface CTSParentModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-470087220

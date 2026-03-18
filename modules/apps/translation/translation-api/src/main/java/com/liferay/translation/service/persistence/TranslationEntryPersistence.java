@@ -717,3 +717,4 @@ public interface TranslationEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-315493496

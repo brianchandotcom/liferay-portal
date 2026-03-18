@@ -131,3 +131,4 @@ public class CTRemoteModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-278652172

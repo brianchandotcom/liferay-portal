@@ -728,3 +728,4 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 		_cpDefinitionOptionValueRelLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-223896826

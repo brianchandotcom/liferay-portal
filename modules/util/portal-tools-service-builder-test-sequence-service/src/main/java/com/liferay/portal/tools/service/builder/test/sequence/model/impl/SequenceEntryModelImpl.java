@@ -652,3 +652,4 @@ public class SequenceEntryModelImpl
 	private SequenceEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2114316452

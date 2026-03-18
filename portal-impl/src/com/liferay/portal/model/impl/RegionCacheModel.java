@@ -287,3 +287,4 @@ public class RegionCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:49238038

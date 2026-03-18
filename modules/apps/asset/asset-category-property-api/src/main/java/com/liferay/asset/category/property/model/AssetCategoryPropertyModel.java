@@ -268,3 +268,4 @@ public interface AssetCategoryPropertyModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1918750303

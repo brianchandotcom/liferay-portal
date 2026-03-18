@@ -370,3 +370,4 @@ public class AkismetEntryLocalServiceWrapper
 	private AkismetEntryLocalService _akismetEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1493520030

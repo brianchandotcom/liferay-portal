@@ -93,3 +93,4 @@ public class CommerceShippingFixedOptionRelTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1958387351

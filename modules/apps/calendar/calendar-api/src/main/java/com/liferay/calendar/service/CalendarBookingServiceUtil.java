@@ -500,3 +500,4 @@ public class CalendarBookingServiceUtil {
 			CalendarBookingServiceUtil.class, CalendarBookingService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-910224336

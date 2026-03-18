@@ -94,3 +94,4 @@ public interface CommerceTaxFixedRateAddressRelService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1676233228

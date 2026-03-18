@@ -330,3 +330,4 @@ public class CommerceChannelCacheModel
 	public boolean discountsTargetNetPrice;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-785757745

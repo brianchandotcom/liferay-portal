@@ -956,3 +956,4 @@ public interface TrashEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-139497810

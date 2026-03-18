@@ -1407,3 +1407,4 @@ public class CommerceInventoryWarehouseItemUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-247673354

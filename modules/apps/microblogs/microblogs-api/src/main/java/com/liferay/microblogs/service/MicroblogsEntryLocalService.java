@@ -364,3 +364,4 @@ public interface MicroblogsEntryLocalService
 		MicroblogsEntry microblogsEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1589060667

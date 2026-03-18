@@ -540,3 +540,4 @@ public abstract class CTSContentLocalServiceBaseImpl
 	private boolean _useTempFile;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1846033876

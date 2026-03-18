@@ -805,3 +805,4 @@ public class CPDefinitionLinkWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1700117341

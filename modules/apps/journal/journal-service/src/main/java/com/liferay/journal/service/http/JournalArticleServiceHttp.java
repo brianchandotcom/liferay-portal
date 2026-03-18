@@ -3418,3 +3418,4 @@ public class JournalArticleServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1322385238

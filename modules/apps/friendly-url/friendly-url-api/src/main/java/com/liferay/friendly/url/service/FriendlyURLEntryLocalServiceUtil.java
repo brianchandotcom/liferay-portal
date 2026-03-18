@@ -669,3 +669,4 @@ public class FriendlyURLEntryLocalServiceUtil {
 			FriendlyURLEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-721585294

@@ -581,3 +581,4 @@ public class MicroblogsEntryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1948420146

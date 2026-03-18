@@ -7338,3 +7338,4 @@ public class SocialRequestPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1856327664

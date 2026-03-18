@@ -1346,3 +1346,4 @@ public class DefinitionModelImpl
 	private Definition _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:605988836

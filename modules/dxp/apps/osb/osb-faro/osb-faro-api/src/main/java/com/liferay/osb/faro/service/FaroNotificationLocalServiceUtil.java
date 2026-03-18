@@ -345,3 +345,4 @@ public class FaroNotificationLocalServiceUtil {
 			FaroNotificationLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:726123937

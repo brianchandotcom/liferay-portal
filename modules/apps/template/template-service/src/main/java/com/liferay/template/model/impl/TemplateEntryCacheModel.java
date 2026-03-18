@@ -280,3 +280,4 @@ public class TemplateEntryCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1395444422

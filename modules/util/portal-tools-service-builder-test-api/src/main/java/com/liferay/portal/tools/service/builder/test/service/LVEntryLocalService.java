@@ -435,3 +435,4 @@ public interface LVEntryLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2089244426

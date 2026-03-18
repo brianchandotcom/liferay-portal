@@ -811,3 +811,4 @@ public class CommerceOrderServiceWrapper
 	private CommerceOrderService _commerceOrderService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1632505293

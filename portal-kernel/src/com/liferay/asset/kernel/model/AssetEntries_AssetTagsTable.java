@@ -43,3 +43,4 @@ public class AssetEntries_AssetTagsTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1583493716

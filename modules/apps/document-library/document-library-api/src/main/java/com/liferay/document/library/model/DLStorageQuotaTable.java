@@ -37,3 +37,4 @@ public class DLStorageQuotaTable extends BaseTable<DLStorageQuotaTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1077289193

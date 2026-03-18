@@ -321,3 +321,4 @@ public class KaleoTaskLocalServiceUtil {
 			KaleoTaskLocalServiceUtil.class, KaleoTaskLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:721152536

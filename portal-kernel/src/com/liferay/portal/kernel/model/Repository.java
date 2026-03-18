@@ -54,3 +54,4 @@ public interface Repository extends PersistedModel, RepositoryModel {
 			typeSettingsUnicodeProperties);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1254469671

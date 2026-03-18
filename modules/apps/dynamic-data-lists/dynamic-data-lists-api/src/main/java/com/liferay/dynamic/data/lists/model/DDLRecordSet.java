@@ -74,3 +74,4 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1516181033

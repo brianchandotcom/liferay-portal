@@ -1039,3 +1039,4 @@ public class BigDecimalEntryUtil {
 	private static volatile BigDecimalEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-84227001

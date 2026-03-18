@@ -142,3 +142,4 @@ public class PermissionCheckFinderEntryModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1465927035

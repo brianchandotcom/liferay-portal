@@ -425,3 +425,4 @@ public class DDMFieldLocalServiceWrapper
 	private DDMFieldLocalService _ddmFieldLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1497078996

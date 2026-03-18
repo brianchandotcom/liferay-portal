@@ -561,3 +561,4 @@ public class NotificationRecipientSettingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-231426124

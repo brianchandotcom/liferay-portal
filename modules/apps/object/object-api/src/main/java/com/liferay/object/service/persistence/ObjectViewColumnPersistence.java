@@ -750,3 +750,4 @@ public interface ObjectViewColumnPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-908373244

@@ -44,3 +44,4 @@ public class LaunchEntryServiceUtil {
 		new Snapshot<>(LaunchEntryServiceUtil.class, LaunchEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-401727678

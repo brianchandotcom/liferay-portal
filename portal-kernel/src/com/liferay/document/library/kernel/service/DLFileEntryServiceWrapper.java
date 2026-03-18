@@ -549,3 +549,4 @@ public class DLFileEntryServiceWrapper
 	private DLFileEntryService _dlFileEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1353989063

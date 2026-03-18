@@ -612,3 +612,4 @@ public abstract class CProductLocalServiceBaseImpl
 		CProductLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2138689958

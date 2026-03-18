@@ -21,3 +21,4 @@ public class KaleoPersistenceConstants {
 		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-583763482

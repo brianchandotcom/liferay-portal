@@ -159,3 +159,4 @@ public interface UserGroupGroupRoleModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1091878464

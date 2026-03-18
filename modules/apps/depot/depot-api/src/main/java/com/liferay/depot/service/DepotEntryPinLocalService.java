@@ -358,3 +358,4 @@ public interface DepotEntryPinLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1294441067

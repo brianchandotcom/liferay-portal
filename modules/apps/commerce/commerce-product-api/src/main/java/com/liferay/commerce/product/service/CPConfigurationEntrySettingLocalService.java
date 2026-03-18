@@ -357,3 +357,4 @@ public interface CPConfigurationEntrySettingLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1416257991

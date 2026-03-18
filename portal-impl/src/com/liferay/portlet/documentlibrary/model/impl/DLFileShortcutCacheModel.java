@@ -333,3 +333,4 @@ public class DLFileShortcutCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:36767309

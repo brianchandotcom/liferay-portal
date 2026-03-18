@@ -76,3 +76,4 @@ public class BookmarksFolderTable extends BaseTable<BookmarksFolderTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:443917674

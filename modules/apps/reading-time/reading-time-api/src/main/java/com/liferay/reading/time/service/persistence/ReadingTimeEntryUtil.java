@@ -760,3 +760,4 @@ public class ReadingTimeEntryUtil {
 	private static volatile ReadingTimeEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2047706104

@@ -290,3 +290,4 @@ public interface DDMTemplateFinder {
 					orderByComparator);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:562417587

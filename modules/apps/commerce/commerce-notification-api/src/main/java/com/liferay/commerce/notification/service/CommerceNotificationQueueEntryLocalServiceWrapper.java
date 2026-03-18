@@ -550,3 +550,4 @@ public class CommerceNotificationQueueEntryLocalServiceWrapper
 		_commerceNotificationQueueEntryLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1347826454

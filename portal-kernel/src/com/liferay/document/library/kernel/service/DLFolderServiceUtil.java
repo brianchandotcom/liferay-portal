@@ -407,3 +407,4 @@ public class DLFolderServiceUtil {
 	private static volatile DLFolderService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1595549727

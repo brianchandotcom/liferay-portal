@@ -75,3 +75,4 @@ public interface DDMFormInstanceRecord
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1292455321

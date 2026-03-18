@@ -74,3 +74,4 @@ public class KaleoDefinitionTable extends BaseTable<KaleoDefinitionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1731166228

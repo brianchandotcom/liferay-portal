@@ -608,3 +608,4 @@ public interface CommerceInventoryWarehouseModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-364153256

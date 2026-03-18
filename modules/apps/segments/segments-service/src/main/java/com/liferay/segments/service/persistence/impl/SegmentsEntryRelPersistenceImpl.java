@@ -2960,3 +2960,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:147060711

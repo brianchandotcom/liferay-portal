@@ -38,3 +38,4 @@ public abstract class RegionBaseImpl extends RegionModelImpl implements Region {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:914315641

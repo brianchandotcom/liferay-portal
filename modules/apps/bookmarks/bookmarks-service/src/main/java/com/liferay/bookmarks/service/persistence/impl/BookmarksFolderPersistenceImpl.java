@@ -8046,3 +8046,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:747831767

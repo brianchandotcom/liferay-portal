@@ -828,3 +828,4 @@ public class WikiPageResourceModelImpl
 	private WikiPageResource _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2102643199

@@ -597,3 +597,4 @@ public interface CommerceCurrencyModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1440566323

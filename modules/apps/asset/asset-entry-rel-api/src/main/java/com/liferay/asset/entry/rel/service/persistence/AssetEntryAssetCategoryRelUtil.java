@@ -720,3 +720,4 @@ public class AssetEntryAssetCategoryRelUtil {
 	private static volatile AssetEntryAssetCategoryRelPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1421712558

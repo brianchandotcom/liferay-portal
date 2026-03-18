@@ -48,3 +48,4 @@ public class FragmentEntryVersionCTServiceImpl
 	private FragmentEntryVersionPersistence _fragmentEntryVersionPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1712769702

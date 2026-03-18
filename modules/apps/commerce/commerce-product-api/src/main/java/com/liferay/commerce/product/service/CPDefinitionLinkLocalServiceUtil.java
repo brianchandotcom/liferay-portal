@@ -547,3 +547,4 @@ public class CPDefinitionLinkLocalServiceUtil {
 			CPDefinitionLinkLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1598021851

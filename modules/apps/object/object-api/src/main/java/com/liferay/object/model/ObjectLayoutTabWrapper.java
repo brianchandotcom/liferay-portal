@@ -595,3 +595,4 @@ public class ObjectLayoutTabWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-651283406

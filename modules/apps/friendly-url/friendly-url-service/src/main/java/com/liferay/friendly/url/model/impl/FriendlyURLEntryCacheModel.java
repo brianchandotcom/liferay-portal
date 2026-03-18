@@ -212,3 +212,4 @@ public class FriendlyURLEntryCacheModel
 	public long classPK;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-398912548

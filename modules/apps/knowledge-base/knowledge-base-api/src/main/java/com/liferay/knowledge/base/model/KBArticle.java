@@ -90,3 +90,4 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 	public boolean isRoot();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1428023115

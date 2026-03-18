@@ -222,3 +222,4 @@ public class ListTypeCacheModel
 	public String type;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1013604350

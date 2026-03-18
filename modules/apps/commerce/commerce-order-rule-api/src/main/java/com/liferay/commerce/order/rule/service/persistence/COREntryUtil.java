@@ -2244,3 +2244,4 @@ public class COREntryUtil {
 	private static volatile COREntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2073844285

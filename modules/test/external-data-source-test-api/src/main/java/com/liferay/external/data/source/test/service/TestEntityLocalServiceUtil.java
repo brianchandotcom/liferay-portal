@@ -289,3 +289,4 @@ public class TestEntityLocalServiceUtil {
 	private static volatile TestEntityLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1950656236

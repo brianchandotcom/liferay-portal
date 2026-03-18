@@ -182,3 +182,4 @@ public class LayoutSEOEntryCustomMetaTagCacheModel
 	public String property;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-168805850

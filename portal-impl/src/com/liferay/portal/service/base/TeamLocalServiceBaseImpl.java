@@ -923,3 +923,4 @@ public abstract class TeamLocalServiceBaseImpl
 		TeamLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:28014100

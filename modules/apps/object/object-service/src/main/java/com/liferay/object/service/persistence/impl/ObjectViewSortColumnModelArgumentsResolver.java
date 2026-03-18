@@ -118,3 +118,4 @@ public class ObjectViewSortColumnModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-735676617

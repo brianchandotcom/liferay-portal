@@ -4464,3 +4464,4 @@ public class UserNotificationEventUtil {
 	private static volatile UserNotificationEventPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:984182661

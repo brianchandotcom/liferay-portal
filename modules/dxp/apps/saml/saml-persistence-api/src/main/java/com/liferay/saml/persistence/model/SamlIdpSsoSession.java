@@ -54,3 +54,4 @@ public interface SamlIdpSsoSession
 	public boolean isExpired();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:519369691

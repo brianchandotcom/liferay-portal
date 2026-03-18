@@ -58,3 +58,4 @@ public interface CommercePriceListDiscountRel
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:36857210

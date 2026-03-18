@@ -73,3 +73,4 @@ public interface CommerceNotificationQueueEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-558052174

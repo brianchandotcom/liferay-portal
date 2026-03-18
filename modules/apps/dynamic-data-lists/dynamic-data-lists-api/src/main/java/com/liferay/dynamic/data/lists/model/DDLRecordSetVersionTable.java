@@ -85,3 +85,4 @@ public class DDLRecordSetVersionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1809833403

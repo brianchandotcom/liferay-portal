@@ -2039,3 +2039,4 @@ public class CPAttachmentFileEntryModelImpl
 	private CPAttachmentFileEntry _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:590585357

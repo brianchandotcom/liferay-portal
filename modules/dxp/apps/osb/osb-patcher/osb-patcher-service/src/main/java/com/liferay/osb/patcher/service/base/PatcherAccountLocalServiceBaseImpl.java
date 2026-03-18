@@ -619,3 +619,4 @@ public abstract class PatcherAccountLocalServiceBaseImpl
 		PatcherAccountLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-527512678

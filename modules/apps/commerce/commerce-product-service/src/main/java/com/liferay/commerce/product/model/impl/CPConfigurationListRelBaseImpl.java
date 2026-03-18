@@ -41,3 +41,4 @@ public abstract class CPConfigurationListRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1329900611

@@ -95,3 +95,4 @@ public class CPDefinitionInventoryServiceUtil {
 			CPDefinitionInventoryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1085590426

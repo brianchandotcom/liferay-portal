@@ -1954,3 +1954,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-304453184

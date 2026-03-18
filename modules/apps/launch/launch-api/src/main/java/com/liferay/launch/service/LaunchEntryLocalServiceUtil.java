@@ -360,3 +360,4 @@ public class LaunchEntryLocalServiceUtil {
 			LaunchEntryLocalServiceUtil.class, LaunchEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-822642840

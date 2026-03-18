@@ -505,3 +505,4 @@ public class CPTaxCategoryServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1322752120

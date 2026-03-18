@@ -347,3 +347,4 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1534242651

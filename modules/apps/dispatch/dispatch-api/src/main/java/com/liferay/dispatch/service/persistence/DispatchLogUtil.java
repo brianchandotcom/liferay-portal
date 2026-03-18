@@ -632,3 +632,4 @@ public class DispatchLogUtil {
 	private static volatile DispatchLogPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:92400056

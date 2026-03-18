@@ -130,3 +130,4 @@ public class CTScoreCacheModel
 	public int score;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:297991787

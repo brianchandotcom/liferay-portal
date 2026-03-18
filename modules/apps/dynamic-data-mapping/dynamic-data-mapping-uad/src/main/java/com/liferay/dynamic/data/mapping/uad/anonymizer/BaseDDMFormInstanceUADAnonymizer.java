@@ -98,3 +98,4 @@ public abstract class BaseDDMFormInstanceUADAnonymizer
 	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2018609776

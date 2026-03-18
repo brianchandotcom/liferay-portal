@@ -301,3 +301,4 @@ public interface AssetTagModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1564371442

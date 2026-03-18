@@ -50,3 +50,4 @@ public interface SXPElement extends PersistedModel, SXPElementModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-426063113

@@ -356,3 +356,4 @@ public interface ListTypeEntryLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:627603196

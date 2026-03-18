@@ -249,3 +249,4 @@ public class MBSuspiciousActivityCacheModel
 	public boolean validated;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1202266621

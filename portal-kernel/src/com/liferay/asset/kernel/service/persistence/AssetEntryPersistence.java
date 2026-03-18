@@ -1793,3 +1793,4 @@ public interface AssetEntryPersistence
 		java.util.List<com.liferay.asset.kernel.model.AssetTag> assetTags);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1360689410

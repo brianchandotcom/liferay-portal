@@ -183,3 +183,4 @@ public class CPConfigurationListServiceWrapper
 	private CPConfigurationListService _cpConfigurationListService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-44780572

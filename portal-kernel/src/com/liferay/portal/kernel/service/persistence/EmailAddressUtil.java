@@ -1630,3 +1630,4 @@ public class EmailAddressUtil {
 	private static volatile EmailAddressPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1000184419

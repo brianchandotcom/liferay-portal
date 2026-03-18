@@ -792,3 +792,4 @@ public class CTAutoResolutionInfoUtil {
 	private static volatile CTAutoResolutionInfoPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:545225919

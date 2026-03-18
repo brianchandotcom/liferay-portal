@@ -717,3 +717,4 @@ public class DDMFormInstanceRecordVersionWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1135012202

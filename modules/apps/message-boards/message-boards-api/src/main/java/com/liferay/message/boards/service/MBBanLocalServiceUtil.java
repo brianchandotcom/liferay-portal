@@ -403,3 +403,4 @@ public class MBBanLocalServiceUtil {
 		new Snapshot<>(MBBanLocalServiceUtil.class, MBBanLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:12909442

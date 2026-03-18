@@ -763,3 +763,4 @@ public interface MBMessageLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:361659014

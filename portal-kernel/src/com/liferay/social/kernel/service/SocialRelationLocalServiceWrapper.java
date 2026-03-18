@@ -654,3 +654,4 @@ public class SocialRelationLocalServiceWrapper
 	private SocialRelationLocalService _socialRelationLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1543145704

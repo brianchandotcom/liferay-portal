@@ -1163,3 +1163,4 @@ public class PortletPreferenceValueUtil {
 	private static volatile PortletPreferenceValuePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1042905854

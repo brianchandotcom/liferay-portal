@@ -724,3 +724,4 @@ public class MBCategoryLocalServiceUtil {
 			MBCategoryLocalServiceUtil.class, MBCategoryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1122513937

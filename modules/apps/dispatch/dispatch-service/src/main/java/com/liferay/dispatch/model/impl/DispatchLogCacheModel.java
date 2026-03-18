@@ -238,3 +238,4 @@ public class DispatchLogCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:930876552

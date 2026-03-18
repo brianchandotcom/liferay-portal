@@ -314,3 +314,4 @@ public interface AnalyticsAssociationLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1738223534

@@ -342,3 +342,4 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-958579288

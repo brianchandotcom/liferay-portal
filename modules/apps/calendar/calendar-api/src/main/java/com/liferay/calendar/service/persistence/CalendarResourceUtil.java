@@ -2059,3 +2059,4 @@ public class CalendarResourceUtil {
 	private static volatile CalendarResourcePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:97606876

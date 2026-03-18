@@ -64,3 +64,4 @@ public class ObjectLayoutColumnTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:538722771

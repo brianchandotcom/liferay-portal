@@ -448,3 +448,4 @@ public interface ObjectEntryVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1708955038

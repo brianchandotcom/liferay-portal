@@ -910,3 +910,4 @@ public class MBMailingListUtil {
 	private static volatile MBMailingListPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1669289266

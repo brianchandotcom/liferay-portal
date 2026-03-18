@@ -323,3 +323,4 @@ public class AssetVocabularyCacheModel
 	public int status;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1294041057

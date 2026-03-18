@@ -929,3 +929,4 @@ public class MBMailingListWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1780767921

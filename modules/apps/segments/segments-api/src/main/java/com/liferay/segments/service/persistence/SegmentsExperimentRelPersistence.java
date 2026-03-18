@@ -500,3 +500,4 @@ public interface SegmentsExperimentRelPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-596845103

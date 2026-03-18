@@ -252,3 +252,4 @@ public class TeamCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1573028238

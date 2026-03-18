@@ -183,3 +183,4 @@ public class DLContentCacheModel
 	public long size;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-4168152

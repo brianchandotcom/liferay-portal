@@ -830,3 +830,4 @@ public class CompanyServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:141410279

@@ -644,3 +644,4 @@ public interface DDMStructureVersionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-370264502

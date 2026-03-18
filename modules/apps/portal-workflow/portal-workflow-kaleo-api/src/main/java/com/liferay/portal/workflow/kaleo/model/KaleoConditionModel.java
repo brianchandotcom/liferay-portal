@@ -308,3 +308,4 @@ public interface KaleoConditionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1709519522

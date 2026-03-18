@@ -67,3 +67,4 @@ public interface CommerceWishListItem
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1004371108

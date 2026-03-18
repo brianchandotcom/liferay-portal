@@ -393,3 +393,4 @@ public class SAPEntryLocalServiceUtil {
 			SAPEntryLocalServiceUtil.class, SAPEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:640343752

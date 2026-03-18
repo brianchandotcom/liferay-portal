@@ -1567,3 +1567,4 @@ public class CommerceShipmentUtil {
 	private static volatile CommerceShipmentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:398920600

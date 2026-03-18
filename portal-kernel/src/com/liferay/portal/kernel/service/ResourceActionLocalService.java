@@ -292,3 +292,4 @@ public interface ResourceActionLocalService
 	public ResourceAction updateResourceAction(ResourceAction resourceAction);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1038400160

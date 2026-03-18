@@ -2941,3 +2941,4 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1787308785

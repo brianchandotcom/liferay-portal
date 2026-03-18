@@ -210,3 +210,4 @@ public class SiteNavigationMenuServiceWrapper
 	private SiteNavigationMenuService _siteNavigationMenuService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:234688292

@@ -127,3 +127,4 @@ public abstract class SegmentsExperimentRelServiceBaseImpl
 		SegmentsExperimentRelServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-568794695

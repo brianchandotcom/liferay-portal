@@ -85,3 +85,4 @@ public class BlogsStatsUserLocalServiceWrapper
 	private BlogsStatsUserLocalService _blogsStatsUserLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-520081928

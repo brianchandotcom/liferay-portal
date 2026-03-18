@@ -974,3 +974,4 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1242389265

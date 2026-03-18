@@ -488,3 +488,4 @@ public class LayoutSEOEntryCustomMetaTagUtil {
 	private static volatile LayoutSEOEntryCustomMetaTagPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-148620798

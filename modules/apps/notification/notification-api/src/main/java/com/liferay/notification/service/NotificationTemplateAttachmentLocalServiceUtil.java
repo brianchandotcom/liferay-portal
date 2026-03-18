@@ -336,3 +336,4 @@ public class NotificationTemplateAttachmentLocalServiceUtil {
 			NotificationTemplateAttachmentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-857760227

@@ -1551,3 +1551,4 @@ public class JournalArticleWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1951643174

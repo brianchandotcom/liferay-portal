@@ -20,3 +20,4 @@ public class AnnouncementUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1079044467

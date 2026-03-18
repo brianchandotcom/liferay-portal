@@ -75,3 +75,4 @@ public class CompanyTable extends BaseTable<CompanyTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-727820500

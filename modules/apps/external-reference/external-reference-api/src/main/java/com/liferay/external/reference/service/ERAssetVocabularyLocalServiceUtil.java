@@ -61,3 +61,4 @@ public class ERAssetVocabularyLocalServiceUtil {
 			ERAssetVocabularyLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-5486421

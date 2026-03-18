@@ -1213,3 +1213,4 @@ public class WikiPageWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1890984131

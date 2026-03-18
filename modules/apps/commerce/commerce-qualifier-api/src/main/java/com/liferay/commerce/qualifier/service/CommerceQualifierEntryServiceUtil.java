@@ -144,3 +144,4 @@ public class CommerceQualifierEntryServiceUtil {
 			CommerceQualifierEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1475424449

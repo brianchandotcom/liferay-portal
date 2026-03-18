@@ -207,3 +207,4 @@ public abstract class LayoutRevisionServiceBaseImpl
 		LayoutRevisionServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1303793835

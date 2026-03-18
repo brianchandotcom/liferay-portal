@@ -39,3 +39,4 @@ public abstract class ObjectFolderItemBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-210484912

@@ -375,3 +375,4 @@ public interface JournalArticleLocalizationPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-468899195

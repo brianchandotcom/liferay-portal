@@ -48,3 +48,4 @@ public class DLContentTable extends BaseTable<DLContentTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:253799292

@@ -43,3 +43,4 @@ public class IndexEntryCTServiceImpl implements CTService<IndexEntry> {
 	private IndexEntryPersistence _indexEntryPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:515097523

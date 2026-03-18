@@ -699,3 +699,4 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			LayoutPageTemplateEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1391057017

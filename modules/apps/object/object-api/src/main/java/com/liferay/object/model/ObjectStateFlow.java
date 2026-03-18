@@ -52,3 +52,4 @@ public interface ObjectStateFlow extends ObjectStateFlowModel, PersistedModel {
 	public void setObjectStates(java.util.List<ObjectState> objectStates);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1690070670

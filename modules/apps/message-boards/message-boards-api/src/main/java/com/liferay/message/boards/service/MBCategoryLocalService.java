@@ -545,3 +545,4 @@ public interface MBCategoryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:227530487

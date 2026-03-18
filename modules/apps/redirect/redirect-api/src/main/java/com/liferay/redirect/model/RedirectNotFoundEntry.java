@@ -56,3 +56,4 @@ public interface RedirectNotFoundEntry
 	public long getRequestCount();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-937008268

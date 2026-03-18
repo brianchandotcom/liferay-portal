@@ -5425,3 +5425,4 @@ public interface BlogsEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:273844440

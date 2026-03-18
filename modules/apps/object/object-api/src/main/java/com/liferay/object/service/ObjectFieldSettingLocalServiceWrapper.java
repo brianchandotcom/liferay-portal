@@ -447,3 +447,4 @@ public class ObjectFieldSettingLocalServiceWrapper
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:151312114

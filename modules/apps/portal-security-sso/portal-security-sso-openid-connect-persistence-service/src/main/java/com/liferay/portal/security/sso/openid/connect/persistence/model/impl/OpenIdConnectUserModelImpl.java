@@ -821,3 +821,4 @@ public class OpenIdConnectUserModelImpl
 	private OpenIdConnectUser _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-918796709

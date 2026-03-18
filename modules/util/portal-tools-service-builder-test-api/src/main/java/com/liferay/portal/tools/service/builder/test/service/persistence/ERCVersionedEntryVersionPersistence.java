@@ -1189,3 +1189,4 @@ public interface ERCVersionedEntryVersionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1271728903

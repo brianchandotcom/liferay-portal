@@ -2849,3 +2849,4 @@ public class MembershipRequestPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1781762328

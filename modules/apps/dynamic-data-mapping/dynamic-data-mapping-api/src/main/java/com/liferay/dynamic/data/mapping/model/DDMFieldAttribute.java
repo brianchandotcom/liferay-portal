@@ -53,3 +53,4 @@ public interface DDMFieldAttribute extends DDMFieldAttributeModel {
 	public void setAttributeValue(String value);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:214333271

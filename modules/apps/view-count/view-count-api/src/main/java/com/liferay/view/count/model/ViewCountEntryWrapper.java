@@ -208,3 +208,4 @@ public class ViewCountEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1814587944

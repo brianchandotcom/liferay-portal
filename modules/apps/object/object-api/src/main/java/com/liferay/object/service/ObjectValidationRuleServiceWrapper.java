@@ -109,3 +109,4 @@ public class ObjectValidationRuleServiceWrapper
 	private ObjectValidationRuleService _objectValidationRuleService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:566284133

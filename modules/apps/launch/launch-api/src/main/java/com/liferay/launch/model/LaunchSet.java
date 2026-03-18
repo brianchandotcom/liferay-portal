@@ -48,3 +48,4 @@ public interface LaunchSet extends LaunchSetModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:371930059

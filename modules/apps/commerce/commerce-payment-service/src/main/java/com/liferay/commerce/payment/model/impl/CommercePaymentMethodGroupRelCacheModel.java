@@ -286,3 +286,4 @@ public class CommercePaymentMethodGroupRelCacheModel
 	public String typeSettings;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1887421507

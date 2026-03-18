@@ -63,3 +63,4 @@ public class ResourcePermissionFinderUtil {
 	private static ResourcePermissionFinder _finder;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-48231887

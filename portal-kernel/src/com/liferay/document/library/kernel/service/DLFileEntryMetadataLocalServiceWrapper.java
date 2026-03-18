@@ -555,3 +555,4 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-757170373

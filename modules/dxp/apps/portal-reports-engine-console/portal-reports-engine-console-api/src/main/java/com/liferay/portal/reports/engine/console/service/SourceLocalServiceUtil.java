@@ -401,3 +401,4 @@ public class SourceLocalServiceUtil {
 		new Snapshot<>(SourceLocalServiceUtil.class, SourceLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-839621897

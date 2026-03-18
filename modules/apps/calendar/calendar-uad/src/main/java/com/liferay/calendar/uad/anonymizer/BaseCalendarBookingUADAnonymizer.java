@@ -98,3 +98,4 @@ public abstract class BaseCalendarBookingUADAnonymizer
 	protected CalendarBookingLocalService calendarBookingLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-468042120

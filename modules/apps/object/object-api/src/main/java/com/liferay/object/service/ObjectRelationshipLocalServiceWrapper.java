@@ -713,3 +713,4 @@ public class ObjectRelationshipLocalServiceWrapper
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1008977212

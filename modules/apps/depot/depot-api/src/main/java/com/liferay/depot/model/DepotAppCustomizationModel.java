@@ -171,3 +171,4 @@ public interface DepotAppCustomizationModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1714631264

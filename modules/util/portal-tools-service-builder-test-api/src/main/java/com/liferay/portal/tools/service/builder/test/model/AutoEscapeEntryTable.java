@@ -39,3 +39,4 @@ public class AutoEscapeEntryTable extends BaseTable<AutoEscapeEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-778200643

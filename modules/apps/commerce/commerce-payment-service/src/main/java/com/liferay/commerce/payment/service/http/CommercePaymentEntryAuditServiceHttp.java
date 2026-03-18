@@ -197,3 +197,4 @@ public class CommercePaymentEntryAuditServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1171078777

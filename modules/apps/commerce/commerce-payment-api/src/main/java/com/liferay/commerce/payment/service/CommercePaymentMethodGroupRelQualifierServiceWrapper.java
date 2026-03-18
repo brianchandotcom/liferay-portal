@@ -220,3 +220,4 @@ public class CommercePaymentMethodGroupRelQualifierServiceWrapper
 		_commercePaymentMethodGroupRelQualifierService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2123298891

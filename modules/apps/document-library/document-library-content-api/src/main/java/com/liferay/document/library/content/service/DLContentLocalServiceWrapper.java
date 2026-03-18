@@ -492,3 +492,4 @@ public class DLContentLocalServiceWrapper
 	private DLContentLocalService _dlContentLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1308509087

@@ -39,3 +39,4 @@ public abstract class CompanyInfoBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1905807349

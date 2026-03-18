@@ -65,3 +65,4 @@ public class OrgLaborTable extends BaseTable<OrgLaborTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-154097955

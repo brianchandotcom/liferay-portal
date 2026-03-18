@@ -43,3 +43,4 @@ public interface PortalLocalService extends BaseLocalService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:194484982

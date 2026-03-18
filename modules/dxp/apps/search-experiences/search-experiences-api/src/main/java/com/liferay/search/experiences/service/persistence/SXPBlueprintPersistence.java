@@ -844,3 +844,4 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-164965608

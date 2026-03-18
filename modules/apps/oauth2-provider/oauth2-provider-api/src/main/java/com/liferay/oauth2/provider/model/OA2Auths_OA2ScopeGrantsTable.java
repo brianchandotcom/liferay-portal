@@ -41,3 +41,4 @@ public class OA2Auths_OA2ScopeGrantsTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1226004507

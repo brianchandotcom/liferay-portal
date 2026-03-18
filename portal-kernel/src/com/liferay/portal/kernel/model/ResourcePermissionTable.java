@@ -58,3 +58,4 @@ public class ResourcePermissionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1595856787

@@ -52,3 +52,4 @@ public interface ObjectLayoutBox extends ObjectLayoutBoxModel {
 		java.util.List<ObjectLayoutRow> objectLayoutRows);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:350491760

@@ -92,3 +92,4 @@ public abstract class BaseUserGroupUADAnonymizer
 	protected UserGroupLocalService userGroupLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-479371711

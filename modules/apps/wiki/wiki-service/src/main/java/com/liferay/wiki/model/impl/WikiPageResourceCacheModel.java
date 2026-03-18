@@ -176,3 +176,4 @@ public class WikiPageResourceCacheModel
 	public String title;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1152627846

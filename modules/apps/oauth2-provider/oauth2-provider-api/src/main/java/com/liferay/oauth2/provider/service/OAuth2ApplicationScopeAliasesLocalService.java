@@ -293,3 +293,4 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:473125989

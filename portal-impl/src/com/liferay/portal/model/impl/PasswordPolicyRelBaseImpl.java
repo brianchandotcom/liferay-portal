@@ -39,3 +39,4 @@ public abstract class PasswordPolicyRelBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1849052849

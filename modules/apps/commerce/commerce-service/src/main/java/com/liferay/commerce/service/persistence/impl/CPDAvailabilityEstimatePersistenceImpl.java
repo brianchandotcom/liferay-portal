@@ -2682,3 +2682,4 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2119043677

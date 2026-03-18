@@ -927,3 +927,4 @@ public class NotificationRecipientSettingUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1463641681

@@ -58,3 +58,4 @@ public class DefinitionTable extends BaseTable<DefinitionTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:217930782

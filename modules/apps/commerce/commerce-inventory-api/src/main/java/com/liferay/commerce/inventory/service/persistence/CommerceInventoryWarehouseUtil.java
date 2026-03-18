@@ -2026,3 +2026,4 @@ public class CommerceInventoryWarehouseUtil {
 	private static volatile CommerceInventoryWarehousePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-243992156

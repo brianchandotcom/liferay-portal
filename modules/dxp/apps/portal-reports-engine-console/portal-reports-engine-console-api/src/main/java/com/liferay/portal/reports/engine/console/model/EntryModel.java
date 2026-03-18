@@ -403,3 +403,4 @@ public interface EntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1328444569

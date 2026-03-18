@@ -272,3 +272,4 @@ public interface CTSGrandParentLocalService
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1789591560

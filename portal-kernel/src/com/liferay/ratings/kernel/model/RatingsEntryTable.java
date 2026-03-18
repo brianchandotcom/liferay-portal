@@ -53,3 +53,4 @@ public class RatingsEntryTable extends BaseTable<RatingsEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1174113527

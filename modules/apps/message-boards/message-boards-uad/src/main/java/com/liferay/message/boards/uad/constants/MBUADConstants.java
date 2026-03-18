@@ -28,3 +28,4 @@ public class MBUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1463212682

@@ -180,3 +180,4 @@ public interface RecentLayoutBranchModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1445880843

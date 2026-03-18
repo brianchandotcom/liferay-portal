@@ -163,3 +163,4 @@ public interface AssetEntryAssetCategoryRelModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:114495204

@@ -127,3 +127,4 @@ public class TicketModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1031320442

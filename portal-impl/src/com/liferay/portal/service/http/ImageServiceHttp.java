@@ -86,3 +86,4 @@ public class ImageServiceHttp {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1911355396

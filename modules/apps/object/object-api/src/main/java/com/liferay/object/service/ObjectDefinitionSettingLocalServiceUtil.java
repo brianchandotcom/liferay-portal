@@ -403,3 +403,4 @@ public class ObjectDefinitionSettingLocalServiceUtil {
 			ObjectDefinitionSettingLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-597159586

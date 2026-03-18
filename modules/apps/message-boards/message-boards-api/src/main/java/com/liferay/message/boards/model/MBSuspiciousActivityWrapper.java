@@ -566,3 +566,4 @@ public class MBSuspiciousActivityWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2105142143

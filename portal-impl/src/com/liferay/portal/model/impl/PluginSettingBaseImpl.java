@@ -39,3 +39,4 @@ public abstract class PluginSettingBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1159364829

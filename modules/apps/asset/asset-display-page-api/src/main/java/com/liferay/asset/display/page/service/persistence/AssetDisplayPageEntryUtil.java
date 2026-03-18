@@ -1343,3 +1343,4 @@ public class AssetDisplayPageEntryUtil {
 	private static volatile AssetDisplayPageEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1753376807

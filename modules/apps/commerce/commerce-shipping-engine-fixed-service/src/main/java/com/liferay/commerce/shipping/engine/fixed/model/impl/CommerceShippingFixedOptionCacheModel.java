@@ -267,3 +267,4 @@ public class CommerceShippingFixedOptionCacheModel
 	public double priority;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-571497209

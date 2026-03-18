@@ -451,3 +451,4 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 		ChangesetEntryLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1476898739

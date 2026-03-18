@@ -66,3 +66,4 @@ public interface NotificationQueueEntryService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1747274111

@@ -126,3 +126,4 @@ public interface ResourceActionModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1528488179

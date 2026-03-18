@@ -1859,3 +1859,4 @@ public class MBMessageServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1462191668

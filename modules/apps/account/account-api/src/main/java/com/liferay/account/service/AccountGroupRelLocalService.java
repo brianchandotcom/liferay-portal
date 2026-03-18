@@ -323,3 +323,4 @@ public interface AccountGroupRelLocalService
 		AccountGroupRel accountGroupRel);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:402927894

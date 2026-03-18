@@ -54,3 +54,4 @@ public interface KaleoTimer extends KaleoTimerModel, PersistedModel {
 	public boolean isRecurring();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1448589611

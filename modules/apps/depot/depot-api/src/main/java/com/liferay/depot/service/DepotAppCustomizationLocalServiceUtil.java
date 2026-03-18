@@ -336,3 +336,4 @@ public class DepotAppCustomizationLocalServiceUtil {
 			DepotAppCustomizationLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1632179753

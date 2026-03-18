@@ -431,3 +431,4 @@ public class ObjectFilterWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1564930703

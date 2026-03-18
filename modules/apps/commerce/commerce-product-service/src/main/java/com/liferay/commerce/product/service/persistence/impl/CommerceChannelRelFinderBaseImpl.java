@@ -57,3 +57,4 @@ public abstract class CommerceChannelRelFinderBaseImpl
 	protected CommerceChannelRelPersistence commerceChannelRelPersistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1953106755

@@ -109,3 +109,4 @@ public interface CPOptionService extends BaseService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1285842532

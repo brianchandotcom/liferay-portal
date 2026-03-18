@@ -1903,3 +1903,4 @@ public class JournalContentSearchUtil {
 	private static volatile JournalContentSearchPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1128580534

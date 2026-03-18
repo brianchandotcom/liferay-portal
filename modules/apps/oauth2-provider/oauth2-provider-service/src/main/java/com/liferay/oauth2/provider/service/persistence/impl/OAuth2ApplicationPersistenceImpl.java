@@ -5295,3 +5295,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:448220155

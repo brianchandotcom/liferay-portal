@@ -937,3 +937,4 @@ public interface CommerceNotificationQueueEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1024573672

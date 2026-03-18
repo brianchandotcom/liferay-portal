@@ -180,3 +180,4 @@ public class CommercePricingClassCPDefinitionRelServiceWrapper
 		_commercePricingClassCPDefinitionRelService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1484674845

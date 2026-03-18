@@ -39,3 +39,4 @@ public abstract class DDMStructureLinkBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:489990540

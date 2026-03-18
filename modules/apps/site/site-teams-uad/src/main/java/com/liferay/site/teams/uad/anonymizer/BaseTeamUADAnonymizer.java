@@ -89,3 +89,4 @@ public abstract class BaseTeamUADAnonymizer
 	protected TeamLocalService teamLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2044544155

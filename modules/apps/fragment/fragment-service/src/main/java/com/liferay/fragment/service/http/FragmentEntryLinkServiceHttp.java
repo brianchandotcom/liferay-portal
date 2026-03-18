@@ -369,3 +369,4 @@ public class FragmentEntryLinkServiceHttp {
 		new Class[] {long.class, String.class, boolean.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:788936619

@@ -91,3 +91,4 @@ public class PLOEntryServiceUtil {
 		new Snapshot<>(PLOEntryServiceUtil.class, PLOEntryService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1213474530

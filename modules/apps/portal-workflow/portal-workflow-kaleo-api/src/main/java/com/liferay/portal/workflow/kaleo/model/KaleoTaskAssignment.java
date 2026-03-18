@@ -52,3 +52,4 @@ public interface KaleoTaskAssignment
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1193229946

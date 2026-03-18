@@ -792,3 +792,4 @@ public class DLFileVersionPreviewUtil {
 	private static volatile DLFileVersionPreviewPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1815931341

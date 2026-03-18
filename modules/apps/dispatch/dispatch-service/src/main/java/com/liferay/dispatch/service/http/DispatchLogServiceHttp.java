@@ -263,3 +263,4 @@ public class DispatchLogServiceHttp {
 		new Class[] {long.class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-689317254

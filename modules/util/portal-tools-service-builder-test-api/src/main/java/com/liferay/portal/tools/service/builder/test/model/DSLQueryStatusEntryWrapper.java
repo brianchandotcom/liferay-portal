@@ -192,3 +192,4 @@ public class DSLQueryStatusEntryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-329802528

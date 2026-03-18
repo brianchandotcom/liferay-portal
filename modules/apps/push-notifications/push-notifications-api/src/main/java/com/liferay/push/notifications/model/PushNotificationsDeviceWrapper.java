@@ -269,3 +269,4 @@ public class PushNotificationsDeviceWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1956488085

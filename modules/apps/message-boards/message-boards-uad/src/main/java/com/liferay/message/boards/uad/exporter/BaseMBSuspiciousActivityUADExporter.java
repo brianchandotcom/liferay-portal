@@ -66,3 +66,4 @@ public abstract class BaseMBSuspiciousActivityUADExporter
 	protected MBSuspiciousActivityLocalService mbSuspiciousActivityLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:229797823

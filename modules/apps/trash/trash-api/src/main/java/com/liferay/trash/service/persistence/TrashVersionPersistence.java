@@ -501,3 +501,4 @@ public interface TrashVersionPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:742830246

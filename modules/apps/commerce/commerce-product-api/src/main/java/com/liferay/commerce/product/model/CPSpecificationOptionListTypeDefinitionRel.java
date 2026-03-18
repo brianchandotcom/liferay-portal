@@ -60,3 +60,4 @@ public interface CPSpecificationOptionListTypeDefinitionRel
 				};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2102354006

@@ -321,3 +321,4 @@ public interface WebsiteLocalService
 	public Website updateWebsite(Website website);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2101107524

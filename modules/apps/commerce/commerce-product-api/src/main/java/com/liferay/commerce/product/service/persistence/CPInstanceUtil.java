@@ -2931,3 +2931,4 @@ public class CPInstanceUtil {
 	private static volatile CPInstancePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:345953973

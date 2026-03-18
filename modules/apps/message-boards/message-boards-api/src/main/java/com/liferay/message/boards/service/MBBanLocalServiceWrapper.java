@@ -480,3 +480,4 @@ public class MBBanLocalServiceWrapper
 	private MBBanLocalService _mbBanLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1614046261

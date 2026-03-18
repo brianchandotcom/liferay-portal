@@ -290,3 +290,4 @@ public class DDLRecordVersionCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2091192609

@@ -314,3 +314,4 @@ public class CalendarResourceCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-381667463

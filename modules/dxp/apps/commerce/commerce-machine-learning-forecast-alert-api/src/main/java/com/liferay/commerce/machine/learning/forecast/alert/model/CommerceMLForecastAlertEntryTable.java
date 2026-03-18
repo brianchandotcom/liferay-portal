@@ -70,3 +70,4 @@ public class CommerceMLForecastAlertEntryTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1379899905

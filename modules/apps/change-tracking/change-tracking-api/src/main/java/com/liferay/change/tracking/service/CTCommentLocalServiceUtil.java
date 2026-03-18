@@ -317,3 +317,4 @@ public class CTCommentLocalServiceUtil {
 			CTCommentLocalServiceUtil.class, CTCommentLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1013070592

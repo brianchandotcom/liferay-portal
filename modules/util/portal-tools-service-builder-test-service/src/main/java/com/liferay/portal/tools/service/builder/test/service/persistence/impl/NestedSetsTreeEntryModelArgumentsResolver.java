@@ -117,3 +117,4 @@ public class NestedSetsTreeEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1034775422

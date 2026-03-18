@@ -39,3 +39,4 @@ public abstract class ResourceActionBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1994096757

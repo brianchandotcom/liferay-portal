@@ -56,3 +56,4 @@ public class SegmentsEntryRoleTable extends BaseTable<SegmentsEntryRoleTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1480699489

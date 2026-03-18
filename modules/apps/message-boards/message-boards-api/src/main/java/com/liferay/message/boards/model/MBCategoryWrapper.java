@@ -897,3 +897,4 @@ public class MBCategoryWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1767957921

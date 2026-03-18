@@ -1076,3 +1076,4 @@ public interface DDMStructureLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:319530675

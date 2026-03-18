@@ -68,3 +68,4 @@ public class TemplateEntryTable extends BaseTable<TemplateEntryTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2132257399

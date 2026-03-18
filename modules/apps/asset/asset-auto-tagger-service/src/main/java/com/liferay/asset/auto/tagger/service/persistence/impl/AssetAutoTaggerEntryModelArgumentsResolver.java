@@ -137,3 +137,4 @@ public class AssetAutoTaggerEntryModelArgumentsResolver
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1495282870

@@ -116,3 +116,4 @@ public class SavedContentEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-314184788

@@ -1542,3 +1542,4 @@ public class FriendlyURLEntryLocalizationUtil {
 		_persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1318964602

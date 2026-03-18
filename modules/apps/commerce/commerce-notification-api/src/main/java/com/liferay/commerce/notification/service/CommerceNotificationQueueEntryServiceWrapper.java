@@ -106,3 +106,4 @@ public class CommerceNotificationQueueEntryServiceWrapper
 		_commerceNotificationQueueEntryService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:641525915

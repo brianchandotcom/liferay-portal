@@ -390,3 +390,4 @@ public class StagingServiceHttp {
 		new Class[] {long.class, String.class, byte[].class};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1490424768

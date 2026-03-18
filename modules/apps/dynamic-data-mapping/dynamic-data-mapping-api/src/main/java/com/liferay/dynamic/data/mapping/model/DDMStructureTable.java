@@ -81,3 +81,4 @@ public class DDMStructureTable extends BaseTable<DDMStructureTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-589456746

@@ -61,3 +61,4 @@ public interface Entry extends EntryModel, PersistedModel {
 	public String getSchedulerRequestName();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1797160518

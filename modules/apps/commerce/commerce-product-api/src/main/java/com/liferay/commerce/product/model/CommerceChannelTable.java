@@ -78,3 +78,4 @@ public class CommerceChannelTable extends BaseTable<CommerceChannelTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-827508503

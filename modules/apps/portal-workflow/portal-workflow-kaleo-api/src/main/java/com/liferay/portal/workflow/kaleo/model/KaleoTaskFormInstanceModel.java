@@ -378,3 +378,4 @@ public interface KaleoTaskFormInstanceModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1697233230

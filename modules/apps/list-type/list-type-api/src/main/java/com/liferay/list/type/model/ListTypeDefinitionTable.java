@@ -63,3 +63,4 @@ public class ListTypeDefinitionTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2053939496

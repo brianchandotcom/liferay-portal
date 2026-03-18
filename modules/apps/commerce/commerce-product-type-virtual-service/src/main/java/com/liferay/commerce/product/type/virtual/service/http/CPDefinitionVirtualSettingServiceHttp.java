@@ -385,3 +385,4 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1893644448

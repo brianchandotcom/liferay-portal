@@ -482,3 +482,4 @@ public class CProductLocalServiceWrapper
 	private CProductLocalService _cProductLocalService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1660603949

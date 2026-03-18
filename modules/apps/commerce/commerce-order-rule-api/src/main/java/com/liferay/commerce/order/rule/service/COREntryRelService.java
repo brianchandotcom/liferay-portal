@@ -125,3 +125,4 @@ public interface COREntryRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:841327511

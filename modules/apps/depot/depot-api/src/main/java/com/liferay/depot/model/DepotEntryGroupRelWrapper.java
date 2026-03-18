@@ -579,3 +579,4 @@ public class DepotEntryGroupRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2049019282

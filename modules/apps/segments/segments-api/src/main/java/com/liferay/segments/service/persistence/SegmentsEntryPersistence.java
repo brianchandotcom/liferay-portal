@@ -2138,3 +2138,4 @@ public interface SegmentsEntryPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1575556079

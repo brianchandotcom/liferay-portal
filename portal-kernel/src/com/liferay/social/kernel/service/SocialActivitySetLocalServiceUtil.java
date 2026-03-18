@@ -424,3 +424,4 @@ public class SocialActivitySetLocalServiceUtil {
 	private static volatile SocialActivitySetLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-318516587

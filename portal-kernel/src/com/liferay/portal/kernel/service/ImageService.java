@@ -52,3 +52,4 @@ public interface ImageService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1525439637

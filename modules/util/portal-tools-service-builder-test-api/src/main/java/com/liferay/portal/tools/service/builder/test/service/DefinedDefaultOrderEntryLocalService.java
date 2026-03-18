@@ -273,3 +273,4 @@ public interface DefinedDefaultOrderEntryLocalService
 		DefinedDefaultOrderEntry definedDefaultOrderEntry);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1268351357

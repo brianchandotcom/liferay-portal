@@ -39,3 +39,4 @@ public class DLSyncEventTable extends BaseTable<DLSyncEventTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:384364541

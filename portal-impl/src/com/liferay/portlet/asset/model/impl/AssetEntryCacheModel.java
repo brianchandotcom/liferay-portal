@@ -427,3 +427,4 @@ public class AssetEntryCacheModel
 	public double priority;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-990350811

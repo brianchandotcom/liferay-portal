@@ -61,3 +61,4 @@ public interface DLTrashLocalService extends BaseLocalService {
 		throws PortalException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1882852468

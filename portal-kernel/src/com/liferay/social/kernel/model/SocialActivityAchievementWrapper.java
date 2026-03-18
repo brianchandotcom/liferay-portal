@@ -375,3 +375,4 @@ public class SocialActivityAchievementWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2101671276

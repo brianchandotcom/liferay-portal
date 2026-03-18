@@ -50,3 +50,4 @@ public interface Module extends ModuleModel, PersistedModel {
 	public boolean isBundle();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-842019606

@@ -646,3 +646,4 @@ public class SocialRequestLocalServiceUtil {
 	private static volatile SocialRequestLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1594075853

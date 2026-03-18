@@ -47,3 +47,4 @@ public interface ClassName extends ClassNameModel, PersistedModel {
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1799425870

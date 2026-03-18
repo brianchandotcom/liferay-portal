@@ -159,3 +159,4 @@ public class ERCVersionedEntryVersionCacheModel
 	public long companyId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1146275545

@@ -150,3 +150,4 @@ public class AccountRoleCacheModel
 	public long roleId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:477346215

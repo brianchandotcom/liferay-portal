@@ -215,3 +215,4 @@ public class PatcherFixRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-516727707

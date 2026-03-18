@@ -317,3 +317,4 @@ public class AkismetEntryLocalServiceUtil {
 			AkismetEntryLocalServiceUtil.class, AkismetEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:964635490

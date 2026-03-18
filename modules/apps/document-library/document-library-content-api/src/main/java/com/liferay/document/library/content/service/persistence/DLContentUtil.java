@@ -957,3 +957,4 @@ public class DLContentUtil {
 	private static volatile DLContentPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:310833477

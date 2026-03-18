@@ -336,3 +336,4 @@ public class PermissionCheckFinderEntryLocalServiceUtil {
 	private static volatile PermissionCheckFinderEntryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2063508420

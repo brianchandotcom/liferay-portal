@@ -916,3 +916,4 @@ public class RoleWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1371612081

@@ -343,3 +343,4 @@ public interface SourceLocalService
 	public Source updateSource(Source source);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1978776997

@@ -16,3 +16,4 @@ public class BlogsUADConstants {
 	};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:443726854

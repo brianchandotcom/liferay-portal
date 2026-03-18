@@ -982,3 +982,4 @@ public interface DDMDataProviderInstancePersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:780829580

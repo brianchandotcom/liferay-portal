@@ -1832,3 +1832,4 @@ public class KaleoTaskAssignmentInstanceUtil {
 	private static volatile KaleoTaskAssignmentInstancePersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1679599313

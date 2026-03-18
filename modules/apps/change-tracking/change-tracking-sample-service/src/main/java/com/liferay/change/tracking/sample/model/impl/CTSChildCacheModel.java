@@ -174,3 +174,4 @@ public class CTSChildCacheModel
 	public String name;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1081071298

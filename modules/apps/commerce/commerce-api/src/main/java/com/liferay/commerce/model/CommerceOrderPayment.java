@@ -52,3 +52,4 @@ public interface CommerceOrderPayment
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1250244636

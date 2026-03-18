@@ -39,3 +39,4 @@ public abstract class CProductBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:705484381

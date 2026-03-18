@@ -148,3 +148,4 @@ public class CommercePricingClassCPDefinitionRelServiceUtil {
 			CommercePricingClassCPDefinitionRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-35212401

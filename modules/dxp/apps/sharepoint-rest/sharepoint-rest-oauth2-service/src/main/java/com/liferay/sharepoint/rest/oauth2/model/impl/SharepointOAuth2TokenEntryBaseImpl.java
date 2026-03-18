@@ -42,3 +42,4 @@ public abstract class SharepointOAuth2TokenEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1391075618

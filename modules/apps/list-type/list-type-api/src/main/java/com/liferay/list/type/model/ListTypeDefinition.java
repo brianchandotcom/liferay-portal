@@ -52,3 +52,4 @@ public interface ListTypeDefinition
 			};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:138868230

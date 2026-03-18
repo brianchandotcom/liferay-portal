@@ -318,3 +318,4 @@ public class CTRemoteLocalServiceUtil {
 			CTRemoteLocalServiceUtil.class, CTRemoteLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1445140565

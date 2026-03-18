@@ -460,3 +460,4 @@ public class RepositoryLocalServiceUtil {
 	private static volatile RepositoryLocalService _service;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1498388955

@@ -51,3 +51,4 @@ public interface AnalyticsMessage
 		};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-466297706

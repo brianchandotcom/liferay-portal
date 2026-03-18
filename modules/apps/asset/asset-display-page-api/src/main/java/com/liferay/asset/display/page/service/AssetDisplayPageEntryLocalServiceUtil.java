@@ -473,3 +473,4 @@ public class AssetDisplayPageEntryLocalServiceUtil {
 			AssetDisplayPageEntryLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1933622741

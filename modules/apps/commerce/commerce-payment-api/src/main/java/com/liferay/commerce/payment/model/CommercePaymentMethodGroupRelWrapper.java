@@ -810,3 +810,4 @@ public class CommercePaymentMethodGroupRelWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-126936728

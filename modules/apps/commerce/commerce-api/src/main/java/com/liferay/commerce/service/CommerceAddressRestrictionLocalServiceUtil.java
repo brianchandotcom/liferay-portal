@@ -383,3 +383,4 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 			CommerceAddressRestrictionLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1510472129

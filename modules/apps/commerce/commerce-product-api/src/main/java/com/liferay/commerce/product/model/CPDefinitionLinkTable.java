@@ -83,3 +83,4 @@ public class CPDefinitionLinkTable extends BaseTable<CPDefinitionLinkTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1248007075

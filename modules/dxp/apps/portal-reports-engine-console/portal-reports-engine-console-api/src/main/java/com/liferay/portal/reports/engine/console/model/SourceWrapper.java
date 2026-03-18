@@ -640,3 +640,4 @@ public class SourceWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1205406470

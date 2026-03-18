@@ -301,3 +301,4 @@ public class FriendlyURLEntryMappingWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1363490827

@@ -313,3 +313,4 @@ public class ClientExtensionEntryRelCacheModel
 	public long lastPublishDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1068148738

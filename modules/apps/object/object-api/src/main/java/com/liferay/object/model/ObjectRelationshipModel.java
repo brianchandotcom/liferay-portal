@@ -516,3 +516,4 @@ public interface ObjectRelationshipModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1164085044

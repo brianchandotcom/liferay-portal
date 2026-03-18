@@ -1015,3 +1015,4 @@ public class CommercePaymentMethodGroupRelQualifierModelImpl
 	private CommercePaymentMethodGroupRelQualifier _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:82752054

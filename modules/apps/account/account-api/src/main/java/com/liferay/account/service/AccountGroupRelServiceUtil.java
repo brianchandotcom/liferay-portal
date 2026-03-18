@@ -83,3 +83,4 @@ public class AccountGroupRelServiceUtil {
 			AccountGroupRelServiceUtil.class, AccountGroupRelService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1355072304

@@ -119,3 +119,4 @@ public class JournalArticleTable extends BaseTable<JournalArticleTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1833103716

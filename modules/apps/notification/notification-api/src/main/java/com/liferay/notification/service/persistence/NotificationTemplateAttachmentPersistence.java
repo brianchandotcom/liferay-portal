@@ -365,3 +365,4 @@ public interface NotificationTemplateAttachmentPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:271299906

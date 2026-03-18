@@ -311,3 +311,4 @@ public class FragmentCollectionServiceWrapper
 	private FragmentCollectionService _fragmentCollectionService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1832812272

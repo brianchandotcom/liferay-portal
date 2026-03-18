@@ -476,3 +476,4 @@ public interface CPAttachmentFileEntryLocalService
 		throws E;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1679399399

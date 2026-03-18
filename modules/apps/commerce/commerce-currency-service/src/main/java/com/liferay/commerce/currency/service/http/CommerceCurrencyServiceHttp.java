@@ -789,3 +789,4 @@ public class CommerceCurrencyServiceHttp {
 		new Class[] {};
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-523762257

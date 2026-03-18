@@ -39,3 +39,4 @@ public abstract class UserTrackerBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-783812301

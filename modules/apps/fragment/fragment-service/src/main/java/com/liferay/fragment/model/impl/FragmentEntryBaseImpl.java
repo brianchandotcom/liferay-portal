@@ -46,3 +46,4 @@ public abstract class FragmentEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1596551767

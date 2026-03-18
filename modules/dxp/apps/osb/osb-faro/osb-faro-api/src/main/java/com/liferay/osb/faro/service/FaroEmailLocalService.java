@@ -54,3 +54,4 @@ public interface FaroEmailLocalService extends BaseLocalService {
 	public String getTemplate(String name) throws Exception;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:542908233

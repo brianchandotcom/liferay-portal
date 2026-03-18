@@ -333,3 +333,4 @@ public class CPDefinitionLinkCacheModel
 	public long statusDate;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-17107367

@@ -1864,3 +1864,4 @@ public interface SocialRequestPersistence
 	public int countAll();
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1294208747

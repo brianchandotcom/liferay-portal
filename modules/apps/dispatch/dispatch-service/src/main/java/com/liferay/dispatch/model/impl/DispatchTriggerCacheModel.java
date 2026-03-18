@@ -360,3 +360,4 @@ public class DispatchTriggerCacheModel
 	public String timeZoneId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1071155355

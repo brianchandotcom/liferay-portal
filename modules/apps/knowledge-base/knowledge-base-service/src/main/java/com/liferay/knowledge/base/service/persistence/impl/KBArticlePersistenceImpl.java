@@ -61809,3 +61809,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-264764265

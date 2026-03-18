@@ -294,3 +294,4 @@ public class RememberMeTokenWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:878390500

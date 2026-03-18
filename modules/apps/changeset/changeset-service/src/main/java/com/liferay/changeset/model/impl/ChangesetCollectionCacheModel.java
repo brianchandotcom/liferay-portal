@@ -192,3 +192,4 @@ public class ChangesetCollectionCacheModel
 	public String description;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-152066283

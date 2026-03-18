@@ -171,3 +171,4 @@ public interface PermissionCheckFinderEntryModel
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:308110582

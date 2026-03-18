@@ -55,3 +55,4 @@ public interface SamlSpIdpConnection
 		throws java.io.IOException;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1084357497

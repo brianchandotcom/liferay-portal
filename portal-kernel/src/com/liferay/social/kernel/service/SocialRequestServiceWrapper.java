@@ -61,3 +61,4 @@ public class SocialRequestServiceWrapper
 	private SocialRequestService _socialRequestService;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:427512479

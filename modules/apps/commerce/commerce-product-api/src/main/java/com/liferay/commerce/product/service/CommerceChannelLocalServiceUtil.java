@@ -515,3 +515,4 @@ public class CommerceChannelLocalServiceUtil {
 			CommerceChannelLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:928885403

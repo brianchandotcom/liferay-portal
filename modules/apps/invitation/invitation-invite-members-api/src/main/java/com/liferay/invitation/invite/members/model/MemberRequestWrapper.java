@@ -445,3 +445,4 @@ public class MemberRequestWrapper
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1118510661

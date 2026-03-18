@@ -2352,3 +2352,4 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1646445369

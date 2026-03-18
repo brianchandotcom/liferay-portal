@@ -164,3 +164,4 @@ public class SamlIdpSpSessionCacheModel
 	public long samlPeerBindingId;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:335335093

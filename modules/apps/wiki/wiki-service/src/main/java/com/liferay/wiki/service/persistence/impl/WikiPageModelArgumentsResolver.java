@@ -132,3 +132,4 @@ public class WikiPageModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1600541298

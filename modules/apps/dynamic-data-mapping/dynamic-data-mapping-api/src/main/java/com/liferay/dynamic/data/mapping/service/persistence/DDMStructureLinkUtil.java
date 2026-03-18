@@ -719,3 +719,4 @@ public class DDMStructureLinkUtil {
 	private static volatile DDMStructureLinkPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1628482815

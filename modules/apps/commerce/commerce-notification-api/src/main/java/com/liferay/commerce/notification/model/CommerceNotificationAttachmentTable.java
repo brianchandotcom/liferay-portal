@@ -70,3 +70,4 @@ public class CommerceNotificationAttachmentTable
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-2019906588

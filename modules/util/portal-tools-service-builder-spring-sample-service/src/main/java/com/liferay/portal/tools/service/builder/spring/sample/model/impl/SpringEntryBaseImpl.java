@@ -39,3 +39,4 @@ public abstract class SpringEntryBaseImpl
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-520863370

@@ -465,3 +465,4 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 			CommerceInventoryBookedQuantityLocalService.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:718652775

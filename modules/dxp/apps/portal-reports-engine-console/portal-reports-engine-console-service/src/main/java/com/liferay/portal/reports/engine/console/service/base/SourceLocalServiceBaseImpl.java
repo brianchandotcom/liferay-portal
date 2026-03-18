@@ -583,3 +583,4 @@ public abstract class SourceLocalServiceBaseImpl
 		SourceLocalServiceBaseImpl.class);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1037228121

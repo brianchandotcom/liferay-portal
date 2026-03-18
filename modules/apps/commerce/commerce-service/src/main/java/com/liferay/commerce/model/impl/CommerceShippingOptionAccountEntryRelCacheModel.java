@@ -241,3 +241,4 @@ public class CommerceShippingOptionAccountEntryRelCacheModel
 	public String commerceShippingOptionKey;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1101256912

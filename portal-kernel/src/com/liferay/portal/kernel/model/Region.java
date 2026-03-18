@@ -51,3 +51,4 @@ public interface Region extends PersistedModel, RegionModel {
 	public void setTitleCurrentLanguageId(String languageId);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1665430939

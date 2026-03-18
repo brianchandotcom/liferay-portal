@@ -61,3 +61,4 @@ public class AccountGroupTable extends BaseTable<AccountGroupTable> {
 	}
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:57231479

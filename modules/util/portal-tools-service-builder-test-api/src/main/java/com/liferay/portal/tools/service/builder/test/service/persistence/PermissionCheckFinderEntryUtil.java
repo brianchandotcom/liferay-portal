@@ -694,3 +694,4 @@ public class PermissionCheckFinderEntryUtil {
 	private static volatile PermissionCheckFinderEntryPersistence _persistence;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:2032528864

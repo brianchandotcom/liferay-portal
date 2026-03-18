@@ -1047,3 +1047,4 @@ public class SamlPeerBindingModelImpl
 	private SamlPeerBinding _escapedModel;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-802370313

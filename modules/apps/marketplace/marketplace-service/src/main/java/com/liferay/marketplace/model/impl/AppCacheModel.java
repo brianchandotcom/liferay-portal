@@ -270,3 +270,4 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 	public boolean required;
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:-1020096628

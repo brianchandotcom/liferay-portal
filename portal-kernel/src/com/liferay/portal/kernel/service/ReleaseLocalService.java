@@ -276,3 +276,4 @@ public interface ReleaseLocalService
 		String previousSchemaVersion);
 
 }
+// LIFERAY-SERVICE-BUILDER-HASH:1001030735

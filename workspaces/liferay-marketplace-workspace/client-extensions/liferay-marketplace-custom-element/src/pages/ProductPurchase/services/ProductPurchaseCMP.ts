@@ -60,6 +60,6 @@ export class ProductPurchaseCMP extends ProductPurchase {
 			return super.getNextStepsLink(cart);
 		}
 
-		return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products/${cart.id}/activation-keys?next-steps`;
+		return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products/${cart.id}?next-steps`;
 	}
 }

@@ -107,7 +107,9 @@ public class FragmentCollectionImplTest {
 
 	@Test
 	@TestInfo("LPD-82487")
-	public void testHasExportableFragments() throws Exception {
+	public void testHasExportableFragmentCompositionsAndFragmentEntries()
+		throws Exception {
+
 		Assert.assertFalse(
 			_fragmentCollection.
 				hasExportableFragmentCompositionsAndFragmentEntries());

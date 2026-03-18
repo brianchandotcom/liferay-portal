@@ -586,7 +586,7 @@ test('LPD-62112 Cannot Preview Pending Version of Page in a Publication', async 
 
 	await changeTrackingPage.reviewChange('Home');
 
-	await page.locator('.btn-outline-secondary').click();
+	await page.locator('.dropdown-toggle.btn-outline-secondary').click();
 
 	await page.getByRole('menuitem', {name: ctCollection.body.name}).click();
 

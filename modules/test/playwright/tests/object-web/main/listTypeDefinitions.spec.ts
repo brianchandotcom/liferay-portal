@@ -259,7 +259,10 @@ test.describe('manage picklists inside the picklists portlet', () => {
 
 		await page.waitForTimeout(500);
 
-		await page.getByPlaceholder('Search').fill(listTypeDefinition1.name);
+		await page
+			.getByTestId('managementToolbar')
+			.getByPlaceholder('Search')
+			.fill(listTypeDefinition1.name);
 
 		await page.keyboard.press('Enter');
 
@@ -309,6 +312,7 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		await page.waitForTimeout(500);
 
 		await listTypeDefinitionPage.frameLocator
+			.getByTestId('managementToolbar')
 			.getByPlaceholder('Search')
 			.fill(itemName1);
 
@@ -491,7 +495,7 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		await expect(listTypeDefinitionPage.picklistItemKey).toBeDisabled();
 	});
 
-	test('empty 	 message displayed when searching for a non-existent picklist', async ({
+	test('empty message displayed when searching for a non-existent picklist', async ({
 		listTypeDefinitionPage,
 		page,
 	}) => {
@@ -501,7 +505,10 @@ test.describe('manage picklists inside the picklists portlet', () => {
 
 		await page.waitForTimeout(500);
 
-		await page.getByPlaceholder('Search').fill(nonExistentName);
+		await page
+			.getByTestId('managementToolbar')
+			.getByPlaceholder('Search')
+			.fill(nonExistentName);
 
 		await page.keyboard.press('Enter');
 

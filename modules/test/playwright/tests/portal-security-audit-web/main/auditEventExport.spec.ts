@@ -65,9 +65,11 @@ test('LPD-55895: Check if the additional information field is exported correctly
 		.locator(`#${AUDIT_PORTLET_NAMESPACE}eventType:visible`)
 		.fill('UPDATE');
 
-	await expect(page.locator('.lexicon-icon-search')).toBeVisible();
+	await expect(
+		page.locator('#main-content .lexicon-icon-search')
+	).toBeVisible();
 
-	await page.locator('.lexicon-icon-search').click();
+	await page.locator('#main-content .lexicon-icon-search').click();
 
 	await page.waitForTimeout(500);
 
@@ -131,9 +133,11 @@ test('LPD-40224: Check if the export audit events .csv is being filtered by the 
 		.locator(`#${AUDIT_PORTLET_NAMESPACE}eventType:visible`)
 		.fill(resourceAction);
 
-	await expect(page.locator('.lexicon-icon-search')).toBeVisible();
+	await expect(
+		page.locator('#main-content .lexicon-icon-search')
+	).toBeVisible();
 
-	await page.locator('.lexicon-icon-search').click();
+	await page.locator('#main-content .lexicon-icon-search').click();
 
 	await page.waitForTimeout(500);
 
@@ -217,7 +221,7 @@ test('LPD-40224: Check if the audit events filtered by date are being exported',
 
 	await clickAndExpectToBeVisible({
 		target: page.getByText('There are no events.'),
-		trigger: page.locator('.lexicon-icon-search'),
+		trigger: page.locator('#main-content .lexicon-icon-search'),
 	});
 
 	await clickAndExpectToBeVisible({
@@ -255,7 +259,7 @@ test("LPS-192555: Assert that the page's URL with advanced search doesn't get ov
 		.locator(`#${AUDIT_PORTLET_NAMESPACE}eventType:visible`)
 		.fill('LOGIN');
 
-	await page.locator('.lexicon-icon-search').click();
+	await page.locator('#main-content .lexicon-icon-search').click();
 
 	await page.waitForTimeout(500);
 

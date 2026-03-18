@@ -58,7 +58,9 @@ export class CommerceAdminCurrenciesPage extends CommerceDNDTablePage {
 		this.priorityButton = page
 			.getByRole('columnheader', {name: 'Priority'})
 			.getByRole('button');
-		this.search = page.getByPlaceholder('Search');
+		this.search = page
+			.getByTestId('managementToolbar')
+			.getByPlaceholder('Search');
 		this.searchButton = page
 			.getByTestId('managementToolbar')
 			.getByRole('button', {name: 'Search'});

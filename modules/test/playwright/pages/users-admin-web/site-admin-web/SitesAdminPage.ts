@@ -20,7 +20,9 @@ export class SitesAdminPage {
 	readonly sitesTable: DataTablePage;
 
 	constructor(page: Page) {
-		this.componentTitle = page.locator('.component-title');
+		this.componentTitle = page.locator(
+			'.info-panel-content .component-title'
+		);
 		this.deleteModalButton = page
 			.locator('.modal-footer')
 			.getByRole('button', {name: 'Delete'});

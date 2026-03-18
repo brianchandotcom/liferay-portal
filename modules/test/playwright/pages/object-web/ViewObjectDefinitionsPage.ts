@@ -86,9 +86,11 @@ export class ViewObjectDefinitionsPage {
 		objectDefinitionLabel: string,
 		placeholder?: string
 	) {
-		const input = this.page.getByRole('searchbox', {
-			name: placeholder ?? 'Search',
-		});
+		const input = this.page
+			.locator('.management-bar')
+			.getByRole('searchbox', {
+				name: placeholder ?? 'Search',
+			});
 
 		await input.fill(objectDefinitionLabel);
 

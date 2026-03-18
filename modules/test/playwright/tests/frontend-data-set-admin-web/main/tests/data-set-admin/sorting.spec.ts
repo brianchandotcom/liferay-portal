@@ -332,7 +332,10 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 
 		await test.step('Enter in a search term that does not exist', async () => {
-			await page.getByPlaceholder('Search').fill('nothing');
+			await page
+				.locator('.management-bar')
+				.getByPlaceholder('Search')
+				.fill('nothing');
 		});
 
 		await test.step('Check that "No Results Found" is displayed', async () => {
@@ -340,7 +343,10 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 
 		await test.step('Enter in a search term to only show ID', async () => {
-			await page.getByPlaceholder('Search').fill('ID');
+			await page
+				.locator('.management-bar')
+				.getByPlaceholder('Search')
+				.fill('ID');
 		});
 
 		await test.step('Check that only "ID" appears in the table', async () => {

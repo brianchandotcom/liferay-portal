@@ -158,8 +158,10 @@ export class FiltersPage {
 				.filter({hasText: 'SourceRequired'}),
 		};
 		this.page = page;
-		this.searchButton = page.getByLabel('Search');
-		this.searchInput = page.getByPlaceholder('Search');
+		this.searchButton = page.getByRole('button', {name: 'Search'});
+		this.searchInput = page
+			.locator('.management-bar')
+			.getByPlaceholder('Search');
 	}
 
 	async assertFiltersTableRowCount(rowCount: number) {

@@ -3269,11 +3269,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 				.getByRole('link', {name: objectEntryB.id.toString()})
 				.click();
 
-			await expect(page.getByPlaceholder('Search')).toHaveValue(
-				'Entry A'
-			);
+			await expect(
+				page.locator('#editObjectEntry').getByPlaceholder('Search')
+			).toHaveValue('Entry A');
 
-			await page.getByPlaceholder('Search').click();
+			await page
+				.locator('#editObjectEntry')
+				.getByPlaceholder('Search')
+				.click();
 
 			await page.getByRole('menuitem', {name: 'Entry C'}).click();
 
@@ -3287,9 +3290,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 				.getByRole('link', {name: objectEntryB.id.toString()})
 				.click();
 
-			await expect(page.getByPlaceholder('Search')).toHaveValue(
-				'Entry C'
-			);
+			await expect(
+				page.locator('#editObjectEntry').getByPlaceholder('Search')
+			).toHaveValue('Entry C');
 		});
 	});
 

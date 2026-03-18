@@ -336,7 +336,9 @@ export class EditUserPage {
 			name: 'Contact Information',
 		});
 		this.customField = async (fieldName: string) => {
-			await page.getByText('Custom Fields').waitFor({timeout: 15 * 1000});
+			await page
+				.getByText('Custom Fields', {exact: true})
+				.waitFor({timeout: 15 * 1000});
 
 			const customField = page.getByText(fieldName);
 

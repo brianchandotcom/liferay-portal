@@ -102,7 +102,9 @@ export class UserGroupsPage {
 			.getByTestId('creationMenuNewButton')
 			.getByText('New');
 		this.customField = async (fieldName: string) => {
-			await page.getByText('Custom Fields').waitFor({timeout: 15 * 1000});
+			await page
+				.getByText('Custom Fields', {exact: true})
+				.waitFor({timeout: 15 * 1000});
 
 			const customField = await page.getByText(fieldName);
 

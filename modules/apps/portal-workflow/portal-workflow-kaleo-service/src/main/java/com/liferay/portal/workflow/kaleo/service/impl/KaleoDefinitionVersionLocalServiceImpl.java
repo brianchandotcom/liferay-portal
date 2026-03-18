@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -55,6 +56,7 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
@@ -327,13 +329,36 @@ public class KaleoDefinitionVersionLocalServiceImpl
 			long companyId, String name, String version)
 		throws PortalException {
 
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			kaleoDefinitionVersionPersistence.findByC_N_V(
-				companyId, name, version);
+		List<KaleoDefinitionVersion> list =
+			kaleoDefinitionVersionPersistence.findByC_N(
+				companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				KaleoDefinitionVersionIdComparator.getInstance(true));
 
-		return kaleoDefinitionVersionPersistence.findByC_N_PrevAndNext(
-			kaleoDefinitionVersion.getKaleoDefinitionVersionId(), companyId,
-			name, KaleoDefinitionVersionIdComparator.getInstance(true));
+		KaleoDefinitionVersion[] kaleoDefinitionVersions =
+			new KaleoDefinitionVersion[3];
+
+		for (int i = 0; i < list.size(); i++) {
+			KaleoDefinitionVersion kaleoDefinitionVersion = list.get(i);
+
+			if (Objects.equals(version, kaleoDefinitionVersion.getVersion())) {
+				if (i > 0) {
+					kaleoDefinitionVersions[0] = list.get(i - 1);
+				}
+
+				kaleoDefinitionVersions[1] = kaleoDefinitionVersion;
+
+				if (i < (list.size() - 1)) {
+					kaleoDefinitionVersions[2] = list.get(i + 1);
+				}
+
+				return kaleoDefinitionVersions;
+			}
+		}
+
+		throw new NoSuchDefinitionVersionException(
+			StringBundler.concat(
+				"{companyId=", companyId, ", name=", name, ", version=",
+				version, "}"));
 	}
 
 	@Override

@@ -84,21 +84,6 @@ components:
                 type:
                     type: string
             type: object
-        Token:
-            properties:
-                accessToken:
-                    readOnly: true
-                    type: string
-                scope:
-                    readOnly: true
-                    type: string
-                serviceURL:
-                    readOnly: true
-                    type: string
-                userToken:
-                    readOnly: true
-                    type: string
-            type: object
         Variable:
             properties:
                 name:
@@ -287,16 +272,3 @@ paths:
                     content:
                         text/event-stream: {}
             tags: ["Task"]
-    "/tokens":
-        post:
-            operationId: postToken
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Token"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Token"
-            tags: ["Token"]

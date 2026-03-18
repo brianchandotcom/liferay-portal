@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.rest.internal.resource.v1_0;
+package com.liferay.ai.hub.cell.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.configuration.AIHubConfiguration;
-import com.liferay.ai.hub.rest.dto.v1_0.Token;
-import com.liferay.ai.hub.rest.resource.v1_0.TokenResource;
-import com.liferay.ai.hub.security.JWTTokenUtil;
+import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
+import com.liferay.ai.hub.cell.rest.dto.v1_0.Token;
+import com.liferay.ai.hub.cell.rest.resource.v1_0.TokenResource;
+import com.liferay.ai.hub.cell.security.JWTTokenUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Feliphe Marinho
- * @author Rafael Praxedes
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/token.properties",
@@ -41,16 +40,16 @@ public class TokenResourceImpl extends BaseTokenResourceImpl {
 
 		Http.Options options = new Http.Options();
 
-		AIHubConfiguration aiHubConfiguration =
+		AIHubCellConfiguration aiHubCellConfiguration =
 			_configurationProvider.getCompanyConfiguration(
-				AIHubConfiguration.class, contextCompany.getCompanyId());
+				AIHubCellConfiguration.class, contextCompany.getCompanyId());
 
-		options.addPart("client_id", aiHubConfiguration.clientId());
-		options.addPart("client_secret", aiHubConfiguration.clientSecret());
+		options.addPart("client_id", aiHubCellConfiguration.clientId());
+		options.addPart("client_secret", aiHubCellConfiguration.clientSecret());
 
 		options.addPart("grant_type", "client_credentials");
 		options.setLocation(
-			aiHubConfiguration.serviceURL() + "/o/oauth2/token");
+			aiHubCellConfiguration.serviceURL() + "/o/oauth2/token");
 		options.setMethod(Http.Method.POST);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -60,7 +59,7 @@ public class TokenResourceImpl extends BaseTokenResourceImpl {
 			{
 				setAccessToken(() -> jsonObject.getString("access_token"));
 				setScope(() -> jsonObject.getString("scope"));
-				setServiceURL(aiHubConfiguration::serviceURL);
+				setServiceURL(aiHubCellConfiguration::serviceURL);
 				setUserToken(
 					() -> JWTTokenUtil.generateToken(
 						TimeUnit.MINUTES.toMillis(1),

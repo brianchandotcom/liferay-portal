@@ -65,6 +65,9 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 				task.getContext(), contextHttpServletRequest,
 				task.getSseEventSinkKey());
 
+		workflowContext.put(
+			"accessToken",
+			contextHttpServletRequest.getHeader("Authorization"));
 		workflowContext.put("outBoundEventName", task.getType());
 		workflowContext.put(
 			"userToken",

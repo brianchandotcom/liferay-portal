@@ -187,7 +187,7 @@
 				},
 				{
 					"#cdata-value": [
-						"You are a decision maker. Based on a given content, you must approve the content if it contains information about bananas, otherwise it should be rejected. The transition names are: approve and reject."
+						"You are a decision maker. Based on a given content, you MUST use the completeWorkflowNode tool to either approve the content if it contains information about bananas or reject it if your response is negative. The transition names are: approve and reject."
 					],
 					"#tag-name": "prompt"
 				},

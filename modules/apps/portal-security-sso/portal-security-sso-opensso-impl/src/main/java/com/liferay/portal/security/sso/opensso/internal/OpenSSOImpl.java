@@ -352,9 +352,7 @@ public class OpenSSOImpl implements OpenSSO {
 					InetAddressUtil.getInetAddressByName(url.getHost()))) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"URL is not allowed for security reasons: " +
-							serviceURL);
+					_log.debug("Service URL " + serviceURL + " is not allowed");
 				}
 
 				return false;

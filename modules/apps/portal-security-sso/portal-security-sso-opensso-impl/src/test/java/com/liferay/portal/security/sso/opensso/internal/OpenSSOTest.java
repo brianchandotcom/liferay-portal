@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -22,17 +21,12 @@ public class OpenSSOTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_openSSO = new OpenSSOImpl();
-	}
-
 	@Test
 	public void testIsValidServiceUrlWithLocalAddress() throws Exception {
 		Assert.assertFalse(
 			_openSSO.isValidServiceUrl("http://localhost:8008/redirect"));
 	}
 
-	private OpenSSO _openSSO;
+	private final OpenSSO _openSSO = new OpenSSOImpl();
 
 }

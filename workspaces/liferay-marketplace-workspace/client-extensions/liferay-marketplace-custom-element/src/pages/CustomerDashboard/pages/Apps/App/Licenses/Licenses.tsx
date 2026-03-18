@@ -51,10 +51,10 @@ type LicensesProps = {
 		row: any,
 		licenseActions: ReturnType<typeof useLicenseActions>
 	) => React.ReactNode;
-	canDeactivate?: boolean;
+	readOnly?: boolean;
 };
 
-const Licenses = ({actions, canDeactivate = true}: LicensesProps) => {
+const Licenses = ({actions, readOnly = false}: LicensesProps) => {
 	const [modalData, setModalData] = useState<LicenseKey>();
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(5);
@@ -67,7 +67,7 @@ const Licenses = ({actions, canDeactivate = true}: LicensesProps) => {
 	const placedOrder = outletContext?.placedOrder;
 	const product = outletContext?.product;
 
-	const keyType = [OrderTypes.CMP, OrderTypes.DXP].includes(
+	const keyType = [OrderTypes.CMP, OrderTypes.DXP_APP].includes(
 		placedOrder?.orderTypeExternalReferenceCode as OrderTypes
 	)
 		? 'On-Premise'
@@ -128,7 +128,7 @@ const Licenses = ({actions, canDeactivate = true}: LicensesProps) => {
 			),
 			last: (
 				<>
-					{canDeactivate && (
+					{!readOnly && (
 						<ClayButton
 							className="border-danger text-danger"
 							displayType="secondary"
@@ -147,7 +147,7 @@ const Licenses = ({actions, canDeactivate = true}: LicensesProps) => {
 						disabled={isLicenseExpired(
 							modalData?.expirationDate as string
 						)}
-						displayType={canDeactivate ? 'primary' : 'secondary'}
+						displayType={readOnly ? 'secondary' : 'primary'}
 						onClick={() => {
 							onDownloadAppLicenseKey(modalData as LicenseKey);
 						}}
@@ -168,7 +168,7 @@ const Licenses = ({actions, canDeactivate = true}: LicensesProps) => {
 			),
 		}),
 		[
-			canDeactivate,
+			readOnly,
 			deactivateLicenseModal,
 			licenseKeyModal,
 			modalData,
@@ -326,30 +326,36 @@ const Licenses = ({actions, canDeactivate = true}: LicensesProps) => {
 				/>
 			) : (
 				<DashboardEmptyTable
-					description1={i18n.translate(
-						'create-new-licenses-and-they-will-show-up-here'
-					)}
+					description1={
+						!readOnly
+							? i18n.translate(
+									'create-new-licenses-and-they-will-show-up-here'
+								)
+							: undefined
+					}
 					icon="bookmarks"
 					title={i18n.translate('no-licenses-yet')}
 				>
-					<ClayTooltipProvider>
-						<Link
-							className={classNames('btn btn-primary mt-4', {
-								disabled: orderStatusIsNotCompleted,
-							})}
-							data-tooltip-align="bottom"
-							title={
-								orderStatusIsNotCompleted
-									? i18n.translate(
-											'the-order-must-be-completed-before-licensing-this-app.'
-										)
-									: undefined
-							}
-							to={`/order/${orderId}/create-license`}
-						>
-							{i18n.translate('create-license-key')}
-						</Link>
-					</ClayTooltipProvider>
+					{!readOnly && (
+						<ClayTooltipProvider>
+							<Link
+								className={classNames('btn btn-primary mt-4', {
+									disabled: orderStatusIsNotCompleted,
+								})}
+								data-tooltip-align="bottom"
+								title={
+									orderStatusIsNotCompleted
+										? i18n.translate(
+												'the-order-must-be-completed-before-licensing-this-app.'
+											)
+										: undefined
+								}
+								to={`/order/${orderId}/create-license`}
+							>
+								{i18n.translate('create-license-key')}
+							</Link>
+						</ClayTooltipProvider>
+					)}
 				</DashboardEmptyTable>
 			)}
 

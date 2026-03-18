@@ -29,14 +29,6 @@ const searchParams = new URLSearchParams({
 });
 
 const getViewDetailsPath = (placedOrder: PlacedOrder) => {
-	if (
-		[OrderTypes.CMP, OrderTypes.DXP].includes(
-			placedOrder.orderTypeExternalReferenceCode as OrderTypes
-		)
-	) {
-		return `${placedOrder.id}/activation-keys`;
-	}
-
 	return `${placedOrder.id}`;
 };
 

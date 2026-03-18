@@ -7,11 +7,10 @@ import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {differenceInDays, format, isBefore, subMonths} from 'date-fns';
-import {Fragment, useEffect} from 'react';
+import {Fragment} from 'react';
 import {useLocation, useOutletContext, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
-import {breadcrumbStore} from '../../../../../components/Breadcrumb/BreadcrumbStore';
 import EmptyState from '../../../../../components/EmptyState';
 import StatusCell from '../../../../../components/Table/StatusCell';
 import Table from '../../../../../components/Table/Table';
@@ -22,8 +21,8 @@ import provisioningOAuth2 from '../../../../../services/oauth/Provisioning';
 import {LicenseKey} from '../../../../../services/oauth/types';
 import TitleSubtitleHeader from '../../../components/TitleSubtitleHeader';
 import Licenses from '../../Apps/App/Licenses/Licenses';
-import ActivationKeyAlert from './LicenseAlert';
-import LicenseTitleHeader from './LicenseTitleHeader';
+import ActivationKeyAlert from '../Licenses/LicenseAlert';
+import LicenseTitleHeader from '../Licenses/LicenseTitleHeader';
 
 import './Licenses.scss';
 
@@ -228,22 +227,13 @@ const ActivationKeysDXP = () => {
 };
 
 export default function ActivationKeys() {
-	const {orderId} = useParams();
 	const location = useLocation();
 	const outletContext = useOutletContext<OutletContext['data']>();
-	const searchParams = new URLSearchParams(location.search);
 
-	const product = outletContext?.product;
+	const searchParams = new URLSearchParams(location.search);
 
 	const orderTypeExternalReferenceCode =
 		outletContext?.placedOrder.orderTypeExternalReferenceCode;
-
-	useEffect(() => {
-		breadcrumbStore.send({
-			replacements: {[orderId as string]: product?.name || ''},
-			type: 'setReplacements',
-		});
-	}, [orderId, product?.name]);
 
 	const ActivationKeysComponent =
 		orderTypeExternalReferenceCode === OrderTypes.DXP
@@ -261,7 +251,7 @@ export default function ActivationKeys() {
 								{i18n.translate('download')}
 							</ClayButton>
 						)}
-						canDeactivate={false}
+						readOnly
 					/>
 				);
 

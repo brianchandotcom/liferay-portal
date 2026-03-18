@@ -20,19 +20,17 @@ type ProductAndOrderPayload = NonNullable<
 const getTabs = (data: ProductAndOrderPayload): NavbarProps['routes'] => {
 	const {orderTypeExternalReferenceCode} = data?.placedOrder ?? {};
 
-	const isAIHUB = orderTypeExternalReferenceCode === OrderTypes.AI_HUB;
+	if (orderTypeExternalReferenceCode === OrderTypes.AI_HUB) {
+		return [];
+	}
+
 	const isCMP = orderTypeExternalReferenceCode === OrderTypes.CMP;
 	const isDXP = orderTypeExternalReferenceCode === OrderTypes.DXP;
 
 	return [
 		{
-			name: i18n.translate('details'),
-			path: '',
-			visible: !(isCMP || isDXP || isAIHUB),
-		},
-		{
 			name: i18n.translate('activation-keys'),
-			path: 'activation-keys',
+			path: '',
 			visible: isCMP || isDXP,
 		},
 		{

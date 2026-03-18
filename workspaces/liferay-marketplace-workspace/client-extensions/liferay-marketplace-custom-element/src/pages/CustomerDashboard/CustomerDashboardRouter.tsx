@@ -6,7 +6,7 @@
 import {Route, Routes} from 'react-router-dom';
 
 import withProviders from '../../hoc/withProviders';
-import App from '../PublisherDashboard/pages/Apps/App';
+import CustomerDashboardApp from '../CustomerDashboard/pages/Apps/App/App';
 import CustomerDashboardOutlet from './CustomerDashboardOutlet';
 import Apps from './pages/Apps';
 import AppOutlet from './pages/Apps/App/AppOutlet';
@@ -21,7 +21,6 @@ import Licenses from './pages/Apps/App/Licenses/Licenses';
 import Support from './pages/Apps/App/Support/Support';
 import Connections from './pages/Connections';
 import LiferayProductsBundles from './pages/LiferayProducts/Bundles/Bundles';
-import ActivationKeys from './pages/LiferayProducts/Licenses/ActivationKeys';
 import LiferayProduct from './pages/LiferayProducts/LiferayProduct';
 import LiferayProductsOutlet from './pages/LiferayProducts/LiferayProductsOutlet';
 import LiferayProductsListView from './pages/LiferayProducts/index';
@@ -38,7 +37,7 @@ const CustomerDashboardRouter = () => {
 				<Route element={<Connections />} path="connections" />
 
 				<Route element={<AppOutlet />} path="order/:orderId">
-					<Route element={<App />} index />
+					<Route element={<CustomerDashboardApp />} index />
 
 					<Route element={<Download />} path="download" />
 
@@ -59,11 +58,6 @@ const CustomerDashboardRouter = () => {
 					path="products/:orderId"
 				>
 					<Route element={<LiferayProduct />} index />
-
-					<Route
-						element={<ActivationKeys />}
-						path="activation-keys"
-					/>
 
 					<Route
 						element={<LiferayProductsBundles />}

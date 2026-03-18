@@ -187,14 +187,10 @@ const AppOutlet = () => (
 					name: i18n.translate('licenses'),
 					path: 'licenses',
 					visible:
-						isPaidApp &&
 						orderCompleted &&
-						[
-							OrderTypes.CLIENT_EXTENSION,
+						isPaidApp &&
+						placedOrder.orderTypeExternalReferenceCode ===
 							OrderTypes.DXP_APP,
-						].includes(
-							placedOrder.orderTypeExternalReferenceCode as OrderTypes
-						),
 				},
 				{
 					name: i18n.translate('support'),

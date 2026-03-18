@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -18,6 +19,7 @@ import {structureBuilderPagesTest} from '../../site-cms-site-initializer/structu
 import {FieldType} from '../../site-cms-site-initializer/structure-builder/pages/StructureBuilderPage';
 
 const test = mergeTests(
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
@@ -28,6 +30,70 @@ const test = mergeTests(
 	pageEditorPagesTest,
 	structureBuilderPagesTest,
 	systemSettingsPageTest
+);
+
+test(
+	'The language picker only shows the languages configured for the space',
+	{
+		tag: ['@LPD-81683'],
+	},
+	async ({
+		apiHelpers,
+		contentsPage,
+		localizationSelectPage,
+		page,
+		structureBuilderPage,
+	}) => {
+
+		// Create a Space with English and Italian only
+
+		const spaceName = getRandomString();
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				availableLanguageIds: ['en-US', 'it-IT'],
+				useCustomLanguages: true,
+			},
+			type: 'Space',
+		});
+
+		// Create a CMS structure
+
+		const structureLabel = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			erc: getRandomString(),
+			label: structureLabel,
+			page: structureBuilderPage,
+		});
+
+		await structureBuilderPage.publishStructure();
+
+		// Select the space and create a content
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel, spaceName);
+
+		// Check the language picker only shows English and Italian
+
+		await localizationSelectPage.trigger.click();
+
+		await expect(
+			page.locator('.dropdown-item', {hasText: 'en-US'})
+		).toBeVisible();
+
+		await expect(
+			page.locator('.dropdown-item', {hasText: 'it-IT'})
+		).toBeVisible();
+
+		await expect(
+			page.locator('.dropdown-item').filter({visible: true})
+		).toHaveCount(2);
+
+		await localizationSelectPage.trigger.click();
+	}
 );
 
 test(

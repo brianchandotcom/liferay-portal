@@ -50,7 +50,7 @@ public class SHSubshellCheck extends BaseFileCheck {
 					continue;
 				}
 
-				String s = matcher.group(1);
+				String s = matcher.group(2);
 
 				s = s.replaceAll("'.*?'", "''");
 
@@ -73,6 +73,6 @@ public class SHSubshellCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _variableDefinitionPattern = Pattern.compile(
-		"local \\w+=(.*)");
+		"local\\s+(-[a-zA-Z]+\\s+)?\\w+=(.*)");
 
 }

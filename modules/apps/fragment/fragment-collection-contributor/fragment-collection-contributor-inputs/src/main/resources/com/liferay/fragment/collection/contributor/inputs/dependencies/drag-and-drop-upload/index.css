@@ -1,6 +1,6 @@
-.drag-and-drop-upload {
-	--default-fragment-height: 281px;
-	height: var(--default-fragment-height, fit-content);
+.dropzone {
+	--default-dropzone-height: 204px;
+	height: var(--default-dropzone-height, fit-content);
 }
 
 .dropzone-default-content,

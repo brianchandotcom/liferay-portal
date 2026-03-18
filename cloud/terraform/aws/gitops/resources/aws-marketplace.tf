@@ -1,17 +1,3 @@
-resource "aws_iam_role_policy" "aws_marketplace_metering_policy" {
-	name="${var.deployment_name}-marketplace-metering"
-	policy=jsonencode({
-		Statement=[
-			{
-				Action=["aws-marketplace:RegisterUsage"]
-				Effect="Allow"
-				Resource="*"
-			},
-		]
-		Version="2012-10-17"
-	})
-	role=aws_iam_role.aws_marketplace_role.id
-}
 resource "aws_iam_role" "aws_marketplace_role" {
 	assume_role_policy=jsonencode(
 		{
@@ -33,4 +19,18 @@ resource "aws_iam_role" "aws_marketplace_role" {
 			Version="2012-10-17"
 		})
 	name=local.aws_marketplace_role_name
+}
+resource "aws_iam_role_policy" "aws_marketplace_metering_policy" {
+	name="${var.deployment_name}-marketplace-metering"
+	policy=jsonencode({
+		Statement=[
+			{
+				Action=["aws-marketplace:RegisterUsage"]
+				Effect="Allow"
+				Resource="*"
+			},
+		]
+		Version="2012-10-17"
+	})
+	role=aws_iam_role.aws_marketplace_role.id
 }

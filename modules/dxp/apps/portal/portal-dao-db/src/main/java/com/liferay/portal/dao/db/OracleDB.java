@@ -143,7 +143,7 @@ public class OracleDB extends BaseDB {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getString(1);
+					return resultSet.getString("value");
 				}
 			}
 		}

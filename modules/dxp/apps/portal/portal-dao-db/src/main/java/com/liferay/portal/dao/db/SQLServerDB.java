@@ -106,11 +106,11 @@ public class SQLServerDB extends BaseDB {
 	@Override
 	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select serverproperty('collation')")) {
+				"select serverproperty('collation') as collation")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getString(1);
+					return resultSet.getString("collation");
 				}
 			}
 		}

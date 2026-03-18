@@ -215,7 +215,7 @@ public class DB2DB extends BaseDB {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getString(1);
+					return resultSet.getString("value");
 				}
 			}
 		}
@@ -485,7 +485,8 @@ public class DB2DB extends BaseDB {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				int numReorgRecAlters = resultSet.getInt(1);
+				int numReorgRecAlters = resultSet.getInt(
+					"num_reorg_rec_alters");
 
 				if (numReorgRecAlters >= 1) {
 					reorgTableRequired = true;

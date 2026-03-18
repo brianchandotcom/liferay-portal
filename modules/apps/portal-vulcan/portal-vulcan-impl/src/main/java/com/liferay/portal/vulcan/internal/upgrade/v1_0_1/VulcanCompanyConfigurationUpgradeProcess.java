@@ -59,7 +59,7 @@ public class VulcanCompanyConfigurationUpgradeProcess extends UpgradeProcess {
 
 				Object value = dictionary.get("companyId");
 
-				if (value instanceof Long) {
+				if ((value == null) || (value instanceof Long)) {
 					continue;
 				}
 

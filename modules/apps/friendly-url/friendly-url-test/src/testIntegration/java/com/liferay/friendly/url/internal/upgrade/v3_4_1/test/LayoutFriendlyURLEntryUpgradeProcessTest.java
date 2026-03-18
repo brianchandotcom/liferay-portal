@@ -469,12 +469,12 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from " + tableName);
+				"select count(*) as count from " + tableName);
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 

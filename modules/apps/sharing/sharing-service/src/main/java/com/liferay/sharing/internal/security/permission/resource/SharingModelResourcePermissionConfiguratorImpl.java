@@ -142,6 +142,10 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				String actionId)
 			throws PortalException {
 
+			if ((actionId != null) && actionId.startsWith("DOWNLOAD_")) {
+				actionId = "DOWNLOAD";
+			}
+
 			SharingEntryAction sharingEntryAction = _sharingEntryActions.get(
 				actionId);
 

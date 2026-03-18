@@ -430,11 +430,7 @@ const AIHubForm = () => {
 					through the messages you receive or via email to
 				</span>
 
-				<a
-					className="ml-1"
-					href="mailto:[EMAIL_ADDRESS]"
-					target="email"
-				>
+				<a className="ml-1" href="mailto:dataprotection@liferay.com">
 					dataprotection@liferay.com
 				</a>
 

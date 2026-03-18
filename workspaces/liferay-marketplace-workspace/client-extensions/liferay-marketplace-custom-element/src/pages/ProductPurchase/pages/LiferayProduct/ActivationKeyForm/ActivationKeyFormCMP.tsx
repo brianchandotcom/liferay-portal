@@ -13,7 +13,6 @@ import {RequiredMask} from '../../../../../components/FieldBase';
 import ProductPurchase from '../../../../../components/ProductPurchase';
 import i18n from '../../../../../i18n';
 import zodSchema, {z, zodResolver} from '../../../../../schema/zod';
-import {productAgreements} from '../../../../../utils/agreements';
 import LicenseDetails from '../../../../CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/LicenseDetails';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {ProductPurchaseCMP} from '../../../services/ProductPurchaseCMP';
@@ -23,7 +22,6 @@ type LicenseKeyForm = z.infer<typeof zodSchema.generateLicenseKey>;
 const ActivationKeyFormCMP = () => {
 	const [loading, setLoading] = useState(false);
 	const [termsAndConditions, setTermsAndConditions] = useState(false);
-	const [userAgreement, setUserAgreement] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -42,6 +40,7 @@ const ActivationKeyFormCMP = () => {
 			macAddress: '',
 			subscription: undefined,
 		},
+		mode: 'all',
 		resolver: zodResolver(zodSchema.generateLicenseKey),
 	});
 
@@ -75,9 +74,7 @@ const ActivationKeyFormCMP = () => {
 				},
 				continueButtonProps: {
 					children: 'Try Beta',
-					disabled:
-						loading ||
-						!(isValid && termsAndConditions && userAgreement),
+					disabled: loading || !(isValid && termsAndConditions),
 					onClick: handleSubmit((data) => onSubmit(data)),
 				},
 			}}
@@ -93,19 +90,15 @@ const ActivationKeyFormCMP = () => {
 
 			<p className="activation-key-form-aggreements-text">
 				<span>
-					Your use of Liferay DXP is subject to these terms and the
-					Liferay End User License Agreement set forth at
+					This release of the Content Marketing Platform is a Beta.
+					You acknowledge that Liferay is not obligated to provide
+					support services while in Beta. For clarity, the
+					Subscription benefits of any active Subscriptions you may
+					have for Liferay Software shall not extend to cover the Beta
+					release of the Content Marketing Platform and participation
+					in the Beta does not grant access to any future GA version
+					of the product
 				</span>
-
-				<a
-					className="ml-1"
-					href={productAgreements.links.eula}
-					target="_blank"
-				>
-					{productAgreements.links.eula}
-				</a>
-
-				<span className="ml-1">{productAgreements.agreement}</span>
 			</p>
 
 			<div className="d-flex flex-row">
@@ -127,33 +120,6 @@ const ActivationKeyFormCMP = () => {
 						'i-have-read-and-agree-to-the-terms-and-conditions-above'
 					)}
 
-					<RequiredMask />
-				</label>
-			</div>
-
-			<div className="d-flex flex-row">
-				<ClayCheckbox
-					checked={userAgreement}
-					id="user-agreement"
-					onChange={() => setUserAgreement(!userAgreement)}
-					required
-				/>
-
-				<label
-					className={classNames('font-weight-normal px-1', {
-						'text-red': isValid && !userAgreement,
-					})}
-					htmlFor="user-agreement"
-				>
-					I have read and agree to the{' '}
-					<a
-						href={productAgreements.links.userAgreement}
-						onClick={(event) => event.stopPropagation()}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						{i18n.translate('liferay-end-user-agreement')}
-					</a>
 					<RequiredMask />
 				</label>
 			</div>

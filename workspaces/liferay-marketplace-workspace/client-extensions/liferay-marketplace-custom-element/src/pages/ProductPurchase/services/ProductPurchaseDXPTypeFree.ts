@@ -50,7 +50,9 @@ export default class ProductPurchaseDXPTypeFree extends ProductPurchase {
 		await provisioningOAuth2.createLicenseKeyTypeFree({
 			assetReceiptLicenseUuid: order.id,
 			domains: this.form.domain,
-			owner: Liferay.ThemeDisplay.getUserEmailAddress(),
+			owner:
+				this.form.businessEmail ||
+				Liferay.ThemeDisplay.getUserEmailAddress(),
 		});
 
 		return order;

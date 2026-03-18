@@ -242,25 +242,6 @@ public class BasicEntryUtil {
 	}
 
 	/**
-	 * Returns the basic entries before and after the current basic entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param basicEntryId the primary key of the current basic entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next basic entry
-	 * @throws NoSuchBasicEntryException if a basic entry with the primary key could not be found
-	 */
-	public static BasicEntry[] findByGroupId_PrevAndNext(
-			long basicEntryId, long groupId,
-			OrderByComparator<BasicEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchBasicEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			basicEntryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the basic entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -730,4 +711,4 @@ public class BasicEntryUtil {
 	private static volatile BasicEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1505941368
+// LIFERAY-SERVICE-BUILDER-HASH:281110133

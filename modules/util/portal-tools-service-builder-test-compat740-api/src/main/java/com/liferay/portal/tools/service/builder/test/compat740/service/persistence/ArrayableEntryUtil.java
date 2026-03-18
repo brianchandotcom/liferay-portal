@@ -242,25 +242,6 @@ public class ArrayableEntryUtil {
 	}
 
 	/**
-	 * Returns the arrayable entries before and after the current arrayable entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param arrayableEntryId the primary key of the current arrayable entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next arrayable entry
-	 * @throws NoSuchArrayableEntryException if a arrayable entry with the primary key could not be found
-	 */
-	public static ArrayableEntry[] findByGroupId_PrevAndNext(
-			long arrayableEntryId, long groupId,
-			OrderByComparator<ArrayableEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchArrayableEntryException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			arrayableEntryId, groupId, orderByComparator);
-	}
-
-	/**
 	 * Returns all the arrayable entries where groupId = any &#63;.
 	 *
 	 * <p>
@@ -526,4 +507,4 @@ public class ArrayableEntryUtil {
 	private static volatile ArrayableEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-95394243
+// LIFERAY-SERVICE-BUILDER-HASH:-1433211228

@@ -146,21 +146,6 @@ public interface ArrayableEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the arrayable entries before and after the current arrayable entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param arrayableEntryId the primary key of the current arrayable entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next arrayable entry
-	 * @throws NoSuchArrayableEntryException if a arrayable entry with the primary key could not be found
-	 */
-	public ArrayableEntry[] findByGroupId_PrevAndNext(
-			long arrayableEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ArrayableEntry>
-				orderByComparator)
-		throws NoSuchArrayableEntryException;
-
-	/**
 	 * Returns all the arrayable entries where groupId = any &#63;.
 	 *
 	 * <p>
@@ -369,4 +354,4 @@ public interface ArrayableEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:576389127
+// LIFERAY-SERVICE-BUILDER-HASH:-524666647

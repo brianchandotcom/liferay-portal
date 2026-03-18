@@ -245,25 +245,6 @@ public class WhereClauseEntryUtil {
 	}
 
 	/**
-	 * Returns the where clause entries before and after the current where clause entry in the ordered set where name = &#63;.
-	 *
-	 * @param whereClauseEntryId the primary key of the current where clause entry
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next where clause entry
-	 * @throws NoSuchWhereClauseEntryException if a where clause entry with the primary key could not be found
-	 */
-	public static WhereClauseEntry[] findByName_Nickname_PrevAndNext(
-			long whereClauseEntryId, String name,
-			OrderByComparator<WhereClauseEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchWhereClauseEntryException {
-
-		return getPersistence().findByName_Nickname_PrevAndNext(
-			whereClauseEntryId, name, orderByComparator);
-	}
-
-	/**
 	 * Removes all the where clause entries where name = &#63; from the database.
 	 *
 	 * @param name the name
@@ -446,4 +427,4 @@ public class WhereClauseEntryUtil {
 	private static volatile WhereClauseEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1957867949
+// LIFERAY-SERVICE-BUILDER-HASH:207169920

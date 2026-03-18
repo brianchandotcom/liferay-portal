@@ -240,25 +240,6 @@ public class ERCCompanyEntryUtil {
 	}
 
 	/**
-	 * Returns the erc company entries before and after the current erc company entry in the ordered set where uuid = &#63;.
-	 *
-	 * @param ercCompanyEntryId the primary key of the current erc company entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc company entry
-	 * @throws NoSuchERCCompanyEntryException if a erc company entry with the primary key could not be found
-	 */
-	public static ERCCompanyEntry[] findByUuid_PrevAndNext(
-			long ercCompanyEntryId, String uuid,
-			OrderByComparator<ERCCompanyEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchERCCompanyEntryException {
-
-		return getPersistence().findByUuid_PrevAndNext(
-			ercCompanyEntryId, uuid, orderByComparator);
-	}
-
-	/**
 	 * Removes all the erc company entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -423,26 +404,6 @@ public class ERCCompanyEntryUtil {
 
 		return getPersistence().fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the erc company entries before and after the current erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param ercCompanyEntryId the primary key of the current erc company entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next erc company entry
-	 * @throws NoSuchERCCompanyEntryException if a erc company entry with the primary key could not be found
-	 */
-	public static ERCCompanyEntry[] findByUuid_C_PrevAndNext(
-			long ercCompanyEntryId, String uuid, long companyId,
-			OrderByComparator<ERCCompanyEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchERCCompanyEntryException {
-
-		return getPersistence().findByUuid_C_PrevAndNext(
-			ercCompanyEntryId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -700,4 +661,4 @@ public class ERCCompanyEntryUtil {
 	private static volatile ERCCompanyEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1842759627
+// LIFERAY-SERVICE-BUILDER-HASH:1354503093

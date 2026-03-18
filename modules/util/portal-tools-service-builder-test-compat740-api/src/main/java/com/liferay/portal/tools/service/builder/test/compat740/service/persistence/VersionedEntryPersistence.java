@@ -146,21 +146,6 @@ public interface VersionedEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns the versioned entries before and after the current versioned entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param versionedEntryId the primary key of the current versioned entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next versioned entry
-	 * @throws NoSuchVersionedEntryException if a versioned entry with the primary key could not be found
-	 */
-	public VersionedEntry[] findByGroupId_PrevAndNext(
-			long versionedEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
-				orderByComparator)
-		throws NoSuchVersionedEntryException;
-
-	/**
 	 * Removes all the versioned entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -296,22 +281,6 @@ public interface VersionedEntryPersistence
 		long groupId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
 			orderByComparator);
-
-	/**
-	 * Returns the versioned entries before and after the current versioned entry in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param versionedEntryId the primary key of the current versioned entry
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next versioned entry
-	 * @throws NoSuchVersionedEntryException if a versioned entry with the primary key could not be found
-	 */
-	public VersionedEntry[] findByGroupId_Head_PrevAndNext(
-			long versionedEntryId, long groupId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<VersionedEntry>
-				orderByComparator)
-		throws NoSuchVersionedEntryException;
 
 	/**
 	 * Removes all the versioned entries where groupId = &#63; and head = &#63; from the database.
@@ -495,4 +464,4 @@ public interface VersionedEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1409694133
+// LIFERAY-SERVICE-BUILDER-HASH:2019372919

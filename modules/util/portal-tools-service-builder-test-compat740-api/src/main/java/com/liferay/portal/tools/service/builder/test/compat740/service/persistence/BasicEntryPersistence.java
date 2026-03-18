@@ -145,21 +145,6 @@ public interface BasicEntryPersistence extends BasePersistence<BasicEntry> {
 			orderByComparator);
 
 	/**
-	 * Returns the basic entries before and after the current basic entry in the ordered set where groupId = &#63;.
-	 *
-	 * @param basicEntryId the primary key of the current basic entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next basic entry
-	 * @throws NoSuchBasicEntryException if a basic entry with the primary key could not be found
-	 */
-	public BasicEntry[] findByGroupId_PrevAndNext(
-			long basicEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<BasicEntry>
-				orderByComparator)
-		throws NoSuchBasicEntryException;
-
-	/**
 	 * Removes all the basic entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -528,4 +513,4 @@ public interface BasicEntryPersistence extends BasePersistence<BasicEntry> {
 				MappingEntry> mappingEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1495919906
+// LIFERAY-SERVICE-BUILDER-HASH:-285013317

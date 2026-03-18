@@ -244,25 +244,6 @@ public class CTEntryUtil {
 	}
 
 	/**
-	 * Returns the ct entries before and after the current ct entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param ctEntryId the primary key of the current ct entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ct entry
-	 * @throws NoSuchCTEntryException if a ct entry with the primary key could not be found
-	 */
-	public static CTEntry[] findByCompanyId_PrevAndNext(
-			long ctEntryId, long companyId,
-			OrderByComparator<CTEntry> orderByComparator)
-		throws com.liferay.portal.tools.service.builder.test.compat740.
-			exception.NoSuchCTEntryException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			ctEntryId, companyId, orderByComparator);
-	}
-
-	/**
 	 * Removes all the ct entries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -506,4 +487,4 @@ public class CTEntryUtil {
 	private static volatile CTEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1944602338
+// LIFERAY-SERVICE-BUILDER-HASH:1892605973

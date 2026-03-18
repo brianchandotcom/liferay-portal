@@ -2179,7 +2179,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			String to)
 		throws Exception {
 
-		String content = "test\n" + RandomTestUtil.randomString();
+		String content = StringUtil.randomId(8);
 
 		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),

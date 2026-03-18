@@ -3653,14 +3653,14 @@ public class BatchEnginePortletDataHandlerTest {
 		"xText" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
-		"test\n" + RandomTestUtil.randomString();
+		StringUtil.randomId(8);
 
 	private static final String
 		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
-			"test\n" + RandomTestUtil.randomString();
+			StringUtil.randomId(8);
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
-		"test\n" + RandomTestUtil.randomString();
+		StringUtil.randomId(8);
 
 	private static BundleContext _bundleContext;
 	private static final BiFunction

@@ -71,7 +71,7 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader("Liferay-AI-Hub-On-Behalf-Of", _userToken);
+		options.addHeader("Liferay-AI-Hub-Cell-On-Behalf-Of", _userToken);
 
 		OAuth2Authorization oAuth2Authorization =
 			OAuth2AuthorizationLocalServiceUtil.

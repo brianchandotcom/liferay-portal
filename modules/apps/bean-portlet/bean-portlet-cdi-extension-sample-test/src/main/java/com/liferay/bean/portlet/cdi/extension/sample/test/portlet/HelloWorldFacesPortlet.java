@@ -5,7 +5,7 @@
 
 package com.liferay.bean.portlet.cdi.extension.sample.test.portlet;
 
-import jakarta.portlet.faces.GenericFacesPortlet;
+import com.liferay.faces.GenericFacesPortlet;
 
 /**
  * @author  Kevin Valencia

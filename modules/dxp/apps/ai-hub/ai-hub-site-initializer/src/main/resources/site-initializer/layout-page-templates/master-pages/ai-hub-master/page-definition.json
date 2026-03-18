@@ -86,7 +86,7 @@
 										"displayStyle": "stacked",
 										"hoveredItemColor": "",
 										"selectedItemColor": "",
-										"source": "{\"contextualMenu\": \"self-and-siblings\", \"title\": \"Self and Siblings\", \"type\": \"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
+										"source": "{\"parentSiteNavigationMenuItemId\": \"0\", \"privateLayout\": \"false\", \"siteNavigationMenuExternalReferenceCode\": \"AIHUBPRIMARYNAVIGATION\", \"title\": \"AI Hub Navigation Menu\", \"type\": \"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
 										"sublevels": "-1"
 									},
 									"fragmentFields": [

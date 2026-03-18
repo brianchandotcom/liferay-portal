@@ -3,15 +3,15 @@
 		"externalReferenceCode": "AIHUBPRIMARYNAVIGATION",
 		"menuItems": [
 			{
-				"friendlyURL": "/agents",
-				"order": 0,
-				"title": "Agents",
+				"externalReferenceCode": "AIHUBPRIMARYNAVIGATION1",
+				"friendlyURL": "/home",
+				"privateLayout": false,
 				"type": "layout"
 			},
 			{
-				"friendlyURL": "/home",
-				"order": 0,
-				"title": "Home",
+				"externalReferenceCode": "AIHUBPRIMARYNAVIGATION2",
+				"friendlyURL": "/agents",
+				"privateLayout": false,
 				"type": "layout"
 			}
 		],

@@ -5,6 +5,8 @@
 
 package com.liferay.fragment.entry.processor.util;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.entry.processor.helper.InfoItemFieldMapped;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
@@ -154,6 +157,28 @@ public class AnalyticsAttributesUtil {
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 				element.attr("data-analytics-asset-action", ACTION_VIEW);
+			}
+
+			String[] categoryNames =
+				AssetCategoryLocalServiceUtil.getCategoryNames(
+					objectEntry.getModelClassName(),
+					objectEntry.getObjectEntryId());
+
+			if (ArrayUtil.isNotEmpty(categoryNames)) {
+				element.attr(
+					"data-analytics-asset-categories",
+					StringUtil.merge(
+						categoryNames, StringPool.COMMA_AND_SPACE));
+			}
+
+			String[] tagNames = AssetTagLocalServiceUtil.getTagNames(
+				objectEntry.getModelClassName(),
+				objectEntry.getObjectEntryId());
+
+			if (ArrayUtil.isNotEmpty(tagNames)) {
+				element.attr(
+					"data-analytics-asset-tags",
+					StringUtil.merge(tagNames, StringPool.COMMA_AND_SPACE));
 			}
 
 			element.attr(

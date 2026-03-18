@@ -10,10 +10,12 @@ import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.util.Objects;
 
@@ -66,6 +68,36 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 	public void tearDown() throws Exception {
 		resetLicenseData();
 		resetLifecycleAction();
+	}
+
+	@Test
+	public void testEmptyBundlesFile() throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		PortalClassLoaderUtil.setClassLoader(
+			new WrapperClassLoader(classLoader) {
+
+				@Override
+				public InputStream getResourceAsStream(String name) {
+					if (name.equals(_getBundlesFilePath())) {
+						return InputStream.nullInputStream();
+					}
+
+					return classLoader.getResourceAsStream(name);
+				}
+
+			});
+
+		try {
+			assertLicenseNotRegistered(hitHomePage("localhost", 8080));
+
+			deployFreeTierLicense(Time.HOUR);
+
+			assertLicenseInvalid(hitHomePage("localhost", 8080));
+		}
+		finally {
+			PortalClassLoaderUtil.setClassLoader(classLoader);
+		}
 	}
 
 	@Test
@@ -172,6 +204,40 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 		}
 	}
 
+	@Test
+	public void testMissingBundlesFile() throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		PortalClassLoaderUtil.setClassLoader(
+			new WrapperClassLoader(classLoader) {
+
+				@Override
+				public InputStream getResourceAsStream(String name) {
+					if (name.equals(_getBundlesFilePath())) {
+						return null;
+					}
+
+					return classLoader.getResourceAsStream(name);
+				}
+
+			});
+
+		try {
+			assertLicenseNotRegistered(hitHomePage("localhost", 8080));
+
+			deployFreeTierLicense(Time.HOUR);
+
+			assertLicenseInvalid(hitHomePage("localhost", 8080));
+		}
+		finally {
+			PortalClassLoaderUtil.setClassLoader(classLoader);
+		}
+	}
+
+	private String _getBundlesFilePath() {
+		return getProperty("bundles.file.path");
+	}
+
 	private String _getDxpOnlyModuleSymbolicName() {
 		return getProperty("dxp.only.module.symbolic.name");
 	}
@@ -184,5 +250,25 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 		_disableKeyValidatorResettableClassFileTransformer;
 	private static ResettableClassFileTransformer
 		_setVersionResettableClassFileTransformer;
+
+	private static class WrapperClassLoader extends ClassLoader {
+
+		public WrapperClassLoader(ClassLoader classLoader) {
+			_classLoader = classLoader;
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			return _classLoader.equals(object);
+		}
+
+		@Override
+		public int hashCode() {
+			return _classLoader.hashCode();
+		}
+
+		private final ClassLoader _classLoader;
+
+	}
 
 }

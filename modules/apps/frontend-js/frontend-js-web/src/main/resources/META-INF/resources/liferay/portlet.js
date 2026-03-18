@@ -610,11 +610,11 @@
 
 								const buttonGroupFragment = buildFragment(`
 									<div class="btn-group hide" id="${portletId}_button-group-title-edit">
-									<button class="btn-toolbar-button  btn btn-default" id="${portletId}_cancel-edit-title">
+									<button aria-label="${Liferay.Language.get('cancel')}" class="btn-toolbar-button btn btn-default lfr-portal-tooltip" id="${portletId}_cancel-edit-title" title="${Liferay.Language.get('cancel')}">
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation"><use href="${Liferay.Icons.spritemap}#times"></use></svg>
 									</button>
-									<button class="btn-toolbar-button btn btn-default" id="${portletId}_confirm-edit-title">
-									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-check " focusable="false" role="presentation"><use href="${Liferay.Icons.spritemap}#check"></use></svg>
+									<button aria-label="${Liferay.Language.get('confirm')}" class="btn-toolbar-button btn btn-default lfr-portal-tooltip" id="${portletId}_confirm-edit-title" title="${Liferay.Language.get('confirm')}">
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-check" focusable="false" role="presentation"><use href="${Liferay.Icons.spritemap}#check"></use></svg>
 									</button>
 									</div>
 								`);

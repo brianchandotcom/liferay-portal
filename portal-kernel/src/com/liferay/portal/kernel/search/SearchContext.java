@@ -83,9 +83,9 @@ public class SearchContext implements Serializable {
 				Map.Entry<Set<Future<?>>, List<Callable<Void>>> entry =
 					_batchModeSyncFuturesAndCallables.get();
 
-				for (Future<?> future : entry.getKey()) {
+				for (Callable<?> callable : entry.getValue()) {
 					try {
-						future.get();
+						callable.call();
 					}
 					catch (Exception exception2) {
 						if (exception1 != null) {
@@ -96,9 +96,9 @@ public class SearchContext implements Serializable {
 					}
 				}
 
-				for (Callable<?> callable : entry.getValue()) {
+				for (Future<?> future : entry.getKey()) {
 					try {
-						callable.call();
+						future.get();
 					}
 					catch (Exception exception2) {
 						if (exception1 != null) {

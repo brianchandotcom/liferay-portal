@@ -138,8 +138,7 @@ public abstract class BaseLicenseTestCase {
 
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("<?xml version=\"1.0\"?>");
-		sb.append("<license><account-name>");
+		sb.append("<?xml version=\"1.0\"?><license><account-name>");
 		sb.append(_FREE_TIER_ACCOUNT_NAME);
 		sb.append("</account-name><product-name>");
 		sb.append(_FREE_TIER_PRODUCT_NAME);

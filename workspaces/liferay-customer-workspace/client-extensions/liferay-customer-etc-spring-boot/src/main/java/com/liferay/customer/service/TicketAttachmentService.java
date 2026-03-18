@@ -233,7 +233,7 @@ public class TicketAttachmentService extends BaseService {
 	}
 
 	public List<TicketAttachment> search(
-			String authorization, String filter, int page, int pageSize)
+			String authorization, String filterString, int page, int pageSize)
 		throws Exception {
 
 		List<TicketAttachment> ticketAttachments = new ArrayList<>();
@@ -244,7 +244,7 @@ public class TicketAttachmentService extends BaseService {
 				UriComponentsBuilder.fromPath(
 					"/o/c/ticketattachments"
 				).queryParam(
-					"filter", filter
+					"filter", filterString
 				).queryParam(
 					"page", page
 				).queryParam(

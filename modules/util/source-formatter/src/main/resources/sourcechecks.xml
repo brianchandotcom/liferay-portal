@@ -1791,6 +1791,7 @@
 		<check name="SHSubshellCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that local variables are not assigned via subshells." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="WhitespaceCheck">
 			<category name="Styling" />

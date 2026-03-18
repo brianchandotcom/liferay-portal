@@ -223,12 +223,16 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 		}
 	});
 
+	const isDemandbaseOnDataSourceList = data?.items?.some(
+		(item: {provider: {type: string}}) =>
+			item.provider.type === 'DEMANDBASE'
+	);
+
 	const renderDataSourcesDropdown = () => (
 		<ClayDropDownWithItems
 			items={[
 				{
 					label: Liferay.Language.get('liferay-dxp'),
-
 					onClick: () => {
 						history.push(
 							toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
@@ -240,12 +244,23 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 				},
 				{
 					label: Liferay.Language.get('salesforce'),
-
 					onClick: () => {
 						history.push(
 							toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
 								groupId,
 								id: DataSourceTypes.Salesforce
+							})
+						);
+					}
+				},
+
+				!isDemandbaseOnDataSourceList && {
+					label: Liferay.Language.get('demandbase'),
+					onClick: () => {
+						history.push(
+							toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
+								groupId,
+								id: DataSourceTypes.Demandbase
 							})
 						);
 					}

@@ -136,7 +136,10 @@ export class PersonalMenuPage {
 		this.selectSiteHeading = page.getByRole('heading', {
 			name: 'Select Site',
 		});
-		this.siteIframeCard = page.frameLocator('iframe').locator('.card');
+		this.siteIframeCard = page
+			.frameLocator('iframe')
+			.locator('.card')
+			.first();
 		this.street1Input = page.getByLabel('Street 1');
 		this.uploadImageFrame = page.frameLocator(
 			'iframe[title="Upload Image"]'

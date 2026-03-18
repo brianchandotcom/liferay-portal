@@ -37,6 +37,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "manage-user-views"));
 			HashMapBuilder.<String, Object>put(
 				"currentURL", themeDisplay.getURLCurrent()
 			).put(
+				"getUserViewsDataSetsURL", fdsAdminDisplayContext.getUserViewsDataSetsURL()
+			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
 				"portletId", portletDisplay.getId()

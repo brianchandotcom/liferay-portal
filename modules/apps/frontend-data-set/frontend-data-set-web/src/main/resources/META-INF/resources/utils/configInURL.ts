@@ -71,10 +71,7 @@ export function writeConfigInURL(
 
 	params.set(
 		fdsConfigParamName,
-		JsonURL.stringify(
-			sortObjectKeys({...(currentConfig || {}), ...config}),
-			{AQF: true, noEmptyComposite: true}
-		) || ''
+		serializeFDSConfig({...(currentConfig || {}), ...config})
 	);
 
 	const urlParams = decodeFdsConfigParam(fdsConfigParamName, params);
@@ -115,6 +112,15 @@ export function writeConfigInURL(
 			path
 		);
 	}
+}
+
+export function serializeFDSConfig(config: Partial<IConfigInURL>) {
+	return (
+		JsonURL.stringify(sortObjectKeys(config), {
+			AQF: true,
+			noEmptyComposite: true,
+		}) || ''
+	);
 }
 
 export function contains(

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.internal.security.auth.verifier;
+package com.liferay.ai.hub.cell.internal.security.auth.verifier;
 
-import com.liferay.ai.hub.security.JWTTokenUtil;
+import com.liferay.ai.hub.cell.security.JWTTokenUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Praxedes
  */
 @Component(
-	property = "auth.verifier.AIHubRequestAuthVerifier.urls.includes=*",
+	property = "auth.verifier.AIHubCellRequestAuthVerifier.urls.includes=*",
 	service = AuthVerifier.class
 )
-public class AIHubRequestAuthVerifier implements AuthVerifier {
+public class AIHubCellRequestAuthVerifier implements AuthVerifier {
 
 	@Override
 	public String getAuthType() {
@@ -50,7 +50,7 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 				accessControlContext.getRequest();
 
 			String token = httpServletRequest.getHeader(
-				"Liferay-AI-Hub-On-Behalf-Of");
+				"Liferay-AI-Hub-Cell-On-Behalf-Of");
 
 			if (Validator.isBlank(token)) {
 				return new AuthVerifierResult();
@@ -77,7 +77,7 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 					ServiceAccessPolicy.SERVICE_ACCESS_POLICY_NAMES,
 					value -> new ArrayList<>());
 
-			serviceAccessPolicyNames.add("AI_HUB_TOKEN");
+			serviceAccessPolicyNames.add("AI_HUB_CELL_TOKEN");
 
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 			authVerifierResult.setUserId(userId);
@@ -86,7 +86,7 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to verify AI Hub JWT token", exception);
+				_log.debug("Unable to verify AI Hub Cell JWT token", exception);
 			}
 
 			return new AuthVerifierResult();
@@ -94,6 +94,6 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AIHubRequestAuthVerifier.class);
+		AIHubCellRequestAuthVerifier.class);
 
 }

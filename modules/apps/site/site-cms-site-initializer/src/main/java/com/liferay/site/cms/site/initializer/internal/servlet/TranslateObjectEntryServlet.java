@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.servlet;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,7 +40,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -189,7 +189,8 @@ public class TranslateObjectEntryServlet extends BaseCMSServlet {
 			zipFileName = file.getName();
 
 			if (objectEntryIds.size() > 1) {
-				zipWriter.addEntry(file.getName(), new FileInputStream(file));
+				zipWriter.addEntry(
+					file.getName(), new AutoDeleteFileInputStream(file));
 			}
 		}
 
@@ -198,17 +199,12 @@ public class TranslateObjectEntryServlet extends BaseCMSServlet {
 			zipFileName = "translations-" + Time.getTimestamp() + ".zip";
 		}
 
-		try (InputStream inputStream = new FileInputStream(file)) {
-			ServletResponseUtil.sendFile(
-				httpServletRequest, httpServletResponse, zipFileName,
-				inputStream, 0, ContentTypes.APPLICATION_ZIP,
-				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
-		}
-		finally {
-			if ((file != null) && file.exists()) {
-				file.delete();
-			}
-		}
+		InputStream inputStream = new AutoDeleteFileInputStream(file);
+
+		ServletResponseUtil.sendFile(
+			httpServletRequest, httpServletResponse, zipFileName, inputStream,
+			0, ContentTypes.APPLICATION_ZIP,
+			HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 	}
 
 	private Set<String> _getAllowedClassNames(long companyId) {

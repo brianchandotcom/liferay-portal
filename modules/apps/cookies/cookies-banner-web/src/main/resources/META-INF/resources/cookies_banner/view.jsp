@@ -11,6 +11,18 @@
 CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_BANNER_DISPLAY_CONTEXT);
 %>
 
+<c:if test="<%= (boolean)request.getAttribute(CookiesBannerWebKeys.FLOATING_ICON_ENABLED) %>">
+	<clay:button
+		cssClass="align-items-center d-none floating-icon-button justify-content-center ml-3 rounded-circle text-white"
+		displayType="unstyled"
+		id='<%= liferayPortletResponse.getNamespace() + "floatingIconButton" %>'
+	>
+		<clay:icon
+			symbol="<%= (String)request.getAttribute(CookiesBannerWebKeys.FLOATING_ICON) %>"
+		/>
+	</clay:button>
+</c:if>
+
 <div aria-label="banner cookies" class="cookies-banner cookies-banner-bottom" role="dialog">
 	<clay:container-fluid
 		cssClass="container-view"

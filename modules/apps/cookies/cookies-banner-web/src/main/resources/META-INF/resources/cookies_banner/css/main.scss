@@ -18,3 +18,23 @@
 		top: 0;
 	}
 }
+.floating-icon-button {
+	background-color: var(--gray-400);
+	bottom: 24px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	height: 60px;
+	left: 24px;
+	position: fixed !important;
+	transition: background-color 0.2s ease;
+	width: 60px;
+	z-index: 1030;
+}
+
+.floating-icon-button:hover {
+	background-color: var(--gray-700);
+}
+
+.floating-icon-button .lexicon-icon {
+	height: 30px;
+	width: 30px;
+}

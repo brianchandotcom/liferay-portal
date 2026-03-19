@@ -5,6 +5,7 @@
 
 package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
+import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.kernel.log.Log;
@@ -66,6 +67,13 @@ public class CookiesBannerBottomJSPDynamicInclude
 			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
 				return;
 			}
+
+			httpServletRequest.setAttribute(
+				CookiesBannerWebKeys.FLOATING_ICON,
+				cookiesPreferenceHandlingConfiguration.floatingIcon());
+			httpServletRequest.setAttribute(
+				CookiesBannerWebKeys.FLOATING_ICON_ENABLED,
+				cookiesPreferenceHandlingConfiguration.floatingIconEnabled());
 		}
 		catch (Exception exception) {
 			_log.error(exception);

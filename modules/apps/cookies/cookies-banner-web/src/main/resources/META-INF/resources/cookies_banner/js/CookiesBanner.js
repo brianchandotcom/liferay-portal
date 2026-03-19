@@ -209,6 +209,54 @@ export default function ({
 			});
 		}
 	}
+
+	checkFloatingIcon(cookieBanner, namespace);
+}
+
+function checkFloatingIcon(cookieBanner, namespace) {
+	const floatingIconButton = document.getElementById(
+		`${namespace}floatingIconButton`
+	);
+
+	if (!floatingIconButton) {
+		return;
+	}
+
+	const toggleIconVisibility = () => {
+		let isBannerVisible = false;
+
+		if (cookieBanner) {
+			isBannerVisible =
+				cookieBanner.style.display !== 'none' &&
+				!cookieBanner.classList.contains('d-none');
+		}
+
+		if (isBannerVisible) {
+			floatingIconButton.classList.remove('d-inline-flex');
+			floatingIconButton.classList.add('d-none');
+		}
+		else if (Liferay.FeatureFlags['LPD-75027']) {
+			floatingIconButton.classList.remove('d-none');
+			floatingIconButton.classList.add('d-inline-flex');
+		}
+	};
+
+	toggleIconVisibility();
+
+	if (cookieBanner) {
+		const observer = new MutationObserver(() => {
+			toggleIconVisibility();
+		});
+
+		observer.observe(cookieBanner, {
+			attributeFilter: ['style', 'class'],
+			attributes: true,
+		});
+	}
+
+	floatingIconButton.addEventListener('click', () => {
+		openCookieConsentModal({});
+	});
 }
 
 function checkCookieConsentForTypes(cookieTypes, modalOptions) {

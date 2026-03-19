@@ -61,6 +61,33 @@ public class ObjectEntryFolderModelSummaryContributorTest {
 			document, LocaleUtil.US, "");
 
 		Assert.assertEquals("Label (snippet)", summary.getTitle());
+
+		document = new DocumentImpl();
+
+		document.addText("name", "My Folder (name)");
+		document.addText("title", "My Folder");
+
+		summary = modelSummaryContributor.getSummary(
+			document, LocaleUtil.US, "");
+
+		Assert.assertEquals("My Folder", summary.getTitle());
+
+		document = new DocumentImpl();
+
+		document.addText("localized_label_en_US", "my folder");
+		document.addText("name", "My Folder");
+
+		summary = modelSummaryContributor.getSummary(
+			document, LocaleUtil.US, "");
+
+		Assert.assertEquals("My Folder", summary.getTitle());
+
+		document.addText("snippet_title", "My Folder (snippet)");
+
+		summary = modelSummaryContributor.getSummary(
+			document, LocaleUtil.US, "");
+
+		Assert.assertEquals("My Folder (snippet)", summary.getTitle());
 	}
 
 	@Inject(

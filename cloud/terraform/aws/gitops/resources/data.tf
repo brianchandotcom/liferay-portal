@@ -433,10 +433,10 @@ data "aws_iam_role" "liferay_irsa" {
 	name=local.liferay_service_account_role_name
 }
 data "aws_iam_roles" "opensearch_linked_role_lookup" {
-	name_regex="^AWSServiceRoleForAmazonOpenSearchService$"
+	path_prefix="/aws-service-role/opensearchservice.amazonaws.com/"
 }
 data "aws_iam_roles" "rds_linked_role_lookup" {
-	name_regex="^AWSServiceRoleForRDS$"
+	path_prefix="/aws-service-role/rds.amazonaws.com/"
 }
 data "aws_subnets" "private" {
 	filter {

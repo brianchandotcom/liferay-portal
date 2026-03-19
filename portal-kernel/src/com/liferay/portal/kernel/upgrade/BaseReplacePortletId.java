@@ -138,7 +138,8 @@ public abstract class BaseReplacePortletId extends BasePortletIdUpgradeProcess {
 				int deleteCount = 0;
 
 				while (resultSet.next()) {
-					preparedStatement2.setLong(1, resultSet.getLong(1));
+					preparedStatement2.setLong(
+						1, resultSet.getLong("resourceActionId"));
 
 					preparedStatement2.addBatch();
 
@@ -195,7 +196,8 @@ public abstract class BaseReplacePortletId extends BasePortletIdUpgradeProcess {
 			int deleteCount = 0;
 
 			while (resultSet.next()) {
-				preparedStatement2.setLong(1, resultSet.getLong(1));
+				preparedStatement2.setLong(
+					1, resultSet.getLong("portletPreferencesId"));
 
 				preparedStatement2.addBatch();
 

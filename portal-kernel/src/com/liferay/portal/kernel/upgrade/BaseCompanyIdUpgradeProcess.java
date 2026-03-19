@@ -139,7 +139,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
-					long companyId = resultSet.getLong(1);
+					long companyId = resultSet.getLong("companyId");
 
 					companyIds.add(companyId);
 				}
@@ -219,7 +219,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
-					companyIds.add(resultSet.getLong(1));
+					companyIds.add(resultSet.getLong("companyId"));
 				}
 			}
 

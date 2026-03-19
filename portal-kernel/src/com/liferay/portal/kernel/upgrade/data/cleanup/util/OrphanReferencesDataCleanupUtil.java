@@ -96,10 +96,10 @@ public class OrphanReferencesDataCleanupUtil {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
-					sourceColumnName, ", count(1) from ", sourceTableName,
-					StringPool.SPACE, _SOURCE_TABLE_ALIAS, whereClause,
-					" group by ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
-					sourceColumnName));
+					sourceColumnName, ", count(1) as count from ",
+					sourceTableName, StringPool.SPACE, _SOURCE_TABLE_ALIAS,
+					whereClause, " group by ", _SOURCE_TABLE_ALIAS,
+					StringPool.PERIOD, sourceColumnName));
 
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
@@ -124,10 +124,11 @@ public class OrphanReferencesDataCleanupUtil {
 
 			while (resultSet.next()) {
 				DataCleanupLoggingUtil.logDelete(
-					_log, resultSet.getLong(2), readOnly, sourceTableName,
+					_log, resultSet.getLong("count"), readOnly, sourceTableName,
 					StringBundler.concat(
 						sourceColumnName, StringPool.SPACE,
-						resultSet.getObject(1), " was not found in column",
+						resultSet.getObject(sourceColumnName),
+						" was not found in column",
 						(targetColumnNames.length > 1) ? "s " : " ",
 						String.join(", ", targetColumnNames), " from table ",
 						targetTableName));

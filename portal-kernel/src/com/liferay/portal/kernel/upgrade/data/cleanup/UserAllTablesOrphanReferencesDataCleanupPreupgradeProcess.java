@@ -77,7 +77,7 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 					OrphanReferencesDataCleanupUtil.getSourceTableAlias(),
 					StringPool.PERIOD, sourceColumnName, ", ",
 					OrphanReferencesDataCleanupUtil.getSourceTableAlias(),
-					".companyId, count(1) from ", sourceTableName, " ",
+					".companyId, count(1) as count from ", sourceTableName, " ",
 					OrphanReferencesDataCleanupUtil.getSourceTableAlias(),
 					OrphanReferencesDataCleanupUtil.getWhereClause(
 						connection, null, null, sourceColumnName,
@@ -106,9 +106,9 @@ public class UserAllTablesOrphanReferencesDataCleanupPreupgradeProcess
 				connection, sourceColumnName, sourceTableName);
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong(2);
-				long count = resultSet.getLong(3);
-				long userId = resultSet.getLong(1);
+				long companyId = resultSet.getLong("companyId");
+				long count = resultSet.getLong("count");
+				long userId = resultSet.getLong(sourceColumnName);
 
 				if (partOfUniqueIndex) {
 					preparedStatement2.setLong(1, userId);

@@ -2173,8 +2173,10 @@ public class GitWorkingDirectory {
 		}
 
 		if (sb.length() == 0) {
-			return "up to date";
+			return "up to date with";
 		}
+
+		sb.append(" of");
 
 		return sb.toString();
 	}

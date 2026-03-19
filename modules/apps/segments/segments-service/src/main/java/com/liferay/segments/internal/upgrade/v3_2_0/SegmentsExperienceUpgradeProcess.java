@@ -63,14 +63,14 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					_getUpdateFragmentEntryLinkSQL(
-						hasLayoutPageTemplateStructureRelCTCollectionId,
-						fragmentEntryLinkColumnName));
+						fragmentEntryLinkColumnName,
+						hasLayoutPageTemplateStructureRelCTCollectionId));
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					_getUpdateLayoutPageTemplateStructureRelSQL(
-						hasLayoutPageTemplateStructureRelCTCollectionId,
-						layoutPageTemplateStructureColumnName));
+						layoutPageTemplateStructureColumnName,
+						hasLayoutPageTemplateStructureRelCTCollectionId));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -196,35 +196,33 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 	}
 
 	private String _getUpdateFragmentEntryLinkSQL(
-		boolean hasFragmentEntryLinkCTCollectionId,
-		String fragmentEntryLinkColumnName) {
+		String columnName, boolean hasCTCollectionId) {
 
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("update FragmentEntryLink set segmentsExperienceId = ? ");
 		sb.append("where ");
 
-		if (hasFragmentEntryLinkCTCollectionId) {
+		if (hasCTCollectionId) {
 			sb.append("ctCollectionId = ? and ");
 		}
 
 		sb.append("segmentsExperienceId = ? and ");
-		sb.append(fragmentEntryLinkColumnName);
+		sb.append(columnName);
 		sb.append(" = ?");
 
 		return sb.toString();
 	}
 
 	private String _getUpdateLayoutPageTemplateStructureRelSQL(
-		boolean hasLayoutPageTemplateStructureRelCTCollectionId,
-		String layoutPageTemplateStructureColumnName) {
+		String columnName, boolean hasCTCollectionId) {
 
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("update LayoutPageTemplateStructureRel set ");
 		sb.append("segmentsExperienceId = ? where ");
 
-		if (hasLayoutPageTemplateStructureRelCTCollectionId) {
+		if (hasCTCollectionId) {
 			sb.append("ctCollectionId = ? and ");
 		}
 
@@ -232,7 +230,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 		sb.append("LayoutPageTemplateStructureId in (select ");
 		sb.append("LayoutPageTemplateStructureId from ");
 		sb.append("LayoutPageTemplateStructure where ");
-		sb.append(layoutPageTemplateStructureColumnName);
+		sb.append(columnName);
 		sb.append(" = ?)");
 
 		return sb.toString();

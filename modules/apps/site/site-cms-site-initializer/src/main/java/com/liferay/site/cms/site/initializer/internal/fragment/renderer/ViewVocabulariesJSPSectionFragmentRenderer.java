@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewVocabulariesDisplayContext;
@@ -14,7 +13,6 @@ import com.liferay.site.cms.site.initializer.internal.display.context.ViewVocabu
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noor Najjar
@@ -33,7 +31,7 @@ public class ViewVocabulariesJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewVocabulariesDisplayContext(
-			_groupService, httpServletRequest,
+			httpServletRequest,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -42,8 +40,5 @@ public class ViewVocabulariesJSPSectionFragmentRenderer
 	protected String getJSPPath() {
 		return "/view_vocabularies.jsp";
 	}
-
-	@Reference
-	private GroupService _groupService;
 
 }

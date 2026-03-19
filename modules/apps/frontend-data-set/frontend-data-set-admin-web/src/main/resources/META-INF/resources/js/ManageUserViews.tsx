@@ -5,6 +5,7 @@
 
 import ClayLabel from '@clayui/label';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {
 	createContext,
@@ -22,15 +23,17 @@ import UserViewsTypeFilter, {
 import {DEFAULT_FETCH_HEADERS, FDS_DEFAULT_PROPS} from './utils/constants';
 import getDataSetResourceURL from './utils/getDataSetResourceURL';
 import getDataSetSnapshotResourceURL from './utils/getDataSetSnapshotResourceURL';
+import openDefaultFailureToast from './utils/openDefaultFailureToast';
+import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 
 import '../css/DataSets.scss';
 
 interface IManageUserViewsProps {
 	currentURL: string;
+	getUserViewsDataSetsURL: string;
 	namespace: string;
 	portletId: string;
 	systemDataSetEntries: Array<{name: string; title: string}>;
-	getUserViewsDataSetsURL: string;
 }
 
 interface IDataSetLabelsContextValue {
@@ -152,6 +155,74 @@ export default function ManageUserViews({
 		);
 	}, [systemDataSetEntries]);
 
+	const deleteUserViews = useCallback(
+		({
+			loadData,
+			snapshotERCs,
+		}: {
+			loadData: Function;
+			snapshotERCs: Array<string>;
+		}) => {
+			openModal({
+				bodyHTML: Liferay.Language.get(
+					'deleting-a-user-view-is-an-action-that-cannot-be-reversed'
+				),
+				buttons: [
+					{
+						autoFocus: true,
+						displayType: 'secondary',
+						label: Liferay.Language.get('cancel'),
+						type: 'cancel',
+					},
+					{
+						displayType: 'danger',
+						label: Liferay.Language.get('delete'),
+						onClick: async ({
+							processClose,
+						}: {
+							processClose: Function;
+						}) => {
+							processClose();
+
+							const responses = await Promise.allSettled(
+								snapshotERCs.map((snapshotERC) =>
+									fetch(
+										getDataSetSnapshotResourceURL({
+											snapshotERC,
+										}),
+										{
+											headers: DEFAULT_FETCH_HEADERS,
+											method: 'DELETE',
+										}
+									)
+								)
+							);
+
+							if (
+								responses.every(
+									(response) =>
+										response.status === 'fulfilled' &&
+										response.value.ok
+								)
+							) {
+								openDefaultSuccessToast();
+
+								loadData();
+
+								return;
+							}
+
+							openDefaultFailureToast();
+						},
+					},
+				],
+				status: 'danger',
+				title: Liferay.Language.get('delete-user-view'),
+			});
+		},
+		[]
+	);
+
 	const requestLabel = useCallback(
 		(fdsName: string) => {
 			if (dataSetLabels[fdsName] !== undefined) {
@@ -246,6 +317,14 @@ export default function ManageUserViews({
 				<FrontendDataSet
 					{...FDS_DEFAULT_PROPS}
 					apiURL={apiURL}
+					bulkActions={[
+						{
+							href: getDataSetSnapshotResourceURL(),
+							icon: 'trash',
+							label: Liferay.Language.get('delete'),
+							method: 'delete',
+						},
+					]}
 					currentURL={currentURL}
 					customDataRenderers={{
 						dataSetNameRenderer: DataSetNameRenderer,
@@ -284,7 +363,22 @@ export default function ManageUserViews({
 							target: 'headless',
 						},
 					]}
+					onBulkActionItemClick={({
+						loadData,
+						selectedData: {keyValues},
+					}: {
+						loadData: Function;
+						selectedData: {keyValues: Array<string>};
+					}) => {
+						deleteUserViews({
+							loadData,
+							snapshotERCs: keyValues,
+						});
+					}}
 					portletId={portletId}
+					selectedItemsKey="externalReferenceCode"
+					selectionType="multiple"
+					style="fluid"
 					views={[views]}
 				/>
 			</div>

@@ -74,7 +74,7 @@ public class TestScriptGenerator {
 		sb.append("that is ");
 
 		String upstreamMasterAheadBehindCount =
-			_gitWorkingDirectory.getUpstreamMasterAheadBehindCount();
+			_gitWorkingDirectory.getUpstreamMasterAheadBehindDescription();
 
 		sb.append(upstreamMasterAheadBehindCount);
 

@@ -88,6 +88,7 @@ public class TestScriptGenerator {
 			_gitWorkingDirectory.getUpstreamMasterAheadBehindDescription();
 
 		sb.append(upstreamMasterAheadBehindDescription);
+
 		sb.append(" upstream/master.\"\n");
 		sb.append("\techo \"\"\n");
 

@@ -15,6 +15,7 @@ import Breadcrumb, {
 } from '../../../../src/main/resources/META-INF/resources/js/common/components/Breadcrumb';
 
 jest.mock('frontend-js-components-web', () => ({
+	FeatureIndicator: ({type}: {type: string}) => <span>{type}</span>,
 	openModal: jest.fn(),
 }));
 

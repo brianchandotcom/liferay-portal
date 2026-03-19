@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -42,10 +41,8 @@ import java.util.Map;
 public class ViewVocabulariesDisplayContext {
 
 	public ViewVocabulariesDisplayContext(
-		GroupService groupService, HttpServletRequest httpServletRequest,
-		ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
-		_groupService = groupService;
 		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
 	}
@@ -183,7 +180,6 @@ public class ViewVocabulariesDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewVocabulariesDisplayContext.class);
 
-	private final GroupService _groupService;
 	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 

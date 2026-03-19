@@ -11,7 +11,6 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -29,10 +28,8 @@ import java.util.Map;
 public class ViewTagsDisplayContext {
 
 	public ViewTagsDisplayContext(
-		GroupService groupService, HttpServletRequest httpServletRequest,
-		ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
-		_groupService = groupService;
 		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
 	}
@@ -91,7 +88,6 @@ public class ViewTagsDisplayContext {
 		return jsonArray;
 	}
 
-	private final GroupService _groupService;
 	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 

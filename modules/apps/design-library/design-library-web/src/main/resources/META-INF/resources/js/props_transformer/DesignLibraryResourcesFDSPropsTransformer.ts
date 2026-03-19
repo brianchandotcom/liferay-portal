@@ -10,7 +10,7 @@ import {ActionItem, DesignLibraryItem} from '../types';
 import {FromNowDateTimeRenderer} from './cell_renderers/FromNowDateTimeRenderer';
 import {StyleBookLinkRenderer} from './cell_renderers/StyleBookLinkRenderer';
 
-enum TableCelRenderer {
+enum TableCellRenderer {
 	DESIGN_LIBRARY_LINK = 'designLibraryLink',
 	FROM_NOW_DATE_TIME = 'fromNowDateTime',
 	RESOURCE_TYPE = 'resourceType',
@@ -34,17 +34,17 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 			tableCell: [
 				{
 					component: StyleBookLinkRenderer,
-					name: TableCelRenderer.DESIGN_LIBRARY_LINK,
+					name: TableCellRenderer.DESIGN_LIBRARY_LINK,
 					type: 'internal',
 				},
 				{
 					component: () => Liferay.Language.get('style-book'),
-					name: TableCelRenderer.RESOURCE_TYPE,
+					name: TableCellRenderer.RESOURCE_TYPE,
 					type: 'internal',
 				},
 				{
 					component: FromNowDateTimeRenderer,
-					name: TableCelRenderer.FROM_NOW_DATE_TIME,
+					name: TableCellRenderer.FROM_NOW_DATE_TIME,
 					type: 'internal',
 				},
 			],
@@ -62,7 +62,7 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 						{
 							actionId: 'edit',
 							contentRenderer:
-								TableCelRenderer.DESIGN_LIBRARY_LINK,
+								TableCellRenderer.DESIGN_LIBRARY_LINK,
 							fieldName: 'title',
 							label: Liferay.Language.get('title'),
 							localizeLabel: true,
@@ -75,7 +75,7 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 							truncate: true,
 						},
 						{
-							contentRenderer: TableCelRenderer.RESOURCE_TYPE,
+							contentRenderer: TableCellRenderer.RESOURCE_TYPE,
 							fieldName: 'type',
 							label: Liferay.Language.get('type'),
 							localizeLabel: true,
@@ -83,7 +83,7 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 						},
 						{
 							contentRenderer:
-								TableCelRenderer.FROM_NOW_DATE_TIME,
+								TableCellRenderer.FROM_NOW_DATE_TIME,
 							fieldName: 'dateModified',
 							label: Liferay.Language.get('modified'),
 							localizeLabel: true,

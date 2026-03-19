@@ -10,7 +10,7 @@ import {ActionItem, DesignLibraryItem} from '../types';
 import {DesignLibraryLinkRenderer} from './cell_renderers/DesignLibraryLinkRenderer';
 import {FromNowDateTimeRenderer} from './cell_renderers/FromNowDateTimeRenderer';
 
-enum TableCelRenderer {
+enum TableCellRenderer {
 	DESIGN_LIBRARY_LINK = 'designLibraryLink',
 	FROM_NOW_DATE_TIME = 'fromNowDateTime',
 }
@@ -33,12 +33,12 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 			tableCell: [
 				{
 					component: DesignLibraryLinkRenderer,
-					name: TableCelRenderer.DESIGN_LIBRARY_LINK,
+					name: TableCellRenderer.DESIGN_LIBRARY_LINK,
 					type: 'internal',
 				},
 				{
 					component: FromNowDateTimeRenderer,
-					name: TableCelRenderer.FROM_NOW_DATE_TIME,
+					name: TableCellRenderer.FROM_NOW_DATE_TIME,
 					type: 'internal',
 				},
 			],
@@ -55,7 +55,7 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 						{
 							actionId: 'edit',
 							contentRenderer:
-								TableCelRenderer.DESIGN_LIBRARY_LINK,
+								TableCellRenderer.DESIGN_LIBRARY_LINK,
 							fieldName: 'name',
 							label: Liferay.Language.get('title'),
 							localizeLabel: true,
@@ -69,7 +69,7 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 						},
 						{
 							contentRenderer:
-								TableCelRenderer.FROM_NOW_DATE_TIME,
+								TableCellRenderer.FROM_NOW_DATE_TIME,
 							fieldName: 'dateModified',
 							label: Liferay.Language.get('modified'),
 							localizeLabel: true,

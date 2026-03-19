@@ -300,8 +300,8 @@ public class InfoFormValidationException extends InfoFormException {
 			AssetCategoryException assetCategoryException,
 			AssetVocabulary assetVocabulary) {
 
-			_assetVocabulary = assetVocabulary;
 			_assetCategoryException = assetCategoryException;
+			_assetVocabulary = assetVocabulary;
 		}
 
 		public AssetCategoryException getAssetCategoryException() {

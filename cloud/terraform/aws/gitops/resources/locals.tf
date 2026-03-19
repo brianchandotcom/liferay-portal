@@ -117,5 +117,6 @@ locals {
 	secret_store_provider_default_enabled=var.external_secret_store_provider_hcl == null
 	secret_store_provider_hcl=local.secret_store_provider_default_enabled ? local.secret_store_provider_default : var.external_secret_store_provider_hcl
 	should_create_opensearch_linked_role=length(data.aws_iam_roles.opensearch_linked_role_lookup.arns) == 0
+	should_create_rds_linked_role=length(data.aws_iam_roles.rds_linked_role_lookup.arns) == 0
 	terraform_manager_name="liferay-cloud-native-terraform"
 }

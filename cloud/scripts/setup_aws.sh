@@ -182,6 +182,8 @@ function _set_up_aws_gitops {
 
 	_terraform_init_and_apply "./resources" "${1}"
 
+	_terraform_orphan_service_linked_roles "./resources"
+
 	echo "GitOps infrastructure setup complete."
 
 	_popd
@@ -225,6 +227,16 @@ function _terraform_init_and_apply {
 	terraform init -upgrade
 
 	terraform apply ${@:2}
+
+	_popd
+}
+
+function _terraform_orphan_service_linked_roles {
+	_pushd "${1}"
+
+	terraform state rm aws_iam_service_linked_role.opensearch_linked_role >/dev/null 2>&1 || true
+
+	terraform state rm aws_iam_service_linked_role.rds_linked_role >/dev/null 2>&1 || true
 
 	_popd
 }

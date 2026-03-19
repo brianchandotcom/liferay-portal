@@ -86,6 +86,10 @@ resource "aws_iam_service_linked_role" "opensearch_linked_role" {
 	aws_service_name="opensearchservice.amazonaws.com"
 	count=local.should_create_opensearch_linked_role ? 1 : 0
 }
+resource "aws_iam_service_linked_role" "rds_linked_role" {
+	aws_service_name="rds.amazonaws.com"
+	count=local.should_create_rds_linked_role ? 1 : 0
+}
 resource "kubernetes_manifest" "function_auto_ready" {
 	manifest={
 		apiVersion="pkg.crossplane.io/v1beta1"

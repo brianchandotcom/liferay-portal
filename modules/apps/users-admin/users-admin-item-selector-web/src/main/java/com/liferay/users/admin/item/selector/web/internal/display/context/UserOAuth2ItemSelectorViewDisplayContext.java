@@ -77,8 +77,7 @@ public class UserOAuth2ItemSelectorViewDisplayContext {
 			).build();
 
 		if (group.isLimitedToParentSiteMembers()) {
-			userParams.put("inherit", Boolean.TRUE);
-			userParams.put("usersGroups", group.getParentGroupId());
+			userParams.put("inheritUsersGroups", group.getParentGroupId());
 		}
 
 		List<User> users = UserLocalServiceUtil.search(

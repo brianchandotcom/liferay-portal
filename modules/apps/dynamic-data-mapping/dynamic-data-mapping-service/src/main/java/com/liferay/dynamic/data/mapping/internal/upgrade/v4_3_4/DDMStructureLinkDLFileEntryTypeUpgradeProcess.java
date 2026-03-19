@@ -77,8 +77,6 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 					5, resultSet1.getString("companyId"));
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
-					long structureId = resultSet2.getLong("structureId");
-
 					if (resultSet2.next()) {
 						ActionableDynamicQuery actionableDynamicQuery =
 							_dlFileEntryTypeLocalService.
@@ -88,6 +86,9 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 							dynamicQuery -> dynamicQuery.add(
 								RestrictionsFactoryUtil.eq(
 									"fileEntryTypeId", fileEntryTypeId)));
+
+						long structureId = resultSet2.getLong("structureId");
+
 						actionableDynamicQuery.setPerformActionMethod(
 							(DLFileEntryType dlFileEntryType) -> {
 								dlFileEntryType.setDataDefinitionId(

@@ -92,6 +92,13 @@ export function fetchEmailAddressDomains({groupId}) {
 	});
 }
 
+export function fetchFeatureUsages({groupId}) {
+	return sendRequest({
+		method: 'GET',
+		path: `main/project/${groupId}/feature-usages`
+	});
+}
+
 export function fetchProjectViaCorpProjectUuid({corpProjectUuid}) {
 	return sendRequest({
 		method: 'GET',

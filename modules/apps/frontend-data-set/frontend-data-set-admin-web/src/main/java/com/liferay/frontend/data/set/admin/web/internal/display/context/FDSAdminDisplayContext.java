@@ -19,6 +19,7 @@ import com.liferay.object.definition.security.permission.resource.ObjectDefiniti
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -256,16 +257,7 @@ public class FDSAdminDisplayContext {
 	}
 
 	public String getSystemDataSetsURL() {
-		ResourceURL resourceURL =
-			(ResourceURL)PortalUtil.getControlPanelPortletURL(
-				_renderRequest, _themeDisplay.getScopeGroup(),
-				FDSAdminPortletKeys.FDS_ADMIN, 0, 0,
-				RenderRequest.RESOURCE_PHASE);
-
-		resourceURL.setResourceID(
-			"/frontend_data_set_admin/get_system_data_sets");
-
-		return resourceURL.toString();
+		return _getDataProviderURL("systemDataSets");
 	}
 
 	public JSONArray getSystemFDSEntryJSONArray() throws Exception {
@@ -304,16 +296,7 @@ public class FDSAdminDisplayContext {
 	}
 
 	public String getUserViewsDataSetsURL() {
-		ResourceURL resourceURL =
-			(ResourceURL)PortalUtil.getControlPanelPortletURL(
-				_renderRequest, _themeDisplay.getScopeGroup(),
-				FDSAdminPortletKeys.FDS_ADMIN, 0, 0,
-				RenderRequest.RESOURCE_PHASE);
-
-		resourceURL.setResourceID(
-			"/frontend_data_set_admin/get_user_views_data_sets");
-
-		return resourceURL.toString();
+		return _getDataProviderURL("userViews");
 	}
 
 	public boolean hasAddDataSetObjectEntryPermission() {
@@ -324,6 +307,12 @@ public class FDSAdminDisplayContext {
 		return portletResourcePermission.contains(
 			_themeDisplay.getPermissionChecker(), 0,
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
+	}
+
+	private String _getDataProviderURL(String fdsDataProviderKey) {
+		return StringBundler.concat(
+			"/o/frontend-data-set-taglib/app/data-set/", fdsDataProviderKey,
+			"/", fdsDataProviderKey);
 	}
 
 	private final CETManager _cetManager;

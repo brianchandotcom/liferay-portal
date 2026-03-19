@@ -13,7 +13,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -120,7 +122,7 @@ public class ViewVocabulariesDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			JSONUtil.putAll(
+			_putAll(
 				ExportImportUtil.getActionItemJSONObject(
 					_httpServletRequest, "export-import-vocabularies",
 					AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
@@ -164,6 +166,18 @@ public class ViewVocabulariesDisplayContext {
 		}
 
 		return url;
+	}
+
+	private JSONArray _putAll(JSONObject... jsonObjects) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (JSONObject jsonObject : jsonObjects) {
+			if (jsonObject != null) {
+				jsonArray.put(jsonObject);
+			}
+		}
+
+		return jsonArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

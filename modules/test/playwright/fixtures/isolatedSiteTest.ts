@@ -23,10 +23,7 @@ const isolatedSiteTest = test.extend<{
 			let site: Site;
 
 			try {
-
-				// Create site and go Site Settings
-
-				site = await apiHelpers.headlessSite.createSite({
+				site = await apiHelpers.headlessAdminSite.postSite({
 					name: getRandomString(),
 				});
 
@@ -38,11 +35,10 @@ const isolatedSiteTest = test.extend<{
 				);
 			}
 			finally {
-
-				// Delete the site
-
-				if (site?.id) {
-					await apiHelpers.headlessSite.deleteSite(site.id);
+				if (site?.externalReferenceCode) {
+					await apiHelpers.headlessAdminSite.deleteSite(
+						site.externalReferenceCode
+					);
 				}
 			}
 		},

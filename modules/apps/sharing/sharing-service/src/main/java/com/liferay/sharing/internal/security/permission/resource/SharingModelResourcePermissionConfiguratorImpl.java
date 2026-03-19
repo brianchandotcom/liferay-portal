@@ -5,9 +5,11 @@
 
 package com.liferay.sharing.internal.security.permission.resource;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
@@ -142,8 +144,10 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				String actionId)
 			throws PortalException {
 
-			if ((actionId != null) && actionId.startsWith("DOWNLOAD_")) {
-				actionId = "DOWNLOAD";
+			if ((actionId != null) &&
+				actionId.startsWith(_DOWNLOAD_ACTION_ID_PREFIX)) {
+
+				actionId = ActionKeys.DOWNLOAD;
 			}
 
 			SharingEntryAction sharingEntryAction = _sharingEntryActions.get(
@@ -181,6 +185,9 @@ public class SharingModelResourcePermissionConfiguratorImpl
 		private SharingModelResourcePermissionLogic(long classNameId) {
 			_classNameId = classNameId;
 		}
+
+		private static final String _DOWNLOAD_ACTION_ID_PREFIX =
+			ActionKeys.DOWNLOAD + StringPool.UNDERLINE;
 
 		private final long _classNameId;
 

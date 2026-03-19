@@ -161,6 +161,8 @@ public abstract class BaseSectionDisplayContextTestCase
 			GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.CMS_BROKEN_LINKS_CHECKER_ENABLED))
 		).put(
+			"candidateAssetLibraries", _getDepotEntriesJSONArray()
+		).put(
 			"cmsGroupId",
 			() -> {
 				try {

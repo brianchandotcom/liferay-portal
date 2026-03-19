@@ -285,6 +285,106 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			_getThemeDisplay(RandomTestUtil.randomString(), "UTC"));
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testObjectEntryInfoItemFieldValuesProviderWithAttachmentField()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			new AttachmentObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).localized(
+				true
+			).name(
+				"localizedAttachmentFieldName"
+			).objectFieldSettings(
+				Arrays.asList(
+					_createObjectFieldSetting("acceptedFileExtensions", "png"),
+					_createObjectFieldSetting(
+						"fileSource", "documentsAndMedia"),
+					_createObjectFieldSetting("maximumFileSize", "100"))
+			).build());
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		try {
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.png",
+				ContentTypes.IMAGE_PNG, RandomTestUtil.randomBytes(), null,
+				null, null,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(),
+				"localizedAttachmentFieldName");
+
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				_group.getGroupId(), TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					objectField.getI18nObjectFieldName(),
+					HashMapBuilder.<String, Object>put(
+						"en_US", fileEntry.getFileEntryId()
+					).put(
+						"es_ES", () -> null
+					).build()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest();
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY,
+				_getThemeDisplay(StringPool.BLANK, "UTC"));
+
+			serviceContext.setRequest(mockHttpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			try {
+				InfoItemFieldValuesProvider<ObjectEntry>
+					infoItemFieldValuesProvider =
+						_infoItemServiceRegistry.getFirstInfoItemService(
+							InfoItemFieldValuesProvider.class,
+							objectDefinition.getClassName());
+
+				InfoItemFieldValues infoItemFieldValues =
+					infoItemFieldValuesProvider.getInfoItemFieldValues(
+						objectEntry);
+
+				Assert.assertNotNull(infoItemFieldValues);
+
+				InfoFieldValue<Object> downloadURLInfoFieldValue =
+					infoItemFieldValues.getInfoFieldValue(
+						objectField.getObjectFieldId() + "#downloadURL");
+
+				Assert.assertNotNull(downloadURLInfoFieldValue);
+
+				Assert.assertNotNull(
+					downloadURLInfoFieldValue.getValue(LocaleUtil.US));
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
+	}
+
 	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
 		throws Exception {
 

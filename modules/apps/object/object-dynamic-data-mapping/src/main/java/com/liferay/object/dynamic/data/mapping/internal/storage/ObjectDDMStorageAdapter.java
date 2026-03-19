@@ -446,15 +446,16 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-					String fileSource = ObjectFieldSettingUtil.getValue(
-						ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-						objectField.getObjectFieldSettings());
+					long fileEntryId = GetterUtil.getLong(valueString);
 
-					if (!Objects.equals(
-							fileSource,
+					if ((fileEntryId > 0) &&
+						!Objects.equals(
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+								objectField.getObjectFieldSettings()),
 							ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
-						fileEntryIds.add(GetterUtil.getLong(valueString));
+						fileEntryIds.add(fileEntryId);
 					}
 
 					properties.put(objectField.getName(), valueString);

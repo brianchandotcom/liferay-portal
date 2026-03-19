@@ -19,14 +19,25 @@ function main {
 
 	pushd $(git rev-parse --show-toplevel) > /dev/null
 
-	local branch=$(parse_git_current_branch)
+	local branch
+
+	branch=$(parse_git_current_branch)
+
 	local repo_dir=${PWD}
-	local repo_name=$(basename ${PWD})
+
+	local repo_name
+
+	repo_name=$(basename ${PWD})
 
 	if [ ${repo_name} == "liferay-portal" ]
 	then
-		local hash=$(git rev-parse HEAD)
-		local release_info_version_trivial=$(get_property "release.info.version.trivial")
+		local hash
+
+		hash=$(git rev-parse HEAD)
+
+		local release_info_version_trivial
+
+		release_info_version_trivial=$(get_property "release.info.version.trivial")
 
 		push_tag 7.4.3.${release_info_version_trivial}-ga${release_info_version_trivial} ${hash}
 

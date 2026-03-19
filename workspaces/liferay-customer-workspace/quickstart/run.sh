@@ -22,7 +22,11 @@ function download_hotfix {
 		"https://releases-cdn.liferay.com/dxp/hotfix/2025.q3.7/liferay-dxp-2025.q3.7-hotfix-16.zip" \
 		"https://releases-cdn.liferay.com/tools/patching-tool/patching-tool-4.0.9.zip"
 	do
-		local file_name="./liferay/patching/$(basename "${file_url}")"
+		local hotfix_file_name
+
+		hotfix_file_name=$(basename "${file_url}")
+
+		local file_name="./liferay/patching/${hotfix_file_name}"
 
 		if [ ! -f "${file_name}" ]
 		then
@@ -54,7 +58,9 @@ function download_license {
 }
 
 function get_container_id {
-	local container_id=$(docker compose ps --quiet "${1}")
+	local container_id
+
+	container_id=$(docker compose ps --quiet "${1}")
 
 	if [[ -n "${container_id}" ]]
 	then
@@ -81,7 +87,9 @@ function main {
 
 	docker compose up --detach database liferay
 
-	local container_id=$(get_container_id "liferay")
+	local container_id
+
+	container_id=$(get_container_id "liferay")
 
 	check_health
 

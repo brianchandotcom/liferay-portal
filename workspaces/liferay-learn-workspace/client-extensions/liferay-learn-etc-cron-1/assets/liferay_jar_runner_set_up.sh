@@ -43,7 +43,9 @@ function clone_repository {
 
 	git -C ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR} log
 
-	local git_log=$(git -C ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR} log -1 --pretty="%B %H %aN")
+	local git_log
+
+	git_log=$(git -C ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR} log -1 --pretty="%B %H %aN")
 
 	send_slack_message "Cloned *${github_url}*: *${git_log//$\"\n\"/}*"
 }
@@ -135,7 +137,11 @@ function send_slack_message {
 
 	local log_url="https://console.${LCP_INFRASTRUCTURE_DOMAIN}/projects/${LCP_PROJECT_ID}/logs?instanceId=${HOSTNAME}&logServiceId=${LCP_SERVICE_ID}"
 
-	local text="$(date) *${LCP_PROJECT_ID}*->*${LCP_SERVICE_ID}* <${log_url}|${HOSTNAME}> \n>${slack_message}"
+	local current_date
+
+	current_date=$(date)
+
+	local text="${current_date} *${LCP_PROJECT_ID}*->*${LCP_SERVICE_ID}* <${log_url}|${HOSTNAME}> \n>${slack_message}"
 
 	eval curl \
 		-X POST \

@@ -42,7 +42,9 @@ function refresh_liferay_sample_workspace {
 	# Sample Workspace
 	#
 
-	local temp_dir=$(mktemp -d)
+	local temp_dir
+
+	temp_dir=$(mktemp -d)
 
 	pushd ${temp_dir}
 

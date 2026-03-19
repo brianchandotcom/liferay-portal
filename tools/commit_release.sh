@@ -7,13 +7,21 @@ function get_property {
 function main {
 	pushd $(git rev-parse --show-toplevel) > /dev/null
 
-	local branch=$(parse_git_current_branch)
+	local branch
+
+	branch=$(parse_git_current_branch)
+
 	local repo_dir=${PWD}
-	local repo_name=$(basename ${PWD})
+
+	local repo_name
+
+	repo_name=$(basename ${PWD})
 
 	if [ ${repo_name} == "liferay-portal" ]
 	then
-		local release_info_version_trivial=$(get_property "release.info.version.trivial")
+		local release_info_version_trivial
+
+		release_info_version_trivial=$(get_property "release.info.version.trivial")
 
 		git clean -df && ant setup-profile-portal && ant setup-sdk && cd modules && ant build-app-all -Dartifact.exclude=true -Dcheck.stale.artifacts.skip=true -Ddownload.app.sources=false -Dgit.commit.app.ticket="7.4.3.${release_info_version_trivial} GA${release_info_version_trivial}"
 
@@ -41,7 +49,9 @@ function main {
 		cd ../liferay-portal
 	elif [ ${repo_name} == "liferay-portal-7.3.x" ]
 	then
-		local release_info_version_display_name=$(get_property "release.info.version.display.name\[7.3.x-private\]")
+		local release_info_version_display_name
+
+		release_info_version_display_name=$(get_property "release.info.version.display.name\[7.3.x-private\]")
 
 		git clean -df && ant setup-profile-dxp && ant setup-sdk && cd modules && ant build-app-all -Dartifact.exclude=true -Dcheck.stale.artifacts.skip=true -Ddownload.app.sources=false -Dgit.commit.app.ticket="${release_info_version_display_name}"
 

@@ -253,12 +253,14 @@ const ActivationKeyFormDXP = () => {
 					</div>
 				</ClayForm.Group>
 
-				<p className="h4">{i18n.translate('purpose')}</p>
+				<p className="h4">
+					{i18n.translate('purpose')} <RequiredMask />{' '}
+				</p>
 
 				<ClayDropDown
 					active={active}
 					alignmentPosition={Align.BottomLeft}
-					className="app-type-dropdown provide-app-build-page-cloud-compatible-container w-100"
+					menuElementAttrs={{className: 'dropdown-menu-purpose'}}
 					onActiveChange={setActive}
 					trigger={
 						<ClayButton

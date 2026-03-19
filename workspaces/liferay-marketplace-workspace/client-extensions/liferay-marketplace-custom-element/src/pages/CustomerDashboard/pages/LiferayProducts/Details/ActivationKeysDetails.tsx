@@ -24,7 +24,7 @@ import Licenses from '../../Apps/App/Licenses/Licenses';
 import ActivationKeyAlert from '../Licenses/LicenseAlert';
 import LicenseTitleHeader from '../Licenses/LicenseTitleHeader';
 
-import './Licenses.scss';
+import '../Licenses/Licenses.scss';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
@@ -263,9 +263,11 @@ export default function ActivationKeys() {
 					symbol="check-circle"
 					title="Your free activation key has been generated!"
 				>
-					Thanks for choosing Liferay DXP! Download your activation
-					key below and, if needed, the software bundle to get
-					started.
+					Your license is ready, but our release bundle is playing
+					hard to get. We are making a quick behind-the-scenes update
+					to ensure they play nicely together so your license takes
+					effect immediately. Hang tight—your download will be
+					available shortly!
 				</ActivationKeyAlert>
 			)}
 

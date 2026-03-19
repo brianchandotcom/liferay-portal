@@ -1,0 +1,11 @@
+.dropdown-menu-purpose {
+	border-radius: 10px !important;
+	max-width: none !important;
+	padding: 8px !important;
+	transition: all 0.3s ease-in-out !important;
+	width: 525px;
+
+	.dropdown-item:hover {
+		color: #0053f0;
+	}
+}

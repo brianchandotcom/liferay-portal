@@ -140,6 +140,11 @@ public interface ExportImportHelper {
 			StagedModelType stagedModelType)
 		throws PortalException;
 
+	public long getModelDeletionCount(
+			PortletDataContext portletDataContext,
+			StagedModelType stagedModelType, String type)
+		throws PortalException;
+
 	public String getPortletExportFileName(Portlet portlet);
 
 	public ZipWriter getPortletZipWriter(String portletId);

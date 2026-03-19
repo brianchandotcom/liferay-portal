@@ -159,6 +159,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
 		for (Registration registration : activeRegistrations) {
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 				exportImportDescriptor =
@@ -193,15 +196,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						"externalReferenceCode", externalReferenceCode)
 				).toString());
 
-			if (isMissingPortletSupported()) {
-				ManifestSummary manifestSummary =
-					portletDataContext.getManifestSummary();
-
-				manifestSummary.addModelDeletionCount(
-					exportImportDescriptor.getKey(),
-					externalReferenceCodes.size());
-			}
+			manifestSummary.addModelDeletionCount(
+				exportImportDescriptor.getKey(), externalReferenceCodes.size());
 		}
+
+		manifestSummary.addModelDeletionCount(className, systemEvents.size());
 	}
 
 	@Override
@@ -649,6 +648,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 			ManifestSummary manifestSummary =
 				portletDataContext.getManifestSummary();
+			Set<String> sharedClassNames = _getSharedClassNames();
 
 			for (Registration registration :
 					_getActiveRegistrations(portletDataContext)) {
@@ -669,18 +669,33 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				manifestSummary.addModelAdditionCount(
 					exportImportDescriptor.getKey(),
 					batchEngineExportTask.getTotalItemsCount());
+
+				String type = null;
+
+				if (sharedClassNames.contains(
+						exportImportDescriptor.getModelClassName())) {
+
+					type = exportImportDescriptor.getKey();
+				}
+
+				manifestSummary.addModelDeletionCount(
+					exportImportDescriptor.getKey(),
+					_exportImportHelper.getModelDeletionCount(
+						portletDataContext,
+						new StagedModelType(
+							exportImportDescriptor.getModelClassName(),
+							StagedModelType.REFERRER_CLASS_NAME_ALL),
+						type));
 			}
 
 			for (String modelClassName : getClassNames()) {
-				long modelDeletionCount =
+				manifestSummary.addModelDeletionCount(
+					modelClassName,
 					_exportImportHelper.getModelDeletionCount(
 						portletDataContext,
 						new StagedModelType(
 							modelClassName,
-							StagedModelType.REFERRER_CLASS_NAME_ALL));
-
-				manifestSummary.addModelDeletionCount(
-					modelClassName, modelDeletionCount);
+							StagedModelType.REFERRER_CLASS_NAME_ALL)));
 			}
 		}
 		finally {

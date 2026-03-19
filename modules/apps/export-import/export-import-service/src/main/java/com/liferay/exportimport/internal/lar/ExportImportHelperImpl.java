@@ -612,12 +612,31 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			StagedModelType stagedModelType)
 		throws PortalException {
 
+		return getModelDeletionCount(portletDataContext, stagedModelType, null);
+	}
+
+	@Override
+	public long getModelDeletionCount(
+			PortletDataContext portletDataContext,
+			StagedModelType stagedModelType, String type)
+		throws PortalException {
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_systemEventLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> doAddCriteria(
-				portletDataContext, stagedModelType, dynamicQuery));
+			dynamicQuery -> {
+				doAddCriteria(
+					portletDataContext, stagedModelType, dynamicQuery);
+
+				if (Validator.isNotNull(type)) {
+					Property extraDataProperty = PropertyFactoryUtil.forName(
+						"extraData");
+
+					dynamicQuery.add(
+						extraDataProperty.like("%\"type\":\"" + type + "\"%"));
+				}
+			});
 		actionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
 		return actionableDynamicQuery.performCount();

@@ -89,11 +89,8 @@ public class UserModelPreFilterContributor
 		BooleanFilter contextFilter, String key, Object value) {
 
 		if (key.equals("inheritUsersGroups") || key.equals("usersGroups")) {
-			String fieldName = "groupIds";
-
-			if (key.equals("inheritUsersGroups")) {
-				fieldName = "scopeGroupId";
-			}
+			String fieldName =
+				key.equals("inheritUsersGroups") ? "scopeGroupId" : "groupIds";
 
 			if (value instanceof Long[]) {
 				Long[] values = (Long[])value;

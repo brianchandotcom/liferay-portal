@@ -110,7 +110,7 @@ public class AttachmentManagerTest {
 	@Test
 	public void testGetOrAddFileEntry() throws Exception {
 		FileEntry tempFileEntry = _addTempFileEntry(
-			DLTestUtil.randomTextFileContent(), ".txt",
+			DLTestUtil.randomTextFileBytes(), ".txt",
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			_objectDefinition);
 
@@ -192,7 +192,7 @@ public class AttachmentManagerTest {
 					).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				DLTestUtil.randomTextFileContent(), ".txt",
+				DLTestUtil.randomTextFileBytes(), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 				_objectDefinition);
 
@@ -221,7 +221,7 @@ public class AttachmentManagerTest {
 						).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				DLTestUtil.randomTextFileContent(), ".txt",
+				DLTestUtil.randomTextFileBytes(), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 				_objectDefinition);
 
@@ -249,7 +249,7 @@ public class AttachmentManagerTest {
 					).build())) {
 
 			tempFileEntry = _addTempFileEntry(
-				DLTestUtil.randomTextFileContent(1000), ".txt",
+				DLTestUtil.randomTextFileBytes(1000), ".txt",
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 				_objectDefinition);
 

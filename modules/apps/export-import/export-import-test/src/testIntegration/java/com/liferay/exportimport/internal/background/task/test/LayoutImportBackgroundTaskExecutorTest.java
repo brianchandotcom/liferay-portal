@@ -461,14 +461,14 @@ public class LayoutImportBackgroundTaskExecutorTest {
 		"x" + RandomTestUtil.randomString();
 
 	private static final byte[] _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
-		DLTestUtil.randomTextFileContent();
+		DLTestUtil.randomTextFileBytes();
 
 	private static final byte[]
 		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
-			DLTestUtil.randomTextFileContent();
+			DLTestUtil.randomTextFileBytes();
 
 	private static final byte[] _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
-		DLTestUtil.randomTextFileContent();
+		DLTestUtil.randomTextFileBytes();
 
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

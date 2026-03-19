@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
@@ -104,6 +104,82 @@ test(
 			await cancelButton.click();
 
 			await expect(page.getByText('Select Video')).not.toBeAttached();
+		});
+	}
+);
+
+test(
+	'Editor can be disabled/enabled',
+	{tag: '@LPD-11235'},
+	async ({classicPage, page}) => {
+		let imageButton: Locator;
+		let toggleDisableEditorButton: Locator;
+		let videoButton: Locator;
+
+		await test.step('Initial data is set', async () => {
+			await expect(
+				classicPage.editable.getByText('Lorem ipsum dolor sit amet')
+			).toBeVisible();
+		});
+
+		await test.step('Toolbar contains custom toobar configuration, including added custom and official plugins', async () => {
+			const expectedButtons = [
+				'Undo',
+				'Redo',
+				'Bold',
+				'Italic',
+				'Bookmark',
+				'Timestamp',
+				'Image',
+				'Video',
+			];
+
+			const availableButtons =
+				await classicPage.toolbar.buttonLabels.allInnerTexts();
+
+			expect(availableButtons).toEqual(expectedButtons);
+		});
+
+		await test.step('"Toggle editor ReadOnly mode" button is present', async () => {
+			toggleDisableEditorButton = page.getByRole('button', {
+				name: 'Toggle editor ReadOnly mode',
+			});
+
+			await expect(toggleDisableEditorButton).toBeVisible();
+		});
+
+		await test.step('Editor toolbar buttons are enabled', async () => {
+			imageButton = classicPage.toolbar.container.getByRole('button', {
+				name: 'Image',
+			});
+
+			await expect(imageButton).toBeEnabled();
+
+			videoButton = classicPage.toolbar.container.getByRole('button', {
+				name: 'Video',
+			});
+
+			await expect(videoButton).toBeEnabled();
+		});
+
+		await test.step('Click in the "Toggle editor ReadOnly mode" disables the editor: toolbar and content', async () => {
+			await toggleDisableEditorButton.click();
+
+			await expect(imageButton).toBeDisabled();
+			await expect(videoButton).toBeDisabled();
+
+			await expect(page.locator('.lfr-ck-disabled')).toBeDefined();
+			await expect(page.locator('.lfr-ck-disabled')).toBeInViewport();
+		});
+
+		await test.step('Click in the "Toggle editor ReadOnly mode" enables the editor: toolbar and content', async () => {
+			await toggleDisableEditorButton.click();
+
+			await expect(imageButton).toBeEnabled();
+			await expect(videoButton).toBeEnabled();
+
+			await expect(page.locator('.lfr-ck-disabled')).not.toBeDefined();
+			await expect(page.locator('.lfr-ck-disabled')).not.toBeInViewport();
 		});
 	}
 );

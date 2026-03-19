@@ -40,6 +40,24 @@ const getHrefLink = (item: any, props: Card) => {
 	return replaceTokens(selectedAction.href, item);
 };
 
+const getYouTubeVideoId = (videoURL: string) => {
+	try {
+		const url = new URL(videoURL);
+
+		if (['www.youtube.com', 'youtube.com'].includes(url.hostname)) {
+			return url.searchParams.get('v');
+		}
+		else if (['www.youtu.be', 'youtu.be'].includes(url.hostname)) {
+			return url.pathname.substring(1);
+		}
+	}
+	catch (_error) {
+		return null;
+	}
+
+	return null;
+};
+
 const getThumbnailProps = (item: any) => {
 	if (item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
 		return {symbol: 'folder'};
@@ -54,6 +72,16 @@ const getThumbnailProps = (item: any) => {
 		else {
 			return {symbol: 'documents-and-media'};
 		}
+	}
+
+	if (item.embedded.videoURL) {
+		const videoId = getYouTubeVideoId(item.embedded.videoURL);
+
+		if (videoId) {
+			return {imgProps: `https://img.youtube.com/vi/${videoId}/0.jpg`};
+		}
+
+		return {symbol: 'video'};
 	}
 
 	return {symbol: 'web-content'};

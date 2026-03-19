@@ -8,7 +8,9 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -38,7 +40,7 @@ public class ViewTagsDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			JSONUtil.putAll(
+			_putAll(
 				ExportImportUtil.getActionItemJSONObject(
 					_httpServletRequest, "export-import-vocabularies",
 					AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
@@ -75,6 +77,18 @@ public class ViewTagsDisplayContext {
 					"/categorization/view-vocabularies"),
 				_themeDisplay)
 		).build();
+	}
+
+	private JSONArray _putAll(JSONObject... jsonObjects) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (JSONObject jsonObject : jsonObjects) {
+			if (jsonObject != null) {
+				jsonArray.put(jsonObject);
+			}
+		}
+
+		return jsonArray;
 	}
 
 	private final GroupService _groupService;

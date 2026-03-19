@@ -211,14 +211,12 @@ public class DBInspector {
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select count(*) from " + tableName);
+				"select count(*) as count from " + tableName);
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				int count = resultSet.getInt(1);
-
-				if (count > 0) {
+				if (resultSet.getInt("count") > 0) {
 					return true;
 				}
 			}

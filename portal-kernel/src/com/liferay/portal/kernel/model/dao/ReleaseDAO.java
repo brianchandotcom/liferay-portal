@@ -90,7 +90,7 @@ public class ReleaseDAO {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getString(1);
+					return resultSet.getString("schemaVersion");
 				}
 
 				return null;

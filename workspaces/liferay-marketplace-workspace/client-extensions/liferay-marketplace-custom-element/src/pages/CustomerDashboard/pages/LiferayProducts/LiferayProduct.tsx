@@ -8,8 +8,8 @@ import {useOutletContext} from 'react-router-dom';
 
 import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
 import {OrderTypes} from '../../../../enums/Order';
-import ActivationKeysDetails from './Details/ActivationKeysDetails';
 import AIHubDetails from './Details/AIHubDetails';
+import ActivationKeysDetails from './Details/ActivationKeysDetails';
 import AnalyticsDetails from './Details/AnalyticsDetails';
 
 const LiferayProduct = () => {

@@ -33,11 +33,11 @@ public class WorkspaceBuildRelevantRule extends RelevantRule {
 	public List<TestScriptCommand> getTestScriptCommands() {
 		List<TestScriptCommand> testScriptCommands = new ArrayList<>();
 
-		Set<String> modifiedWorkspaceDirs = new HashSet<>();
+		Set<String> modifiedDirNames = new HashSet<>();
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		String baseDirPath = JenkinsResultsParserUtil.getCanonicalPath(
+		String baseFilePath = JenkinsResultsParserUtil.getCanonicalPath(
 			gitWorkingDirectory.getWorkingDirectory());
 
 		for (File modifiedFile :
@@ -46,21 +46,21 @@ public class WorkspaceBuildRelevantRule extends RelevantRule {
 			String modifiedFilePath = JenkinsResultsParserUtil.getCanonicalPath(
 				modifiedFile);
 
-			if (modifiedFilePath.startsWith(baseDirPath + "/workspaces/")) {
-				String relativePath = modifiedFilePath.substring(
-					baseDirPath.length() + 12);
+			if (modifiedFilePath.startsWith(baseFilePath + "/workspaces/")) {
+				String relativeFilePath = modifiedFilePath.substring(
+					baseFilePath.length() + 12);
 
-				int index = relativePath.indexOf('/');
+				int index = relativeFilePath.indexOf('/');
 
 				if (index != -1) {
-					String workspaceDirName = relativePath.substring(0, index);
+					String workspaceDirName = relativeFilePath.substring(0, index);
 
-					modifiedWorkspaceDirs.add(workspaceDirName);
+					modifiedDirNames.add(workspaceDirName);
 				}
 			}
 		}
 
-		for (String workspaceDirName : modifiedWorkspaceDirs) {
+		for (String workspaceDirName : modifiedDirNames) {
 			testScriptCommands.add(
 				new TestScriptCommand(
 					"./gradlew build", "workspaces/" + workspaceDirName));

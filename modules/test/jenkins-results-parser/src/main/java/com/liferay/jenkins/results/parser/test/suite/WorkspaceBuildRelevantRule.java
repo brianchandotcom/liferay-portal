@@ -6,16 +6,13 @@
 package com.liferay.jenkins.results.parser.test.suite;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Kenji Heigel
@@ -33,34 +30,14 @@ public class WorkspaceBuildRelevantRule extends RelevantRule {
 	public List<TestScriptCommand> getTestScriptCommands() {
 		List<TestScriptCommand> testScriptCommands = new ArrayList<>();
 
-		Set<String> modifiedDirNames = new HashSet<>();
-
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		String baseFilePath = JenkinsResultsParserUtil.getCanonicalPath(
-			gitWorkingDirectory.getWorkingDirectory());
+		List<File> modifiedDirsList = getModifiedDirsList(
+			new File(gitWorkingDirectory.getWorkingDirectory(), "workspaces"));
 
-		for (File modifiedFile :
-				gitWorkingDirectory.getModifiedFilesList(true)) {
+		for (File modifiedDir : modifiedDirsList) {
+			String workspaceDirName = modifiedDir.getName();
 
-			String modifiedFilePath = JenkinsResultsParserUtil.getCanonicalPath(
-				modifiedFile);
-
-			if (modifiedFilePath.startsWith(baseFilePath + "/workspaces/")) {
-				String relativeFilePath = modifiedFilePath.substring(
-					baseFilePath.length() + 12);
-
-				int index = relativeFilePath.indexOf('/');
-
-				if (index != -1) {
-					String workspaceDirName = relativeFilePath.substring(0, index);
-
-					modifiedDirNames.add(workspaceDirName);
-				}
-			}
-		}
-
-		for (String workspaceDirName : modifiedDirNames) {
 			testScriptCommands.add(
 				new TestScriptCommand(
 					"./gradlew build", "workspaces/" + workspaceDirName));

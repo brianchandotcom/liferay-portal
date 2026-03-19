@@ -448,10 +448,12 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 					Map<Locale, Object> values = infoLocalizedValue.getValues();
 
 					for (Map.Entry<Locale, Object> entry : values.entrySet()) {
-						Long fileEntryId = (Long)entry.getValue();
+						FileEntry fileEntry = dlAppLocalService.fetchFileEntry(
+							GetterUtil.getLong(entry.getValue()));
 
-						FileEntry fileEntry = dlAppLocalService.getFileEntry(
-							GetterUtil.getLong(fileEntryId));
+						if (fileEntry == null) {
+							continue;
+						}
 
 						downloadURLInfoFieldValueBuilder.value(
 							entry.getKey(),

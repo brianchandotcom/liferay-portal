@@ -82,14 +82,6 @@ resource "aws_iam_role_policy_attachment" "provider_aws_s3_attachment" {
 	policy_arn=aws_iam_policy.provider_aws_s3_policy.arn
 	role=aws_iam_role.provider_aws_s3_role.name
 }
-resource "aws_iam_service_linked_role" "opensearch_linked_role" {
-	aws_service_name="opensearchservice.amazonaws.com"
-	count=local.should_create_opensearch_linked_role ? 1 : 0
-}
-resource "aws_iam_service_linked_role" "rds_linked_role" {
-	aws_service_name="rds.amazonaws.com"
-	count=local.should_create_rds_linked_role ? 1 : 0
-}
 resource "kubernetes_manifest" "function_auto_ready" {
 	manifest={
 		apiVersion="pkg.crossplane.io/v1beta1"

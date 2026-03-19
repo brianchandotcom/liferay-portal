@@ -26,6 +26,8 @@ function main {
 
 	terraform_args="$(_get_terraform_apply_args "${1}")"
 
+	_set_up_aws_service_linked_roles
+
 	_set_up_aws_eks "${terraform_args}"
 
 	_set_up_aws_grafana "${terraform_args}"
@@ -182,8 +184,6 @@ function _set_up_aws_gitops {
 
 	_terraform_init_and_apply "./resources" "${1}"
 
-	_terraform_orphan_service_linked_roles "./resources"
-
 	echo "GitOps infrastructure setup complete."
 
 	_popd
@@ -221,22 +221,36 @@ function _set_up_aws_grafana {
 	_popd
 }
 
+function _set_up_aws_service_linked_roles {
+	local service_linked_roles=(
+		"rds.amazonaws.com:AWSServiceRoleForRDS"
+		"opensearchservice.amazonaws.com:AWSServiceRoleForAmazonOpenSearchService"
+	)
+
+	echo "Ensuring required AWS Service-Linked Roles exist."
+
+	for slr in "${service_linked_roles[@]}"
+	do
+		local role_name="${slr##*:}"
+		local service_name="${slr%%:*}"
+
+		if ! aws iam get-role --role-name "${role_name}" >/dev/null 2>&1
+		then
+			echo "Setting up AWS Service-Linked Role for ${service_name}."
+
+			aws iam create-service-linked-role --aws-service-name "${service_name}" --no-cli-pager
+		else
+			echo "AWS Service-Linked Role for ${service_name} already exists."
+		fi
+	done
+}
+
 function _terraform_init_and_apply {
 	_pushd "${1}"
 
 	terraform init -upgrade
 
 	terraform apply ${@:2}
-
-	_popd
-}
-
-function _terraform_orphan_service_linked_roles {
-	_pushd "${1}"
-
-	terraform state rm aws_iam_service_linked_role.opensearch_linked_role >/dev/null 2>&1 || true
-
-	terraform state rm aws_iam_service_linked_role.rds_linked_role >/dev/null 2>&1 || true
 
 	_popd
 }

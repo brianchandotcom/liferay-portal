@@ -7,6 +7,8 @@ package com.liferay.exportimport.internal.lar;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
+import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
+import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandlerRegistryUtil;
 import com.liferay.exportimport.internal.data.handler.MissingPortlet;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
@@ -1137,20 +1139,21 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
 
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if ((portletDataContext.getScopeGroupId() !=
-				portletDataContext.getCompanyGroupId()) &&
-			!stagingGroupHelper.isCompanyGroup(
+		BatchEnginePortletDataHandler batchEnginePortletDataHandler =
+			BatchEnginePortletDataHandlerRegistryUtil.getByClassName(
 				portletDataContext.getCompanyId(),
-				portletDataContext.getScopeGroupId())) {
+				stagedModelType.getClassName());
 
-			dynamicQuery.add(
-				groupIdProperty.eq(portletDataContext.getScopeGroupId()));
+		if (((batchEnginePortletDataHandler != null) &&
+			 batchEnginePortletDataHandler.isDataPortalLevel()) ||
+			(portletDataContext.getScopeGroupId() ==
+				portletDataContext.getCompanyGroupId())) {
+
+			dynamicQuery.add(groupIdProperty.eq(0L));
 		}
 		else {
-			dynamicQuery.add(groupIdProperty.eq(0L));
+			dynamicQuery.add(
+				groupIdProperty.eq(portletDataContext.getScopeGroupId()));
 		}
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(

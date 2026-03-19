@@ -5,14 +5,13 @@
 
 package com.liferay.object.internal.service;
 
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -45,8 +44,7 @@ public class ObjectEntrySharingEntryServiceWrapper
 		return super.addOrUpdateSharingEntry(
 			externalReferenceCode, toUserGroupId, toUserId, classNameId,
 			classPK, groupId, shareable,
-			_processSharingEntryActions(
-				classNameId, groupId, sharingEntryActions),
+			_processSharingEntryActions(classPK, sharingEntryActions),
 			expirationDate, serviceContext);
 	}
 
@@ -61,8 +59,7 @@ public class ObjectEntrySharingEntryServiceWrapper
 		return super.addSharingEntry(
 			externalReferenceCode, toUserGroupId, toUserId, classNameId,
 			classPK, groupId, shareable,
-			_processSharingEntryActions(
-				classNameId, groupId, sharingEntryActions),
+			_processSharingEntryActions(classPK, sharingEntryActions),
 			expirationDate, serviceContext);
 	}
 
@@ -86,13 +83,12 @@ public class ObjectEntrySharingEntryServiceWrapper
 		return super.updateSharingEntry(
 			sharingEntryId,
 			_processSharingEntryActions(
-				sharingEntry.getClassNameId(), sharingEntry.getGroupId(),
-				sharingEntryActions),
+				sharingEntry.getClassPK(), sharingEntryActions),
 			shareable, expirationDate, serviceContext);
 	}
 
 	private Collection<SharingEntryAction> _processSharingEntryActions(
-			long classNameId, long groupId,
+			long classPK,
 			Collection<SharingEntryAction> originalSharingEntryActions)
 		throws PortalException {
 
@@ -100,17 +96,14 @@ public class ObjectEntrySharingEntryServiceWrapper
 			return originalSharingEntryActions;
 		}
 
-		Group group = _groupLocalService.getGroup(groupId);
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			classPK);
 
-		ObjectDefinition cmsBasicDocumentObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_DOCUMENT", group.getCompanyId());
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
-		if ((cmsBasicDocumentObjectDefinition == null) ||
-			!Objects.equals(
-				_portal.getClassName(classNameId),
-				cmsBasicDocumentObjectDefinition.getClassName())) {
+		if (!Objects.equals(
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
 
 			return originalSharingEntryActions;
 		}
@@ -129,13 +122,7 @@ public class ObjectEntrySharingEntryServiceWrapper
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private Portal _portal;
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

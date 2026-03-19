@@ -5,6 +5,7 @@
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 import {dateUtils} from 'frontend-js-web';
+import React from 'react';
 
 import {ActionItem, DesignLibraryItem} from '../types';
 import {FromNowDateTimeRenderer, StyleBookLinkRenderer} from './cell_renderers';
@@ -32,7 +33,9 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 					type: 'internal',
 				},
 				{
-					component: () => Liferay.Language.get('style-book'),
+					component: () => (
+						<span>{Liferay.Language.get('style-book')}</span>
+					),
 					name: TableCellRenderer.RESOURCE_TYPE,
 					type: 'internal',
 				},

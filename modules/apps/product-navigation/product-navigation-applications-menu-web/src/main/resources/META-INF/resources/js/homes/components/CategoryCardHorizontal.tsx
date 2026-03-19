@@ -23,7 +23,7 @@ const CategoryCardHorizontal = ({
 			href={href}
 			interactive
 		>
-			<ClayCard.Body className="c-p-2 c-px-lg-3 c-py-lg-2">
+			<ClayCard.Body className="c-p-2">
 				<ClayCard.Row>
 					{leadingIcon ? (
 						<ClayLayout.ContentCol>

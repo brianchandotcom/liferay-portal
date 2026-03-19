@@ -104,7 +104,8 @@ public class UserViewsDataProvider implements FDSDataProvider<UserViewDataSet> {
 		_checkPermissions(themeDisplay);
 
 		return _getSortedDataSetEntries(
-			themeDisplay.getCompanyId(), fdsKeywords.getKeywords()).size();
+			themeDisplay.getCompanyId(), fdsKeywords.getKeywords()
+		).size();
 	}
 
 	private void _addDataSetObjectEntries(
@@ -181,7 +182,8 @@ public class UserViewsDataProvider implements FDSDataProvider<UserViewDataSet> {
 	private void _addSystemFDSEntries(
 		Map<String, String> dataSetEntries, String keywords) {
 
-		Set<String> systemFDSNames = _systemFDSEntryRegistry.getSystemFDSNames();
+		Set<String> systemFDSNames =
+			_systemFDSEntryRegistry.getSystemFDSNames();
 
 		if (systemFDSNames == null) {
 			return;

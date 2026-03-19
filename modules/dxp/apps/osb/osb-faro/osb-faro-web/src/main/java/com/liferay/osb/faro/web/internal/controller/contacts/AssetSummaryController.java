@@ -11,7 +11,7 @@ import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
-import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
+import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AssetSummaryDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.petra.string.StringPool;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryController extends BaseFaroController {
 
 	@GET
-	public FaroResultsDisplay getAssetSummary(
+	public FaroFDSResultsDisplay getAssetSummary(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("keywords") String keywords,
@@ -58,7 +58,7 @@ public class AssetSummaryController extends BaseFaroController {
 		Function<AssetSummary, AssetSummaryDisplay> function =
 			AssetSummaryDisplay::new;
 
-		return new FaroResultsDisplay(results, function);
+		return new FaroFDSResultsDisplay(results, function, cur, delta);
 	}
 
 }

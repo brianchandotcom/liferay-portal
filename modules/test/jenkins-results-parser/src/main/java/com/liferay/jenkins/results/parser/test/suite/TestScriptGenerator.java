@@ -73,15 +73,15 @@ public class TestScriptGenerator {
 
 		sb.append("that is ");
 
-		String upstreamMasterAheadBehindCount =
+		String upstreamMasterAheadBehindDescription =
 			_gitWorkingDirectory.getUpstreamMasterAheadBehindDescription();
 
-		sb.append(upstreamMasterAheadBehindCount);
+		sb.append(upstreamMasterAheadBehindDescription);
 
 		sb.append(" upstream/master.\"\n");
 		sb.append("\techo \"\"\n");
 
-		if (upstreamMasterAheadBehindCount.contains("behind")) {
+		if (upstreamMasterAheadBehindDescription.contains("behind")) {
 			sb.append("\techo \"Warning: Your branch is behind ");
 			sb.append("upstream/master. It is recommended to rebase your ");
 			sb.append("branch before running tests.\"\n");
@@ -179,7 +179,7 @@ public class TestScriptGenerator {
 		sb.append(
 			"$(_format_duration $((${SECONDS} - ${total_start_time})))):\"\n");
 		sb.append("\techo \"Current branch is ");
-		sb.append(upstreamMasterAheadBehindCount);
+		sb.append(upstreamMasterAheadBehindDescription);
 		sb.append(" upstream/master.\"\n");
 		sb.append("\techo \"");
 		sb.append(_SEPARATOR);

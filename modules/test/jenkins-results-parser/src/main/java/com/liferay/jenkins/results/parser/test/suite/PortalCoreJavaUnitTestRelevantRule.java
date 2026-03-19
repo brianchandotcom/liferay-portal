@@ -34,11 +34,11 @@ public class PortalCoreJavaUnitTestRelevantRule extends RelevantRule {
 	public List<TestScriptCommand> getTestScriptCommands() {
 		List<TestScriptCommand> testScriptCommands = new ArrayList<>();
 
-		Set<String> modifiedCoreDirs = new HashSet<>();
+		Set<String> modifiedDirNames = new HashSet<>();
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		String baseDirPath = JenkinsResultsParserUtil.getCanonicalPath(
+		String baseFilePath = JenkinsResultsParserUtil.getCanonicalPath(
 			gitWorkingDirectory.getWorkingDirectory());
 
 		for (File modifiedFile :
@@ -47,37 +47,37 @@ public class PortalCoreJavaUnitTestRelevantRule extends RelevantRule {
 			String modifiedFilePath = JenkinsResultsParserUtil.getCanonicalPath(
 				modifiedFile);
 
-			if (modifiedFilePath.startsWith(baseDirPath + "/")) {
-				String relativePath = modifiedFilePath.substring(
-					baseDirPath.length() + 1);
+			if (modifiedFilePath.startsWith(baseFilePath + "/")) {
+				String relativeFilePath = modifiedFilePath.substring(
+					baseFilePath.length() + 1);
 
-				int index = relativePath.indexOf('/');
+				int index = relativeFilePath.indexOf('/');
 
 				if (index != -1) {
-					String topLevelDirName = relativePath.substring(0, index);
+					String topLevelDirName = relativeFilePath.substring(0, index);
 
-					if (_coreDirectories.contains(topLevelDirName)) {
-						modifiedCoreDirs.add(topLevelDirName);
+					if (_portalCoreDirs.contains(topLevelDirName)) {
+						modifiedDirNames.add(topLevelDirName);
 					}
 				}
 			}
 		}
 
-		if (modifiedCoreDirs.isEmpty()) {
+		if (modifiedDirNames.isEmpty()) {
 			return testScriptCommands;
 		}
 
 		testScriptCommands.add(new TestScriptCommand("ant compile-test", "."));
 
-		for (String modifiedCoreDir : modifiedCoreDirs) {
+		for (String modifiedDirName : modifiedDirNames) {
 			testScriptCommands.add(
-				new TestScriptCommand("ant test-unit", modifiedCoreDir));
+				new TestScriptCommand("ant test-unit", modifiedDirName));
 		}
 
 		return testScriptCommands;
 	}
 
-	private static final Set<String> _coreDirectories = new HashSet<>(
+	private static final Set<String> _portalCoreDirs = new HashSet<>(
 		Arrays.asList(
 			"portal-impl", "portal-kernel", "portal-test", "portal-web",
 			"support-tomcat", "util-bridges", "util-java", "util-slf4j",

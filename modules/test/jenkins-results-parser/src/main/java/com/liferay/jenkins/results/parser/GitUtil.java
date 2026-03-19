@@ -716,7 +716,9 @@ public class GitUtil {
 		}
 
 		System.out.println(
-			JenkinsResultsParserUtil.combine("Merge base ", mergeBaseSHA, " is missing from local history. Deepening history..."));
+			JenkinsResultsParserUtil.combine(
+				"Merge base ", mergeBaseSHA,
+				" is missing from local history. Deepening history..."));
 
 		executionResult = executeBashCommands(
 			1, 0, MILLIS_TIMEOUT, new File("."),

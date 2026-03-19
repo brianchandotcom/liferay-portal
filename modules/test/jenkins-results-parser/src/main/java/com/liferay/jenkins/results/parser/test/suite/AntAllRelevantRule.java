@@ -32,7 +32,7 @@ public class AntAllRelevantRule extends RelevantRule {
 	@Override
 	public List<TestScriptCommand> getTestScriptCommands() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)getGitWorkingDirectory();
+			getPortalGitWorkingDirectory();
 
 		try {
 			boolean hasDxpModules = false;

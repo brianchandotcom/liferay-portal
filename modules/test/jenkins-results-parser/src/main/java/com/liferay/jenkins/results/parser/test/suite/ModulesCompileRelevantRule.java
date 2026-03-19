@@ -34,13 +34,13 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 			getPortalGitWorkingDirectory();
 
 		try {
-			List<File> modulesToCompile = new ArrayList<>();
+			List<File> moduleDirs = new ArrayList<>();
 
 			List<File> modifiedModuleDirsList =
 				portalGitWorkingDirectory.getModifiedModuleDirsList();
 
 			if (modifiedModuleDirsList.size() <= 5) {
-				modulesToCompile.addAll(modifiedModuleDirsList);
+				moduleDirs.addAll(modifiedModuleDirsList);
 			}
 			else {
 				for (File modifiedModuleDir : modifiedModuleDirsList) {
@@ -48,12 +48,12 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 						modifiedModuleDir, ".lfrbuild-portal");
 
 					if (!lfrbuildPortalFile.exists()) {
-						modulesToCompile.add(modifiedModuleDir);
+						moduleDirs.add(modifiedModuleDir);
 					}
 				}
 			}
 
-			if (modulesToCompile.isEmpty()) {
+			if (moduleDirs.isEmpty()) {
 				return new ArrayList<>();
 			}
 
@@ -68,9 +68,9 @@ public class ModulesCompileRelevantRule extends RelevantRule {
 
 			sb.append("../gradlew");
 
-			for (File modifiedModuleDir : modulesToCompile) {
+			for (File moduleDir : moduleDirs) {
 				sb.append(" ");
-				sb.append(getGradlePackageName(modifiedModuleDir));
+				sb.append(getGradlePackageName(moduleDir));
 				sb.append(":deploy");
 			}
 

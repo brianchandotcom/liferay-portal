@@ -28,6 +28,10 @@ function getObjectEntryPayload({
 		objectDefinitionName: dataset.analyticsObjectDefinitionName.trim(),
 	};
 
+	if (dataset.analyticsAssetTitle) {
+		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
+	}
+
 	return payload;
 }
 

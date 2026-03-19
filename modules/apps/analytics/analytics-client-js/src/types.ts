@@ -97,6 +97,7 @@ export namespace Analytics {
 		dataset: {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]: Analytics.ElementAction;
+			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
 			[Analytics.DataSetList.AnalyticsAssetType]: Analytics.ElementType;
 			[Analytics.DataSetList.AnalyticsExternalReferenceCode]: string;
 			[Analytics.DataSetList.AnalyticsObjectDefinitionName]: string;

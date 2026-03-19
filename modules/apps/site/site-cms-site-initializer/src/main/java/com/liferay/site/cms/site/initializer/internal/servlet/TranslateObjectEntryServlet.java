@@ -118,10 +118,10 @@ public class TranslateObjectEntryServlet extends BaseCMSServlet {
 			return;
 		}
 
-		String xliffMimeType = jsonObject.getString("xliffMimeType");
 		String sourceLanguageId = jsonObject.getString("sourceLanguageId");
 		String[] targetLanguageIds = JSONUtil.toStringArray(
 			jsonObject.getJSONArray("targetLanguageIds"));
+		String xliffMimeType = jsonObject.getString("xliffMimeType");
 
 		Map<String, List<Long>> objectEntryIds = new HashMap<>();
 

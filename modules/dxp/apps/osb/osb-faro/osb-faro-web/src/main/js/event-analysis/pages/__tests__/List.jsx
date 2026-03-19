@@ -14,6 +14,7 @@ import {mockEventAnalysisListReq} from 'test/graphql-data';
 import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
+import {useRequest} from 'shared/hooks/useRequest';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -24,6 +25,18 @@ jest.mock('react-router-dom', () => ({
 		channelId: '456',
 		groupId: '123'
 	})
+}));
+
+const mockUseRequestResponse = (overrides = {}) => ({
+	data: [],
+	error: false,
+	loading: false,
+	refetch: jest.fn(),
+	...overrides
+});
+
+jest.mock('shared/hooks/useRequest', () => ({
+	useRequest: jest.fn()
 }));
 
 const eventAnalysis = [
@@ -61,6 +74,10 @@ const WrappedComponent = ({eventAnalyses}) => (
 const mockUseDataSource = useDataSource;
 
 describe('Event Analysis List', () => {
+	beforeEach(() => {
+		useRequest.mockReturnValue(mockUseRequestResponse());
+	});
+
 	it('should render', async () => {
 		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
 
@@ -138,5 +155,79 @@ describe('EventAnalysisList with no Data Source', () => {
 		expect(
 			getByText('Access our documentation to learn more.')
 		).toBeInTheDocument();
+	});
+});
+
+describe('Event Analysis List - Feature Limits', () => {
+	it('should enable the create button when limit is NOT reached', async () => {
+		useRequest.mockReturnValue(
+			mockUseRequestResponse({
+				data: [
+					{
+						currentUsage: 2,
+						limit: 3,
+						name: 'Event Analysis'
+					}
+				]
+			})
+		);
+
+		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+
+		const {getByText} = render(
+			<WrappedComponent eventAnalyses={eventAnalysis} />
+		);
+
+		const createButton = getByText('Create Analysis').closest('a');
+		expect(createButton).not.toHaveClass('disabled');
+	});
+
+	it('should disable the create button and show alert icon when limit IS reached', async () => {
+		useRequest.mockReturnValue(
+			mockUseRequestResponse({
+				data: [
+					{
+						currentUsage: 3,
+						limit: 3,
+						name: 'Event Analysis'
+					}
+				]
+			})
+		);
+		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+
+		const {container, getByText} = render(
+			<WrappedComponent eventAnalyses={eventAnalysis} />
+		);
+
+		const createButton = getByText('Create Analysis').closest('a');
+		expect(createButton).toHaveClass('disabled');
+
+		expect(
+			container.querySelector('.lexicon-icon-exclamation-full')
+		).toBeInTheDocument();
+	});
+
+	it('should enable the create button when limit is unlimited (-1)', async () => {
+		useRequest.mockReturnValue(
+			mockUseRequestResponse({
+				data: [
+					{
+						currentUsage: 100,
+						limit: -1,
+						name: 'Event Analysis'
+					}
+				]
+			})
+		);
+
+		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+
+		const {getByText} = render(
+			<WrappedComponent eventAnalyses={eventAnalysis} />
+		);
+
+		const createButton = getByText('Create Analysis').closest('a');
+		expect(createButton).not.toHaveClass('disabled');
 	});
 });

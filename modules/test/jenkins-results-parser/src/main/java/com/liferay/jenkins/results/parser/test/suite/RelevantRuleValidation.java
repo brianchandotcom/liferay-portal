@@ -128,7 +128,8 @@ public class RelevantRuleValidation {
 				portalGitWorkingDirectory, upstreamBranchName, null,
 				repositoryName, "relevant", upstreamBranchName);
 
-		RelevantRuleEngine.getInstance(portalAcceptancePullRequestJob);
+		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
+			portalAcceptancePullRequestJob);
 
 		for (Path testPropertiesPath : _findTestPropertiesPaths(portalDir)) {
 			Properties testProperties = JenkinsResultsParserUtil.getProperties(
@@ -144,12 +145,11 @@ public class RelevantRuleValidation {
 			List<RelevantRule> relevantRules = new ArrayList<>();
 
 			for (String relevantRuleName : relevantRuleNames.split(",")) {
-				RelevantRule relevantRule = new RelevantRule(
-					testPropertiesPath.toString(),
-					portalAcceptancePullRequestJob, relevantRuleName,
-					testProperties);
-
-				relevantRules.add(relevantRule);
+				relevantRules.add(
+					relevantRuleEngine.getRelevantRule(
+						testPropertiesPath.toString(),
+						portalAcceptancePullRequestJob, testProperties,
+						relevantRuleName));
 			}
 
 			evaluate(relevantRules);

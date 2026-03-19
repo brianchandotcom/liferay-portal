@@ -14,6 +14,7 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CurrencyResource;
@@ -40,6 +41,7 @@ import java.io.OutputStreamWriter;
 
 import java.math.BigDecimal;
 
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -50,6 +52,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.logging.Log;
@@ -65,13 +68,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -514,6 +511,70 @@ public class MarketplaceRestController extends BaseRestController {
 			orderMetadataJSONObject.put(
 				"exchangeRate", currency.getRate()
 			).toString());
+	}
+
+	@PostMapping("product-feedback/{id}")
+	public void postProductFeedback(@RequestBody String json, @PathVariable("id") long id) throws Exception{
+
+		if (_log.isInfoEnabled()) {
+			_log.info("POST email dispatch " + json);
+		}
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		if (!jsonObject.has("modelDTOProduct")) {
+			return;
+		}
+
+		String objectActionTriggerKey = jsonObject.getString(
+				"objectActionTriggerKey");
+
+		if (!Objects.equals(objectActionTriggerKey, "onAfterAdd")) {
+			return;
+		}
+
+		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
+				"modelCPDefinition");
+
+
+		Product product = _marketplaceService.getProduct(
+				modelCPDefinitionJSONObject.getLong("CProductId"));
+
+		_marketplaceService.postNotificationQueueEntry(
+				null, "MARKETPLACE-PRODUCT-FEEDBACK",
+				new HashMapBuilder<String, Object>().put(
+						"[%APP_TYPE%]",
+						product.getProductType()
+				).put(
+						"[%EMAIL_DESCRIPTION%]",
+						StringBundler.concat(
+								"p>It has been a few weeks since you started using <b>CMP </b>" +
+										"Beta via the Marketplace. We hope it’s helping you" +
+										"streamline your Liferay operations. Could you spare" +
+										"<b>5 minutes</b> to let us know how we’re doing?</p>)")
+				).put(
+						"[%ENVIROMENT%]",
+						"liferay"
+				).put(
+						"[%CATALOG_NAME%]",
+						() -> {
+							Catalog catalog = product.getCatalog();
+							return catalog.getName();
+						}
+				).put(
+						"[%ORDER_ID%]", String.valueOf(product.getId())
+				).put(
+						"[%CPDEFINITION_NAME%]",
+						product.getName(
+						).get(
+								modelCPDefinitionJSONObject.getString("defaultLanguageId")
+						)
+				).put(
+						"[%CPDEFINITION_THUMBNAIL%]",
+						new URL(
+								"http://" + lxcDXPMainDomain + product.getThumbnail()
+						).toString()
+				).build());
 	}
 
 	private static final int _ACCOUNT_TYPE_BUSINESS = 2;

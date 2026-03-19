@@ -35,11 +35,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -78,6 +76,8 @@ public class MarketplaceCommandLineRunner
 		_invoke(this::_processOrdersTotalAmount, "Orders Total Amount");
 
 		_invoke(this::_processPendingOrders, "Pending Orders");
+
+		_invoke(this::_processProductFeedback, "Product Feedback");
 
 		_invoke(
 			this::_processProjectsUsingMarketplaceApps,
@@ -728,6 +728,47 @@ public class MarketplaceCommandLineRunner
 			_updateOrder(order.getId(), _ORDER_STATUS_PROCESSING);
 
 			_updateOrder(order.getId(), _ORDER_STATUS_COMPLETED);
+		}
+	}
+
+	private void _processProductFeedback() throws Exception {
+
+
+		LocalDateTime weekAgo = LocalDate.now().minusDays(7).atStartOfDay();
+
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+		String filter =
+				"orderType/any(x:(x eq 'CMP_BETA')) " +
+						"and createDate gt " + weekAgo.format(formatter) +
+						" and createDate lt " + weekAgo.plusHours(6).format(formatter);
+
+		Page<Order> page = _getOrdersPage(filter, -1, -1);
+
+		if (page.getTotalCount() == 0) {
+			if (_log.isInfoEnabled()) {
+				_log.info("There are no product feedback to be sent");
+			}
+
+			return;
+		}
+
+		for (Order order : page.getItems()) {
+			if (order.getTotalAmount() > 0) {
+				try{
+					post(
+						_liferayOAuth2AccessTokenManager.getAuthorization(
+								_liferayOAuthApplicationExternalReferenceCodes),
+						"",
+						UriComponentsBuilder.fromUriString(
+								_liferayMarketplaceEtcSpringBootURL + "/object/action/email/dispatch/" + orderId
+						).build(
+						).toUri());
+				}
+				catch (Exception exception){
+					_log.error(exception);
+				}
+			}
 		}
 	}
 

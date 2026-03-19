@@ -1575,6 +1575,35 @@ public class GitWorkingDirectory {
 		return executionResult.getStandardOut();
 	}
 
+	public String getMergeBaseWithUpstreamMasterSHA() {
+		if (_mergeBaseWithUpstreamMasterSHA != null) {
+			return _mergeBaseWithUpstreamMasterSHA;
+		}
+
+		GitRemote upstreamGitRemote = _getUpstreamLiferayPortalGitRemote();
+
+		if (upstreamGitRemote == null) {
+			_mergeBaseWithUpstreamMasterSHA = "";
+
+			return _mergeBaseWithUpstreamMasterSHA;
+		}
+
+		executeBashCommands(
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			GitUtil.MILLIS_TIMEOUT,
+			JenkinsResultsParserUtil.combine(
+				"git fetch ", upstreamGitRemote.getName(), " master"));
+
+		String mergeBaseSHA = getMergeBaseCommitSHA(
+			getCurrentBranchName(),
+			JenkinsResultsParserUtil.combine(
+				upstreamGitRemote.getName(), "/master"));
+
+		_mergeBaseWithUpstreamMasterSHA = mergeBaseSHA;
+
+		return mergeBaseSHA;
+	}
+
 	public List<File> getModifiedDirsList(
 		boolean checkUnstagedFiles, List<PathMatcher> excludesPathMatchers,
 		List<PathMatcher> includesPathMatchers) {
@@ -1632,16 +1661,33 @@ public class GitWorkingDirectory {
 	}
 
 	public List<File> getModifiedFilesList() {
-		return getModifiedFilesList(false, null, null);
+		if (_modifiedFilesList != null) {
+			return _modifiedFilesList;
+		}
+
+		_modifiedFilesList = getModifiedFilesList(false, null, null);
+
+		return _modifiedFilesList;
 	}
 
 	public List<File> getModifiedFilesList(boolean checkUnstagedFiles) {
+		if (!checkUnstagedFiles && (_modifiedFilesList != null)) {
+			return _modifiedFilesList;
+		}
+
 		return getModifiedFilesList(checkUnstagedFiles, null, null);
 	}
 
 	public List<File> getModifiedFilesList(
 		boolean checkUnstagedFiles, List<PathMatcher> excludesPathMatchers,
 		List<PathMatcher> includesPathMatchers) {
+
+		if (!checkUnstagedFiles && (excludesPathMatchers == null) &&
+			(includesPathMatchers == null) && !_useUpstreamMasterDiffBase &&
+			(_modifiedFilesList != null)) {
+
+			return _modifiedFilesList;
+		}
 
 		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
 
@@ -1654,10 +1700,16 @@ public class GitWorkingDirectory {
 
 		sb.append("git diff --diff-filter=ADMR --name-only ");
 
-		sb.append(
-			getMergeBaseCommitSHA(
-				currentLocalGitBranch,
-				getLocalGitBranch(getUpstreamBranchName(), true)));
+		if (_useUpstreamMasterDiffBase) {
+			sb.append(getMergeBaseWithUpstreamMasterSHA());
+			sb.append(" ");
+		}
+		else {
+			sb.append(
+				getMergeBaseCommitSHA(
+					currentLocalGitBranch,
+					getLocalGitBranch(getUpstreamBranchName(), true)));
+		}
 
 		if (!checkUnstagedFiles) {
 			sb.append(" ");
@@ -2066,6 +2118,49 @@ public class GitWorkingDirectory {
 			upstreamBranchName, true, upstreamBranchSHA);
 	}
 
+	public String getUpstreamMasterAheadBehindCount() {
+		if (_upstreamMasterAheadBehindCount != null) {
+			return _upstreamMasterAheadBehindCount;
+		}
+
+		GitRemote upstreamGitRemote = _getUpstreamLiferayPortalGitRemote();
+
+		if (upstreamGitRemote == null) {
+			_upstreamMasterAheadBehindCount = "";
+
+			return _upstreamMasterAheadBehindCount;
+		}
+
+		executeBashCommands(
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			GitUtil.MILLIS_TIMEOUT,
+			JenkinsResultsParserUtil.combine(
+				"git fetch ", upstreamGitRemote.getName(), " master"));
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			GitUtil.MILLIS_TIMEOUT,
+			JenkinsResultsParserUtil.combine(
+				"git rev-list --left-right --count ",
+				upstreamGitRemote.getName(), "/master...",
+				getCurrentBranchName()));
+
+		if (executionResult.getExitValue() != 0) {
+			throw new GitWorkingDirectoryRuntimeException(
+				this,
+				JenkinsResultsParserUtil.combine(
+					"Unable to get ahead/behind count for upstream master\n",
+					executionResult.getStandardError()));
+		}
+
+		String aheadBehindCount = _formatAheadBehindCount(
+			executionResult.getStandardOut());
+
+		_upstreamMasterAheadBehindCount = aheadBehindCount;
+
+		return aheadBehindCount;
+	}
+
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {
 		return getRemoteGitBranch(
 			getUpstreamBranchName(), getUpstreamGitRemote());
@@ -2457,6 +2552,12 @@ public class GitWorkingDirectory {
 
 	public void setCacheBashCommands(boolean cacheBashCommands) {
 		_cacheBashCommands = cacheBashCommands;
+	}
+
+	public void setUseUpstreamMasterDiffBase(
+		boolean useUpstreamMasterDiffBase) {
+
+		_useUpstreamMasterDiffBase = useUpstreamMasterDiffBase;
 	}
 
 	public void stageFileInCurrentLocalGitBranch(String fileName) {
@@ -3007,6 +3108,38 @@ public class GitWorkingDirectory {
 		return true;
 	}
 
+	private String _formatAheadBehindCount(String standardOut) {
+		String[] values = standardOut.trim(
+		).split(
+			"\\s+"
+		);
+
+		String behindCount = values[0];
+		String aheadCount = values[1];
+
+		StringBuilder sb = new StringBuilder();
+
+		if (!aheadCount.equals("0")) {
+			sb.append(aheadCount);
+			sb.append(" commits ahead");
+		}
+
+		if (!behindCount.equals("0")) {
+			if (!aheadCount.equals("0")) {
+				sb.append(", ");
+			}
+
+			sb.append(behindCount);
+			sb.append(" commits behind");
+		}
+
+		if (sb.length() == 0) {
+			return "up to date";
+		}
+
+		return sb.toString();
+	}
+
 	private String _getGitRepositoryName(GitRemote gitRemote) {
 		if (gitRemote == null) {
 			return null;
@@ -3122,6 +3255,20 @@ public class GitWorkingDirectory {
 		}
 
 		return GitUtil.getPrivateRepositoryName(gitRepositoryName);
+	}
+
+	private GitRemote _getUpstreamLiferayPortalGitRemote() {
+		for (GitRemote gitRemote : getGitRemotes().values()) {
+			String remoteURL = gitRemote.getRemoteURL();
+
+			if (remoteURL.contains("github.com:liferay/liferay-portal.git") ||
+				remoteURL.contains("github.com/liferay/liferay-portal.git")) {
+
+				return gitRemote;
+			}
+		}
+
+		return null;
 	}
 
 	private String _loadGitRepositoryName() {
@@ -3247,7 +3394,11 @@ public class GitWorkingDirectory {
 		new ConcurrentHashMap<>();
 	private final String _gitRepositoryName;
 	private final String _gitRepositoryUsername;
+	private String _mergeBaseWithUpstreamMasterSHA;
+	private List<File> _modifiedFilesList;
 	private final String _upstreamBranchName;
+	private String _upstreamMasterAheadBehindCount;
+	private boolean _useUpstreamMasterDiffBase;
 	private File _workingDirectory;
 
 }

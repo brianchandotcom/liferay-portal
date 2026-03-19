@@ -266,9 +266,10 @@ test('Ensure Check URL button opens to correct destination URL', async ({
 		false
 	);
 
-	await page.getByLabel('Check URL').click();
-
-	const newPage = await page.waitForEvent('popup');
+	const [newPage] = await Promise.all([
+		page.waitForEvent('popup'),
+		page.getByLabel('Check URL').click(),
+	]);
 
 	await expect(newPage.url()).toContain(destinationPage.friendlyURL);
 });

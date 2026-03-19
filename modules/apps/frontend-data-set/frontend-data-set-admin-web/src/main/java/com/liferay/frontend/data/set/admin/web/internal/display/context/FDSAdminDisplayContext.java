@@ -172,6 +172,18 @@ public class FDSAdminDisplayContext {
 		return resourceURL.toString();
 	}
 
+	public String getManageUserViewsURL() {
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_renderRequest, FDSAdminPortletKeys.FDS_ADMIN,
+				RenderRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/frontend_data_set_admin/manage_user_views"
+		).setBackURL(
+			_themeDisplay.getURLCurrent()
+		).buildString();
+	}
+
 	public JSONArray getRESTApplicationResolvedSchemasJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

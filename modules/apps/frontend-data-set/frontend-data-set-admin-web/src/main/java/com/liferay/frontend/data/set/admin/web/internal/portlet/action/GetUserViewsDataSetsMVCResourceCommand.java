@@ -79,8 +79,9 @@ public class GetUserViewsDataSetsMVCResourceCommand
 
 		Map<String, String> dataSetEntries = new LinkedHashMap<>();
 
-		_addSystemDataSets(dataSetEntries, search);
-		_addCustomDataSets(dataSetEntries, themeDisplay.getCompanyId(), search);
+		addSystemFDSEntries(dataSetEntries, search);
+		addDataSetObjectEntries(
+			dataSetEntries, themeDisplay.getCompanyId(), search);
 
 		List<Map.Entry<String, String>> sortedDataSetEntries = new ArrayList<>(
 			dataSetEntries.entrySet());
@@ -127,14 +128,14 @@ public class GetUserViewsDataSetsMVCResourceCommand
 			));
 	}
 
-	private void _addCustomDataSets(
+	private void addDataSetObjectEntries(
 			Map<String, String> dataSetEntries, long companyId, String search)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					_LIFERAY_DATA_SET_ERC, companyId);
+					"L_DATA_SET", companyId);
 
 		if (objectDefinition == null) {
 			return;
@@ -177,7 +178,7 @@ public class GetUserViewsDataSetsMVCResourceCommand
 		}
 	}
 
-	private void _addSystemDataSets(
+	private void addSystemFDSEntries(
 		Map<String, String> dataSetEntries, String search) {
 
 		Set<String> systemFDSNames =
@@ -212,8 +213,6 @@ public class GetUserViewsDataSetsMVCResourceCommand
 			dataSetEntries.put(systemFDSEntry.getName(), label);
 		}
 	}
-
-	private static final String _LIFERAY_DATA_SET_ERC = "L_DATA_SET";
 
 	private static final int _MAX_CUSTOM_DATA_SET_ENTRIES = 200;
 

@@ -142,7 +142,7 @@ public class AttachmentManagerTest {
 
 		try {
 			tempFileEntry = _addTempFileEntry(
-				RandomTestUtil.randomString(), ".bmp",
+				RandomTestUtil.randomBytes(), ".bmp",
 				RandomTestUtil.randomString(), ContentTypes.IMAGE_BMP,
 				_objectDefinition);
 
@@ -164,9 +164,8 @@ public class AttachmentManagerTest {
 		ObjectDefinition objectDefinition = _addObjectDefinition("*");
 
 		tempFileEntry = _addTempFileEntry(
-			RandomTestUtil.randomString(), ".bmp",
-			RandomTestUtil.randomString(), ContentTypes.IMAGE_BMP,
-			objectDefinition);
+			RandomTestUtil.randomBytes(), ".bmp", RandomTestUtil.randomString(),
+			ContentTypes.IMAGE_BMP, objectDefinition);
 
 		folder = tempFileEntry.getFolder();
 
@@ -308,7 +307,7 @@ public class AttachmentManagerTest {
 	}
 
 	private FileEntry _addTempFileEntry(
-			String content, String extension, String fileName, String mimeType,
+			byte[] content, String extension, String fileName, String mimeType,
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -316,7 +315,7 @@ public class AttachmentManagerTest {
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(fileName + extension),
-			FileUtil.createTempFile(content.getBytes()), mimeType);
+			FileUtil.createTempFile(content), mimeType);
 	}
 
 	@Inject

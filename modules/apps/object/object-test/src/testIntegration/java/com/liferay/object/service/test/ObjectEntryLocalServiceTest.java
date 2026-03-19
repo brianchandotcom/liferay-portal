@@ -7258,11 +7258,8 @@ public class ObjectEntryLocalServiceTest {
 				RandomTestUtil.randomString() + ".txt"),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(
-				DLTestUtil.randomTextFileContent(
-					8
-				).getBytes()),
-			0, null, null, null, ServiceContextTestUtil.getServiceContext());
+			new ByteArrayInputStream(DLTestUtil.randomTextFileContent(8)), 0,
+			null, null, null, ServiceContextTestUtil.getServiceContext());
 
 		return _dlFileEntryLocalService.getFileEntry(
 			fileEntry.getFileEntryId());
@@ -7488,10 +7485,7 @@ public class ObjectEntryLocalServiceTest {
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			_objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(title + ".txt"),
-			FileUtil.createTempFile(
-				DLTestUtil.randomTextFileContent(
-					8
-				).getBytes()),
+			FileUtil.createTempFile(DLTestUtil.randomTextFileContent(8)),
 			ContentTypes.TEXT_PLAIN);
 	}
 

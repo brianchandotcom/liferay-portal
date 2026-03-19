@@ -150,7 +150,7 @@ public class LayoutImportBackgroundTaskExecutorTest {
 		}
 	}
 
-	private DLFileEntry _addDLFileEntry(String content, long groupId)
+	private DLFileEntry _addDLFileEntry(byte[] content, long groupId)
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
@@ -159,7 +159,7 @@ public class LayoutImportBackgroundTaskExecutorTest {
 				RandomTestUtil.randomString() + ".txt"),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(content.getBytes()), 0, null, null, null,
+			new ByteArrayInputStream(content), 0, null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		return _dlFileEntryLocalService.getFileEntry(
@@ -336,7 +336,7 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	}
 
 	private FileEntry _addTempFileEntry(
-			String content, ObjectDefinition objectDefinition)
+			byte[] content, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		return TempFileEntryUtil.addTempFileEntry(
@@ -344,8 +344,7 @@ public class LayoutImportBackgroundTaskExecutorTest {
 			objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(
 				RandomTestUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(content.getBytes()),
-			ContentTypes.TEXT_PLAIN);
+			FileUtil.createTempFile(content), ContentTypes.TEXT_PLAIN);
 	}
 
 	private void _deleteObjectEntries(ObjectEntry... objectEntries)
@@ -461,14 +460,14 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
+	private static final byte[] _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
 		DLTestUtil.randomTextFileContent(8);
 
-	private static final String
+	private static final byte[]
 		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
 			DLTestUtil.randomTextFileContent(8);
 
-	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
+	private static final byte[] _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
 		DLTestUtil.randomTextFileContent(8);
 
 	@Inject

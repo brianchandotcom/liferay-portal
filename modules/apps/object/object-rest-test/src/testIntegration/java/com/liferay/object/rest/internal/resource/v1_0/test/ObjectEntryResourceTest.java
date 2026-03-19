@@ -7471,7 +7471,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1),
 			scopeJSONObject);
 
-		String content = DLTestUtil.randomTextFileContent(8);
+		byte[] content = DLTestUtil.randomTextFileContent(8);
 
 		fileEntry = _addTempFileEntry(
 			content, _objectDefinition1, RandomTestUtil.randomString());
@@ -7490,7 +7490,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.POST);
 
 		_assertAttachmentJSONObject(
-			null, Base64.encode(content.getBytes()),
+			null, Base64.encode(content),
 			jsonObject.getJSONObject(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1),
 			scopeJSONObject);
@@ -7519,7 +7519,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.GET);
 
 		_assertAttachmentJSONObject(
-			null, Base64.encode(content.getBytes()),
+			null, Base64.encode(content),
 			jsonObject.getJSONObject(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1),
 			scopeJSONObject);
@@ -7574,7 +7574,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.GET);
 
 		_assertAttachmentJSONObject(
-			null, Base64.encode(content.getBytes()),
+			null, Base64.encode(content),
 			jsonObject.getJSONObject(
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE),
 			scopeJSONObject);
@@ -12211,7 +12211,7 @@ public class ObjectEntryResourceTest {
 			String.valueOf(_jsonFactory.createJSONObject()),
 			objectDefinition.getRESTContextPath(), Http.Method.POST);
 
-		String fileContent1 = DLTestUtil.randomTextFileContent(8);
+		byte[] fileContent1 = DLTestUtil.randomTextFileContent(8);
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry1 = _toFileEntry(
 			Base64::encode, fileContent1,
@@ -12224,7 +12224,7 @@ public class ObjectEntryResourceTest {
 
 		fileEntry1.setScope(scope);
 
-		String fileContent2 = DLTestUtil.randomTextFileContent(8);
+		byte[] fileContent2 = DLTestUtil.randomTextFileContent(8);
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry2 = _toFileEntry(
 			Base64::encode, fileContent2,
@@ -12256,11 +12256,11 @@ public class ObjectEntryResourceTest {
 			jsonObject.getJSONObject("localizedAttachment_i18n");
 
 		_assertAttachmentJSONObject(
-			null, Base64.encode(fileContent1.getBytes()),
+			null, Base64.encode(fileContent1),
 			localizedAttachmentI18nValuesJSONObject.getJSONObject("en_US"),
 			_jsonFactory.createJSONObject(scope.toString()));
 		_assertAttachmentJSONObject(
-			null, Base64.encode(fileContent2.getBytes()),
+			null, Base64.encode(fileContent2),
 			localizedAttachmentI18nValuesJSONObject.getJSONObject("pt_BR"),
 			_jsonFactory.createJSONObject(scope.toString()));
 
@@ -12274,12 +12274,11 @@ public class ObjectEntryResourceTest {
 				ServiceContextTestUtil.getServiceContext());
 
 		DLFileEntry existingDLFileEntry = _addDLFileEntry(
-			StringPool.BLANK, existingFolder.getFolderId());
+			new byte[0], existingFolder.getFolderId());
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry3 = _toFileEntry(
-			content -> null, StringPool.BLANK,
-			existingDLFileEntry.getFileName(), null, _testGroupId,
-			existingDLFileEntry.getMimeType());
+			content -> null, new byte[0], existingDLFileEntry.getFileName(),
+			null, _testGroupId, existingDLFileEntry.getMimeType());
 
 		fileEntry3.setExternalReferenceCode(
 			existingDLFileEntry.getExternalReferenceCode());
@@ -15513,7 +15512,7 @@ public class ObjectEntryResourceTest {
 		return objectDefinition;
 	}
 
-	private DLFileEntry _addDLFileEntry(String content, long folderId)
+	private DLFileEntry _addDLFileEntry(byte[] content, long folderId)
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
@@ -15522,7 +15521,7 @@ public class ObjectEntryResourceTest {
 				RandomTestUtil.randomString() + ".txt"),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(content.getBytes()), 0, null, null, null,
+			new ByteArrayInputStream(content), 0, null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		return _dlFileEntryLocalService.getFileEntry(
@@ -15685,15 +15684,14 @@ public class ObjectEntryResourceTest {
 	}
 
 	private FileEntry _addTempFileEntry(
-			String content, ObjectDefinition objectDefinition, String title)
+			byte[] content, ObjectDefinition objectDefinition, String title)
 		throws Exception {
 
 		return TempFileEntryUtil.addTempFileEntry(
 			_testGroupId, TestPropsValues.getUserId(),
 			objectDefinition.getPortletId(),
 			TempFileEntryUtil.getTempFileName(title + ".txt"),
-			FileUtil.createTempFile(content.getBytes()),
-			ContentTypes.TEXT_PLAIN);
+			FileUtil.createTempFile(content), ContentTypes.TEXT_PLAIN);
 	}
 
 	private User _addUser(String userName, String userPassword)
@@ -18232,10 +18230,7 @@ public class ObjectEntryResourceTest {
 			StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
 				StringUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(
-				DLTestUtil.randomTextFileContent(
-					8
-				).getBytes()),
+			FileUtil.createTempFile(DLTestUtil.randomTextFileContent(8)),
 			ContentTypes.TEXT_PLAIN);
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -18348,7 +18343,7 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
 
-		String fileContent = DLTestUtil.randomTextFileContent(8);
+		byte[] fileContent = DLTestUtil.randomTextFileContent(8);
 
 		com.liferay.portal.kernel.repository.model.Folder existingFolder =
 			_dlAppLocalService.addFolder(
@@ -18713,7 +18708,9 @@ public class ObjectEntryResourceTest {
 				"title", "Unable to decode Base64 file"
 			),
 			_toFileEntry(
-				String::new, "$" + DLTestUtil.randomTextFileContent(7),
+				String::new,
+				ArrayUtil.append(
+					DLTestUtil.randomTextFileContent(7), (byte)'$'),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			httpMethod, null, objectDefinition,
@@ -19196,10 +19193,7 @@ public class ObjectEntryResourceTest {
 			StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
 				StringUtil.randomString() + ".txt"),
-			FileUtil.createTempFile(
-				DLTestUtil.randomTextFileContent(
-					8
-				).getBytes()),
+			FileUtil.createTempFile(DLTestUtil.randomTextFileContent(8)),
 			ContentTypes.TEXT_PLAIN);
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -19305,7 +19299,7 @@ public class ObjectEntryResourceTest {
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
-		String fileContent = DLTestUtil.randomTextFileContent(8);
+		byte[] fileContent = DLTestUtil.randomTextFileContent(8);
 
 		com.liferay.portal.kernel.repository.model.Folder existingFolder =
 			_dlAppLocalService.addFolder(
@@ -19680,7 +19674,9 @@ public class ObjectEntryResourceTest {
 				"title", "Unable to decode Base64 file"
 			),
 			_toFileEntry(
-				String::new, "$" + DLTestUtil.randomTextFileContent(7),
+				String::new,
+				ArrayUtil.append(
+					DLTestUtil.randomTextFileContent(7), (byte)'$'),
 				RandomTestUtil.randomString() + ".txt", null, null,
 				customFileEntry1.getMimeType()),
 			null, objectDefinition,
@@ -20461,8 +20457,7 @@ public class ObjectEntryResourceTest {
 				TempFileEntryUtil.getTempFileName("foo.pdf"),
 				FileUtil.createTempFile(
 					DLTestUtil.randomTextFileContent(
-						(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1
-					).getBytes()),
+						(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1)),
 				ContentTypes.TEXT_PLAIN);
 
 			validationResponse = _validate(
@@ -21255,14 +21250,14 @@ public class ObjectEntryResourceTest {
 	}
 
 	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
-		Function<byte[], String> encodeFunction, String fileContent,
+		Function<byte[], String> encodeFunction, byte[] fileContent,
 		String fileName, String folderExternalReferenceCode, Long folderSiteId,
 		String mimeType) {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		fileEntry.setFileBase64(encodeFunction.apply(fileContent.getBytes()));
+		fileEntry.setFileBase64(encodeFunction.apply(fileContent));
 		fileEntry.setName(fileName);
 		fileEntry.setMimeType(mimeType);
 
@@ -21315,14 +21310,14 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONObject _toFileEntryJSONObject(
-			String fileContent, String fileName, Folder folder, String mimeType,
+			byte[] fileContent, String fileName, Folder folder, String mimeType,
 			String objectFieldName)
 		throws Exception {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		fileEntry.setFileBase64(Base64.encode(fileContent.getBytes()));
+		fileEntry.setFileBase64(Base64.encode(fileContent));
 		fileEntry.setMimeType(mimeType);
 
 		if (StringUtil.equals(

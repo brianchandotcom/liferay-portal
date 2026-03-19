@@ -223,11 +223,11 @@ function _set_up_aws_grafana {
 
 function _set_up_aws_service_linked_roles {
 	local service_linked_roles=(
-		"rds.amazonaws.com:AWSServiceRoleForRDS"
 		"opensearchservice.amazonaws.com:AWSServiceRoleForAmazonOpenSearchService"
+		"rds.amazonaws.com:AWSServiceRoleForRDS"
 	)
 
-	echo "Ensuring required AWS Service-Linked Roles exist."
+	echo "Setting up AWS Service-Linked Roles."
 
 	for slr in "${service_linked_roles[@]}"
 	do
@@ -239,6 +239,8 @@ function _set_up_aws_service_linked_roles {
 			echo "Setting up AWS Service-Linked Role for ${service_name}."
 
 			aws iam create-service-linked-role --aws-service-name "${service_name}" --no-cli-pager
+
+			echo "AWS Service-Linked Role for ${service_name} setup complete."
 		else
 			echo "AWS Service-Linked Role for ${service_name} already exists."
 		fi

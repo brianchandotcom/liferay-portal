@@ -119,8 +119,9 @@ public class TestScriptGenerator {
 				String escapedDir = relativeDir.replace("\"", "\\\"");
 
 				commands.add(
-					"\t\t\"" + escapedCommand + "\"\n\t\t\"" + escapedDir +
-						"\"");
+					JenkinsResultsParserUtil.combine(
+						"\t\t\"", escapedCommand, "\"\n\t\t\"", escapedDir,
+						"\""));
 			}
 		}
 

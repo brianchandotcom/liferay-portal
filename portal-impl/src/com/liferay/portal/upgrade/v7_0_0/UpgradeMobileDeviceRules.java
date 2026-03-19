@@ -38,7 +38,7 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long bitwiseValue = resultSet.getLong(1);
+					long bitwiseValue = resultSet.getLong("bitwiseValue");
 
 					actionIds |= bitwiseValue;
 				}
@@ -63,8 +63,8 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long companyId = resultSet.getLong(1);
-					long roleId = resultSet.getLong(2);
+					long companyId = resultSet.getLong("companyId");
+					long roleId = resultSet.getLong("roleId");
 
 					ownerRoleIds.put(companyId, roleId);
 				}
@@ -91,8 +91,9 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong(1);
-				long ruleGroupInstanceId = resultSet.getLong(2);
+				long companyId = resultSet.getLong("companyId");
+				long ruleGroupInstanceId = resultSet.getLong(
+					"ruleGroupInstanceId");
 
 				preparedStatement2.setLong(1, companyId);
 				preparedStatement2.setLong(2, ruleGroupInstanceId);
@@ -135,9 +136,10 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {
-					long companyId = resultSet.getLong(1);
-					long ruleGroupInstanceId = resultSet.getLong(2);
-					long userId = resultSet.getLong(3);
+					long companyId = resultSet.getLong("companyId");
+					long ruleGroupInstanceId = resultSet.getLong(
+						"ruleGroupInstanceId");
+					long userId = resultSet.getLong("userId");
 
 					preparedStatement2.setLong(
 						1, increment(ResourcePermission.class.getName()));

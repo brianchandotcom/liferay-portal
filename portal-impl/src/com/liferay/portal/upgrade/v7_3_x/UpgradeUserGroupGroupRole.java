@@ -61,9 +61,11 @@ public class UpgradeUserGroupGroupRole extends UpgradeProcess {
 
 			while (resultSet.next()) {
 				updatePreparedStatement.setLong(1, ++userGroupGroupRoleId);
-				updatePreparedStatement.setLong(2, resultSet.getLong(1));
-				updatePreparedStatement.setLong(3, resultSet.getLong(2));
-				updatePreparedStatement.setLong(4, resultSet.getLong(3));
+				updatePreparedStatement.setLong(
+					2, resultSet.getLong("userGroupId"));
+				updatePreparedStatement.setLong(
+					3, resultSet.getLong("groupId"));
+				updatePreparedStatement.setLong(4, resultSet.getLong("roleId"));
 
 				updatePreparedStatement.addBatch();
 			}

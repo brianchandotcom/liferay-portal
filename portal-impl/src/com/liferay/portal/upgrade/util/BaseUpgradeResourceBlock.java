@@ -108,7 +108,7 @@ public abstract class BaseUpgradeResourceBlock extends UpgradeProcess {
 							"resourceBlockId = ?")) {
 
 				while (resultSet.next()) {
-					long resourceBlockId = resultSet.getLong(1);
+					long resourceBlockId = resultSet.getLong("resourceBlockId");
 
 					deletePreparedStatement.setLong(1, resourceBlockId);
 

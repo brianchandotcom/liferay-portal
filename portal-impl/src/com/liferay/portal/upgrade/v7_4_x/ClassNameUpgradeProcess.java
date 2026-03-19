@@ -229,7 +229,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from DLFileEntryMetadata where " +
+				"select count(*) as count from DLFileEntryMetadata where " +
 					"DDMStructureId = ?")) {
 
 			preparedStatement.setLong(1, structureId);
@@ -237,7 +237,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 

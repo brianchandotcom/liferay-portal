@@ -34,8 +34,8 @@ public class UpgradeDB2 extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String tableName = resultSet.getString(1);
-					String columnName = resultSet.getString(2);
+					String tableName = resultSet.getString("tabname");
+					String columnName = resultSet.getString("colname");
 
 					if (_log.isInfoEnabled()) {
 						_log.info(

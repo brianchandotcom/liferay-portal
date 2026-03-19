@@ -168,7 +168,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				structureIds.add(resultSet.getString(1));
+				structureIds.add(resultSet.getString("structureId"));
 			}
 		}
 

@@ -64,18 +64,19 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 				ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
-					long oldPortletPreferencesId = resultSet.getLong(1);
+					long oldPortletPreferencesId = resultSet.getLong(
+						"portletPreferencesId");
 
 					long ownerId = 0;
 					long plid = 0;
 
 					if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
-						ownerId = resultSet.getLong(3);
+						ownerId = resultSet.getLong("plid");
 						plid = 0;
 					}
 					else {
-						ownerId = resultSet.getLong(1);
-						plid = resultSet.getLong(2);
+						ownerId = resultSet.getLong("portletPreferencesId");
+						plid = resultSet.getLong("ownerId");
 					}
 
 					long newPortletPreferencesId = increment();
@@ -250,7 +251,8 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 					insertPreparedStatement.setLong(
 						1, increment(PortletPreferenceValue.class.getName()));
 					insertPreparedStatement.setLong(2, newPortletPreferencesId);
-					insertPreparedStatement.setLong(3, resultSet.getLong(1));
+					insertPreparedStatement.setLong(
+						3, resultSet.getLong("portletPreferenceValueId"));
 
 					insertPreparedStatement.addBatch();
 				}

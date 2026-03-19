@@ -52,11 +52,12 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 						"ctCollectionId = ? and fileEntryId = ?")) {
 
 			while (resultSet.next()) {
-				long fileEntryId = resultSet.getLong(2);
+				long fileEntryId = resultSet.getLong("fileEntryId");
 
 				preparedStatement2.setString(1, String.valueOf(fileEntryId));
 
-				preparedStatement2.setLong(2, resultSet.getLong(1));
+				preparedStatement2.setLong(
+					2, resultSet.getLong("ctCollectionId"));
 				preparedStatement2.setLong(3, fileEntryId);
 
 				preparedStatement2.addBatch();

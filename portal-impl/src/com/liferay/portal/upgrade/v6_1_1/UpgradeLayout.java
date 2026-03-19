@@ -47,8 +47,8 @@ public class UpgradeLayout extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from Layout where uuid_ = ? and groupId = ? " +
-					"and privateLayout = ?")) {
+				"select count(*) as count from Layout where uuid_ = ? and " +
+					"groupId = ? and privateLayout = ?")) {
 
 			preparedStatement.setString(1, sourcePrototypeLayoutUuid);
 			preparedStatement.setLong(2, groupId);
@@ -56,9 +56,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					if (count > 0) {
+					if (resultSet.getInt("count") > 0) {
 						return true;
 					}
 

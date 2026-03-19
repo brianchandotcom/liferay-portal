@@ -25,6 +25,11 @@ components:
                         $ref: "#/components/schemas/ConnectedSite"
                     readOnly: true
                     type: array
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The user who created the asset library.
+                    readOnly: true
                 creatorUserId:
                     description:
                         The asset library's creator user ID.
@@ -163,6 +168,62 @@ components:
                 searchable:
                     default: true
                     type: boolean
+            type: object
+        Creator:
+            description:
+                Represents the user who created/authored the content. Properties follow the
+                [creator](https://schema.org/creator) specification.
+            properties:
+                additionalName:
+                    description:
+                        The user's additional name, which can be used as a middle name.
+                    readOnly: true
+                    type: string
+                contentType:
+                    # @review
+                    description:
+                        The type of the content.
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The user's external reference code.
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
+                familyName:
+                    description:
+                        The user's surname (last name).
+                    readOnly: true
+                    type: string
+                givenName:
+                    description:
+                        The user's first name.
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        The user's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                image:
+                    description:
+                        A relative URL to the user's profile image.
+                    format: uri
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        The user's full name.
+                    readOnly: true
+                    type: string
+                profileURL:
+                    description:
+                        A relative URL to the user's profile.
+                    format: uri
+                    readOnly: true
+                    type: string
             type: object
         MimeTypeLimit:
             description:

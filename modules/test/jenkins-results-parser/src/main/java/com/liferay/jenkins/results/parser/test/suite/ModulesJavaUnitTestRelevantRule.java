@@ -44,18 +44,18 @@ public class ModulesJavaUnitTestRelevantRule extends RelevantRule {
 
 			List<TestScriptCommand> testScriptCommands = new ArrayList<>();
 
-			StringBuilder commandSb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
-			commandSb.append("../gradlew");
+			sb.append("../gradlew");
 
 			for (File modifiedModuleDir : modifiedModuleDirsList) {
-				commandSb.append(" ");
-				commandSb.append(_getGradlePackageName(modifiedModuleDir));
-				commandSb.append(":test");
+				sb.append(" ");
+				sb.append(_getGradlePackageName(modifiedModuleDir));
+				sb.append(":test");
 			}
 
 			testScriptCommands.add(
-				new TestScriptCommand(commandSb.toString(), "modules"));
+				new TestScriptCommand(sb.toString(), "modules"));
 
 			return testScriptCommands;
 		}
@@ -65,18 +65,19 @@ public class ModulesJavaUnitTestRelevantRule extends RelevantRule {
 	}
 
 	private String _getGradlePackageName(File moduleDir) {
-		String absolutePath = JenkinsResultsParserUtil.getCanonicalPath(
-			moduleDir);
+		String moduleDirFilePath = JenkinsResultsParserUtil.getCanonicalPath(
+		moduleDir);
 
-		int x = absolutePath.indexOf("/modules/");
+		int index = moduleDirFilePath.indexOf("/modules/");
 
-		if (x == -1) {
+		if (index == -1) {
 			return "";
 		}
 
-		String relativePath = absolutePath.substring(x + 9);
+		String relativeModuleDirFilePath = moduleDirFilePath.substring(
+		index + 9);
 
-		return ":" + relativePath.replace('/', ':');
+		return ":" + relativeModuleDirFilePath.replace('/', ':');
 	}
 
 }

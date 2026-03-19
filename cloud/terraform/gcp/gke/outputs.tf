@@ -19,6 +19,15 @@ output "network_id" {
 output "network_name" {
 	value=google_compute_network.vpc.name
 }
+output "private_subnet_ids" {
+	value=[google_compute_subnetwork.subnet.id,]
+}
+output "project_id" {
+	value=var.project_id
+}
+output "region" {
+	value=var.region
+}
 output "subnet_id" {
 	value=google_compute_subnetwork.subnet.id
 }

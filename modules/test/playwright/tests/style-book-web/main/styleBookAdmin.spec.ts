@@ -160,7 +160,9 @@ test(
 			await styleBooksPage.goto(site.friendlyUrlPath);
 		});
 
-		const errorMessage = page.getByText('Please enter a unique name.');
+		const errorMessage = page.getByText(
+			'A Style Book with this name already exists. Please enter a different name.'
+		);
 		const input = page.getByRole('textbox', {name: 'Name'});
 		const saveButton = page.getByRole('button', {name: 'Save'});
 
@@ -204,7 +206,9 @@ test(
 			}
 		});
 
-		const errorMessage = page.getByText('Please enter a unique name.');
+		const errorMessage = page.getByText(
+			'A Style Book with this name already exists. Please enter a different name.'
+		);
 		const input = page.getByRole('textbox', {name: 'Name'});
 		const saveButton = page.getByRole('button', {name: 'Save'});
 

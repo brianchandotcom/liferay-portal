@@ -245,6 +245,8 @@ function _set_up_aws_service_linked_roles {
 			echo "AWS Service-Linked Role for ${service_name} already exists."
 		fi
 	done
+
+	echo "AWS Service-Linked Roles setup complete."
 }
 
 function _terraform_init_and_apply {

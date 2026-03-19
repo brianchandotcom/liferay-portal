@@ -371,9 +371,9 @@ public class ListUtil {
 	}
 
 	public static <E> E[] getPreviousAndNext(
-		List<E> list, Predicate<E> predicate, IntFunction<E[]> arrayFactory) {
+		List<E> list, Predicate<E> predicate, IntFunction<E[]> intFunction) {
 
-		E[] previousAndNext = arrayFactory.apply(3);
+		E[] previousAndNext = intFunction.apply(3);
 
 		for (int i = 0; i < list.size(); i++) {
 			E element = list.get(i);

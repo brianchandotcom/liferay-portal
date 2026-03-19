@@ -22,6 +22,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -34,9 +35,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.webserver.WebServerServlet;
 
 import java.io.ByteArrayInputStream;
 
@@ -49,6 +53,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author David Truong
@@ -169,6 +175,36 @@ public class DLFileEntryCTTest {
 		Assert.assertEquals(ctEntries.toString(), 0, ctEntries.size());
 
 		Assert.assertFalse(fileEntry.isCheckedOut());
+	}
+
+	@Test
+	public void testHasFiles() throws Exception {
+		String title = RandomTestUtil.randomString();
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			_addFileEntry(RandomTestUtil.randomString(), title);
+		}
+
+		String friendlyURL = String.format(
+			"%s%s/%s", FriendlyURLResolverConstants.URL_SEPARATOR_X_FILE_ENTRY,
+			_group.getFriendlyURL(), title);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(Method.GET, "/documents" + friendlyURL);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER, TestPropsValues.getUser());
+		mockHttpServletRequest.setContextPath("/documents");
+		mockHttpServletRequest.setParameter(
+			"previewCTCollectionId",
+			String.valueOf(_ctCollection.getCtCollectionId()));
+		mockHttpServletRequest.setPathInfo(friendlyURL);
+		mockHttpServletRequest.setServletPath(StringPool.BLANK);
+
+		Assert.assertTrue(WebServerServlet.hasFiles(mockHttpServletRequest));
 	}
 
 	@Test

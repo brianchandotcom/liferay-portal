@@ -1301,7 +1301,7 @@ public class GitWorkingDirectory {
 	}
 
 	public GitRemote getGitRemote(String name) {
-		if (name.equals("upstream")) {
+		if (name.equals("upstream") && JenkinsResultsParserUtil.isCINode()) {
 			name = "upstream-temp";
 		}
 
@@ -2618,15 +2618,18 @@ public class GitWorkingDirectory {
 
 		_gitRepositoryName = gitRepositoryName;
 
-		String remoteGitRepositoryName = _getRemoteGitRepositoryName();
+		if (JenkinsResultsParserUtil.isCINode()) {
+			String remoteGitRepositoryName = _getRemoteGitRepositoryName();
 
-		RemoteGitRepository remoteGitRepository =
-			GitRepositoryFactory.getRemoteGitRepository(
-				"github.com", remoteGitRepositoryName,
-				JenkinsResultsParserUtil.getUpstreamUserName(
-					remoteGitRepositoryName, getUpstreamBranchName()));
+			RemoteGitRepository remoteGitRepository =
+				GitRepositoryFactory.getRemoteGitRepository(
+					"github.com", remoteGitRepositoryName,
+					JenkinsResultsParserUtil.getUpstreamUserName(
+						remoteGitRepositoryName, getUpstreamBranchName()));
 
-		addGitRemote(true, "upstream-temp", remoteGitRepository.getRemoteURL());
+			addGitRemote(
+				true, "upstream-temp", remoteGitRepository.getRemoteURL());
+		}
 
 		_gitRepositoryUsername = loadGitRepositoryUsername();
 	}

@@ -707,8 +707,9 @@ public class GitUtil {
 
 		ExecutionResult executionResult = executeBashCommands(
 			1, 0, 1000 * 10, new File("."),
-			"git merge-base --is-ancestor " + mergeBaseSHA + " " +
-				baseBranchName);
+			JenkinsResultsParserUtil.combine(
+				"git merge-base --is-ancestor ", mergeBaseSHA, " ",
+				baseBranchName));
 
 		if (executionResult.getExitValue() == 0) {
 			return;
@@ -720,13 +721,17 @@ public class GitUtil {
 
 		executionResult = executeBashCommands(
 			1, 0, MILLIS_TIMEOUT, new File("."),
-			"git fetch -f --no-tags " + remoteURL + " " + mergeBaseSHA + ":" +
-				baseBranchName);
+			JenkinsResultsParserUtil.combine(
+				"git fetch -f --no-tags ", remoteURL, " ", mergeBaseSHA, ":",
+				baseBranchName));
 
 		if (executionResult.getExitValue() != 0) {
-			System.out.println(
-				"Unable to stitch history: " +
-					executionResult.getStandardError());
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Merge base ", mergeBaseSHA, " was unabled to be fetched",
+					"\n", "Please try rebasing with latest branch",
+					" and/or checking Github's status here: ",
+					"https://www.githubstatus.com/history"));
 		}
 	}
 

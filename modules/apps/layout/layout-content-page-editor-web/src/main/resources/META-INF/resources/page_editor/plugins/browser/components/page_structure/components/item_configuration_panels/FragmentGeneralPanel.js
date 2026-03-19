@@ -89,6 +89,9 @@ export function FragmentGeneralPanel({item}) {
 					return (
 						<div className="mb-1 panel-group-sm" key={index}>
 							<FieldSet
+								customComponentModule={
+									fieldSet.customComponentModule
+								}
 								description={fieldSet.description}
 								fields={fields}
 								fragmentEntryLinks={

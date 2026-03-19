@@ -716,8 +716,7 @@ public class GitUtil {
 		}
 
 		System.out.println(
-			"Merge base " + mergeBaseSHA +
-				" is missing from local history. Deepening history...");
+			JenkinsResultsParserUtil.combine("Merge base ", mergeBaseSHA, " is missing from local history. Deepening history..."));
 
 		executionResult = executeBashCommands(
 			1, 0, MILLIS_TIMEOUT, new File("."),
@@ -728,10 +727,9 @@ public class GitUtil {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Merge base ", mergeBaseSHA, " was unabled to be fetched",
-					"\n", "Please try rebasing with latest branch",
-					" and/or checking Github's status here: ",
-					"https://www.githubstatus.com/history"));
+					"Unable to fetch branch history.\n",
+					"Please rebase with liferay/", repositoryName, " ",
+					baseBranchName, " and try again."));
 		}
 	}
 

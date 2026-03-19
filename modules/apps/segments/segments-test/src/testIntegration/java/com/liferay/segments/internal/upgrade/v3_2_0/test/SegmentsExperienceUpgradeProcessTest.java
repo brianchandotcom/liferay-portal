@@ -73,6 +73,9 @@ public class SegmentsExperienceUpgradeProcessTest
 
 	@Before
 	public void setUp() throws Exception {
+		_connection = DataAccess.getConnection();
+		_db = DBManagerUtil.getDB();
+
 		_group = GroupTestUtil.addGroup();
 
 		_publishedLayout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -118,12 +121,14 @@ public class SegmentsExperienceUpgradeProcessTest
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try {
-			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
+			_db.alterTableAddColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId", "LONG");
 
 			runUpgrade();
 		}
 		finally {
-			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
+			_db.alterTableDropColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId");
 		}
 
 		_assertSegmentsExperiences();
@@ -138,7 +143,8 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
+			_db.alterTableAddColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId", "LONG");
 
 			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
 			_renameColumn("plid", "plid2", "FragmentEntryLink");
@@ -146,7 +152,8 @@ public class SegmentsExperienceUpgradeProcessTest
 			runUpgrade();
 		}
 		finally {
-			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
+			_db.alterTableDropColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId");
 
 			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
 			_renameColumn("plid2", "plid", "FragmentEntryLink");
@@ -162,14 +169,16 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
+			_db.alterTableAddColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId", "LONG");
 
 			_renameColumn("plid", "plid2", "FragmentEntryLink");
 
 			runUpgrade();
 		}
 		finally {
-			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
+			_db.alterTableDropColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId");
 
 			_renameColumn("plid2", "plid", "FragmentEntryLink");
 		}
@@ -184,38 +193,16 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
+			_db.alterTableAddColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId", "LONG");
 
 			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
 
 			runUpgrade();
 		}
 		finally {
-			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
-
-			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
-		}
-
-		_assertSegmentsExperiences();
-	}
-
-	@Test
-	public void testUpgradeWithoutCtCollectionIdColumn() throws Exception {
-		_deleteSegmentsExperiences();
-
-		try {
-			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
-			_addOrDropColumn(
-				"ctCollectionId", "drop", "LayoutPageTemplateStructureRel");
-
-			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
-
-			runUpgrade();
-		}
-		finally {
-			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
-			_addOrDropColumn(
-				"ctCollectionId", "add", "LayoutPageTemplateStructureRel");
+			_db.alterTableDropColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId");
 
 			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
 		}
@@ -230,18 +217,48 @@ public class SegmentsExperienceUpgradeProcessTest
 		_deleteSegmentsExperiences();
 
 		try {
-			_addOrDropColumn("segmentsEntryId", "add", "SegmentsExperience");
-			_addOrDropColumn(
-				"segmentsExperienceId", "drop", "FragmentEntryLink");
+			_db.alterTableAddColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId", "LONG");
+			_db.alterTableDropColumn(
+				_connection, "FragmentEntryLink", "ctCollectionId");
 
 			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
 
 			runUpgrade();
 		}
 		finally {
-			_addOrDropColumn("segmentsEntryId", "drop", "SegmentsExperience");
-			_addOrDropColumn(
-				"segmentsExperienceId", "add", "FragmentEntryLink");
+			_db.alterTableDropColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId");
+			_db.alterTableAddColumn(
+				_connection, "FragmentEntryLink", "ctCollectionId", "LONG");
+
+			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
+		}
+
+		_assertSegmentsExperiences();
+	}
+
+	@Test
+	public void testUpgradeWithoutCtCollectionIdColumn() throws Exception {
+		_deleteSegmentsExperiences();
+
+		try {
+			_db.alterTableAddColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId", "LONG");
+			_db.alterTableDropColumn(
+				_connection, "LayoutPageTemplateStructureRel",
+				"ctCollectionId");
+
+			_renameColumn("plid", "classPK", "LayoutPageTemplateStructure");
+
+			runUpgrade();
+		}
+		finally {
+			_db.alterTableDropColumn(
+				_connection, "SegmentsExperience", "segmentsEntryId");
+			_db.alterTableAddColumn(
+				_connection, "LayoutPageTemplateStructureRel", "ctCollectionId",
+				"LONG");
 
 			_renameColumn("classPK", "plid", "LayoutPageTemplateStructure");
 		}
@@ -284,23 +301,6 @@ public class SegmentsExperienceUpgradeProcessTest
 
 		return _segmentsExperienceLocalService.updateSegmentsExperience(
 			segmentsExperience);
-	}
-
-	private void _addOrDropColumn(
-			String columnName, String statement, String tableName)
-		throws Exception {
-
-		try (Connection connection = DataAccess.getConnection()) {
-			DB db = DBManagerUtil.getDB();
-
-			if (statement.equals("add")) {
-				db.alterTableAddColumn(
-					connection, tableName, columnName, "LONG");
-			}
-			else if (statement.equals("drop")) {
-				db.alterTableDropColumn(connection, tableName, columnName);
-			}
-		}
 	}
 
 	private void _assertFragmentEntryLinks(
@@ -468,6 +468,8 @@ public class SegmentsExperienceUpgradeProcessTest
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
+	private Connection _connection;
+	private DB _db;
 	private Layout _draftLayout;
 
 	@Inject

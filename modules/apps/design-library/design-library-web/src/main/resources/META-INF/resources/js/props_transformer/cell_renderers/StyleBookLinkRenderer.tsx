@@ -7,7 +7,7 @@ import React from 'react';
 
 import {BaseLinkRenderer, BaseLinkRendererProps} from './BaseLinkRenderer';
 
-export function StyleBookLinkRenderer(props: BaseLinkRendererProps) {
+export default function StyleBookLinkRenderer(props: BaseLinkRendererProps) {
 	return (
 		<BaseLinkRenderer
 			{...props}

@@ -7,7 +7,9 @@ import React from 'react';
 
 import {BaseLinkRenderer, BaseLinkRendererProps} from './BaseLinkRenderer';
 
-export function DesignLibraryLinkRenderer(props: BaseLinkRendererProps) {
+export default function DesignLibraryLinkRenderer(
+	props: BaseLinkRendererProps
+) {
 	return (
 		<BaseLinkRenderer
 			{...props}

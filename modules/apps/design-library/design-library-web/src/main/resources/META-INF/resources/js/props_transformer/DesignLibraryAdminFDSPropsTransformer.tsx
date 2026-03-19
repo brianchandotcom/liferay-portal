@@ -7,13 +7,11 @@ import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 import {dateUtils} from 'frontend-js-web';
 
 import {ActionItem, DesignLibraryItem} from '../types';
-import {DesignLibraryLinkRenderer} from './cell_renderers/DesignLibraryLinkRenderer';
-import {FromNowDateTimeRenderer} from './cell_renderers/FromNowDateTimeRenderer';
-
-enum TableCellRenderer {
-	DESIGN_LIBRARY_LINK = 'designLibraryLink',
-	FROM_NOW_DATE_TIME = 'fromNowDateTime',
-}
+import {
+	DesignLibraryLinkRenderer,
+	FromNowDateTimeRenderer,
+} from './cell_renderers';
+import {TableCellRenderer} from './constants';
 
 export default function DesignLibraryAdminFDSPropsTransformer(
 	props: IFrontendDataSetProps

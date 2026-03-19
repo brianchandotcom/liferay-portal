@@ -6,6 +6,6 @@
 import {dateUtils} from 'frontend-js-web';
 import React from 'react';
 
-export function FromNowDateTimeRenderer({value}: {value: string}) {
+export default function FromNowDateTimeRenderer({value}: {value: string}) {
 	return <time dateTime={value}>{dateUtils.fromNow(new Date(value))}</time>;
 }

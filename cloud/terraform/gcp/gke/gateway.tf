@@ -24,7 +24,6 @@ resource "helm_release" "envoy_gateway" {
 	]
 	version="v1.6.3"
 }
-
 resource "time_sleep" "wait_for_gateway" {
 	create_duration="60s"
 	depends_on=[

@@ -74,6 +74,19 @@ public class ViewDesignLibraryAdminDisplayContext {
 				null, null, "link"));
 	}
 
+	public Map<String, Object> getFDSAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"entryIdKey", DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY
+		).put(
+			"redirectURL",
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/design_library/design_library_resources"
+			).buildString()
+		).build();
+	}
+
 	private JSONArray _getActionItemsJSONArray() {
 		return JSONUtil.putAll(
 			JSONUtil.put(

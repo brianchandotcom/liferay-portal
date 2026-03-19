@@ -4,8 +4,10 @@
  */
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
+import CreateDesignLibraryModal from '../modal/CreateDesignLibraryModal';
 import {
 	FromNowDateTimeRenderer,
 	LinkRenderer,
@@ -13,13 +15,39 @@ import {
 } from './cell_renderers';
 import {TableCellContentType} from './constants';
 
-export default function DesignLibraryAdminFDSPropsTransformer(
-	props: IFrontendDataSetProps
-): IFrontendDataSetProps {
+export default function DesignLibraryAdminFDSPropsTransformer({
+	additionalProps: {entryIdKey, redirectURL},
+	id,
+	...props
+}: {
+	additionalProps: {
+		entryIdKey: string;
+		redirectURL: string;
+	};
+
+	id: string;
+	props: Record<string, unknown>;
+}): IFrontendDataSetProps {
 	const creationMenu = {
 		primaryItems: [
 			{
 				label: Liferay.Language.get('new-design-library'),
+				onClick: () => {
+					openModal({
+						contentComponent: ({
+							closeModal,
+						}: {
+							closeModal: () => void;
+						}) =>
+							CreateDesignLibraryModal({
+								closeModal,
+								dataSetId: id,
+								entryIdKey,
+								redirectURL,
+							}),
+						size: 'md',
+					});
+				},
 			},
 		],
 	};
@@ -48,6 +76,7 @@ export default function DesignLibraryAdminFDSPropsTransformer(
 			],
 		},
 		hideManagementBarInEmptyState: true,
+		id,
 		views: [
 			{
 				contentRenderer: 'table',

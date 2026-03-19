@@ -75,13 +75,13 @@ public class DefaultSearchResultPermissionFilter
 	implements SearchResultPermissionFilter {
 
 	public DefaultSearchResultPermissionFilter(
+		DefaultSearchResultPermissionFilterConfiguration
+			defaultSearchResultPermissionFilterConfiguration,
 		FacetPostProcessor facetPostProcessor, IndexerRegistry indexerRegistry,
 		PermissionChecker permissionChecker,
 		RelatedEntryIndexerRegistry relatedEntryIndexerRegistry,
 		Function<SearchContext, Hits> searchFunction,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
-		DefaultSearchResultPermissionFilterConfiguration
-			defaultSearchResultPermissionFilterConfiguration,
 		ServiceTrackerMap
 			<String, ModelResourcePermission<? extends ClassedModel>>
 				serviceTrackerMap) {

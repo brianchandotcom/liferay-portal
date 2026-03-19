@@ -16,6 +16,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Link;
 import com.liferay.headless.admin.user.dto.v1_0.SharedAsset;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -121,10 +122,7 @@ public class SharedAssetDTOConverter
 				setFile(
 					() -> NestedFieldsSupplier.supply(
 						"file",
-						fieldName -> _getFileEntry(
-							sharingEntry.getClassName(),
-							sharingEntry.getClassPK(),
-							sharingEntry.getCompanyId())));
+						fieldName -> _getFileEntry(sharingEntry.getClassPK())));
 				setFileTypeIcon(
 					() -> {
 						if (StringUtil.equals(
@@ -188,6 +186,48 @@ public class SharedAssetDTOConverter
 		};
 	}
 
+	private FileEntry _getFileEntry(long classPK) {
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			classPK);
+
+		if (objectEntry == null) {
+			return null;
+		}
+
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		if (!Objects.equals(
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+
+			return null;
+		}
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectField objectField : objectFields) {
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				Map<String, Serializable> values = objectEntry.getValues();
+
+				String objectFieldName = objectField.getName();
+
+				Serializable serializable = values.get(objectFieldName);
+
+				if (serializable instanceof Long) {
+					return _getFileEntry(
+						GetterUtil.getLong(serializable), objectDefinition,
+						objectEntry, objectField);
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private FileEntry _getFileEntry(
 		long fileEntryId, ObjectDefinition objectDefinition,
 		ObjectEntry objectEntry, ObjectField objectField) {
@@ -226,61 +266,6 @@ public class SharedAssetDTOConverter
 			});
 
 		return fileEntry;
-	}
-
-	private FileEntry _getFileEntry(
-		String className, long classPK, long companyId) {
-
-		ObjectDefinition cmsBasicDocumentObjectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_DOCUMENT", companyId);
-
-		if ((cmsBasicDocumentObjectDefinition == null) ||
-			!Objects.equals(
-				className, cmsBasicDocumentObjectDefinition.getClassName())) {
-
-			return null;
-		}
-
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			classPK);
-
-		if (objectEntry == null) {
-			return null;
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (objectDefinition == null) {
-			return null;
-		}
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
-		for (ObjectField objectField : objectFields) {
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
-
-				Map<String, Serializable> values = objectEntry.getValues();
-
-				String objectFieldName = objectField.getName();
-
-				Serializable serializable = values.get(objectFieldName);
-
-				if (serializable instanceof Long) {
-					return _getFileEntry(
-						GetterUtil.getLong(serializable), objectDefinition,
-						objectEntry, objectField);
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private String _getMimeType(SharingEntry sharingEntry) {

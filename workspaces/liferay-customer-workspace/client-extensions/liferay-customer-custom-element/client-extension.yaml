@@ -10,20 +10,20 @@ liferay-customer-custom-element:
     name: Liferay Customer Custom Element
     portletCategoryName: category.client-extensions
     properties:
-        about-the-overview-page-url: https://support-uat.liferay.com/w/about-the-overview-page-video-tutorial
+        about-the-overview-page-url: https://support.liferay.com/w/about-the-overview-page-video-tutorial
         account-settings-url: https://login.liferay.com/enduser/settings
-        article-deactivate-key-url: https://support-uat.liferay.com/w/how-do-i-manage-my-activation-keys-when-upgrading-or-replacing-servers
-        article-deploying-activation-keys-url: https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/activating-liferay-dxp
-        article-getting-started-with-liferay-enterprise-search-url: https://support-uat.liferay.com/w/les-getting-started-with-liferay-enterprise-search
+        article-deactivate-key-url: https://support.liferay.com/w/how-do-i-manage-my-activation-keys-when-upgrading-or-replacing-servers
+        article-deploying-activation-keys-url: https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/setting-up-liferay/activating-liferay-dxp
+        article-getting-started-with-liferay-enterprise-search-url: https://support.liferay.com/w/les-getting-started-with-liferay-enterprise-search
         article-notified-when-my-activation-key-is-about-to-expire-url: https://support.liferay.com/w/how-do-i-receive-notifications-when-my-activation-keys-are-about-to-expire
         article-what-is-my-instance-sizing-value-url: https://support.liferay.com/w/activation-keys-faq-for-liferay-dxp-and-liferay-commerce#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1
-        create-ticket-url: https://liferay-sandbox-424.atlassian.net/servicedesk/customer/portals
+        create-ticket-url: https://liferay.atlassian.net/servicedesk/customer/portals
         feature-flags: ISSD-100,ISSD-119,ISSD-78,LPS-148342,LPS-148366,LPS-159127,LPS-159359,LPS-180001,LPS-181031,LPS-185004,LPS-185063,LPS-186175,LPS-187767,LPS-191380,LPS-192494,LPS-194304,LPS-194304,LRSD-5119,LRSD-6322,LRSD-7805,LRSD-8280,LRSD-8459
         import-date: 2022/11/17
         jira-fls-portal-url: https://liferay.atlassian.net/servicedesk/customer/portal/204
         jira-fls-project: LRFLS
         jira-hc-portal-url: https://liferay.atlassian.net/servicedesk/customer/portal/105
-        provisioning-server-api: https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0
+        provisioning-server-api: https://provisioning.liferay.com/o/provisioning-rest/v1.0
     type: customElement
     urls:
         -   "*.js"
@@ -40,7 +40,7 @@ liferay-customer-custom-element-testing:
         about-the-overview-page-url: https://support-uat.liferay.com/w/about-the-overview-page-video-tutorial
         account-settings-url: https://login-dev.liferay.com/enduser/settings
         article-deactivate-key-url: https://support-uat.liferay.com/w/how-do-i-manage-my-activation-keys-when-upgrading-or-replacing-servers
-        article-deploying-activation-keys-url: https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/activating-liferay-dxp
+        article-deploying-activation-keys-url: https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/setting-up-liferay/activating-liferay-dxp
         article-getting-started-with-liferay-enterprise-search-url: https://support-uat.liferay.com/w/les-getting-started-with-liferay-enterprise-search
         article-notified-when-my-activation-key-is-about-to-expire-url: https://support-uat.liferay.com/w/how-do-i-receive-notifications-when-my-activation-keys-are-about-to-expire
         article-what-is-my-instance-sizing-value-url: https://support-uat.liferay.com/w/activation-keys-faq-for-liferay-dxp-and-liferay-commerce#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1

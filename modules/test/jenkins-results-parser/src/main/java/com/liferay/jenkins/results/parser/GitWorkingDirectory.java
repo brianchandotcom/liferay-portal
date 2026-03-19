@@ -1580,7 +1580,7 @@ public class GitWorkingDirectory {
 			return _mergeBaseWithUpstreamMasterSHA;
 		}
 
-		GitRemote upstreamGitRemote = _getUpstreamLiferayPortalGitRemote();
+		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		if (upstreamGitRemote == null) {
 			_mergeBaseWithUpstreamMasterSHA = "";
@@ -2063,14 +2063,24 @@ public class GitWorkingDirectory {
 	public GitRemote getUpstreamGitRemote() {
 		Map<String, GitRemote> gitRemotes = getGitRemotes();
 
-		GitRemote gitRemote = gitRemotes.get("upstream-temp");
+		GitRemote upstreamGitRemote = gitRemotes.get("upstream-temp");
 
-		if (gitRemote == null) {
-			gitRemote = gitRemotes.get("upstream");
+		if (upstreamGitRemote == null) {
+			upstreamGitRemote = gitRemotes.get("upstream");
 		}
 
-		if (gitRemote != null) {
-			return gitRemote;
+		if (upstreamGitRemote != null) {
+			return upstreamGitRemote;
+		}
+
+		for (GitRemote gitRemote : gitRemotes.values()) {
+			String remoteURL = gitRemote.getRemoteURL();
+
+			if (remoteURL.contains("github.com:liferay/liferay-portal.git") ||
+				remoteURL.contains("github.com/liferay/liferay-portal.git")) {
+
+				return gitRemote;
+			}
 		}
 
 		String gitRepositoryName = getGitRepositoryName();
@@ -2123,7 +2133,7 @@ public class GitWorkingDirectory {
 			return _upstreamMasterAheadBehindCount;
 		}
 
-		GitRemote upstreamGitRemote = _getUpstreamLiferayPortalGitRemote();
+		GitRemote upstreamGitRemote = getUpstreamGitRemote();
 
 		if (upstreamGitRemote == null) {
 			_upstreamMasterAheadBehindCount = "";
@@ -3255,20 +3265,6 @@ public class GitWorkingDirectory {
 		}
 
 		return GitUtil.getPrivateRepositoryName(gitRepositoryName);
-	}
-
-	private GitRemote _getUpstreamLiferayPortalGitRemote() {
-		for (GitRemote gitRemote : getGitRemotes().values()) {
-			String remoteURL = gitRemote.getRemoteURL();
-
-			if (remoteURL.contains("github.com:liferay/liferay-portal.git") ||
-				remoteURL.contains("github.com/liferay/liferay-portal.git")) {
-
-				return gitRemote;
-			}
-		}
-
-		return null;
 	}
 
 	private String _loadGitRepositoryName() {

@@ -35,9 +35,8 @@ public class TestScriptGenerator {
 		GitWorkingDirectory gitWorkingDirectory =
 			testScriptGenerator.getGitWorkingDirectory();
 
-		File baseDir = gitWorkingDirectory.getWorkingDirectory();
-
-		File scriptFile = new File(baseDir, "validate_branch.sh");
+		File scriptFile = new File(
+			gitWorkingDirectory.getWorkingDirectory(), "validate_branch.sh");
 
 		JenkinsResultsParserUtil.write(scriptFile, generatedScript);
 

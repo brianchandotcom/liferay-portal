@@ -17,17 +17,23 @@ renderResponse.setTitle(LanguageUtil.get(request, "manage-user-views"));
 %>
 
 <aui:style type="text/css">
-	.manage-user-views .management-bar-wrapper {
-		background: #fff;
-		margin-left: -100%;
-		margin-right: -100%;
-		padding-left: 100%;
-		padding-right: 100%;
-	}
+		.management-bar-wrapper {
+			background: #fff;
+			margin-left: -100%;
+			margin-right: -100%;
+			padding-left: 100%;
+			padding-right: 100%;
+		}
 
-	.portlet-body {
-		overflow: hidden;
-	}
+		.portlet-body {
+			overflow: hidden;
+		}
+
+		.management-bar > .ml-4.mt-2 {
+			align-items: center;
+			display: flex;
+			margin-top: 0 !important;
+		}
 </aui:style>
 
 <div class="container-fluid container-fluid-max-xxxl">
